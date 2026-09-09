@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>취향 시안 — 축 1·2</title>
+<style>
+  :root { --frame-w: 390px; }
+  body { font-family: "Pretendard", Inter, system-ui, sans-serif; background: #fafafa; }
+  .row { display: flex; gap: 16px; }
+  .variant { width: 390px; height: 500px; border: 1px solid #ddd; position: relative; }
+  .label { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%;
+           background: #111; color: #fff; font-size: 12px; text-align: center; line-height: 20px; }
+</style>
+</head>
+<body>
+<p>이 페이지는 스타일만 비교하는 용도입니다. 문구·기능은 신경 쓰지 마세요. 번호로 말씀해 주세요.</p>
+<h1>취향 시안 — 축 1·2</h1>
+
+<section data-axis="1">
+  <h2>축 1 밝기·색온도 <small>이 축만 다르고 나머지는 같습니다</small></h2>
+  <div class="row">
+    <figure class="variant" data-v="A"><span class="label">①</span>PixCrop 홈 화면 (라이트, 중립)<figcaption>A</figcaption></figure>
+    <figure class="variant" data-v="B"><span class="label">①</span>PixCrop 홈 화면 (라이트, 따뜻함)<figcaption>B</figcaption></figure>
+    <figure class="variant" data-v="C"><span class="label">①</span>PixCrop 홈 화면 (다크, 차가움)<figcaption>C</figcaption></figure>
+  </div>
+</section>
+
+<section data-axis="2">
+  <h2>축 2 정보 밀도 <small>이 축만 다르고 나머지는 같습니다</small></h2>
+  <div class="row">
+    <figure class="variant" data-v="A"><span class="label">②</span>compact 카드 배치<figcaption>A</figcaption></figure>
+    <figure class="variant" data-v="B"><span class="label">②</span>comfortable 카드 배치<figcaption>B</figcaption></figure>
+    <figure class="variant" data-v="C"><span class="label">②</span>spacious 카드 배치<figcaption>C</figcaption></figure>
+  </div>
+</section>
+<script>(async()=>{const db=window.claude&&typeof window.claude.use==="function"?await window.claude.use("db"):null;if(db){await db.doc("feedback/axis-1").get();}})();</script></body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>로우파이 플로우 — 사진 보정하기</title>
+<style>
+  :root { --frame-w: 390px; }
+  body { font-family: system-ui, sans-serif; background: #eee; }
+  .screen { width: 390px; height: 844px; border: 1px solid #999; margin: 8px auto; position: relative; background: #fff; }
+  .label { position: absolute; top: 4px; left: 4px; width: 20px; height: 20px; border-radius: 50%;
+           background: #333; color: #fff; font-size: 12px; text-align: center; line-height: 20px; }
+  a.next { display: block; margin-top: 16px; }
+</style>
+</head>
+<body>
+<p>이 페이지는 스타일만 비교하는 용도입니다. 문구·기능은 신경 쓰지 마세요. 번호로 말씀해 주세요.</p>
+
+<section class="screen" id="s1">
+  <span class="label">①</span> 홈 — 사진 목록
+  <a class="next" href="#s2">사진 탭 → 편집으로 이동 (②)</a>
+</section>
+
+<section class="screen" id="s2">
+  <span class="label">②</span> 편집 화면 진입
+  <a class="next" href="#s3">필터 탭 (③)</a>
+</section>
+
+<section class="screen" id="s3">
+  <span class="label">③</span> 필터 선택
+  <a class="next" href="#s4">밝기 슬라이더 (④)</a>
+</section>
+
+<section class="screen" id="s4">
+  <span class="label">④</span> 밝기 조정
+  <a class="next" href="#s5">저장 버튼 (⑤)</a>
+</section>
+
+<section class="screen" id="s5">
+  <span class="label">⑤</span> 저장하기
+  <a class="next" href="#s6">완료 토스트 (⑥)</a>
+</section>
+
+<section class="screen" id="s6">
+  <span class="label">⑥</span> 저장 완료 토스트
+</section>
+<section class="scene"><h2>장면 1 · 화면 ① 홈</h2><div class="states">기본 · 로딩 · 실패 · 비어있음</div></section><script>(async()=>{const db=window.claude&&typeof window.claude.use==="function"?await window.claude.use("db"):null;if(db){await db.doc("feedback/scene-1").get();}})();</script></body>
+</html>

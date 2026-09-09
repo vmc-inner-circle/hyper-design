@@ -7,11 +7,12 @@ VIBE MAFIA CLUB 하네스톤 2회차(2026-09-05)를 계기로 이너서클 코�
 
 ## 이 레포의 상태
 
-**완전 빈 템플릿입니다.** 뼈대(A/B/C/0 4단계 구조, 파일 포맷)만 있고, 실제 판단 기준 내용은 비어 있습니다.
+**team-3 버전이 들어와 있습니다.** 하네스톤 2회차 team-3([harnessthon-2-team-3](https://github.com/vibemafiaclub/harnessthon-2-team-3))이 빈 템플릿을 채운 판본을 이 경로(`apps/harness/`)로 가져왔습니다. 4단계 뼈대는 더 이상 `TODO`가 아니라 실행 가능한 스킬입니다.
 
-- 판단 기준의 실제 내용(예: "무엇을 보고 고급스럽다고 판단하는가")은 **하네스톤 참가자·코파운더가 실제로 채워야** 의미가 있습니다.
-- 미리 채워서 예시로 주면, 참가자가 자기 안목을 꺼내는 대신 이미 있는 답을 검토하는 일이 되어 버려 원래 목적(다양한 디자이너의 독립적 안목 수집)이 오염됩니다.
-- 그래서 지금은 각 섹션에 `TODO`만 있고, 예시 2~3개만 남깁니다.
+- 디자인 초보 사용자용 **인터뷰 스킬**(구조 → 플로우 → 레퍼런스·취향 → 규칙)이 메인 대화를 이끌고, `figma-builder`·`design-auditor`·`probe-renderer` 서브 에이전트가 생성·검증·시안제작을 맡습니다.
+- 취향은 라벨형 질문 대신 **HTML 시안 비교**로 좁히고, 규칙은 공통 디자인 이슈(`docs/이슈.md`·`docs/desingissue.md`)에서 뽑은 **기본값**으로 관리합니다.
+- 단계 종료는 LLM 자기보고가 아니라 `scripts/`의 **결정론적 게이트 스크립트**(테스트 69개)로 판정합니다.
+- 판단 기준의 구체값(무엇을 보고 "고급스럽다"고 판단하는지)은 여전히 프로젝트마다 다릅니다 — 다른 팀·참가자 판본과 대조하는 것이 이 오픈소스의 목적입니다.
 
 ## 프레임워크 — 4단계 판단 구조
 
@@ -31,18 +32,45 @@ C단계에서 탈락하면 원인에 따라 세 갈래로 라우팅한다 — �
 ## 구조
 
 ```
-.claude/skills/oss-design-harness/SKILL.md   # 하네스 본체 — 4단계 프롬프트 뼈대
-templates/brief.md                            # 0단계 산출물 양식
-templates/decisions.md                        # B단계 산출물 양식
-docs/concept.md                               # 컨셉 스펙 전문 (배경·경쟁 포지셔닝·논리 검증 과정)
+.claude/skills/oss-design-harness/SKILL.md          # 하네스 본체 — 인터뷰(1~4단계) + 서브 에이전트 위임(5~6단계)
+.claude/skills/oss-design-harness/references/
+  interview-rules.md                                 # 디자인 초보용 질문 규칙, 단계별 스크립트, 역추출 패턴
+  taste-axes.md                                      # 고정 5축(밝기·밀도·형태·강조색·타이포) + 프로젝트 추가 축
+  probe-page.md                                      # HTML 시안·로우파이·규칙 미리보기 페이지 규격 (번호 라벨 필수)
+  lofi-flow.md                                       # 시나리오 내러티브 + 클릭형 로우파이 규칙
+  design-rules.md                                    # docs/이슈.md·desingissue.md를 기본값 있는 규칙 키로 변환
+  reference-sourcing.md                              # 스킬이 경쟁 앱을 검색·캡처해 레퍼런스 페이지로 만드는 절차
+  structure-survey.md · final-preview.md            # 허브 첫 탭(구조 설문)과 마지막 탭(최종 미리보기) 스펙
+.claude/agents/figma-builder.md                      # 토큰 → 컴포넌트 → 화면 → fix, STAGE 단위 실행
+.claude/agents/design-auditor.md                     # A단계 스크립트 실행 + C단계 스크린샷 판단 + 3갈래 라우팅
+.claude/agents/probe-renderer.md                     # 시안·로우파이·규칙 미리보기 HTML 제작 → Artifact 배포
+.claude/skills/oss-design-harness/templates/         # brief · decisions · design-rules · icons · screens · build-log · structure-survey — design/ 산출물 양식
+docs/concept.md                                      # 컨셉 스펙 전문
+docs/이슈.md · docs/desingissue.md                    # 규칙의 원천이 된 공통 디자인 이슈
+docs/example-prd.md                                  # 예시 PRD (청첩장모임 스케줄러)
+scripts/                                             # check_phase · figma_snapshot · figma_audit · build_hub + 테스트
 ```
 
-## 사용법 (참가자용)
+## 전체 흐름 한눈에
 
-1. Figma 파일을 열고, 이 레포를 프로젝트 루트로 해서 Claude Code(또는 다른 코딩 에이전트)를 실행한다.
-2. `.claude/skills/oss-design-harness/SKILL.md`의 각 단계 `TODO`를 채워 넣는다 — 이게 당신의 판단기준을 코드화하는 작업이다.
-3. 0단계 결과는 `brief.md`, B단계 결과는 `decisions.md`에 남긴다 (템플릿을 프로젝트 폴더로 복사해서 사용).
-4. 완성된 SKILL.md는 팀/코파운더와 공유해 비교한다.
+**[FigJam 흐름도 열기](https://www.figma.com/board/BW8kTvRl6xeGHp1cOMOgHw)** — "디자인 도우미 전체 흐름 (최종, 위에서 아래)"
+
+1. **대화로 정하기** 기획서 → 화면 목록 → 눌러보며 순서 확인 → 비슷한 앱 → 스타일(색상 / 모양·간격 / 글자) → 아이콘 → 규칙 → 최종 미리보기. 모든 탭은 허브 링크 하나에 쌓이고, 사용자는 "추천대로 / 다르게"만 고른다.
+2. **자동 점검** 빠진 것이 있으면 되돌아가고, Figma 로그인이 안 됐으면 규칙 문서까지만 전달한다.
+3. **Figma로 만들기** 색·글자·간격 → 부품 → 화면. 단계마다 스크린샷을 확인한다.
+4. **검사하기** 숫자로 자동 검사 → 눈으로 검사 → 작은 문제는 그 부분만 고치고, 방향이 틀리면 스타일로 되돌아가고, 3번 반복 실패면 사람이 결정한다.
+
+## 사용법
+
+PRD 하나만 있으면 시작할 수 있다. 예시 PRD는 `docs/example-prd.md`.
+
+1. `apps/harness`를 프로젝트 루트로 해서 Claude Code를 실행한다 (`.claude/`와 `scripts/`가 이 경로 기준이다). Figma MCP를 `/mcp`로 인증한다 (5단계 이후에만 필요).
+2. PRD 파일을 두고 이렇게 말한다: `docs/example-prd.md 이 PRD로 디자인 인터뷰 해줘`.
+3. 스킬이 링크 하나(허브 Artifact)를 준다. 탭을 순서대로 보며 "추천대로" 또는 "다르게"를 누르고 저장한 뒤 "다 봤어"라고 말한다. 1단계 구조 → 2단계 플로우 → 3단계 레퍼런스·취향 → 4단계 규칙 순서다.
+4. 규칙이 확정되면 figma-builder가 토큰 → 컴포넌트 → 화면을 만들고, 단계마다 스크린샷을 확인한다. design-auditor가 검수하고 결함은 자동으로 고친다.
+5. 산출물은 프로젝트의 `design/` 폴더에 쌓인다 (git 추적 제외). Figma 파일과 `design/design-rules.md`를 개발 쪽에 넘기면 끝이다.
+
+검증 스크립트는 `scripts/README.md` 참고.
 
 ## 라이선스
 
