@@ -295,8 +295,11 @@ class CliTest(unittest.TestCase):
             path = os.path.join(tmp, "html-fix-list.md")
             run_main(["--design-dir", str(HTML_BAD), "--fix-list", path])
             text = Path(path).read_text(encoding="utf-8")
-        self.assertIn("| 파일 | 화면/상태 | 노드(선택자) | 규칙 키 | 현재값 → 기대값 |", text)
+        self.assertIn("| 화면 | 상태 | 요소 | 규칙 키 | 현재값 → 기대값 |", text)
         self.assertIn("button.primary-per-screen", text)
+        # 파일 단위 결함(화면 '-')은 화면 칸에 파일 이름
+        self.assertIn("| final-preview.html | - |", text)
+        self.assertNotIn("| - | - |", text)
 
     def test_render_without_playwright_is_exit_2(self):
         original = html_audit._import_playwright

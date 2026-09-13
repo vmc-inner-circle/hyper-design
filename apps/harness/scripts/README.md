@@ -44,7 +44,7 @@ python3 scripts/html_audit.py --design-dir design [--json] [--fix-list design/ht
 ```
 
 `--json` 은 `{"ok","stats","failureCountByRule","findings":[{rule,file,screen,state,node,selector,actual,expected}],"warnings"}`.
-`--fix-list` 는 렌더러 수정 입력용 표(`파일 / 화면/상태 / 노드(선택자) / 규칙 키 / 현재값 → 기대값`)를 쓴다.
+`--fix-list` 는 렌더러 수정 입력용 표(`| 화면 | 상태 | 요소 | 규칙 키 | 현재값 → 기대값 |`)를 쓴다. 파일 단위 결함(CSS 규칙·`:root`·화면 밖)은 화면 칸에 파일 이름을 적는다.
 
 **`--render` 는 정적 검사도 스크립트 실행 후의 DOM(`page.content()`)으로 돌린다.** 마크업을 JS 템플릿으로 만드는
 페이지는 `--render` 없이 돌리면 소스에 `data-screen` 섹션이 없어 `component.manifest`·`state.frames` 가
@@ -58,7 +58,7 @@ python3 scripts/html_audit.py --design-dir design [--json] [--fix-list design/ht
 | 상태 프레임 | `<div class="phone" data-state="<state>" data-width="390\|360\|430">` | state: `default·empty·loading·error·long-title·many-items·text-120·keyboard·guest-name` (+ `many-items-scroll`·`default-scroll`). `data-width` 생략 = 390. **1:1 크기로 배치**(축소 썸네일·transform 금지 — `frame.size` 로 걸린다). 같은 화면·상태·폭 프레임은 1개 |
 | 컴포넌트 인스턴스 | `data-component="<screens.md 컴포넌트명>"` | 화면 default 프레임의 **최상위** data-component 집합 = 구성표. 컴포넌트 안의 부품은 중첩 data-component 로 둬도 된다(구성표 대조에서 제외) |
 | 탭 가능한 요소 | `data-tap` | 탭바·세그먼트처럼 칸이 붙은 묶음은 부모에 `data-tap-group` (`tap.gap` 면제, `tap.min` 은 그대로) |
-| primary 버튼 | `data-primary` | default 프레임에 정확히 1개. design-rules §C `web.primary` 예외 화면은 section(또는 default 프레임)에 `data-primary-exempt` → 0~1개 |
+| primary 버튼 | `data-primary` | default 프레임에 정확히 1개. 예외 화면은 `<section data-screen>` 또는 `.phone[data-state]` 에 `data-primary-exempt="<design-rules §C 키>"`(예: `web.primary`) → 그 화면 default 프레임은 0~1개. 둘 다 있으면 프레임 쪽 값을 쓴다. 키는 design-rules `## C. 프로젝트 전용 규칙` 표(제목 `C. 프로젝트…`)에서만 읽는다 — 빈 값·§C 에 없는 키는 실패 |
 | 고정 바 | `data-fixed="cta\|tabbar"` | 홈 인디케이터 영역은 `data-safe-area` (고정 바 안에 두거나 바로 아래 형제로) |
 | 스크롤 본문 | `data-scroll` | 고정 바가 있는 default·many-items(-scroll) 프레임에는 필수 |
 | 말줄임 텍스트 | `data-truncate="1\|2\|3"` | 1 = `text-overflow:ellipsis`+`white-space:nowrap`+`overflow:hidden` (또는 line-clamp 1), 2·3 = `-webkit-line-clamp` 같은 값. 말줄임이 걸리는데 속성이 없으면 `text.clip` |
@@ -91,7 +91,7 @@ python3 scripts/html_audit.py --design-dir design [--json] [--fix-list design/ht
 | `icon.allowlist` | `data-icon` 이 icons.md 허용 목록에 있음(제외 목록 이름은 따로 표시) + 프레임 안 래퍼 없는 `<svg>` 0개 |
 | `component.manifest` | 화면별 default 프레임 최상위 `data-component` 집합 = screens.md 구성 열(빠짐·초과). 구성 셀은 괄호·따옴표 설명을 지우고 `·`/`+` 로 나눈 조각의 첫 PascalCase 토큰만 읽는다("(없음)"·"소제목 web-h2" 무시). 섹션 없음·screens.md 에 없는 화면·컴포넌트 목록 밖 이름도 보고 |
 | `state.frames` | 화면마다 7종(default·empty·loading·error·long-title·many-items·text-120) + FormField 화면은 `keyboard` + screens.md 상태 열의 추가 상태(guest-name 등). `data-width` 390 프레임만 센다 |
-| `button.primary-per-screen` | default 프레임 안 `data-primary` 정확히 1개 (`data-primary-exempt` 면 0~1개) |
+| `button.primary-per-screen` | default 프레임 안 `data-primary` 정확히 1개 (section 또는 default 프레임에 `data-primary-exempt="<§C 키>"` 면 0~1개. 키가 design-rules §C 프로젝트 전용 규칙 표에 없으면 실패) |
 | `no-lorem` | lorem ipsum 금지 (check_phase probes 와 같은 규칙) |
 | `no-external` | 외부 `<script src>`·`<link href>`·`<img src>`·CSS `url()`/`@import` 금지. fonts.googleapis.com·fonts.gstatic.com 만 허용 (check_phase `_is_external` 재사용) |
 

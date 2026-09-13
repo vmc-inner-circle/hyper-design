@@ -37,3 +37,9 @@ confirmed_at: 2026-09-12
 | icon.sizes | 16 / 20 / 24 | 기본값 | 사용 |
 | icon-button.hit | 44×44 | 기본값 | 사용 |
 | thumbnail.spec | | 기본값 | (미사용) |
+
+## C. 프로젝트 전용 규칙
+
+| 키 | 값 | 출처 |
+|---|---|---|
+| web.primary | 웹 예외 화면(my-prep)은 부모 웹 스타일을 따라 primary 0~1개 | 1단계 |

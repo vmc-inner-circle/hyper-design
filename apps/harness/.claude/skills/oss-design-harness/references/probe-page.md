@@ -102,7 +102,7 @@
 | `data-tap` | 탭 가능한 요소 전부(버튼·아이콘 버튼·리스트 행·탭·칩) | 값 없음 | tap.min, tap.gap |
 | `data-tap-group` | 탭바·세그먼트처럼 칸이 붙은 `data-tap` 묶음의 부모 | 값 없음. `tap.gap` 면제(`tap.min`은 그대로) | tap.gap |
 | `data-primary` | primary 버튼 | 값 없음. **default 프레임에 정확히 1개** | button.primary-per-screen |
-| `data-primary-exempt` | design-rules §C `web.primary` 예외 화면의 `<section>`(또는 default 프레임) | 값 없음. primary 0~1개 허용 | button.primary-per-screen |
+| `data-primary-exempt` | primary 예외 화면의 `<section>`(또는 default 프레임) | 값 = design-rules §C(프로젝트 전용 규칙) 키 (예: `web.primary`). 빈 값·§C 에 없는 키는 실패. primary 0~1개 허용 | button.primary-per-screen |
 | `data-fixed` | 하단 CTA 바 · 탭바 | `cta` · `tabbar` | fixed.no-clip, safe-area |
 | `data-safe-area` | 홈 인디케이터 영역(고정 바 안, 또는 바로 아래 형제) | 값 없음. 높이 ≥ 34 | safe-area |
 | `data-scroll` | 세로 스크롤 본문(화면당 1개). 고정 바가 있는 default·many-items(-scroll) 프레임엔 필수 | 값 없음 | fixed.no-clip |

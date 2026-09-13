@@ -755,7 +755,7 @@ def required_states(row, found_names):
     return need
 
 
-def check_screens(page, rows, component_list, th, findings, rule_keys=frozenset()):
+def check_screens(page, rows, component_list, th, findings, exempt_keys=frozenset()):
     """component.manifest · state.frames · button.primary-per-screen (화면 파일에만)."""
     by_slug = {r["slug"]: r for r in rows if r["slug"]}
     by_name = {r["name"]: r for r in rows if r["name"]}
@@ -832,15 +832,19 @@ def check_screens(page, rows, component_list, th, findings, rule_keys=frozenset(
                             el_selector(el, default.el), "{} (구성표 밖)".format(name),
                             "제거하거나 screens.md 에 추가 후 사용자 확인"))
 
-        # button.primary-per-screen — 예외는 .phone[data-state] 의 data-primary-exempt="<design-rules §C 키>"
+        # button.primary-per-screen — 예외는 <section data-screen> 또는 .phone[data-state] 의
+        # data-primary-exempt="<design-rules §C 키>" (둘 다 있으면 프레임 쪽 우선)
         count = sum(1 for el in [default.el] + list(walk(default.el)) if el.has("data-primary"))
-        exempt = default.el.has("data-primary-exempt")
-        key = (default.el.get("data-primary-exempt") or "").strip()
-        if exempt and rule_keys and key not in rule_keys:
+        holder = default.el if default.el.has("data-primary-exempt") else sec
+        exempt = holder.has("data-primary-exempt")
+        key = (holder.get("data-primary-exempt") or "").strip()
+        if exempt and key not in exempt_keys:      # 빈 값·§C 표에 없는 키는 실패
+            node, where = (("frame", ".phone[data-state=default]") if holder is default.el
+                           else ("section", '[data-screen="{}"]'.format(slug)))
             findings.append(Finding(
-                "button.primary-per-screen", page.name, slug, default.label, "frame", ".phone[data-state=default]",
-                'data-primary-exempt="{}" (design-rules 에 없는 키)'.format(key),
-                'design-rules §C 의 예외 키 (예: data-primary-exempt="web.primary")'))
+                "button.primary-per-screen", page.name, slug, default.label, node, where,
+                'data-primary-exempt="{}" (design-rules §C 에 없는 키)'.format(key),
+                'design-rules §C 프로젝트 전용 규칙의 키 (예: data-primary-exempt="web.primary")'))
         ok = count <= 1 if exempt else count == 1
         if not ok:
             findings.append(Finding(
@@ -908,7 +912,7 @@ def static_findings(page, ctx):
     check_token_defined(page, ctx["tokens"], findings)
     check_icons(page, ctx["allow"], ctx["excluded"], findings)
     if page.name == SCREENS_FILE and not ctx["skip_screens"]:
-        check_screens(page, ctx["rows"], ctx["component_list"], ctx["th"], findings, ctx["rule_keys"])
+        check_screens(page, ctx["rows"], ctx["component_list"], ctx["th"], findings, ctx["exempt_keys"])
     check_hygiene(page, findings)
     return findings
 
@@ -1297,6 +1301,33 @@ def run_render(paths, th, shots_dir, scale=2, viewport="page"):
     return results, shots, warnings
 
 
+# ── design-rules §C ───────────────────────────────────────────────────────
+# 템플릿 제목은 "## C. 프로젝트 전용 규칙" (옛 표기 "프로젝트 규칙"도 받는다). references 의 "C. 검수 목록"은 대상 아님.
+_SECTION_C_RE = re.compile(r"^C\.\s*프로젝트")
+
+
+def parse_project_keys(path):
+    """design-rules.md §C(프로젝트 전용 규칙) 표의 키 집합. data-primary-exempt 값 검증용."""
+    try:
+        text = Path(path).read_text(encoding="utf-8")
+    except OSError:
+        return frozenset()
+    keys, in_c = set(), False
+    for raw in text.splitlines():
+        line = raw.strip()
+        if line.startswith("## "):
+            in_c = bool(_SECTION_C_RE.match(line[3:].strip()))
+            continue
+        if not in_c:
+            continue
+        m = figma_audit._ROW_RE.match(line)
+        if m:
+            key = m.group(1).split("|")[0].strip()
+            if figma_audit._KEY_RE.match(key):
+                keys.add(key)
+    return frozenset(keys)
+
+
 # ── 실행 ──────────────────────────────────────────────────────────────────
 def find_targets(design_dir):
     out = []
@@ -1357,7 +1388,7 @@ def run_audit(design_dir, render=False, shots_dir=None, scale=2, viewport="page"
 
     ctx = {"tokens": tokens, "allow": allow, "excluded": excluded, "rows": rows,
            "component_list": component_list, "th": th, "skip_screens": bool(skip_reason),
-           "rule_keys": frozenset(rules)}
+           "exempt_keys": parse_project_keys(rules_path)}
     findings = []
     stats = {"files": [], "sections": 0, "frames": 0, "render": bool(render), "screenshots": shots,
              "viewport": viewport if render else None, "skipped": skipped,
