@@ -1,0 +1,158 @@
+{
+  "file": "parity fixture (ok)",
+  "generatedAt": "2026-09-13T00:00:00Z",
+  "variables": [
+    {
+      "collection": "color",
+      "name": "bg"
+    },
+    {
+      "collection": "color",
+      "name": "surface-1"
+    },
+    {
+      "collection": "color",
+      "name": "text"
+    },
+    {
+      "collection": "color",
+      "name": "text-muted"
+    },
+    {
+      "collection": "color",
+      "name": "border"
+    },
+    {
+      "collection": "color",
+      "name": "accent"
+    },
+    {
+      "collection": "color",
+      "name": "on-accent"
+    },
+    {
+      "collection": "color",
+      "name": "accent-soft"
+    },
+    {
+      "collection": "space",
+      "name": "4"
+    },
+    {
+      "collection": "space",
+      "name": "8"
+    },
+    {
+      "collection": "space",
+      "name": "12"
+    },
+    {
+      "collection": "space",
+      "name": "16"
+    },
+    {
+      "collection": "space",
+      "name": "24"
+    },
+    {
+      "collection": "space",
+      "name": "32"
+    },
+    {
+      "collection": "space",
+      "name": "48"
+    },
+    {
+      "collection": "space",
+      "name": "screen-padding"
+    },
+    {
+      "collection": "space",
+      "name": "web-card-padding"
+    },
+    {
+      "collection": "radius",
+      "name": "sm"
+    },
+    {
+      "collection": "radius",
+      "name": "md"
+    },
+    {
+      "collection": "radius",
+      "name": "lg"
+    },
+    {
+      "collection": "radius",
+      "name": "full"
+    },
+    {
+      "collection": "size",
+      "name": "tap-min"
+    }
+  ],
+  "textStyles": [
+    "Text/h3",
+    "Text/body",
+    "Text/caption",
+    "Text/web-body"
+  ],
+  "effectStyles": [
+    "Shadow/sm",
+    "Shadow/md"
+  ],
+  "componentSets": [
+    "Button",
+    "IconButton",
+    "AppBar",
+    "TripHeader",
+    "TodoItem",
+    "BottomCTA",
+    "TabBar",
+    "FormField",
+    "Chip",
+    "WebAddressBar",
+    "WebSegment",
+    "EmptyState",
+    "Snackbar",
+    "Icon/chevron-left",
+    "Icon/plus",
+    "Icon/check",
+    "Icon/calendar",
+    "Icon/list-checks",
+    "Icon/bell",
+    "Icon/users",
+    "Icon/luggage",
+    "Icon/circle-alert",
+    "Icon/loader-circle",
+    "Icon/user",
+    "Icon/clock"
+  ],
+  "components": [
+    "_Base/cell"
+  ],
+  "screenFrames": [
+    {
+      "name": "여행 홈/default",
+      "w": 390,
+      "h": 844
+    },
+    {
+      "name": "여행 만들기/default",
+      "w": 390,
+      "h": 844
+    },
+    {
+      "name": "내 준비 (웹)/default",
+      "w": 390,
+      "h": 844
+    },
+    {
+      "name": "메모",
+      "w": 600,
+      "h": 200
+    }
+  ],
+  "truncated": false,
+  "errors": []
+}

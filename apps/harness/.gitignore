@@ -4,3 +4,4 @@ __pycache__/
 design/figma-snapshot.json
 design/references/*.png
 design/
+.venv/
