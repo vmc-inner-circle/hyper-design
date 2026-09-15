@@ -1,0 +1,338 @@
+<title>따라가 보기</title>
+<style>
+:root{color-scheme:light only;
+  --bg:#F7F8FA;--card:#FFF;--line:#E5E7EB;--ink:#1F2937;--sub:#6B7280;--soft:#EEF0F3;
+  --acc:#2F6BFF;--fail:#DC2626;--ok:#166534;--ok-bg:#D1FAE5;--warn-bg:#FEF3C7;--warn:#92400E}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:14px/1.5 "Pretendard",-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 24px 72px}
+.hdr{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+.counter{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:#EEF3FF;border-radius:14px;padding:3px 12px;vertical-align:4px;margin-left:8px}
+.sub{color:var(--sub);margin:0 0 16px;font-size:14px}
+.all-ok{font:inherit;font-size:14px;font-weight:700;height:40px;padding:0 18px;border-radius:10px;border:0;background:var(--ok-bg);color:var(--ok);cursor:pointer}
+.tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:2px solid var(--line);flex-wrap:wrap}
+.tab{font:inherit;font-size:14px;font-weight:600;padding:8px 16px;border:0;background:none;color:var(--sub);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab.on{color:var(--acc);border-bottom-color:var(--acc)}
+.tab small{display:block;font-size:11px;font-weight:400;margin-top:2px}
+.scenebar{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.sb{font:inherit;font-size:18px;font-weight:700;width:36px;height:36px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.sb:disabled{opacity:.35;cursor:default}
+.sb-num{font-size:14px;font-weight:700}
+.scene-grid{display:grid;grid-template-columns:396px minmax(0,1fr);gap:24px;align-items:start}
+.phone-col{display:flex;justify-content:center}
+.phone{width:390px;height:844px;border-radius:44px;background:var(--card);overflow:hidden;position:relative;display:flex;flex-direction:column;border:3px solid #D1D5DB;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.pst{height:44px;display:flex;align-items:center;justify-content:space-between;padding:14px 28px 0;font-size:15px;font-weight:600;flex-shrink:0}
+.psr{font-size:12px;letter-spacing:2px;color:var(--sub)}
+.pab{height:56px;display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid var(--line);flex-shrink:0;position:relative}
+.pbk{font-size:22px;color:var(--acc);width:28px;flex-shrink:0}
+.pat{font-size:17px;font-weight:700;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pbd{flex:1;overflow-y:auto;background:var(--bg);position:relative}
+.pta{height:52px;display:flex;align-items:center;padding:0 20px;border-top:1px solid var(--line);flex-shrink:0;position:relative}
+.pbn{width:100%;height:44px;border-radius:12px;border:0;font-size:16px;font-weight:700;cursor:default;display:flex;align-items:center;justify-content:center;gap:6px}
+.ppr{background:var(--acc);color:#fff}
+.pds{background:var(--line);color:var(--sub)}
+.ptb{height:54px;display:flex;border-top:1px solid var(--line);flex-shrink:0;position:relative}
+.pti{flex:1;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--sub)}
+.pti.on{color:var(--acc);font-weight:700}
+.phi{height:34px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;flex-shrink:0}
+.phb{width:134px;height:5px;border-radius:3px;background:#000}
+.ppd{padding:16px}
+.pfd{margin-bottom:12px}
+.pfd label{display:block;font-size:12px;color:var(--sub);margin-bottom:4px;font-weight:600}
+.pin{height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;font-size:15px;display:flex;align-items:center;background:#fff}
+.per{font-size:13px;color:var(--fail);margin-top:8px;text-align:center}
+.pcd{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:12px}
+.pct{font-size:15px;font-weight:700;margin-bottom:4px}
+.pcs{font-size:13px;color:var(--sub)}
+.psx{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;height:100%;padding:40px}
+.psx .ic{font-size:48px;opacity:.3;margin-bottom:16px}
+.psx.ok .ic{width:64px;height:64px;border-radius:50%;background:var(--ok-bg);color:var(--ok);font-size:32px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;opacity:1}
+.psx .t{font-size:16px;font-weight:700;margin-bottom:4px}
+.psx .d{font-size:14px;color:var(--sub)}
+.plo{position:absolute;inset:0;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;border-radius:44px;z-index:10}
+.spinner{width:32px;height:32px;border:3px solid var(--line);border-top-color:var(--acc);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.abg{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:rgba(47,107,255,.12);color:var(--acc);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+[data-pulse]{position:relative;z-index:2;cursor:pointer}
+[data-pulse]::after{content:'';position:absolute;inset:-4px;border:2.5px solid var(--acc);border-radius:inherit;animation:pulse 1.5s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(47,107,255,.3)}50%{opacity:.7;box-shadow:0 0 0 8px rgba(47,107,255,0)}}
+.pbn[data-pulse]::after{border-radius:12px}
+.panel{min-width:0}
+.nsc{margin-bottom:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.nst{font-size:12px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px}
+.nnr{font-size:14px;line-height:1.6}
+.nar{font-size:13px;line-height:1.8}
+.nar b{color:var(--acc)}
+.nch{display:inline-flex;height:26px;align-items:center;padding:0 10px;border-radius:13px;font-size:12px;font-weight:600;background:var(--soft);color:var(--ink);margin:2px}
+.nch.acc{background:#EEF3FF;color:var(--acc)}
+.nch.ok{background:var(--ok-bg);color:var(--ok)}
+.nsg{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.pill{font:inherit;font-size:12px;font-weight:600;height:28px;padding:0 10px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.pill.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.nfl{font-size:13px;line-height:1.8;color:var(--sub)}
+.nop{display:flex;flex-direction:column;gap:8px}
+.nrc{display:flex;gap:8px}
+.nrb{font:inherit;font-size:14px;font-weight:700;height:40px;padding:0 16px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.nrb.on-good{background:var(--ok-bg);border-color:var(--ok);color:var(--ok)}
+.nrb.on-confusing{background:var(--warn-bg);border-color:var(--warn);color:var(--warn)}
+.ncs{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.nsr{display:flex;align-items:center;gap:10px;margin-top:8px}
+textarea{width:100%;font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid var(--line);border-radius:10px;resize:vertical;color:var(--ink);background:#fff;min-height:60px}
+.save{font:inherit;font-weight:700;font-size:13px;height:34px;padding:0 14px;border-radius:9px;border:0;background:var(--acc);color:#fff;cursor:pointer}
+.save:disabled{opacity:.5;cursor:default}
+.saved{font-size:12px;font-weight:600;color:var(--ok)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--ink);color:#fff;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+@media(max-width:900px){.scene-grid{grid-template-columns:1fr}.panel{margin-top:16px}}
+</style>
+
+<div class="wrap">
+<div class="hdr">
+  <h1><span id="titleText"></span> <span class="counter" id="counter">의견 남긴 항목 0개</span></h1>
+  <button class="all-ok" id="allOk">전체 괜찮아요 👍</button>
+</div>
+<p class="sub" id="pageSub"></p>
+<nav class="tabs" id="tabs"></nav>
+<div class="scenebar">
+  <button class="sb" id="prevBtn" title="이전 (←)">&#8249;</button>
+  <span class="sb-num" id="sceneNum"></span>
+  <button class="sb" id="nextBtn" title="다음 (→)">&#8250;</button>
+</div>
+
+<main class="scene-grid">
+  <div class="phone-col"><div class="phone" id="phone"></div></div>
+  <div class="panel" id="panel"></div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 =====
+areas:[{n,name}] 상단바→본문→하단 순 자동배치 / pulse: phone.cta와 같으면 그 버튼 반짝임(없으면 "")
+states: 첫 값=초기상태. 로딩/실패/성공/비활성/비어있음은 렌더러가 인식
+phone.type: form(content:[{label,value}]|문자열) list(content:[{title,sub}], emptyText) detail([{label,value}]) success(문자열)
+프로젝트 고유 이름 금지 — "화면 A","사용자 1" 식 중립 표현만
+===== */
+const DATA = {
+  title: "따라가 보기",
+  subtitle: "사용자가 화면 A부터 화면 D까지 이동하며 작업을 마치는 흐름이에요.",
+  scenarios: [
+    {id:1, name:"시나리오 1", desc:"첫 작업"},
+    {id:2, name:"시나리오 2", desc:"확인 작업"}
+  ],
+  scenes: [
+    {s:1, i:1, title:"장면 1", screen:"화면 A", narr:"앱을 엽니다. 화면 A에서 필요한 값을 입력합니다.",
+     areas:[{n:"①",name:"상단 바"},{n:"②",name:"입력 영역"},{n:"③",name:"진행 버튼"}], pulse:"진행",
+     after:["누름","로딩","성공: 화면 B로 이동"], states:["기본","로딩","실패"], flow:"① 상단 바 → ② 값 입력 → ③ 진행 버튼",
+     phone:{type:"form", appbar:"화면 A", content:[{label:"입력 1",value:"값 1"},{label:"입력 2",value:"값 2"}], cta:"진행", tabbar:false}},
+    {s:1, i:2, title:"장면 2", screen:"화면 B", narr:"화면 B로 이동합니다. 아직 항목이 없어 빈 상태 안내가 보입니다.",
+     areas:[{n:"①",name:"상단 바"},{n:"②",name:"본문 영역"},{n:"③",name:"탭바"}], pulse:"새로 만들기",
+     after:["누름","화면 C로 이동"], states:["비어있음","기본"], flow:"① 상단 바 → ② 빈 상태 확인 → ③ 새로 만들기",
+     phone:{type:"list", appbar:"화면 B", content:[{title:"항목 1",sub:"부가 설명"}], emptyText:"아직 항목이 없어요", cta:"새로 만들기", tabbar:true}},
+    {s:2, i:1, title:"장면 3", screen:"화면 C", narr:"항목을 눌러 화면 C(상세)로 들어갑니다. 세부 정보가 보입니다.",
+     areas:[{n:"①",name:"상단 바"},{n:"②",name:"상세 정보"},{n:"③",name:"확정 버튼"}], pulse:"확정",
+     after:["누름","성공: 완료 화면으로"], states:["기본","로딩"], flow:"① 상단 바 → ② 정보 확인 → ③ 확정",
+     phone:{type:"detail", appbar:"화면 C", back:true, content:[{label:"항목 이름",value:"값 A"},{label:"상태",value:"진행 중"}], cta:"확정", tabbar:false}},
+    {s:2, i:2, title:"장면 4", screen:"화면 D", narr:"확정을 누르면 완료 화면이 나타납니다.",
+     areas:[{n:"①",name:"상단 바"},{n:"②",name:"완료 안내"}], pulse:"",
+     after:[], states:["기본"], flow:"① 상단 바 → ② 완료 안내 확인",
+     phone:{type:"success", appbar:"화면 D", content:"작업이 완료됐어요", tabbar:false}}
+  ]
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+let toastTimer;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2000);}
+
+function phSt(){return '<div class="pst"><span>9:41</span><span class="psr">━━ ▓▓</span></div>';}
+function phHi(){return '<div class="phi"><div class="phb"></div></div>';}
+function badge(n){return `<span class="abg">${esc(n)}</span>`;}
+
+function phoneScreen(scene,state){
+  const p=scene.phone||{},areas=scene.areas||[];
+  let ai=0;
+  const nextBadge=()=>ai<areas.length?badge(areas[ai++].n):'';
+  const loading=state==='로딩';
+  let html=phSt();
+  if(p.appbar)html+=`<div class="pab">${nextBadge()}${p.back?'<span class="pbk">‹</span>':''}<span class="pat">${esc(p.appbar)}</span></div>`;
+  html+=`<div class="pbd">${nextBadge()}${bodyContent(p,state)}</div>`;
+  if(p.cta){
+    const success=state==='성공',disabled=state==='비활성';
+    const canPulse=scene.pulse&&scene.pulse===p.cta&&state===scene.states[0];
+    const label=loading?p.cta+' 중...':success?'✓ 완료':p.cta;
+    html+=`<div class="pta">${nextBadge()}<button class="pbn ${disabled?'pds':'ppr'}"${canPulse&&!disabled?' data-pulse':''}>${esc(label)}</button></div>`;
+  }
+  if(p.tabbar)html+=`<div class="ptb">${nextBadge()}${[1,2,3,4].map(n=>`<div class="pti${n===1?' on':''}">메뉴${n}</div>`).join('')}</div>`;
+  if(loading)html+='<div class="plo"><div class="spinner"></div></div>';
+  html+=phHi();
+  return html;
+}
+
+function bodyContent(p,state){
+  const c=p.content,fail=state==='실패';
+  if(p.type==='success')return `<div class="psx ok"><div class="ic">✓</div><div class="t">완료됐어요</div>${typeof c==='string'&&c?`<div class="d">${esc(c)}</div>`:''}</div>`;
+  if(p.type==='list'){
+    const items=Array.isArray(c)?c:[];
+    if(state==='비어있음'||!items.length)return `<div class="psx"><div class="ic">＋</div><div class="t">${esc(p.emptyText||'아직 항목이 없어요')}</div></div>`;
+    return `<div class="ppd">${items.map(it=>{
+      const title=typeof it==='string'?it:(it.title||'');
+      const sub=typeof it==='string'?'':(it.sub||'');
+      return `<div class="pcd"><div class="pct">${esc(title)}</div>${sub?`<div class="pcs">${esc(sub)}</div>`:''}</div>`;
+    }).join('')}</div>`;
+  }
+  if(p.type==='detail'){
+    const rows=Array.isArray(c)?c:[{label:'',value:c||''}];
+    return `<div class="ppd">${rows.map(r=>`<div class="pcd"><div class="pct">${esc(r.label||'')}</div><div class="pcs">${esc(r.value||'')}</div></div>`).join('')}</div>`;
+  }
+  if(Array.isArray(c))return `<div class="ppd">${c.map(f=>`<div class="pfd"><label>${esc(f.label||'')}</label><div class="pin">${esc(f.value||'')}</div></div>`).join('')}${fail?'<div class="per">다시 확인해 주세요</div>':''}</div>`;
+  return `<div class="ppd"><div class="pcd"><div class="pct">${esc(c||'')}</div></div>${fail?'<div class="per">다시 확인해 주세요</div>':''}</div>`;
+}
+
+const SCENES=DATA.scenes,SCENARIOS=DATA.scenarios;
+const SCEN_MAP={};
+SCENARIOS.forEach(sc=>{SCEN_MAP[sc.id]=SCENES.reduce((a,s,i)=>{if(s.s===sc.id)a.push(i);return a;},[]);});
+let cur=0,curState=SCENES[0].states[0];
+const FB={},DRAFT={};
+const LS_KEY='flow-tour-fb';
+let db=null,dbReady=false;
+
+const scenarioOf=idx=>SCENES[idx].s;
+function go(idx){if(idx<0||idx>=SCENES.length)return;cur=idx;curState=SCENES[cur].states[0];renderAll();}
+const goScenario=s=>go(SCEN_MAP[s][0]);
+function renderAll(){renderTabs();renderNav();renderPhone();renderPanel();}
+
+function renderTabs(){
+  const s=scenarioOf(cur);
+  $('#tabs').innerHTML=SCENARIOS.map(sc=>`<button class="tab${sc.id===s?' on':''}" data-s="${sc.id}">${esc(sc.name)}<small>${esc(sc.desc)}</small></button>`).join('');
+}
+function renderNav(){
+  const idxs=SCEN_MAP[scenarioOf(cur)];
+  $('#sceneNum').textContent=`${idxs.indexOf(cur)+1} / ${idxs.length}`;
+  $('#prevBtn').disabled=cur===0;
+  $('#nextBtn').disabled=cur===SCENES.length-1;
+}
+function renderPhone(){
+  const scene=SCENES[cur];
+  $('#phone').innerHTML=phoneScreen(scene,curState);
+  const pulseEl=$('#phone [data-pulse]');
+  if(pulseEl)pulseEl.onclick=(e)=>{e.stopPropagation();go(cur+1);};
+  $('#phone').onclick=(e)=>{if(!e.target.closest('[data-pulse]'))toast('이 투어에서는 안 쓰는 버튼이에요');};
+}
+
+function renderPanel(){
+  const scene=SCENES[cur],g=cur+1,d=draft(g),saved=FB[g];
+  const reaction=d.reaction||(saved?saved.reaction:null);
+  const isConfusing=reaction==='confusing';
+  const areasHtml=scene.areas.map(a=>`<b>${esc(a.n)}</b> ${esc(a.name)}`).join('<br>');
+  const afterHtml=scene.after&&scene.after.length?scene.after.map((c,i)=>`<span class="nch${i===scene.after.length-1?' ok':' acc'}">${esc(c)}</span>`).join(' → '):'<span style="color:var(--sub)">마지막 장면이에요</span>';
+  const statesHtml=scene.states.map(s=>`<button class="pill${s===curState?' on':''}" data-state="${esc(s)}">${esc(s)}</button>`).join('');
+  const chipsHtml=scene.areas.map(a=>`<button class="pill${d.marks.includes(a.n)?' on':''}" data-mark="${esc(a.n)}" data-markname="${esc(a.name)}">${esc(a.n)} ${esc(a.name)}</button>`).join('');
+
+  $('#panel').innerHTML=`
+    <div class="nsc"><div class="nst">지금 상황</div><div class="nnr">${esc(scene.narr)}</div></div>
+    <div class="nsc"><div class="nst">화면 구성</div><div class="nar">${areasHtml}</div></div>
+    <div class="nsc"><div class="nst">누르면 이렇게 돼요</div>
+      <div>${afterHtml}</div>
+      <div class="nsg" style="margin-top:10px"><span style="font-size:12px;color:var(--sub);margin-right:4px">다른 모습:</span>${statesHtml}</div>
+    </div>
+    <div class="nsc"><div class="nst">시선 흐름</div><div class="nfl">${esc(scene.flow)}</div></div>
+    <div class="nsc"><div class="nst">이 장면, 어때요?</div>
+      <div class="nop">
+        <div class="nrc">
+          <button class="nrb${reaction==='good'?' on-good':''}" data-react="good">괜찮아요 👍</button>
+          <button class="nrb${isConfusing?' on-confusing':''}" data-react="confusing">어색해요 🤔</button>
+        </div>
+        ${isConfusing?`<div>
+          <div style="font-size:12px;color:var(--sub);margin:6px 0">어디가 어색한가요?</div>
+          <div class="ncs">${chipsHtml}</div>
+          <textarea placeholder="자유롭게 적어 주세요" data-text>${esc(d.text||'')}</textarea>
+          <div class="nsr"><button class="save" id="saveBtn">저장</button><span class="saved" id="savedMsg">${saved?'저장됨 ✓':''}</span></div>
+        </div>`:''}
+      </div>
+    </div>`;
+
+  $$('[data-state]').forEach(btn=>btn.onclick=()=>{curState=btn.dataset.state;renderPhone();renderPanel();});
+  $$('[data-react]').forEach(btn=>btn.onclick=()=>handleReaction(btn.dataset.react));
+  $$('[data-mark]').forEach(btn=>btn.onclick=()=>{
+    const d2=draft(g),idx=d2.marks.indexOf(btn.dataset.mark);
+    if(idx>=0){d2.marks.splice(idx,1);d2.markNames.splice(idx,1);}
+    else{d2.marks.push(btn.dataset.mark);d2.markNames.push(btn.dataset.markname);}
+    renderPanel();
+  });
+  const ta=$('[data-text]');
+  if(ta)ta.oninput=()=>{draft(g).text=ta.value;};
+  const sb=$('#saveBtn');
+  if(sb)sb.onclick=()=>saveFeedback(g);
+}
+
+function draft(g){
+  if(!DRAFT[g]){
+    const s=FB[g];
+    DRAFT[g]={reaction:s?s.reaction:null,marks:s?[...(s.marks||[])]:[],markNames:s?[...(s.markNames||[])]:[],text:s?s.text||'':''};
+  }
+  return DRAFT[g];
+}
+function handleReaction(reaction){
+  const g=cur+1,d=draft(g);
+  d.reaction=reaction;
+  if(reaction==='good')saveFeedback(g);
+  renderPanel();
+}
+function buildDoc(g){
+  const scene=SCENES[g-1],d=draft(g);
+  return{unit:'scene',n:g,screen:scene.screen,label:scene.screen,reaction:d.reaction,marks:d.marks||[],markNames:d.markNames||[],text:(d.text||'').trim(),updatedAt:new Date().toISOString()};
+}
+async function persist(path,doc){
+  if(dbReady&&db){await db.doc(path).set(doc);}
+  else{let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}all[path]=doc;try{localStorage.setItem(LS_KEY,JSON.stringify(all));}catch(_){throw{code:'unavailable',message:'localStorage 실패'};}}
+}
+async function saveFeedback(g){
+  const doc=buildDoc(g),path=`feedback/scene-${g}`;
+  try{await persist(path,doc);FB[g]=doc;delete DRAFT[g];updateCount();if(g===cur+1)renderPanel();toast('저장됨 ✓');return true;}
+  catch(e){console.warn('save failed',e&&e.code,e);toast('저장 실패, 다시 눌러 주세요');return false;}
+}
+function updateCount(){$('#counter').textContent=`의견 남긴 항목 ${Object.keys(FB).length}개`;}
+
+$('#allOk').onclick=async()=>{
+  let saved=0;
+  for(let i=0;i<SCENES.length;i++){
+    const g=i+1;
+    if(FB[g]&&FB[g].reaction==='confusing')continue;
+    const d=draft(g);d.reaction='good';
+    if(await saveFeedback(g))saved++;
+  }
+  toast(`${saved}개 장면 괜찮아요로 저장됨`);
+  renderAll();
+};
+$('#prevBtn').onclick=()=>go(cur-1);
+$('#nextBtn').onclick=()=>go(cur+1);
+$('#tabs').onclick=(e)=>{const t=e.target.closest('.tab');if(t)goScenario(+t.dataset.s);};
+document.addEventListener('keydown',(e)=>{
+  if(e.target.tagName==='TEXTAREA'||e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowLeft')go(cur-1);
+  if(e.key==='ArrowRight')go(cur+1);
+});
+
+function applyLoaded(pairs){
+  pairs.forEach(([docId,data])=>{
+    if(!data)return;
+    const m=/^scene-(\d+)$/.exec(docId);
+    if(m){const g=+m[1];if(g>=1&&g<=SCENES.length)FB[g]=data;}
+  });
+  updateCount();renderAll();
+}
+async function initFeedback(){
+  try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(e){db=null;}
+  if(db){dbReady=true;try{const snap=await db.collection('feedback').get();applyLoaded(snap.docs.map(d=>[d.id,d.data()]));}catch(e){console.warn('load failed',e&&e.code,e);toast('저장된 의견을 불러오지 못했어요');}}
+  else{let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}applyLoaded(Object.entries(all).map(([p,d])=>[p.replace(/^feedback\//,''),d]));}
+}
+
+$('#titleText').textContent=DATA.title;
+$('#pageSub').textContent=DATA.subtitle;
+renderAll();
+initFeedback();
+</script>

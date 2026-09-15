@@ -1,0 +1,82 @@
+<title>아이콘</title>
+<style>
+:root{color-scheme:light only;--bg:#F7F8FA;--card:#FFF;--s1:#EEF0F3;--text:#1F2937;--muted:#6B7280;--border:#E5E7EB;--acc:#2F6BFF;--ok:#166534;--ok-bg:#D1FAE5;--r:12px;--sp:20px}
+html,body{background:var(--bg)}body{margin:0;color:var(--text);font:15px/1.5 "Pretendard",-apple-system,system-ui,sans-serif}*{box-sizing:border-box}
+.w{max-width:960px;margin:0 auto;padding:var(--sp) var(--sp) 80px}
+h1{font-size:28px;font-weight:700;margin:0 0 4px}.sub{color:var(--muted);margin:0 0 8px}
+.cnt{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:#EEF3FF;border-radius:14px;padding:3px 12px;margin-left:8px}
+.aa{font:inherit;font-size:14px;font-weight:700;height:40px;padding:0 18px;border-radius:9999px;border:0;background:var(--ok-bg);color:var(--ok);cursor:pointer;margin-bottom:24px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.ic{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;display:flex;align-items:center;gap:16px}
+.ic svg{flex-shrink:0;color:var(--text)}
+.ic-info{flex:1;min-width:0}.ic-name{font-size:14px;font-weight:600}.ic-meta{font-size:12px;color:var(--muted)}
+.ic.changed{border-color:var(--acc);background:#EEF3FF}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--text);color:#fff;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}.toast.show{opacity:1}
+.fw{font-size:12px;color:var(--muted);background:var(--s1);border-radius:8px;padding:6px 10px;margin-bottom:12px;display:inline-block}
+</style>
+<div class="w">
+<h1>아이콘 <span class="cnt" id="cnt">0건 변경</span></h1>
+<p class="sub">각 행동에 맞는 아이콘이에요</p>
+<button class="aa" id="aa">전체 추천대로 할게요</button>
+<div class="fw" id="fw" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div class="grid" id="grid"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 ===== */
+const DATA = {
+  icons: [
+    {meaning:"뒤로",name:"chevron-left",size:24,where:"앱바",label:false,
+     svg:'<path d="m15 18-6-6 6-6"/>'},
+    {meaning:"닫기",name:"x",size:24,where:"시트·다이얼로그",label:false,
+     svg:'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>'},
+    {meaning:"더보기",name:"ellipsis-vertical",size:20,where:"목록 행",label:false,
+     svg:'<circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/>'},
+    {meaning:"삭제",name:"trash-2",size:20,where:"시트 액션",label:true,
+     svg:'<path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>'},
+    {meaning:"공유",name:"share-2",size:20,where:"앱바 액션",label:false,
+     svg:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>'},
+    {meaning:"저장",name:"check",size:20,where:"하단 CTA",label:true,
+     svg:'<path d="M20 6 9 17l-5-5"/>'},
+    {meaning:"검색",name:"search",size:20,where:"앱바",label:false,
+     svg:'<path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/>'},
+    {meaning:"설정",name:"settings",size:24,where:"탭바",label:true,
+     svg:'<path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/>'},
+    {meaning:"홈",name:"house",size:24,where:"탭바",label:true,
+     svg:'<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'},
+    {meaning:"새로 만들기",name:"plus",size:24,where:"FAB / 빈 상태",label:true,
+     svg:'<path d="M5 12h14"/><path d="M12 5v14"/>'},
+    {meaning:"이미지 실패",name:"image-off",size:24,where:"썸네일 실패",label:false,
+     svg:'<line x1="2" x2="22" y1="2" y2="22"/><path d="M10.41 10.41a2 2 0 1 1-2.83-2.83"/><line x1="13.5" x2="6" y1="13.5" y2="21"/><line x1="18" x2="21" y1="12" y2="15"/><path d="M3.59 3.59A1.99 1.99 0 0 0 3 5v14a2 2 0 0 0 2 2h14c.55 0 1.052-.22 1.41-.59"/><path d="M21 15V5a2 2 0 0 0-2-2H9"/>'},
+    {meaning:"빈 상태",name:"inbox",size:48,where:"빈 상태 (장식)",label:true,
+     svg:'<polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>'},
+    {meaning:"오류",name:"circle-alert",size:20,where:"에러 문구 옆",label:true,
+     svg:'<circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/>'},
+    {meaning:"오프라인",name:"wifi-off",size:16,where:"오프라인 배너",label:true,
+     svg:'<path d="M12 20h.01"/><path d="M8.5 16.429a5 5 0 0 1 7 0"/><path d="M5 12.859a10 10 0 0 1 5.17-2.69"/><path d="M19 12.859a10 10 0 0 0-2.007-1.523"/><path d="M2 8.82a15 15 0 0 1 4.177-2.643"/><path d="M22 8.82a15 15 0 0 0-11.288-3.764"/><path d="m2 2 20 20"/>'}
+  ]
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const $=s=>document.querySelector(s);const LS='icons-fb';let db=null,dbR=false;const changes={};let tT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const SW={16:1.5,20:1.75,24:2,48:2};
+function render(){
+  const grid=$('#grid');
+  grid.innerHTML=DATA.icons.map(ic=>{
+    const sw=SW[ic.size]||2;
+    return `<div class="ic${changes[ic.meaning]?' changed':''}" data-meaning="${esc(ic.meaning)}">
+      <svg width="${ic.size}" height="${ic.size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ic.svg}</svg>
+      <div class="ic-info"><div class="ic-name">${esc(ic.meaning)} · ${esc(ic.name)}</div><div class="ic-meta">${ic.size}px · ${esc(ic.where)}${ic.label?' · 라벨 동반':''}</div></div></div>`;
+  }).join('');
+}
+$('#aa').addEventListener('click',async()=>{
+  const doc={unit:'icons',choices:{},changed:[],text:'추천대로',updatedAt:new Date().toISOString()};
+  try{await ps('feedback/icons',doc);toast('전체 추천대로 저장');}catch(_){toast('저장 실패');}
+});
+function uc(){$('#cnt').textContent=`${Object.keys(changes).length}건 변경`;}
+async function ps(p,d){if(dbR&&db)await db.doc(p).set(d);else{let a={};try{a=JSON.parse(localStorage.getItem(LS)||'{}');}catch(_){}a[p]=d;try{localStorage.setItem(LS,JSON.stringify(a));}catch(_){throw{code:'unavailable'};}}}
+(async()=>{try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(_){db=null;}
+if(db){dbR=true;try{const s=await db.doc('feedback/icons').get();if(s.exists){const d=s.data();if(d.changed)d.changed.forEach(m=>{changes[m]=d.choices[m];});uc();}}catch(_){}}
+else{$('#fw').hidden=false;}render();})();
+</script>
