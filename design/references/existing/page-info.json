@@ -1,0 +1,120 @@
+{
+ "title": "Dayfine — 어디서든, 모르는 단어를 그 자리에서",
+ "viewport": {
+  "w": 1440,
+  "h": 900
+ },
+ "links": [
+  {
+   "href": "#top",
+   "text": "Dayfine"
+  },
+  {
+   "href": "#solution",
+   "text": "해결책"
+  },
+  {
+   "href": "#pricing",
+   "text": "가격"
+  },
+  {
+   "href": "#faq",
+   "text": "FAQ"
+  },
+  {
+   "href": "/blog",
+   "text": "블로그"
+  },
+  {
+   "href": "/download",
+   "text": "다운로드"
+  },
+  {
+   "href": "/download",
+   "text": "무료로 시작"
+  },
+  {
+   "href": "/download",
+   "text": "무료로 시작하기"
+  },
+  {
+   "href": "https://buy.polar.sh/polar_cl_kccB5NpeSKHA6siYCXZ7ChkEpjwCj8DQrsjSt2HHrBW",
+   "text": "Pro 시작하기"
+  },
+  {
+   "href": "https://buy.polar.sh/polar_cl_QPsqilqfE8vIriBEf1XIUlO4j7uidw3zDXQDO2Sjq54",
+   "text": "MAX 시작하기 →"
+  },
+  {
+   "href": "mailto:contact@dayfine.xyz",
+   "text": "contact@dayfine.xyz"
+  },
+  {
+   "href": "/download",
+   "text": "무료로 다운로드"
+  },
+  {
+   "href": "/activate",
+   "text": "라이선스 안내"
+  },
+  {
+   "href": "/terms",
+   "text": "이용약관"
+  },
+  {
+   "href": "/privacy",
+   "text": "개인정보처리방침"
+  },
+  {
+   "href": "/refund-policy",
+   "text": "취소 및 환불 규정"
+  },
+  {
+   "href": "mailto:contact@dayfine.xyz",
+   "text": "문의"
+  }
+ ],
+ "headings": [
+  "모르는 단어,읽던 자리에서 바로",
+  "seamless",
+  "아무 단어나 눌러, 그 자리에서 뜻을 보세요",
+  "단어 하나 찾는 게, 왜 이렇게 번거롭죠?",
+  "인터넷에선 되는데, 워드에선 안 돼요",
+  "사전을 고를 수가 없어요",
+  "단어는 되는데, 표현은 안 돼요",
+  "언제 어디서나 나만의 커스텀 AI 사전",
+  "쓰는 사전만 골라서탭 하나로 전환",
+  "seamless",
+  "화면은 내 마음대로드래그로 자유 분할",
+  "seamless",
+  "PDF, 워드, 브라우저어디서든 같은 동작",
+  "사전에 없는 숙어는AI가 이어서 설명",
+  "pull off",
+  "찾아본 단어는나만의 단어장으로",
+  "드래그가 안 되는 글자도캡처 한 번이면 검색",
+  "deliberate",
+  "모르는 ‘단어’를 매일 마주하는 사람들에게",
+  "6개 언어, 하나의 사전",
+  "읽다가 막히던 순간이, 이렇게 풀립니다",
+  "먼저 써 본 사람들의 이야기",
+  "쓰는 만큼만 고르세요",
+  "Free",
+  "Pro",
+  "Max",
+  "궁금한 점을 먼저 정리했습니다",
+  "모르는 단어 앞에서, 더는 멈추지 마세요"
+ ],
+ "navText": [
+  "Dayfine",
+  "해결책",
+  "가격",
+  "FAQ",
+  "블로그",
+  "다운로드",
+  "라이선스 안내",
+  "이용약관",
+  "개인정보처리방침",
+  "취소 및 환불 규정",
+  "문의"
+ ]
+}

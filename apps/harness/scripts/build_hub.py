@@ -196,7 +196,7 @@ async function loadCounts(){{
     if(!db)return;
     const snap=await db.collection('feedback').get();
     counts={{}};
-    snap.docs.forEach(d=>{{const id=d.id;const dd=d.data()||{{}};const has=(dd.reaction||dd.best||dd.worst||(dd.marks&&dd.marks.length)||(dd.want&&dd.want.length)||(dd.dislike&&dd.dislike.length)||dd.answers||dd.choices||(dd.text&&dd.text.trim()));if(!has)return;META.forEach(x=>x.prefixes.forEach(p=>{{if(id.startsWith(p)&&(id===p||!/\d/.test(p.slice(-1))||id.length===p.length))counts[p]=(counts[p]||0)+1;}}));}});
+    snap.docs.forEach(d=>{{const id=d.id;const dd=d.data()||{{}};const has=(dd.reaction||dd.best||dd.worst||(dd.marks&&dd.marks.length)||(dd.want&&dd.want.length)||(dd.dislike&&dd.dislike.length)||dd.answers||dd.choices||(dd.text&&dd.text.trim()));if(!has)return;META.forEach(x=>x.prefixes.forEach(p=>{{if(id.startsWith(p)&&(id===p||!/[0-9]/.test(p.slice(-1))||id.length===p.length))counts[p]=(counts[p]||0)+1;}}));}});
     paint();
   }}catch(e){{}}
 }}
@@ -222,4 +222,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            _stream.reconfigure(encoding="utf-8", errors="replace")
     sys.exit(main())

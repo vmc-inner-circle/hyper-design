@@ -230,7 +230,7 @@ class CliTest(unittest.TestCase):
     def run_cli(self, *args):
         return subprocess.run(
             [sys.executable, str(SCRIPTS_DIR / "figma_audit.py"), *args],
-            capture_output=True, text=True, cwd=str(REPO_ROOT))
+            capture_output=True, text=True, encoding="utf-8", cwd=str(REPO_ROOT))
 
     def test_exit_zero_on_clean_snapshot(self):
         proc = self.run_cli("--snapshot", str(SNAPSHOT_OK), "--rules", str(RULES),
@@ -356,6 +356,6 @@ class ComponentManifestTest(unittest.TestCase):
             [sys.executable, str(SCRIPTS_DIR / "figma_audit.py"),
              "--snapshot", str(SNAPSHOT_OK), "--rules", str(RULES),
              "--screens", str(self.SCREENS_BAD), "--json"],
-            capture_output=True, text=True)
+            capture_output=True, text=True, encoding="utf-8")
         self.assertEqual(proc.returncode, 1, proc.stdout + proc.stderr)
         self.assertIn("component.manifest", proc.stdout)

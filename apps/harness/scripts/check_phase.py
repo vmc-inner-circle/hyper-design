@@ -493,7 +493,7 @@ def validate_tap_min(v: str) -> bool:
 
 
 def validate_device_frame(v: str) -> bool:
-    return "390" in v
+    return bool(re.search(r"\d+\s*[×x]\s*\d+", v))
 
 
 def validate_zscale_ascending(v: str) -> bool:
@@ -530,6 +530,10 @@ B_VALIDATORS = {
 }
 
 _STAGE_MARK_RE = re.compile(r"축\s*\d|[123]단계|레퍼런스")
+# 고치기 루트는 출처 어휘가 다르다: 안 바꾼 칸은 '기존 화면', rebuild·섭취·시안 단계 표기 허용
+_POLISH_STAGE_MARK_RE = re.compile(
+    r"축\s*\d|[123]단계|레퍼런스|기존 화면|rebuild|preserve|0'|3a|3b|existing|델타"
+)
 _NO_STAGE_NEEDED = {"기본값", "고정", "자동", ""}
 
 
@@ -654,16 +658,23 @@ def check_rules(design_dir: str) -> Optional[List[Result]]:
 
     # 출처 단계 표기 검사 (A/B/C 공통)
     if source_rows:
+        polish = read_track(design_dir) == "polish"
+        stage_re = _POLISH_STAGE_MARK_RE if polish else _STAGE_MARK_RE
+        stage_desc = (
+            "축 n/1~3단계/레퍼런스/기존 화면/rebuild/0'/3a/3b"
+            if polish
+            else "축 n/1~3단계/레퍼런스"
+        )
         mark = len(rep.results)
         for key, src, val, table_name in source_rows:
             src_norm = src.strip()
             if src_norm in _NO_STAGE_NEEDED:
                 continue
-            if not _STAGE_MARK_RE.search(src_norm):
+            if not stage_re.search(src_norm):
                 rep.fail(
                     "source-stage-mark",
                     path,
-                    f"{table_name}.[{key}] 출처에 단계 표기(축 n/1~3단계/레퍼런스) 없음: {src_norm!r}",
+                    f"{table_name}.[{key}] 출처에 단계 표기({stage_desc}) 없음: {src_norm!r}",
                 )
         rep.ok_if_no_fail_since(mark, "source-stage-valid", path)
 
@@ -678,6 +689,7 @@ _SCRIPT_SRC_RE = re.compile(r"<script[^>]*\bsrc\s*=\s*[\"']([^\"']+)[\"']", re.I
 _LINK_HREF_RE = re.compile(r"<link[^>]*\bhref\s*=\s*[\"']([^\"']+)[\"']", re.I)
 _DATA_AXIS_RE = re.compile(r"<section[^>]*\bdata-axis\s*=\s*[\"']([^\"']+)[\"'][^>]*>", re.I)
 _DATA_V_RE = re.compile(r"data-v\s*=\s*[\"'](A|B|C)[\"']", re.I)
+_DATA_EXISTING_V_RE = re.compile(r"data-v\s*=\s*[\"'](A|B|C|D)[\"']", re.I)
 _CLASS_LABEL_RE = re.compile(r'class\s*=\s*"[^"]*\blabel\b[^"]*"')
 _FRAME_390_RE = re.compile(r"(width\s*:\s*390px|--frame-w\s*:\s*390px)")
 _DB_USE_RE = re.compile(r"claude\.use\(\s*[\"']db[\"']\s*\)")
@@ -703,6 +715,7 @@ def check_probes(design_dir: str) -> Optional[List[Result]]:
     if not files:
         return None
     rep = Reporter("probes")
+    polish = read_track(design_dir) == "polish"
 
     for f in files:
         content = read_file(f)
@@ -710,6 +723,8 @@ def check_probes(design_dir: str) -> Optional[List[Result]]:
             rep.fail("readable", f, "파일을 읽을 수 없음")
             continue
         base = os.path.basename(f)
+        if base in {"hub.html", "hub-share.html"}:
+            continue
 
         # 외부 스크립트 금지
         scripts = _SCRIPT_SRC_RE.findall(content)
@@ -730,8 +745,17 @@ def check_probes(design_dir: str) -> Optional[List[Result]]:
         # 번호 라벨 5개 이상
         circled_count = len(CIRCLED_RE.findall(content))
         label_count = circled_count if circled_count > 0 else len(_CLASS_LABEL_RE.findall(content))
-        if base.startswith("structure"):
-            rep.ok("label-count", f, "structure 설문은 면제")
+        is_existing = base.startswith("existing") or base.startswith("elements")
+        is_survey = base.startswith("structure") or base.startswith("story")
+        is_reference = base.startswith("reference")
+        is_flow = base.startswith("flow")
+        if is_survey:
+            rep.ok("label-count", f, "설문은 면제")
+        elif is_existing:
+            if label_count < 1:
+                rep.fail("label-count", f, f"existing 시안에 원문자/class=label 라벨이 {label_count}개 (1~5개/장)")
+            else:
+                rep.ok("label-count", f, "existing는 장당 1~5")
         elif label_count < 5:
             rep.fail("label-count", f, f"원문자/class=label 라벨이 {label_count}개 (5개 이상 필요)")
         else:
@@ -756,9 +780,23 @@ def check_probes(design_dir: str) -> Optional[List[Result]]:
                     )
             rep.ok_if_no_fail_since(mark, "axis-variants-valid", f)
 
-        # 390 프레임 폭 (structure 설문 탭은 폰 프레임이 없으므로 면제)
-        if base.startswith("structure"):
-            rep.ok("frame-390", f, "structure 설문은 면제")
+        if is_existing and not base.startswith("elements"):
+            variants = set(_DATA_EXISTING_V_RE.findall(content))
+            missing = sorted({"A", "B", "C", "D"} - {v.upper() for v in variants})
+            if missing:
+                rep.fail("existing-variants-abcd", f, f"existing 시안에 data-v {missing} 누락")
+            else:
+                rep.ok("existing-variants-abcd", f)
+
+        # 프레임 폭. 처음부터는 390. 고치기는 --frame-w 실측(어떤 탭이든).
+        _FRAME_W_RE = re.compile(r"--frame-w\s*:\s*\d+px")
+        if is_survey:
+            rep.ok("frame-390", f, "설문은 면제")
+        elif is_existing or is_reference or is_flow or polish:
+            if _FRAME_W_RE.search(content) or _FRAME_390_RE.search(content):
+                rep.ok("frame-390", f, "고치기/실측 프레임은 --frame-w 허용")
+            else:
+                rep.fail("frame-390", f, "시안에 --frame-w:<n>px 또는 390 프레임이 없음")
         elif not _FRAME_390_RE.search(content):
             rep.fail("frame-390", f, "width:390px 또는 --frame-w:390px 를 찾을 수 없음")
         else:
@@ -777,6 +815,17 @@ def check_probes(design_dir: str) -> Optional[List[Result]]:
             rep.fail("feedback-path", f, "db 문서 경로 'feedback/…'가 없음")
         else:
             rep.ok("feedback-panel", f)
+
+        # story 설문: 구성 표 행 제외를 읽으려면 story-map 저장이 필요
+        if base.startswith("story"):
+            if "story-map" in content:
+                rep.ok("story-map", f)
+            else:
+                rep.fail(
+                    "story-map",
+                    f,
+                    "story 설문에 feedback/story-map 저장 코드가 없음 — 구성 표 '이번엔 빼요'를 읽을 수 없음",
+                )
 
         # 투어형 플로우: 장면 구조 + 상태 세그먼트
         if base.startswith("flow"):
@@ -814,12 +863,24 @@ PHASE_HINT_FILE = {
 }
 
 PHASE_ORDER = ["structure", "flow", "taste", "rules", "probes"]
+POLISH_SKIP_PHASES = frozenset({"structure", "flow", "taste"})
+_TRACK_RE = re.compile(r"^-\s*트랙:\s*(greenfield|polish)\b", re.M)
+
+
+def read_track(design_dir: str) -> str:
+    text = read_file(os.path.join(design_dir, "brief.md")) or ""
+    m = _TRACK_RE.search(text)
+    return m.group(1) if m else "greenfield"
 
 
 def run_all(design_dir: str) -> Tuple[List[Result], List[str]]:
     all_results: List[Result] = []
     skipped: List[str] = []
+    track = read_track(design_dir)
     for name in PHASE_ORDER:
+        if track == "polish" and name in POLISH_SKIP_PHASES:
+            skipped.append(name)
+            continue
         res = PHASE_FUNCS[name](design_dir)
         if res is None:
             skipped.append(name)
@@ -828,9 +889,12 @@ def run_all(design_dir: str) -> Tuple[List[Result], List[str]]:
     return all_results, skipped
 
 
-def print_text(phase: str, results: List[Result], skipped: List[str]) -> None:
+def print_text(phase: str, results: List[Result], skipped: List[str], track: str = "greenfield") -> None:
     for name in skipped:
-        print(f"[SKIP] {name} — 파일 없음: {PHASE_HINT_FILE[name]}")
+        if track == "polish" and name in POLISH_SKIP_PHASES:
+            print(f"[SKIP] {name} — polish 트랙")
+        else:
+            print(f"[SKIP] {name} — 파일 없음: {PHASE_HINT_FILE[name]}")
     for r in results:
         if r.ok:
             print(f"[OK] {r.name}")
@@ -868,7 +932,7 @@ def main() -> int:
                 )
             )
         else:
-            print_text("all", results, skipped)
+            print_text("all", results, skipped, track=read_track(design_dir))
         if not results:
             return 2
         return 0 if passed else 1
@@ -909,4 +973,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    for _stream in (sys.stdout, sys.stderr):
+        if hasattr(_stream, "reconfigure"):
+            _stream.reconfigure(encoding="utf-8", errors="replace")
     sys.exit(main())

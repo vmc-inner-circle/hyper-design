@@ -1,0 +1,25 @@
+{
+ "feedback/story-1": {
+  "unit": "story",
+  "n": 1,
+  "answers": {
+   "who": "first",
+   "job": "download",
+   "leftover": "none",
+   "range": "visual"
+  },
+  "text": "직접 선택",
+  "updatedAt": "2026-09-16T10:49:18.710Z"
+ },
+ "feedback/story-map": {
+  "unit": "story",
+  "n": 0,
+  "label": "메뉴·구성",
+  "best": null,
+  "worst": null,
+  "marks": [],
+  "markNames": [],
+  "text": "추천대로",
+  "updatedAt": "2026-09-16T10:53:50.700Z"
+ }
+}

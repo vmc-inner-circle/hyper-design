@@ -5,9 +5,17 @@
 
 # Brief
 
-- PRD: <경로>
-- 진행 단계: [ ] 1 구조 [ ] 2 플로우 [ ] 3 레퍼런스·취향 [ ] 4 규칙 확정
-- 플랫폼: iOS / Android / 둘 다
+- 트랙: greenfield / polish
+- 변경 범위: preserve / rebuild
+- 표면: phone / desktop-window / popup / web
+- 소스: PRD / 로컬 경로 / URL / 캡처 / 정적 HTML
+- PRD: <경로 또는 없음>
+- 기존 화면: <경로 또는 URL 또는 없음>
+- 디자인 요소: 없음 / <URL·파일 목록>
+- 프레임: <W×H>
+- 진행 단계 (greenfield): [ ] 1 구조 [ ] 2 플로우 [ ] 3 레퍼런스·취향 [ ] 4 규칙 확정
+- 진행 단계 (polish): [ ] 0' 섭취 [ ] 3b 반응 [ ] 4 델타 [ ] 5 Figma [ ] 6 검증
+- 플랫폼: iOS / Android / 둘 다 / 데스크톱 창 / 웹
 - 태블릿·가로 모드: 미지원 / 지원
 - 하단 탭바: 없음 / 탭 n개 (목록)
 - 다국어: 예 / 아니오

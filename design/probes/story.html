@@ -1,0 +1,323 @@
+<title>이 화면의 일</title>
+<style>
+:root{color-scheme:light only;
+  --bg:#F7F8FA;--card:#FFFFFF;--line:#E5E7EB;--ink:#1F2937;--sub:#6B7280;--soft:#EEF0F3;
+  --acc:#2F6BFF;--acc-d:#1F4ED8}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:14px/1.5 "Pretendard",-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+.wrap{max-width:1200px;margin:0 auto;padding:20px 24px 72px}
+h1{font-size:22px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:17px;margin:0 0 4px}
+h2 small{font-weight:500;color:var(--sub);font-size:13px;margin-left:8px}
+.sub{color:var(--sub);margin:0 0 24px}
+.counter{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:#EEF3FF;border-radius:14px;padding:3px 12px;vertical-align:4px;margin-left:8px}
+.screen{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:20px}
+.screen b{display:block;font-size:15px;margin-bottom:4px}
+.fb-warn{font-size:12px;color:var(--sub);background:var(--soft);border-radius:8px;padding:6px 10px;margin-bottom:16px;display:inline-block}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--ink);color:#fff;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+section[data-unit]{display:grid;grid-template-columns:132px minmax(0,1fr);gap:24px;align-items:start;margin-bottom:48px}
+.strip{position:sticky;top:12px;display:flex;flex-direction:column;gap:10px;width:132px}
+.strip .ax{display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;background:var(--card);border:1px solid var(--line);border-radius:12px;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden}
+.strip .ax b{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font-size:13px;display:inline-flex;align-items:center;justify-content:center}
+.save{font:inherit;font-weight:700;font-size:14px;height:40px;width:132px;padding:0;border-radius:10px;border:0;background:var(--acc);color:#fff;cursor:pointer}
+.save:disabled{opacity:.5;cursor:default}
+.save:focus-visible,.opt:focus-visible,.rowchk:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.strip .saved{font-size:12px;font-weight:600;color:#166534;text-align:center;min-height:18px}
+.strip .go{height:auto;min-height:40px;padding:8px 6px;line-height:1.3;white-space:normal}
+.strip .alt{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.strip .alt.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.strip .save[hidden]{display:none}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:12px;font-weight:700;color:var(--sub);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:10px;border-bottom:1px solid var(--soft);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.name{font-weight:700;white-space:nowrap}
+td.cta{color:var(--acc);font-weight:600}
+td.rm{width:120px;text-align:right}
+td.rm label{font-size:12px;color:var(--sub);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+tr.off td{opacity:.4;text-decoration:line-through}
+tr.off td.rm{opacity:1;text-decoration:none}
+.q{padding:14px 0;border-bottom:1px solid var(--soft)}
+.q:last-of-type{border-bottom:0}
+.q .qt{font-weight:700;margin-bottom:4px}
+.q .why{font-size:12px;color:var(--sub);margin:0 0 10px}
+.q .why b{color:#166534}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;position:relative}
+.opt.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.opt.reco::after{content:"추천";position:absolute;top:-9px;right:8px;font-size:10px;font-weight:700;padding:1px 6px;border-radius:8px;background:#166534;color:#fff}
+.q[data-locked] .opt{pointer-events:none}
+.q[data-locked] .opt:not(.on){opacity:.45}
+.fb{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.fb .eyebrow{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--sub);text-transform:uppercase;margin-bottom:10px}
+textarea{width:100%;font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid var(--line);border-radius:10px;resize:vertical;color:var(--ink);background:#fff;min-height:72px}
+.foot{margin-top:40px;font-size:12px;color:var(--sub);text-align:center}
+@media (max-width:900px){section[data-unit]{grid-template-columns:1fr}.strip{position:static;flex-direction:row;flex-wrap:wrap;width:auto}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+
+<div class="wrap">
+<h1>이 화면의 일 <span class="counter" id="fb-count">확인한 항목 0</span></h1>
+<p class="sub">사이트에서 보이는 메뉴와 일을 맞춥니다. 스타일 단어는 묻지 않습니다.</p>
+<div class="fb-warn" id="fb-warn" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div class="screen" id="screen"></div>
+
+<section data-unit="map" id="unit-map" hidden>
+  <div class="strip">
+    <div class="ax"><b>1</b><span>구성</span></div>
+    <button class="save go" data-accept="map" type="button">추천대로 할게요</button>
+    <button class="save go alt" data-alt="map" type="button">다르게 할래요</button>
+    <button class="save" data-save="map" hidden type="button">저장</button>
+    <div class="saved" id="saved-map"></div>
+  </div>
+  <div>
+    <h2>이 사이트에 있는 것 <small>메뉴와 페이지에서 뽑았어요. 같은 결이 여기까지 갑니다</small></h2>
+    <div class="card">
+      <table id="sections">
+        <thead><tr><th>화면</th><th>무슨 화면인지</th><th>어떻게 들어가는지</th><th>가장 중요한 버튼</th><th></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="fb" data-fb="map" hidden>
+      <div class="eyebrow">고칠 점</div>
+      <textarea data-text placeholder="빠진 메뉴가 있거나, 이번엔 빼야 할 페이지가 있으면 적어 주세요"></textarea>
+    </div>
+  </div>
+</section>
+
+<section data-unit="1">
+  <div class="strip">
+    <div class="ax"><b id="q-num">1</b><span>일</span></div>
+    <button class="save" id="accept" type="button">추천대로 할게요</button>
+    <button class="save go alt" id="save-q" type="button">이 말도 저장</button>
+    <div class="saved" id="saved"></div>
+  </div>
+  <div>
+    <h2>이 화면의 일 <small>추천이 미리 골라져 있어요. 없는 말은 아래에 적어도 됩니다</small></h2>
+    <div class="card" id="questions"></div>
+    <div class="fb" data-fb="q">
+      <div class="eyebrow">선택지에 없는 말</div>
+      <textarea id="q-note" placeholder="예: 가격은 그대로 두고, 첫 화면에서 다운로드가 더 잘 보였으면 해요. 비워 둬도 됩니다."></textarea>
+    </div>
+  </div>
+</section>
+<p class="foot">표에 남은 화면에, 다음 탭에서 고른 결이 그대로 갑니다.</p>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const SURVEY = {
+  screen: {name:"Dayfine 랜딩 (/)", purpose:"Windows 팝업 사전(Ctrl+C 두 번 → 그 자리에 뜻)을 처음 보는 사람에게 소개하고 다운로드로 이끄는 한 페이지"},
+  sections: [
+    {id:"landing", name:"첫 화면 /", role:"제품 소개·기능·가격·FAQ가 한 페이지에", entry:"주소를 열면 바로", cta:"무료로 시작"},
+    {id:"solution", name:"해결책 구역", role:"랜딩 안 구역 — 어떻게 푸는지 설명", entry:"메뉴 '해결책'", cta:"—"},
+    {id:"pricing", name:"가격 구역", role:"랜딩 안 구역 — Free/Pro/Max 요금", entry:"메뉴 '가격'", cta:"Pro·Max 시작하기"},
+    {id:"faq", name:"FAQ 구역", role:"랜딩 안 구역 — 궁금한 점 정리", entry:"메뉴 'FAQ'", cta:"—"},
+    {id:"blog", name:"블로그 /blog", role:"읽기 학습 글 모음", entry:"메뉴 '블로그'", cta:"—"},
+    {id:"download", name:"다운로드 /download", role:"Windows 설치 파일 내려받기", entry:"메뉴 '다운로드'·각 CTA", cta:"설치 파일 받기"},
+    {id:"activate", name:"라이선스 안내 /activate", role:"구매 후 활성화 방법", entry:"푸터 '라이선스 안내'", cta:"—"}
+  ],
+  questions: [
+    {id:"who", q:"이 사이트를 주로 누가 보나요?", why:"첫 화면에서 무엇을 먼저 보여줄지가 달라집니다", options:[
+      {value:"first", label:"처음 온 사람 — Dayfine을 모르고 왔어요"},
+      {value:"return", label:"이미 아는 사람 — 들어보고 찾아왔어요"},
+      {value:"user", label:"이미 쓰는 사람 — 다운로드·활성화하러 와요"},
+      {value:"unknown", label:"잘 모르겠어요"}]},
+    {id:"job", q:"이 화면에서 해야 하는 일 하나를 고르면?", why:"어느 버튼을 가장 크게 둘지가 달라집니다", options:[
+      {value:"download", label:"무료로 내려받게 하기"},
+      {value:"understand", label:"뭘 하는 앱인지 이해하게 하기"},
+      {value:"paid", label:"Pro·Max 결제까지 이끌기"}]},
+    {id:"leftover", q:"지금 화면에서 남는 것·빠지는 것은?", why:"어느 영역을 지키고 덜어낼지가 달라집니다", options:[
+      {value:"none", label:"없는 것 같아요"},
+      {value:"deco", label:"장식처럼 보이는 구역이 있어요"},
+      {value:"missing", label:"빠진 게 있어요 — 아래에 적을게요"}]},
+    {id:"range", q:"어디까지 바꿀까요?", why:"다음 탭에서 보여줄 시안의 폭이 달라집니다", options:[
+      {value:"visual", label:"보이는 것만 다듬기 — 자리·메뉴는 그대로"},
+      {value:"job", label:"하는 일·배치까지 바꿔도 돼요"}]}
+  ]
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const $=(s,r=document)=>r.querySelector(s);
+const LS_KEY='story-feedback';
+let db=null, dbReady=false;
+const FB={};
+const DRAFT={};
+let answers={};
+let savedAt=null;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('show'),2200);}
+function reco(){const a={};(SURVEY.questions||[]).forEach(q=>{a[q.id]=q.options[0].value;});return a;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function fmtAgo(iso){if(!iso)return'';const d=(Date.now()-new Date(iso).getTime())/1000;if(d<60)return'방금';if(d<3600)return Math.floor(d/60)+'분 전';if(d<86400)return Math.floor(d/3600)+'시간 전';return new Date(iso).toLocaleDateString('ko-KR');}
+function hasMap(){return Array.isArray(SURVEY.sections)&&SURVEY.sections.length>0;}
+function updateCount(){
+  const n=(hasMap()&&FB.map?1:0)+(FB.q?1:0);
+  const t=hasMap()?2:1;
+  $('#fb-count').textContent=`확인한 항목 ${n}/${t}`;
+}
+function nameOf(id){const s=(SURVEY.sections||[]).find(x=>x.id===id);return s?s.name:id;}
+
+function draftMap(){
+  if(!DRAFT.map){
+    const s=FB.map;
+    DRAFT.map={marks:s?[...(s.marks||[])]:[], text:s&&s.text&&s.text!=='추천대로'?s.text:''};
+  }
+  return DRAFT.map;
+}
+
+async function persist(path,doc){
+  if(dbReady&&db){await db.doc(path).set(doc);}
+  else{let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}
+    if(all.answers&&!all['feedback/story-1']) all={'feedback/story-1':all};
+    all[path]=doc; localStorage.setItem(LS_KEY, JSON.stringify(all));}
+}
+
+function extraNote(){const el=$('#q-note'); return el?el.value.trim():'';}
+function renderQ(){
+  (SURVEY.questions||[]).forEach(q=>{
+    const box=$(`.q[data-q="${q.id}"]`); if(!box) return;
+    box.querySelectorAll('.opt').forEach(b=>b.classList.toggle('on', b.dataset.val===answers[q.id]));
+  });
+  const note=$('#q-note');
+  if(note && document.activeElement!==note){
+    const t=FB.q&&FB.q.text&&FB.q.text!=='추천대로'&&FB.q.text!=='직접 선택'?FB.q.text:'';
+    note.value=t;
+  }
+  $('#saved').textContent=savedAt?`저장됨 ✓ ${fmtAgo(savedAt)}`:'';
+}
+function renderMap(){
+  if(!hasMap()) return;
+  const d=draftMap(), s=FB.map;
+  document.querySelectorAll('#sections tbody tr').forEach(tr=>{
+    const on=d.marks.includes(tr.dataset.id);
+    tr.classList.toggle('off', on);
+    const c=$('.rowchk', tr); if(c) c.checked=on;
+  });
+  const panel=$('.fb[data-fb="map"]');
+  const ta=$('[data-text]', panel);
+  if(document.activeElement!==ta) ta.value=d.text;
+  $('#saved-map').textContent=s?`저장됨 ✓ ${s.text==='추천대로'?'추천대로':''} ${fmtAgo(s.updatedAt)}`:'';
+  const acc=$('[data-accept="map"]');
+  acc.textContent=s&&s.text==='추천대로'?'추천대로 ✓':'추천대로 할게요';
+}
+
+function setMapLocked(locked){
+  document.querySelectorAll('.rowchk').forEach(c=>c.disabled=locked);
+}
+function openAlt(){
+  const panel=$('.fb[data-fb="map"]');
+  panel.hidden=false; panel.dataset.opened='1';
+  $('[data-alt="map"]').classList.add('on');
+  $('[data-save="map"]').hidden=false;
+  setMapLocked(false);
+}
+function closeAlt(){
+  const panel=$('.fb[data-fb="map"]');
+  panel.hidden=true; delete panel.dataset.opened;
+  $('[data-alt="map"]').classList.remove('on');
+  $('[data-save="map"]').hidden=true;
+  setMapLocked(true);
+}
+
+function buildDocMap(accept){
+  const now=new Date().toISOString();
+  if(accept) return {unit:'story', n:0, label:'메뉴·구성', best:null, worst:null, marks:[], markNames:[], text:'추천대로', updatedAt:now};
+  const d=draftMap();
+  return {unit:'story', n:0, label:'메뉴·구성', best:null, worst:null, marks:[...d.marks], markNames:d.marks.map(nameOf), text:d.text.trim(), updatedAt:now};
+}
+function docQ(kind){
+  const note=extraNote();
+  const text=note || (kind==='reco'?'추천대로':'직접 선택');
+  return {unit:'story', n:1, answers:{...answers}, text, updatedAt:new Date().toISOString()};
+}
+
+(function build(){
+  const s=SURVEY.screen||{};
+  $('#screen').innerHTML=`<b>${esc(s.name||'')}</b>${esc(s.purpose||'')}`;
+  $('#questions').innerHTML=(SURVEY.questions||[]).map(q=>`<div class="q" data-q="${esc(q.id)}"><div class="qt">${esc(q.q)}</div><p class="why"><b>이걸 정하면</b> ${esc(q.why)}</p><div class="opts">${q.options.map((o,i)=>`<button type="button" class="opt${i===0?' reco':''}" data-val="${esc(o.value)}">${esc(o.label)}</button>`).join('')}</div></div>`).join('');
+  answers=reco();
+  if(hasMap()){
+    $('#unit-map').hidden=false;
+    $('#q-num').textContent='2';
+    const tb=$('#sections tbody');
+    tb.innerHTML=SURVEY.sections.map(x=>`<tr data-id="${esc(x.id)}"><td class="name">${esc(x.name)}</td><td>${esc(x.role)}</td><td>${esc(x.entry)}</td><td class="cta">${esc(x.cta)}</td><td class="rm"><label><input type="checkbox" class="rowchk" data-id="${esc(x.id)}" disabled> 이번엔 빼요</label></td></tr>`).join('');
+    setMapLocked(true);
+  }
+})();
+
+$('#questions').addEventListener('click', async e=>{
+  const b=e.target.closest('.opt'); if(!b) return;
+  const q=b.closest('.q'); answers[q.dataset.q]=b.dataset.val;
+  try{
+    const doc=docQ('pick');
+    await persist('feedback/story-1', doc);
+    FB.q=doc; savedAt=doc.updatedAt; updateCount(); renderQ(); toast('저장됨');
+  }catch(err){toast('저장 실패');}
+});
+$('#accept').addEventListener('click', async ()=>{
+  answers=reco();
+  try{
+    const doc=docQ('reco');
+    await persist('feedback/story-1', doc);
+    FB.q=doc; savedAt=doc.updatedAt; updateCount(); renderQ(); toast(extraNote()?'저장됨 추천대로 + 덧붙인 말':'저장됨 추천대로');
+  }catch(err){toast('저장 실패');}
+});
+$('#save-q').addEventListener('click', async ()=>{
+  try{
+    const doc=docQ(extraNote()?'note':'pick');
+    await persist('feedback/story-1', doc);
+    FB.q=doc; savedAt=doc.updatedAt; updateCount(); renderQ(); toast('저장됨 ✓');
+  }catch(e){toast('저장 실패');}
+});
+document.addEventListener('change', e=>{
+  const c=e.target.closest('.rowchk'); if(!c) return;
+  const d=draftMap(), i=d.marks.indexOf(c.dataset.id);
+  c.checked?(i<0&&d.marks.push(c.dataset.id)):(i>=0&&d.marks.splice(i,1));
+  renderMap();
+});
+document.querySelectorAll('[data-alt="map"]').forEach(btn=>btn.addEventListener('click',()=>{
+  const panel=$('.fb[data-fb="map"]');
+  if(panel.hidden){openAlt(); panel.scrollIntoView({behavior:'smooth',block:'nearest'});} else closeAlt();
+}));
+document.querySelectorAll('[data-save="map"]').forEach(btn=>btn.addEventListener('click', async ()=>{
+  const doc=buildDocMap(false);
+  btn.disabled=true; btn.textContent='저장 중…';
+  try{await persist('feedback/story-map', doc); FB.map=doc; delete DRAFT.map; updateCount(); renderMap(); toast('저장됨 ✓');}
+  catch(e){toast('저장 실패');}
+  finally{btn.disabled=false; btn.textContent='저장';}
+}));
+document.querySelectorAll('[data-accept="map"]').forEach(btn=>btn.addEventListener('click', async ()=>{
+  const doc=buildDocMap(true);
+  btn.disabled=true; btn.textContent='저장 중…';
+  try{await persist('feedback/story-map', doc); FB.map=doc; delete DRAFT.map; closeAlt(); updateCount(); renderMap(); toast('저장됨 ✓ 추천대로');}
+  catch(e){toast('저장 실패'); btn.textContent='추천대로 할게요';}
+  finally{btn.disabled=false;}
+}));
+$('[data-fb="map"] [data-text]')&&$('[data-fb="map"] [data-text]').addEventListener('input', e=>{draftMap().text=e.target.value;});
+
+function applyLoaded(pairs){
+  pairs.forEach(([id,data])=>{
+    if(!data) return;
+    if(id==='story-1'){
+      FB.q=data; if(data.answers) answers={...reco(), ...data.answers}; savedAt=data.updatedAt;
+    }
+    if(id==='story-map') FB.map=data;
+  });
+}
+(async function init(){
+  try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(e){db=null;}
+  if(db){
+    dbReady=true;
+    try{const snap=await db.collection('feedback').get(); applyLoaded(snap.docs.map(d=>[d.id,d.data()]));}catch(e){toast('저장된 의견을 불러오지 못했어요');}
+  } else {
+    $('#fb-warn').hidden=false;
+    let all={}; try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}
+    if(all.answers) applyLoaded([['story-1', all]]);
+    else applyLoaded(Object.entries(all).map(([p,d])=>[p.replace(/^feedback\//,''), d]));
+  }
+  updateCount(); renderQ(); renderMap();
+  if(hasMap()&&FB.map&&FB.map.text!=='추천대로') openAlt();
+})();
+</script>

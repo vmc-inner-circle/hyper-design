@@ -1,13 +1,13 @@
 ---
 name: oss-design-harness
-description: PRD를 받아 디자인 초보 사용자와 인터뷰(구조→플로우→레퍼런스·취향→규칙)를 진행해 brief/decisions/design-rules를 확정하고, figma-builder·design-auditor 서브 에이전트로 Figma 화면을 생성·검증하는 하네스. "이 PRD로 UI 만들어줘", "디자인 인터뷰 해줘", "Figma 화면 만들어줘", "디자인 규칙 정해줘", "UI/UX 방향 잡아줘" 같은 요청에 트리거된다.
+description: PRD 또는 이미 있는 화면(코드, 웹 주소, 스크린샷)을 받아 디자인 초보 사용자와 인터뷰하고, 확정된 결과를 Figma로 만드는 하네스. 처음부터(구조→플로우→취향→규칙)와 고치기(기존 화면 반응→규칙 델타) 두 입구. "이 PRD로 UI 만들어줘", "있는 화면 고쳐줘", "이 웹사이트 디자인을 개선해줘", "디자인 인터뷰 해줘", "Figma 화면 만들어줘" 같은 요청에 트리거된다.
 ---
 
 # oss-design-harness
 
-**디자인을 한 번도 해본 적 없는 사용자**가 자기 PRD에 맞는 UI/UX 스타일을 찾아가도록 돕고, 확정된 결과를 Figma 화면으로 만드는 하네스.
+**디자인을 한 번도 해본 적 없는 사용자**가 UI/UX 스타일을 찾아가도록 돕고, 확정된 결과를 Figma 화면으로 만드는 하네스.
 
-**대상은 모바일 앱(iOS·Android)이다.** 모든 시안·로우파이·Figma 프레임은 390×844(iPhone 기준) 세로 화면으로 만든다. hover·커서·툴팁 같은 데스크톱 개념은 쓰지 않고 press·롱프레스·바텀시트·탭바·세이프 에어리어로 생각한다. PRD가 태블릿이나 웹도 요구하면 1단계에서 확인하고 예외로 기록한다.
+입구는 두 개다. **처음부터**는 PRD로 `[1]→[6]`을 탄다. **고치기**는 이미 있는 화면(코드, 웹 주소, 스크린샷)을 시안으로 쓰고 `[3b]`부터 탄다. 처음부터의 기본 표면은 모바일 앱 390×844(press·롱프레스·바텀시트·탭바·세이프 에어리어). 고치기는 가져온 화면의 실제 크기를 쓴다 — 데스크톱 창에 390을 씌우지 않는다. 전문은 `references/polish-route.md`.
 
 핵심 원칙 네 가지. 모든 단계에서 지킨다.
 
@@ -16,7 +16,7 @@ description: PRD를 받아 디자인 초보 사용자와 인터뷰(구조→플�
 3. **기본값이 항상 있다.** 사용자가 "모르겠어요"라고 해도 진행이 멈추지 않는다. `references/design-rules.md`의 기본값을 적용하고 `brief.md` 가정 로그에 남긴다.
 4. **작은 단위로 확정한다.** 토큰 → 컴포넌트 → 화면 순서. 앞 단계가 확정되기 전에 다음 단계를 만들지 않는다. 확정된 것은 다시 묻지 않는다.
 
-**브라우저 자동화 금지.** 이 스킬과 서브 에이전트는 `claude-in-chrome`·`chrome-devtools` 도구를 쓰지 않는다. 시안 페이지를 배포하면 링크만 주고, 렌더 확인은 사용자가 직접 한다.
+**브라우저 자동화 금지 (허브 검사).** 이 스킬과 서브 에이전트는 `claude-in-chrome`·`chrome-devtools`로 **하네스가 만든 시안 HTML을 열어 확인하지 않는다.** 배포하면 링크만 주고, 렌더 확인은 사용자가 직접 한다. **고치기 `[0']`에서 사용자 제품을 가져오는 것**은 예외가 아니라 다른 일 — `references/polish-route.md` 캡처 사다리. 공개 URL은 Figma `generate_figma_design`, 보이는 데스크톱 창은 computer-use(`cu.py shot`). 초보에게 캡처를 기본으로 시키지 않는다.
 
 ## 산출물 위치
 
@@ -45,14 +45,22 @@ design/
 | 5. 생성 | `figma-builder`: 토큰 → 컴포넌트 → 화면. 단계마다 사용자 확인 | Figma, build-log.md | `.claude/agents/figma-builder.md` |
 | 6. 검증 | `design-auditor`: A단계(속성 수치) + C단계(스크린샷) → 실패 시 라우팅 | build-log.md | `.claude/agents/design-auditor.md` |
 
+고치기 루트는 이 표를 1부터 타지 않는다. `[0' 섭취] → [3a' 일 설문] → [3a-ref 레퍼런스 3] → [3b 시안 A/B/C/D] → [4 델타] → [5] → [6]`. 5축 취향은 건너뛴다. 레퍼런스 찾기는 건너뛰지 않는다. `references/polish-route.md`.
+
 1~4단계의 질문과 해석은 이 스킬이 메인 대화에서 직접 한다. HTML 페이지 제작은 `probe-renderer` 서브 에이전트에게 넘기되 **서브 에이전트는 배포하지 않는다** — 파일만 만들고, 메인 대화가 `design/probes/hub.json`에 탭을 추가한 뒤 `python3 scripts/build_hub.py`로 허브를 다시 만들어 **같은 URL로 재배포**한다(`capabilities: {db: {}}`). 병렬로 만든 탭들은 전부 끝난 뒤 한 번에 합쳐 링크 하나만 준다. 사용자 반응은 페이지 안 의견 패널에 저장되고(Artifact `db`, 컬렉션 `feedback`), 사용자가 "다 봤어"라고 하면 메인 대화가 `Artifact(action:"read_db", db_op:"list", collection:"feedback")`로 읽어 반환된 라벨 지도로 `marks`를 영역 이름으로 푼다. 의견이 0건일 때만 터미널로 묻는다. 5~6단계는 서브 에이전트에게 넘기되, **사용자 확인 게이트는 항상 메인 대화에서** 연다.
 
 ## 시작 절차
 
-1. PRD 파일을 읽는다. 없으면 붙여넣어 달라고 한다. 한 문단짜리여도 그대로 시작한다. 빈구멍은 1단계에서 채운다.
-2. 대상 프로젝트에 `design/`이 있으면 읽고 어느 단계까지 끝났는지 파악해 그 다음부터 이어간다.
-3. 사용자에게 흐름을 4줄로 알려준다. "질문은 한 번에 최대 4개, 모르면 '모르겠어요'를 고르면 기본값으로 진행합니다. 화면은 링크 하나(허브)에 탭으로 쌓이고, 탭마다 제가 추천을 표시해두니 '추천대로'만 눌러도 됩니다"를 반드시 말한다.
-4. `references/interview-rules.md`를 읽고 1단계를 시작한다. 화면 인벤토리 표를 먼저 만든 뒤 `probe-renderer`에 `KIND=structure OUT=design/probes/structure.html`로 설문 탭을 만들게 하고, hub.json 첫 탭으로 넣어 허브를 배포한다. 사용자가 "다 봤어"라고 하면 `read_db`(`feedback/structure-1`, `structure-2`, `structure-overall`)를 읽어 brief.md §1을 채우고 `check_phase.py --phase structure`를 돌린다. 의견 0건일 때만 터미널 질문(최대 4개).
+1. 대상 프로젝트에 `design/`이 있으면 읽고 어느 단계까지 끝났는지 파악해 그 다음부터 이어간다. 트랙이 이미 있으면 입구 질문을 다시 하지 않는다.
+2. 가져온 것을 본다. PRD, 코드 화면, 웹 주소, 스크린샷, Figma 링크. 없으면 "만들고 싶은 제품 설명이나, 고칠 화면(주소·스크린샷·폴더)을 주세요" 한 줄만 한다. 한 문단짜리여도 그대로 시작한다.
+3. **입구 질문 1개.** 추천을 첫 칸에 둔다. 화면·주소·캡처가 있으면 추천은 고치기. PRD만 있으면 추천은 처음부터. **예외:** 주소/화면이 있어도 "앱 만들어줘·모바일로 새로"처럼 **다른 표면에 새 제품을 만들라는 말**이면 추천은 처음부터이고 그 화면은 디자인 요소다. 세 번째 입구를 만들지 않는다.
+   - (추천) 있는 화면을 고칠게요 → 고치기 루트. brief에 `트랙: polish`. `변경 범위`는 말로 분류한다 (기본 preserve). 시작에서 보존/재배치를 묻지 않는다.
+   - 처음부터 만들게요 → 아래 5번. brief에 `트랙: greenfield`.
+   - 모르겠어요 → 추천 따름 + 가정 로그.
+   feature는 시작 선택지에 넣지 않는다. 고치기 범위가 커진 것으로 취급한다. 소스 종류(HTML/URL/창)도 묻지 않는다. `references/polish-route.md` 분류표.
+4. 사용자에게 흐름을 루트에 맞게 말한다. 공통: "질문은 한 번에 최대 4개, 모르면 '모르겠어요'를 고르면 기본값으로 진행합니다. 화면은 링크 하나(허브)에 탭으로 쌓이고, 탭마다 제가 추천을 표시해두니 '추천대로'만 눌러도 됩니다".
+5. **처음부터:** `references/interview-rules.md`를 읽고 1단계를 시작한다. 화면 인벤토리 표를 먼저 만든 뒤 `probe-renderer`에 `KIND=structure OUT=design/probes/structure.html`로 설문 탭을 만들게 하고, hub.json 첫 탭으로 넣어 허브를 배포한다. 사용자가 "다 봤어"라고 하면 `read_db`(`feedback/structure-1`, `structure-2`, `structure-overall`)를 읽어 brief.md §1을 채우고 `check_phase.py --phase structure`를 돌린다. 의견 0건일 때만 터미널 질문(최대 4개).
+6. **고치기:** `references/polish-route.md`대로 `[0']` 섭취(소스 분류는 하네스, 웹이면 메뉴·경로를 구성 표로 뽑음) → 디자인 요소 질문(해당될 때만) → `KIND=story` 일 설문(구성 표 + 질문 4개) → `KIND=reference` 경쟁 3개(`reference-sourcing.md` §고치기) → `KIND=existing` 시안 A/B/C/D **대표 1장**. 변경 범위 기본은 preserve. D를 고르면 rebuild. 시작에서 보존/재배치를 묻지 않는다. 「왜 어색한지」·빈 사이트맵을 타이핑하게 하지 않는다. `[5]`는 표에 남은 화면에 고른 결을 적용한다. `[1][2][3a 취향 5축][4.5]`는 만들지 않고 가정 로그에 건너뛴 이유를 남긴다. 레퍼런스 탭은 만든다. `check_phase.py --phase all`은 structure/flow/taste를 건너뛴다.
 
 ## 질문 규칙 (요약. 전문은 references/interview-rules.md)
 
@@ -128,9 +136,9 @@ Agent(subagent_type: "figma-builder",
 | 링크 | 항상 **허브 하나**(`design/probes/hub.html`, `capabilities: {db: {}}`). 탭은 단계마다 hub.json에 추가하고 같은 URL로 재배포. 외부 공유가 필요하면 `python3 scripts/build_hub.py --share` → `hub-share.html`을 **별도 artifact**(`capabilities: {}`, 공개 가능)로 배포. 공유본 저장은 보는 사람 브라우저에만 남는다고 사용자에게 말한다 |
 | 저장 확인 | 사용자가 "저장했다"고 하면 믿지 말고 `read_db`로 확인한다. 허브 db 브리지는 postMessage RPC(build_hub.py가 주입) — 자식 페이지는 `claude.use("db")`만 쓴다. 탭 배지 카운트는 hub.json `prefix`/`prefixes`로 센다 |
 | 선택 UI | 추천은 텍스트("추천: B — 이유"), 선택은 화면 클릭 또는 "전체 추천대로/괜찮아요" 버튼 하나. "다르게 할래요"·"전체 의견"·섹션별 👍·번호 칩 세부 패널은 **없다**. 용어에는 `.plain` 쉬운 설명 한 줄 |
-| 탭 구성 | 구조 · 따라가 보기 · 레퍼런스 · 색상 · 모양·간격 · 글자·달력 · 아이콘 · 규칙 미리보기 · 최종 미리보기 (순서 고정) |
+| 탭 구성 | **처음부터:** 구조 · 따라가 보기 · 레퍼런스 · 색상 · 모양·간격 · 글자·달력 · 아이콘 · 규칙 미리보기 · 최종 미리보기. **고치기:** 내 화면 · 방향 3중1 · 예상 디자인 · 이 결로 따라가기 · (선택) 디자인 요소 · 규칙 델타. 두 루트의 탭을 섞지 않는다. 고치기에 5축 취향 탭은 없다 |
 | 안내 문구 | 페이지에 범례·설명 문장 금지. 제목 아래 한 줄만 |
-| 브라우저 | claude-in-chrome·chrome-devtools 금지. 렌더 확인은 사용자 |
+| 브라우저 | 허브 시안 검사에 claude-in-chrome·chrome-devtools 금지. 고치기 섭취는 polish-route 캡처 사다리 |
 | Figma | 번호 라벨 없음. tokens·components 스크린샷은 사용자에게 안 보냄. screens는 병렬 + 화면당 스크린샷 1장 즉시 전송. components STAGE는 사용자가 "필요 없다"고 하면 중단하고 화면은 자리표시(실제 문구)로 만든 뒤 fix STAGE에서 교체 |
 | 게이트 | 단계 끝마다 `check_phase.py`, Figma STAGE 끝마다 `figma_audit.py`. 스크립트 exit 0 전에는 "끝났다"고 하지 않는다 |
 | 기록 | 사용자 원문은 brief.md에 그대로, 해석은 별도. 추천 수락은 가정 로그에 "추천 수락"으로. 하네스 규칙 변경은 사용자가 산출물로 검증한 뒤에만 반영 |
@@ -140,7 +148,7 @@ Agent(subagent_type: "figma-builder",
 
 | 에이전트 | 언제 | 호출 형태 | 주의 |
 |---|---|---|---|
-| `probe-renderer` | 허브 탭 하나 만들 때마다 | `Agent(subagent_type:"probe-renderer", prompt:"KIND=<structure|flow|reference|taste|icons|rules|preview> OUT=design/probes/<file>.html …")` | 배포 안 함(파일만). 여러 탭은 **동시에** 띄운다(레퍼런스+취향 1페이지, 취향 3페이지 등). 반환된 라벨 지도를 보관 |
+| `probe-renderer` | 허브 탭 하나 만들 때마다 | `Agent(subagent_type:"probe-renderer", prompt:"KIND=<structure|story|flow|reference|taste|icons|rules|preview|existing> OUT=design/probes/<file>.html …")` | 배포 안 함(파일만). 여러 탭은 **동시에** 띄운다. 고치기는 KIND=story → KIND=reference(3개) → KIND=existing(A/B/C/D). 반환된 라벨 지도를 보관 |
 | `general-purpose` | 레퍼런스 앱 검색·스크린샷 수집, 조사 작업 | 사용자 답과 무관한 조사는 인터뷰 중에 **미리** 돌린다 | 결과는 `design/references/candidates.md`처럼 별도 파일로 받는다 |
 | `figma-builder` | STAGE 하나씩. screens는 화면 3~4개씩 에이전트 2~3개 | `STAGE=screens` + 담당 화면 번호 + x 위치(번호×470) + 스크린샷 파일명 규칙 | build-log는 에이전트별 파일. 스냅샷·audit은 마지막 하나만. 변경 사항(색 값 등)은 `SendMessage`로 진행 중인 에이전트에 바로 알린다 |
 | `design-auditor` | screens + figma_audit 통과 후 | 결함을 국소/방향/반복 셋 중 하나로 라우팅 | 국소 결함만 `STAGE=fix`에 넘긴다 |
@@ -155,4 +163,4 @@ Agent(subagent_type: "figma-builder",
 
 ## Figma MCP가 없을 때
 
-Figma MCP가 연결되지 않았거나 인증이 안 된 경우, 1~4단계는 그대로 진행하고 5단계 직전에 인증을 요청한다. 인증이 불가능하면 design-rules.md와 규칙 미리보기 HTML까지를 산출물로 마무리하고 그 사실을 명시한다. 조용히 범위를 줄이지 않는다.
+Figma MCP가 연결되지 않았거나 인증이 안 된 경우, 처음부터 루트는 1~4단계를 그대로 진행하고 5단계 직전에 인증을 요청한다. 고치기 루트의 URL 캡처(`generate_figma_design`)는 MCP가 필요하다. 없으면 사용자 스크린샷으로 `[0']`를 채우고 3b·4는 진행한다. 인증이 끝까지 불가능하면 design-rules.md와 허브 시안까지를 산출물로 마무리하고 그 사실을 명시한다. 조용히 범위를 줄이지 않는다.

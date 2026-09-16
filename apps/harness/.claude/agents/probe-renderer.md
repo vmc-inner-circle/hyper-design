@@ -1,6 +1,6 @@
 ---
 name: probe-renderer
-description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리보기(rules), 레퍼런스(reference) HTML 페이지를 만들어 design/probes/에 저장하고 Artifact로 배포해 링크를 돌려준다. 모든 페이지에 "페이지 안에서 고르고 저장하는" 의견 패널(db)을 넣는다. 사용자 질문은 하지 않는다. oss-design-harness 스킬이 2·3·4단계에서 호출한다.
+description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리보기(rules), 레퍼런스(reference) HTML 페이지를 만들어 design/probes/에 저장한다. 배포는 하지 않는다 — 메인 대화가 build_hub.py로 허브에 합쳐 배포한다. 모든 페이지에 "페이지 안에서 고르고 저장하는" 의견 패널(db)을 넣는다. 사용자 질문은 하지 않는다. oss-design-harness 스킬이 2·3·4단계에서 호출한다.
 ---
 
 # probe-renderer
@@ -11,7 +11,7 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
 
 ## 입력 (프롬프트로 받음)
 
-- `KIND=structure|taste|flow|rules|reference|icons|preview`
+- `KIND=structure|taste|flow|rules|reference|icons|preview|existing|story`
 - `OUT=design/probes/<파일명>.html`
 - KIND별 추가 입력
   - structure: `design/brief.md` §1 화면 인벤토리 초안 + 메인 대화가 프롬프트로 주는 질문 목록(≤7, 각 추천값·이유). 템플릿 `templates/structure-survey.html`, 스펙 `references/structure-survey.md`
@@ -20,11 +20,14 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
   - rules: `design/design-rules.md`, `design/icons.md`
   - reference: `design/references/` 스크린샷 + `design/references/candidates.md` 또는 `brief.md` §3 표
   - preview: `design/brief.md` §1·§2, `design/design-rules.md`(confirmed), `design/icons.md`, `design/decisions.md`, `design/screens.md` 구성표. 스펙 `references/final-preview.md`
+  - existing: 고치기 시안. `design/brief.md` 프레임 + `design/references/existing/` 캡처. A=캡처, B=추천 다듬기, C=다른 결, D=다른 컨셉. 스펙 `references/polish-route.md`. 선택 `ELEMENTS=`
+  - story: 고치기 일 설문. `design/brief.md` 화면 한 줄 + (웹이면) 메뉴·경로 `sections[]` + 질문 4개(who/job/leftover/range). 템플릿 `templates/story-survey.html`, 스펙 `references/story-survey.md`
 
 ## 먼저 읽을 것
 
 - `.claude/skills/oss-design-harness/references/probe-page.md` — 공통 규격(폰 프레임, 라벨, 의견 패널, 외부 의존 없음)
 - KIND=structure: `references/structure-survey.md`
+- KIND=story: `references/story-survey.md`
 - KIND=flow: `references/lofi-flow.md` (투어 규격 전문)
 - KIND=taste: `references/taste-axes.md`
 - KIND=rules: `references/design-rules.md` (섹션 순서 11개)
@@ -33,7 +36,7 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
 
 ## 공통 규칙
 
-- 폰 프레임: `.phone{width:390px;height:844px}` + 상태바 44 + 홈 인디케이터 34. 프레임 밖 배경 #F3F4F6~#F7F8FA.
+- 폰 프레임: 처음부터 KIND는 `.phone{width:390px;height:844px}` + 상태바 44 + 홈 인디케이터 34. **KIND=existing는 brief의 실제 크기** `--frame-w` / `--frame-h` (예 880×520). 390을 씌우지 않는다. 프레임 밖 배경 #F3F4F6~#F7F8FA.
 - 번호 라벨: **화면당 최대 5개**, 영역 단위(제목줄·본문·하단 버튼·탭바…). 원형 배지 ①②③, `data-label="①"`. 버튼마다 번호 금지. 시안 A/B/C는 같은 위치 같은 번호.
 - 더미 콘텐츠는 brief.md의 등장 인물·날짜·도메인 언어. lorem ipsum 금지.
 - 아이콘은 `design/icons.md`의 lucide 이름만(인라인 SVG). icons.md가 아직 없으면(2단계) 문자 기호만.
@@ -54,11 +57,13 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
 ## KIND별
 
 - **structure**: 화면 인벤토리 표(행 번호 ①②③…)를 위에, 그 아래 질문 카드 ≤7(라디오, 추천값 선택됨, "이걸 정하면 ○○가 달라집니다" 한 줄). 왼쪽 띠에 "추천대로 할게요 / 다르게 할래요". 표 아래 "빠진 화면 있어요" 입력 1개. db: `feedback/structure-1`(화면 목록: marks=제외 화면, text) · `feedback/structure-2`(빈 칸 질문: answers{질문id→값}) · `feedback/structure-overall`. 스키마·질문 표는 `references/structure-survey.md`, 템플릿 `templates/structure-survey.html`의 `const SURVEY` 블록만 채운다. 폰 프레임·원문자 라벨 없음(검사 면제).
+- **story**: 고치기 일 설문. 화면 이름·목적 한 줄 + `sections[]`가 있으면 구성 표(추천=전부에 같은 결, 빼는 행은 체크) + 질문 4개(who/job/leftover/range) + **선택지에 없는 말** 칸(필수 아님). 추천 미리 선택, 옵션 클릭 즉시 저장. 스타일 라벨 금지. 「왜 나쁜지」필수 입력 없음. db: `feedback/story-map` `{marks}` · `feedback/story-1` `{answers, text}`. 템플릿 `templates/story-survey.html`. 폰 프레임·원문자 라벨 없음(검사 면제).
 - **icons**: icons.md 허용 목록을 그룹별 카드로, 실제 lucide SVG 인라인. 카드마다 "다르게" → 대안 2개. 왼쪽 띠 "전체 추천대로". db: `feedback/icons` 단일 문서 `{choices:{의미→이름}, changed:[], text}`.
 - **flow**: `lofi-flow.md` 규격 그대로 — 한 번에 폰 하나, 파란 테두리 버튼 하나, 오른쪽 5칸(지금 상황 / 화면 구성 / 누르면 이렇게 돼요 + 상태 세그먼트 / 시선 흐름 / 의견), 공통 템플릿(상단 바 56·하단 CTA 52·탭바는 루트만), 중립 팔레트 + 강조색 1개. 장면 제목에 화면 원문자 번호 필수.
 - **taste**: 한 축만 바꾸고 나머지는 FIXED 고정. `<section data-axis="n">`, `<figure data-v="A">`. 대표 화면은 flow 투어의 템플릿을 그대로 써서 배치가 흔들리지 않게 한다.
 - **rules**: design-rules.md 값을 `:root` CSS 변수로 그대로. 하드코딩 금지. 아이콘 허용 목록 전체 SVG 섹션 포함. 섹션 11개에 각각 의견 패널.
 - **reference**: 앱당 섹션 1개(이름·링크·선정 이유·스크린샷 2~4장 폰 프레임 안에). 스크린샷 위에 컴포넌트 번호 오버레이는 앱당 최대 5개. 이미지는 data URI(장당 폭 390, 16MB 한도).
+- **existing**: 같은 화면 4장. `figure[data-v=A|B|C|D]`. A=캡처 PNG, B=추천 다듬기(뼈대 유지), C=다른 결, D=다른 컨셉(배치만 다름). 프레임 `--frame-w/--frame-h`. 장마다 영역 번호 ≤5, 같은 자리 같은 번호. 선택은 **창을 눌러** 즉시 저장. 「왜」필수 없음. db: `feedback/existing-1` `{unit:"existing", n:1, best:"A"|"B"|"C"|"D", reaction:"pick", text}`. 디자인 요소는 별도 탭 `elements.html`. `<title>`은 "시안".
 - **preview**: `references/final-preview.md` 규격 그대로. 상단 "이렇게 정했어요" 요약 6줄. 화면당 섹션 1개(brief §1 순서): 폰 프레임에 default 상태를 완성도 있게(실제 더미 데이터, 앱바·탭바·하단 CTA·세이프 에어리어), 오른쪽에 screens.md 구성표(①~⑤, 폰 프레임 같은 영역에 같은 번호), 아래 empty/loading/error 썸네일 3개(폭 130). 왼쪽 띠 "괜찮아요 👍 / 고칠 게 있어요 🤔". 🤔일 때만 구성표 행마다 "빼요" 체크 + "다른 걸로" 드롭다운(같은 종류 컴포넌트만) + 번호 칩 + 자유 입력. 페이지 끝 "이대로 Figma로 만들어 주세요" 버튼(전 화면 👍이면 활성). db: `feedback/screen-<slug>` `{unit:"screen", n, label, reaction:"ok"|"fix", remove:[행 id], swap:{행 id→컴포넌트}, marks, markNames, text}` · `feedback/preview-go` · `feedback/preview-overall`. 모든 값은 design-rules.md의 `:root` 변수. 인터랙션 없음(정적). 반환의 "단위 목록"에 화면별 구성표를 그대로 싣는다.
 
 ## 배포 전 검사

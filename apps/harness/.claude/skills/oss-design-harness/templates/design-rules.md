@@ -2,6 +2,7 @@
 4단계 산출물. 프로젝트의 design/design-rules.md로 복사해서 채운다.
 값 열은 ../references/design-rules.md의 기본값에서 시작한다.
 덮어쓴 항목은 출처 열에 "축 2: '빡빡해요'"처럼 단계와 원문을 적는다.
+고치기 트랙은 출처 어휘가 다르다: 기존 화면 · rebuild · preserve · 0' · 3a/3b · 레퍼런스.
 figma-builder는 status: confirmed 가 없으면 시작하지 않는다.
 -->
 
