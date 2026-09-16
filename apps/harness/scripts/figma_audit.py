@@ -42,14 +42,29 @@ DEFAULT_RULES = {
     "z.scale": ("base 0 · sticky 100 · app-bar 200 · tab-bar 200 · overlay 300 · "
                 "sheet 400 · dialog 500 · snackbar 600"),
     "button.sizes": "sm 36h / px12 / text14 · md 44h / px16 / text15 · lg 52h / px20 / text16",
-    "button.states": "default · pressed · selected · disabled · loading",
+    "button.states": "default · pressed · disabled",
     "icon.set": "lucide 단일. 다른 세트 혼용 금지",
 }
 
 # 규칙 표에 수치가 없는 값들 (design-auditor.md A단계 표에서 직접 온 상수)
 REUSE_THRESHOLD = 0.90                      # 컴포넌트 재사용률 하한
-SCREEN_STATES = ["default", "empty", "loading", "error",
-                 "long-title", "many-items", "text-120"]
+# 화면 상태는 screens.md 가 선언한 것만 만든다. 여기에 목록을 박아두면
+# 그 목록이 곧 생성 지시가 되어(화면 10개 x 7 = 70프레임) 아무도 요구하지 않은
+# 프레임이 쌓인다. 선언이 없을 때의 최소값만 남긴다.
+BASE_SCREEN_STATE = "default"
+# 상태명은 영어 고정. 옛 한글 표기를 만나면 정규화해 판정하되 경고한다.
+LEGACY_STATE_ALIASES = {
+    "\ube48": "empty", "\uc2e4\ud328": "error", "\ube44\ud65c\uc131": "disabled",
+    "\ub85c\ub529": "loading", "\uc131\uacf5": "success", "\ucd08\uae30": "initial",
+}
+# 상태가 없음을 뜻하는 표기
+EMPTY_STATE_MARKERS = {"", "-", "\u2014", "none", "n/a", "na", "\uc5c6\uc74c",
+                       "\ud574\ub2f9\uc5c6\uc74c", "\ud574\ub2f9 \uc5c6\uc74c"}
+# 화면 상태로 만들면 안 되는 것 — 짧은 대기는 Skeleton 컴포넌트,
+# 긴 작업(결제·업로드 등)은 독립 화면으로 올린다.
+FORBIDDEN_SCREEN_STATES = {"loading", "success"}
+# 화면당 상태 프레임 상한 (default 포함)
+MAX_STATES_PER_SCREEN = 3
 THUMBNAIL_STATES = ["default", "pressed", "selected"]
 VARIANT_TARGETS = ["Button", "IconButton", "Thumbnail"]
 # AI가 직접 그린 아이콘 탐지 대상 (icon.set)
@@ -213,8 +228,10 @@ class Thresholds:
             if s not in seen:
                 seen.add(s)
                 ordered.append(s)
-        self.button_states = ordered or ["default", "pressed", "selected", "disabled", "loading"]
-        self.thumbnail_states = [s for s in THUMBNAIL_STATES if s in self.button_states] or THUMBNAIL_STATES
+        self.button_states = ordered or ["default", "pressed", "disabled"]
+        # Thumbnail 은 선택형 컴포넌트라 selected 가 본래 역할이다.
+        # button.states 선언(버튼 3종)에서 파생시키지 않는다.
+        self.thumbnail_states = list(THUMBNAIL_STATES)
 
 
 # ── brief.md 화면 목록 파싱 ───────────────────────────────────────────────
@@ -397,9 +414,14 @@ def icon_base_name(node):
 
 
 def parse_screens_manifest(path):
-    """design/screens.md 의 구성표를 읽는다. {화면명 또는 slug(소문자): [컴포넌트명, ...]}"""
+    """design/screens.md 의 구성표를 읽는다.
+
+    반환: (manifest, states, warnings)
+        manifest {화면명 또는 slug(소문자): [컴포넌트명, ...]}
+        states   {화면명 또는 slug(소문자): [상태명, ...]}  — 상태 프레임의 유일한 출처
+    """
     text = Path(path).read_text(encoding="utf-8")
-    manifest, warnings = {}, []
+    manifest, states, warnings = {}, {}, []
     header = None
     for line in text.splitlines():
         line = line.strip()
@@ -414,10 +436,22 @@ def parse_screens_manifest(path):
             continue
         row = dict(zip(header, cells))
         comp_cell = next((v for k, v in row.items() if "구성" in k), "")
+        state_cell = next((v for k, v in row.items() if "상태" in k), "")
         screen = row.get("화면") or ""
         slug = row.get("slug") or ""
         if not comp_cell or not (screen or slug):
             continue
+        state_body = re.sub(r"[(\uff08][^)\uff09]*[)\uff09]", " ", state_cell or "")
+        declared = []
+        for part in re.split(r"[\u00b7,/\uff0f\u3001;]|\s{2,}", state_body):
+            tok = part.strip().strip(".").lower()
+            if not tok or tok in EMPTY_STATE_MARKERS:
+                continue
+            declared.append(LEGACY_STATE_ALIASES.get(tok, tok))
+        if declared:
+            for key in (screen, slug):
+                if key:
+                    states[key.lower()] = declared
         comps = []
         for part in re.split(r"[·,]", comp_cell):
             part = re.sub(r"^[\s①-⑳⓪-⓿]+", "", part).strip()
@@ -431,7 +465,9 @@ def parse_screens_manifest(path):
                 manifest[key.lower()] = comps
     if not manifest:
         warnings.append("screens.md에서 구성표를 읽지 못했습니다 ('구성' 열이 있는 표 필요). component.manifest 검사를 건너뜁니다.")
-    return manifest, warnings
+    if not states:
+        warnings.append("screens.md에 '상태 프레임' 열이 없습니다. 화면마다 default 하나만 있는 것으로 검사합니다.")
+    return manifest, states, warnings
 
 
 MANIFEST_IGNORE = {"DeviceFrame", "Icon", "Skeleton"}
@@ -587,7 +623,11 @@ def check_naming(snap, frame_ids, findings):
 
 
 def check_variant_coverage(snap, th, findings):
-    """02 Components 의 Button·IconButton·Thumbnail 이 state 값을 전부 가져야 한다."""
+    """02 Components 의 Button·IconButton·Thumbnail state 가 design-rules 선언과 정확히 일치해야 한다.
+
+    빠진 것(하한)뿐 아니라 **선언에 없는 것(상한)** 도 실패다. 하한만 보면
+    "덜 만들면 FAIL, 더 만들면 통과"가 되어 variant 가 계속 불어난다.
+    """
     expected = {
         "Button": th.button_states,
         "IconButton": th.button_states,
@@ -619,10 +659,21 @@ def check_variant_coverage(snap, th, findings):
                 COMPONENTS_PAGE, "-", target, node.get("id"), "variant.coverage",
                 "state " + ("/".join(sorted(found)) if found else "없음"),
                 "state " + "/".join(expected[target])))
+        extra = sorted(s for s in found if s not in expected[target])
+        if extra:
+            findings.append(Finding(
+                COMPONENTS_PAGE, "-", target, node.get("id"), "variant.excess",
+                "선언에 없는 state " + "/".join(extra),
+                "design-rules.md 선언(" + "/".join(expected[target]) + ")만. 초과분 삭제"))
 
 
-def check_state_frames(snap, screens, findings):
-    """화면마다 상태 프레임 7개가 있어야 한다."""
+def check_state_frames(snap, screens, states_by_screen, findings):
+    """화면 상태 프레임이 screens.md 선언과 정확히 일치해야 한다.
+
+    선언이 유일한 출처다. 빠진 것(하한)과 **선언에 없는 것(상한)** 을 모두 잡는다.
+    screens.md 에 상태 열이 없으면 default 하나만 요구한다 — 목록을 여기에
+    박아두면 그 목록이 곧 생성 지시가 된다.
+    """
     present = {}
     for node, screen, state, width in screen_frames(snap):
         if width:
@@ -630,12 +681,39 @@ def check_state_frames(snap, screens, findings):
         present.setdefault(screen, set()).add(state)
     for screen in screens:
         found = present.get(screen, set())
-        missing = [s for s in SCREEN_STATES if s not in found]
+        declared = states_by_screen.get(screen.lower()) if states_by_screen else None
+        expected = declared or [BASE_SCREEN_STATE]
+        source = "screens.md 선언" if declared else "screens.md 선언 없음 → default만"
+
+        missing = [s for s in expected if s not in found]  # 선언 없으면 default 하나만
         if missing:
             findings.append(Finding(
                 SCREENS_PAGE, screen, screen, "-", "state.frames",
                 "누락 " + "/".join(missing),
-                "/".join(SCREEN_STATES) + " 7개"))
+                f"{source}: " + "/".join(expected)))
+
+        # 상한은 선언이 있을 때만 판정한다. 선언이 없으면 초과를 가릴 근거가 없다
+        # (금지 상태와 절대 상한은 선언 유무와 무관하게 아래에서 계속 검사한다).
+        if declared:
+            extra = sorted(s for s in found if s not in expected)
+            if extra:
+                findings.append(Finding(
+                    SCREENS_PAGE, screen, screen, "-", "state.excess",
+                    "선언에 없는 상태 " + "/".join(extra),
+                    f"{source}: " + "/".join(expected) + ". 초과 프레임 삭제"))
+
+        forbidden = sorted(s for s in found if s in FORBIDDEN_SCREEN_STATES)
+        if forbidden:
+            findings.append(Finding(
+                SCREENS_PAGE, screen, screen, "-", "state.layer",
+                "화면 상태로 만든 " + "/".join(forbidden),
+                "짧은 대기는 Skeleton 컴포넌트, 긴 작업은 독립 화면으로 분리"))
+
+        if len(found) > MAX_STATES_PER_SCREEN:
+            findings.append(Finding(
+                SCREENS_PAGE, screen, screen, "-", "state.cap",
+                f"상태 프레임 {len(found)}개",
+                f"화면당 최대 {MAX_STATES_PER_SCREEN}개(default 포함)"))
 
 
 def check_primary_count(snap, findings):
@@ -1016,9 +1094,22 @@ def run_audit(snapshot_path, rules_path, brief_path=None, icons_path=None, scree
         warnings.extend(icon_warnings)
 
     manifest = None
+    states_by_screen = {}
     if screens_path:
-        manifest, manifest_warnings = parse_screens_manifest(screens_path)
+        manifest, states_by_screen, manifest_warnings = parse_screens_manifest(screens_path)
         warnings.extend(manifest_warnings)
+        declared_forbidden = sorted({
+            st
+            for decl in states_by_screen.values()
+            for st in decl
+            if st in FORBIDDEN_SCREEN_STATES
+        })
+        if declared_forbidden:
+            warnings.append(
+                "screens.md 상태 프레임 열에 " + "/".join(declared_forbidden)
+                + " 가 선언돼 있습니다. 짧은 대기는 Skeleton 컴포넌트로, "
+                  "긴 작업(결제·업로드 등)은 독립 화면으로 올리세요."
+            )
 
     findings = []
     check_palette(snap, th, frame_ids, findings)
@@ -1028,7 +1119,7 @@ def run_audit(snapshot_path, rules_path, brief_path=None, icons_path=None, scree
     check_naming(snap, frame_ids, findings)
     check_variant_coverage(snap, th, findings)
     if screens:
-        check_state_frames(snap, screens, findings)
+        check_state_frames(snap, screens, states_by_screen, findings)
     check_primary_count(snap, findings)
     check_tap_targets(snap, th, frame_ids, findings)
     check_safe_area(snap, th, findings)

@@ -81,8 +81,12 @@ python3 scripts/figma_audit.py \
 | `space.grid` | padding·itemSpacing·(오토레이아웃 밖 자식의) x·y 가 `space.scale` 배수 |
 | `component.reuse` | 인스턴스 / (인스턴스 + 로컬 FRAME) ≥ 90% |
 | `naming.default` | `Frame 12`·`Rectangle 3`·`Text` 같은 기본 레이어명 0개 |
-| `variant.coverage` | Button·IconButton 은 `default/pressed/selected/disabled/loading`, Thumbnail 은 `default/pressed/selected` |
-| `state.frames` | 화면마다 `default/empty/loading/error/long-title/many-items/text-120` 7개 |
+| `variant.coverage` | Button·IconButton 은 `design-rules.md`의 `button.states` 선언(기본 `default/pressed/disabled`), Thumbnail 은 선택형이라 `default/pressed/selected` 고정 |
+| `variant.excess` | **상한.** 선언에 없는 state variant 가 있으면 실패 — 하한만 보면 "덜 만들면 FAIL, 더 만들면 통과"가 되어 계속 불어난다 |
+| `state.frames` | 화면 상태는 `screens.md` 상태 프레임 열이 **유일한 출처**다. 선언된 것이 없으면 실패. 선언 자체가 없으면 `default` 하나만 요구 |
+| `state.excess` | **상한.** `screens.md` 선언에 없는 상태 프레임이 있으면 실패 |
+| `state.layer` | `loading`·`success` 를 화면 상태로 만들면 실패 — 짧은 대기는 `Skeleton` 컴포넌트, 긴 작업(외부 시스템 의존·취소 불가)은 독립 화면 |
+| `state.cap` | 화면당 상태 프레임 `default` 포함 최대 3개 |
 | `button.primary-per-screen` | `<화면>/default` 안에 variant=primary Button 인스턴스 정확히 1개 |
 | `tap.min` | 탭 가능한 인스턴스 44×44 이상 |
 | `tap.gap` | 형제 탭 영역 간격 8 이상 |

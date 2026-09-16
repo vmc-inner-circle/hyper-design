@@ -94,6 +94,54 @@ class CliExitCodeTests(unittest.TestCase):
             shutil.rmtree(tmp)
 
 
+class StateTokenTests(unittest.TestCase):
+    """상태 셀 파싱 — 표기가 흔들려도 같은 결과가 나와야 한다."""
+
+    def test_parenthetical_negation_is_not_counted(self):
+        # "해당없음" 설명을 세면 안 쓰는 상태까지 쓰는 것으로 잡힌다
+        self.assertEqual(cp.state_tokens("empty (error·disabled 해당없음)"), ["empty"])
+
+    def test_empty_markers_are_dropped(self):
+        for marker in ("-", "—", "없음", "N/A", "none", ""):
+            self.assertEqual(cp.state_tokens(marker), [], marker)
+
+    def test_separator_variants_give_same_tokens(self):
+        expected = ["empty", "error"]
+        for cell in ("empty·error", "empty, error", "empty / error",
+                     "empty\nerror", "EMPTY·Error"):
+            self.assertEqual(cp.state_tokens(cell), expected, cell)
+
+    def test_substring_does_not_match(self):
+        # 부분 문자열 매칭이면 'nonempty' 가 'empty' 로 잡힌다
+        self.assertEqual(cp.state_tokens("nonempty"), ["nonempty"])
+
+    def test_legacy_korean_names_are_detected(self):
+        self.assertEqual(cp.state_tokens("빈·실패"), ["빈", "실패"])
+        self.assertEqual(cp.LEGACY_STATE_ALIASES["빈"], "empty")
+
+
+class StateLanguageTests(unittest.TestCase):
+    """상태명 영어 고정 — 한글 문서가 조용히 통과하면 안 된다."""
+
+    def test_korean_state_names_fail_with_english_hint(self):
+        results = cp.check_structure(DESIGN_BAD)
+        hits = [r for r in results if not r.ok and r.name == "structure:screens-state-lang"]
+        self.assertTrue(hits)
+        self.assertIn("빈→empty", " ".join(h.detail for h in hits))
+
+    def test_korean_names_still_judged_for_layer(self):
+        """한글이라고 층위 검사를 건너뛰지 않는다 ('로딩'도 loading 으로 잡힌다)."""
+        results = cp.check_structure(DESIGN_BAD)
+        msgs = " ".join(r.detail for r in results
+                        if not r.ok and r.name == "structure:screens-state-layer")
+        self.assertIn("loading", msgs)
+
+    def test_unknown_state_is_rejected(self):
+        results = cp.check_structure(DESIGN_BAD)
+        names = [r.name for r in results if not r.ok]
+        self.assertIn("structure:screens-state-unknown", names)
+
+
 class StructureUnitTests(unittest.TestCase):
     def test_ok_fixture_structure_passes(self):
         results = cp.check_structure(DESIGN_OK)
@@ -107,7 +155,9 @@ class StructureUnitTests(unittest.TestCase):
     def test_bad_fixture_detects_missing_state(self):
         results = cp.check_structure(DESIGN_BAD)
         names = [r.name for r in results if not r.ok]
-        self.assertIn("structure:screens-states", names)
+        self.assertIn("structure:screens-state-layer", names)   # loading
+        self.assertIn("structure:screens-state-cap", names)     # 허용 상태 3개 > 상한 2
+        self.assertIn("structure:screens-state-lang", names)    # 한글 표기
 
     def test_bad_fixture_detects_unselected_platform(self):
         results = cp.check_structure(DESIGN_BAD)

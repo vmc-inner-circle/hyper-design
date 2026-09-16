@@ -27,10 +27,15 @@ BRIEF = FIXTURES / "brief.md"
 ICONS = FIXTURES / "icons.md"
 
 
-def audit(snapshot, rules=RULES, brief=BRIEF, icons=ICONS):
+SCREENS = FIXTURES / "screens.md"
+SCREENS_STATES = FIXTURES / "screens_states.md"
+
+
+def audit(snapshot, rules=RULES, brief=BRIEF, icons=ICONS, screens=None):
     return figma_audit.run_audit(str(snapshot), str(rules),
                                  str(brief) if brief else None,
-                                 str(icons) if icons else None)
+                                 str(icons) if icons else None,
+                                 str(screens) if screens else None)
 
 
 def keys_of(findings):
@@ -60,7 +65,10 @@ class ThresholdParsingTest(unittest.TestCase):
         self.assertEqual((self.th.safe_top, self.th.safe_bottom), (44, 34))
         self.assertEqual(self.th.button_heights, [36, 44, 52])
         self.assertEqual(self.th.button_states,
-                         ["default", "pressed", "selected", "disabled", "loading"])
+                         ["default", "pressed", "disabled"])
+        # Thumbnail 은 선택형이라 button.states 축소와 무관하게 selected 를 유지한다
+        self.assertEqual(self.th.thumbnail_states,
+                         ["default", "pressed", "selected"])
         self.assertEqual(self.th.z_scale["snackbar"], 600)
         self.assertGreater(self.th.z_scale["snackbar"], self.th.z_scale["dialog"])
 
@@ -101,7 +109,7 @@ class SnapshotOkTest(unittest.TestCase):
         findings, warnings, stats = audit(SNAPSHOT_OK)
         self.assertEqual([f.line() for f in findings], [])
         self.assertEqual(warnings, [])
-        self.assertEqual(stats["screenFrames"], 15)   # 7상태 × 2화면 + @360 검증 프레임
+        self.assertEqual(stats["screenFrames"], 5)    # default·empty × 2화면 + @360 검증 프레임
 
     def test_screens_inferred_without_brief(self):
         findings, _, stats = audit(SNAPSHOT_OK, brief=None)
@@ -124,7 +132,11 @@ class SnapshotBadTest(unittest.TestCase):
         "component.reuse",
         "naming.default",
         "variant.coverage",
+        "variant.excess",
         "state.frames",
+        "state.excess",
+        "state.cap",
+        "state.layer",
         "button.primary-per-screen",
         "tap.min",
         "tap.gap",
@@ -140,7 +152,7 @@ class SnapshotBadTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.findings, cls.warnings, cls.stats = audit(SNAPSHOT_BAD)
+        cls.findings, cls.warnings, cls.stats = audit(SNAPSHOT_BAD, screens=SCREENS_STATES)
         cls.keys = keys_of(cls.findings)
 
     def test_at_least_ten_distinct_rules_fail(self):
@@ -160,7 +172,7 @@ class SnapshotBadTest(unittest.TestCase):
             self.assertIn("→", line)
 
     def test_findings_are_sorted_deterministically(self):
-        again, _, _ = audit(SNAPSHOT_BAD)
+        again, _, _ = audit(SNAPSHOT_BAD, screens=SCREENS_STATES)
         self.assertEqual([f.line() for f in self.findings], [f.line() for f in again])
 
     def test_palette_points_at_unbound_fill(self):
@@ -174,17 +186,42 @@ class SnapshotBadTest(unittest.TestCase):
         self.assertEqual(len(hits), 1)
         self.assertIn("≥ 90%", hits[0].expected)
 
-    def test_state_frame_reports_missing_state(self):
+    def test_state_frame_reports_missing_declared_state(self):
+        """screens.md 가 선언한 상태가 Figma 에 없으면 잡는다."""
         hits = [f for f in self.findings if f.key == "state.frames"]
-        self.assertEqual(len(hits), 1)
-        self.assertEqual(hits[0].frame, "Detail")
-        self.assertIn("text-120", hits[0].actual)
+        self.assertTrue(hits)
+        self.assertTrue(any("disabled" in h.actual for h in hits), [h.actual for h in hits])
 
-    def test_variant_coverage_reports_missing_loading(self):
+    def test_state_excess_flags_undeclared_frames(self):
+        """선언에 없는 상태 프레임(상한)을 잡는다 — 하한만 보면 계속 불어난다."""
+        hits = [f for f in self.findings if f.key == "state.excess"]
+        self.assertTrue(hits)
+        joined = " ".join(h.actual for h in hits)
+        self.assertIn("long-title", joined)
+
+    def test_state_layer_flags_loading_frame(self):
+        """loading 은 화면 상태가 아니라 Skeleton 또는 독립 화면이다."""
+        hits = [f for f in self.findings if f.key == "state.layer"]
+        self.assertTrue(hits)
+        self.assertIn("loading", " ".join(h.actual for h in hits))
+        self.assertIn("Skeleton", hits[0].expected)
+
+    def test_state_cap_flags_too_many_frames(self):
+        hits = [f for f in self.findings if f.key == "state.cap"]
+        self.assertTrue(hits)
+        self.assertIn("최대 3개", hits[0].expected)
+
+    def test_variant_coverage_reports_missing_state(self):
         hits = [f for f in self.findings if f.key == "variant.coverage"]
-        self.assertEqual(len(hits), 1)
+        self.assertTrue(hits)
         self.assertEqual(hits[0].node_name, "Button")
-        self.assertNotIn("loading", hits[0].actual)
+
+    def test_variant_excess_flags_undeclared_state(self):
+        """design-rules 선언에 없는 variant(상한)를 잡는다."""
+        hits = [f for f in self.findings if f.key == "variant.excess"]
+        self.assertTrue(hits)
+        joined = " ".join(h.actual for h in hits)
+        self.assertTrue("loading" in joined or "selected" in joined, joined)
 
     def test_icon_size_by_text_uses_sibling_font_size(self):
         hits = {f.node_id: f for f in self.findings if f.key == "icon.size-by-text"}
@@ -332,7 +369,7 @@ class ComponentManifestTest(unittest.TestCase):
     SCREENS_BAD = FIXTURES / "screens_bad.md"
 
     def test_manifest_parsed(self):
-        manifest, warnings = figma_audit.parse_screens_manifest(str(self.SCREENS))
+        manifest, _states, warnings = figma_audit.parse_screens_manifest(str(self.SCREENS))
         self.assertEqual(manifest["home"], ["AppBar", "Card", "Button", "TabBar"])
         self.assertEqual(manifest["detail"], manifest["Detail".lower()])
         self.assertEqual(warnings, [])

@@ -47,7 +47,7 @@ preview: design/probes/rules-preview.html
 | button.sizes | sm 36h / px12 / text14 · md 44h / px16 / text15 · lg 52h / px20 / text16 | 기본값 | 사용 |
 | button.radius | radius.md | 기본값 | 사용 |
 | button.variants | primary · secondary · ghost · danger | 기본값 | 사용 |
-| button.states | default · pressed(배경 12% 명도 변화) · selected(accent-soft) · disabled(opacity .4) · loading(스피너 20) | 기본값 | 사용 |
+| button.states | default · pressed(배경 12% 명도 변화) · disabled(opacity .4) | 기본값 | 사용 |
 | button.row-rule | 같은 줄의 버튼은 같은 size·radius | 기본값 | 사용 |
 | button.primary-per-screen | 화면당 primary 1개. 하단 고정 바 | 기본값 | 사용 |
 | icon.set | lucide 단일. 다른 세트 혼용 금지 | 기본값 | 사용 |

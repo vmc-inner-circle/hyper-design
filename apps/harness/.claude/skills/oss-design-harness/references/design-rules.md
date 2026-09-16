@@ -45,11 +45,27 @@
 | button.sizes | sm 36h / px12 / text14 · md 44h / px16 / text15 · lg 52h / px20 / text16 (풀폭 CTA) |
 | button.radius | radius.md (축 3 round면 full) |
 | button.variants | primary(accent bg, 흰 글자) · secondary(surface-1 bg, text) · ghost(투명, accent 글자) · danger |
-| button.states | default · pressed(배경 12% 명도 변화, **글자·아이콘 색 유지**, 절대 검정 전환 없음) · selected(accent-soft bg + accent 1px border) · disabled(opacity .4) · loading(스피너 20, 라벨 숨김, 폭 유지) |
+| button.states | default · pressed(배경 12% 명도 변화, **글자·아이콘 색 유지**, 절대 검정 전환 없음) · disabled(opacity .4). **이 3개가 전부다.** 늘리지 않는다 |
+| button.states-excluded | `selected`는 버튼이 아니라 선택형 컴포넌트(탭·칩·체크)에서만 쓴다. `loading`은 버튼 variant로 만들지 않는다 — 버튼을 누른 뒤의 대기는 `Skeleton`이 덮거나(짧음), 독립 화면으로 간다(긺). variant 가짓수가 늘 때마다 Figma 파일이 무거워지고 유지보수 대상이 함께 늘어난다 |
 | button.row-rule | 같은 줄의 버튼은 같은 size·radius. 두 개면 secondary 왼쪽, primary 오른쪽 |
 | button.text | 한 줄. 넘치면 문구를 줄인다. 줄바꿈 금지 |
 | button.primary-per-screen | 화면당 primary 1개. 기본 위치는 **하단 고정 바** (엄지 영역). 2단계 플로우에서 확정 |
 | button.duplicate | 같은 동작의 버튼을 앱바와 본문에 이중 배치하지 않는다. 범위가 다르면 라벨에 범위를 쓴다 |
+
+### B1-1. 상태를 어느 층에 둘 것인가 (이슈: 상태 프레임 과잉)
+
+상태는 세 층으로 나뉜다. 층을 섞으면 화면마다 상태 프레임이 불어난다.
+
+| 키 | 기본값 |
+|---|---|
+| state.layer-component | **짧은 대기는 전부 여기.** 조회·저장 대부분이 해당된다. `Skeleton` 컴포넌트(또는 버튼 내부 비활성)로 덮는다. **상태 프레임을 만들지 않는다** |
+| state.layer-screen | **같은 화면의 다른 모습**만. `empty`(데이터 0개) · `disabled`(읽기 전용 역할) · `error`(폼 인라인 검증 실패). 화면당 default 포함 **최대 3개** |
+| state.layer-flow | **시간축 위의 다른 지점**은 상태가 아니라 화면이다. 주문서 → 결제중 → 결제완료. `brief.md` §1 화면 목록에 **행으로 추가**한다 |
+| state.flow-trigger | 독립 화면으로 올리는 조건 — ① 외부 시스템 의존(결제·업로드·외부 생성 등) **또는** ② 처리 중 사용자가 화면을 떠날 수 없음(취소 불가·되돌릴 수 없음). 둘 다 아니면 Skeleton |
+| state.forbidden | 화면 상태 목록에 `loading`·`success`·`initial`을 쓰지 않는다. 앞의 둘은 층이 틀렸고, `initial`은 default 와 중복이다 |
+| state.naming | 상태명은 **영어 소문자 고정**(`default`·`empty`·`error`·`disabled`). `brief.md`·`screens.md`·Figma 프레임 이름이 모두 같은 키를 쓴다. 문서 언어가 갈리면 같은 상태가 두 이름을 갖고 한쪽 게이트가 조용히 통과한다. 사용자에게 보이는 라벨만 쉬운 한국어로 옮긴다 |
+| state.edge-case | `long-title`·`many-items`·`text-120` 같은 경계값은 **상태가 아니다.** 상태 프레임으로 만들지 말고 default 프레임의 콘텐츠로 확인한다 |
+| state.derivation | 상태는 화면 속성에서 파생된다 — 목록 + 첫 사용 진입 → `empty` / 폼 → `error` / 읽기 전용 역할 존재 → `disabled`. 규칙으로 설명되지 않는 상태는 만들지 않는다 |
 
 ### B2. 아이콘·탭 영역 (이슈: 아이콘 버튼, 커서, 아이콘 의미)
 

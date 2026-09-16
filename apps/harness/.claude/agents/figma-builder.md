@@ -44,7 +44,7 @@ description: design/design-rules.md(status confirmed)와 brief.md를 읽어 Figm
 
 1. `Icon/<name>` — `design/icons.md` 허용 목록의 lucide 아이콘만. 각 이름마다 SVG를 가져와(`curl -s https://unpkg.com/lucide-static@latest/icons/<name>.svg`) `use_figma`에서 `figma.createNodeFromSvg(svg)`로 만들고 컴포넌트화. size 속성 16/20/24 variants, stroke 1.5/1.75/2, 색은 currentColor → text 변수 바인딩. **벡터를 직접 그리거나 기존 아이콘을 변형해 새 아이콘을 만들지 않는다.** 목록에 없는 아이콘이 필요하면 만들지 말고 build-log.md "누락 아이콘"에 적고 계속 진행
 2. `Button` — variants: variant(primary/secondary/ghost/danger) × size(sm/md/lg) × state(default/pressed/selected/disabled/loading). 텍스트 한 줄. 아이콘 슬롯 boolean
-3. `IconButton` — size(sm/md/lg) × state. 탭 영역 44 정사각 (시각 크기와 별도)
+3. `IconButton` — **size 는 md 1종만** × state. 탭 영역이 44 정사각으로 고정이라 시각 크기를 3종으로 나눌 실익이 없다. 앱바처럼 24가 필요하면 그 자리에서 아이콘 크기만 바꾼다. state 는 `design-rules.md`의 `button.states` 선언과 정확히 같게 만든다 — **선언에 없는 state 를 추가하면 `variant.excess` 로 실패한다**
 4. `Thumbnail` — state(default/pressed/selected) × 제목 위치는 규칙의 1개만
 5. `Card` — 제목 2줄 말줄임 텍스트(고정 높이 2줄)
 6. `Input`, `Select` — state(default/focus/error/disabled). 도움말 caption 슬롯

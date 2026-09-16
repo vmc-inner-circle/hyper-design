@@ -212,7 +212,56 @@ def get_assumption_rows(brief_text: str) -> Tuple[List[str], List[List[str]]]:
 # 1. structure — design/brief.md
 # ---------------------------------------------------------------------------
 
-REQUIRED_STATES = ["초기", "빈", "로딩", "성공", "실패", "비활성"]
+# 화면 상태는 "빠짐없이 나열"이 아니라 "필요한 것만"이다.
+# 6종 전부를 요구하면 그 요구가 곧 생성 지시가 되어, 아무도 원하지 않은
+# 상태 프레임이 화면마다 쌓인다.
+# 상태명은 **영어로 고정**한다. brief.md 는 사람이 읽고 screens.md·Figma 는
+# 기계가 읽는데, 언어가 갈리면 같은 상태가 두 이름을 갖게 되고 한쪽 게이트가
+# 조용히 통과한다(한글 PRD 전용 게이트 = 영문 프로젝트에서 무력화).
+# 사용자에게 보이는 라벨은 별개다 — 시안 페이지에는 계속 쉬운 한국어를 쓴다.
+ALLOWED_STATES = ["empty", "error", "disabled"]
+# 화면 상태로 만들면 안 되는 것.
+FORBIDDEN_STATES = {
+    "loading": "짧은 대기는 Skeleton 컴포넌트로, 긴 작업은 독립 화면으로 올린다",
+    "success": "플로우의 다음 단계이므로 화면으로 만든다 (예: 주문서→결제중→결제완료)",
+    "initial": "default 와 중복이다",
+}
+# 과거 한글 표기 → 영어. 옛 문서를 만나면 고쳐 쓰라고 알려준다.
+LEGACY_STATE_ALIASES = {
+    "빈": "empty", "실패": "error", "비활성": "disabled",
+    "로딩": "loading", "성공": "success", "초기": "initial",
+}
+# 상태가 없음을 뜻하는 표기. 상태명으로 세지 않는다.
+EMPTY_STATE_MARKERS = {"", "-", "—", "none", "n/a", "na", "없음", "해당없음", "해당 없음"}
+# 화면당 상태 상한 (default 제외)
+MAX_STATES_PER_SCREEN = 2
+
+_PAREN_RE = re.compile(r"[(\uff08][^)\uff09]*[)\uff09]")
+
+
+_STATE_SPLIT_RE = re.compile(r"[\u00b7,/\uff0f\u3001;]|\s{2,}|\n")
+
+
+def state_tokens(cell_text: str):
+    """상태 셀을 토큰 목록으로 읽는다.
+
+    - 괄호 안은 "…해당없음" 같은 **부정** 설명 자리다. 그대로 세면
+      안 쓰는 상태까지 쓰는 것으로 잡히는 오탐이 된다.
+    - `-`·`없음`·`N/A` 같은 빈 표기는 상태가 아니다.
+    - 부분 문자열이 아니라 **토큰 단위**로 본다. 표기가 흔들려도
+      (`default·empty`, `empty, error`, 줄바꿈) 같은 결과가 나오게 한다.
+    """
+    body = _PAREN_RE.sub(" ", cell_text or "")
+    # 셀 전체가 빈 표기면 분리하지 않는다 ("N/A" 가 n·a 로 쪼개지는 것 방지)
+    if body.strip().strip(".").lower() in EMPTY_STATE_MARKERS:
+        return []
+    tokens = []
+    for raw in _STATE_SPLIT_RE.split(body):
+        tok = raw.strip().strip(".").lower()
+        if not tok or tok in EMPTY_STATE_MARKERS:
+            continue
+        tokens.append(tok)
+    return tokens
 
 
 def check_structure(design_dir: str) -> Optional[List[Result]]:
@@ -243,14 +292,45 @@ def check_structure(design_dir: str) -> Optional[List[Result]]:
                             path,
                             f"§1 화면 목록[{screen_name}] '{h}' 셀이 비어있음",
                         )
-                # 정의된 상태 6개 전부
-                state_cell = cell(row, idx_state)
-                missing = [s for s in REQUIRED_STATES if s not in state_cell]
-                if missing:
+                # 정의된 상태 — 허용 목록 안에서, 상한 이내로만
+                tokens = state_tokens(cell(row, idx_state))
+
+                # 한글 표기를 만나면 영어로 고치라고 알린다 (조용히 통과시키지 않는다)
+                legacy = [t for t in tokens if t in LEGACY_STATE_ALIASES]
+                if legacy:
                     rep.fail(
-                        "screens-states",
+                        "screens-state-lang",
                         path,
-                        f"§1 화면 목록[{screen_name}] '정의된 상태'에 {missing} 누락",
+                        f"§1 화면 목록[{screen_name}] '정의된 상태'가 한글 표기 "
+                        f"({'·'.join(legacy)}) — 영어로 적는다: "
+                        + ", ".join(f"{k}→{LEGACY_STATE_ALIASES[k]}" for k in legacy),
+                    )
+                # 영어로 정규화해 판정한다 (옛 문서도 층위·상한은 그대로 검사)
+                norm = [LEGACY_STATE_ALIASES.get(t, t) for t in tokens]
+
+                for bad in (t for t in norm if t in FORBIDDEN_STATES):
+                    rep.fail(
+                        "screens-state-layer",
+                        path,
+                        f"§1 화면 목록[{screen_name}] '정의된 상태'에 '{bad}' — {FORBIDDEN_STATES[bad]}",
+                    )
+                unknown = [t for t in norm
+                           if t not in ALLOWED_STATES and t not in FORBIDDEN_STATES
+                           and t != "default"]
+                if unknown:
+                    rep.fail(
+                        "screens-state-unknown",
+                        path,
+                        f"§1 화면 목록[{screen_name}] '정의된 상태'에 알 수 없는 값 "
+                        f"({'·'.join(unknown)}) — {'/'.join(ALLOWED_STATES)} 중에서만 쓴다",
+                    )
+                used = [t for t in norm if t in ALLOWED_STATES]
+                if len(used) > MAX_STATES_PER_SCREEN:
+                    rep.fail(
+                        "screens-state-cap",
+                        path,
+                        f"§1 화면 목록[{screen_name}] '정의된 상태' {len(used)}개({'·'.join(used)}) "
+                        f"— 화면당 최대 {MAX_STATES_PER_SCREEN}개. 시나리오가 깨지는 것만 남긴다",
                     )
                 # primary 액션 정확히 1개
                 primary_cell = cell(row, idx_primary)
