@@ -1,0 +1,91 @@
+<title>규칙 미리보기</title>
+<style>
+:root{color-scheme:light only;--bg:#F7F8FA;--s1:#EEF0F3;--s2:#E5E7EB;--text:#1F2937;--muted:#6B7280;--border:#E5E7EB;--acc:#2563EB;--acc-p:#1D4ED8;--acc-s:rgba(37,99,235,.1);--danger:#DC2626;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-full:9999px;--sh-sm:0 1px 2px rgba(0,0,0,.06);--sh-md:0 4px 12px rgba(0,0,0,.08);--sp:16px;--sec:24px}
+html,body{background:var(--bg)}body{margin:0;color:var(--text);font:15px/1.5 "Pretendard",-apple-system,system-ui,sans-serif}*{box-sizing:border-box}
+.w{max-width:960px;margin:0 auto;padding:var(--sp) var(--sp) 80px}
+h1{font-size:24px;font-weight:600;margin:0 0 4px}.sub{color:var(--muted);margin:0 0 var(--sec)}
+.aa{font:inherit;font-size:14px;font-weight:700;height:44px;padding:0 20px;border-radius:var(--r-full);border:0;background:var(--acc);color:#fff;cursor:pointer;margin-bottom:var(--sec)}
+.cnt{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:var(--acc-s);border-radius:14px;padding:3px 12px;margin-left:8px}
+.sec{margin-bottom:var(--sec);background:#fff;border-radius:var(--r-lg);padding:var(--sp);box-shadow:var(--sh-sm)}
+.sec h2{font-size:18px;font-weight:600;margin:0 0 4px}.sec .d{font-size:13px;color:var(--muted);margin:0 0 12px}
+.g{display:flex;flex-wrap:wrap;gap:8px}
+.sw{width:64px;height:64px;border-radius:var(--r-sm);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:1px solid var(--border)}.sw span{font-size:8px;color:var(--muted);margin-top:2px}
+.tr{display:flex;align-items:baseline;gap:12px;padding:6px 0;border-bottom:1px solid var(--s1)}.tl{width:72px;font-size:12px;color:var(--muted);flex-shrink:0}
+.b{display:inline-flex;align-items:center;justify-content:center;font:inherit;font-weight:700;border:0;cursor:pointer;gap:6px}
+.bm{height:44px;padding:0 16px;font-size:15px;border-radius:var(--r-md)}
+.bp{background:var(--acc);color:#fff}.b2{background:var(--s1);color:var(--text)}.bd{background:var(--danger);color:#fff}
+.bx{opacity:.4}.br{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.cd{background:#fff;border-radius:var(--r-lg);padding:var(--sp);box-shadow:var(--sh-md);max-width:320px}.cd h3{font-size:15px;font-weight:600;margin:0 0 4px}.cd p{font-size:13px;color:var(--muted);margin:4px 0 0}
+.inp{height:44px;border:1px solid var(--border);border-radius:var(--r-md);padding:0 12px;font:inherit;font-size:15px;background:#fff;width:100%;max-width:320px}.ie{border-color:var(--danger)}.em{font-size:13px;color:var(--danger);margin-top:4px}
+.sht{background:#fff;border-radius:var(--r-lg) var(--r-lg) 0 0;padding:var(--sp);box-shadow:var(--sh-md);max-width:320px}.sht-g{width:36px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 12px}.sht-h{font-size:17px;font-weight:700;margin-bottom:8px}
+.dlg{background:#fff;border-radius:var(--r-lg);padding:20px;max-width:280px;text-align:center;box-shadow:var(--sh-md)}.dlg h3{font-size:17px;font-weight:700;margin:0 0 8px}.dlg p{font-size:14px;color:var(--muted);margin:0 0 16px}
+.ey{text-align:center;padding:32px var(--sp);background:#fff;border-radius:var(--r-lg);box-shadow:var(--sh-sm);max-width:280px}
+.sk{background:linear-gradient(90deg,var(--s1) 25%,var(--s2) 50%,var(--s1) 75%);background-size:200% 100%;animation:sk 1.5s ease-in-out infinite;border-radius:var(--r-sm);height:16px;margin-bottom:8px}@keyframes sk{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.fs{margin-top:12px;padding-top:12px;border-top:1px solid var(--s1);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fc{font:inherit;font-size:12px;font-weight:600;height:28px;padding:0 10px;border-radius:14px;border:1px solid var(--border);background:#fff;cursor:pointer}.fc.on{background:var(--acc);border-color:var(--acc);color:#fff}
+textarea{font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--border);border-radius:var(--r-sm);resize:vertical;min-height:48px;width:100%;max-width:280px}
+.sv{font:inherit;font-size:13px;font-weight:700;height:32px;padding:0 14px;border-radius:var(--r-full);border:0;background:var(--acc);color:#fff;cursor:pointer}
+.sm{font-size:12px;color:#166534;font-weight:600}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:var(--r-full);background:var(--text);color:#fff;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}.toast.show{opacity:1}
+.fw{font-size:12px;color:var(--muted);background:var(--s1);border-radius:var(--r-sm);padding:6px 10px;margin-bottom:12px;display:inline-block}
+</style>
+<div class="w">
+<h1>규칙 미리보기 <span class="cnt" id="cnt">0/8</span></h1>
+<p class="sub">확정된 디자인 토큰과 컴포넌트 규칙이에요</p>
+<button class="aa" id="aa">전체 추천대로 할게요</button>
+<div class="fw" id="fw" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div id="sections"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 ===== */
+const DATA = {
+  tokens: {
+    bg:"#FFFFFF",s1:"#F5F5F7",s2:"#E9E9EE",text:"#111827",muted:"#6B7280",border:"#E5E7EB",
+    acc:"#2563EB",accP:"#1D4ED8",accS:"rgba(37,99,235,.1)",danger:"#DC2626",
+    radius:{sm:4,md:8,lg:12,full:9999},
+    shadow:{sm:"0 1px 2px rgba(0,0,0,.06)",md:"0 4px 12px rgba(0,0,0,.08)"},
+    type:{display:"24px/600",h1:"20px/600",h2:"17px/600",body:"15px/400",bodySm:"14px/400",caption:"12px/400",label:"13px/500"}
+  },
+  sections: [
+    {id:1, title:"색 토큰", desc:"앱 전체에서 쓰이는 색", render:"colors"},
+    {id:2, title:"타이포그래피", desc:"글자 크기와 무게", render:"type"},
+    {id:3, title:"버튼", desc:"크기와 상태", render:"buttons"},
+    {id:4, title:"아이콘", desc:"lucide 단일 세트", render:"icons"},
+    {id:5, title:"카드", desc:"목록 항목 카드", render:"card"},
+    {id:6, title:"입력", desc:"텍스트 필드와 에러", render:"input"},
+    {id:7, title:"시트·다이얼로그", desc:"바텀시트와 확인 다이얼로그", render:"sheet"},
+    {id:8, title:"빈·로딩·실패", desc:"상태별 화면", render:"states"}
+  ],
+  domainText: {title:"항목 제목", sub:"설명 텍스트", long:"이것은 긴 제목의 예시입니다 — 두 줄까지 표시됩니다"}
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const $=s=>document.querySelector(s);const LS='rules-fb';let db=null,dbR=false;const FB={};let tT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+const T=DATA.tokens;const D=DATA.domainText;
+const renderers={
+  colors(){const cs=[{n:'bg',v:T.bg},{n:'surface-1',v:T.s1},{n:'surface-2',v:T.s2},{n:'text',v:T.text},{n:'muted',v:T.muted},{n:'border',v:T.border},{n:'accent',v:T.acc},{n:'danger',v:T.danger}];return`<div class="g">${cs.map(c=>`<div class="sw" style="background:${c.v};color:${c.v===T.bg||c.v===T.s1||c.v===T.s2||c.v===T.border?T.text:'#fff'}">${esc(c.n)}<span>${esc(c.v)}</span></div>`).join('')}</div>`;},
+  type(){const roles=Object.entries(T.type);return roles.map(([k,v])=>{const [sz,wt]=v.split('/');return`<div class="tr"><span class="tl">${k}</span><span style="font-size:${sz};font-weight:${wt}">${esc(D.title)}</span></div>`;}).join('');},
+  buttons(){return`<p style="font-size:12px;color:var(--muted);margin:0 0 8px">primary · secondary · danger</p><div class="br"><button class="b bm bp">확인</button><button class="b bm b2">취소</button><button class="b bm bd">삭제</button></div><p style="font-size:12px;color:var(--muted);margin:0 0 8px">pressed · disabled</p><div class="br"><button class="b bm bp" style="background:${T.accP}">눌림</button><button class="b bm bp bx">비활성</button></div>`;},
+  icons(){return`<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--s1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg> 뒤로 (24px)</div><div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--s1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg> 검색 (20px)</div><div style="display:flex;align-items:center;gap:8px;padding:8px 0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg> 오류 (16px)</div>`;},
+  card(){return`<div class="g"><div class="cd"><h3>${esc(D.long)}</h3><p>${esc(D.sub)}</p><p style="margin-top:8px"><span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:#FEF3C7;color:#92400E">진행 중</span></p></div></div>`;},
+  input(){return`<div style="margin-bottom:12px"><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px;font-weight:600">이름</label><input class="inp" value="${esc(D.title)}" readonly></div><div><label style="font-size:12px;color:var(--muted);display:block;margin-bottom:4px;font-weight:600">이메일</label><input class="inp ie" value="user@" readonly><div class="em">올바른 이메일을 입력해 주세요</div></div>`;},
+  sheet(){return`<div class="g" style="align-items:flex-end"><div class="sht"><div class="sht-g"></div><div class="sht-h">옵션 선택</div><div style="padding:8px 0;border-bottom:1px solid var(--s1)">옵션 A</div><div style="padding:8px 0">옵션 B</div></div><div class="dlg"><h3>확인할까요?</h3><p>이 작업은 되돌릴 수 없어요</p><div style="display:flex;gap:8px"><button class="b bm b2" style="flex:1">취소</button><button class="b bm bp" style="flex:1">확인</button></div></div></div>`;},
+  states(){return`<div class="g"><div class="ey"><div style="font-size:48px;opacity:.3;margin-bottom:12px">📭</div><div style="font-size:16px;font-weight:700;margin-bottom:8px">아직 없어요</div><button class="b bm bp">새로 만들기</button></div><div style="background:#fff;border-radius:var(--r-lg);padding:var(--sp);box-shadow:var(--sh-sm);width:180px"><div class="sk" style="width:60%"></div><div class="sk" style="width:100%;height:40px"></div><div class="sk" style="width:80%"></div></div><div style="background:#fff;border-radius:var(--r-lg);padding:var(--sp);box-shadow:var(--sh-sm);width:180px;text-align:center"><div style="font-size:24px;color:var(--danger);margin-bottom:8px">⚠</div><div style="font-size:14px;margin-bottom:4px">불러올 수 없어요</div><button class="b" style="font-size:13px;height:32px;padding:0 12px;border-radius:var(--r-md);background:var(--s1)">다시 시도</button></div></div>`;}
+};
+function render(){
+  const el=$('#sections');
+  el.innerHTML=DATA.sections.map(s=>`<section class="sec" data-sec="${s.id}"><h2>${s.id}. ${esc(s.title)}</h2><p class="d">${esc(s.desc)}</p>${renderers[s.render]()}<div class="fs" data-fb="${s.id}"></div></section>`).join('');
+  el.querySelectorAll('.fs').forEach(fs=>{const n=fs.dataset.fb;fs.innerHTML=`<button class="fc" data-c="${n}">어색한 부분이 있어요</button><div data-dt="${n}" hidden style="margin-top:8px;display:flex;flex-direction:column;gap:6px"><textarea data-tx="${n}" placeholder="어디가 어색한지 적어 주세요"></textarea><div><button class="sv" data-sv="${n}">저장</button> <span class="sm" data-sm="${n}"></span></div></div>`;});
+}
+document.addEventListener('click',e=>{const c=e.target.closest('[data-c]');if(c){const n=c.dataset.c,d=document.querySelector(`[data-dt="${n}"]`);d.hidden=!d.hidden;c.classList.toggle('on',!d.hidden);}});
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-sv]');if(!b)return;const n=b.dataset.sv,tx=(document.querySelector(`[data-tx="${n}"]`)||{}).value||'',doc={unit:'section',n:+n,reaction:tx.trim()?'fix':'good',text:tx.trim(),updatedAt:new Date().toISOString()};try{await ps(`feedback/section-${n}`,doc);FB[n]=doc;uc();document.querySelector(`[data-sm="${n}"]`).textContent='저장됨 ✓';toast('저장됨 ✓');}catch(_){toast('저장 실패');}});
+$('#aa').addEventListener('click',async()=>{let ok=0;const total=DATA.sections.length;for(let i=0;i<total;i++){const s=DATA.sections[i];if(FB[s.id])continue;const doc={unit:'section',n:s.id,reaction:'good',text:'',updatedAt:new Date().toISOString()};try{await ps(`feedback/section-${s.id}`,doc);FB[s.id]=doc;ok++;}catch(_){}}uc();toast(`${ok}개 섹션 저장`);});
+function uc(){$('#cnt').textContent=`${Object.keys(FB).length}/${DATA.sections.length}`;}
+async function ps(p,d){if(dbR&&db)await db.doc(p).set(d);else{let a={};try{a=JSON.parse(localStorage.getItem(LS)||'{}');}catch(_){}a[p]=d;try{localStorage.setItem(LS,JSON.stringify(a));}catch(_){throw{code:'unavailable'};}}}
+(async()=>{try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(_){db=null;}
+if(db){dbR=true;try{const s=await db.collection('feedback').get();s.docs.forEach(d=>{const m=/^section-(\d+)$/.exec(d.id);if(m)FB[m[1]]=d.data();});uc();}catch(_){}}
+else{$('#fw').hidden=false;let a={};try{a=JSON.parse(localStorage.getItem(LS)||'{}');}catch(_){}Object.entries(a).forEach(([p,d])=>{const m=/section-(\d+)$/.exec(p);if(m)FB[m[1]]=d;});uc();}
+render();})();
+</script>

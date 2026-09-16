@@ -1,0 +1,85 @@
+<title>취향 시안</title>
+<style>
+:root{color-scheme:light only;--bg:#F7F8FA;--s1:#EEF0F3;--text:#1F2937;--muted:#6B7280;--border:#E5E7EB;--acc:#2F6BFF;--r:12px;--sp:20px}
+html,body{background:var(--bg)}body{margin:0;color:var(--text);font:15px/1.5 "Pretendard",-apple-system,system-ui,sans-serif}*{box-sizing:border-box}
+.w{max-width:1280px;margin:0 auto;padding:var(--sp) var(--sp) 80px}
+h1{font-size:28px;font-weight:700;margin:0 0 4px}.sub{color:var(--muted);margin:0 0 24px}
+.cnt{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:#EEF3FF;border-radius:14px;padding:3px 12px;margin-left:8px}
+.ax{margin-bottom:48px}.ax h2{font-size:20px;font-weight:600;margin:0 0 2px}.ax h2 small{font-weight:400;color:var(--muted);font-size:13px;margin-left:8px}
+.reco{font-size:14px;color:var(--muted);margin:0 0 16px}.reco b{color:#166534}
+.row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.var{cursor:pointer;border:3px solid transparent;border-radius:20px;padding:8px;transition:border-color .15s}.var.on{border-color:var(--acc)}.var figcaption{text-align:center;font-size:14px;font-weight:600;margin-top:8px}
+.phone{width:390px;height:844px;border-radius:44px;overflow:hidden;position:relative;display:flex;flex-direction:column;border:3px solid #D1D5DB;box-shadow:0 8px 30px rgba(0,0,0,.08);transform:scale(0.55);transform-origin:top center;margin-bottom:-380px}
+.ph-st{height:44px;display:flex;align-items:center;justify-content:space-between;padding:14px 28px 0;font-size:15px;font-weight:600;flex-shrink:0}
+.ph-ab{height:56px;display:flex;align-items:center;padding:0 16px;flex-shrink:0;font-size:17px;font-weight:700}
+.ph-bd{flex:1;overflow:hidden;padding:16px}
+.ph-card{border-radius:12px;padding:16px;margin-bottom:12px}.ph-card h3{font-size:15px;font-weight:600;margin:0 0 4px}.ph-card p{font-size:13px;margin:4px 0 0}
+.ph-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px}
+.ph-tb{height:54px;display:flex;flex-shrink:0}.ph-tb div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px}
+.ph-hi{height:34px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;flex-shrink:0}.ph-hi span{width:134px;height:5px;border-radius:3px;background:#000;display:block}
+.lb{position:absolute;top:4px;left:4px;width:22px;height:22px;border-radius:50%;background:rgba(47,107,255,.12);color:var(--acc);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--text);color:#fff;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}.toast.show{opacity:1}
+.fw{font-size:12px;color:var(--muted);background:var(--s1);border-radius:8px;padding:6px 10px;margin-bottom:12px;display:inline-block}
+@media(max-width:800px){.row{flex-direction:column;align-items:center}.phone{transform:scale(0.45);margin-bottom:-460px}}
+</style>
+<div class="w">
+<h1>취향 시안 <span class="cnt" id="cnt">0/2</span></h1>
+<p class="sub">마음에 드는 화면을 눌러 주세요</p>
+<div class="fw" id="fw" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div id="axes"></div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 ===== */
+const DATA = {
+  axes: [
+    {id:1, name:"밝기·색온도", desc:"바탕이 어떤 톤인지", recommend:"A", recommendWhy:"기본값 — 중립 라이트",
+     variants:[
+       {v:"A", label:"라이트 중립", css:{bg:"#FFFFFF",s1:"#F5F5F7",text:"#111827",muted:"#6B7280",border:"#E5E7EB",acc:"#2563EB"}},
+       {v:"B", label:"라이트 따뜻", css:{bg:"#FDFBF7",s1:"#F5F0E8",text:"#1F1B16",muted:"#8C8278",border:"#E7E0D4",acc:"#2563EB"}},
+       {v:"C", label:"다크 차가움", css:{bg:"#0F1115",s1:"#181B22",text:"#E6E8EC",muted:"#6B7280",border:"#2A2F3A",acc:"#60A5FA"}}
+     ]},
+    {id:4, name:"강조색", desc:"눌러야 할 버튼 색", recommend:"A", recommendWhy:"차분한 단일 강조",
+     variants:[
+       {v:"A", label:"차분한 블루", css:{acc:"#2563EB"}},
+       {v:"B", label:"선명한 그린", css:{acc:"#16A34A"}},
+       {v:"C", label:"무채 강조", css:{acc:"#111827"}}
+     ]}
+  ],
+  phone: {appbar:"화면 A", cards:[{title:"항목 1",sub:"설명 텍스트",badge:"진행 중",badgeStyle:"background:#FEF3C7;color:#92400E"}], tabbar:["화면 A","탐색","설정"]}
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const $=s=>document.querySelector(s);const LS='taste-fb';let db=null,dbR=false;const FB={};let tT;
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2000);}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function renderPhone(css,phone){
+  const c={bg:'#FFFFFF',s1:'#F5F5F7',text:'#111827',muted:'#6B7280',border:'#E5E7EB',acc:'#2563EB',...css};
+  const cards=phone.cards.map(cd=>`<div class="ph-card" style="background:${c.bg};border:1px solid ${c.border}"><h3 style="color:${c.text}">${esc(cd.title)}</h3><p style="color:${c.muted}">${esc(cd.sub)}</p>${cd.badge?`<p style="margin-top:8px"><span class="ph-badge" style="${cd.badgeStyle||''}">${esc(cd.badge)}</span></p>`:''}</div>`).join('');
+  const tabs=phone.tabbar.map((t,i)=>`<div style="color:${i===0?c.acc:c.muted};${i===0?'font-weight:700':''}">${esc(t)}</div>`).join('');
+  return `<div class="phone" style="background:${c.bg};color:${c.text}"><div class="ph-st"><span>9:41</span><span style="font-size:12px;color:${c.muted}">━━ ▓▓</span></div><div class="ph-ab" style="border-bottom:1px solid ${c.border}"><span class="lb">①</span>${esc(phone.appbar)}</div><div class="ph-bd" style="background:${c.s1}">${cards}</div><div class="ph-tb" style="border-top:1px solid ${c.border}">${tabs}</div><div class="ph-hi"><span></span></div></div>`;
+}
+function render(){
+  let html='';
+  DATA.axes.forEach(ax=>{
+    html+=`<section class="ax" data-axis="${ax.id}"><h2>${esc(ax.name)} <small>${esc(ax.desc)}</small></h2><p class="reco"><b>추천: ${esc(ax.recommend)}</b> — ${esc(ax.recommendWhy)}</p><div class="row">`;
+    ax.variants.forEach(vr=>{
+      const baseCss=DATA.axes[0].variants.find(v=>v.v===(FB[`axis-${DATA.axes[0].id}`]?.best||DATA.axes[0].recommend))?.css||{};
+      const css={...baseCss,...vr.css};
+      html+=`<figure class="var${FB[`axis-${ax.id}`]?.best===vr.v?' on':''}" data-v="${vr.v}" data-ax="${ax.id}">${renderPhone(css,DATA.phone)}<figcaption>${vr.v} · ${esc(vr.label)}</figcaption></figure>`;
+    });
+    html+=`</div></section>`;
+  });
+  $('#axes').innerHTML=html;
+  document.querySelectorAll('.var').forEach(fig=>fig.addEventListener('click',async()=>{
+    const ax=+fig.dataset.ax,v=fig.dataset.v,axData=DATA.axes.find(a=>a.id===ax);
+    fig.closest('.ax').querySelectorAll('.var').forEach(f=>f.classList.remove('on'));fig.classList.add('on');
+    const doc={unit:"axis",n:ax,best:v,text:v===axData.recommend?"추천대로":"직접 선택",updatedAt:new Date().toISOString()};
+    try{await ps(`feedback/axis-${ax}`,doc);FB[`axis-${ax}`]=doc;uc();toast('저장됨 ✓');}catch(e){toast('저장 실패');}
+  }));
+}
+function uc(){$('#cnt').textContent=`${Object.keys(FB).length}/${DATA.axes.length}`;}
+async function ps(p,d){if(dbR&&db)await db.doc(p).set(d);else{let a={};try{a=JSON.parse(localStorage.getItem(LS)||'{}');}catch(_){}a[p]=d;try{localStorage.setItem(LS,JSON.stringify(a));}catch(_){throw{code:'unavailable'};}}}
+(async()=>{try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(_){db=null;}
+if(db){dbR=true;try{const s=await db.collection('feedback').get();s.docs.forEach(d=>{if(d.id.startsWith('axis-'))FB[d.id]=d.data();});uc();}catch(_){}}
+else{$('#fw').hidden=false;let a={};try{a=JSON.parse(localStorage.getItem(LS)||'{}');}catch(_){}Object.entries(a).forEach(([p,d])=>{const k=p.replace('feedback/','');if(k.startsWith('axis-'))FB[k]=d;});uc();}render();})();
+</script>

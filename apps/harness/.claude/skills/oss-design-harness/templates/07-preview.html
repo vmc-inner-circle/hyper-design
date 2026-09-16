@@ -1,0 +1,271 @@
+<title>최종 미리보기</title>
+<style>
+:root{--c-bg:#FFFFFF;--c-s1:#F5F5F7;--c-tx:#111827;--c-mu:#6B7280;--c-bd:#E5E7EB;--c-ac:#2563EB;--c-rd:8px;--c-rf:9999px;--c-at:color-mix(in srgb,var(--c-ac) 12%,var(--c-bg));--ff:"Pretendard",-apple-system,"Apple SD Gothic Neo",Roboto,system-ui,sans-serif;--pg-bg:#F3F4F6;--pg-cd:#FFFFFF;--pg-tx:#111827;--pg-mu:#6B7280;--pg-bd:#E5E7EB;--pg-sf:#EEF0F3}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--pg-bg:#111827;--pg-cd:#1F2937;--pg-tx:#F3F4F6;--pg-mu:#9CA3AF;--pg-bd:#374151;--pg-sf:#1F2937}}
+:root[data-theme="dark"]{--pg-bg:#111827;--pg-cd:#1F2937;--pg-tx:#F3F4F6;--pg-mu:#9CA3AF;--pg-bd:#374151;--pg-sf:#1F2937}
+html,body{background:var(--pg-bg)}
+body{margin:0;color:var(--pg-tx);font:14px/1.5 var(--ff)}
+*{box-sizing:border-box}
+.wrap{max-width:1100px;margin:0 auto;padding:20px 24px 80px}
+h1{font-size:22px;margin:0}
+.counter{display:inline-block;font-size:13px;font-weight:600;color:var(--c-ac);background:var(--c-at);border-radius:14px;padding:3px 12px;vertical-align:4px;margin-left:8px}
+.sub{color:var(--pg-mu);margin:4px 0 16px;font-size:14px}
+.fb-warn{font-size:12px;color:var(--pg-mu);background:var(--pg-sf);border-radius:var(--c-rd);padding:6px 10px;margin-bottom:12px;display:inline-block}
+.summary{background:var(--pg-cd);border:1px solid var(--pg-bd);border-radius:12px;padding:20px 24px;margin-bottom:32px}
+.summary h2{font-size:16px;font-weight:700;margin:0 0 12px;color:var(--c-ac)}
+.s-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.s-item{font-size:13px;display:flex;gap:8px}
+.s-item .sk{color:var(--pg-mu);min-width:56px}
+.s-item .sv{font-weight:600}
+.sc-sec{margin-bottom:48px}
+.sc-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sc-n{display:inline-flex;width:28px;height:28px;border-radius:50%;background:var(--c-ac);color:#fff;font-size:14px;font-weight:800;align-items:center;justify-content:center;flex-shrink:0}
+.sc-name{font-size:18px;font-weight:700}
+.sc-sub{font-size:13px;color:var(--pg-mu);margin:0 0 16px}
+.sc-grid{display:grid;grid-template-columns:132px 390px minmax(0,1fr);gap:24px;align-items:start}
+.strip{position:sticky;top:12px;display:flex;flex-direction:column;gap:8px;width:132px}
+.strip-label{font-size:11px;font-weight:700;color:var(--pg-mu);text-align:center}
+.r-btn,.sv-btn{font:inherit;font-size:13px;font-weight:700;height:36px;width:132px;padding:0;border-radius:var(--c-rd);cursor:pointer}
+.r-btn{border:1px solid var(--pg-bd);background:var(--pg-cd);color:var(--pg-tx)}
+.r-btn.on-ok{background:#D1FAE5;border-color:#166534;color:#166534}
+.r-btn.on-fix{background:#FEF3C7;border-color:#92400E;color:#92400E}
+.sv-btn{border:0;background:var(--c-ac);color:#fff}
+.sv-msg{font-size:11px;font-weight:600;color:#166534;text-align:center;min-height:14px}
+.ph-area{display:flex;flex-direction:column;gap:16px;align-items:flex-start}
+.phone{width:390px;height:844px;border-radius:40px;background:var(--c-bg);overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 4px 12px rgba(0,0,0,.08);border:3px solid var(--c-bd);flex-shrink:0}
+.ph-st{height:44px;display:flex;align-items:center;justify-content:space-between;padding:14px 28px 0;font:600 15px/1 var(--ff);flex-shrink:0;color:var(--c-tx)}
+.ph-st-r{font:400 12px/1 var(--ff);letter-spacing:2px;color:var(--c-mu)}
+.ph-ab{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid var(--c-bd);flex-shrink:0;position:relative}
+.ph-ab-t{font:600 17px/1.3 var(--ff);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--c-tx)}
+.ph-bd{flex:1;overflow-y:auto;background:var(--c-s1);position:relative}
+.ph-pad{padding:16px}
+.ph-cta{height:56px;display:flex;align-items:center;padding:0 20px;border-top:1px solid var(--c-bd);flex-shrink:0;position:relative}
+.ph-btn-p{width:100%;height:44px;border-radius:var(--c-rd);border:0;font:700 15px/1 var(--ff);cursor:default;background:var(--c-ac);color:#fff}
+.ph-tb{height:54px;display:flex;border-top:1px solid var(--c-bd);flex-shrink:0;position:relative}
+.ph-tb-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:400 11px/1 var(--ff);color:var(--c-mu)}
+.ph-tb-i.on{color:var(--c-ac);font-weight:700}
+.ph-tb-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.5}
+.ph-tb-i.on .ph-tb-dot{opacity:1}
+.ph-hi{height:34px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;flex-shrink:0}
+.ph-hi-b{width:134px;height:5px;border-radius:3px;background:var(--c-tx);opacity:.25}
+.ph-card{background:var(--c-bg);border:1px solid var(--c-bd);border-radius:var(--c-rd);padding:14px;margin-bottom:10px;position:relative}
+.ph-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.ph-card-t{font:700 15px/1.3 var(--ff);color:var(--c-tx)}
+.ph-card-sub{font:400 13px/1.4 var(--ff);color:var(--c-mu)}
+.ph-badge{display:inline-flex;align-items:center;font:700 11px/1 var(--ff);padding:4px 9px;border-radius:var(--c-rf);white-space:nowrap;flex-shrink:0}
+.ph-field{margin-bottom:12px}
+.ph-field-l{display:block;font:600 12px/1 var(--ff);color:var(--c-mu);margin-bottom:6px}
+.ph-field-v{height:44px;border:1px solid var(--c-bd);border-radius:var(--c-rd);padding:0 12px;font:400 15px/44px var(--ff);background:var(--c-bg);color:var(--c-tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ph-text{font:400 14px/1.6 var(--ff);color:var(--c-tx);margin:0 0 12px}
+.comp{background:var(--pg-cd);border:1px solid var(--pg-bd);border-radius:12px;padding:16px;min-width:0}
+.comp h3{font:700 13px/1 var(--ff);color:var(--pg-mu);margin:0 0 12px;text-transform:uppercase}
+.comp-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--pg-bd);font:400 13px/1.5 var(--ff)}
+.comp-row:last-child{border-bottom:0}
+.comp-n{width:22px;height:22px;border-radius:50%;background:var(--c-at);color:var(--c-ac);font:800 11px/22px var(--ff);text-align:center;flex-shrink:0}
+.comp-label{font-weight:700;color:var(--pg-tx)}
+.comp-empty{color:var(--pg-mu);font-size:13px}
+.thumbs{display:flex;gap:10px;flex-wrap:wrap}
+.thumb{width:130px;text-align:center;background:var(--pg-cd);border:1px solid var(--pg-bd);border-radius:12px;padding:12px 10px}
+.thumb-ic{width:26px;height:26px;border-radius:50%;background:var(--pg-sf);color:var(--pg-mu);font:700 12px/26px var(--ff);margin:0 auto 8px}
+.thumb-name{font:700 12px/1.3 var(--ff);color:var(--pg-tx);margin-bottom:4px}
+.thumb-desc{font:400 11px/1.4 var(--ff);color:var(--pg-mu)}
+.fb-det{background:var(--pg-cd);border:1px solid var(--pg-bd);border-radius:12px;padding:16px;margin-top:16px}
+.fb-det h4{font:700 13px/1 var(--ff);color:var(--pg-mu);margin:0 0 10px}
+.fb-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.fb-chip{font:inherit;font-size:12px;font-weight:600;height:28px;padding:0 10px;border-radius:14px;border:1px solid var(--pg-bd);background:var(--pg-cd);color:var(--pg-tx);cursor:pointer}
+.fb-chip.on{background:var(--c-ac);border-color:var(--c-ac);color:#fff}
+textarea{width:100%;font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid var(--pg-bd);border-radius:var(--c-rd);resize:vertical;color:var(--pg-tx);background:var(--pg-cd);min-height:60px}
+.bottom{text-align:center;padding:32px 0 16px;border-top:1px solid var(--pg-bd);margin-top:32px}
+.go-btn{font:inherit;font-size:16px;font-weight:800;height:52px;padding:0 32px;border-radius:12px;border:0;background:var(--c-ac);color:#fff;cursor:pointer}
+.go-btn:disabled,.sv-btn:disabled{opacity:.4;cursor:default}
+.go-msg{font:400 13px/1.5 var(--ff);color:var(--pg-mu);margin-top:8px}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--pg-tx);color:var(--pg-bg);font:600 13px/1 var(--ff);opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+@media(max-width:1100px){.sc-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}.strip{position:static;flex-direction:row;flex-wrap:wrap;width:auto;align-items:center;gap:8px}.r-btn,.sv-btn{width:auto;flex:1;min-width:96px}.ph-area{align-items:center}.comp{margin-top:16px;width:100%}.s-grid{grid-template-columns:1fr}.thumbs{justify-content:center}}
+</style>
+<div class="wrap">
+<h1 id="pageTitle">최종 미리보기 <span class="counter" id="counter">의견 남긴 항목 0개</span></h1>
+<p class="sub" id="pageSub"></p>
+<div class="fb-warn" id="fbWarn" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div class="summary" id="summary" hidden><h2>이렇게 정했어요</h2><div class="s-grid" id="summaryGrid"></div></div>
+<div id="screens"></div>
+<div class="bottom">
+<button class="go-btn" id="goBtn" disabled>이대로 Figma로 만들어 주세요</button>
+<div class="go-msg" id="goMsg">모든 화면에 괜찮아요를 눌러야 활성화돼요</div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 ===== */
+const DATA = {
+  title: "최종 미리보기",
+  subtitle: "이대로 Figma로 만들어도 되는지 확인해 주세요",
+  summary: [
+    {label:"색온도", value:"라이트 중립"}, {label:"밀도", value:"comfortable"},
+    {label:"형태", value:"soft"}, {label:"강조색", value:"차분한 블루"}
+  ],
+  tokens: {bg:"#FFFFFF", s1:"#F5F5F7", text:"#111827", muted:"#6B7280", border:"#E5E7EB", acc:"#2563EB", radius:"8px", radiusFull:"9999px"},
+  screens: [
+    {id:"home", name:"화면 A", desc:"목록형 화면 예시",
+     areas:[{n:"①",name:"앱바"},{n:"②",name:"목록"},{n:"③",name:"탭바"}],
+     phone:{appbar:"화면 A", content:[
+       {type:"card", title:"항목 1", sub:"설명 텍스트", badge:"진행 중", badgeColor:"#FEF3C7,#92400E"},
+       {type:"card", title:"항목 2", sub:"설명 텍스트", badge:"완료", badgeColor:"#D1FAE5,#166534"},
+       {type:"card", title:"항목 3", sub:"설명 텍스트"}
+     ], cta:"새로 만들기", tabbar:["화면 A","화면 B","설정"]},
+     states:[{name:"빈 상태", desc:"안내와 시작 버튼"}, {name:"에러", desc:"이유와 재시도 버튼"}]},
+    {id:"detail", name:"화면 B", desc:"상세형 화면 예시",
+     areas:[{n:"①",name:"앱바"},{n:"②",name:"정보"},{n:"③",name:"버튼"}],
+     phone:{appbar:"항목 1", content:[
+       {type:"field", label:"이름", value:"사용자"},
+       {type:"field", label:"상태", value:"진행 중"},
+       {type:"text", value:"항목 하나의 세부 정보"}
+     ], cta:"저장", tabbar:null},
+     states:[{name:"빈 상태", desc:"정보 없을 때"}, {name:"에러", desc:"불러오기 실패 시"}]}
+  ]
+};
+/* ===== 아래는 손대지 않는다 ===== */
+const DEFAULT_TOKENS={bg:"#FFFFFF",s1:"#F5F5F7",text:"#111827",muted:"#6B7280",border:"#E5E7EB",acc:"#2563EB",radius:"8px",radiusFull:"9999px"};
+const $=s=>document.querySelector(s);const $$=s=>[...document.querySelectorAll(s)];
+function esc(s){const d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
+function twoColors(s){const p=(s||'').split(',').map(x=>x.trim());return p.length===2&&/^#/.test(p[0])&&/^#/.test(p[1])?p:null;}
+let toastTimer;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2000);}
+function applyTokens(){
+  const t=Object.assign({},DEFAULT_TOKENS,DATA.tokens||{}),root=document.documentElement.style;
+  root.setProperty('--c-bg',t.bg);root.setProperty('--c-s1',t.s1);root.setProperty('--c-tx',t.text);
+  root.setProperty('--c-mu',t.muted);root.setProperty('--c-bd',t.border);root.setProperty('--c-ac',t.acc);
+  root.setProperty('--c-rd',t.radius);root.setProperty('--c-rf',t.radiusFull);
+}
+function renderContentItem(item){
+  item=item||{};
+  if(item.type==='field')return `<div class="ph-field"><span class="ph-field-l">${esc(item.label)}</span><div class="ph-field-v">${esc(item.value)}</div></div>`;
+  if(item.type==='text')return `<p class="ph-text">${esc(item.value||item.title)}</p>`;
+  let badgeHtml='';
+  if(item.badge){
+    const cc=twoColors(item.badgeColor);
+    const style=cc?`background:${cc[0]};color:${cc[1]}`:'background:var(--c-at);color:var(--c-ac)';
+    badgeHtml=`<span class="ph-badge" style="${style}">${esc(item.badge)}</span>`;
+  }
+  return `<div class="ph-card"><div class="ph-card-top"><span class="ph-card-t">${esc(item.title)}</span>${badgeHtml}</div>${item.sub?`<div class="ph-card-sub">${esc(item.sub)}</div>`:''}</div>`;
+}
+function renderPhone(sc){
+  const p=sc.phone||{};
+  let html=`<div class="ph-st"><span>9:41</span><span class="ph-st-r">&#9608;&#9608; &#9608;</span></div><div class="ph-ab"><span class="ph-ab-t">${esc(p.appbar||sc.name)}</span></div><div class="ph-bd"><div class="ph-pad">${(p.content||[]).map(renderContentItem).join('')}</div></div>`;
+  if(p.cta)html+=`<div class="ph-cta"><button class="ph-btn-p">${esc(p.cta)}</button></div>`;
+  if(p.tabbar&&p.tabbar.length)html+=`<div class="ph-tb">${p.tabbar.map((t,i)=>`<div class="ph-tb-i${i===0?' on':''}"><span class="ph-tb-dot"></span><span>${esc(t)}</span></div>`).join('')}</div>`;
+  html+='<div class="ph-hi"><div class="ph-hi-b"></div></div>';
+  return html;
+}
+function renderComp(sc){
+  const areas=sc.areas||[];
+  if(!areas.length)return '<div class="comp-empty">구성 정보가 없어요</div>';
+  return areas.map(a=>`<div class="comp-row"><span class="comp-n">${esc(a.n)}</span><span class="comp-label">${esc(a.name)}</span></div>`).join('');
+}
+function renderStates(sc){
+  const states=sc.states||[];
+  if(!states.length)return '';
+  return states.map((s,i)=>`<div class="thumb"><div class="thumb-ic">${i+1}</div><div class="thumb-name">${esc(s.name)}</div><div class="thumb-desc">${esc(s.desc||'')}</div></div>`).join('');
+}
+var FB={};var DRAFT={};var LS_KEY='preview-fb';var db=null,dbReady=false;
+function draft(id){
+  if(!DRAFT[id]){
+    const s=FB[id];
+    DRAFT[id]={reaction:s?s.reaction:null,marks:s?[].concat(s.marks||[]):[],markNames:s?[].concat(s.markNames||[]):[],text:s?s.text||'':''};
+  }
+  return DRAFT[id];
+}
+function renderSummary(){
+  const box=$('#summary'),grid=$('#summaryGrid'),items=DATA.summary||[];
+  if(!items.length){box.hidden=true;return;}
+  box.hidden=false;
+  grid.innerHTML=items.map(it=>`<div class="s-item"><span class="sk">${esc(it.label)}</span><span class="sv">${esc(it.value)}</span></div>`).join('');
+}
+function renderScreen(sc,idx){
+  const saved=FB[sc.id],d=draft(sc.id);
+  const reaction=d.reaction||(saved?saved.reaction:null);
+  const isFix=reaction==='fix';
+  let detailHtml='';
+  if(isFix){
+    const chipsHtml=(sc.areas||[]).map(a=>{
+      const on=(d.marks||[]).indexOf(a.n)>=0?' on':'';
+      return `<button class="fb-chip${on}" data-screen="${sc.id}" data-mark="${esc(a.n)}" data-markname="${esc(a.name)}">${esc(a.n)} ${esc(a.name)}</button>`;
+    }).join('');
+    detailHtml=`<div class="fb-det"><h4>어디를 고칠까요?</h4><div class="fb-chips">${chipsHtml}</div><textarea data-screen="${sc.id}" placeholder="자유롭게 적어 주세요">${esc(d.text||'')}</textarea></div>`;
+  }
+  const thumbs=renderStates(sc);
+  return `<section class="sc-sec" id="screen-${sc.id}"><div class="sc-hd"><span class="sc-n">${idx+1}</span><span class="sc-name">${esc(sc.name)}</span></div><div class="sc-sub">${esc(sc.desc||'')}</div><div class="sc-grid"><aside class="strip"><div class="strip-label">${esc(sc.name)}</div><button class="r-btn${reaction==='ok'?' on-ok':''}" data-screen="${sc.id}" data-react="ok">괜찮아요 &#128077;</button><button class="r-btn${reaction==='fix'?' on-fix':''}" data-screen="${sc.id}" data-react="fix">고칠 게 있어요 &#129300;</button><button class="sv-btn" data-screen="${sc.id}"${isFix?'':' disabled'}>저장</button><div class="sv-msg">${saved?'저장됨 &#10003;':''}</div></aside><div class="ph-area"><div class="phone">${renderPhone(sc)}</div>${thumbs?`<div class="thumbs">${thumbs}</div>`:''}</div><div class="comp"><h3>화면 구성</h3>${renderComp(sc)}</div></div>${detailHtml}</section>`;
+}
+function renderAll(){
+  $('#pageTitle').childNodes[0].nodeValue=(DATA.title||'최종 미리보기')+' ';
+  $('#pageSub').textContent=DATA.subtitle||'';
+  renderSummary();
+  const screens=DATA.screens||[];
+  $('#screens').innerHTML=screens.map((sc,i)=>renderScreen(sc,i)).join('');
+  bindEvents();
+  updateGoBtn();
+}
+function bindEvents(){
+  $$('.r-btn[data-react]').forEach(btn=>{btn.onclick=()=>handleReaction(btn.dataset.screen,btn.dataset.react);});
+  $$('.sv-btn[data-screen]').forEach(btn=>{btn.onclick=()=>saveFeedback(btn.dataset.screen);});
+  $$('.fb-chip[data-mark]').forEach(chip=>{
+    chip.onclick=()=>{
+      const d=draft(chip.dataset.screen);
+      if(!d.marks)d.marks=[];if(!d.markNames)d.markNames=[];
+      const idx=d.marks.indexOf(chip.dataset.mark);
+      if(idx>=0){d.marks.splice(idx,1);d.markNames.splice(idx,1);}
+      else{d.marks.push(chip.dataset.mark);d.markNames.push(chip.dataset.markname);}
+      renderAll();
+    };
+  });
+  $$('textarea[data-screen]').forEach(ta=>{ta.oninput=()=>{draft(ta.dataset.screen).text=ta.value;};});
+  $('#goBtn').onclick=()=>{if(!$('#goBtn').disabled)saveGo();};
+}
+function handleReaction(id,reaction){
+  const d=draft(id);d.reaction=reaction;
+  renderAll();
+  if(reaction==='ok')saveFeedback(id);
+}
+function findScreen(id){return (DATA.screens||[]).find(s=>s.id===id);}
+function buildDoc(id){
+  const sc=findScreen(id),idx=(DATA.screens||[]).indexOf(sc),d=draft(id);
+  return{unit:'screen',n:idx+1,label:sc?sc.name:id,reaction:d.reaction,remove:[],swap:{},marks:d.marks||[],markNames:d.markNames||[],text:(d.text||'').trim(),updatedAt:new Date().toISOString()};
+}
+function errMsg(e){const c=e&&e.code;if(c==='not_granted')return'저장 권한이 없어요';if(c==='quota_exceeded')return'저장 공간이 가득 찼어요';if(c==='resource_exhausted')return'잠시 뒤 다시 눌러 주세요';return'저장 실패, 다시 눌러 주세요';}
+async function persist(path,doc){
+  if(dbReady&&db){await db.doc(path).set(doc);}
+  else{let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}all[path]=doc;try{localStorage.setItem(LS_KEY,JSON.stringify(all));}catch(_){throw{code:'unavailable'};}}
+}
+async function saveFeedback(id){
+  const doc=buildDoc(id),path='feedback/screen-'+id;
+  try{await persist(path,doc);FB[id]=doc;delete DRAFT[id];updateCount();renderAll();toast('저장됨 ✓');}
+  catch(e){console.warn('save failed',e);toast(errMsg(e));}
+}
+async function saveGo(){
+  const doc={unit:'preview',n:0,label:'확정',text:'go',updatedAt:new Date().toISOString()};
+  try{await persist('feedback/preview-go',doc);toast('확정됨! Figma로 만들기를 시작할게요');$('#goBtn').disabled=true;$('#goMsg').textContent='확정됨!';}
+  catch(e){toast(errMsg(e));}
+}
+function updateCount(){$('#counter').textContent='의견 남긴 항목 '+Object.keys(FB).length+'개';}
+function updateGoBtn(){
+  const screens=DATA.screens||[];
+  const allOk=screens.length>0&&screens.every(sc=>FB[sc.id]&&FB[sc.id].reaction==='ok');
+  $('#goBtn').disabled=!allOk;
+  $('#goMsg').textContent=allOk?'모든 화면 확인 완료!':'모든 화면에 괜찮아요를 눌러야 활성화돼요';
+}
+function applyLoaded(pairs){
+  pairs.forEach(p=>{
+    const docId=p[0],data=p[1];if(!data)return;
+    const m=/^screen-(.+)$/.exec(docId);
+    if(m)FB[m[1]]=data;
+  });
+  updateCount();renderAll();
+}
+async function initFeedback(){
+  try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(e){db=null;}
+  if(db){dbReady=true;try{const snap=await db.collection('feedback').get();applyLoaded(snap.docs.map(d=>[d.id,d.data()]));}catch(e){console.warn('load failed',e);toast('저장된 의견을 불러오지 못했어요');}}
+  else{$('#fbWarn').hidden=false;let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}applyLoaded(Object.entries(all).map(e=>[e[0].replace(/^feedback\//,''),e[1]]));}
+}
+applyTokens();
+renderAll();
+initFeedback();
+</script>

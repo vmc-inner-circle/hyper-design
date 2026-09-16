@@ -1,0 +1,397 @@
+<title>레퍼런스</title>
+<style>
+:root{color-scheme:light only;
+  --bg:#F7F8FA;--card:#FFFFFF;--line:#E5E7EB;--ink:#1F2937;--sub:#6B7280;--soft:#EEF0F3;
+  --acc:#2F6BFF;--acc-d:#1F4ED8;--acc-bg:#EEF3FF;
+  --fail:#DC2626;--fail-bg:#FEE2E2;
+  --ok:#166534;--ok-bg:#D1FAE5;
+  --shadow:0 4px 24px rgba(0,0,0,.06);
+  --radius:16px}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--ink);font:14px/1.5 "Pretendard",-apple-system,"Apple SD Gothic Neo",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+
+/* Layout */
+.wrap{max-width:1100px;margin:0 auto;padding:20px 24px 72px}
+.hdr{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+h1{font-size:22px;margin:0;letter-spacing:-.01em}
+.counter{display:inline-block;font-size:13px;font-weight:600;color:var(--acc);background:var(--acc-bg);border-radius:14px;padding:3px 12px}
+.sub{color:var(--sub);margin:0 0 24px;font-size:14px}
+.fb-warn{font-size:12px;color:var(--sub);background:var(--soft);border-radius:8px;padding:6px 10px;margin-bottom:12px;display:inline-block}
+
+/* App section */
+.app-sec{display:grid;grid-template-columns:132px minmax(0,1fr);gap:24px;align-items:start;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--line)}
+.app-sec:last-child{border-bottom:0;margin-bottom:0}
+
+.strip{position:sticky;top:12px;display:flex;flex-direction:column;gap:10px;width:132px}
+.st-num{font-size:22px;font-weight:800;text-align:center;color:var(--acc)}
+.save{font:inherit;font-weight:700;font-size:14px;height:40px;width:132px;padding:0;border-radius:10px;border:0;background:var(--acc);color:#fff;cursor:pointer;transition:opacity .15s}
+.save:disabled{opacity:.5;cursor:default}
+.saved-msg{font-size:12px;font-weight:600;color:var(--ok);text-align:center;min-height:18px}
+
+.app-card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;overflow:hidden}
+.app-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+h2{font-size:18px;margin:0;display:flex;align-items:baseline;gap:8px}
+.app-tag{font-size:11px;font-weight:700;color:#fff;padding:2px 10px;border-radius:10px;white-space:nowrap}
+.app-link{font-size:13px;color:var(--acc);text-decoration:none;font-weight:600}
+.app-link:hover{text-decoration:underline}
+.app-reason{font-size:14px;color:var(--sub);margin:0 0 16px;line-height:1.6}
+
+/* Phone frame 390x844 */
+.screens{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px}
+.phone-wrap{flex-shrink:0;position:relative}
+.phone{width:390px;height:844px;border-radius:44px;background:var(--card);overflow:hidden;position:relative;border:3px solid var(--line);box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.phone img{width:100%;height:100%;object-fit:cover;display:block}
+.placeholder-shot{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--soft)}
+.placeholder-shot .ph-icon{width:56px;height:56px;border-radius:14px;background:var(--line);display:flex;align-items:center;justify-content:center;font-size:22px;color:var(--sub)}
+.placeholder-shot .ph-label{font-size:14px;font-weight:700;color:var(--sub)}
+
+/* Overlay badges */
+.ov-badge{position:absolute;width:28px;height:28px;border-radius:50%;background:rgba(47,107,255,.88);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;z-index:5;pointer-events:none;box-shadow:0 2px 6px rgba(47,107,255,.35)}
+
+/* Feedback */
+.feedback{max-width:560px}
+.rec-line{font-size:14px;font-weight:600;color:var(--acc);margin:0 0 10px;line-height:1.5;padding:8px 12px;background:var(--acc-bg);border-radius:10px}
+.accept-btn{font:inherit;font-size:14px;font-weight:700;height:40px;padding:0 20px;border-radius:10px;border:0;background:var(--ok-bg);color:var(--ok);cursor:pointer;margin-bottom:14px;display:block;transition:background .15s}
+.accept-btn:hover{filter:brightness(.92)}
+.accept-btn.done{opacity:.6;cursor:default}
+
+.comp-items{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:16px}
+.comp-item{background:var(--soft);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.comp-item-hd{display:flex;align-items:center;gap:8px}
+.comp-mark{width:24px;height:24px;border-radius:50%;background:var(--acc);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.comp-name{font-size:14px;font-weight:600;flex:1}
+.comp-reco{font-size:10px;font-weight:700;color:var(--ok);background:var(--ok-bg);border-radius:8px;padding:1px 7px}
+.comp-desc{font-size:13px;color:var(--sub);line-height:1.5;margin:0}
+
+/* Cycle chip: none -> want -> skip -> none */
+.chip-cycle{font:inherit;font-size:12px;font-weight:700;height:30px;padding:0 12px;border-radius:15px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;transition:all .15s;align-self:flex-start}
+.chip-cycle:hover{border-color:var(--acc)}
+.chip-cycle[data-state="want"]{border-color:var(--acc);background:var(--acc);color:#fff}
+.chip-cycle[data-state="skip"]{border-color:var(--fail);background:var(--fail-bg);color:#991B1B}
+
+textarea{width:100%;font:inherit;font-size:14px;line-height:1.5;padding:10px 12px;border:1px solid var(--line);border-radius:10px;resize:vertical;color:var(--ink);background:var(--card);min-height:60px;margin-top:8px}
+textarea::placeholder{color:#9CA3AF}
+
+/* Collapsed app wrapper */
+details.app-fold{margin-bottom:40px}
+details.app-fold summary{font-size:14px;font-weight:700;color:var(--acc);cursor:pointer;padding:12px 0;list-style:none}
+details.app-fold summary::-webkit-details-marker{display:none}
+details.app-fold summary::before{content:"\25B6";display:inline-block;margin-right:8px;font-size:10px;transition:transform .2s}
+details.app-fold[open] summary::before{transform:rotate(90deg)}
+details.app-fold .app-sec{margin-top:8px;margin-bottom:0;padding-bottom:0;border-bottom:0}
+
+/* Toast */
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);padding:8px 16px;border-radius:18px;background:var(--ink);color:var(--bg);font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:50}
+.toast.show{opacity:1}
+
+@media(max-width:900px){
+  .app-sec{grid-template-columns:1fr;gap:12px}
+  .strip{position:static;flex-direction:row;align-items:center;gap:12px;width:auto}
+  .st-num{font-size:16px}
+  .save{width:auto;padding:0 20px;flex-shrink:0}
+  .screens{flex-direction:column;align-items:center}
+  .comp-items{grid-template-columns:1fr}
+}
+@media(max-width:500px){
+  .wrap{padding:16px 16px 64px}
+  .phone{width:320px;height:693px;border-radius:36px}
+}
+@media(prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+
+<div class="wrap">
+<div class="hdr"><h1 id="title"></h1></div>
+<p class="sub" id="subtitle"></p>
+<div class="fb-warn" id="fbWarn" hidden>이 환경에서는 브라우저에만 저장돼요</div>
+<div id="appList"></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== 메인 에이전트가 채우는 유일한 블록 =====
+DATA = {
+  title:"레퍼런스", subtitle:"비슷한 앱에서 가져오고 싶은 부분을 골라 주세요",
+  recommended:["app-a","app-b","app-c"],   // 펼쳐서 보여줄 앱 id. 나머지는 접힘
+  apps:[
+    {id, name, tag, tagColor, link, why,
+     screenshots:[],   // data URI 배열, 비어있으면 placeholder
+     components:[ {n:"①", name, desc, recommend:true|false}, ... ]}
+  ]
+};
+프로젝트 실제 앱 이름 금지 — "앱 A/B/C/D" 형태로만 채운다.
+*/
+const DATA = {
+  title: "레퍼런스",
+  subtitle: "비슷한 앱에서 가져오고 싶은 부분을 골라 주세요",
+  recommended: ["app-a", "app-b", "app-c"],
+  apps: [
+    {id:"app-a", name:"앱 A", tag:"직접 경쟁", tagColor:"#2F6BFF",
+     link:"https://apps.apple.com/", why:"핵심 기능이 유사한 직접 경쟁 서비스",
+     screenshots:[],
+     components:[
+       {n:"①", name:"목록 뷰", desc:"항목을 한눈에 훑어보는 정렬 방식", recommend:true},
+       {n:"②", name:"상세 카드", desc:"항목을 눌렀을 때 정보가 배치되는 방식", recommend:false},
+       {n:"③", name:"색으로 구분", desc:"항목마다 색을 달리해 빠르게 구분", recommend:true},
+       {n:"④", name:"하단 탭 내비게이션", desc:"주요 화면을 하단 탭으로 전환", recommend:false}
+     ]},
+    {id:"app-b", name:"앱 B", tag:"간접 레퍼런스", tagColor:"#7C3AED",
+     link:"https://apps.apple.com/", why:"직접 경쟁은 아니지만 참고할 흐름이 있는 앱",
+     screenshots:[],
+     components:[
+       {n:"①", name:"진행률 대시보드", desc:"남은 일과 진행 상태를 홈에서 바로 확인", recommend:false},
+       {n:"②", name:"그룹 관리 목록", desc:"대상을 그룹으로 묶어 정리하고 상태를 한 줄로", recommend:true},
+       {n:"③", name:"회신 상태 추적", desc:"대기/완료/거절을 실시간으로 추적", recommend:true},
+       {n:"④", name:"체크리스트 카드", desc:"할 일을 카드로 정리하고 완료 체크", recommend:false}
+     ]},
+    {id:"app-c", name:"앱 C", tag:"같은 도메인", tagColor:"#059669",
+     link:"https://example.com", why:"같은 문제를 다른 방식으로 풀고 있는 앱",
+     screenshots:[],
+     components:[
+       {n:"①", name:"후보 선택 그리드", desc:"여러 후보를 그리드로 보여주고 체크", recommend:true},
+       {n:"②", name:"링크 한 번으로 참여", desc:"설치 없이 링크 하나로 바로 참여", recommend:true},
+       {n:"③", name:"결과 자동 집계", desc:"응답이 끝나면 가장 많이 겹치는 결과를 자동으로 계산", recommend:false}
+     ]},
+    {id:"app-d", name:"앱 D", tag:"참고", tagColor:"#6B7280",
+     link:"https://example.com", why:"부분적으로만 참고할 만한 앱",
+     screenshots:[],
+     components:[
+       {n:"①", name:"온보딩 슬라이드", desc:"처음 실행 시 기능을 소개하는 슬라이드", recommend:false},
+       {n:"②", name:"설정 화면 구성", desc:"설정 항목을 섹션별로 묶어 정리", recommend:false}
+     ]}
+  ]
+};
+/* ===== 아래는 손대지 않는다 ===== */
+
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let toastTimer;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2000);}
+function errMsg(e){const c=e&&e.code;if(c==='not_granted')return'저장 권한이 없어요';if(c==='revoked')return'접근이 끊겼어요';if(c==='quota_exceeded')return'저장 공간이 가득 찼어요';if(c==='resource_exhausted')return'잠시 뒤 다시 눌러 주세요';return'저장 실패, 다시 눌러 주세요';}
+function fmtAgo(iso){if(!iso)return'';const d=(Date.now()-new Date(iso).getTime())/1000;if(d<60)return'방금';if(d<3600)return Math.floor(d/60)+'분 전';if(d<86400)return Math.floor(d/3600)+'시간 전';return new Date(iso).toLocaleDateString('ko-KR');}
+
+const MARK_MAP={};
+DATA.apps.forEach(a=>a.components.forEach(c=>{MARK_MAP[a.id+'|'+c.n]=c.name;}));
+
+/* ===== STATE ===== */
+const FB={};
+const DRAFT={};
+const LS_KEY='ref-feedback';
+let db=null,dbReady=false;
+
+function draft(appId){
+  if(!DRAFT[appId]){
+    const fb=FB[appId];
+    DRAFT[appId]=fb?{take:[...(fb.marks||[])],worst:[...(fb.worst||[])],text:fb.text||'',reaction:fb.reaction||'custom'}:{take:[],worst:[],text:'',reaction:null};
+  }
+  return DRAFT[appId];
+}
+function chipState(d,mark){
+  if((d.take||[]).includes(mark))return'want';
+  if((d.worst||[]).includes(mark))return'skip';
+  return'none';
+}
+
+/* ===== RENDER ===== */
+function placeholderHtml(){
+  return `<div class="placeholder-shot"><div class="ph-icon">&#128241;</div><div class="ph-label">스크린샷</div></div>`;
+}
+function phoneHtml(app,shotIdx,withBadges){
+  const src=app.screenshots&&app.screenshots[shotIdx];
+  const inner=src?`<img src="${esc(src)}" alt="${esc(app.name)} 스크린샷 ${shotIdx+1}">`:placeholderHtml();
+  const n=app.components.length;
+  const badges=withBadges?app.components.map((c,i)=>{
+    const top=10+(n>1?i*(78/(n-1)):0);
+    return `<span class="ov-badge" style="top:${top}%;left:8%">${esc(c.n)}</span>`;
+  }).join(''):'';
+  return `<div class="phone-wrap"><div class="phone">${inner}${badges}</div></div>`;
+}
+function appCardHtml(app,idx){
+  const recComps=app.components.filter(c=>c.recommend);
+  const recLine=recComps.length?`추천: ${recComps.map(c=>c.n+' '+esc(c.name)).join(', ')}`:'';
+  const shotCount=(app.screenshots&&app.screenshots.length)||1;
+  let screensHtml='';
+  for(let i=0;i<shotCount;i++)screensHtml+=phoneHtml(app,i,i===0);
+  const compHtml=app.components.map(c=>`
+    <div class="comp-item">
+      <div class="comp-item-hd"><span class="comp-mark">${esc(c.n)}</span><span class="comp-name">${esc(c.name)}</span>${c.recommend?'<span class="comp-reco">추천</span>':''}</div>
+      <p class="comp-desc">${esc(c.desc)}</p>
+      <button class="chip-cycle" data-mark="${esc(c.n)}" data-state="none">선택 안 함</button>
+    </div>`).join('');
+  return `
+  <section class="app-sec" data-app="${esc(app.id)}" data-n="${idx+1}">
+    <div class="strip">
+      <span class="st-num">${idx+1}</span>
+      <button class="save" data-action="save" disabled>저장</button>
+      <div class="saved-msg"></div>
+    </div>
+    <div class="app-card">
+      <div class="app-hd">
+        <h2>${esc(app.name)} <span class="app-tag" style="background:${esc(app.tagColor||'#6B7280')}">${esc(app.tag||'')}</span></h2>
+        ${app.link?`<a class="app-link" href="${esc(app.link)}" target="_blank" rel="noopener">링크 &#8599;</a>`:''}
+      </div>
+      <p class="app-reason">${esc(app.why||'')}</p>
+      <div class="screens">${screensHtml}</div>
+      <div class="feedback">
+        ${recLine?`<div class="rec-line">${recLine}</div>`:''}
+        ${recComps.length?`<button class="accept-btn" data-action="accept">추천대로 할게요</button>`:''}
+        <div class="comp-items">${compHtml}</div>
+        <textarea data-field="text" placeholder="추가로 하고 싶은 말이 있으면 적어 주세요"></textarea>
+      </div>
+    </div>
+  </section>`;
+}
+function renderList(){
+  $('#title').innerHTML=`${esc(DATA.title)} <span class="counter" id="counter">의견 남긴 항목 0개</span>`;
+  $('#subtitle').textContent=DATA.subtitle||'';
+  const rec=new Set(DATA.recommended||[]);
+  $('#appList').innerHTML=DATA.apps.map((app,idx)=>{
+    const card=appCardHtml(app,idx);
+    return rec.has(app.id)?card:`<details class="app-fold"><summary>${esc(app.name)} 보기</summary>${card}</details>`;
+  }).join('');
+}
+function updateCount(){
+  const done=Object.keys(FB).length;
+  const c=$('#counter');if(c)c.textContent=`의견 남긴 항목 ${done}개`;
+}
+function renderSection(appId){
+  const sec=$(`[data-app="${appId}"]`);
+  if(!sec)return;
+  const fb=FB[appId];
+  const d=draft(appId);
+
+  const msg=sec.querySelector('.saved-msg');
+  msg.textContent=fb?`저장됨 ✓ ${fmtAgo(fb.updatedAt)}`:'';
+
+  const abtn=sec.querySelector('.accept-btn');
+  if(abtn){
+    if(fb&&fb.reaction==='good'){abtn.classList.add('done');abtn.textContent='추천대로 저장됨 ✓';}
+    else{abtn.classList.remove('done');abtn.textContent='추천대로 할게요';}
+  }
+
+  const state=fb?{take:fb.marks||[],worst:fb.worst||[]}:d;
+  sec.querySelectorAll('.chip-cycle').forEach(c=>{
+    const st=chipState(state,c.dataset.mark);
+    c.dataset.state=st;
+    c.textContent=st==='want'?'가져올래요':st==='skip'?'별로예요':'선택 안 함';
+  });
+
+  const ta=sec.querySelector('textarea');
+  if(ta&&document.activeElement!==ta)ta.value=fb&&!DRAFT[appId]?fb.text||'':d.text||'';
+
+  const saveBtn=sec.querySelector('.save');
+  const hasDraft=!!DRAFT[appId]&&((DRAFT[appId].take||[]).length||(DRAFT[appId].worst||[]).length||(DRAFT[appId].text||'').trim());
+  if(saveBtn)saveBtn.disabled=!hasDraft;
+}
+function renderAll(){DATA.apps.forEach(a=>renderSection(a.id));}
+
+/* ===== ACTIONS ===== */
+function buildDoc(appId){
+  const app=DATA.apps.find(a=>a.id===appId);
+  const d=draft(appId);
+  const take=[...(d.take||[])];
+  const worst=[...(d.worst||[])];
+  return{
+    unit:'app',n:DATA.apps.findIndex(a=>a.id===appId)+1,label:app.name,
+    reaction:d.reaction||'custom',
+    marks:take,markNames:take.map(m=>MARK_MAP[appId+'|'+m]||m),
+    worst:worst,worstNames:worst.map(m=>MARK_MAP[appId+'|'+m]||m),
+    text:(d.text||'').trim(),
+    updatedAt:new Date().toISOString()
+  };
+}
+async function persist(path,doc){
+  if(dbReady&&db){await db.doc(path).set(doc);}
+  else{
+    let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}
+    all[path]=doc;
+    try{localStorage.setItem(LS_KEY,JSON.stringify(all));}catch(_){throw{code:'unavailable',message:'localStorage fail'};}
+  }
+}
+async function saveFB(appId){
+  const doc=buildDoc(appId);
+  const path='feedback/app-'+appId;
+  try{
+    await persist(path,doc);
+    FB[appId]=doc;delete DRAFT[appId];
+    updateCount();renderSection(appId);
+    toast('저장됨 ✓');
+  }catch(e){console.warn('save',e);toast(errMsg(e));}
+}
+async function acceptRec(appId){
+  const app=DATA.apps.find(a=>a.id===appId);
+  const recMarks=app.components.filter(c=>c.recommend).map(c=>c.n);
+  if(!recMarks.length)return;
+  const d=draft(appId);
+  d.reaction='good';d.take=[...recMarks];d.worst=[];d.text=d.text||'';
+  await saveFB(appId);
+}
+
+/* ===== EVENTS ===== */
+document.addEventListener('click',e=>{
+  if(e.target.matches('[data-action="accept"]')){
+    const sec=e.target.closest('.app-sec');
+    if(sec)acceptRec(sec.dataset.app);
+    return;
+  }
+  if(e.target.matches('[data-action="save"]')){
+    const sec=e.target.closest('.app-sec');
+    if(sec)saveFB(sec.dataset.app);
+    return;
+  }
+  if(e.target.matches('.chip-cycle')){
+    const sec=e.target.closest('.app-sec');
+    if(!sec)return;
+    const appId=sec.dataset.app;
+    const d=draft(appId);
+    const mark=e.target.dataset.mark;
+    if(!d.take)d.take=[];if(!d.worst)d.worst=[];
+    const inTake=d.take.includes(mark),inWorst=d.worst.includes(mark);
+    if(!inTake&&!inWorst){d.take.push(mark);}
+    else if(inTake){d.take=d.take.filter(m=>m!==mark);d.worst.push(mark);}
+    else{d.worst=d.worst.filter(m=>m!==mark);}
+    d.reaction='custom';
+    renderSection(appId);
+    const saveBtn=sec.querySelector('.save');
+    if(saveBtn)saveBtn.disabled=false;
+  }
+});
+document.addEventListener('input',e=>{
+  if(e.target.matches('textarea[data-field="text"]')){
+    const sec=e.target.closest('.app-sec');
+    if(!sec)return;
+    const d=draft(sec.dataset.app);
+    d.text=e.target.value;
+    d.reaction=d.reaction||'custom';
+    const saveBtn=sec.querySelector('.save');
+    if(saveBtn)saveBtn.disabled=false;
+  }
+});
+
+/* ===== INIT ===== */
+function applyLoaded(pairs){
+  pairs.forEach(([docId,data])=>{
+    if(!data)return;
+    const m=/^app-(.+)$/.exec(docId);
+    if(m)FB[m[1]]=data;
+  });
+  updateCount();renderAll();
+}
+async function init(){
+  try{db=window.claude&&typeof window.claude.use==='function'?await window.claude.use('db'):null;}catch(e){db=null;}
+  if(db){
+    dbReady=true;
+    try{const snap=await db.collection('feedback').get();applyLoaded(snap.docs.map(d=>[d.id,d.data()]));}
+    catch(e){console.warn('load',e);toast('저장된 의견을 불러오지 못했어요');}
+  }else{
+    $('#fbWarn').hidden=false;
+    let all={};try{all=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(_){}
+    applyLoaded(Object.entries(all).map(([p,d])=>[p.replace(/^feedback\//,''),d]));
+  }
+}
+
+renderList();
+renderAll();
+init();
+</script>

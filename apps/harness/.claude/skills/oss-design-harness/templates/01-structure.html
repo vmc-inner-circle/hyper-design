@@ -135,7 +135,7 @@ textarea::placeholder{color:#9CA3AF}
 <script>
 /* ===== probe-renderer(KIND=structure)가 채우는 유일한 블록 =====
 SURVEY = {
-  screens: [ {id:"home", name:"홈", role:"모임 목록", entry:"앱 실행 시", cta:"새 모임 만들기"}, ... ],
+  screens: [ {id:"home", name:"화면 A", role:"메인 목록", entry:"앱 실행 시", cta:"새로 만들기"}, ... ],
   fixed:   [ {label:"플랫폼", value:"iOS와 Android 둘 다", source:"PRD 2절"}, ... ],   // 묻지 않는 확정 항목
   questions: [
     { id:"entry", q:"앱을 열면 맨 처음 무엇이 보이나요?", why:"PRD에 로그인 언급이 없어요",
@@ -146,24 +146,20 @@ SURVEY = {
 */
 const SURVEY = {
   screens: [
-    {id:"home", name:"홈", role:"내 모임 목록", entry:"앱 실행 시", cta:"새 모임 만들기"},
-    {id:"create", name:"모임 만들기", role:"날짜·장소 입력", entry:"홈 → 새 모임", cta:"만들기"},
-    {id:"detail", name:"모임 상세", role:"참석 여부와 일정", entry:"홈 → 모임 카드", cta:"참석할게요"}
+    {id:"home", name:"화면 A", role:"메인 목록", entry:"앱 실행", cta:"새로 만들기"},
+    {id:"detail", name:"화면 B", role:"상세 보기", entry:"목록 → 항목 탭", cta:"확인"},
+    {id:"create", name:"화면 C", role:"새 항목 입력", entry:"화면 A → +", cta:"저장"},
+    {id:"settings", name:"화면 D", role:"앱 설정", entry:"탭바", cta:"저장"}
   ],
   fixed: [
-    {label:"플랫폼", value:"iOS와 Android 둘 다", source:"PRD"}
+    {label:"플랫폼", value:"iOS와 Android", source:"PRD"},
+    {label:"태블릿", value:"미지원", source:"기본값"}
   ],
   questions: [
-    {id:"entry", q:"앱을 열면 맨 처음 무엇이 보이나요?", why:"PRD에 로그인 언급이 없어요",
-     options:[{value:"main",label:"바로 메인 화면"},{value:"login",label:"로그인 먼저"},{value:"onboarding",label:"온보딩 몇 장 먼저"}]},
-    {id:"core", q:"가장 자주 반복하는 행동 하나는?", why:"화면 순서와 첫 버튼을 정하는 기준이에요",
-     options:[{value:"reply",label:"참석 여부 답하기"},{value:"create",label:"모임 만들기"},{value:"check",label:"일정 확인하기"}]},
-    {id:"tabbar", q:"하단에 탭이 필요한가요?", why:"화면이 3개라 탭 없이 한 흐름으로도 충분해요",
-     options:[{value:"none",label:"아니오, 한 흐름만"},{value:"3",label:"예, 3개"}]},
-    {id:"empty", q:"아직 모임이 하나도 없을 때 무엇을 보여줄까요?", why:"처음 온 사람이 다음 행동을 알 수 있어야 해요",
-     options:[{value:"cta",label:"안내 한 줄 + 첫 행동 버튼"},{value:"sample",label:"샘플 모임 미리 보여주기"},{value:"blank",label:"아무것도 안 보여줌"}]},
-    {id:"lang", q:"언어는 하나인가요?", why:"긴 언어 기준으로 버튼 폭을 검사해요",
-     options:[{value:"ko",label:"한국어만"},{value:"ko-en",label:"한국어 + 영어"},{value:"multi",label:"셋 이상"}]}
+    {id:"entry", q:"앱을 열면 맨 처음 무엇이 보이나요?", why:"로그인이 필요한 서비스인지에 따라 달라져요",
+     options:[{value:"login",label:"로그인 먼저"},{value:"main",label:"바로 메인 화면"},{value:"onboarding",label:"온보딩 먼저"}]},
+    {id:"tabbar", q:"하단에 탭이 필요한가요?", why:"화면 수에 따라 탐색 방식이 달라져요",
+     options:[{value:"yes",label:"예"},{value:"no",label:"아니오"}]}
   ]
 };
 /* ===== 아래는 손대지 않는다 ===== */

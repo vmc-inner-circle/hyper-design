@@ -14,7 +14,7 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
 - `KIND=structure|taste|flow|rules|reference|icons|preview`
 - `OUT=design/probes/<파일명>.html`
 - KIND별 추가 입력
-  - structure: `design/brief.md` §1 화면 인벤토리 초안 + 메인 대화가 프롬프트로 주는 질문 목록(≤7, 각 추천값·이유). 템플릿 `templates/structure-survey.html`, 스펙 `references/structure-survey.md`
+  - structure: `design/brief.md` §1 화면 인벤토리 초안 + 메인 대화가 프롬프트로 주는 질문 목록(≤7, 각 추천값·이유). 템플릿 `templates/01-structure.html`, 스펙 `references/structure-survey.md`
   - taste: `AXES=1,2` (한 페이지에 축 2개까지), `FIXED=` 앞 축에서 확정된 값(없으면 기본값 ★), 대표 화면은 `design/brief.md` §1·§2에서
   - flow: `design/brief.md` §2 시나리오 (+ 부록 화면)
   - rules: `design/design-rules.md`, `design/icons.md`
@@ -53,7 +53,7 @@ description: 취향 시안(taste), 따라가 보기 투어(flow), 규칙 미리�
 
 ## KIND별
 
-- **structure**: 화면 인벤토리 표(행 번호 ①②③…)를 위에, 그 아래 질문 카드 ≤7(라디오, 추천값 선택됨, "이걸 정하면 ○○가 달라집니다" 한 줄). 왼쪽 띠에 "추천대로 할게요 / 다르게 할래요". 표 아래 "빠진 화면 있어요" 입력 1개. db: `feedback/structure-1`(화면 목록: marks=제외 화면, text) · `feedback/structure-2`(빈 칸 질문: answers{질문id→값}) · `feedback/structure-overall`. 스키마·질문 표는 `references/structure-survey.md`, 템플릿 `templates/structure-survey.html`의 `const SURVEY` 블록만 채운다. 폰 프레임·원문자 라벨 없음(검사 면제).
+- **structure**: 화면 인벤토리 표(행 번호 ①②③…)를 위에, 그 아래 질문 카드 ≤7(라디오, 추천값 선택됨, "이걸 정하면 ○○가 달라집니다" 한 줄). 왼쪽 띠에 "추천대로 할게요 / 다르게 할래요". 표 아래 "빠진 화면 있어요" 입력 1개. db: `feedback/structure-1`(화면 목록: marks=제외 화면, text) · `feedback/structure-2`(빈 칸 질문: answers{질문id→값}) · `feedback/structure-overall`. 스키마·질문 표는 `references/structure-survey.md`, 템플릿 `templates/01-structure.html`의 `const SURVEY` 블록만 채운다. 폰 프레임·원문자 라벨 없음(검사 면제).
 - **icons**: icons.md 허용 목록을 그룹별 카드로, 실제 lucide SVG 인라인. 카드마다 "다르게" → 대안 2개. 왼쪽 띠 "전체 추천대로". db: `feedback/icons` 단일 문서 `{choices:{의미→이름}, changed:[], text}`.
 - **flow**: `lofi-flow.md` 규격 그대로 — 한 번에 폰 하나, 파란 테두리 버튼 하나, 오른쪽 5칸(지금 상황 / 화면 구성 / 누르면 이렇게 돼요 + 상태 세그먼트 / 시선 흐름 / 의견), 공통 템플릿(상단 바 56·하단 CTA 52·탭바는 루트만), 중립 팔레트 + 강조색 1개. 장면 제목에 화면 원문자 번호 필수.
 - **taste**: 한 축만 바꾸고 나머지는 FIXED 고정. `<section data-axis="n">`, `<figure data-v="A">`. 대표 화면은 flow 투어의 템플릿을 그대로 써서 배치가 흔들리지 않게 한다.

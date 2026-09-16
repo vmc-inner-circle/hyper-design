@@ -67,7 +67,7 @@ design/
 
 - **레퍼런스는 스킬이 찾는다.** 사용자에게 레퍼런스를 달라고 하지 않는다. `references/reference-sourcing.md`대로 PRD 도메인의 경쟁 앱 3~5개를 검색해 고르고, 앱스토어 스크린샷을 모아 `probe-renderer`(KIND=reference)로 레퍼런스 페이지를 만든다. 앱마다 "왜 골랐는지" 한 줄과 컴포넌트 번호 라벨. 사용자는 "가져오고 싶은 번호 / 싫은 번호 / 이유"만 답한다. 전체를 따라 하지 않는다. 일부만 가져온다. 사용자가 따로 가진 캡처가 있으면 같은 페이지에 추가한다.
 - **시안 생성.** PRD의 대표 화면 하나를 로우파이 콘텐츠로 그린다. 축 하나만 바꾸고 나머지 축은 기본값(또는 앞 축에서 확정된 값)에 고정한다. 축을 섞으면 왜 골랐는지 알 수 없게 된다.
-- 페이지 제작은 위임한다: `Agent(subagent_type: "probe-renderer", prompt: "KIND=taste AXES=1,4 FIXED=<앞 축 확정값> RECOMMEND=<축별 추천 시안과 이유> OUT=design/probes/taste-color.html")`. 탭은 주제별 3개(색상=축1+4 / 모양·간격=축3+2 / 글자·달력=축5+추가축, `taste-axes.md` 표 참고). 추천은 메인 대화가 PRD 도메인을 보고 정한다. 반환 후 hub.json에 탭을 추가하고 `build_hub.py` → 허브를 같은 URL로 재배포한다. 라벨 지도를 보관한다.
+- 페이지 제작은 위임한다: `Agent(subagent_type: "probe-renderer", model: "sonnet", prompt: "KIND=taste AXES=1,4 FIXED=<앞 축 확정값> RECOMMEND=<축별 추천 시안과 이유> OUT=design/probes/taste-color.html")`. fast path 사용 시 메인이 `04-taste.html` 템플릿을 채워 완성 HTML을 프롬프트에 넣고 Write만 시킨다. 탭은 주제별 3개(색상=축1+4 / 모양·간격=축3+2 / 글자·달력=축5+추가축, `taste-axes.md` 표 참고). 추천은 메인 대화가 PRD 도메인을 보고 정한다. 반환 후 hub.json에 탭을 추가하고 `build_hub.py` → 허브를 같은 URL로 재배포한다. 라벨 지도를 보관한다.
 - 반응은 페이지 안에서 받는다. 축마다 "추천: B — 이유" 텍스트 한 줄이 있고, 사용자는 **마음에 드는 폰 화면을 누르면** 즉시 `feedback/axis-<n>`에 저장된다(text: 추천이면 "추천대로", 아니면 "직접 선택"). 버튼·세부 의견 칸은 없다. 사용자가 "다 봤어"라고 하면 `read_db`로 읽어 decisions.md에 옮긴다. 저장이 0건인 축은 추천값 + 가정 로그. 한 페이지에 축 2개까지.
 - 한 축에서 "모르겠어요"면 기본값 + 가정 로그. 좋다와 싫다의 이유가 충돌하면 그 축만 중간값 시안으로 2차를 한 번 보여준다. 3차는 없다.
 
@@ -109,6 +109,7 @@ design/
 
 ```
 Agent(subagent_type: "figma-builder",
+      model: "sonnet",
       prompt: "design/design-rules.md, design/brief.md, design/screens.md를 읽고 STAGE=tokens 실행. 결과를 design/build-log.md에 기록.")
 ```
 
@@ -136,14 +137,51 @@ Agent(subagent_type: "figma-builder",
 | 기록 | 사용자 원문은 brief.md에 그대로, 해석은 별도. 추천 수락은 가정 로그에 "추천 수락"으로. 하네스 규칙 변경은 사용자가 산출물로 검증한 뒤에만 반영 |
 | 일반성 | 도메인 이름·더미 데이터·화면 수를 스킬/스크립트/템플릿에 박지 않는다. 프로젝트 값은 `design/`에만 |
 
+## HTML 시안 생성 — fast path (템플릿 방식)
+
+서브 에이전트가 HTML을 처음부터 만들면 15~28분이 걸린다. 서브 에이전트가 생성된 후 요구사항을 읽고 생각하는 과정이 병목이다. **메인 에이전트가 템플릿을 채워 완성 HTML을 만들고, 서브 에이전트는 Write만 하면 ~48초로 끝난다.**
+
+### 절차
+
+1. `templates/` 아래 해당 KIND의 템플릿(`01-structure.html` ~ `07-preview.html`)을 읽는다
+2. 메인 에이전트가 `/* REPLACE: ... */` 주석을 실제 프로젝트 값(brief.md, design-rules.md, decisions.md)으로 치환해 완성 HTML을 만든다
+3. 서브 에이전트를 **model: "sonnet"**으로 호출하고, 완성 HTML을 프롬프트에 넣어 Write만 시킨다
+
+```
+Agent(subagent_type: "probe-renderer",
+      model: "sonnet",
+      prompt: "아래 HTML을 design/probes/<file>.html에 Write해라. 파일을 읽지 마라. 스킬을 로드하지 마라. Write만 실행해라.\n\n<완성 HTML>")
+```
+
+### 템플릿 목록
+
+| 파일 | KIND | 치환 대상 |
+|---|---|---|
+| `01-structure.html` | structure | SURVEY 데이터 (화면 목록, 질문, 옵션) |
+| `02-flow.html` | flow | SCENES 배열 (장면별 폰 렌더 함수), 시나리오 탭 |
+| `03-reference.html` | reference | APP_SECTIONS (앱별 섹션, 스크린샷 data URI) |
+| `04-taste.html` | taste | AXIS 값 (CSS 변수, 추천 이유), PHONE_CONTENT |
+| `05-icons.html` | icons | ICON_CARDS (의미별 lucide SVG) |
+| `06-rules.html` | rules | CSS_TOKENS (design-rules.md 전체), SECTION 11개 |
+| `07-preview.html` | preview | SCREEN_SECTIONS (화면별 폰 + 구성표) |
+
+### 기존 방식과의 선택
+
+| 상황 | 방식 |
+|---|---|
+| 단순 치환 (취향·규칙·아이콘) | **fast path** — 메인이 템플릿 채움 + sub Write |
+| 복잡한 생성 (레퍼런스 스크린샷 합성) | 기존 probe-renderer에 **model: "sonnet"** 지정 |
+
+모든 `Agent()` 호출에 **`model: "sonnet"`**을 지정한다.
+
 ## 서브 에이전트 활용법
 
 | 에이전트 | 언제 | 호출 형태 | 주의 |
 |---|---|---|---|
-| `probe-renderer` | 허브 탭 하나 만들 때마다 | `Agent(subagent_type:"probe-renderer", prompt:"KIND=<structure|flow|reference|taste|icons|rules|preview> OUT=design/probes/<file>.html …")` | 배포 안 함(파일만). 여러 탭은 **동시에** 띄운다(레퍼런스+취향 1페이지, 취향 3페이지 등). 반환된 라벨 지도를 보관 |
+| `probe-renderer` | 허브 탭 하나 만들 때마다 | `Agent(subagent_type:"probe-renderer", model:"sonnet", prompt:"KIND=<kind> OUT=design/probes/<file>.html …")` — fast path면 완성 HTML + Write 지시만 | 배포 안 함(파일만). 여러 탭은 **동시에** 띄운다. 반환된 라벨 지도를 보관 |
 | `general-purpose` | 레퍼런스 앱 검색·스크린샷 수집, 조사 작업 | 사용자 답과 무관한 조사는 인터뷰 중에 **미리** 돌린다 | 결과는 `design/references/candidates.md`처럼 별도 파일로 받는다 |
-| `figma-builder` | STAGE 하나씩. screens는 화면 3~4개씩 에이전트 2~3개 | `STAGE=screens` + 담당 화면 번호 + x 위치(번호×470) + 스크린샷 파일명 규칙 | build-log는 에이전트별 파일. 스냅샷·audit은 마지막 하나만. 변경 사항(색 값 등)은 `SendMessage`로 진행 중인 에이전트에 바로 알린다 |
-| `design-auditor` | screens + figma_audit 통과 후 | 결함을 국소/방향/반복 셋 중 하나로 라우팅 | 국소 결함만 `STAGE=fix`에 넘긴다 |
+| `figma-builder` | STAGE 하나씩. screens는 화면 3~4개씩 에이전트 2~3개 | `Agent(subagent_type:"figma-builder", model:"sonnet", prompt:"STAGE=screens …")` | build-log는 에이전트별 파일. 스냅샷·audit은 마지막 하나만 |
+| `design-auditor` | screens + figma_audit 통과 후 | `Agent(subagent_type:"design-auditor", model:"sonnet", prompt:…)` | 국소 결함만 `STAGE=fix`에 넘긴다 |
 | 진행 중 에이전트에 지시 변경 | 사용자 피드백이 오면 | `SendMessage(to:<agentId>, message:…)` — 재생성하지 말고 이어서 고치게 | 같은 파일을 두 에이전트가 동시에 쓰지 않게 영역·파일을 나눈다 |
 | 파일 생성 감시 | 화면 스크린샷 순차 전송 | `Monitor`로 `design/screenshots/screen-*.png` 감시 → 새 파일마다 `SendUserFile` | 파일 크기가 2초간 안 변할 때만 보낸다(쓰기 중 전송 방지) |
 | 병렬 원칙 | 사용자 답이 필요 없는 작업은 전부 병렬 | 인터뷰 대기 중에 레퍼런스 소싱·아이콘 탭·design-rules 초안을 미리 | 한 사용자 응답을 두 번 기다리게 하지 않는다 |
