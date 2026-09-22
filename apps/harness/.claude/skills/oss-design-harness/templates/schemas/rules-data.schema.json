@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "rules-data",
+  "description": "4단계 규칙 미리보기 데이터.",
+  "type": "object",
+  "required": ["tokens", "sections"],
+  "properties": {
+    "tokens": {"type": "object", "description": "design-rules.md A표에서 파생된 CSS 토큰"},
+    "sections": {"type": "array", "items": {"type": "object", "required": ["id", "title"], "properties": {"id": {"type": "string"}, "title": {"type": "string"}, "desc": {"type": "string"}, "render": {"type": "string", "description": "렌더러 함수명"}}}},
+    "domainText": {"type": "object", "properties": {"title": {"type": "string"}, "sub": {"type": "string"}, "long": {"type": "string"}}}
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "preview-data",
+  "description": "4.5단계 최종 미리보기 데이터.",
+  "type": "object",
+  "required": ["screens"],
+  "properties": {
+    "title": {"type": "string"},
+    "screens": {"type": "array", "items": {"type": "object", "required": ["id", "name", "phone"], "properties": {"id": {"type": "string"}, "name": {"type": "string"}, "cat": {"type": "string", "enum": ["화면", "예외", "아이콘", "토큰"]}, "desc": {"type": "string"}, "areas": {"type": "array", "items": {"type": "string"}}, "phone": {"type": "string", "description": "폰 내부 HTML"}, "nav": {"type": "object", "description": "셀렉터→대상id 매핑"}, "toast": {"type": "object", "description": "셀렉터→토스트 메시지"}}}}
+  }
+}

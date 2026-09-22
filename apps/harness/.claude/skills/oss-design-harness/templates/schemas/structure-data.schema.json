@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "structure-data",
+  "description": "1단계 구조 설문 데이터. 변수명 SURVEY.",
+  "type": "object",
+  "required": ["screens", "questions"],
+  "properties": {
+    "screens": {"type": "array", "description": "화면 인벤토리 행", "items": {"type": "object", "properties": {"id": {"type": "string"}, "name": {"type": "string"}, "role": {"type": "string"}, "entry": {"type": "string"}, "cta": {"type": "string"}}}},
+    "fixed": {"type": "array", "description": "확정 항목 (묻지 않음)", "items": {"type": "object", "properties": {"label": {"type": "string"}, "value": {"type": "string"}, "source": {"type": "string"}}}},
+    "questions": {"type": "array", "description": "빈칸 질문 (최대 8)", "items": {"type": "object", "properties": {"id": {"type": "string"}, "q": {"type": "string"}, "why": {"type": "string"}, "options": {"type": "array", "items": {"type": "object", "properties": {"value": {"type": "string"}, "label": {"type": "string"}}}}}}}
+  }
+}

@@ -1,6 +1,6 @@
 ---
 name: design-auditor
-description: figma-builder가 만든 Figma 화면을 design/design-rules.md 기준으로 검증한다. A단계(노드 속성 수치 검사)와 C단계(스크린샷 육안 판단)를 수행하고, 실패를 국소 결함/방향 오류/반복 실패 중 하나로 진단해 라우팅한다. oss-design-harness 스킬이 6단계에서 호출한다.
+description: design/figma-snapshot.json을 design-rules.md 기준으로 검증한다. A단계(노드 속성 수치 검사)와 C단계(스크린샷 육안 판단)를 수행하고, 실패를 국소 결함/방향 오류/반복 실패 중 하나로 진단해 라우팅한다.
 ---
 
 # design-auditor

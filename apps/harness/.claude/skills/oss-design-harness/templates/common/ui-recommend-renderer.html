@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI 추천</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f5f5f0;--sf:#fff;--sa:#f8f8f5;--tx:#1a1a1a;--t2:#555;--t3:#999;--ac:#2563eb;--ab:#eff6ff;--al:#dbeafe;--ok:#16a34a;--ob:#f0fdf4;--wn:#d97706;--wb:#fffbeb;--wt:#92400e;--bd:#e5e5e0;--rd:12px;--ft:-apple-system,BlinkMacSystemFont,"Pretendard Variable",Pretendard,sans-serif;--frame-w:390px}
+body{font-family:var(--ft);background:var(--bg);color:var(--tx)}
+/* localStorage 저장. feedback/ 경로. 상태: 로딩, 실패, 비어있음 */
+/* ①②③④⑤ */
+
+.top{position:fixed;top:0;left:0;right:0;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 24px;height:56px;z-index:200;gap:8px}
+.top h1{font-size:16px;font-weight:600;margin-right:24px}
+.st{padding:8px 16px;border-radius:var(--rd);font-size:14px;font-weight:500;color:var(--t2);cursor:pointer;border:1px solid transparent;transition:all .15s}
+.st:hover{background:var(--sa)}
+.st.on{background:var(--ac);color:#fff}
+
+.main{padding:80px 24px 100px;max-width:1200px;margin:0 auto}
+
+.screen-section{margin-bottom:48px}
+.section-head{margin-bottom:20px}
+.section-head h2{font-size:20px;font-weight:700;margin-bottom:4px}
+.section-head p{font-size:14px;color:var(--t2);line-height:1.6}
+
+.options{display:flex;gap:20px;overflow-x:auto;padding-bottom:12px}
+.option{flex-shrink:0;width:280px}
+.option-label{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.opt-letter{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff}
+.opt-a{background:var(--ac)}
+.opt-b{background:var(--wn)}
+.opt-c{background:var(--t3)}
+.opt-name{font-size:14px;font-weight:600}
+.opt-rec{font-size:11px;font-weight:600;color:var(--ac);background:var(--ab);padding:2px 8px;border-radius:4px}
+
+.phone{width:280px;height:500px;border-radius:32px;border:2px solid #d1d5db;background:var(--sf);overflow:hidden;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.08);cursor:pointer;transition:all .2s}
+.phone:hover{border-color:var(--ac);box-shadow:0 8px 24px rgba(37,99,235,.12)}
+.phone:active{transform:scale(.98)}
+.phone.selected{border-color:var(--ac);border-width:3px;box-shadow:0 0 0 4px var(--al),0 8px 24px rgba(37,99,235,.15)}
+.phone.selected::after{content:"✓ 선택됨";position:absolute;top:12px;right:12px;background:var(--ac);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;z-index:20}
+.phone .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100px;height:26px;background:#000;border-radius:0 0 14px 14px;z-index:10}
+.phone .sbar{height:40px;display:flex;align-items:flex-end;justify-content:center;padding-bottom:4px;font-size:11px;font-weight:600}
+.phone .body{height:calc(100% - 40px);overflow-y:auto;display:flex;flex-direction:column}
+
+/* 폰 내부 컴포넌트 */
+.p-bar{height:44px;display:flex;align-items:center;padding:0 16px;gap:8px}
+.p-bar .bk{font-size:14px;color:var(--t2)}
+.p-bar h4{font-size:14px;font-weight:600;flex:1}
+.p-bar .act{font-size:14px;color:var(--t2)}
+.p-area{flex:1;padding:0 16px 16px;overflow-y:auto}
+
+.p-cam{border-radius:14px;height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;cursor:default}
+.p-cam svg{width:32px;height:32px;stroke:currentColor;fill:none;stroke-width:1.5}
+.p-cam span{font-size:12px;font-weight:500}
+
+.p-search{width:100%;padding:10px 12px;border-radius:8px;font-size:12px;margin-bottom:8px}
+.p-hint{font-size:11px;color:var(--t3);text-align:center;margin-top:8px}
+
+.p-cd{border-radius:10px;padding:12px;margin-bottom:6px}
+.p-cd h5{font-size:12px;font-weight:600;margin-bottom:2px}
+.p-cd p{font-size:10px;line-height:1.4}
+.p-cd .row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.p-badge{font-size:9px;font-weight:600;padding:2px 6px;border-radius:8px}
+.b-ok{background:var(--ob);color:var(--ok)}
+.b-gap{background:var(--wb);color:var(--wt)}
+
+.p-confirm{text-align:center;padding:16px 8px}
+.p-img{width:80px;height:80px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
+.p-img svg{width:32px;height:32px;fill:none;stroke-width:1.5}
+.p-confirm h5{font-size:14px;font-weight:600;margin-bottom:2px}
+.p-confirm .sub{font-size:11px;color:var(--t2);margin-bottom:12px}
+.p-btn{display:inline-block;padding:8px 14px;border-radius:8px;font-size:11px;font-weight:600;margin:2px}
+.p-btn-f{color:#fff}
+.p-btn-g{border:1px solid var(--bd)}
+
+.p-cmp{border-radius:8px;padding:10px;font-size:11px;line-height:1.5;margin-bottom:10px}
+.p-cmp strong{font-weight:700}
+.p-gap{border-radius:8px;padding:8px 10px;font-size:10px;line-height:1.4;margin-bottom:8px}
+.p-link{display:block;padding:8px 10px;border-radius:8px;font-size:11px;text-decoration:none}
+.p-disc{font-size:9px;color:var(--t3);text-align:center;padding:8px;line-height:1.4}
+
+.why-card{background:var(--sf);border-radius:12px;border:1px solid var(--bd);padding:14px 16px;margin-top:12px}
+.why-card .ref{font-size:11px;color:var(--t3);margin-bottom:6px}
+.why-card .reason{font-size:13px;color:var(--t2);line-height:1.6}
+.why-card .diff{font-size:12px;color:var(--wt);background:var(--wb);padding:6px 10px;border-radius:6px;margin-top:8px}
+
+.opinion{background:var(--sf);border-radius:12px;border:1px solid var(--bd);padding:14px 16px;margin-top:16px}
+.opinion h4{font-size:13px;font-weight:600;margin-bottom:8px}
+.ob2{display:flex;gap:8px}
+.obt{flex:1;padding:10px;border-radius:var(--rd);border:1.5px solid var(--bd);background:var(--sf);font-size:13px;cursor:pointer;font-family:var(--ft);text-align:center;transition:all .15s}
+.obt:hover{background:var(--sa)}
+.obt:active{transform:scale(.96)}
+.obt.sg{background:var(--ob);border-color:var(--ok);color:var(--ok)}
+.obt.sb{background:var(--wb);border-color:var(--wn);color:var(--wt)}
+
+.nf{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);padding:12px 24px;display:flex;align-items:center;justify-content:center;gap:16px;z-index:200}
+.nf button{padding:10px 20px;border-radius:var(--rd);font-size:14px;font-weight:500;cursor:pointer;border:1px solid var(--bd);background:var(--sf);font-family:var(--ft);color:var(--tx);transition:all .15s}
+.nf button:hover{background:var(--sa)}
+.nf button:disabled{opacity:.3;cursor:default}
+.nf .ds{display:flex;gap:5px}
+.nf .d{width:8px;height:8px;border-radius:50%;background:var(--bd);transition:all .3s}
+.nf .d.dn{width:22px;border-radius:4px;background:var(--ac)}
+
+.fi{opacity:0;transform:translateY(14px);animation:fi .4s ease forwards}
+@keyframes fi{to{opacity:1;transform:translateY(0)}}
+.fi:nth-child(1){animation-delay:.05s}.fi:nth-child(2){animation-delay:.1s}.fi:nth-child(3){animation-delay:.15s}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>UI 추천</h1>
+  <div class="st on" onclick="goScreen(0)">① 홈</div>
+  <div class="st" onclick="goScreen(1)">③ 제품 확인</div>
+  <div class="st" onclick="goScreen(2)">④ 성분 정보</div>
+  <div class="st" onclick="goScreen(3)">⑤ 대조 상세</div>
+  <div class="st" onclick="goScreen(4)">예외 처리</div>
+</div>
+
+<div class="main" id="main"></div>
+
+<div class="nf">
+  <button onclick="prevScreen()">← 이전</button>
+  <div class="ds" id="dots"></div>
+  <button onclick="nextScreen()">다음 →</button>
+</div>
+
+<script>
+var LS_KEY='harness-uirec-'+(typeof DATA!=='undefined'&&DATA&&DATA.title||'uirec');
+var cur=0;
+var ops={};
+try{ops=JSON.parse(localStorage.getItem(LS_KEY)||'{}');}catch(e){}
+
+/* REPLACE: DATA */
+/* claude.use('db') — localStorage 사용. feedback/ 경로 유지 */
+var DATA = null;
+var SCREENS = DATA ? DATA.screens : [];
+
+function render(){
+  var s=SCREENS[cur];
+  var op=ops[cur]||{};
+  var html='<div class="screen-section"><div class="section-head fi"><h2>'+s.title+'</h2><p>'+s.desc+'</p></div><div class="options">';
+  s.options.forEach(function(o){
+    var cls=o.letter==='A'?'opt-a':o.letter==='B'?'opt-b':'opt-c';
+    var sel=op.pick===o.letter?' selected':'';
+    html+='<div class="option fi"><div class="option-label"><div class="opt-letter '+cls+'">'+o.letter+'</div><div class="opt-name">'+o.name+'</div>'+(o.rec?'<span class="opt-rec">★ 추천</span>':'')+'</div><div class="phone'+sel+'" onclick="pick(\''+o.letter+'\')"><div class="notch"></div><div class="sbar">9:41</div><div class="body">'+o.phone+'</div></div><div class="why-card">'+(o.ref?'<div class="ref">참고: '+o.ref+'</div>':'')+'<div class="reason">'+o.reason+'</div>'+(o.diff?'<div class="diff">⚠ '+o.diff+'</div>':'')+'</div></div>';
+  });
+  html+='</div>';
+  var selA=op.pick==='A'?' sg':'';
+  var selB=op.pick==='B'?' sg':'';
+  var selC=s.options.length>2&&op.pick==='C'?' sg':'';
+  html+='<div class="opinion fi"><h4>어떤 게 좋아요? '+(op.pick?'<span style="font-size:12px;color:var(--ok);font-weight:500">'+op.pick+' 선택됨 ✓</span>':'<span style="font-size:12px;color:var(--t3);font-weight:400">폰 화면을 클릭하거나 아래 버튼을 눌러주세요</span>')+'</h4><div class="ob2"><div class="obt'+selA+'" onclick="pick(\'A\')">A가 좋아요</div><div class="obt'+selB+'" onclick="pick(\'B\')">B가 좋아요</div>'+(s.options.length>2?'<div class="obt'+selC+'" onclick="pick(\'C\')">C가 좋아요</div>':'')+'</div></div>';
+  html+='</div>';
+  document.getElementById('main').innerHTML=html;
+  document.getElementById('dots').innerHTML=SCREENS.map(function(_,i){return '<div class="d'+(i===cur?' dn':'')+'"></div>';}).join('');
+  document.querySelectorAll('.top .st').forEach(function(t,i){t.classList.toggle('on',i===cur)});
+}
+
+function goScreen(i){cur=i;render();}
+function nextScreen(){if(cur<SCREENS.length-1){cur++;render();}}
+function prevScreen(){if(cur>0){cur--;render();}}
+function pick(letter){
+  ops[cur]={pick:letter,updatedAt:new Date().toISOString()};
+  try{localStorage.setItem(LS_KEY,JSON.stringify(ops));}catch(e){}
+  var path='feedback/ui-rec-'+cur;
+  render();
+  setTimeout(function(){
+    if(cur<SCREENS.length-1){cur++;render();window.scrollTo({top:0,behavior:'smooth'});}
+  },500);
+}
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')nextScreen();if(e.key==='ArrowLeft')prevScreen();});
+render();
+</script>
+</body>
+</html>

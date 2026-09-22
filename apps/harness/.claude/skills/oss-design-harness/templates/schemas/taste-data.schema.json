@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "taste-data",
+  "description": "3단계 취향 축 시안 데이터.",
+  "type": "object",
+  "required": ["axes"],
+  "properties": {
+    "axes": {"type": "array", "items": {"type": "object", "required": ["id", "name", "variants"], "properties": {"id": {"type": "integer"}, "name": {"type": "string"}, "desc": {"type": "string"}, "recommend": {"type": "string"}, "recommendWhy": {"type": "string"}, "variants": {"type": "array", "items": {"type": "object", "properties": {"v": {"type": "string"}, "label": {"type": "string"}, "css": {"type": "object"}}}}}}},
+    "phone": {"type": "object", "description": "3시안 공통 폰 내용"}
+  }
+}

@@ -20,9 +20,7 @@
 …
 ```
 
-## 투어 페이지 규격 (probe-renderer KIND=flow)
-
-제작·배포는 `probe-renderer`가 한다. 아래는 그 에이전트가 따르는 규격이다.
+## 투어 페이지 규격
 
 ### 구조
 - **한 번에 폰 화면 하나.** 왼쪽 390×844 폰 프레임 1개, 오른쪽 설명 패널. 1280 폭 기준, 좁으면 세로 쌓기.
@@ -62,13 +60,4 @@
 - 🤔를 눌렀을 때만 영역 번호 칩(①②③④…) 토글 + 자유 입력이 펼쳐지고 왼쪽 띠의 가로 저장 버튼이 활성화된다 → "저장됨 ✓". 의견 있는 장면은 진행 점에 표시.
 - 페이지 맨 아래 "전체 의견" 1개.
 
-저장은 Artifact `db` capability (`capabilities: {db: {}}`). 문서 경로 `feedback/scene-<장면번호>`, 전체는 `feedback/overall`. 본문 `{scene, screen, reaction: "good"|"confusing"|"bad"|null, marks: ["③"], markNames: ["하단 버튼"], text, updatedAt}`. `set()`으로 통째 저장. 열 때 `db.collection("feedback").get()` 1회로 복원. `claude.use("db")`가 null이면 localStorage 폴백 + "이 환경에서는 브라우저에만 저장돼요" 안내.
-
-## 메인 대화가 하는 일
-
-1. probe-renderer가 돌려준 **장면 ↔ 화면 ↔ 영역 번호·이름 대응표**를 보관한다.
-2. 사용자에게 링크를 주고 "다 보시면 말씀해 주세요"만 말한다. 터미널 질문은 하지 않는다.
-3. 사용자가 "다 봤어"라고 하면 `Artifact(action: "read_db", db_op: "list", collection: "feedback")`로 읽는다. 대응표로 `marks`를 영역 이름으로 풀어 brief.md §2에 원문(text) + 해석을 남긴다.
-4. 의견이 0건이면 그때만 터미널로 묻는다: "막힌 장면이 있었나요? (없음 / 장면 번호)", "순서가 이상한 곳이 있나요?" 두 개.
-5. 🤔가 붙은 장면만 골라 수정 시나리오를 만들고, 그 장면만 다시 보여준다. 로우파이 전체를 다시 만들지 않는다 (화면 추가·삭제 수준일 때만).
-6. 반응이 없거나 전부 👍인 장면의 primary CTA는 파란 버튼 그대로 확정하고 brief §2 "화면별 primary CTA" 줄을 채운다.
+저장: localStorage 키 `feedback/scene-<장면번호>`, 전체는 `feedback/overall`. 본문 `{scene, screen, reaction: "good"|"confusing"|"bad"|null, marks: ["③"], markNames: ["하단 버튼"], text, updatedAt}`.

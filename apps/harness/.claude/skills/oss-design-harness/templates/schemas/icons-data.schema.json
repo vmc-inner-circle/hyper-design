@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "icons-data",
+  "description": "4단계 아이콘 허용 목록 데이터.",
+  "type": "object",
+  "required": ["icons"],
+  "properties": {
+    "icons": {"type": "array", "items": {"type": "object", "required": ["meaning", "name"], "properties": {"meaning": {"type": "string"}, "name": {"type": "string", "description": "lucide 이름"}, "size": {"type": "integer", "enum": [16, 20, 24]}, "where": {"type": "string"}, "label": {"type": "string"}, "svg": {"type": "string"}}}}
+  }
+}

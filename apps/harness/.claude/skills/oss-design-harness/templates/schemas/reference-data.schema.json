@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "reference-data",
+  "description": "3단계 레퍼런스 앱 데이터.",
+  "type": "object",
+  "required": ["apps"],
+  "properties": {
+    "title": {"type": "string"},
+    "subtitle": {"type": "string"},
+    "recommended": {"type": "array", "items": {"type": "string"}, "description": "펼쳐 보일 앱 id"},
+    "apps": {"type": "array", "items": {"type": "object", "required": ["id", "name"], "properties": {"id": {"type": "string"}, "name": {"type": "string"}, "tag": {"type": "string"}, "link": {"type": "string"}, "why": {"type": "string"}, "screenshots": {"type": "array", "items": {"type": "string"}}, "components": {"type": "array", "items": {"type": "object", "properties": {"n": {"type": "integer"}, "name": {"type": "string"}, "desc": {"type": "string"}, "recommend": {"type": "boolean"}}}}}}}
+  }
+}
