@@ -1,13 +1,13 @@
 # 1단계 구조 — 설문 탭 (허브 첫 탭)
 
-1단계(PRD 확정)는 터미널 질문이 아니라 **허브 Artifact의 첫 탭 "1단계 구조"**에서 설문지처럼 진행한다. 스킬이 PRD에서 뽑을 수 있는 것은 전부 미리 채우고, 정말 빈 칸만 질문으로 노출한다. 터미널 질문은 저장된 의견이 0건일 때의 폴백이다.
+1단계(PRD 확정)에서는 구조 설문 HTML을 만들어 사용자에게 보여준다. PRD에서 뽑을 수 있는 것은 전부 미리 채우고, 빈 칸만 채팅으로 묻는다.
 
 ## 흐름
 
 1. 스킬이 PRD를 읽어 화면 인벤토리 표를 만든다 (interview-rules.md §1). 빈 칸을 세고 아래 질문 목록에서 **PRD에 답이 없는 것만** 고른다. 상한 8개.
 2. `probe-renderer`에 `KIND=structure OUT=design/probes/structure.html`로 위임한다. 렌더러는 `templates/structure-survey.html`을 복사해 상단 `SURVEY` 데이터 블록만 채운다. 나머지 HTML·JS는 손대지 않는다.
 3. 메인 대화가 hub.json 첫 탭에 `{"file":"structure.html","title":"1단계 구조","prefix":"structure-","stage":"1단계 구조"}`를 추가하고 `build_hub.py` → 같은 URL로 재배포.
-4. 사용자가 "다 봤어"라고 하면 `Artifact(action:"read_db", db_op:"list", collection:"feedback")`로 읽어 `structure-1`, `structure-2`, `structure-overall`을 brief.md에 옮긴다.
+4. 사용자가 "다 봤어"라고 하면 채팅으로 빈 칸을 묻고 brief.md에 옮긴다.
 5. `python3 scripts/check_phase.py --phase structure` 통과 후 2단계.
 
 ## 질문 목록 (PRD에 답이 없을 때만 노출)
@@ -51,11 +51,10 @@ feedback/structure-overall {unit:"overall", n:0, label:"전체", text, updatedAt
 
 기존 본문 스키마에 `answers` 필드 하나만 추가된다. 다른 탭의 읽기 로직은 영향받지 않는다.
 
-## read_db → brief.md 매핑
+## 채팅 피드백 → brief.md 매핑
 
-- `structure-1.marks`에 있는 화면은 §1 표에서 삭제하고 §5 가정 로그에 "사용자 제외" 기록. `text`가 "추천대로"가 아니면 원문을 §5에 남기고 빠진 화면은 §1에 행 추가.
-- `structure-2.answers`의 각 값을 위 표 "brief.md 반영" 열대로 채운다. 추천값이 선택된 항목도 **답한 것**으로 취급한다 (가정이 아니다). 노출되지 않은 질문(PRD로 확정)은 출처를 PRD로 적는다.
-- 두 문서가 모두 없으면 의견 0건 → interview-rules.md §1의 터미널 질문으로 폴백.
+- 사용자가 제외한 화면은 §1 표에서 삭제하고 §5 가정 로그에 "사용자 제외" 기록.
+- 채팅으로 받은 답을 위 표 "brief.md 반영" 열대로 채운다. 추천값을 수락한 항목도 **답한 것**으로 취급한다 (가정이 아니다). PRD로 확정된 항목은 출처를 PRD로 적는다.
 
 ## 렌더러(KIND=structure)가 채우는 것
 

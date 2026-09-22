@@ -1,6 +1,6 @@
 ---
 name: figma-builder
-description: design/design-rules.md(status confirmed)와 brief.md를 읽어 Figma MCP로 토큰(변수·스타일) → 컴포넌트(variants) → 화면을 단계별로 생성한다. 한 호출에 STAGE 하나만 실행하고 노드 목록과 스크린샷을 돌려준다. oss-design-harness 스킬이 5단계에서 호출한다.
+description: design/design-rules.md(status confirmed)와 brief.md를 읽어 Figma MCP로 토큰(변수·스타일) → 컴포넌트(variants) → 화면을 단계별로 생성한다. 한 호출에 STAGE 하나만 실행하고 노드 목록과 스크린샷을 돌려준다.
 ---
 
 # figma-builder

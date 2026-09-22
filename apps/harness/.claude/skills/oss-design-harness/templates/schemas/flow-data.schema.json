@@ -1,0 +1,268 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "flow-data",
+  "description": "따라가 보기 투어 데이터. common/flow-renderer.html이 읽는다. phones는 raw HTML이 아니라 선언적 컴포넌트로 쓴다 — 메인 에이전트가 HTML을 몰라도 채울 수 있어야 하므로.",
+  "type": "object",
+  "required": [
+    "title",
+    "scenarios",
+    "phones"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "앱 이름. 상단 바에 표시"
+    },
+    "css": {
+      "type": "string",
+      "description": "프로젝트별 CSS. 도메인 아이콘 정의(.i-product{background-image:url('data:…')}). 렌더러가 <style>로 주입. 렌더러 기본 아이콘은 i-cam, i-sad 뿐이며 그 외 icon 클래스는 여기에 반드시 정의"
+    },
+    "scenarios": {
+      "type": "array",
+      "description": "시나리오 탭. 하나가 핵심 작업 하나에 대응. brief.md §2와 1:1",
+      "items": {
+        "type": "object",
+        "required": [
+          "tab",
+          "steps"
+        ],
+        "properties": {
+          "tab": {
+            "type": "string",
+            "description": "탭 라벨 (예: '📷 사진으로 확인')"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "title",
+                "screen",
+                "narr",
+                "phoneId"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "장면 제목"
+                },
+                "screen": {
+                  "type": "string",
+                  "description": "화면 번호·이름 (예: '홈 ①'). brief §1 원문자와 동일"
+                },
+                "narr": {
+                  "type": "string",
+                  "description": "지금 상황 — 2인칭 현재형 시나리오 문장"
+                },
+                "flow": {
+                  "type": "array",
+                  "description": "유저 플로우 칩. user=사용자 행동(파랑) system=시스템 처리(회색) ok=성공 결과(초록) fail=실패(빨강)",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "text",
+                      "type"
+                    ],
+                    "properties": {
+                      "text": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "enum": [
+                          "user",
+                          "system",
+                          "ok",
+                          "fail"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "expects": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "기대 효과 — 이 화면이 왜 이렇게 생겼는지"
+                },
+                "areas": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "화면 구성 영역 (예: '① 카메라 영역'). 최대 5개"
+                },
+                "hint": {
+                  "type": "string",
+                  "description": "다음 행동 안내. 빈 문자열이면 표시 안 함"
+                },
+                "phoneId": {
+                  "type": "string",
+                  "description": "phones의 키. brief §1 phoneId 열과 동일"
+                },
+                "clickId": {
+                  "type": "string",
+                  "description": "이 장면에서 눌러야 할 요소의 id. phones[phoneId] 안의 컴포넌트 id와 일치해야 함. brief §1 clickId 열과 동일"
+                },
+                "autoMs": {
+                  "type": "number",
+                  "description": "자동 전환 대기(ms). 로딩 화면처럼 사용자 입력이 없는 장면에만"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "phones": {
+      "type": "object",
+      "description": "phoneId → 화면 선언. brief §1 '컴포넌트 구성' 열이 곧 body 배열",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "body"
+        ],
+        "properties": {
+          "bar": {
+            "type": "object",
+            "description": "상단 바. back:false면 뒤로가기 없음(루트 화면). action은 오른쪽 아이콘 문자",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "back": {
+                "type": "boolean",
+                "default": true
+              },
+              "action": {
+                "type": "string"
+              },
+              "actionId": {
+                "type": "string"
+              },
+              "actionStyle": {
+                "type": "string"
+              }
+            }
+          },
+          "body": {
+            "type": "array",
+            "description": "컴포넌트 목록. loading/fail/empty는 단독 사용(전체 화면)",
+            "items": {
+              "type": "object",
+              "required": [
+                "type"
+              ],
+              "properties": {
+                "type": {
+                  "enum": [
+                    "hero-action",
+                    "search",
+                    "hint",
+                    "card-list",
+                    "confirm",
+                    "badge-list",
+                    "compare",
+                    "loading",
+                    "fail",
+                    "empty",
+                    "disclaimer",
+                    "share-bar"
+                  ],
+                  "description": "hero-action: 큰 진입 액션(카메라 등) | search: 검색창 | hint: 안내 문구 | card-list: 제목+부제 카드 목록 | confirm: 아이콘+제목+부제+버튼 | badge-list: 제목+배지+설명 카드 목록 | compare: 라벨/본문 쌍 대조 + 간극 + 링크 | loading: 스피너 | fail: 실패 안내 | empty: 빈 상태 | disclaimer: 하단 면책 | share-bar: 공유 버튼"
+                },
+                "id": {
+                  "type": "string",
+                  "description": "clickId로 참조할 때만. hero-action·search·confirm/fail 버튼·card-list/badge-list 항목에 부여"
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "CSS 아이콘 클래스명 (i-cam, i-sad 등). 기본 제공 외 아이콘은 css 필드에 정의. HTML 금지"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "placeholder": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string",
+                  "description": "search에 값이 있으면 '입력된 상태'로 렌더"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "subtitle": {
+                  "type": "string"
+                },
+                "buttons": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "label"
+                    ],
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "primary": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "items": {
+                  "type": "array",
+                  "description": "card-list: {title, subtitle, id} / badge-list: {title, badge, badgeType(ok|gap), desc, alias, id}",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "pairs": {
+                  "type": "array",
+                  "description": "compare 전용. type: product(주황 왼선) | official(초록 왼선)",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "label",
+                      "text"
+                    ],
+                    "properties": {
+                      "label": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "enum": [
+                          "product",
+                          "official"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "gap": {
+                  "type": "string",
+                  "description": "compare 전용. 간극 설명"
+                },
+                "link": {
+                  "type": "string",
+                  "description": "compare 전용. 외부 링크 라벨"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

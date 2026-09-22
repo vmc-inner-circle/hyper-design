@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ui-recommend-data",
+  "description": "3단계 UI 추천 A/B 비교 데이터. 화면별 옵션 2~3개를 폰 목업으로 보여주고 선택받는다.",
+  "type": "object",
+  "required": ["screens"],
+  "properties": {
+    "screens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title", "desc", "options"],
+        "properties": {
+          "title": {"type": "string", "description": "화면 제목 (예: '① 홈 — 촬영/검색 진입')"},
+          "desc": {"type": "string", "description": "이 화면에서 결정할 것"},
+          "options": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["letter", "name", "phone", "reason"],
+              "properties": {
+                "letter": {"type": "string", "enum": ["A", "B", "C"]},
+                "name": {"type": "string", "description": "옵션 이름 (예: '카메라 중심')"},
+                "rec": {"type": "boolean", "description": "추천 여부"},
+                "phone": {"type": "string", "description": "폰 내부 HTML"},
+                "ref": {"type": "string", "description": "참고 앱 (예: 'Aindly ① 카메라 UI')"},
+                "reason": {"type": "string", "description": "추천 이유"},
+                "diff": {"type": "string", "description": "주의점 / 다른 쪽의 문제"}
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -40,12 +40,11 @@ feedback/preview-go      {unit:"preview", n:0, label:"확정", text:"go", update
 feedback/preview-overall {unit:"overall", ...}
 ```
 
-## read_db → 다음 단계
+## 채팅 피드백 → 다음 단계
 
-- `preview-go`가 있고 모든 `screen-*`가 `ok` → `design/screens.md`를 확정본으로 저장(구성표 그대로), 5단계 시작.
-- `fix`가 있는 화면: `remove`·`swap`을 screens.md에 반영하고 그 화면만 다시 그려 같은 URL로 재배포. 2회까지. 3회째면 방향 오류로 보고 3단계 해당 축을 재확인.
-- `remove`된 컴포넌트는 figma-builder 화면 STAGE에서 만들지 않는다. figma_audit의 `component.manifest` 검사(screens.md 밖 인스턴스 0개, 빠진 행 0개)로 확인한다.
-- 의견 0건이면 터미널로 "화면 n개 중 고칠 것이 있나요? (없음 / 번호)" 1회.
+- 사용자가 "이대로 진행"이라고 하면 `design/screens.md`를 확정본으로 저장, 5단계 시작.
+- 고칠 화면이 있으면 screens.md에 반영하고 그 화면만 다시 그려 보여준다. 2회까지. 3회째면 방향 오류로 보고 3단계 해당 축을 재확인.
+- 제거된 컴포넌트는 Figma 화면 STAGE에서 만들지 않는다.
 
 ## design/screens.md 형식
 
