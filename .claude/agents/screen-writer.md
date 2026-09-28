@@ -45,6 +45,8 @@ model: sonnet
 
 ## 하지 않는 것
 
+- **다른 실행물 읽기.** `RUN` 밖의 `runs/*`·`submissions/`·`archive`는 열지 않는다(참고·"관례 확인"도 금지). 형식은 `packages/`의 패턴·스니펫·`00-rules.md`, 데이터는 `RUN/screens.json`·`RUN/flow.json`만으로 충분하다. 다른 실행물을 보면 "PRD만으로 시작"이라는 조건이 깨진다.
+
 - 화면 추가·삭제, 영역 추가·삭제 (screens.json이 진실이다).
 - 스니펫에 없는 구조 발명. 부족하면 가장 가까운 조각을 쓰고 보고에 한 줄 적는다.
 - `packages/`·`scripts/`·`screens.json` 수정. lint/build 실행 (메인이 한다).

@@ -109,7 +109,9 @@ for (const s of S.screens || []) {
 // 지금 화면들 = S.concept(기본 첫 시안). 시안의 메인 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
 const concepts = Array.isArray(S.concepts) ? S.concepts.filter((c) => c && c.id) : [];
 const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts[0]).id : null;
-if (mode === "board") for (const c of concepts) {
+// 시안을 확정(board.locked에 concept)한 초안에는 시안 화면을 싣지 않는다 — 보이지 않는 화면으로 파일만 무거워진다
+const conceptLocked = ((S.board && S.board.locked) || []).includes("concept");
+if (mode === "board" && (stage === "concept" || !conceptLocked)) for (const c of concepts) {
   if (c.id === mainConcept && stage !== "concept") continue;
   for (const slug of c.screens || []) {
     const p = path.join(runDir, "concepts", c.id, slug + ".html");

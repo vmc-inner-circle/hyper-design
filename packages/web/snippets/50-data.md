@@ -246,6 +246,28 @@
 ```
 주의: 요일 7개 + 날짜 칸은 7의 배수. `today`와 `selected`는 각각 하나. 이전/다음 달 칸은 `is-other-month`.
 
+## week-grid — 주간 시간표 (요일 7열 × 시간 줄)
+언제: 요일·시간으로 반복되는 일정·예약·근무표. **7열 표(.table)로 만들지 않는다**(칸이 좁아 글자가 세로로 깨진다).
+첫 줄 = 빈 칸 + 요일 7개, 그다음 시간마다 = 시간 칸 + 요일 칸 7개(빈 칸도 `.wg-cell` 하나). 칸 안 일정은 `.wg-slot`, 상태는 `is-open`(자리 있음) · `is-almost`(거의 참) · `is-full`(마감) · `is-mine`(내 예약) · `is-muted`(지난·다른 담당).
+
+```html
+<div class="week-grid">
+  <div class="wg-corner"></div>
+  <div class="wg-day">월<b>10/5</b></div><div class="wg-day">화<b>10/6</b></div><div class="wg-day today">수<b>10/7</b></div>
+  <div class="wg-day">목<b>10/8</b></div><div class="wg-day">금<b>10/9</b></div><div class="wg-day">토<b>10/10</b></div><div class="wg-day">일<b>10/11</b></div>
+
+  <div class="wg-time">07:00</div>
+  <div class="wg-cell"><button class="wg-slot is-open"><span class="wg-slot-title">주간 계획 회의</span><span class="wg-slot-meta">김민수 · 자리 2</span></button></div>
+  <div class="wg-cell"></div>
+  <div class="wg-cell"><button class="wg-slot is-full"><span class="wg-slot-title">주간 계획 회의</span><span class="wg-slot-meta">김민수 · 마감 · 대기 2</span></button></div>
+  <div class="wg-cell"><button class="wg-slot is-almost"><span class="wg-slot-title">신입 교육</span><span class="wg-slot-meta">이서준 · 자리 1</span></button></div>
+  <div class="wg-cell"></div><div class="wg-cell"></div><div class="wg-cell"></div>
+  <!-- 시간 줄마다 반복 -->
+</div>
+```
+오늘 요일 열은 머리칸 `.wg-day.today`와 그 열의 칸마다 `.wg-cell.today`를 함께 붙인다(열 전체가 연하게 칠해진다).
+주의: 칸 안 글자는 두 줄(제목 · 담당과 자리)로 짧게. `.wg-slot`은 버튼이지만 `.btn`이 아니라 누르면 어떻게 되는지 표시는 흐름·갈래에 있을 때만 `data-trigger`.
+
 ## day-strip — 가로 날짜 칩 (요일/날짜 2줄)
 언제: 주 단위 일정에서 날짜를 고르는 상단 띠. 좌우로 7~14개.
 

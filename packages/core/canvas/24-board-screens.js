@@ -13,12 +13,10 @@
   function parts(m) { return String(m || "").split(/\s*,\s*/).filter(Boolean); }
 
   // 흐름에 나오는 순서대로 화면을 늘어놓는다 (처음 시작 흐름이 앞)
+  // 화면 번호 순서(= 사용자가 만나는 순서, ids.js). 번호가 없으면 screens.json 순서
   function screenOrder() {
-    var seen = {}, out = [];
-    function add(slug) { if (!seen[slug] && HX.bySlug[slug]) { seen[slug] = 1; out.push(slug); } }
-    HX.data.flows.forEach(function (f) { (f.steps || []).forEach(function (st) { add(st.from); add(st.to); }); });
-    HX.data.screens.forEach(function (s) { add(s.slug); });
-    return out;
+    return HX.data.screens.map(function (s, i) { return { slug: s.slug, k: typeof s.id === "number" ? s.id : 1e6 + i }; })
+      .sort(function (a, b) { return a.k - b.k; }).map(function (x) { return x.slug; });
   }
   function hasMark(s) {
     var st = B.state, ss = st.screens[s.id];

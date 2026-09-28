@@ -13,6 +13,7 @@
    - `data-trigger="<key>"`: flow.json의 step이나 **branches(갈래)** 에 있는 버튼. 다른 화면·창이 열린다.
    - `data-back`: 이전 화면으로 돌아가는 버튼(취소·닫기·'모임으로' 같은 뒤로가기, 창의 완료 버튼).
    - `data-stay="바뀐 뒤 안내 문구"`: 그 자리에서 바뀌는 버튼(삭제·필터·다시 알리기·복사). 문구는 해요체 한 문장("알림을 다시 보냈어요"). 최종본에서 누르면 이 문구가 잠깐 뜬다.
+   - **같은 일을 하는 버튼이 여러 개**(목록 행마다 '예약하기')면 `data-trigger`는 한 곳(첫 행)에만 붙이고 나머지는 **글자를 똑같이** 두면 된다 — 따로 표시하지 않는다. lint가 같은 글자의 트리거 버튼을 찾아 통과시키고, 최종본도 같은 글자 버튼을 같은 화면으로 잇는다. `data-stay`로 때우지 않는다.
 4. **아이콘**: `<svg class="icon" aria-hidden="true"><use href="#i-<lucide-name>"/></svg>`. 크기는 `.icon-sm`(16) `.icon`(20) `.icon-lg`(24). 이름은 `packages/core/icons/allowlist.json` 값 또는 프로젝트 `icons.json` 값만. 아이콘만 있는 버튼은 `aria-label` 필수.
 5. **문구는 전부 실제 문구.** PRD 도메인의 그럴듯한 데이터(이름·날짜·장소·금액)를 쓴다. "버튼"·"텍스트"·"제목"·Lorem ipsum 금지. 비어 보이는 목록은 최소 3~5행을 채운다.
 6. **프레임은 1280×800 고정.** `.app`이 프레임을 채우고 `.content`만 내부 스크롤한다. 첫 화면(above the fold)에 핵심이 보이게 배치한다.
@@ -39,5 +40,5 @@
 | 20-buttons.md | btn 변형·크기·아이콘 · btn-icon · 버튼 그룹 |
 | 30-inputs.md | field · input · select · textarea · checkbox · radio · switch · segmented · search |
 | 40-display.md | card · badge · chip · avatar · tabs · breadcrumb · progress · stat · empty · skeleton · divider · banner · toast · tooltip · kbd |
-| 50-data.md | list · table · timeline · steps · calendar · day-strip |
+| 50-data.md | list · table · timeline · steps · calendar · **week-grid(주간 시간표)** · day-strip |
 | 60-overlay.md | modal · drawer · dropdown · popover |

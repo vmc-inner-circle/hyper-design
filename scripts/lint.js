@@ -341,9 +341,11 @@ for (const s of slugs.values()) {
 // 글자가 있는 .btn은 셋 중 하나: data-trigger(흐름 단계·갈래로 다른 화면) / data-back(되돌아가기) / data-stay(그 자리에서 바뀜)
 for (const [slug, btns] of buttonsBySlug) {
   const lost = [], orphan = [];
+  // 같은 일을 하는 버튼이 여러 개(목록 행마다 '예약하기')면 트리거는 한 곳에만 — 글자가 같은 트리거 버튼이 있으면 통과(00-rules 3-2)
+  const trigTexts = new Set(btns.filter((b) => b.trigger).map((b) => b.text));
   for (const b of btns) {
     if (b.trigger) { if (!stepTo.has(slug + "|" + b.trigger) && !branchTo.has(slug + "|" + b.trigger)) orphan.push(b.text); }
-    else if (!b.stay && !b.back) lost.push(b.text);
+    else if (!b.stay && !b.back && !trigTexts.has(b.text)) lost.push(b.text);
   }
   if (lost.length) fail(`화면 ${slug}: 누르면 어떻게 되는지 없는 버튼 ${lost.map((t) => `'${t}'`).join(", ")} — 다른 화면이면 data-trigger + flow.json branches, 되돌아가면 data-back, 그 자리에서 바뀌면 data-stay="바뀐 뒤 안내 문구"`);
   if (orphan.length) warn(`화면 ${slug}: data-trigger가 있는데 흐름·갈래에 없는 버튼 ${orphan.map((t) => `'${t}'`).join(", ")}`);
@@ -413,6 +415,12 @@ if (S.concepts !== undefined) {
       if (/<\s*(html|head|body|style|script|link)\b/i.test(html)) fail(`${cd}: <html|head|body|style|script|link> 금지`);
       if (/\sstyle\s*=\s*["']/i.test(html)) fail(`${cd}: 인라인 style 금지`);
       for (const m of html.matchAll(/href\s*=\s*["']#i-([a-z0-9-]+)["']/g)) if (!allowed.has(m[1])) fail(`${cd}: 아이콘 '${m[1]}' 허용 목록에 없음`);
+      // 2턴에 screens/로 그대로 옮겨 쓰므로 영역·연결도 원래 화면 기준으로 본다
+      const sc = slugs.get(slug), keys = new Set(((sc && sc.regions) || []).map((r) => r.key));
+      const regs = [...html.matchAll(/data-region\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]);
+      for (const k of keys) if (!regs.includes(k)) warn(`${cd}: 영역 '${k}'이 없음 — 고르면 옮겨 쓸 때 다시 붙여야 함`);
+      const trigs = [...html.matchAll(/data-trigger\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]);
+      for (const k of new Set(trigs.filter((k, i) => trigs.indexOf(k) !== i))) fail(`${cd}: data-trigger="${k}" 가 2번 이상 — 같은 버튼이 여럿이면 한 곳에만(00-rules 3-2)`);
       const want = SHELLS[c.shell];
       const appCls = ((/<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html) || [])[1] || "").split(/\s+/);
       if (want && !appCls.includes(want)) warn(`${cd}: 시안 메뉴 구조가 ${c.shell}인데 .app에 ${want} 없음`);
@@ -427,6 +435,7 @@ if (S.concepts !== undefined) {
   if (main && SHELLS[main.shell]) for (const s of slugs.values()) {
     if (s.overlayOf || !s.file || !exists(path.join(runDir, s.file))) continue;
     const html = fs.readFileSync(path.join(runDir, s.file), "utf8");
+    if (!/class=["'][^"']*\bnav-item\b/.test(html)) continue;   // 메뉴 없는 화면(초대 받았을 때 등 가운데 한 장)은 제외
     const appCls = ((/<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html) || [])[1] || "").split(/\s+/);
     if (!appCls.includes(SHELLS[main.shell])) warn(`화면 ${s.slug}: 시안 ${main.id}의 메뉴 구조(${main.shell})인데 .app에 ${SHELLS[main.shell]} 없음`);
   }
