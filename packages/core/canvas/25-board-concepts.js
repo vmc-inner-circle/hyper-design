@@ -69,13 +69,13 @@
           pick,
           memo]),
         HX.el("div", { class: "hx-cc-right" }, [
-          HX.el("div", { class: "hx-cc-shots-h", text: "메인 화면 " + (c.screens || []).length + "장 · 옆으로 넘겨 더 보기 · 누르면 크게" }), shots])]);
+          HX.el("div", { class: "hx-cc-shots-h", text: "메인 화면 " + (c.screens || []).length + "장 · 옆으로 넘겨 더 보기 · 화면은 끝까지 보여요 · 누르면 크게" }), shots])]);
       (c.screens || []).forEach(function (slug) {
         var s = HX.bySlug[slug], title = s ? s.name : slug;
         var box = HX.el("div", { class: "hx-cc-shot-frame", "data-theme": c.look, "data-swatch": (L.swatches[0] || {}).id || "", "data-type": B.state.type });
         var shot = HX.el("button", { type: "button", class: "hx-cc-shot", title: "크게 보기", onclick: function () { zoom(c, slug, title); } }, [HX.el("span", { class: "hx-cc-shot-name", text: title }), box]);
         shots.appendChild(shot);
-        HX.mountFrame(frameKey(c, slug), box, { fit: "width", badges: false });   // 첫 화면 높이만 (누르면 전체)
+        HX.mountFrame(frameKey(c, slug), box, { fit: "width", fullHeight: true, badges: false });   // 내용 끝까지 — 화면 안에서 스크롤하지 않게
       });
       cards[c.id] = { el: card, pick: pick }; cols.appendChild(card);
     });
