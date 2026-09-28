@@ -704,10 +704,11 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-cc-pick { justify-content: center; height: 36px; }
 .hx-cc-col.hx-on .hx-cc-pick { background: var(--hxc-primary); border-color: var(--hxc-primary); color: #fff; }
 .hx-cc-shots { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
-.hx-cc-shot { flex: 0 0 560px; display: flex; flex-direction: column; gap: 4px; padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in; }
-.hx-cc-shot-name { font-size: 12px; font-weight: 700; color: var(--hxc-muted); }
+.hx-cc-shot { flex: 0 0 560px; display: flex; flex-direction: column; gap: 4px; }
+.hx-cc-shot-name { align-self: flex-start; display: inline-flex; align-items: center; gap: 4px; padding: 0; border: 0; background: none; font-size: 12px; font-weight: 700; color: var(--hxc-muted); cursor: zoom-in; }
+.hx-cc-shot-name:hover { color: var(--hxc-primary); }
 .hx-cc-shot-frame { width: 100%; border-radius: 8px; overflow: hidden; }
-.hx-cc-shot:hover .hx-frame { border-color: var(--hxc-primary); }
+.hx-cc-shot-frame .content { scrollbar-width: thin; }
 .hx-cc-zoom { display: block; overflow: auto; padding: 16px; }
 
 .hx-cc-right { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
