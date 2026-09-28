@@ -1,0 +1,52 @@
+/* 테마 B — 라이트 · 따뜻함.
+   크림 바탕, 테라코타 강조, 둥근 형태. 가족·생활·기록 도메인에 어울린다. */
+
+[data-theme="b"] {
+  --c-bg: #FBF8F3;
+  --c-surface: #FFFFFF;
+  --c-surface-2: #F5F0E8;
+  --c-surface-3: #ECE5D9;
+  --c-border: #E8E0D3;
+  --c-border-strong: #D2C7B6;
+
+  --c-text: #1F1B16;
+  --c-text-2: #5C544A;
+  --c-text-muted: #A0968A;
+  --c-text-inverse: #FFFFFF;
+
+  --c-primary: #D9562B;
+  --c-primary-hover: #C24A22;
+  --c-primary-active: #A63E1C;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #FBE9E1;
+  --c-primary-soft-fg: #8A3316;
+
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+
+  --c-success: #2F8F5B;
+  --c-success-soft: #E4F3EA;
+  --c-success-soft-fg: #1F5C3B;
+  --c-warning: #C98A1B;
+  --c-warning-soft: #FBF0D9;
+  --c-warning-soft-fg: #7A5210;
+  --c-danger: #C6382F;
+  --c-danger-hover: #A92E26;
+  --c-danger-active: #8A241E;
+  --c-danger-soft: #FAE5E3;
+  --c-danger-soft-fg: #7F231D;
+  --c-info: #3A7CA5;
+  --c-info-soft: #E5F0F7;
+  --c-info-soft-fg: #24506B;
+
+  --c-focus: #D9562B;
+  --c-overlay: rgba(31, 27, 22, .45);
+  --c-skeleton: #ECE5D9;
+
+  /* 형태 성격: round */
+  --r-card: var(--r-xl);
+  --r-control: var(--r-pill);
+  --shadow-card: var(--shadow-md);
+  --border-card: 1px solid transparent;
+}

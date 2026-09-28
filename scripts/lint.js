@@ -1,0 +1,306 @@
+#!/usr/bin/env node
+/**
+ * lint.js — run 폴더의 데이터·조각이 계약(docs/harness-design.md §10)을 지키는지 검사한다.
+ *
+ *   node scripts/lint.js runs/<project> [--strict]
+ *
+ * exit 0 = 통과. FAIL이 하나라도 있으면 exit 1. WARN은 exit에 영향 없음(--strict면 실패).
+ * LLM 자기보고 대신 이 스크립트가 "끝났다"를 판정한다.
+ */
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = path.resolve(__dirname, "..");
+const args = process.argv.slice(2);
+const runDir = args.find((a) => !a.startsWith("--"));
+const strict = args.includes("--strict");
+if (!runDir) {
+  console.error("usage: node scripts/lint.js runs/<project> [--strict]");
+  process.exit(2);
+}
+
+const fails = [];
+const warns = [];
+const fail = (m) => fails.push(m);
+const warn = (m) => warns.push(m);
+const readJSON = (p) => JSON.parse(fs.readFileSync(p, "utf8"));
+const exists = (p) => fs.existsSync(p);
+
+// ---------- 입력 ----------
+const screensPath = path.join(runDir, "screens.json");
+const flowPath = path.join(runDir, "flow.json");
+const iconsPath = path.join(runDir, "icons.json");
+if (!exists(screensPath)) { console.error(`[FAIL] ${screensPath} 없음`); process.exit(1); }
+if (!exists(flowPath)) { console.error(`[FAIL] ${flowPath} 없음`); process.exit(1); }
+
+const S = readJSON(screensPath);
+const F = readJSON(flowPath);
+const projectIcons = exists(iconsPath) ? readJSON(iconsPath) : {};
+const platform = S.platform || "web";
+const pkgDir = path.join(ROOT, "packages", platform);
+
+const sprite = fs.readFileSync(path.join(ROOT, "packages/core/icons/lucide-sprite.svg"), "utf8");
+const spriteIds = new Set([...sprite.matchAll(/<symbol id="([^"]+)"/g)].map((m) => m[1]));
+const coreAllow = readJSON(path.join(ROOT, "packages/core/icons/allowlist.json"));
+const allowed = new Set([
+  ...Object.entries(coreAllow).filter(([k]) => !k.startsWith("_")).map(([, v]) => v),
+  ...Object.entries(projectIcons).filter(([k]) => !k.startsWith("_")).map(([, v]) => v),
+]);
+
+// 알려진 클래스 목록: base.css + components.css + patterns/*.html 에 등장하는 클래스
+const knownClasses = new Set();
+const collectClasses = (css) => {
+  for (const m of css.matchAll(/\.([a-zA-Z_][\w-]*)/g)) knownClasses.add(m[1]);
+};
+collectClasses(fs.readFileSync(path.join(ROOT, "packages/core/tokens/base.css"), "utf8"));
+const compDir = path.join(pkgDir, "components");
+const compFiles = exists(compDir) ? fs.readdirSync(compDir).filter((f) => f.endsWith(".css")) : [];
+if (compFiles.length) for (const f of compFiles) collectClasses(fs.readFileSync(path.join(compDir, f), "utf8"));
+else warn(`packages/${platform}/components/*.css 없음 — 클래스 검사 생략`);
+
+// ---------- 메타 ----------
+if (!["web", "mobile"].includes(platform)) fail(`screens.json platform은 web|mobile 여야 함 (지금: ${platform})`);
+if (!S.toggles || !["normal", "large"].includes(S.toggles.type)) fail(`toggles.type은 normal|large 여야 함`);
+// ---------- 분위기(looks)·버튼 색(swatches) — references/prd-to-screens.md §6 ----------
+{
+  const LK = require("./looks.js");
+  if (!Array.isArray(S.looks) || !S.looks.length) warn(`looks 없음 — 기본 분위기(깔끔한 흰색/따뜻한 크림/차분한 밤)를 쓴다. PRD에 맞춘 분위기 3개와 버튼 색을 만든다`);
+  const looks = LK.getLooks(S);
+  if (S.looks && S.looks.length !== 3) warn(`분위기는 3개 (지금 ${S.looks.length}개)`);
+  const lookIds = new Set();
+  for (const L of looks) {
+    const ld = `분위기 '${L.name || L.id}'`;
+    if (!L.id || !/^[a-z0-9-]+$/.test(L.id)) fail(`${ld}: id는 영문 소문자`);
+    if (lookIds.has(L.id)) fail(`${ld}: id 중복`); lookIds.add(L.id);
+    if (!L.name) fail(`${ld}: name 없음 (사용자에게 보이는 이름, 예: "따뜻한 크림")`);
+    else if (/[a-z]|#|테마|톤$/i.test(L.name)) warn(`${ld}: 이름은 한국어 일상어로 (예: "따뜻한 크림", "밤 바다")`);
+    if (!["light", "dark"].includes(L.mode)) fail(`${ld}: mode는 light|dark`);
+    if (!["soft", "round", "sharp"].includes(L.shape)) fail(`${ld}: shape는 soft|round|sharp`);
+    let ok = true;
+    try { LK.hex2rgb(L.bg); LK.hex2rgb(L.ink); } catch (e) { fail(`${ld}: bg·ink는 #RRGGBB`); ok = false; }
+    if (ok) {
+      const c = LK.contrast(L.ink, L.bg);
+      if (c < 4.5) fail(`${ld}: 글자와 배경 대비 ${c.toFixed(1)} (4.5 이상)`); else if (c < 7) warn(`${ld}: 글자와 배경 대비 ${c.toFixed(1)} (7 이상 권장)`);
+      if (L.mode === "dark" && LK.contrast(L.bg, "#000000") > 3) warn(`${ld}: mode dark인데 배경이 밝음`);
+      if (L.mode === "light" && LK.contrast(L.bg, "#FFFFFF") > 1.4) warn(`${ld}: mode light인데 배경이 어두움`);
+    }
+    const sws = L.swatches || [];
+    if (sws.length !== 5) warn(`${ld}: 버튼 색은 5개 (지금 ${sws.length}개, 첫 번째가 추천)`);
+    const swIds = new Set();
+    for (const sw of sws) {
+      const sd = `${ld} 버튼 색 '${sw.name || sw.id}'`;
+      if (!sw.id || !/^[a-z0-9-]+$/.test(sw.id)) fail(`${sd}: id는 영문 소문자`);
+      if (swIds.has(sw.id)) fail(`${sd}: id 중복`); swIds.add(sw.id);
+      if (!sw.name || /#|[a-z]/i.test(sw.name)) warn(`${sd}: 이름은 한국어 색 이름으로 (예: "테라코타", "바다 파랑")`);
+      try {
+        const fg = LK.swatchTokens(L, sw)["--c-primary-fg"];
+        const c = LK.contrast(sw.hex, fg);
+        if (c < 3) fail(`${sd}: 버튼 위 글자 대비 ${c.toFixed(1)} (3 이상)`);
+        if (ok && LK.contrast(sw.hex, L.bg) < 1.6) warn(`${sd}: 배경과 너무 비슷해 버튼이 안 보일 수 있음`);
+      } catch (e) { fail(`${sd}: hex는 #RRGGBB`); }
+    }
+  }
+  if (!lookIds.has(S.theme)) fail(`screens.json theme '${S.theme}'이 looks에 없음`);
+  const cur = looks.find((l) => l.id === S.theme);
+  const sw = S.toggles && (S.toggles.swatch || S.toggles.accent);
+  if (cur && sw && !["calm", "vivid"].includes(sw) && !(cur.swatches || []).some((x) => x.id === sw)) fail(`toggles.swatch '${sw}'이 분위기 '${cur.id}'의 버튼 색에 없음`);
+  const rec = S.board && S.board.recommend;
+  if (rec && rec.theme && !lookIds.has(rec.theme)) fail(`board.recommend.theme '${rec.theme}'이 looks에 없음`);
+}
+if (!Array.isArray(S.screens) || S.screens.length === 0) fail(`screens가 비어 있음`);
+const roleKeys = new Set((S.roles || []).map((r) => r.key));
+
+// ---------- 화면·영역·id ----------
+const ids = new Map(); // id → 설명
+const slugs = new Map(); // slug → screen
+const regionKeysBySlug = new Map();
+const triggersBySlug = new Map(); // slug → Map(triggerKey → 속한 region key | null)
+
+// 조각 HTML에서 data-trigger마다 가장 가까운 바깥 data-region을 찾는다 (가벼운 태그 스택 파서)
+function scanTriggers(html) {
+  const out = new Map();
+  const stack = []; // {tag, region}
+  const voids = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr", "use", "path", "circle", "rect", "line", "polyline", "polygon"]);
+  for (const m of html.matchAll(/<(\/?)([a-zA-Z][\w-]*)([^>]*?)(\/?)>/g)) {
+    const [, close, tagRaw, attrs, selfClose] = m;
+    const tag = tagRaw.toLowerCase();
+    if (close) { for (let i = stack.length - 1; i >= 0; i--) if (stack[i].tag === tag) { stack.length = i; break; } continue; }
+    const region = (/data-region\s*=\s*["']([^"']+)["']/.exec(attrs) || [])[1] || null;
+    const trig = (/data-trigger\s*=\s*["']([^"']+)["']/.exec(attrs) || [])[1] || null;
+    const parentRegion = [...stack].reverse().find((s) => s.region)?.region || null;
+    if (trig) out.set(trig, region || parentRegion);
+    if (!selfClose && !voids.has(tag)) stack.push({ tag, region });
+  }
+  return out;
+}
+const noteId = (id, desc) => {
+  if (!Number.isInteger(id)) { fail(`${desc}: id 누락 (node scripts/ids.js ${runDir} 실행)`); return; }
+  if (ids.has(id)) fail(`id ${id} 중복: ${ids.get(id)} ↔ ${desc}`);
+  ids.set(id, desc);
+};
+
+for (const s of S.screens || []) {
+  const desc = `화면 ${s.slug || "(slug 없음)"}`;
+  if (!s.slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s.slug)) fail(`${desc}: slug는 케밥케이스 영문이어야 함`);
+  if (slugs.has(s.slug)) fail(`slug 중복: ${s.slug}`);
+  slugs.set(s.slug, s);
+  if (!s.name) fail(`${desc}: name 없음`);
+  if (!s.file) fail(`${desc}: file 없음`);
+  if (s.role && roleKeys.size && !roleKeys.has(s.role)) fail(`${desc}: role '${s.role}'이 roles에 없음`);
+  if (s.state && !["first-run", "empty", "input"].includes(s.state)) fail(`${desc}: state는 first-run|empty|input 중 하나`);
+  noteId(s.id, desc);
+
+  const regions = s.regions || [];
+  if (regions.length === 0) warn(`${desc}: 영역이 0개 — 사용자가 가리킬 곳이 없음`);
+  if (regions.length > 6) fail(`${desc}: 영역 ${regions.length}개 (최대 6)`);
+  const keys = new Set();
+  for (const r of regions) {
+    const rd = `${s.slug} / ${r.key || "(key 없음)"}`;
+    if (!r.key || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(r.key)) fail(`${rd}: region key는 케밥케이스 영문이어야 함`);
+    if (keys.has(r.key)) fail(`${rd}: 같은 화면 안 key 중복`);
+    keys.add(r.key);
+    if (!r.label) fail(`${rd}: label 없음 (보드에 보이는 한글 이름)`);
+    // 사용자는 컴포넌트를 모른다 — 번호를 누르면 보이는 이름에 컴포넌트 용어 금지
+    const jargon = (r.label || "").match(/카드|띠|배너|스트립|패널|서랍|드로어|모달|탭|칩|배지|세그먼트|토글|스위치|리스트|타임라인|섹션|영역|위젯|컴포넌트/);
+    if (jargon) warn(`${rd}: label에 컴포넌트 용어 '${jargon[0]}' — '무엇이 보이는/하는 곳'으로 (예: "날짜 고르기")`);
+    if (!r.why) warn(`${rd}: why 없음 — 번호를 누르면 보이는 "이게 뭐냐면" 한 문장`);
+    noteId(r.id, `영역 ${rd}`);
+  }
+  regionKeysBySlug.set(s.slug, keys);
+
+  // ----- 조각 파일 -----
+  const fragPath = path.join(runDir, s.file || "");
+  if (!s.file || !exists(fragPath)) { fail(`${desc}: 조각 파일 없음 (${s.file})`); continue; }
+  const html = fs.readFileSync(fragPath, "utf8");
+
+  if (/<\s*(html|head|body|style|script|link)\b/i.test(html)) fail(`${desc}: 조각에 <html|head|body|style|script|link> 금지`);
+  if (/\sstyle\s*=\s*["']/i.test(html)) fail(`${desc}: 인라인 style 금지 — 컴포넌트 클래스만 사용`);
+  if (/lorem ipsum|dolor sit amet/i.test(html)) fail(`${desc}: Lorem ipsum 금지 — 도메인 더미 텍스트 사용`);
+  // 자리표시 문구: 요소 내용이 통째로 "버튼"/"텍스트"뿐인 경우만 (라벨 "설명 (선택)" 같은 실제 문구는 제외)
+  if (/>\s*(버튼|텍스트|제목|내용|본문|더미)\s*<\/(button|a|h[1-6]|p|span|td|th|li)>/.test(html)) warn(`${desc}: 자리표시 문구("버튼"·"텍스트" 등) 발견 — 실제 문구로`);
+
+  // data-region 양방향 대조
+  const inHtml = [...html.matchAll(/data-region\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]);
+  const inHtmlSet = new Set(inHtml);
+  const dupInHtml = inHtml.filter((k, i) => inHtml.indexOf(k) !== i);
+  for (const k of new Set(dupInHtml)) fail(`${desc}: data-region="${k}" 가 조각에 2번 이상 등장`);
+  for (const k of keys) if (!inHtmlSet.has(k)) fail(`${desc}: screens.json 영역 '${k}'이 조각에 data-region으로 없음`);
+  for (const k of inHtmlSet) if (!keys.has(k)) fail(`${desc}: 조각의 data-region='${k}'이 screens.json에 없음`);
+
+  // data-trigger (흐름 화살표 출발점) — 화면 안에서 유일해야 한다
+  const trigAll = [...html.matchAll(/data-trigger\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]);
+  for (const k of new Set(trigAll.filter((k, i) => trigAll.indexOf(k) !== i))) fail(`${desc}: data-trigger="${k}" 가 2번 이상 등장`);
+  triggersBySlug.set(s.slug, scanTriggers(html));
+
+  // 아이콘
+  for (const m of html.matchAll(/href\s*=\s*["']#i-([a-z0-9-]+)["']/g)) {
+    const name = m[1];
+    if (!spriteIds.has(name)) fail(`${desc}: 아이콘 '${name}' 은 lucide 스프라이트에 없음`);
+    else if (!allowed.has(name)) fail(`${desc}: 아이콘 '${name}' 은 allowlist/icons.json에 없음 — icons.json에 의미와 함께 등록`);
+  }
+  for (const m of html.matchAll(/<svg\b(?![^>]*class=["'][^"']*\bicon(-sm|-lg)?\b)[^>]*>\s*<use/g)) {
+    warn(`${desc}: <svg><use> 에 .icon/.icon-sm/.icon-lg 클래스 없음`);
+  }
+  for (const m of html.matchAll(/<button\b([^>]*)>\s*<svg[^>]*>\s*<use[^>]*>\s*<\/svg>\s*<\/button>/g)) {
+    if (!/aria-label\s*=/.test(m[1])) fail(`${desc}: 아이콘만 있는 버튼에 aria-label 없음`);
+  }
+
+  // 알려지지 않은 클래스 (경고)
+  if (knownClasses.size) {
+    const unknown = new Set();
+    for (const m of html.matchAll(/class\s*=\s*["']([^"']+)["']/g)) {
+      for (const c of m[1].split(/\s+/).filter(Boolean)) {
+        if (!knownClasses.has(c) && !c.startsWith("hx-")) unknown.add(c);
+      }
+    }
+    if (unknown.size) warn(`${desc}: components.css에 없는 클래스 ${[...unknown].map((c) => `'${c}'`).join(", ")} — 스타일이 안 먹는다`);
+  }
+}
+
+// ---------- roles[].nav ----------
+for (const r of S.roles || []) {
+  if (!r.nav) { warn(`역할 '${r.key}': nav 없음 — 화면마다 사이드바가 제각각이 된다 (references/prd-to-screens.md §2)`); continue; }
+  for (const n of r.nav) {
+    if (!slugs.has(n.slug)) fail(`역할 '${r.key}' nav: 화면 '${n.slug}' 없음`);
+    if (!n.label) fail(`역할 '${r.key}' nav '${n.slug}': label 없음`);
+    if (n.icon && !spriteIds.has(n.icon)) fail(`역할 '${r.key}' nav '${n.slug}': 아이콘 '${n.icon}' 스프라이트에 없음`);
+    else if (n.icon && !allowed.has(n.icon)) fail(`역할 '${r.key}' nav '${n.slug}': 아이콘 '${n.icon}' allowlist/icons.json에 없음`);
+  }
+}
+
+// ---------- flow ----------
+if (!Array.isArray(F.flows) || F.flows.length === 0) fail(`flow.json flows가 비어 있음`);
+const flowKeys = new Set();
+const reached = new Set();
+for (const f of F.flows || []) {
+  const fd = `플로우 ${f.key || "(key 없음)"}`;
+  if (!f.key) fail(`${fd}: key 없음`);
+  if (flowKeys.has(f.key)) fail(`${fd}: key 중복`);
+  flowKeys.add(f.key);
+  if (!f.name) fail(`${fd}: name 없음`);
+  // 흐름 제목은 디자인 산출물의 작업 이름: 짧은 '~하기' (문장·해요체·주어 금지)
+  else if (!/기$/.test(f.name.trim())) warn(`${fd}: 제목 "${f.name}" — 짧은 '~하기' 작업 이름으로 (예: "첫 모임 만들기", "책 고르고 투표하기")`);
+  else if (f.name.trim().length > 18) warn(`${fd}: 제목 "${f.name}" — 18자 이내로 짧게`);
+  else if (/[·()]/.test(f.name)) warn(`${fd}: 제목에 가운뎃점·괄호 — 자연스러운 문장으로 ("비행기·숙소" → "비행기와 숙소")`);
+  if (f.role && roleKeys.size && !roleKeys.has(f.role)) fail(`${fd}: role '${f.role}'이 roles에 없음`);
+  if (!Array.isArray(f.steps) || f.steps.length === 0) { fail(`${fd}: steps 비어 있음`); continue; }
+  f.steps.forEach((st, i) => {
+    const sd = `${fd} step ${i + 1}`;
+    // 흐름은 끊기지 않는 한 줄이어야 한다: 이번 step의 출발 화면 = 직전 step의 도착 화면
+    if (i > 0 && st.from !== f.steps[i - 1].to) warn(`${sd}: 흐름이 끊김 ('${f.steps[i - 1].to}' 다음에 '${st.from}'에서 시작) — 별도 흐름으로 나눈다`);
+    if (!slugs.has(st.from)) fail(`${sd}: from '${st.from}' 화면 없음`);
+    if (!slugs.has(st.to)) fail(`${sd}: to '${st.to}' 화면 없음`);
+    if (st.from && slugs.has(st.from)) {
+      const keys = regionKeysBySlug.get(st.from) || new Set();
+      if (!st.region) fail(`${sd}: region 없음 (어디를 누르는지)`);
+      else if (!keys.has(st.region)) fail(`${sd}: region '${st.region}'이 '${st.from}' 화면 영역에 없음`);
+    }
+    if (!st.action) fail(`${sd}: action 문장 없음 ("'…'을 누르면")`);
+    // trigger: 화살표가 출발하는 실제 버튼/항목. 조각에 data-trigger="<key>"가 있어야 한다
+    if (!st.trigger) warn(`${sd}: trigger 없음 — 화살표가 영역 덩어리에서 출발한다. 누르는 요소에 data-trigger를 붙이고 step.trigger로 지정`);
+    else if (slugs.has(st.from)) {
+      const trig = triggersBySlug.get(st.from) || new Map();
+      if (!trig.has(st.trigger)) fail(`${sd}: trigger '${st.trigger}'가 '${st.from}' 조각에 data-trigger로 없음`);
+      else if (st.region && trig.get(st.trigger) !== st.region) warn(`${sd}: trigger '${st.trigger}'가 region '${st.region}' 안에 있지 않음 (실제: ${trig.get(st.trigger) || "영역 밖"})`);
+    }
+    reached.add(st.from); reached.add(st.to);
+  });
+}
+// 처음 시작 흐름: 빈 상태/첫 진입 화면이 하나도 없으면 비디자이너가 "처음엔 어떻게 보이지?"를 알 수 없다
+if (![...slugs.values()].some((s) => s.state === "first-run" || s.state === "empty")) {
+  warn(`처음 켰을 때·데이터 없을 때 화면이 없음 — 역할마다 '처음 시작' 흐름을 맨 앞에 (references/prd-to-screens.md §3)`);
+}
+for (const s of slugs.values()) {
+  if (s.variantOf && !slugs.has(s.variantOf)) fail(`화면 ${s.slug}: variantOf '${s.variantOf}' 화면 없음`);
+}
+for (const slug of slugs.keys()) {
+  if (!reached.has(slug)) warn(`화면 '${slug}' 은 어떤 플로우에도 등장하지 않음 — 지도에서 고립 노드`);
+}
+
+// ---------- icons.json ----------
+{
+  const seen = new Map();
+  for (const [k, v] of Object.entries(projectIcons)) {
+    if (k.startsWith("_")) continue;
+    if (!spriteIds.has(v)) fail(`icons.json '${k}': '${v}' 은 lucide 스프라이트에 없음`);
+    if (seen.has(v)) fail(`icons.json: 아이콘 '${v}' 이 두 의미(${seen.get(v)}, ${k})에 쓰임`);
+    seen.set(v, k);
+  }
+}
+
+// ---------- board 설정 (있으면) ----------
+if (S.board) {
+  if (S.board.hero && !slugs.has(S.board.hero)) fail(`board.hero '${S.board.hero}' 화면 없음`);
+  for (const q of S.board.ask || []) {
+    if (!q.id || !q.text || !Array.isArray(q.options) || q.options.length < 2) fail(`board.ask 항목 형식 오류: ${JSON.stringify(q)}`);
+    if (q.recommended === undefined) fail(`board.ask '${q.id}': recommended 없음 — 모든 질문에 추천값`);
+  }
+}
+
+// ---------- 출력 ----------
+for (const w of warns) console.log(`[WARN] ${w}`);
+for (const f of fails) console.log(`[FAIL] ${f}`);
+const nScreens = (S.screens || []).length;
+const nRegions = (S.screens || []).reduce((n, s) => n + (s.regions || []).length, 0);
+console.log(`[lint] 화면 ${nScreens} · 영역 ${nRegions} · 플로우 ${(F.flows || []).length} · FAIL ${fails.length} · WARN ${warns.length}`);
+process.exit(fails.length || (strict && warns.length) ? 1 : 0);

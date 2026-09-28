@@ -1,0 +1,135 @@
+<!-- pattern: dashboard — 요약 수치 4개 + 차트 자리 + 최근 목록.
+     차트·그래프는 그리지 않는다: 회색 .skeleton-block 위에 카드 제목으로 "무슨 차트인지"만 적는다.
+     <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다. data-region key는 예시(example-*). -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 -->대시보드</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김민</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 -->
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg><span>대시보드</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg><span>요청</span><span class="badge badge-neutral">8</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-chart-bar"/></svg><span>리포트</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>설정</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title"><!-- slot: 인사 또는 페이지 제목 -->좋은 아침이에요, 민수 님</h1>
+        <p class="page-desc"><!-- slot: 기준 시점 -->9월 27일 (토) 기준 · 마지막 갱신 5분 전</p>
+      </div>
+      <div class="page-actions">
+        <div class="segmented">
+          <button class="segmented-item">주간</button>
+          <button class="segmented-item active">월간</button>
+          <button class="segmented-item">분기</button>
+        </div>
+        <button class="btn btn-secondary"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>내보내기</button>
+      </div>
+    </div>
+
+    <section class="section grid-4" data-region="example-stats">
+      <!-- slot: 핵심 수치 4개 (stat) -->
+      <div class="card"><div class="card-body"><div class="stat">
+        <span class="stat-label">이번 달 처리 건수</span>
+        <span class="stat-value">1,284</span>
+        <span class="stat-delta up"><svg class="icon-sm" aria-hidden="true"><use href="#i-trending-up"/></svg> 12.4%</span>
+      </div></div></div>
+      <div class="card"><div class="card-body"><div class="stat">
+        <span class="stat-label">미결 요청</span>
+        <span class="stat-value">27</span>
+        <span class="stat-delta down"><svg class="icon-sm" aria-hidden="true"><use href="#i-trending-up"/></svg> 5건 증가</span>
+      </div></div></div>
+      <div class="card"><div class="card-body"><div class="stat">
+        <span class="stat-label">평균 처리 시간</span>
+        <span class="stat-value">1.8<small>일</small></span>
+        <span class="stat-delta up"><svg class="icon-sm" aria-hidden="true"><use href="#i-trending-down"/></svg> 0.3일 단축</span>
+      </div></div></div>
+      <div class="card"><div class="card-body"><div class="stat">
+        <span class="stat-label">활성 구성원</span>
+        <span class="stat-value">412</span>
+        <span class="stat-delta">지난달과 같음</span>
+      </div></div></div>
+    </section>
+
+    <section class="section grid-2" data-region="example-charts">
+      <!-- slot: 차트 자리 2개 (제목 + skeleton-block). 실제 차트를 그리지 않는다 -->
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">주별 처리 추이</h2><span class="badge badge-neutral">최근 8주</span></div>
+        <div class="card-body"><div class="skeleton skeleton-block"></div></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">유형별 비중</h2><button class="btn btn-ghost btn-sm">자세히</button></div>
+        <div class="card-body">
+          <div class="skeleton skeleton-block"></div>
+          <div class="row gap-4 text-sm">
+            <span class="badge badge-dot badge-primary">구매 42%</span>
+            <span class="badge badge-dot badge-info">출장 31%</span>
+            <span class="badge badge-dot badge-neutral">기타 27%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section grid-2" data-region="example-recent">
+      <!-- slot: 최근 목록 + 할 일 -->
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">최근 요청</h2><button class="btn btn-ghost btn-sm">전체 보기</button></div>
+        <ul class="list list-divided">
+          <li class="list-item">
+            <span class="list-icon is-primary"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">사무용품 구매</span><span class="list-sub">김민수 · 128,000원</span></div>
+            <span class="list-meta"><span class="badge badge-warning">검토 중</span></span>
+          </li>
+          <li class="list-item">
+            <span class="list-icon is-success"><svg class="icon" aria-hidden="true"><use href="#i-circle-check"/></svg></span>
+            <div class="list-main"><span class="list-title">외부 교육 참가비</span><span class="list-sub">이서연 · 450,000원</span></div>
+            <span class="list-meta"><span class="badge badge-success">승인</span></span>
+          </li>
+          <li class="list-item">
+            <span class="list-icon is-danger"><svg class="icon" aria-hidden="true"><use href="#i-circle-alert"/></svg></span>
+            <div class="list-main"><span class="list-title">서버 임대료 9월</span><span class="list-sub">박준호 · 1,320,000원</span></div>
+            <span class="list-meta"><span class="badge badge-danger">반려</span></span>
+          </li>
+          <li class="list-item">
+            <span class="list-icon"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">출장 경비 정산</span><span class="list-sub">정우진 · 342,000원</span></div>
+            <span class="list-meta"><span class="badge badge-neutral">초안</span></span>
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">오늘 할 일</h2><span class="badge badge-primary">3</span></div>
+        <ul class="list list-divided">
+          <li class="list-item">
+            <input class="checkbox" type="checkbox" aria-label="완료">
+            <div class="list-main"><span class="list-title">분기 보고서 초안 검토</span><span class="list-sub">마감 오늘 18:00</span></div>
+            <span class="list-meta"><span class="badge badge-warning">임박</span></span>
+          </li>
+          <li class="list-item">
+            <input class="checkbox" type="checkbox" aria-label="완료">
+            <div class="list-main"><span class="list-title">신규 입사자 계정 승인</span><span class="list-sub">인사팀 요청 · 2명</span></div>
+            <span class="list-meta">10/1</span>
+          </li>
+          <li class="list-item is-muted">
+            <input class="checkbox" type="checkbox" checked aria-label="완료">
+            <div class="list-main"><span class="list-title">주간 회의 안건 정리</span><span class="list-sub">완료 · 09:40</span></div>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</div>
