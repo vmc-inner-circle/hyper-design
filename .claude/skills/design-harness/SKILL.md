@@ -39,8 +39,10 @@ description: PRD 하나를 받아 사용자 개입 5회 이하로 웹 서비스 
 
 | 작업 | 모델 | 호출 |
 |---|---|---|
-| PRD 분석 · 데이터 · 의견 해석 · 게이트 · 검수 | 메인 | 직접 |
-| 새 화면 조립 (1턴, 추가 화면) | sonnet | `Agent(subagent_type:"screen-writer", model:"sonnet")` |
+| PRD 분석 · 데이터 · 시안 정하기 · 의견 해석 · 게이트 · 검수 | 메인 | 직접 |
+| 레퍼런스 조사 (1턴, 관점 5개 동시) | sonnet | `Agent(subagent_type:"ref-scout", model:"sonnet", run_in_background:true)` |
+| 새 화면 조립 (1턴, 추가 화면) · 다른 시안의 핵심 화면 (`CONCEPT=`) | sonnet | `Agent(subagent_type:"screen-writer", model:"sonnet")` |
+| 고른 시안으로 전체 화면 맞추기 (2턴, `MODE=restyle`) | sonnet | 3개씩 병렬 |
 | 국소 수정 (`MODE=revise`) | haiku | `Agent(subagent_type:"screen-writer", model:"haiku")` |
 | lint FAIL 재시도 | sonnet | |
 
@@ -59,6 +61,25 @@ haiku에 넘기는 `CHANGES`의 "할 것"은 명령형으로 완결한다(어떤
 ### 1.0 기록 시작
 - `runs/<project>/` 생성(영문 케밥케이스). `templates/prompt-log.md`·`templates/brief.md` 복사. `harness-notes.md` 빈 파일.
 - `elapsed.txt`에 `시작: YYYY-MM-DD HH:MM`(`date`로 확인). `prompt-log.md` 1회에 PRD 원문.
+
+### 1.0-1 레퍼런스 조사 시작 (ref-scout 5개, 백그라운드)
+
+디자이너처럼 **비슷한 서비스를 먼저 살펴보고** 그 근거로 화면 구성이 다른 시안을 만든다(색만 다른 안 금지). PRD를 읽자마자 ref-scout 5개를 **백그라운드로 동시에** 띄우고, 메인은 기다리지 않고 1.1로 간다.
+
+```
+Agent(subagent_type: "ref-scout", model: "sonnet", run_in_background: true, prompt: "
+PRD=<누가 · 무엇을 · 핵심 작업 3줄>
+ANGLE=<아래 5개 중 하나>
+AVOID=<다른 조사원에게 준 예상 후보 이름 — 겹치지 않게>
+")
+```
+- `ref-scout`가 목록에 없다고 나오면(에이전트 파일을 이번 세션 중에 만든 경우) `subagent_type: "general-purpose"`로 띄우고 프롬프트 첫 줄에 "먼저 .claude/agents/ref-scout.md를 읽고 그 지침대로만 일한다(WebSearch·WebFetch만, 파일 쓰기 금지, 최종 답은 JSON 하나)."를 붙인다.
+
+관점 5개: ① 같은 일을 하는 국내 서비스 ② 같은 일을 하는 해외 서비스 ③ 핵심 작업이 닮은 다른 분야 서비스 ④ 같은 사용자층이 매일 쓰는 앱 ⑤ 디자인 갤러리에서 이 작업의 화면 모음.
+
+- 동시에 돌아 서로를 못 보므로 **같은 서비스가 겹칠 수 있다** — 이름이 같으면 하나만 남기고 가져올 점을 합친다(4곳이어도 진행). 겹침을 줄이려고 AVOID에 흔한 후보(관점별로 떠오르는 유명 서비스)를 미리 나눠 적는다.
+- 결과(JSON 5개)는 `runs/<p>/references.md`에 표로 모으고 `screens.json`의 `references`에 넣는다(prd-to-screens §7). 3분이 지나도 안 온 조사원은 기다리지 않는다(3곳 이상이면 진행).
+- 결과가 오기 전에 할 수 있는 것(brief·화면·흐름·갈래)을 먼저 한다. 시안(`concepts`)만 결과를 본 뒤 정한다.
 
 ### 1.1-0 초안 전에 물을지 판단 (메인, 1분)
 
@@ -90,6 +111,7 @@ PRD를 읽고 아래 표로 판단한다. **대부분의 PRD는 묻지 않는다
 - 항목: 화면당 3~6개, `label`·`why`는 ux-writing §2.
 - **화면 느낌**: PRD에 맞춘 분위기 3개(이름·이유·배경·글자·모양) + 분위기마다 버튼 색 5개(색 이름, 첫 번째 추천) + 글자 크기 추천(prd-to-screens §6). 구조 질문 최대 3개.
 - 가정 로그: PRD에 없어서 정한 것 전부.
+- **시안 3개**(레퍼런스가 모인 뒤, prd-to-screens §7): 메뉴 구조(`shell`: sidebar·top·rail)·첫 화면 구성·분위기가 **서로 다른** 안. 첫 번째가 추천이고 지금 화면들을 그 안으로 만든다. 안마다 참고한 곳(refs)과 보여줄 핵심 화면 2~3개.
 
 ### 1.2 데이터 파일
 - `screens.json`(계약 §6.1), `flow.json`(§6.2, 모든 step에 `trigger`, 제목 '~하기', `branches`), `icons.json`.
@@ -112,16 +134,31 @@ THEME_HINT=<상태 배지 규칙(예: 확정=badge-success+circle-check, 후보=
 ")
 ```
 
+- 추천 시안의 `shell`이 top·rail이면 프롬프트에 `SHELL=nav-top`(또는 `nav-rail`)을 넣는다 — 모든 화면의 `.app`에 그 클래스(00-rules 11-1).
+- **다른 시안의 핵심 화면**: 시안마다 screen-writer 1개를 같은 때 띄운다(추천 시안 화면과 병렬).
+
+```
+Agent(subagent_type: "screen-writer", model: "sonnet", prompt: "
+RUN=runs/<project>
+CONCEPT=<b|c>
+SCREENS=<그 시안의 screens 2~3개>
+DOMAIN=<추천 시안과 같은 더미 데이터>
+시안 메모: <이름 · 메뉴 구조(shell) · 첫 화면에 무엇을 먼저 · 밀도 · 참고한 곳에서 가져올 점(borrow)을 구체적으로>
+출력은 runs/<project>/concepts/<id>/<slug>.html. 영역(data-region)·트리거(data-trigger)는 원래 화면과 같게 붙인다(고르면 그대로 옮겨 쓴다).
+")
+```
+
 - 끝나면 `lint.js`. FAIL 화면만 FAIL 원문과 함께 재호출(최대 2회), 그래도 실패면 메인이 고친다. "components에 없는 클래스" WARN은 반드시 잡는다.
 
 ### 1.4 검수 → 띄우기
 1. `node scripts/build.js runs/<project> --mode board`
-2. 헤드리스 Chrome(계약 §11)으로 `out/board.html`을 1440×900에서 연다. 확인: (사용 흐름) 카드 수 = 흐름 수 / 첫 카드 → 따라가 보기 두 장·파란 박스·단계 문장 / → 한 번·Esc / 화면 클릭 → 화면 디자인. (화면 디자인) 화면 속 버튼이 제 모양 / 요소 하나 눌러 바꿔주세요 → 핀·'의견 보내기 (1)' / 콘솔 에러 0. 깨진 화면만 고친다. 검수로 남긴 의견은 헤드리스 프로필에만 남으므로 사용자 보드에는 영향 없다.
+2. 헤드리스 Chrome(계약 §11)으로 `out/board.html`을 1440×900에서 연다. 확인: (시안 비교) 시안 3개가 나란히, 안마다 핵심 화면이 그 안의 메뉴 구조·분위기로 / '이 안으로 할게요' → 의견 보내기 첫 줄에 '시안 b(…)'. (사용 흐름) 카드 수 = 흐름 수 / 첫 카드 → 따라가 보기 두 장·파란 박스·단계 문장 / → 한 번·Esc / 화면 클릭 → 화면 디자인. (화면 디자인) 화면 속 버튼이 제 모양 / 요소 하나 눌러 바꿔주세요 → 핀·'의견 보내기 (1)' / 콘솔 에러 0. 깨진 화면만 고친다. 검수로 남긴 의견은 헤드리스 프로필에만 남으므로 사용자 보드에는 영향 없다.
 3. **헤드리스 Chrome 종료** → `node scripts/build.js runs/<project> --mode board --open`
 4. `elapsed.txt`에 `초안1: HH:MM`. 사용자에게 (이 형식 그대로):
 
 ```
 초안 1을 브라우저에 띄웠어요. (runs/<project>/out/board.html)
+비슷한 서비스 N곳을 살펴보고 만든 시안 3개가 '시안 비교'에 있어요. 마음에 드는 안을 골라 주세요.
 '사용 흐름'에서 흐름 카드를 눌러 화면이 어떻게 이어지는지 보시고, '화면 디자인'에서 고치고 싶은 곳을 눌러 의견을 남겨 주세요.
 다 되면 오른쪽 위 "의견 보내기"에서 내용을 확인하고 복사해 여기에 붙여넣어 주세요.
 (화면 N개 · 흐름 M개 · 웹)
@@ -132,9 +169,10 @@ THEME_HINT=<상태 배지 규칙(예: 확정=badge-success+circle-check, 후보=
 `references/answer-parsing.md`대로.
 1. `prompt-log.md` 2회에 (AI 질문 요약 = "초안 1 보드") + 붙여넣은 원문.
 2. 줄 단위로 해석해 `brief.md` 답변 로그에 **원문 | 해석 | 반영**.
-3. 반영: `화면 S · … [경로]` 줄은 그 화면의 경로 요소를 고칠 대상으로(answer-parsing §1-1) / 첫 줄의 분위기·글자 크기·버튼 색 확정(`theme`, `toggles.type`, `toggles.swatch`, `board.locked = ["theme","type","swatch","ask"]`) / `확인:` → 구조 반영 / `N 빼기` → 항목·조각 블록 제거 / `N 바꿔` → 재작성 대상 / `화면 N 빼기` → 화면 제거 + 흐름을 **끊김 없게** 다시 잇기(끊기면 흐름을 쪼갬) / `추가:` → 새 화면(+ 필요하면 새 흐름) / `메모:` → 전역 힌트.
-4. 의견 때문에 화면에 **새 묶음이 생기거나 버튼이 다른 묶음으로 옮겨지면**(예: 열 머리에 끼어 있던 '회원 추가' 버튼을 위쪽 도구줄로) screens.json에 항목을 추가하고, 그 버튼을 쓰는 흐름 step의 `region`도 새 항목으로 옮긴다. `round: 2`, `board.focus = [고친 화면 slug]`, `ids.js`.
-5. 재작성: 문구·아이콘·요소 교체처럼 단순한 수정은 haiku, 배치를 다시 짜는 수정(열 정렬·새 묶음)은 sonnet(`MODE=revise`, 1~2개씩 병렬), 새 화면도 sonnet → lint → 검수 → 헤드리스 종료 → `--open` → "초안 2를 띄웠어요. 고친 화면에는 '고친 화면' 표시가 있어요."
+3. **시안**: 첫 줄의 `시안 <id>`가 지금 화면들의 시안과 다르면 먼저 전체를 그 시안으로 맞춘다 — `screens.json`의 `concept`을 바꾸고, 그 시안의 핵심 화면(`concepts/<id>/<slug>.html`)은 `screens/`로 옮겨 쓰고, 나머지 화면은 screen-writer `MODE=restyle`(3개씩 병렬, 메뉴 구조·첫 화면 구성을 그 시안처럼, 내용·영역·트리거는 그대로). `board.locked`에 `"concept"`. 같으면 `"concept"`만 잠근다.
+4. 반영: `화면 S · … [경로]` 줄은 그 화면의 경로 요소를 고칠 대상으로(answer-parsing §1-1) / 첫 줄의 분위기·글자 크기·버튼 색 확정(`theme`, `toggles.type`, `toggles.swatch`, `board.locked = ["theme","type","swatch","ask"]`) / `확인:` → 구조 반영 / `N 빼기` → 항목·조각 블록 제거 / `N 바꿔` → 재작성 대상 / `화면 N 빼기` → 화면 제거 + 흐름을 **끊김 없게** 다시 잇기(끊기면 흐름을 쪼갬) / `추가:` → 새 화면(+ 필요하면 새 흐름) / `메모:` → 전역 힌트.
+5. 의견 때문에 화면에 **새 묶음이 생기거나 버튼이 다른 묶음으로 옮겨지면**(예: 열 머리에 끼어 있던 '회원 추가' 버튼을 위쪽 도구줄로) screens.json에 항목을 추가하고, 그 버튼을 쓰는 흐름 step의 `region`도 새 항목으로 옮긴다. `round: 2`, `board.focus = [고친 화면 slug]`, `ids.js`.
+6. 재작성: 문구·아이콘·요소 교체처럼 단순한 수정은 haiku, 배치를 다시 짜는 수정(열 정렬·새 묶음)은 sonnet(`MODE=revise`, 1~2개씩 병렬), 새 화면도 sonnet → lint → 검수 → 헤드리스 종료 → `--open` → "초안 2를 띄웠어요. 고친 화면에는 '고친 화면' 표시가 있어요."
 
 ## 3턴 — 의견 2 → 최종
 

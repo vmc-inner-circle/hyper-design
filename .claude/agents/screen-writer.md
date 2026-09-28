@@ -15,6 +15,9 @@ model: sonnet
 - `SCREENS=<slug>,<slug>,…` — 이번에 만들 화면
 - `DOMAIN=…` — 더미 데이터 힌트(인물·장소·기간·상태 어휘). **모든 화면에 이 값을 그대로 쓴다.**
 - `MODE=revise` 가 있으면 수정 모드: `CHANGES=`만 반영하고 `KEEP=` 영역은 그대로 둔다.
+- `SHELL=nav-top|nav-rail` 이 있으면 모든 화면의 `.app`에 그 클래스를 붙이고 메뉴를 그 골격대로 둔다(패턴 `shell-top.html`·`shell-rail.html`, 10-layout "app 변형"). 없으면 기본(왼쪽 메뉴).
+- `CONCEPT=<id>` 가 있으면 **시안 모드**: 같은 화면을 다른 시안으로 만든다. `RUN/screens.json`의 `concepts`에서 그 시안(shell·traits·refs)을 읽고, 프롬프트의 "시안 메모"대로 **메뉴 구조와 첫 화면 구성·밀도를 바꾼다**. 내용(문구·데이터)·영역(data-region)·트리거(data-trigger)는 원래 화면과 같게. 출력은 `RUN/concepts/<id>/<slug>.html`.
+- `MODE=restyle` 이 있으면 **시안 맞추기**: 기존 `RUN/screens/<slug>.html`을 읽어 `SHELL`과 "시안 메모"대로 뼈대·배치만 바꾼다. 문구·영역·트리거·data-back·data-stay는 그대로 옮긴다. 같은 경로에 덮어쓴다.
 
 ## 절차 (화면 하나당)
 

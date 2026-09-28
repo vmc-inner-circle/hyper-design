@@ -286,6 +286,7 @@
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "c") { e.preventDefault(); B.openSend(); return; }
       var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.tagName === "SELECT" || t.isContentEditable);
       if (typing || doc.querySelector(".hx-modal") || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (B.tab && B.tab() === "concept") return;   // 시안 비교 탭은 보통 스크롤
       if (e.key === "ArrowRight") { e.preventDefault(); B.closeCoach(); B.go(1); }
       else if (e.key === "ArrowLeft") { e.preventDefault(); B.closeCoach(); B.go(-1); }
       else if (e.key === "Escape") { e.preventDefault(); B.overview(); }

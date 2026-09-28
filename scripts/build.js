@@ -101,6 +101,19 @@ for (const s of S.screens || []) {
   );
 }
 
+// ---------- 시안(concepts): 보드의 '시안 비교' 탭 ----------
+// 지금 화면들 = S.concept(기본 첫 시안). 다른 시안의 핵심 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
+const concepts = Array.isArray(S.concepts) ? S.concepts.filter((c) => c && c.id) : [];
+const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts[0]).id : null;
+if (mode === "board") for (const c of concepts) {
+  if (c.id === mainConcept) continue;
+  for (const slug of c.screens || []) {
+    const p = path.join(runDir, "concepts", c.id, slug + ".html");
+    if (!exists(p)) { console.warn(`[build] WARN 시안 ${c.id} 화면 없음: concepts/${c.id}/${slug}.html`); continue; }
+    sections.push(`<section class="hx-screen" data-screen="${esc(c.id + "~" + slug)}" data-concept="${esc(c.id)}">\n${read(p).trim()}\n</section>`);
+  }
+}
+
 // ---------- 데이터 ----------
 const data = {
   meta: {
@@ -110,6 +123,7 @@ const data = {
     mode,
     round,
     theme,
+    concept: mainConcept,
     toggles: { type, swatch },
     looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: l.ink,
       swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: s.hex })) })),
@@ -123,6 +137,9 @@ const data = {
   })),
   flows: F.flows || [],
   branches: F.branches || [],
+  concepts: mode === "board" ? concepts.map((c) => ({ id: c.id, name: c.name || c.id, why: c.why || "", shell: c.shell || "sidebar", look: c.look || theme,
+    traits: c.traits || [], refs: c.refs || [], screens: c.screens || [] })) : [],
+  references: mode === "board" ? (S.references || []) : [],
   board: mode === "board" ? (S.board || {}) : null,
   pages: mode === "final" ? Object.fromEntries(Object.entries(pageFiles(S, F)).map(([k, v]) => [k, "screens/" + v])) : null,
 };

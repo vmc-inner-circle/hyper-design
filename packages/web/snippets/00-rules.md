@@ -21,6 +21,7 @@
 9. 패턴 파일(`packages/web/patterns/<pattern>.html`)에서 시작한다. `<!-- slot: … -->` 자리를 조각으로 채우고 주석은 지운다.
 10. 완성 후 스스로 점검: data-region 개수 = screens.json 영역 개수 / 이 화면이 from인 step의 trigger가 모두 `data-trigger`로 있음 / 아이콘 이름 allowlist 확인 / `style=` 없음 / Lorem 없음.
 11. **사이드바·상단바는 `screens.json`의 `roles[].nav`를 그대로 옮긴다.** 항목 순서·라벨·아이콘을 바꾸지 않고, 현재 화면 항목에만 `.active`. 상단바 제목은 `screens.json`의 `title`. 화면마다 내비가 달라지면 안 된다.
+11-1. **메뉴 구조(시안의 shell)**: 기본은 왼쪽 메뉴(`.sidebar`). 프롬프트에 `SHELL=nav-top`이면 `<div class="app nav-top">` + 상단바 안 `<nav class="topnav-nav">`에 같은 `.nav-item`들(사이드바 없음), `SHELL=nav-rail`이면 `<div class="app nav-rail">` + 사이드바는 그대로(좁은 아이콘 메뉴로 보인다). 골격은 `patterns/shell-top.html`·`shell-rail.html`, 설명은 10-layout "app 변형". `.nav-item` 클래스 이름은 바꾸지 않는다.
 12. **영역을 나누기 위한 클래스 없는 `<div data-region="…">` 래퍼는 허용**된다(스타일이 필요 없는 순수 묶음). 단 `.stack`/`.section`처럼 간격이 필요하면 그 클래스를 쓴다.
 13. **뜨는 창 화면**(`screens.json`에 `overlayOf`가 있음): 파일 전체가 `<div class="modal-backdrop">…</div>` 하나다. 뒷 화면은 쓰지 않는다 — build가 `overlayOf` 화면을 깔고 그 `.app`의 마지막 자식으로 창을 넣는다. 영역은 `.modal`(또는 `.drawer`)에 붙인다. backdrop에는 붙이지 않는다.
 14. **primary 버튼은 화면당 최대 1개.** 주 행동이 없는 읽기 전용 화면은 0개여도 된다. 모달이 열려 있으면 모달 안 primary가 그 화면의 유일한 primary다.

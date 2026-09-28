@@ -371,6 +371,64 @@ if (S.board) {
   }
 }
 
+// ---------- 시안(concepts) · 레퍼런스 — references/prd-to-screens.md §7 ----------
+if (S.concepts !== undefined) {
+  const C = Array.isArray(S.concepts) ? S.concepts : [];
+  const SHELLS = { sidebar: null, top: "nav-top", rail: "nav-rail" };
+  if (C.length < 2 || C.length > 3) warn(`시안은 3개 (지금 ${C.length}개)`);
+  const lookIds = new Set(require("./looks.js").getLooks(S).map((l) => l.id));
+  const cids = new Set();
+  for (const c of C) {
+    const cd = `시안 ${c.id || "?"}`;
+    if (!c.id || !/^[a-z]$/.test(c.id)) fail(`${cd}: id는 a·b·c`);
+    if (cids.has(c.id)) fail(`${cd}: id 중복`); cids.add(c.id);
+    if (!c.name) fail(`${cd}: name 없음 (예: "달력 한 장으로 보기")`);
+    else if (/[a-z]{3,}|시안|레이아웃|대시보드형|타입/i.test(c.name)) warn(`${cd}: 이름 "${c.name}" — 무엇이 먼저 보이는지 일상어로 (예: "오늘 할 일부터 보기")`);
+    if (!c.why) warn(`${cd}: why 없음 — 이 안이 누구에게 왜 좋은지 한 문장`);
+    if (!(c.shell in SHELLS)) fail(`${cd}: shell은 sidebar|top|rail`);
+    if (!lookIds.has(c.look)) fail(`${cd}: look '${c.look}'이 looks에 없음`);
+    if (!Array.isArray(c.refs) || !c.refs.length) warn(`${cd}: 참고한 곳(refs) 없음 — 레퍼런스에서 무엇을 가져왔는지`);
+    for (const r of c.refs || []) if (!r.name || !r.borrow) warn(`${cd}: refs 항목에 name·borrow 필요`);
+    const scr = Array.isArray(c.screens) ? c.screens : [];
+    if (scr.length < 2 || scr.length > 3) warn(`${cd}: 보여줄 핵심 화면은 2~3개 (지금 ${scr.length}개)`);
+    for (const slug of scr) if (!slugs.has(slug)) fail(`${cd}: 화면 '${slug}' 없음`);
+  }
+  const main = C.find((c) => c.id === S.concept) || C[0];
+  if (S.concept && !cids.has(S.concept)) fail(`screens.json concept '${S.concept}'이 concepts에 없음`);
+  if (C.length > 1 && new Set(C.map((c) => c.shell + "|" + (c.home || ""))).size === 1 && new Set(C.map((c) => c.shell)).size === 1)
+    warn(`시안끼리 메뉴 구조(shell)가 모두 같음 — 색만 다른 안이 되지 않게 뼈대·첫 화면 구성을 다르게`);
+  // 다른 시안의 핵심 화면 조각
+  for (const c of C) {
+    if (!main || c.id === main.id) continue;
+    for (const slug of c.screens || []) {
+      const fp = path.join(runDir, "concepts", c.id || "", slug + ".html"), cd = `시안 ${c.id} / ${slug}`;
+      if (!exists(fp)) { fail(`${cd}: 조각 없음 (concepts/${c.id}/${slug}.html)`); continue; }
+      const html = fs.readFileSync(fp, "utf8");
+      if (/<\s*(html|head|body|style|script|link)\b/i.test(html)) fail(`${cd}: <html|head|body|style|script|link> 금지`);
+      if (/\sstyle\s*=\s*["']/i.test(html)) fail(`${cd}: 인라인 style 금지`);
+      for (const m of html.matchAll(/href\s*=\s*["']#i-([a-z0-9-]+)["']/g)) if (!allowed.has(m[1])) fail(`${cd}: 아이콘 '${m[1]}' 허용 목록에 없음`);
+      const want = SHELLS[c.shell];
+      const appCls = ((/<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html) || [])[1] || "").split(/\s+/);
+      if (want && !appCls.includes(want)) warn(`${cd}: 시안 메뉴 구조가 ${c.shell}인데 .app에 ${want} 없음`);
+      if (knownClasses.size) {
+        const unknown = new Set();
+        for (const m of html.matchAll(/class\s*=\s*["']([^"']+)["']/g)) for (const k of m[1].split(/\s+/).filter(Boolean)) if (!knownClasses.has(k) && !k.startsWith("hx-")) unknown.add(k);
+        if (unknown.size) warn(`${cd}: components.css에 없는 클래스 ${[...unknown].map((k) => `'${k}'`).join(", ")}`);
+      }
+    }
+  }
+  // 지금 화면들이 고른 시안의 메뉴 구조를 따르는지
+  if (main && SHELLS[main.shell]) for (const s of slugs.values()) {
+    if (s.overlayOf || !s.file || !exists(path.join(runDir, s.file))) continue;
+    const html = fs.readFileSync(path.join(runDir, s.file), "utf8");
+    const appCls = ((/<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html) || [])[1] || "").split(/\s+/);
+    if (!appCls.includes(SHELLS[main.shell])) warn(`화면 ${s.slug}: 시안 ${main.id}의 메뉴 구조(${main.shell})인데 .app에 ${SHELLS[main.shell]} 없음`);
+  }
+  const R = Array.isArray(S.references) ? S.references : [];
+  if (R.length < 3) warn(`살펴본 서비스(references) ${R.length}곳 — 5곳 정도 조사해 시안의 근거로 (ref-scout)`);
+  for (const r of R) if (!r.name || !r.url || !r.borrow) warn(`references '${r.name || "?"}': name·url·borrow 필요`);
+}
+
 // ---------- 출력 ----------
 for (const w of warns) console.log(`[WARN] ${w}`);
 for (const f of fails) console.log(`[FAIL] ${f}`);

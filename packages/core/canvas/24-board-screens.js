@@ -36,8 +36,10 @@
       var b = HX.el("button", { type: "button", class: "hx-bd-tab", role: "tab", onclick: function () { B.setTab(key); } }, [HX.icon(icon), label]);
       tabBtns[key] = b; return b;
     }
+    // 시안이 있고 아직 고르지 않았으면 맨 앞에 '시안 비교' (25-board-concepts.js)
+    var hasConcepts = !!(B.buildConcepts && B.concepts && B.concepts.length > 1 && !B.isLocked("concept"));
     var tabs = HX.el("div", { class: "hx-bd-tabs", role: "tablist", "aria-label": "보기" }, [
-      tab("flow", "사용 흐름", "#i-workflow"), tab("design", "화면 디자인", "#i-layout-grid")]);
+      hasConcepts ? tab("concept", "시안 비교", "#i-columns-3") : null, tab("flow", "사용 흐름", "#i-workflow"), tab("design", "화면 디자인", "#i-layout-grid")]);
     bar.insertBefore(tabs, bar.children[1] || null);
 
     // ---------- 화면 디자인 뷰 ----------
@@ -49,6 +51,7 @@
     side.appendChild(sideAll); side.appendChild(sideScreen);
     var view = HX.el("div", { class: "hx-sd" }, [list, stage, side]);
     app.appendChild(view);
+    if (hasConcepts) app.appendChild(B.buildConcepts());
 
     var order = screenOrder(), cur = null, frame = null, itemEls = {};
 
@@ -363,8 +366,9 @@
     var tabNow = "flow";
     B.tab = function () { return tabNow; };
     B.setTab = function (t, o) {
-      tabNow = t === "design" ? "design" : "flow";
+      tabNow = t === "design" || (t === "concept" && hasConcepts) ? t : "flow";
       app.classList.toggle("hx-tab-design", tabNow === "design");
+      app.classList.toggle("hx-tab-concept", tabNow === "concept");
       Object.keys(tabBtns).forEach(function (k) { tabBtns[k].setAttribute("aria-selected", k === tabNow ? "true" : "false"); tabBtns[k].classList.toggle("hx-on", k === tabNow); });
       if (tabNow === "design" && !cur && !(o && o.slug)) show(order[0] || ALL);
       HX.relayout();
@@ -394,6 +398,6 @@
     }, true);
 
     buildList();
-    B.setTab("flow");
+    B.setTab(hasConcepts && !B.focus.length ? "concept" : "flow");
   };
 })();
