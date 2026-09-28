@@ -403,7 +403,7 @@ if (S.concepts !== undefined) {
   if (combo.size < C.length) warn(`메뉴 구조와 분위기가 똑같은 시안이 있음 — 첫 화면 구성·밀도까지 다르게`);
   const names = C.map((c) => c.home || "").filter(Boolean);
   if (names.length === C.length && new Set(names).size < C.length) warn(`첫 화면 구성(home)이 겹치는 시안이 있음`);
-  // 다른 시안의 핵심 화면 조각
+  // 시안의 메인 화면 조각
   for (const c of C) {
     if (!main || (c.id === main.id && S.stage !== "concept")) continue;   // 시안 단계에서는 추천 시안도 concepts/<id>/에
     for (const slug of c.screens || []) {

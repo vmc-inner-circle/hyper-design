@@ -1,6 +1,7 @@
 /* 25-board-concepts.js — 시안 고르기. 디자이너가 고객에게 안을 보여주듯:
    1턴 보드(meta.stage = "concept")는 이 화면 하나뿐이다(B.startConcept). 시안을 고른 뒤 2턴에 그 시안으로 전체 화면·흐름을 만든다.
-   살펴본 레퍼런스(HX.data.references) → 시안 5개를(이름 · 이유 · 특징 · 참고한 곳 · 핵심 화면 2~3장) → "이 안으로 할게요".
+   살펴본 레퍼런스(HX.data.references) → 시안 5개를 시안마다 한 줄로(왼쪽: 이름 · 이유 · 특징 · 참고한 곳 · 고르기 · 메모 / 오른쪽: 메인 화면 3~6장 좌우 캐러셀,
+   모두 같은 높이(첫 화면) · 넘치는 내용은 화면 안 스크롤 · 이름을 누르면 크게) → "이 안으로 할게요".
    지금 화면들(사용 흐름·화면 디자인)은 HX.meta.concept 시안으로 만든 것. 다른 시안의 화면은 build.js가 "<시안 id>~<slug>" 섹션으로 싣는다.
    시안을 고르면 그 시안의 분위기(look)도 함께 바뀐다(화면 느낌에서 다시 바꿀 수 있다). 복사 글 첫 줄: "시안 <id>(이름) · 테마 …" */
 (function () {
@@ -30,7 +31,7 @@
   B.buildConcepts = function () {
     var C = B.concepts, main = B.mainConcept = (B.concept(HX.meta.concept) || C[0]).id;
     var refs = (HX.data.references || []).filter(function (r) { return r && r.name; });
-    var el = HX.el("div", { class: "hx-cc", role: "tabpanel", "aria-label": "시안 비교" });
+    var el = HX.el("div", { class: "hx-cc", role: "tabpanel", "aria-label": "시안 고르기" });
     el.appendChild(HX.el("div", { class: "hx-cc-intro" }, [
       HX.el("b", { text: "이런 방향으로 만들어 봤어요" }),
       HX.el("span", { text: (refs.length ? "비슷한 서비스 " + refs.length + "곳을 살펴보고 " : "") + "화면 구성이 다른 안 " + C.length + "개를 만들었어요. 마음에 드는 안 하나를 골라 주세요. 다른 안에서 가져오고 싶은 점은 그 안의 칸에 적어 주세요. 고른 안으로 모든 화면과 사용 흐름을 만들어요." })]));

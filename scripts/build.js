@@ -105,8 +105,8 @@ for (const s of S.screens || []) {
   );
 }
 
-// ---------- 시안(concepts): 보드의 '시안 비교' 탭 ----------
-// 지금 화면들 = S.concept(기본 첫 시안). 다른 시안의 핵심 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
+// ---------- 시안(concepts): 1턴 보드의 '시안 고르기' ----------
+// 지금 화면들 = S.concept(기본 첫 시안). 시안의 메인 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
 const concepts = Array.isArray(S.concepts) ? S.concepts.filter((c) => c && c.id) : [];
 const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts[0]).id : null;
 if (mode === "board") for (const c of concepts) {
