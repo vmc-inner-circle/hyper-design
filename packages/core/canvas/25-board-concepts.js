@@ -57,20 +57,19 @@
       memo.value = (B.state.cmemo || {})[c.id] || "";
       var shots = HX.el("div", { class: "hx-cc-shots" });
       var card = HX.el("article", { class: "hx-cc-col", dataset: { concept: c.id } }, [
-        // 위: 설명 띠(누구에게 왜 · 참고한 곳 · 고르기와 메모) / 아래: 메인 화면들을 전체 폭 격자로 (시안 안에서 넘기지 않는다)
         HX.el("header", { class: "hx-cc-head" }, [
-          HX.el("div", { class: "hx-cc-about" }, [
-            HX.el("div", { class: "hx-cc-top" }, [HX.el("span", { class: "hx-cc-id", text: "시안 " + c.id.toUpperCase() }), isRec ? HX.el("span", { class: "hx-tag hx-rec", text: "추천" }) : null,
-              B.stage !== "concept" && c.id === main ? HX.el("span", { class: "hx-tag", text: "지금 화면들" }) : null]),
-            HX.el("h3", { class: "hx-cc-name", text: c.name }),
-            c.why ? HX.el("p", { class: "hx-cc-why", text: c.why }) : null,
-            HX.el("ul", { class: "hx-cc-traits" }, [SHELL[c.shell] || null, L && L.name ? "분위기 " + L.name : null].concat(c.traits || []).filter(Boolean).map(function (t) { return HX.el("li", { text: t }); }))]),
+          HX.el("div", { class: "hx-cc-top" }, [HX.el("span", { class: "hx-cc-id", text: "시안 " + c.id.toUpperCase() }), isRec ? HX.el("span", { class: "hx-tag hx-rec", text: "추천" }) : null,
+            B.stage !== "concept" && c.id === main ? HX.el("span", { class: "hx-tag", text: "지금 화면들" }) : null]),
+          HX.el("h3", { class: "hx-cc-name", text: c.name }),
+          c.why ? HX.el("p", { class: "hx-cc-why", text: c.why }) : null,
+          HX.el("ul", { class: "hx-cc-traits" }, [SHELL[c.shell] || null, L && L.name ? "분위기 " + L.name : null].concat(c.traits || []).filter(Boolean).map(function (t) { return HX.el("li", { text: t }); })),
           (c.refs || []).length ? HX.el("div", { class: "hx-cc-from" }, [HX.el("span", { class: "hx-cc-from-h", text: "참고한 곳" })].concat((c.refs || []).map(function (r) {
             return HX.el("div", { class: "hx-cc-from-row" }, [r.url ? HX.el("a", { href: r.url, target: "_blank", rel: "noopener", text: r.name }) : HX.el("b", { text: r.name }), r.borrow ? " — " + r.borrow : ""]);
-          }))) : HX.el("div"),
-          HX.el("div", { class: "hx-cc-act" }, [pick, memo])]),
+          }))) : null,
+          pick,
+          memo]),
         HX.el("div", { class: "hx-cc-right" }, [
-          HX.el("div", { class: "hx-cc-shots-h", text: "메인 화면 " + (c.screens || []).length + "장 · 누르면 크게" }), shots])]);
+          HX.el("div", { class: "hx-cc-shots-h", text: "메인 화면 " + (c.screens || []).length + "장 · 옆으로 넘겨 더 보기 · 누르면 크게" }), shots])]);
       (c.screens || []).forEach(function (slug) {
         var s = HX.bySlug[slug], title = s ? s.name : slug;
         var box = HX.el("div", { class: "hx-cc-shot-frame", "data-theme": c.look, "data-swatch": (L.swatches[0] || {}).id || "", "data-type": B.state.type });
