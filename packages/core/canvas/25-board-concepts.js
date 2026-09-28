@@ -74,7 +74,7 @@
         var box = HX.el("div", { class: "hx-cc-shot-frame", "data-theme": c.look, "data-swatch": (L.swatches[0] || {}).id || "", "data-type": B.state.type });
         var shot = HX.el("button", { type: "button", class: "hx-cc-shot", title: "크게 보기", onclick: function () { zoom(c, slug, title); } }, [HX.el("span", { class: "hx-cc-shot-name", text: title }), box]);
         shots.appendChild(shot);
-        HX.mountFrame(frameKey(c, slug), box, { fit: "width", badges: false });
+        HX.mountFrame(frameKey(c, slug), box, { fit: "width", badges: false });   // 첫 화면 높이만 (누르면 전체)
       });
       cards[c.id] = { el: card, pick: pick }; cols.appendChild(card);
     });

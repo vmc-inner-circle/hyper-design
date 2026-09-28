@@ -120,10 +120,10 @@ PRD를 읽고 아래 표로 판단한다. **대부분의 PRD는 묻지 않는다
 ### 1.2 시안 5개 (레퍼런스가 모인 뒤, prd-to-screens §6-1)
 - `references`: 조사 결과(겹치면 하나로). `runs/<p>/references.md`에도 표로.
 - `looks` 5개(분위기, 시안마다 하나) + 분위기마다 버튼 색 5개(prd-to-screens §6).
-- `concepts` 5개: 메뉴 구조(`shell` sidebar·top·rail을 모두 쓴다) · 첫 화면 구성(`home`) · 밀도 · 분위기(`look`)가 **서로 다른** 안. 첫 번째가 추천. 안마다 참고한 곳(`refs`)과 비교할 핵심 화면 2~3개(`screens`, 모든 안이 같은 slug).
+- `concepts` 5개: 메뉴 구조(`shell` sidebar·top·rail을 모두 쓴다) · 첫 화면 구성(`home`) · 밀도 · 분위기(`look`)가 **서로 다른** 안. 첫 번째가 추천. 안마다 참고한 곳(`refs`)과 비교할 **메인 화면 3~6장**(`screens`, 모든 안이 같은 slug — 역할별 메뉴 화면 먼저, 남는 칸에 핵심 작업 화면. PRD를 보고 정한다).
 - `"stage": "concept"`, `"concept": "<추천 id>"`.
 
-### 1.3 데이터 파일 → 시안 화면 — screen-writer 5개 병렬 (시안마다 1개, sonnet)
+### 1.3 데이터 파일 → 시안 화면 — screen-writer 병렬 (시안마다 3장씩 1개, 최대 10개 동시, sonnet)
 - `screens.json`(계약 §6.1), `flow.json`(§6.2, 모든 step에 `trigger`, 제목 '~하기', `branches`), `icons.json`. 달력이 있으면 `node scripts/calendar.js …`로 격자를 미리. `node scripts/ids.js runs/<project>`. `node scripts/lint.js runs/<project>` — 이때 FAIL은 "시안 조각 없음"만.
 
 ```
@@ -131,7 +131,7 @@ Agent(subagent_type: "screen-writer", model: "sonnet", prompt: "
 RUN=runs/<project>
 CONCEPT=<a|b|c|d|e>
 SHELL=<nav-top|nav-rail — sidebar면 빼기>
-SCREENS=<그 시안의 screens 2~3개>
+SCREENS=<그 시안의 screens 중 3장 — 4장 이상이면 에이전트를 나눠 같은 CONCEPT로 하나 더>
 DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장소·날짜 범위·상태 어휘. 모든 시안이 같은 값>
 시안 메모: <이름 · 첫 화면에 무엇을 먼저(home) · 밀도 · 참고한 곳에서 가져올 점(borrow)을 화면별로 구체적으로>
 각 화면은 screens.json의 항목(name·purpose·pattern·regions)과 flow.json의 trigger·branches를 따른다(고르면 그대로 옮겨 쓴다).
@@ -143,7 +143,7 @@ DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장�
 
 ### 1.4 검수 → 띄우기
 1. `node scripts/build.js runs/<project> --mode board` (시안 단계면 시안 고르기 화면만 만든다)
-2. 헤드리스 Chrome(계약 §11)으로 1440×900: 살펴본 서비스 카드 / 시안 5개(그 시안의 메뉴 구조·분위기로 핵심 화면) / '이 안으로 할게요' → 보내기 버튼이 '시안 X(으)로 보내기' / 칸에 적으면 개수 / 콘솔 에러 0.
+2. 헤드리스 Chrome(계약 §11)으로 1440×900: 살펴본 서비스 카드 / 시안 5개(그 시안의 메뉴 구조·분위기로 메인 화면 3~6장이 가로로) / '이 안으로 할게요' → 보내기 버튼이 '시안 X(으)로 보내기' / 칸에 적으면 개수 / 콘솔 에러 0.
 3. **헤드리스 Chrome 종료** → `node scripts/build.js runs/<project> --mode board --open`
 4. `elapsed.txt`에 `시안: HH:MM`. 사용자에게 (이 형식 그대로):
 
@@ -159,7 +159,7 @@ DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장�
 1. `prompt-log.md` 2회에 (AI 질문 요약 = "시안 보드") + 붙여넣은 원문. `brief.md` 답변 로그에 **원문 | 해석 | 반영**.
 2. `시안 <id>(이름)` → `screens.json`: `concept = <id>`, `stage` 삭제, `theme = 그 시안의 look`, `board.recommend.theme`도 같게, `board.locked = ["concept"]`, `round: 1`(초안 1).
 3. `시안 <id> 메모: …` → 고른 시안의 메모면 그 시안을 고칠 점, 다른 시안의 메모면 **그 안에서 가져올 요소**(예: "B의 달력") — 모두 이번 초안의 전역 힌트로(answer-parsing §1).
-4. 고른 시안의 핵심 화면 `concepts/<id>/<slug>.html`을 `screens/<slug>.html`로 복사(메모가 그 화면을 건드리면 복사 뒤 revise).
+4. 고른 시안의 메인 화면 `concepts/<id>/<slug>.html`을 `screens/<slug>.html`로 복사(메모가 그 화면을 건드리면 복사 뒤 revise).
 5. 나머지 화면: 1턴에 쓰던 조립 틀 그대로, screen-writer 3개씩 병렬(sonnet). 프롬프트에 `SHELL=`과 "시안 메모"(그 시안의 home·밀도·borrow + 3의 힌트), 그리고 "모양 기준: runs/<project>/concepts/<id>/ 의 화면을 먼저 읽고 같은 골격·밀도로"를 넣는다.
 
 ```

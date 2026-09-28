@@ -687,9 +687,10 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-cc-ref-top a, .hx-cc-from-row a { color: var(--hxc-primary); font-weight: 700; text-decoration: none; }
 .hx-cc-ref-top a:hover, .hx-cc-from-row a:hover { text-decoration: underline; }
 .hx-cc-ref-borrow { margin-top: 4px; font-size: 12px; color: var(--hxc-text-2); word-break: keep-all; }
-.hx-cc-cols { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 16px; max-width: 1760px; margin: 0 auto; align-items: start; }
+.hx-cc-cols { display: flex; flex-direction: column; gap: 16px; max-width: 1760px; margin: 0 auto; }
 .hx-cc-memo { width: 100%; min-height: 52px; font-size: 13px; }
-.hx-cc-col { display: flex; flex-direction: column; gap: 12px; padding: 14px; border: 2px solid var(--hxc-border); border-radius: 14px; background: var(--hxc-surface); }
+/* 시안 하나 = 한 줄: 왼쪽 설명·고르기·메모 / 오른쪽 메인 화면들을 가로로 (넘치면 가로 스크롤) */
+.hx-cc-col { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 16px; padding: 14px; border: 2px solid var(--hxc-border); border-radius: 14px; background: var(--hxc-surface); align-items: start; }
 .hx-cc-col.hx-on { border-color: var(--hxc-primary); box-shadow: 0 0 0 4px var(--hxc-primary-soft); }
 .hx-cc-head { display: flex; flex-direction: column; gap: 8px; }
 .hx-cc-top { display: flex; align-items: center; gap: 6px; }
@@ -702,8 +703,9 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-cc-from-h { font-weight: 800; color: var(--hxc-muted); }
 .hx-cc-pick { justify-content: center; height: 36px; }
 .hx-cc-col.hx-on .hx-cc-pick { background: var(--hxc-primary); border-color: var(--hxc-primary); color: #fff; }
-.hx-cc-shots { display: flex; flex-direction: column; gap: 12px; }
-.hx-cc-shot { display: flex; flex-direction: column; gap: 4px; padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in; }
+.hx-cc-shots { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
+.hx-cc-shot { flex: 0 0 420px; display: flex; flex-direction: column; gap: 4px; padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in; }
+.hx-cc-shot .hx-cc-shot-frame { max-height: 420px; overflow: hidden; }
 .hx-cc-shot-name { font-size: 12px; font-weight: 700; color: var(--hxc-muted); }
 .hx-cc-shot-frame { width: 100%; border-radius: 8px; overflow: hidden; }
 .hx-cc-shot:hover .hx-frame { border-color: var(--hxc-primary); }

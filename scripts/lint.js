@@ -391,7 +391,8 @@ if (S.concepts !== undefined) {
     if (!Array.isArray(c.refs) || !c.refs.length) warn(`${cd}: 참고한 곳(refs) 없음 — 레퍼런스에서 무엇을 가져왔는지`);
     for (const r of c.refs || []) if (!r.name || !r.borrow) warn(`${cd}: refs 항목에 name·borrow 필요`);
     const scr = Array.isArray(c.screens) ? c.screens : [];
-    if (scr.length < 2 || scr.length > 3) warn(`${cd}: 보여줄 핵심 화면은 2~3개 (지금 ${scr.length}개)`);
+    if (scr.length < 3) warn(`${cd}: 보여줄 메인 화면은 3~6장 (지금 ${scr.length}장) — 역할별 메뉴 화면부터`);
+    if (scr.length > 6) fail(`${cd}: 보여줄 메인 화면은 최대 6장 (지금 ${scr.length}장) — 1턴이 길어지고 비교하기 어렵다`);
     for (const slug of scr) if (!slugs.has(slug)) fail(`${cd}: 화면 '${slug}' 없음`);
   }
   const main = C.find((c) => c.id === S.concept) || C[0];
