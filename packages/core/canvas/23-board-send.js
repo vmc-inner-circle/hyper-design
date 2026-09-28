@@ -16,6 +16,17 @@
   B.summary = function () {
     var st = B.state, board = HX.data.board || {}, groups = [];
     var locked = Array.isArray(board.locked) ? board.locked : [];
+    if (B.stage === "concept") {
+      var C = B.concept(st.concept);
+      groups.push({ title: "고른 시안", items: [(C ? "시안 " + C.id.toUpperCase() + " · " + C.name : "") + (st.concept === B.REC.concept ? " — 추천 그대로" : " — 직접 고름")] });
+      var cm = B.conceptMemos().map(function (m) { return "시안 " + m.c.id.toUpperCase() + "(" + m.c.name + "): " + m.text; });
+      if (cm.length) groups.push({ title: "시안에 남긴 말", items: cm });
+      var more0 = [];
+      if (one(st.add)) more0.push("추가로 필요한 것: " + one(st.add));
+      if (one(st.memo)) more0.push("그 밖의 메모: " + one(st.memo));
+      if (more0.length) groups.push({ title: "더 필요한 것", items: more0 });
+      return groups;
+    }
     // 1) 화면 느낌
     var look = B.lookLine();
     var same = st.theme === B.REC.theme && st.type === B.REC.type && st.accent === B.fixSwatch(st.theme, B.REC.accent);

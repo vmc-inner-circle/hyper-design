@@ -81,6 +81,8 @@ a.list-item:hover, button.list-item:hover { background: var(--c-surface-2); }
   padding-bottom: var(--sp-5); position: relative;
 }
 .timeline-compact .timeline-item { grid-template-columns: var(--icon-md) 1fr; }
+/* 시간 칸(.timeline-time)을 빼고 쓰면 자동으로 두 칸(점 · 내용) — 내용이 좁은 점 칸에 들어가 글자가 세로로 깨지지 않게 */
+.timeline-item:not(:has(> .timeline-time)) { grid-template-columns: var(--icon-md) 1fr; }
 .timeline-time { font-size: var(--fs-sm); color: var(--c-text-muted); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; line-height: var(--lh-normal); }
 .timeline-dot { position: relative; width: var(--icon-md); height: calc(var(--fs-md) * var(--lh-normal)); display: flex; align-items: center; justify-content: center; }
 .timeline-dot::before {

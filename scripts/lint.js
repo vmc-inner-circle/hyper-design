@@ -66,7 +66,7 @@ if (!S.toggles || !["normal", "large"].includes(S.toggles.type)) fail(`toggles.t
   const LK = require("./looks.js");
   if (!Array.isArray(S.looks) || !S.looks.length) warn(`looks 없음 — 기본 분위기(깔끔한 흰색/따뜻한 크림/차분한 밤)를 쓴다. PRD에 맞춘 분위기 3개와 버튼 색을 만든다`);
   const looks = LK.getLooks(S);
-  if (S.looks && S.looks.length !== 3) warn(`분위기는 3개 (지금 ${S.looks.length}개)`);
+  if (S.looks && (S.looks.length < 3 || S.looks.length > 5)) warn(`분위기는 3~5개 (지금 ${S.looks.length}개, 시안마다 하나씩)`);
   const lookIds = new Set();
   for (const L of looks) {
     const ld = `분위기 '${L.name || L.id}'`;
@@ -187,6 +187,7 @@ for (const s of S.screens || []) {
 
   // ----- 조각 파일 -----
   const fragPath = path.join(runDir, s.file || "");
+  if (S.stage === "concept" && (!s.file || !exists(fragPath))) continue;   // 1턴 시안 단계: 전체 화면은 2턴에 만든다
   if (!s.file || !exists(fragPath)) { fail(`${desc}: 조각 파일 없음 (${s.file})`); continue; }
   const html = fs.readFileSync(fragPath, "utf8");
 
@@ -375,7 +376,7 @@ if (S.board) {
 if (S.concepts !== undefined) {
   const C = Array.isArray(S.concepts) ? S.concepts : [];
   const SHELLS = { sidebar: null, top: "nav-top", rail: "nav-rail" };
-  if (C.length < 2 || C.length > 3) warn(`시안은 3개 (지금 ${C.length}개)`);
+  if (C.length !== 5) warn(`시안은 5개 (지금 ${C.length}개)`);
   const lookIds = new Set(require("./looks.js").getLooks(S).map((l) => l.id));
   const cids = new Set();
   for (const c of C) {
@@ -395,11 +396,15 @@ if (S.concepts !== undefined) {
   }
   const main = C.find((c) => c.id === S.concept) || C[0];
   if (S.concept && !cids.has(S.concept)) fail(`screens.json concept '${S.concept}'이 concepts에 없음`);
-  if (C.length > 1 && new Set(C.map((c) => c.shell + "|" + (c.home || ""))).size === 1 && new Set(C.map((c) => c.shell)).size === 1)
-    warn(`시안끼리 메뉴 구조(shell)가 모두 같음 — 색만 다른 안이 되지 않게 뼈대·첫 화면 구성을 다르게`);
+  if (C.length > 1 && new Set(C.map((c) => c.shell)).size < Math.min(3, C.length))
+    warn(`시안끼리 메뉴 구조(shell)가 ${new Set(C.map((c) => c.shell)).size}가지뿐 — sidebar·top·rail을 모두 쓴다`);
+  const combo = new Set(C.map((c) => c.shell + "|" + c.look));
+  if (combo.size < C.length) warn(`메뉴 구조와 분위기가 똑같은 시안이 있음 — 첫 화면 구성·밀도까지 다르게`);
+  const names = C.map((c) => c.home || "").filter(Boolean);
+  if (names.length === C.length && new Set(names).size < C.length) warn(`첫 화면 구성(home)이 겹치는 시안이 있음`);
   // 다른 시안의 핵심 화면 조각
   for (const c of C) {
-    if (!main || c.id === main.id) continue;
+    if (!main || (c.id === main.id && S.stage !== "concept")) continue;   // 시안 단계에서는 추천 시안도 concepts/<id>/에
     for (const slug of c.screens || []) {
       const fp = path.join(runDir, "concepts", c.id || "", slug + ".html"), cd = `시안 ${c.id} / ${slug}`;
       if (!exists(fp)) { fail(`${cd}: 조각 없음 (concepts/${c.id}/${slug}.html)`); continue; }

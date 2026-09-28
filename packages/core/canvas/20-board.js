@@ -26,27 +26,29 @@
   var recType = isLocked("type") && toggles.type ? toggles.type : (rec.type || toggles.type || "normal");
   var recSwatch = isLocked("swatch") && toggles.swatch ? toggles.swatch : (rec.swatch || rec.accent || toggles.swatch);
   var REC = B.REC = { theme: recTheme, type: recType, accent: fixSwatch(recTheme, recSwatch) };
-  // 시안(concepts): 레퍼런스 조사로 만든 방향 2~3개. 지금 화면들은 HX.meta.concept(기본 첫 시안)으로 만든 것
+  // 단계: "concept"(1턴 — 시안만 보여주고 고르게) / "draft"(2턴부터 — 고른 시안으로 만든 전체 화면)
+  var STAGE = B.stage = HX.meta.stage === "concept" ? "concept" : "draft";
+  // 시안(concepts): 레퍼런스 조사로 만든 방향 5개. draft 단계의 화면들은 HX.meta.concept(고른 시안)으로 만든 것
   var CONCEPTS = B.concepts = (HX.data.concepts || []).filter(function (c) { return c && c.id; });
   B.concept = function (id) { return CONCEPTS.filter(function (c) { return c.id === id; })[0] || CONCEPTS[0] || null; };
   REC.concept = CONCEPTS.length ? (B.concept(HX.meta.concept || rec.concept) || CONCEPTS[0]).id : null;
   B.recWhy = { theme: rec.themeWhy || "", type: rec.typeWhy || "", accent: rec.swatchWhy || rec.accentWhy || "" };
   B.fixSwatch = fixSwatch;
   var TYPE_LABEL = B.TYPE_LABEL = { normal: "보통", large: "크게" }, ACCENT_LABEL = B.ACCENT_LABEL = { calm: "차분", vivid: "선명" };
-  var storeKey = "hx:" + (HX.meta.project || "project") + ":" + (HX.meta.round || 1);
+  var storeKey = "hx:" + (HX.meta.project || "project") + ":" + (HX.meta.stage === "concept" ? "concept" : HX.meta.round || 1);
   B.data = board;
   B.asks = Array.isArray(board.ask) ? board.ask.filter(function (q) { return q && q.id && Array.isArray(q.options); }) : [];
   B.focus = Array.isArray(board.focus) ? board.focus.filter(function (k) { return HX.bySlug[k]; }) : [];
 
   // ---------- 상태 ----------
   // pins: 화면 디자인 탭에서 사용자가 화면 아무 곳이나 골라 단 의견 { id: {id, sid, slug, path, desc, where, v, memo} }
-  var state = { concept: REC.concept, theme: REC.theme, type: REC.type, accent: REC.accent, ask: {}, regions: {}, screens: {}, pins: {}, pinSeq: 0, add: "", memo: "" };
+  var state = { concept: REC.concept, cmemo: {}, theme: REC.theme, type: REC.type, accent: REC.accent, ask: {}, regions: {}, screens: {}, pins: {}, pinSeq: 0, add: "", memo: "" };
   (function restore() {
     var saved = HX.storage.get(storeKey); if (!saved || typeof saved !== "object") return;
     ["concept", "theme", "type", "accent", "add", "memo"].forEach(function (k) { if (typeof saved[k] === "string") state[k] = saved[k]; });
     if (isLocked("concept") || !B.concept(state.concept) || (CONCEPTS.length && B.concept(state.concept).id !== state.concept)) state.concept = REC.concept;
     // regions(미리 정한 번호로 남긴 의견)는 지금 보드에서 보이지도 지울 수도 없으므로 불러오지 않는다
-    ["ask", "screens", "pins"].forEach(function (k) { if (saved[k] && typeof saved[k] === "object") state[k] = saved[k]; });
+    ["ask", "screens", "pins", "cmemo"].forEach(function (k) { if (saved[k] && typeof saved[k] === "object") state[k] = saved[k]; });
     if (typeof saved.pinSeq === "number") state.pinSeq = saved.pinSeq;
     if (isLocked("theme") || !LOOKS.some(function (l) { return l.id === state.theme; })) state.theme = REC.theme;
     if (isLocked("type")) state.type = REC.type;
@@ -57,7 +59,7 @@
   B.state = state;
   B.resetAll = function () {
     state.ask = {}; state.regions = {}; state.screens = {}; state.pins = {}; state.add = ""; state.memo = "";
-    if (!isLocked("concept")) state.concept = REC.concept;
+    if (!isLocked("concept")) { state.concept = REC.concept; state.cmemo = {}; }
     if (!isLocked("theme")) state.theme = REC.theme;
     if (!isLocked("type")) state.type = REC.type;
     if (!isLocked("swatch")) state.accent = fixSwatch(state.theme, REC.accent);
@@ -78,8 +80,8 @@
   // 사람이 읽는 한 줄 / 복사 글 첫 줄(answer-parsing.md: "테마 <look id>(이름) · 글자 <보통|크게> · 버튼색 <swatch id>(이름)")
   B.lookLine = function () { return "분위기 " + B.look(state.theme).name + " · 글자 크기 " + (TYPE_LABEL[state.type] || state.type) + " · 버튼 색 " + B.swatch(state.theme, state.accent).name; };
   B.themeLine = function () {
-    var L = B.look(state.theme), sw = B.swatch(state.theme, state.accent), C = state.concept ? B.concept(state.concept) : null;
-    return (C ? "시안 " + C.id + "(" + C.name + ") · " : "") + "테마 " + L.id + "(" + L.name + ") · 글자 " + (TYPE_LABEL[state.type] || state.type) + " · 버튼색 " + sw.id + "(" + sw.name + ")";
+    var L = B.look(state.theme), sw = B.swatch(state.theme, state.accent);
+    return "테마 " + L.id + "(" + L.name + ") · 글자 " + (TYPE_LABEL[state.type] || state.type) + " · 버튼색 " + sw.id + "(" + sw.name + ")";
   };
   B.one = function (s) { return String(s || "").replace(/\s*\n+\s*/g, " / ").trim(); };
 
@@ -93,9 +95,22 @@
   };
 
   // ---------- 답변 텍스트 (추천과 다른 것만, 순서 고정) — answer-parsing.md와 묶인 형식, 바꾸지 말 것 ----------
+  // 시안 단계의 복사 글: "시안 <id>(이름)" · "시안 <id> 메모: …" · 추가 · 메모 (answer-parsing.md §1)
+  B.conceptLine = function () { var C = B.concept(state.concept); return C ? "시안 " + C.id + "(" + C.name + ")" : ""; };
+  B.conceptMemos = function () {
+    return CONCEPTS.filter(function (c) { return B.one((state.cmemo || {})[c.id]); }).map(function (c) { return { c: c, text: B.one(state.cmemo[c.id]) }; });
+  };
   B.answer = function () {
+    if (STAGE === "concept") {
+      var cl = [B.conceptLine()];
+      B.conceptMemos().forEach(function (m) { cl.push("시안 " + m.c.id + " 메모: " + m.text); });
+      if (B.one(state.add)) cl.push("추가: " + B.one(state.add));
+      if (B.one(state.memo)) cl.push("메모: " + B.one(state.memo));
+      cl.push("(나머지는 추천대로)");
+      return cl.join("\n");
+    }
     var locked = Array.isArray(board.locked) ? board.locked : [];
-    var lines = [B.themeLine() + (isLocked("theme") && isLocked("type") && isLocked("swatch") && (!CONCEPTS.length || isLocked("concept")) ? " (확정)" : "")];
+    var lines = [B.themeLine() + (isLocked("theme") && isLocked("type") && isLocked("swatch") ? " (확정)" : "")];
     var one = function (s) { return String(s || "").replace(/\s*\n+\s*/g, " / ").trim(); };
     if (locked.indexOf("ask") < 0) (board.ask || []).forEach(function (q) {
       if (!q || !Array.isArray(q.options)) return;
@@ -129,7 +144,7 @@
   /* 추천과 다르게 표시한 항목 수 (복사 버튼 숫자) */
   B.diffCount = function () {
     var n = B.answer().split("\n").length - 2;
-    if (CONCEPTS.length && !isLocked("concept") && state.concept !== REC.concept) n++;
+    if (STAGE === "concept") return n + (state.concept !== REC.concept ? 1 : 0);
     if (!isLocked("theme") && state.theme !== REC.theme) n++;
     if (!isLocked("type") && state.type !== REC.type) n++;
     if (!isLocked("swatch") && state.accent !== fixSwatch(state.theme, REC.accent)) n++;

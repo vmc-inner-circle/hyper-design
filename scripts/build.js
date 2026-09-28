@@ -93,8 +93,12 @@ const fragOf = (s) => {
   const cut = back.lastIndexOf("</div>");
   return cut < 0 ? back + "\n" + own : back.slice(0, cut) + own + "\n" + back.slice(cut);
 };
+// 1턴 시안 보드(stage "concept")는 아직 전체 화면이 없다 — 시안 화면만 싣는다
+const stage = mode === "board" && S.stage === "concept" ? "concept" : "draft";
+if (S.stage === "concept" && mode === "final") { console.error("[build] FAIL 시안 단계(stage: concept)에서는 최종본을 만들 수 없음"); process.exit(1); }
 const sections = [];
 for (const s of S.screens || []) {
+  if (stage === "concept") continue;
   const frag = fragOf(s);
   sections.push(
     `<section class="hx-screen" data-screen="${esc(s.slug)}" data-role="${esc(s.role || "")}" data-id="${s.id}">\n${frag}\n</section>`
@@ -106,7 +110,7 @@ for (const s of S.screens || []) {
 const concepts = Array.isArray(S.concepts) ? S.concepts.filter((c) => c && c.id) : [];
 const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts[0]).id : null;
 if (mode === "board") for (const c of concepts) {
-  if (c.id === mainConcept) continue;
+  if (c.id === mainConcept && stage !== "concept") continue;
   for (const slug of c.screens || []) {
     const p = path.join(runDir, "concepts", c.id, slug + ".html");
     if (!exists(p)) { console.warn(`[build] WARN 시안 ${c.id} 화면 없음: concepts/${c.id}/${slug}.html`); continue; }
@@ -124,6 +128,7 @@ const data = {
     round,
     theme,
     concept: mainConcept,
+    stage,
     toggles: { type, swatch },
     looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: l.ink,
       swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: s.hex })) })),
@@ -152,7 +157,7 @@ if (canvasJsParts.length === 0) console.warn(`[build] WARN packages/core/canvas/
 const canvasJs = canvasJsParts.length ? canvasJsParts.join("\n\n") : "console.warn('canvas.js 없음');";
 
 // ---------- 조립 (스프라이트 제외) ----------
-const title = mode === "board" ? `${data.meta.title} — ${round}차 보드` : `${data.meta.title} — 화면 지도`;
+const title = mode === "board" ? `${data.meta.title} — ${stage === "concept" ? "시안" : round + "차 보드"}` : `${data.meta.title} — 화면 지도`;
 let html = `<!doctype html>
 <html lang="ko" data-mode="${mode}" data-platform="${platform}" data-theme="${esc(theme)}" data-type="${esc(type)}" data-swatch="${esc(swatch)}">
 <head>

@@ -6,7 +6,8 @@
     var app = document.getElementById("hx-app") || document.body.appendChild(document.createElement("div"));
     var mode = HX.mode;
     try {
-      if (mode === "board" && HX.board) HX.board.start(app);
+      if (mode === "board" && HX.board && HX.board.stage === "concept" && HX.board.startConcept) HX.board.startConcept(app);
+      else if (mode === "board" && HX.board) HX.board.start(app);
       else if (HX.final) HX.final.start(app);
       else app.textContent = "렌더러를 찾을 수 없어요 (mode=" + mode + ")";
     } catch (e) {
