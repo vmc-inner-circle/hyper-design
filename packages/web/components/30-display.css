@@ -198,7 +198,8 @@ button.chip, a.chip { cursor: pointer; }
 .banner {
   display: flex; align-items: flex-start; gap: var(--sp-3);
   padding: var(--sp-3) var(--sp-4);
-  border: 1px solid transparent; border-radius: var(--r-control);
+  border: 1px solid transparent;
+  border-radius: min(var(--r-control), var(--r-lg)); /* 여러 줄 상자: 둥근 분위기에서도 알약 모양 금지 */
   font-size: var(--fs-sm); line-height: var(--lh-normal);
   background: var(--c-surface-2); color: var(--c-text);
 }

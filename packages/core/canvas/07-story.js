@@ -54,7 +54,7 @@
           thumb,
           HX.el("ol", { class: "hx-story-path" }, names.map(function (n) { return HX.el("li", { text: n }); })),
           HX.el("div", { class: "hx-story-foot" }, [
-            HX.el("span", { text: "화면 " + R.insts.length + "개" }),
+            HX.el("span", { text: "화면 " + R.insts.length + "개" + (R.branches && R.branches.length ? " · 갈래 " + R.branches.length + "개" : "") }),
             HX.el("span", { class: "hx-story-go" }, ["따라가 보기", HX.icon("#i-chevron-right")])])]);
         grid.appendChild(card);
         HX.mountFrame(R.insts[0].slug, thumb, { fit: "width", badges: false });

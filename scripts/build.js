@@ -82,11 +82,20 @@ cssParts.push(...canvasCssParts);
 const css = cssParts.join("\n\n");
 
 // ---------- 화면 조각 ----------
-const sections = [];
-for (const s of S.screens || []) {
+// 뜨는 창 화면(overlayOf): 조각에는 창(.modal-backdrop)만 있다 → 뒷 화면 조각의 .app 마지막 자식으로 넣어 합친다
+const fragOf = (s) => {
   const p = path.join(runDir, s.file);
   if (!exists(p)) { console.error(`[build] FAIL 조각 없음: ${s.file}`); process.exit(1); }
-  const frag = read(p).trim();
+  const own = read(p).trim();
+  const base = s.overlayOf && (S.screens || []).find((x) => x.slug === s.overlayOf);
+  if (!base) return own;
+  const back = read(path.join(runDir, base.file)).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
+  const cut = back.lastIndexOf("</div>");
+  return cut < 0 ? back + "\n" + own : back.slice(0, cut) + own + "\n" + back.slice(cut);
+};
+const sections = [];
+for (const s of S.screens || []) {
+  const frag = fragOf(s);
   sections.push(
     `<section class="hx-screen" data-screen="${esc(s.slug)}" data-role="${esc(s.role || "")}" data-id="${s.id}">\n${frag}\n</section>`
   );
@@ -109,10 +118,11 @@ const data = {
   },
   screens: (S.screens || []).map((s) => ({
     id: s.id, slug: s.slug, name: s.name, role: s.role || null, purpose: s.purpose || "",
-    pattern: s.pattern || null, state: s.state || null, variantOf: s.variantOf || null,
+    pattern: s.pattern || null, state: s.state || null, variantOf: s.variantOf || null, overlayOf: s.overlayOf || null,
     regions: (s.regions || []).map((r) => ({ id: r.id, key: r.key, label: r.label, why: r.why || "" })),
   })),
   flows: F.flows || [],
+  branches: F.branches || [],
   board: mode === "board" ? (S.board || {}) : null,
   pages: mode === "final" ? Object.fromEntries(Object.entries(pageFiles(S, F)).map(([k, v]) => [k, "screens/" + v])) : null,
 };
@@ -193,9 +203,13 @@ if (mode === "final") {
   const order = Object.keys(files);
   order.forEach((slug, i) => {
     const s = (S.screens || []).find((x) => x.slug === slug);
-    const frag = read(path.join(runDir, s.file)).trim();
+    const frag = fragOf(s);
     const links = {};
     for (const f of F.flows || []) for (const st of f.steps || []) if (st.from === slug && st.trigger && files[st.to]) links[st.trigger] = { href: files[st.to], action: st.action || "" };
+    // 갈래(흐름 밖의 버튼이 여는 화면·창)도 같은 방식으로
+    for (const b of F.branches || []) if (b.from === slug && b.trigger && files[b.to] && !links[b.trigger]) links[b.trigger] = { href: files[b.to], action: b.action || "" };
+    // 되돌아가기(data-back): 뜨는 창이면 뒷 화면으로, 아니면 브라우저 뒤로
+    const backHref = s.overlayOf && files[s.overlayOf] ? files[s.overlayOf] : "";
     // 왼쪽 메뉴(roles[].nav)도 실제 화면 페이지로 — 메뉴 글자로 찾는다
     const navMap = {};
     for (const r of S.roles || []) for (const n of r.nav || []) if (files[n.slug] && !navMap[n.label]) navMap[n.label] = files[n.slug];
@@ -223,7 +237,11 @@ html, body { height: 100%; }
 body { margin: 0; background: var(--c-bg); }
 .app { width: 100%; min-width: 1180px; height: 100vh; }
 [data-hx-link] { cursor: pointer; }
-[data-hx-link]:hover { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+[data-hx-link]:hover, [data-stay]:hover, [data-back]:hover { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+[data-stay], [data-back] { cursor: pointer; }
+.hx-toast { position: fixed; left: 50%; bottom: 72px; transform: translateX(-50%); z-index: 9999; padding: 10px 16px; border-radius: 999px;
+  background: rgba(17, 24, 39, .92); color: #fff; font: 600 14px/1.3 Pretendard, system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+.hx-toast[hidden] { display: none; }
 .hx-page-nav { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; align-items: center; gap: 8px; padding: 6px 10px;
   border-radius: 999px; background: rgba(17, 24, 39, .88); color: #fff; font: 600 12px/1 Pretendard, system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
 .hx-page-nav a, .hx-page-off { display: inline-flex; align-items: center; gap: 4px; color: #fff; text-decoration: none; padding: 4px 6px; border-radius: 999px; }
@@ -260,6 +278,21 @@ ${nav}
     var t = (a.textContent || "").replace(/\\s+/g, " ").trim(), href = nav[t]; if (!href) return;
     a.setAttribute("href", href); a.setAttribute("data-hx-link", ""); a.setAttribute("title", t + " 화면으로");
   });
+  // 그 자리에서 바뀌는 버튼(data-stay="안내 문구"): 짧은 안내만 띄운다 / 되돌아가는 버튼(data-back)
+  var toast = document.createElement("div"); toast.className = "hx-toast"; toast.hidden = true; document.body.appendChild(toast);
+  var tt = 0, backHref = ${JSON.stringify(backHref)};
+  document.querySelectorAll("[data-stay]").forEach(function (b) {
+    if (b.hasAttribute("data-hx-link")) return;
+    b.addEventListener("click", function (e) {
+      e.preventDefault(); var msg = b.getAttribute("data-stay"); if (!msg) return;
+      toast.textContent = msg; toast.hidden = false; clearTimeout(tt); tt = setTimeout(function () { toast.hidden = true; }, 1800);
+    });
+  });
+  document.querySelectorAll("[data-back]").forEach(function (b) {
+    if (b.hasAttribute("data-hx-link")) return;
+    b.setAttribute("data-hx-link", ""); b.setAttribute("title", "이전 화면으로");
+    b.addEventListener("click", function (e) { e.preventDefault(); if (backHref) location.href = backHref; else if (history.length > 1) history.back(); });
+  });
   document.addEventListener("click", function (e) { var a = e.target.closest("a[href='#'], .app a:not([data-hx-link]), .app button:not([data-hx-link])"); if (a && !a.closest(".hx-page-nav")) e.preventDefault(); }, true);
 })();
 </script>
@@ -271,11 +304,11 @@ ${nav}
   console.log(`[build] final → ${path.relative(process.cwd(), pageDir)}/ (화면별 독립 페이지 ${order.length}개)`);
 }
 
-// 흐름에 나오는 순서대로 NN-slug.html 이름을 정한다 (index.html의 화면 전체와 같은 순서)
+// 화면 번호 순서대로 NN-slug.html 이름을 정한다 (보드의 '화면 N' = 최종본 NN, index.html의 화면 전체와 같은 순서)
+// 번호가 없으면 screens.json 순서. 중간에 뺀 화면이 있어도 NN은 01부터 이어진다.
 function pageFiles(S, F) {
-  const seen = [], add = (slug) => { if (slug && !seen.includes(slug) && (S.screens || []).some((x) => x.slug === slug)) seen.push(slug); };
-  for (const f of F.flows || []) for (const st of f.steps || []) { add(st.from); add(st.to); }
-  for (const s of S.screens || []) add(s.slug);
+  const list = (S.screens || []).map((s, i) => ({ slug: s.slug, k: Number.isInteger(s.id) ? s.id : 1e6 + i }));
+  const seen = list.sort((a, b) => a.k - b.k).map((x) => x.slug);
   const out = {};
   seen.forEach((slug, i) => { out[slug] = String(i + 1).padStart(2, "0") + "-" + slug + ".html"; });
   return out;

@@ -1,4 +1,4 @@
-/* 06-map-edges.js — HX.buildMap의 연결선(파란 단계 화살표 + 라벨 pill, 회색 "돌아와서" 점선)과 줌/팬/맞춤/포커스. 05-map.js가 호출한다. */
+/* 06-map-edges.js — HX.buildMap의 연결선(파란 단계 화살표 + 라벨 pill, 회색 "돌아와서" 점선, 아래로 내려가는 갈래 점선)과 줌/팬/맞춤/포커스. 05-map.js가 호출한다. */
 (function () {
   "use strict";
   var HX = window.HX, doc = document;
@@ -19,6 +19,17 @@
     function geom(L) {
       var d0 = I.dims(), A = I.frameBox(L.a.id), B = I.frameBox(L.b.id), an = I.nodeBox(L.a.id), bn = I.nodeBox(L.b.id);
       var gx = (an.x + an.w + bn.x) / 2, b = { x: B.x, y: midY(B, d0.FH) }, a, viaTrig = false;
+      if (L.kind === "branch") {
+        // 갈래: 누르는 버튼(점선 박스) 아래에서 출발해 아래 칸의 작은 화면 위쪽 가운데로
+        var fa2 = frames[L.a.id], src2 = L.branch.trigger ? fa2.triggerRect(L.branch.trigger) : null;
+        if (!src2 && L.branch.region) src2 = fa2.regionRect(L.branch.region);
+        a = src2 ? { x: A.x + A.cl + src2.x + src2.w / 2, y: A.y + A.ct + src2.y + src2.h } : { x: A.x + A.w / 2, y: A.y + A.h };
+        b = { x: B.x + B.w / 2, y: B.y - 2 };
+        var dy = Math.max(60, (b.y - a.y) / 2), q1 = { x: a.x, y: a.y + dy }, q2 = { x: b.x, y: b.y - dy };
+        var m = cubic(a, q1, q2, b, 0.62);
+        return { d: "M" + r1(a.x) + "," + r1(a.y) + " C" + r1(q1.x) + "," + r1(q1.y) + " " + r1(q2.x) + "," + r1(q2.y) + " " + r1(b.x) + "," + r1(b.y),
+          a: a, px: m.x, py: m.y + 10, viaTrig: !!(src2 && L.branch.trigger && fa2.triggerRect(L.branch.trigger)), fa: fa2, trig: L.branch.trigger };
+      }
       if (L.kind === "back") {
         a = { x: A.x + A.w, y: midY(A, d0.FH) };
         return { d: "M" + r1(a.x) + "," + r1(a.y) + " L" + r1(b.x) + "," + r1(b.y), a: a, px: gx, py: (a.y + b.y) / 2 };
@@ -32,32 +43,34 @@
       var lo = 0, hi = 1, p = cubic(a, c1, c2, b, 0.5);
       for (var k = 0; k < 24; k++) { var t = (lo + hi) / 2; p = cubic(a, c1, c2, b, t); if (p.x < gx) lo = t; else hi = t; }
       return { d: "M" + r1(a.x) + "," + r1(a.y) + " C" + r1(c1.x) + "," + r1(c1.y) + " " + r1(c2.x) + "," + r1(c2.y) + " " + r1(b.x) + "," + r1(b.y),
-        a: a, px: gx, py: p.y, viaTrig: viaTrig, fa: fa };
+        a: a, px: gx, py: p.y, viaTrig: viaTrig, fa: fa, trig: st.trigger };
     }
     function draw() {
       if (!I.vp.clientWidth) return;
       I.edgeLayer.innerHTML = ""; I.pillLayer.innerHTML = ""; drawn = [];
       links.forEach(function (L) {
         if (!I.visible(L.row) || !frames[L.a.id] || !frames[L.b.id]) return;
-        var P = geom(L), back = L.kind === "back";
-        var p = svgEl("path", { class: back ? "hx-link-back" : "hx-edge" + (P.viaTrig ? " hx-edge-trig" : ""), d: P.d, "marker-end": back ? "url(#hx-arrow-back)" : "url(#hx-arrow)" });
-        var pill = HX.el("div", { class: "hx-wf-pill" + (back ? " hx-wf-pill-back" : ""), style: "left:" + r1(P.px) + "px;top:" + r1(P.py) + "px" },
-          back ? "돌아와서" : [HX.el("b", { text: (L.index + 1) + "단계" }), HX.el("span", { class: "hx-pill-act", text: " · " + (L.step.action || "") })]);
-        if (!back) pill.title = (L.index + 1) + "단계 · " + (L.step.action || "");
+        var P = geom(L), back = L.kind === "back", br = L.kind === "branch";
+        var p = svgEl("path", { class: back ? "hx-link-back" : br ? "hx-edge-branch" : "hx-edge" + (P.viaTrig ? " hx-edge-trig" : ""), d: P.d,
+          "marker-end": back ? "url(#hx-arrow-back)" : br ? "url(#hx-arrow-branch)" : "url(#hx-arrow)" });
+        var pill = HX.el("div", { class: "hx-wf-pill" + (back ? " hx-wf-pill-back" : br ? " hx-wf-pill-branch" : ""), style: "left:" + r1(P.px) + "px;top:" + r1(P.py) + "px" },
+          back ? "돌아와서" : br ? [HX.el("b", { text: "갈래" }), HX.el("span", { class: "hx-pill-act", text: " · " + (L.branch.action || "") })]
+            : [HX.el("b", { text: (L.index + 1) + "단계" }), HX.el("span", { class: "hx-pill-act", text: " · " + (L.step.action || "") })]);
+        if (!back) pill.title = br ? "갈래 · " + (L.branch.action || "") : (L.index + 1) + "단계 · " + (L.step.action || "");
         I.edgeLayer.appendChild(p); I.pillLayer.appendChild(pill);
         var rec = { L: L, p: p, pill: pill, dot: null };
         if (!back) {
-          var dot = svgEl("circle", { class: "hx-edge-dot", cx: r1(P.a.x), cy: r1(P.a.y), r: 4 });
+          var dot = svgEl("circle", { class: br ? "hx-edge-dot hx-edge-dot-branch" : "hx-edge-dot", cx: r1(P.a.x), cy: r1(P.a.y), r: 4 });
           var hit = svgEl("path", { class: "hx-edge-hit", d: P.d });
           hit.addEventListener("mouseenter", function (ev) {
             svg.classList.add("hx-hover"); p.classList.add("hx-active"); pill.classList.add("hx-active");
-            if (P.viaTrig) P.fa.highlightTrigger(L.step.trigger, true);
+            if (P.viaTrig) P.fa.highlightTrigger(P.trig, true);
             showTip(L, ev);
           });
           hit.addEventListener("mousemove", moveTip);
           hit.addEventListener("mouseleave", function () {
             svg.classList.remove("hx-hover"); p.classList.remove("hx-active"); pill.classList.remove("hx-active");
-            if (P.viaTrig) P.fa.highlightTrigger(L.step.trigger, false);
+            if (P.viaTrig) P.fa.highlightTrigger(P.trig, false);
             tip.style.display = "none";
           });
           I.edgeLayer.appendChild(dot); I.edgeLayer.appendChild(hit); rec.dot = dot;
@@ -67,9 +80,10 @@
       paintActive();
     }
     function showTip(L, ev) {
-      var to = HX.bySlug[L.b.slug];
+      var to = HX.bySlug[L.b.slug], br = L.kind === "branch";
       tip.innerHTML = "";
-      tip.appendChild(HX.el("div", {}, [HX.el("b", { text: L.step.action }), " → " + (to ? to.name : L.b.slug), HX.el("div", { class: "hx-tip-flow", text: "흐름 " + L.row.n + " · " + (L.flow.name || "") })]));
+      tip.appendChild(HX.el("div", {}, [HX.el("b", { text: br ? L.branch.action : L.step.action }), " → " + (to ? to.name : L.b.slug),
+        HX.el("div", { class: "hx-tip-flow", text: br ? "갈래 · 흐름 밖에서 이 버튼을 누르면" : "흐름 " + L.row.n + " · " + (L.flow.name || "") })]));
       tip.style.display = ""; moveTip(ev);
     }
     function moveTip(ev) { tip.style.left = Math.min(ev.clientX + 14, window.innerWidth - 340) + "px"; tip.style.top = (ev.clientY + 14) + "px"; }
@@ -140,10 +154,13 @@
       var nb = I.nodeBox(it.id), ah = vh - pad.t - pad.b, fw = 0.75;
       if (o.pair) {
         var nx = view.instances.filter(function (x) { return x.row === it.row && x.pos === it.pos + 1; })[0];
-        if (nx && view.nodes[nx.id]) {
-          var b2 = I.nodeBox(nx.id), y0 = Math.min(nb.y, b2.y), y1 = Math.max(nb.y + nb.h, b2.y + b2.h);
-          nb = { x: nb.x, y: y0, w: b2.x + b2.w - nb.x, h: y1 - y0 };
-        }
+        var boxes = [nb];
+        if (nx && view.nodes[nx.id]) boxes.push(I.nodeBox(nx.id));
+        // 이 화면의 갈래(아래 칸)도 함께 보이게
+        (view.branchesOf ? view.branchesOf(it.id) : []).forEach(function (bi) { var bb = I.nodeBox(bi.id); bb.h += 44; boxes.push(bb); });   // +이름표(화면 아래)
+        var x0 = Math.min.apply(null, boxes.map(function (b) { return b.x; })), y0 = Math.min.apply(null, boxes.map(function (b) { return b.y; }));
+        var x1 = Math.max.apply(null, boxes.map(function (b) { return b.x + b.w; })), y1 = Math.max.apply(null, boxes.map(function (b) { return b.y + b.h; }));
+        nb = { x: x0, y: y0, w: x1 - x0, h: y1 - y0 };
         fw = 0.94;
       }
       var nz = HX.clamp(Math.min(vw * fw / nb.w, ah * 0.84 / nb.h), 0.05, 3);

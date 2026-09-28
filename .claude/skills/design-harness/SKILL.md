@@ -85,12 +85,14 @@ PRD를 읽고 아래 표로 판단한다. **대부분의 PRD는 묻지 않는다
 - 역할 2~3개 + 역할마다 `nav`.
 - 화면: **핵심 8~14개 + 처음 시작용 3~5개**(빈 홈·등록·빈 목록·초대 받았을 때·빈 부모 홈 등, `state`·`variantOf`).
 - 흐름: **처음 시작 흐름을 역할마다 맨 앞에** + 핵심 흐름. 전부 끊김 없는 한 줄, 흐름 6~9개.
+- **갈래**: 화면마다 글자 버튼을 훑어 흐름 밖에서 다른 화면·창을 여는 버튼을 `branches`로(prd-to-screens §5-1). 새 입력·선택 UI를 여는 핵심 버튼은 **뜨는 창 화면**(`overlayOf`, 3~6개)을 만든다.
+- 화면 순서 = 사용자가 만나는 순서(번호가 이 순서로 1, 2, 3…).
 - 항목: 화면당 3~6개, `label`·`why`는 ux-writing §2.
 - **화면 느낌**: PRD에 맞춘 분위기 3개(이름·이유·배경·글자·모양) + 분위기마다 버튼 색 5개(색 이름, 첫 번째 추천) + 글자 크기 추천(prd-to-screens §6). 구조 질문 최대 3개.
 - 가정 로그: PRD에 없어서 정한 것 전부.
 
 ### 1.2 데이터 파일
-- `screens.json`(계약 §6.1), `flow.json`(§6.2, 모든 step에 `trigger`, 제목 '~하기'), `icons.json`.
+- `screens.json`(계약 §6.1), `flow.json`(§6.2, 모든 step에 `trigger`, 제목 '~하기', `branches`), `icons.json`.
 - 달력 화면이 있으면 `node scripts/calendar.js YYYY-MM --event …  --out runs/<p>/snippets/calendar-YYYY-MM.html`로 격자를 미리 만든다.
 - `node scripts/ids.js runs/<project>`.
 - `node scripts/lint.js runs/<project>` — 이때 FAIL은 "조각 파일 없음"만 남아야 한다. 말·흐름 WARN은 여기서 고친다.

@@ -24,11 +24,14 @@ model: sonnet
 4. 필요한 조각만 `packages/web/snippets/*.md`에서 찾아 **그대로 복사**한다. 클래스를 새로 만들지 않는다.
 5. `regions[]`의 key마다 그 영역을 감싸는 요소 **하나**에 `data-region="<key>"`를 붙인다. 개수가 정확히 맞아야 한다.
 5-1. `RUN/flow.json`에서 `from`이 이 slug인 step을 모두 찾아, 각 step의 `trigger` key를 **실제로 누르는 요소 하나**에 `data-trigger="<key>"`로 붙인다(그 step의 `region` 안). 요소가 없으면 그 영역에 버튼을 만든다 — 문구는 `action`의 따옴표 안 말.
+5-1-1. `RUN/flow.json`의 `branches`에서 `from`이 이 slug인 갈래도 똑같이 `data-trigger`를 붙인다.
+5-1-2. 그 밖에 글자가 있는 `.btn`은 00-rules 3-2대로 `data-back`(이전 화면으로) 또는 `data-stay="바뀐 뒤 안내 문구"`(그 자리에서 바뀜)를 **빠짐없이** 붙인다. 하나라도 빠지면 lint FAIL.
+5-1-3. `overlayOf`가 있는 화면(뜨는 창)은 **창만** 쓴다: 파일 전체가 `<div class="modal-backdrop">…</div>` 하나(60-overlay의 modal 또는 drawer). 뒷 화면은 쓰지 않는다(build가 깐다). 영역은 `.modal`/`.drawer` 안에. 닫기·취소 버튼은 `data-back`, 완료 버튼(추가·저장)도 뒷 화면으로 돌아가므로 `data-back`.
 5-2. 이 화면의 `state`가 `first-run`·`empty`면 00-rules 17번대로 **비워 둔다**(숫자·목록 금지, `.empty` 조각). `input`이면 입력칸에 예시 값.
 6. 문구를 전부 DOMAIN의 실제 값으로 채운다. 프롬프트의 "화면별 메모"가 있으면 그대로 따른다. 목록은 3~5행. "버튼"·"텍스트"·Lorem 금지.
 7. 아이콘 이름은 `packages/core/icons/allowlist.json`의 값 또는 `RUN/icons.json`의 값만.
-8. `RUN/screens/<slug>.html`로 저장한다. 루트는 `<div class="app">` 하나, `<style>`·`<script>`·인라인 `style=` 없음.
-9. 저장 후 자체 점검: `data-region` 개수 = regions 개수 / from step의 trigger 전부 `data-trigger`로 존재 / `style=` 0건 / 아이콘 이름 확인.
+8. `RUN/screens/<slug>.html`로 저장한다. 루트는 `<div class="app">` 하나(뜨는 창은 `.modal-backdrop` 하나), `<style>`·`<script>`·인라인 `style=` 없음.
+9. 저장 후 자체 점검: `data-region` 개수 = regions 개수 / from step·갈래의 trigger 전부 `data-trigger`로 존재 / 글자 있는 `.btn`마다 data-trigger·data-back·data-stay 중 하나 / `style=` 0건 / 아이콘 이름 확인.
 
 ## 수정 모드 (MODE=revise)
 

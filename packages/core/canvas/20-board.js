@@ -20,8 +20,12 @@
   B.look = function (id) { return LOOKS.filter(function (l) { return l.id === id; })[0] || LOOKS[0] || { id: id, name: id, swatches: [] }; };
   B.swatch = function (lookId, id) { var L = B.look(lookId); return L.swatches.filter(function (s) { return s.id === id; })[0] || L.swatches[0] || { id: id, name: id, hex: "#999999" }; };
   function fixSwatch(lookId, v) { var L = B.look(lookId); return L.swatches.some(function (s) { return s.id === v; }) ? v : (v === "vivid" && L.swatches[1] ? L.swatches[1].id : (L.swatches[0] || {}).id); }
-  var recTheme = LOOKS.some(function (l) { return l.id === rec.theme; }) ? rec.theme : HX.meta.theme;
-  var REC = B.REC = { theme: recTheme, type: rec.type || toggles.type || "normal", accent: fixSwatch(recTheme, rec.swatch || rec.accent || toggles.swatch) };
+  // 확정(잠금)된 값은 1턴 추천(board.recommend)이 아니라 확정값(theme · toggles)을 쓴다
+  var validLook = function (id) { return LOOKS.some(function (l) { return l.id === id; }); };
+  var recTheme = isLocked("theme") && validLook(HX.meta.theme) ? HX.meta.theme : (validLook(rec.theme) ? rec.theme : HX.meta.theme);
+  var recType = isLocked("type") && toggles.type ? toggles.type : (rec.type || toggles.type || "normal");
+  var recSwatch = isLocked("swatch") && toggles.swatch ? toggles.swatch : (rec.swatch || rec.accent || toggles.swatch);
+  var REC = B.REC = { theme: recTheme, type: recType, accent: fixSwatch(recTheme, recSwatch) };
   B.recWhy = { theme: rec.themeWhy || "", type: rec.typeWhy || "", accent: rec.swatchWhy || rec.accentWhy || "" };
   B.fixSwatch = fixSwatch;
   var TYPE_LABEL = B.TYPE_LABEL = { normal: "보통", large: "크게" }, ACCENT_LABEL = B.ACCENT_LABEL = { calm: "차분", vivid: "선명" };

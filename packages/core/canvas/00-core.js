@@ -253,9 +253,10 @@
     var f = { el: el, stage: stage, overlay: overlay, tlayer: tlayer, section: section, screen: screen, slug: slug, opts: opts,
       h: HX.frame.h, scale: opts.scale || 1, fit: opts.fit || null, maxScale: opts.maxScale || 1, pad: opts.pad || 0, fitTo: opts.fitTo || null,
       boxes: {}, tboxes: {}, spot: null, spotTrig: null };
-    (opts.triggers || []).forEach(function (k) {
+    (opts.triggers || []).concat(opts.branchTriggers || []).forEach(function (k, i) {
       if (!k || f.tboxes[k]) return;
-      var tb = HX.el("div", { class: "hx-tbox", dataset: { trigger: k }, style: "display:none" });
+      var br = i >= (opts.triggers || []).length;   // 갈래 버튼: 점선 박스
+      var tb = HX.el("div", { class: "hx-tbox" + (br ? " hx-tbox-branch" : ""), dataset: { trigger: k }, style: "display:none" });
       tlayer.appendChild(tb); f.tboxes[k] = { el: tb, rect: null, region: null };
     });
     ((screen && screen.regions) || []).forEach(function (r) {

@@ -115,6 +115,7 @@ const ids = new Map(); // id → 설명
 const slugs = new Map(); // slug → screen
 const regionKeysBySlug = new Map();
 const triggersBySlug = new Map(); // slug → Map(triggerKey → 속한 region key | null)
+const buttonsBySlug = new Map(); // slug → [{ text, trigger, stay, back }] — 글자가 있는 .btn
 
 // 조각 HTML에서 data-trigger마다 가장 가까운 바깥 data-region을 찾는다 (가벼운 태그 스택 파서)
 function scanTriggers(html) {
@@ -130,6 +131,20 @@ function scanTriggers(html) {
     const parentRegion = [...stack].reverse().find((s) => s.region)?.region || null;
     if (trig) out.set(trig, region || parentRegion);
     if (!selfClose && !voids.has(tag)) stack.push({ tag, region });
+  }
+  return out;
+}
+// 글자가 있는 .btn(버튼·링크)마다: 누르면 어디로 가는지(data-trigger) · 그 자리에서 바뀌는지(data-stay) · 되돌아가는지(data-back)
+function scanButtons(html) {
+  const out = [];
+  for (const m of html.matchAll(/<(button|a)\b([^>]*)>([\s\S]*?)<\/\1>/g)) {
+    const attrs = m[2], cls = (/class\s*=\s*["']([^"']*)["']/.exec(attrs) || [])[1] || "";
+    const list = cls.split(/\s+/);
+    if (!list.includes("btn") || list.includes("btn-icon") || list.includes("nav-item")) continue;
+    const text = m[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    if (!text) continue;
+    out.push({ text, trigger: (/data-trigger\s*=\s*["']([^"']+)["']/.exec(attrs) || [])[1] || null,
+      stay: /\sdata-stay\b/.test(attrs), back: /\sdata-back\b/.test(attrs) });
   }
   return out;
 }
@@ -149,6 +164,7 @@ for (const s of S.screens || []) {
   if (s.role && roleKeys.size && !roleKeys.has(s.role)) fail(`${desc}: role '${s.role}'이 roles에 없음`);
   if (s.state && !["first-run", "empty", "input"].includes(s.state)) fail(`${desc}: state는 first-run|empty|input 중 하나`);
   noteId(s.id, desc);
+  if (Number.isInteger(s.id) && s.id > 100) warn(`${desc}: 화면 번호 ${s.id} — 화면은 1, 2, 3…으로 (node scripts/ids.js가 발급)`);
 
   const regions = s.regions || [];
   if (regions.length === 0) warn(`${desc}: 영역이 0개 — 사용자가 가리킬 곳이 없음`);
@@ -165,6 +181,7 @@ for (const s of S.screens || []) {
     if (jargon) warn(`${rd}: label에 컴포넌트 용어 '${jargon[0]}' — '무엇이 보이는/하는 곳'으로 (예: "날짜 고르기")`);
     if (!r.why) warn(`${rd}: why 없음 — 번호를 누르면 보이는 "이게 뭐냐면" 한 문장`);
     noteId(r.id, `영역 ${rd}`);
+    if (Number.isInteger(r.id) && r.id <= 100 && !Number.isInteger(S.nextId)) warn(`${rd}: 영역 번호 ${r.id} — 영역은 101부터 (화면 번호와 섞이지 않게)`);
   }
   regionKeysBySlug.set(s.slug, keys);
 
@@ -191,6 +208,13 @@ for (const s of S.screens || []) {
   const trigAll = [...html.matchAll(/data-trigger\s*=\s*["']([^"']+)["']/g)].map((m) => m[1]);
   for (const k of new Set(trigAll.filter((k, i) => trigAll.indexOf(k) !== i))) fail(`${desc}: data-trigger="${k}" 가 2번 이상 등장`);
   triggersBySlug.set(s.slug, scanTriggers(html));
+  buttonsBySlug.set(s.slug, scanButtons(html));
+
+  // 뜨는 창 화면: 조각은 창(.modal-backdrop) 하나뿐 — 뒷 화면은 build.js가 overlayOf 화면을 깔아 합친다
+  if (s.overlayOf) {
+    const body = html.replace(/<!--[\s\S]*?-->/g, "").trim();
+    if (!/^<div\s+class=["'][^"']*\bmodal-backdrop\b/.test(body)) fail(`${desc}: 뜨는 창 화면(overlayOf)의 조각은 <div class="modal-backdrop">…</div> 하나로 시작해야 함 — 뒷 화면은 쓰지 않는다`);
+  }
 
   // 아이콘
   for (const m of html.matchAll(/href\s*=\s*["']#i-([a-z0-9-]+)["']/g)) {
@@ -258,8 +282,8 @@ for (const f of F.flows || []) {
     if (!st.action) fail(`${sd}: action 문장 없음 ("'…'을 누르면")`);
     // trigger: 화살표가 출발하는 실제 버튼/항목. 조각에 data-trigger="<key>"가 있어야 한다
     if (!st.trigger) warn(`${sd}: trigger 없음 — 화살표가 영역 덩어리에서 출발한다. 누르는 요소에 data-trigger를 붙이고 step.trigger로 지정`);
-    else if (slugs.has(st.from)) {
-      const trig = triggersBySlug.get(st.from) || new Map();
+    else if (triggersBySlug.has(st.from)) {   // 조각을 아직 안 썼으면(1.2 단계) 건너뛴다
+      const trig = triggersBySlug.get(st.from);
       if (!trig.has(st.trigger)) fail(`${sd}: trigger '${st.trigger}'가 '${st.from}' 조각에 data-trigger로 없음`);
       else if (st.region && trig.get(st.trigger) !== st.region) warn(`${sd}: trigger '${st.trigger}'가 region '${st.region}' 안에 있지 않음 (실제: ${trig.get(st.trigger) || "영역 밖"})`);
     }
@@ -272,6 +296,56 @@ if (![...slugs.values()].some((s) => s.state === "first-run" || s.state === "emp
 }
 for (const s of slugs.values()) {
   if (s.variantOf && !slugs.has(s.variantOf)) fail(`화면 ${s.slug}: variantOf '${s.variantOf}' 화면 없음`);
+  if (s.overlayOf) {
+    const base = slugs.get(s.overlayOf);
+    if (!base) fail(`화면 ${s.slug}: overlayOf '${s.overlayOf}' 화면 없음`);
+    else if (base.overlayOf) fail(`화면 ${s.slug}: overlayOf '${s.overlayOf}'도 뜨는 창 — 뒷 화면은 보통 화면이어야 함`);
+    if (!/창$/.test(s.name || "")) warn(`화면 ${s.slug}: 뜨는 창 화면 이름은 '~ 창'으로 (예: "날짜 더하기 창")`);
+  }
+}
+{
+  const n = [...slugs.values()].filter((s) => s.overlayOf).length;
+  if (n > 6) warn(`뜨는 창 화면 ${n}개 — 6개 이하로 (핵심 작업에 닿는 창만 화면으로, 나머지는 data-stay)`);
+}
+
+// ---------- branches (갈래: 흐름 밖의 버튼이 여는 화면) ----------
+const branchTo = new Map(); // "from|trigger" → to
+const stepTo = new Map();   // "from|trigger" → to
+for (const f of F.flows || []) for (const st of f.steps || []) if (st.trigger) stepTo.set(st.from + "|" + st.trigger, st.to);
+if (F.branches !== undefined && !Array.isArray(F.branches)) fail(`flow.json branches는 배열이어야 함`);
+(F.branches || []).forEach((b, i) => {
+  const bd = `갈래 ${i + 1} (${b.from || "?"} → ${b.to || "?"})`;
+  if (!slugs.has(b.from)) { fail(`${bd}: from '${b.from}' 화면 없음`); return; }
+  if (!slugs.has(b.to)) fail(`${bd}: to '${b.to}' 화면 없음`);
+  if (b.from === b.to) fail(`${bd}: 같은 화면으로 가는 갈래 — 그 자리에서 바뀌는 버튼은 조각에 data-stay`);
+  if (!b.action) fail(`${bd}: action 문장 없음 ("'…'을 누르면")`);
+  const keys = regionKeysBySlug.get(b.from) || new Set();
+  if (!b.region) fail(`${bd}: region 없음`); else if (!keys.has(b.region)) fail(`${bd}: region '${b.region}'이 '${b.from}' 화면 영역에 없음`);
+  if (!b.trigger) { fail(`${bd}: trigger 없음 — 누르는 버튼에 data-trigger`); return; }
+  const trig = triggersBySlug.get(b.from) || new Map();
+  if (!triggersBySlug.has(b.from)) { /* 조각 전 — 건너뜀 */ }
+  else if (!trig.has(b.trigger)) fail(`${bd}: trigger '${b.trigger}'가 '${b.from}' 조각에 data-trigger로 없음`);
+  else if (b.region && trig.get(b.trigger) !== b.region) warn(`${bd}: trigger '${b.trigger}'가 region '${b.region}' 안에 있지 않음 (실제: ${trig.get(b.trigger) || "영역 밖"})`);
+  const k = b.from + "|" + b.trigger;
+  if (stepTo.has(k)) fail(`${bd}: trigger '${b.trigger}'는 이미 흐름 단계에 있음 — 갈래에서 뺀다`);
+  if (branchTo.has(k)) fail(`${bd}: trigger '${b.trigger}' 갈래 중복`);
+  branchTo.set(k, b.to);
+  reached.add(b.from); reached.add(b.to);
+});
+for (const s of slugs.values()) {
+  if (s.overlayOf && ![...branchTo.values(), ...stepTo.values()].includes(s.slug)) fail(`화면 ${s.slug}: 뜨는 창인데 이 창을 여는 버튼(갈래)이 없음 — flow.json branches에 추가`);
+}
+
+// ---------- 버튼마다 누르면 어떻게 되는지 (계약 §6.2) ----------
+// 글자가 있는 .btn은 셋 중 하나: data-trigger(흐름 단계·갈래로 다른 화면) / data-back(되돌아가기) / data-stay(그 자리에서 바뀜)
+for (const [slug, btns] of buttonsBySlug) {
+  const lost = [], orphan = [];
+  for (const b of btns) {
+    if (b.trigger) { if (!stepTo.has(slug + "|" + b.trigger) && !branchTo.has(slug + "|" + b.trigger)) orphan.push(b.text); }
+    else if (!b.stay && !b.back) lost.push(b.text);
+  }
+  if (lost.length) fail(`화면 ${slug}: 누르면 어떻게 되는지 없는 버튼 ${lost.map((t) => `'${t}'`).join(", ")} — 다른 화면이면 data-trigger + flow.json branches, 되돌아가면 data-back, 그 자리에서 바뀌면 data-stay="바뀐 뒤 안내 문구"`);
+  if (orphan.length) warn(`화면 ${slug}: data-trigger가 있는데 흐름·갈래에 없는 버튼 ${orphan.map((t) => `'${t}'`).join(", ")}`);
 }
 for (const slug of slugs.keys()) {
   if (!reached.has(slug)) warn(`화면 '${slug}' 은 어떤 플로우에도 등장하지 않음 — 지도에서 고립 노드`);
@@ -302,5 +376,5 @@ for (const w of warns) console.log(`[WARN] ${w}`);
 for (const f of fails) console.log(`[FAIL] ${f}`);
 const nScreens = (S.screens || []).length;
 const nRegions = (S.screens || []).reduce((n, s) => n + (s.regions || []).length, 0);
-console.log(`[lint] 화면 ${nScreens} · 영역 ${nRegions} · 플로우 ${(F.flows || []).length} · FAIL ${fails.length} · WARN ${warns.length}`);
+console.log(`[lint] 화면 ${nScreens} · 영역 ${nRegions} · 플로우 ${(F.flows || []).length} · 갈래 ${(F.branches || []).length} · FAIL ${fails.length} · WARN ${warns.length}`);
 process.exit(fails.length || (strict && warns.length) ? 1 : 0);

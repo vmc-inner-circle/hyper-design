@@ -1,0 +1,98 @@
+<!-- pattern: shell-top — 사이드바 없이 상단바에 가로 탭 내비를 둔 앱 골격.
+     다른 패턴의 출발점. <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다.
+     data-region key는 예시(example-*). screens.json의 key로 바꾼다. -->
+<div class="app nav-top">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+
+    <nav class="topnav-nav" data-region="example-nav">
+      <!-- slot: 내비 항목 (3~7개, 현재 화면에 .active). sidebar와 같은 .nav-item을 그대로 쓴다 -->
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span><span class="badge badge-neutral">12</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-list-checks"/></svg><span>할 일</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>참석자</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-chart-bar"/></svg><span>리포트</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>설정</span></a>
+    </nav>
+
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <button class="btn btn-ghost btn-icon" aria-label="도움말"><svg class="icon" aria-hidden="true"><use href="#i-circle-question-mark"/></svg></button>
+      <div class="avatar avatar-sm">김</div>
+    </div>
+  </header>
+
+  <!-- .sidebar는 이 변형에서 쓰지 않는다 (aside 자체를 넣지 않는다) -->
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="page-header" data-region="example-header">
+        <div>
+          <h1 class="page-title"><!-- slot: 페이지 제목 -->9월 워크숍 일정</h1>
+          <p class="page-desc"><!-- slot: 한 줄 요약 -->9월 12일(금) · 참석 24명 · 장소 확정 대기</p>
+        </div>
+        <div class="page-actions">
+          <!-- slot: 보조 액션 0~2개 + primary 1개 -->
+          <button class="btn"><svg class="icon" aria-hidden="true"><use href="#i-share-2"/></svg>공유</button>
+          <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>세션 추가</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <!-- slot: 검색·필터·보기 전환 (필요 없으면 .toolbar 통째로 삭제) -->
+        <div class="search">
+          <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+          <input class="input" type="search" placeholder="세션·발표자 검색">
+        </div>
+        <div class="segmented">
+          <button class="segmented-item active">전체</button>
+          <button class="segmented-item">확정</button>
+          <button class="segmented-item">후보</button>
+        </div>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost"><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-down"/></svg>시작 시각순</button>
+      </div>
+
+      <section class="section" data-region="example-main">
+        <!-- slot: 본문 (card · list · table · grid-* 등 조각) -->
+        <div class="card">
+          <ul class="list">
+            <li class="list-item">
+              <div class="row gap-3">
+                <span class="badge badge-success">확정</span>
+                <div class="flex-1">
+                  <div class="fw-semibold">오프닝 세션 · 팀 소개</div>
+                  <div class="text-sm text-2">09:30–10:20 · 대회의실 A · 박지훈</div>
+                </div>
+                <button class="btn btn-ghost btn-icon btn-sm" aria-label="더보기"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="row gap-3">
+                <span class="badge badge-neutral">후보</span>
+                <div class="flex-1">
+                  <div class="fw-semibold">워크숍 A · 고객 여정 그리기</div>
+                  <div class="text-sm text-2">10:30–12:00 · 세미나실 3 · 이서준</div>
+                </div>
+                <button class="btn btn-ghost btn-icon btn-sm" aria-label="더보기"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button>
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="row gap-3">
+                <span class="badge badge-warning">변경됨</span>
+                <div class="flex-1">
+                  <div class="fw-semibold">점심 · 도시락 배부</div>
+                  <div class="text-sm text-2">12:00–13:00 · 라운지 · 운영팀</div>
+                </div>
+                <button class="btn btn-ghost btn-icon btn-sm" aria-label="더보기"><svg class="icon" aria-hidden="true"><use href="#i-ellipsis"/></svg></button>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

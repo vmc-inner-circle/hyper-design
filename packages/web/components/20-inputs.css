@@ -89,6 +89,7 @@
   height: auto;
   min-height: calc(var(--ctl-md) * 2.5);
   padding: var(--sp-2) var(--sp-3);
+  border-radius: min(var(--r-control), var(--r-lg)); /* 여러 줄 입력: 알약 모서리가 글자를 자른다 */
   resize: vertical;
 }
 

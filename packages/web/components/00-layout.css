@@ -289,3 +289,98 @@
 .w-full { width: 100%; }
 .flex-1 { flex: 1 1 auto; min-width: 0; }
 .shrink-0 { flex: 0 0 auto; }
+
+/* ============================================================
+   레이아웃 변형 — nav-top (상단 가로 탭) · nav-rail (좁은 아이콘 레일)
+   기본 골격(.app, .topnav, .sidebar, .nav-item …)의 마크업·동작은
+   그대로 두고, 이 두 클래스가 붙었을 때만 모양을 바꾼다.
+   .nav-item 클래스명은 두 변형 모두 그대로 유지한다(다른 도구가 이 클래스로 메뉴를 찾는다).
+   ============================================================ */
+
+/* ---- nav-top: 좌측 사이드바를 없애고 상단바에 가로 탭으로 내비를 둔다 ---- */
+.app.nav-top {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "topnav"
+    "content";
+}
+.app.nav-top .sidebar { display: none; } /* 마크업엔 남아 있어도 이 변형에선 쓰지 않는다 */
+.app.nav-top .topnav-brand { min-width: 0; } /* 사이드바 폭에 맞춘 정렬이 필요 없다 */
+
+.topnav-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  height: 100%;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+}
+.topnav-nav .nav-item {
+  width: auto;
+  flex: 0 0 auto;
+  height: 100%;
+  min-height: 0;
+  padding: 0 var(--sp-3);
+  border-radius: 0;
+  position: relative;
+}
+.topnav-nav .nav-item.active {
+  background: transparent;
+  color: var(--c-text);
+}
+.topnav-nav .nav-item.active::after {
+  content: "";
+  position: absolute;
+  left: var(--sp-3);
+  right: var(--sp-3);
+  bottom: 0;
+  height: 2px; /* 밑줄 두께: 기존 1px 보더처럼 고정값을 쓴 예외 */
+  background: var(--c-primary);
+}
+.topnav-nav .nav-item .badge,
+.topnav-nav .nav-item .kbd { display: none; } /* 가로 탭에는 라벨만, 배지·단축키는 생략 */
+/* 본문 폭 제한은 새 클래스 없이 기존 .content-inner(--content-max)를 그대로 쓴다 */
+
+/* ---- nav-rail: 넓은 사이드바 대신 아이콘만 남는 좁은 레일 ---- */
+.app.nav-rail {
+  --rail-w: calc(var(--sp-16) + var(--sp-4)); /* 64px+16px=80px, 76~88px 범위의 아이콘 레일 폭 */
+  grid-template-columns: var(--rail-w) minmax(0, 1fr);
+}
+.app.nav-rail .sidebar {
+  padding: var(--sp-4) var(--sp-2);
+  align-items: center;
+}
+.app.nav-rail .nav-section { display: none; } /* 좁은 레일엔 그룹 제목을 놓을 자리가 없다 */
+.app.nav-rail .nav-item {
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--ctl-lg);
+  padding: var(--sp-2) var(--sp-1);
+  gap: var(--sp-1);
+  text-align: center;
+}
+.app.nav-rail .nav-item > span:not(.badge) {
+  flex: 0 0 auto;
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.app.nav-rail .nav-item .badge {
+  /* 숫자 배지를 아이콘 우상단 모서리의 작은 점/카운트로 옮긴다 */
+  position: absolute;
+  top: calc(var(--sp-1) * -1);
+  right: var(--sp-1);
+  margin-left: 0;
+  min-width: var(--sp-4);
+  height: var(--sp-4);
+  padding: 0 var(--sp-1);
+  line-height: var(--sp-4);
+}
+.app.nav-rail .nav-item .kbd { display: none; } /* 단축키 힌트는 레일 폭에 맞지 않는다 */
+.app.nav-rail .sidebar-footer { align-items: center; padding-top: var(--sp-3); }
+.app.nav-rail .sidebar-footer .nav-item .truncate { display: none; } /* 이름 대신 아바타만 남긴다 */

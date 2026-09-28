@@ -28,7 +28,7 @@
     "locked": [],
     "focus": []
   },
-  "nextId": 1,
+  "nextScreenId": 1, "nextRegionId": 101,
   "screens": [
     {
       "slug": "home",
@@ -47,7 +47,8 @@
 }
 ```
 
-- `id`는 적지 않아도 된다 → `node scripts/ids.js runs/<p>`가 채운다. 한 번 발급된 번호는 바뀌지 않는다.
+- `id`는 적지 않아도 된다 → `node scripts/ids.js runs/<p>`가 채운다. 화면은 1부터(screens.json 순서), 항목은 101부터 따로. 한 번 발급된 번호는 바뀌지 않는다.
+- `overlayOf`(선택): 뜨는 창 화면 — 조각에는 `.modal-backdrop`만, 뒷 화면은 build가 합친다. 이름은 '~ 창'.
 - `board.locked`: 2라운드부터 `["theme","toggles","ask"]`. `board.focus`: 지난 라운드에 고친 화면 slug — 보드 맨 위에 먼저 나온다.
 
 ## flow.json
@@ -57,16 +58,21 @@
   "flows": [
     {
       "key": "create",
-      "name": "관리자가 새 항목을 만든다",
+      "name": "새 항목 만들기",
       "role": "owner",
       "steps": [
         { "from": "home", "region": "new", "trigger": "create", "action": "'새로 만들기'를 누르면", "to": "editor" },
         { "from": "editor", "region": "save", "trigger": "save", "action": "'저장'을 누르면", "to": "home" }
       ]
     }
+  ],
+  "branches": [
+    { "from": "home", "region": "list", "trigger": "invite", "action": "'초대하기'를 누르면", "to": "invite-dialog" }
   ]
 }
 ```
+
+- `branches`(갈래): 흐름 밖의 버튼이 여는 화면·창. 형식은 step과 같다. 글자가 있는 `.btn`은 `data-trigger`(흐름·갈래) · `data-back` · `data-stay="안내 문구"` 중 하나를 반드시 가진다.
 
 조각에서는 누르는 요소에 `data-trigger`: `<button class="btn btn-primary" data-trigger="create">새로 만들기</button>` (그 step의 region 안).
 

@@ -117,6 +117,62 @@
 
 주의: `.content` 안에 또 다른 스크롤 영역을 만들지 않는다(`.split` 예외).
 
+## app 변형 — nav-top / nav-rail (내비 방향이 다른 골격)
+언제: 기본 골격(상단바 + 넓은 좌 사이드바)이 아니라 다른 "디자인 방향"이 필요할 때. 화면 하나마다가 아니라 프로젝트 전체가 한 방향을 쓴다.
+
+### nav-top — 사이드바 없이 상단바에 가로 탭
+언제: 메뉴가 5개 이하로 적고, 화면 폭을 콘텐츠에 최대한 쓰고 싶을 때(대시보드형 SaaS, 랜딩성 관리 화면). `.sidebar`는 마크업에 넣지 않고, 같은 `.nav-item`을 상단바 안 `.topnav-nav`에 가로로 늘어놓는다.
+
+```html
+<div class="app nav-top">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span>팀 워크스페이스</span>
+    </div>
+    <nav class="topnav-nav">
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span><span class="badge badge-neutral">12</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-list-checks"/></svg><span>할 일</span></a>
+    </nav>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김</div>
+    </div>
+  </header>
+  <main class="content">
+    <div class="content-inner">
+      <div class="page-header"><div><h1 class="page-title">9월 워크숍 일정</h1></div></div>
+      <!-- 본문 -->
+    </div>
+  </main>
+</div>
+```
+
+주의: `.nav-item`은 사이드바와 완전히 같은 클래스(아이콘+`<span>` 라벨, 현재 항목에 `.active`)를 그대로 쓴다 — 클래스명을 바꾸지 않는다(다른 도구가 `.nav-item`으로 메뉴를 찾는다). 활성 탭은 배경이 아니라 밑줄로 표시된다. 배지·`.kbd`는 가로 탭에서 자동으로 숨는다(라벨만 남긴다). 본문 폭을 제한하려면 `.content-inner`(`--content-max`)로 감싼다 — 새 클래스가 필요 없다. 시작은 `packages/web/patterns/shell-top.html`.
+
+### nav-rail — 좁은 아이콘 레일
+언제: 메뉴가 많아 항목명을 다 보여줄 필요는 없지만 아이콘 내비는 항상 보이게 하고 싶을 때(도구성 앱, 좌측 고정 내비를 줄이고 콘텐츠를 넓히고 싶을 때). 마크업은 기본 골격과 동일하게 `<aside class="sidebar">`를 쓰되, `.app`에 `nav-rail`만 더한다 — 사이드바 안 내용은 손대지 않는다.
+
+```html
+<div class="app nav-rail">
+  <header class="topnav">…</header>
+  <aside class="sidebar">
+    <nav class="nav">
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span><span class="badge badge-neutral">12</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>참석자</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a class="nav-item" href="#"><div class="avatar avatar-sm">김</div><span class="truncate">김하은 · 운영팀</span></a>
+    </div>
+  </aside>
+  <main class="content">…</main>
+</div>
+```
+
+주의: 레일 폭은 약 80px(간격 토큰 조합, `--rail-w`)로 좁아지고, `.nav-item`은 아이콘 위에 `text-xs` 크기 짧은 라벨이 오는 세로 배치로 바뀐다. `.nav-section` 그룹 제목은 숨는다(자리가 없다) — 항목을 그룹 없이 3~7개로 유지한다. 숫자 배지는 아이콘 모서리의 작은 점/카운트로 바뀐다. `.sidebar-footer`의 이름 텍스트는 숨고 아바타만 남는다. 항목 라벨은 두 글자 안팎 짧은 말을 쓴다(길면 말줄임). 시작은 `packages/web/patterns/shell-rail.html`.
+
 ## page-header
 언제: 페이지 제목 · 한 줄 설명 · 우측 액션. 화면당 1개, `.content` 첫 자식.
 
