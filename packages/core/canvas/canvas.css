@@ -710,3 +710,6 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-cc-shot-frame { width: 100%; border-radius: 8px; overflow: hidden; }
 .hx-cc-shot:hover .hx-frame { border-color: var(--hxc-primary); }
 .hx-cc-zoom { display: block; overflow: auto; padding: 16px; }
+
+.hx-cc-right { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.hx-cc-shots-h { font-size: 12px; font-weight: 700; color: var(--hxc-muted); }

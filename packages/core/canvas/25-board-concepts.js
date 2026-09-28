@@ -68,7 +68,8 @@
           }))) : null,
           pick,
           memo]),
-        shots]);
+        HX.el("div", { class: "hx-cc-right" }, [
+          HX.el("div", { class: "hx-cc-shots-h", text: "메인 화면 " + (c.screens || []).length + "장 · 옆으로 넘겨 더 보기 · 누르면 크게" }), shots])]);
       (c.screens || []).forEach(function (slug) {
         var s = HX.bySlug[slug], title = s ? s.name : slug;
         var box = HX.el("div", { class: "hx-cc-shot-frame", "data-theme": c.look, "data-swatch": (L.swatches[0] || {}).id || "", "data-type": B.state.type });
