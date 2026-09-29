@@ -263,3 +263,6 @@ button.chip, a.chip { cursor: pointer; }
   vertical-align: middle;
 }
 .kbd + .kbd { margin-left: var(--sp-1); }
+
+/* 세로로 쌓는 묶음 안의 배지는 글자만큼만 (폭을 다 차지하지 않게) */
+.stack > .badge, .empty > .badge, .card-body > .badge { align-self: flex-start; }

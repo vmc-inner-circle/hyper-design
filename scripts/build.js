@@ -28,6 +28,7 @@
 const fs = require("fs");
 const path = require("path");
 const LOOKS = require("./looks.js");
+const EXPAND = require("./expand.js");   // 안전장치: 펼치지 않은 부품 태그·셸이 남아 있어도 화면이 깨지지 않게
 
 const ROOT = path.resolve(__dirname, "..");
 const args = process.argv.slice(2);
@@ -86,10 +87,10 @@ const css = cssParts.join("\n\n");
 const fragOf = (s) => {
   const p = path.join(runDir, s.file);
   if (!exists(p)) { console.error(`[build] FAIL 조각 없음: ${s.file}`); process.exit(1); }
-  const own = read(p).trim();
+  const own = EXPAND.expandFragment(S, s, read(p)).trim();
   const base = s.overlayOf && (S.screens || []).find((x) => x.slug === s.overlayOf);
   if (!base) return own;
-  const back = read(path.join(runDir, base.file)).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
+  const back = EXPAND.expandFragment(S, base, read(path.join(runDir, base.file))).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
   const cut = back.lastIndexOf("</div>");
   return cut < 0 ? back + "\n" + own : back.slice(0, cut) + own + "\n" + back.slice(cut);
 };
@@ -116,7 +117,8 @@ if (mode === "board" && (stage === "concept" || !conceptLocked)) for (const c of
   for (const slug of c.screens || []) {
     const p = path.join(runDir, "concepts", c.id, slug + ".html");
     if (!exists(p)) { console.warn(`[build] WARN 시안 ${c.id} 화면 없음: concepts/${c.id}/${slug}.html`); continue; }
-    sections.push(`<section class="hx-screen" data-screen="${esc(c.id + "~" + slug)}" data-concept="${esc(c.id)}">\n${read(p).trim()}\n</section>`);
+    const cs = (S.screens || []).find((x) => x.slug === slug) || { slug };
+    sections.push(`<section class="hx-screen" data-screen="${esc(c.id + "~" + slug)}" data-concept="${esc(c.id)}">\n${EXPAND.expandFragment(S, cs, read(p), { concept: c.id }).trim()}\n</section>`);
   }
 }
 

@@ -4,7 +4,8 @@
 
 ## 반드시 지킬 것
 
-1. **파일은 `<body>` 안쪽 내용만.** `<html> <head> <body> <style> <script> <link>` 금지. 루트는 `<div class="app">` 하나.
+0. **먼저 `05-parts.md`를 읽는다 — 짧은 부품 태그로 쓰고, 셸(상단바·메뉴)은 쓰지 않는다.** 파일은 `<main class="content">…</main>` 하나(뜨는 창은 `<x-modal>` 하나). 메인이 `scripts/expand.js`로 펼치고 셸을 붙인다. 쓰는 분량이 절반 이하로 줄어 화면이 빨리 나온다.
+1. **파일은 `<body>` 안쪽 내용만.** `<html> <head> <body> <style> <script> <link>` 금지. 루트는 `<main class="content">`(펼친 뒤에는 `<div class="app">` 하나).
 2. **클래스는 이 폴더 조각에 있는 것만.** 새 클래스·인라인 `style=` 금지. 스타일이 부족하면 만들지 말고 가장 가까운 조각을 쓴다. (lint가 잡는다)
 3. **영역 표시**: `screens.json`의 `regions[].key`마다 그 영역을 감싸는 요소 하나에 `data-region="<key>"`를 붙인다. 화면당 한 key는 정확히 한 번. 빠지거나 남으면 lint 실패.
    - 영역은 사용자가 "7번 바꿔주세요"라고 가리킬 단위다. 버튼 하나보다 **의미 있는 덩어리**(목록 전체, 카드 한 장, 상단 요약 띠, 우측 패널)에 붙인다. 너무 작으면 배지가 겹친다.
@@ -19,12 +20,12 @@
 6. **프레임은 1280×800 고정.** `.app`이 프레임을 채우고 `.content`만 내부 스크롤한다. 첫 화면(above the fold)에 핵심이 보이게 배치한다.
 7. **상태 표시는 `.badge`로 통일**한다 (예: 확정 = `badge-success`, 후보 = `badge-neutral`, 변경됨 = `badge-warning`). 같은 의미에 같은 색.
 8. **화면당 primary 버튼은 1개**(`.btn-primary`). 나머지는 secondary/ghost.
-9. 패턴 파일(`packages/web/patterns/<pattern>.html`)에서 시작한다. `<!-- slot: … -->` 자리를 조각으로 채우고 주석은 지운다.
+9. 패턴 파일(`packages/web/patterns/<pattern>.html`)은 **`<main>` 안쪽 배치만** 참고한다(셸 부분은 옮기지 않는다). `<!-- slot: … -->` 자리를 조각으로 채우고 주석은 지운다.
 10. 완성 후 스스로 점검: data-region 개수 = screens.json 영역 개수 / 이 화면이 from인 step의 trigger가 모두 `data-trigger`로 있음 / 아이콘 이름 allowlist 확인 / `style=` 없음 / Lorem 없음.
-11. **사이드바·상단바는 `screens.json`의 `roles[].nav`를 그대로 옮긴다.** 항목 순서·라벨·아이콘을 바꾸지 않고, 현재 화면 항목에만 `.active`. 상단바 제목은 `screens.json`의 `title`. 화면마다 내비가 달라지면 안 된다.
-11-1. **메뉴 구조(시안의 shell)**: 기본은 왼쪽 메뉴(`.sidebar`). 프롬프트에 `SHELL=nav-top`이면 `<div class="app nav-top">` + 상단바 안 `<nav class="topnav-nav">`에 같은 `.nav-item`들(사이드바 없음), `SHELL=nav-rail`이면 `<div class="app nav-rail">` + 사이드바는 그대로(좁은 아이콘 메뉴로 보인다). 골격은 `patterns/shell-top.html`·`shell-rail.html`, 설명은 10-layout "app 변형". `.nav-item` 클래스 이름은 바꾸지 않는다.
+11. **사이드바·상단바는 쓰지 않는다 — expand.js가 `screens.json`의 `roles[].nav`로 붙인다.** (예전 방식: 직접 쓸 때는 roles[].nav를 그대로 옮긴다.) 항목 순서·라벨·아이콘을 바꾸지 않고, 현재 화면 항목에만 `.active`. 상단바 제목은 `screens.json`의 `title`. 화면마다 내비가 달라지면 안 된다.
+11-1. **메뉴 구조(시안의 shell)** — 셸을 쓰지 않으면 expand.js가 시안의 shell로 붙이므로 신경 쓰지 않는다. 직접 쓸 때만: 기본은 왼쪽 메뉴(`.sidebar`). 프롬프트에 `SHELL=nav-top`이면 `<div class="app nav-top">` + 상단바 안 `<nav class="topnav-nav">`에 같은 `.nav-item`들(사이드바 없음), `SHELL=nav-rail`이면 `<div class="app nav-rail">` + 사이드바는 그대로(좁은 아이콘 메뉴로 보인다). 골격은 `patterns/shell-top.html`·`shell-rail.html`, 설명은 10-layout "app 변형". `.nav-item` 클래스 이름은 바꾸지 않는다.
 12. **영역을 나누기 위한 클래스 없는 `<div data-region="…">` 래퍼는 허용**된다(스타일이 필요 없는 순수 묶음). 단 `.stack`/`.section`처럼 간격이 필요하면 그 클래스를 쓴다.
-13. **뜨는 창 화면**(`screens.json`에 `overlayOf`가 있음): 파일 전체가 `<div class="modal-backdrop">…</div>` 하나다. 뒷 화면은 쓰지 않는다 — build가 `overlayOf` 화면을 깔고 그 `.app`의 마지막 자식으로 창을 넣는다. 영역은 `.modal`(또는 `.drawer`)에 붙인다. backdrop에는 붙이지 않는다.
+13. **뜨는 창 화면**(`screens.json`에 `overlayOf`가 있음): 파일 전체가 `<x-modal …>…</x-modal>`(또는 `<div class="modal-backdrop">…</div>`) 하나다. 뒷 화면은 쓰지 않는다 — build가 `overlayOf` 화면을 깔고 그 `.app`의 마지막 자식으로 창을 넣는다. 영역은 `.modal`(또는 `.drawer`)에 붙인다. backdrop에는 붙이지 않는다.
 14. **primary 버튼은 화면당 최대 1개.** 주 행동이 없는 읽기 전용 화면은 0개여도 된다. 모달이 열려 있으면 모달 안 primary가 그 화면의 유일한 primary다.
 15. 달력 격자는 손으로 쓰지 않는다. 메인이 `node scripts/calendar.js`로 만들어 준 `runs/<p>/snippets/calendar-*.html`을 그대로 붙인다. 없으면 `.day-strip`이나 `.timeline`으로 대신한다.
 16. `.day-strip`은 행사 기간 앞뒤로 며칠을 채워 7일 이상으로 만들고, 기간 밖은 `.is-muted`.
@@ -36,6 +37,7 @@
 
 | 파일 | 내용 |
 |---|---|
+| **05-parts.md** | **짧은 부품 태그(먼저)** · 셸은 쓰지 않는다 |
 | 10-layout.md | app · topnav · sidebar · content · page-header · toolbar · section · grid · split · stack/row |
 | 20-buttons.md | btn 변형·크기·아이콘 · btn-icon · 버튼 그룹 |
 | 30-inputs.md | field · input · select · textarea · checkbox · radio · switch · segmented · search |

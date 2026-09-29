@@ -191,6 +191,7 @@ for (const s of S.screens || []) {
   if (!s.file || !exists(fragPath)) { fail(`${desc}: 조각 파일 없음 (${s.file})`); continue; }
   const html = fs.readFileSync(fragPath, "utf8");
 
+  if (/<x-[a-z]/.test(html)) fail(`${desc}: 펼치지 않은 부품 태그(<x-…>) — node scripts/expand.js ${runDir} 먼저`);
   if (/<\s*(html|head|body|style|script|link)\b/i.test(html)) fail(`${desc}: 조각에 <html|head|body|style|script|link> 금지`);
   if (/\sstyle\s*=\s*["']/i.test(html)) fail(`${desc}: 인라인 style 금지 — 컴포넌트 클래스만 사용`);
   if (/lorem ipsum|dolor sit amet/i.test(html)) fail(`${desc}: Lorem ipsum 금지 — 도메인 더미 텍스트 사용`);

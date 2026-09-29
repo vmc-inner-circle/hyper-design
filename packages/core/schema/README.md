@@ -48,6 +48,7 @@
 ```
 
 - `id`는 적지 않아도 된다 → `node scripts/ids.js runs/<p>`가 채운다. 화면은 1부터(screens.json 순서), 항목은 101부터 따로. 한 번 발급된 번호는 바뀌지 않는다.
+- `roles[].user`(선택): `{ "name": "김지영", "initials": "김지" }` — 셸 오른쪽 위·사이드바 아래 사용자 표시. `brand`·`brandIcon`(선택): 상단바 서비스 이름·아이콘(없으면 `title`·layout-dashboard). 셸은 `scripts/expand.js`가 붙인다. 화면마다 `shell: "none"`(메뉴 없는 한 장)·`navActive: "<nav slug>"`(메뉴에 없는 화면에서 켤 항목)로 바꿀 수 있다.
 - `overlayOf`(선택): 뜨는 창 화면 — 조각에는 `.modal-backdrop`만, 뒷 화면은 build가 합친다. 이름은 '~ 창'.
 - `board.locked`: 2라운드부터 `["theme","toggles","ask"]`. `board.focus`: 지난 라운드에 고친 화면 slug — 보드 맨 위에 먼저 나온다.
 

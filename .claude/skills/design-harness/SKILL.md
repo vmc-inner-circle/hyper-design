@@ -126,20 +126,22 @@ PRD를 읽고 아래 표로 판단한다. **대부분의 PRD는 묻지 않는다
 ### 1.3 데이터 파일 → 시안 화면 — screen-writer 병렬 (시안마다 3장씩 1개, 최대 10개 동시, sonnet)
 - `screens.json`(계약 §6.1), `flow.json`(§6.2, 모든 step에 `trigger`, 제목 '~하기', `branches`), `icons.json`. 달력이 있으면 `node scripts/calendar.js …`로 격자를 미리. `node scripts/ids.js runs/<project>`. `node scripts/lint.js runs/<project>` — 이때 FAIL은 "시안 조각 없음"만.
 
+**화면을 빨리 쓰는 방법(라이브러리·모듈)**: 에이전트마다 먼저 작업 묶음을 만든다 — `node scripts/pack.js runs/<project> --screens <3장> [--concept <id>] --name <이름>` → `runs/<project>/packs/<이름>.md`. 에이전트는 **그 파일 하나만 읽고 화면마다 한 번씩 쓴 뒤 끝낸다**(셸 없이 `<main>`만, 짧은 부품 태그). 셀프 테스트 측정: 3장에 4~8분 · 도구 호출 15~38회 → **1.8분 · 4회**.
+
 ```
 Agent(subagent_type: "screen-writer", model: "sonnet", prompt: "
+PACK=runs/<project>/packs/<이름>.md
 RUN=runs/<project>
 CONCEPT=<a|b|c|d|e>
-SHELL=<nav-top|nav-rail — sidebar면 빼기>
 SCREENS=<그 시안의 screens 중 3장 — 4장 이상이면 에이전트를 나눠 같은 CONCEPT로 하나 더>
 DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장소·날짜 범위·상태 어휘. 모든 시안이 같은 값>
 시안 메모: <이름 · 첫 화면에 무엇을 먼저(home) · 밀도 · 참고한 곳에서 가져올 점(borrow)을 화면별로 구체적으로>
 각 화면은 screens.json의 항목(name·purpose·pattern·regions)과 flow.json의 trigger·branches를 따른다(고르면 그대로 옮겨 쓴다).
-출력은 runs/<project>/concepts/<id>/<slug>.html 뿐.
+이 PACK 파일 하나만 읽고, 화면마다 Write 한 번으로 쓴 뒤 끝낸다(다시 열어 점검하지 않는다).
 ")
 ```
 
-- 끝나면 `lint.js`. FAIL 시안만 FAIL 원문과 함께 재호출(최대 2회), 그래도 실패면 메인이 고친다.
+- 끝나면 **`node scripts/expand.js runs/<project>`**(짧은 부품 태그를 펼치고 셸을 붙여 파일에 다시 씀) → `lint.js`. FAIL 시안만 FAIL 원문과 함께 재호출(최대 2회), 그래도 실패면 메인이 고친다.
 
 ### 1.4 검수 → 띄우기
 1. `node scripts/build.js runs/<project> --mode board` (시안 단계면 시안 고르기 화면만 만든다)
@@ -159,11 +161,12 @@ DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장�
 1. `prompt-log.md` 2회에 (AI 질문 요약 = "시안 보드") + 붙여넣은 원문. `brief.md` 답변 로그에 **원문 | 해석 | 반영**.
 2. `시안 <id>(이름)` → `screens.json`: `concept = <id>`, `stage` 삭제, `theme = 그 시안의 look`, `board.recommend.theme`도 같게, `board.locked = ["concept"]`, `round: 1`(초안 1).
 3. `시안 <id> 메모: …` → 고른 시안의 메모면 그 시안을 고칠 점, 다른 시안의 메모면 **그 안에서 가져올 요소**(예: "B의 달력") — 모두 이번 초안의 전역 힌트로(answer-parsing §1).
-4. 고른 시안의 메인 화면 `concepts/<id>/<slug>.html`을 `screens/<slug>.html`로 복사(메모가 그 화면을 건드리면 복사 뒤 revise).
-5. 나머지 화면: 1턴에 쓰던 조립 틀 그대로, screen-writer 3개씩 병렬(sonnet). 프롬프트에 `SHELL=`과 "시안 메모"(그 시안의 home·밀도·borrow + 3의 힌트), 그리고 "모양 기준: runs/<project>/concepts/<id>/ 의 화면을 먼저 읽고 같은 골격·밀도로"를 넣는다.
+4. 고른 시안의 메인 화면 `concepts/<id>/<slug>.html`을 `screens/<slug>.html`로 복사(메모가 그 화면을 건드리면 복사 뒤 revise). 셸은 expand.js가 붙였으므로 그대로 맞다(시안을 바꿔 셸만 바꿀 때는 `expand.js --reshell`).
+5. 나머지 화면: 3장씩 `pack.js`로 작업 묶음을 만들고(`--concept <고른 id>`로 시안의 메뉴 구조·첫 화면·밀도가 묶음에 들어간다) screen-writer를 병렬로(sonnet). 프롬프트에는 `PACK=` · DOMAIN · 화면별 메모 · "시안 메모"(그 시안의 home·밀도·borrow + 3의 힌트)만.
 
 ```
 Agent(subagent_type: "screen-writer", model: "sonnet", prompt: "
+PACK=runs/<project>/packs/<이름>.md
 RUN=runs/<project>
 SCREENS=<slug1>,<slug2>,<slug3>
 DOMAIN=<도메인 한 줄 + 고정 더미 데이터: 인물(역할 포함)·장소·날짜 범위·금액 단위·상태 어휘. 오늘 날짜>
@@ -171,11 +174,11 @@ THEME_HINT=<상태 배지 규칙(예: 확정=badge-success+circle-check, 후보=
 화면별 메모:
 - <slug>: <이 화면에 무엇이 보여야 하는지, 채울 값, 빈 상태면 .empty로 비워 둘 것, primary 버튼 문구>
 트리거: runs/<project>/flow.json에서 from이 이 화면인 step의 trigger를 실제 버튼에 data-trigger로 (00-rules 3-1).
-각 화면은 screens.json의 해당 항목(name·purpose·pattern·regions)을 읽고, packages/web/patterns/<pattern>.html에서 시작해 packages/web/snippets/*.md의 조각만으로 조립한다. 출력은 runs/<project>/screens/<slug>.html 뿐.
+이 PACK 파일 하나만 읽고, 화면마다 Write 한 번으로 쓴 뒤 끝낸다(다시 열어 점검하지 않는다).
 ")
 ```
 
-6. `lint.js`(FAIL 화면만 재호출 최대 2회) → `build.js --mode board` → 헤드리스 검수: (사용 흐름) 카드 수 = 흐름 수 / 첫 카드 → 두 장·파란 박스·단계 문장 / 갈래가 있는 화면에서 보라 점선 박스 → 아래 칸 화면 / → 한 번·Esc / 화면 클릭 → 화면 디자인. (화면 디자인) 화면 속 버튼이 제 모양 / 요소 하나 눌러 바꿔주세요 → 핀·'의견 보내기 (1)' / 콘솔 에러 0 → **헤드리스 종료** → `--open`.
+6. `node scripts/expand.js runs/<project>` → `lint.js`(FAIL 화면만 재호출 최대 2회) → `build.js --mode board` → 헤드리스 검수: (사용 흐름) 카드 수 = 흐름 수 / 첫 카드 → 두 장·파란 박스·단계 문장 / 갈래가 있는 화면에서 보라 점선 박스 → 아래 칸 화면 / → 한 번·Esc / 화면 클릭 → 화면 디자인. (화면 디자인) 화면 속 버튼이 제 모양 / 요소 하나 눌러 바꿔주세요 → 핀·'의견 보내기 (1)' / 콘솔 에러 0 → **헤드리스 종료** → `--open`.
 7. `elapsed.txt`에 `초안: HH:MM`. 사용자에게:
 
 ```

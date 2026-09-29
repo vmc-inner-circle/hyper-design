@@ -250,6 +250,12 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 
 규칙 전문은 `packages/web/snippets/00-rules.md`. 요약: body 안쪽만, 스니펫 클래스만, `data-region`·`data-trigger` 표시, Lucide 아이콘만, 실제 도메인 문구, 빈 상태 화면은 `.empty` 조각으로 비워 둔다.
 
+**빨리 쓰는 방법(라이브러리·모듈)** — 셀프 테스트에서 가장 느린 구간이 화면 HTML 쓰기(에이전트 3장에 4~8분)였다.
+- **셸 자동 조립**: 에이전트는 `<main class="content">…</main>`만 쓴다. 상단바·메뉴·현재 위치·사용자 표시는 `scripts/expand.js`가 `roles[].nav`(+`roles[].user`, `brand`)와 시안의 메뉴 구조(sidebar·top·rail·none)로 붙인다 — 메뉴가 화면마다 어긋나지 않는다.
+- **짧은 부품 태그**: `<x-btn>` `<x-badge>` `<x-icon>` `<x-avatar>` `<x-list>` `<x-item>` `<x-stat>` `<x-empty>` `<x-card>` `<x-section>` `<x-page-header>` `<x-modal>`(형식은 `packages/web/snippets/05-parts.md`). expand.js가 라이브러리와 같은 HTML로 펼쳐 **파일에 다시 쓴다** — 이후 lint·보드 요소 고르기·수정 에이전트는 일반 HTML만 본다. 쓰는 분량이 화면당 절반 이하(수업 예약 화면 7,218자 → 2,463자).
+- **작업 묶음(팩)**: `node scripts/pack.js runs/<p> --screens a,b,c [--concept id]` → 그 에이전트가 맡은 화면에 필요한 것만(규칙 요약·부품 표·쓸 수 있는 클래스·아이콘·화면별 영역과 눌러야 하는 버튼 문구) 파일 하나로. 에이전트는 그것만 읽고 화면마다 한 번 쓰고 끝낸다 — 점검은 lint가. 셀프 테스트 측정(같은 3장, sonnet): 4~8분·도구 호출 15~38회·토큰 약 10만 → **1.8분·4회·약 3만**.
+- 순서: pack.js → screen-writer(PACK=) → `node scripts/expand.js runs/<p>` → `lint.js`(펼치지 않은 `<x-…>`가 남으면 FAIL) → `build.js`(안전장치로 한 번 더 펼침). 시안을 바꿔 셸만 바꿀 때는 `expand.js --reshell`.
+
 ### 6.4 `icons.json` (프로젝트)
 
 의미 → lucide 이름 1:1. core `allowlist.json`에 없는 아이콘만 등록한다. 같은 아이콘에 두 의미 금지.
@@ -272,7 +278,7 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 |---|---|---|
 | PRD 분석 · 데이터 작성 · 의견 해석 · 게이트 판정 · 브라우저 검수 | 메인 | 메인 모델 |
 | 레퍼런스 조사 (관점 5개) | ref-scout, 5개 동시·백그라운드 | sonnet |
-| 새 화면 조립 · 시안의 메인 화면(`CONCEPT=`, 1턴 최대 10개 동시) · 시안 맞추기(`MODE=restyle`) | screen-writer, 3장씩 병렬 | sonnet |
+| 새 화면 조립 · 시안의 메인 화면(`CONCEPT=`, 1턴 최대 10개 동시) · 시안 맞추기(`MODE=restyle`) | screen-writer, 3장씩 병렬, 에이전트마다 `pack.js` 작업 묶음(`PACK=`) 하나만 읽고 쓴다 | sonnet |
 | 국소 수정 (`MODE=revise`) | screen-writer | haiku (메인이 명령형으로 완결한 지시만) |
 | lint 실패 재시도 | screen-writer | sonnet |
 | 하네스 자체의 큰 변경(캔버스 등) | general-purpose | 메인 모델, Write 250줄 이하·브라우저 도구 금지 (스톨 방지) |
@@ -290,6 +296,7 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 | 최종 전 | `lint.js && build.js --mode final` → 검수 → `--open` | 동일 |
 
 lint가 보는 것:
+- 부품 태그: 펼치지 않은 `<x-…>`가 남아 있으면 FAIL(`expand.js` 먼저).
 - 데이터: id 중복·누락, slug·key 형식, role·nav 존재, state 값, variantOf 대상.
 - 조각: `data-region` ↔ screens.json 양방향, `data-trigger` 존재·유일·항목 소속, 아이콘(스프라이트·allowlist), `<style>`/`<script>`/인라인 style, Lorem·자리표시 문구, components에 없는 클래스.
 - 흐름: from/to/region/trigger 존재, **끊김 없는 한 줄**, 흐름에 안 나오는 화면.
