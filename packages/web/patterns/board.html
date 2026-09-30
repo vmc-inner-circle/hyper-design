@@ -1,0 +1,125 @@
+<!-- pattern: board — 카드가 열로 나뉜 칸반.
+     열 = .grid-4 (또는 .grid-3) 안의 .stack. 열 머리는 row-between(제목 + 개수 배지), 카드는 .card.card-compact.card-clickable.
+     <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다. data-region key는 예시(example-*). -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 -->요청 보드</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김민</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 -->
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-kanban"/></svg><span>보드</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-list"/></svg><span>목록</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title"><!-- slot: 페이지 제목 -->요청 보드</h1>
+        <p class="page-desc"><!-- slot: 요약 -->전체 14건 · 이번 주 마감 5건</p>
+      </div>
+      <div class="page-actions">
+        <div class="segmented">
+          <button class="segmented-item"><svg class="icon-sm" aria-hidden="true"><use href="#i-list"/></svg>목록</button>
+          <button class="segmented-item active"><svg class="icon-sm" aria-hidden="true"><use href="#i-kanban"/></svg>보드</button>
+        </div>
+        <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>요청 추가</button>
+      </div>
+    </div>
+
+    <div class="toolbar" data-region="example-filters">
+      <!-- slot: 필터 칩 -->
+      <div class="chip-group">
+        <button class="chip active">전체</button>
+        <button class="chip">내 담당</button>
+        <button class="chip">이번 주 마감</button>
+        <button class="chip"><svg class="icon-sm" aria-hidden="true"><use href="#i-funnel"/></svg> 필터</button>
+      </div>
+      <div class="spacer"></div>
+      <div class="avatar-group">
+        <span class="avatar avatar-sm">김민</span><span class="avatar avatar-sm avatar-success">이서</span><span class="avatar avatar-sm avatar-warning">박준</span><span class="avatar avatar-sm avatar-more">+3</span>
+      </div>
+    </div>
+
+    <div class="grid-4" data-region="example-board">
+      <!-- slot: 열 3~4개. 열마다 머리 + 카드 2~4장 -->
+      <div class="stack">
+        <div class="row-between"><span class="fw-semibold">접수 <span class="badge badge-neutral">4</span></span><button class="btn btn-ghost btn-icon btn-sm" aria-label="열 메뉴"><svg class="icon-sm" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></div>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">구매</span></div>
+          <span class="fw-semibold">사무용품 구매</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm">김민</span>10/2</span><span>128,000원</span></div>
+        </div></a>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-info">출장</span></div>
+          <span class="fw-semibold">부산 고객사 방문</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-info">정우</span>10/5</span><span>342,000원</span></div>
+        </div></a>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">구매</span><span class="badge badge-warning">마감 임박</span></div>
+          <span class="fw-semibold">회의실 모니터 교체</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-warning">박준</span>9/29</span><span>890,000원</span></div>
+        </div></a>
+        <button class="btn btn-ghost w-full"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>카드 추가</button>
+      </div>
+
+      <div class="stack">
+        <div class="row-between"><span class="fw-semibold">검토 중 <span class="badge badge-warning">3</span></span><button class="btn btn-ghost btn-icon btn-sm" aria-label="열 메뉴"><svg class="icon-sm" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></div>
+        <a class="card card-compact card-clickable is-selected" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-info">교육</span></div>
+          <span class="fw-semibold">외부 교육 참가비</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-success">이서</span>9/30</span><span>450,000원</span></div>
+        </div></a>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">구독</span></div>
+          <span class="fw-semibold">디자인 툴 연간 구독</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-success">이서</span>10/10</span><span>1,560,000원</span></div>
+        </div></a>
+      </div>
+
+      <div class="stack">
+        <div class="row-between"><span class="fw-semibold">승인 <span class="badge badge-success">5</span></span><button class="btn btn-ghost btn-icon btn-sm" aria-label="열 메뉴"><svg class="icon-sm" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></div>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">구매</span></div>
+          <span class="fw-semibold">개발 서버 증설</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-warning">박준</span>9/26</span><span>2,400,000원</span></div>
+        </div></a>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-info">출장</span></div>
+          <span class="fw-semibold">대전 지사 점검</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm">김민</span>9/25</span><span>186,000원</span></div>
+        </div></a>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">행사</span></div>
+          <span class="fw-semibold">3분기 워크숍 장소</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-info">정우</span>9/24</span><span>3,200,000원</span></div>
+        </div></a>
+      </div>
+
+      <div class="stack">
+        <div class="row-between"><span class="fw-semibold">반려 <span class="badge badge-danger">2</span></span><button class="btn btn-ghost btn-icon btn-sm" aria-label="열 메뉴"><svg class="icon-sm" aria-hidden="true"><use href="#i-ellipsis"/></svg></button></div>
+        <a class="card card-compact card-clickable" href="#"><div class="card-body">
+          <div class="row gap-2"><span class="badge badge-neutral">구매</span><span class="badge badge-danger">증빙 누락</span></div>
+          <span class="fw-semibold">서버 임대료 9월</span>
+          <div class="row-between text-sm text-muted"><span class="row gap-2"><span class="avatar avatar-sm avatar-warning">박준</span>9/28</span><span>1,320,000원</span></div>
+        </div></a>
+        <div class="empty empty-sm">
+          <span class="empty-icon"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg></span>
+          <span class="empty-desc">반려 건은 수정 후 다시 접수됩니다</span>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

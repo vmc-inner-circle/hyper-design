@@ -1,0 +1,130 @@
+/* design-harness core tokens — 플랫폼·테마 무관 기본값.
+   테마 파일(theme-*.css)이 색을, toggles.css가 글자 크기·강조 성격을 덮어쓴다.
+   컴포넌트 CSS는 여기 변수만 참조한다. 색·간격·반경·그림자 하드코딩 금지. */
+
+:root {
+  /* ---- 타이포 ---- */
+  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 15px;   /* 본문 */
+  --fs-lg: 17px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 32px;
+
+  --lh-tight: 1.25;
+  --lh-normal: 1.5;
+  --lh-loose: 1.7;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ---- 간격 (4px 그리드) ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* ---- 반경 ---- */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
+  --r-pill: 999px;
+
+  /* ---- 컨트롤 크기 ---- */
+  --ctl-sm: 32px;
+  --ctl-md: 40px;
+  --ctl-lg: 48px;
+  --icon-sm: 16px;
+  --icon-md: 20px;
+  --icon-lg: 24px;
+  --icon-stroke: 2;
+
+  /* ---- 레이아웃 (web) ---- */
+  --frame-w: 1280px;
+  --frame-h: 800px;
+  --topnav-h: 56px;
+  --sidebar-w: 240px;
+  --content-max: 960px;
+  --gutter: var(--sp-6);
+  --split-list-w: 360px;
+  --search-w: 320px;
+  --ring-w: 3px;
+
+  /* ---- 그림자 ---- */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .08);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, .12);
+
+  /* ---- 레이어 ---- */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-drawer: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-badge: 900;   /* 하네스 번호 배지 — 항상 최상단 */
+
+  /* ---- 모션 ---- */
+  --dur-fast: 120ms;
+  --dur-normal: 200ms;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+
+  /* ---- 하네스 전용 (번호 배지·bbox·화살표). 테마와 무관하게 고정 ---- */
+  --hx-badge-bg: #FF3B30;
+  --hx-badge-fg: #FFFFFF;
+  --hx-bbox: rgba(255, 59, 48, .85);
+  --hx-bbox-fill: rgba(255, 59, 48, .06);
+  --hx-arrow: #2563EB;
+  --hx-arrow-muted: rgba(37, 99, 235, .35);
+}
+
+/* ---- 리셋 (컴포넌트가 기대하는 최소 기준) ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-normal);
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+  word-break: keep-all;        /* 한국어는 단어(어절) 단위로 줄바꿈 — "준/비"처럼 끊기지 않게 */
+  overflow-wrap: anywhere;     /* 아주 긴 영문·숫자만 필요할 때 끊는다 */
+}
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; }
+[hidden] { display: none !important; }
+
+/* ---- 아이콘 (Lucide, 스프라이트 <use>) ---- */
+.icon, .icon-sm, .icon-lg {
+  width: var(--icon-md); height: var(--icon-md);
+  fill: none; stroke: currentColor;
+  stroke-width: var(--icon-stroke); stroke-linecap: round; stroke-linejoin: round;
+  flex: 0 0 auto;
+}
+.icon-sm { width: var(--icon-sm); height: var(--icon-sm); }
+.icon-lg { width: var(--icon-lg); height: var(--icon-lg); }
+
+/* ---- 접근성 ---- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
