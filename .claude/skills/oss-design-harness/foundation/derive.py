@@ -53,15 +53,34 @@ def from_palette(path):
         for st in order(S[scale]):
             if contrast(S[scale][st], bg) >= target: return S[scale][st]
         return S[scale][order(S[scale])[-1]]
-    white = hex2rgb(P["white"]); bg = S["gray"][P["bg_step"]]; line = S["gray"][P["line_step"]]
-    brand = S[P["brand"]][P["brand_step"]]
-    tint = S[P["brand"]]["80"] if "80" in S[P["brand"]] else mix(white, brand, .1)
-    c = {"bg": bg, "surface": white, "line": line, "text1": hex2rgb(P["ink"]),
-         "text2": first_pass("gray", bg, 7), "text3": first_pass("gray", bg, 4.5),
-         "brand": brand, "brand_text": first_pass(P["brand"], white, 4.5),
-         "brand_tint": tint, "brand_tint_text": first_pass(P["brand"], tint, 4.5),
-         "danger": first_pass(P["danger"], white, 4.5), "danger_tint": S[P["danger"]]["50"]}
+    G = P.get("gray", "gray"); B = P["brand"]; D = P.get("danger")
+    white = hex2rgb(P["white"]); bg = S[G][P["bg_step"]]; line = S[G][P["line_step"]]
+    brand = S[B][P["brand_step"]]
+    lightest = lambda k: S[k][order(S[k])[0]]
+    if P.get("mono"):                                   # 모노: 틴트는 배경 회색, 강조 글자는 먹색
+        tint = bg
+    else:
+        steps = order(S[B]); tint = S[B]["80"] if "80" in S[B] else (S[B][steps[1]] if contrast(lightest(B), white) < 1.1 else mix(white, brand, .1))
+    danger_scale = D if D else None
+    ink = hex2rgb(P["ink"])
+    def gray_for(target, lo, hi):
+        """팔레트 회색 중 대비가 [lo, hi]인 가장 밝은 단계. 없으면(측정 합성 팔레트에 중간 회색이 비는 경우)
+        먹색과 배경 사이를 섞어 목표 대비에 맞춘다 — 보조 글자가 본문과 같은 색이 되어 위계가 무너지는 것 방지."""
+        for st in order(S[G]):
+            k = contrast(S[G][st], bg)
+            if lo <= k <= hi: return S[G][st]
+        t = 0.0
+        while t < 1 and contrast(mix(bg, ink, t), bg) < target: t += 0.01
+        notes.append(f"회색 {target}:1 단계가 팔레트에 없어 먹색·배경 사이에서 계산")
+        return mix(bg, ink, t)
     notes = list(P.get("notes", []))
+    c = {"bg": bg, "surface": white, "line": line, "text1": hex2rgb(P["ink"]),
+         "text2": gray_for(7.5, 7, 10), "text3": gray_for(4.8, 4.5, 6.2),
+         "brand": brand, "brand_text": first_pass(B, white, 4.5),
+         "brand_tint": tint, "brand_tint_text": first_pass(B, tint, 4.5),
+         "danger": first_pass(danger_scale, white, 4.5) if danger_scale else darken_until(hex2rgb("#E5484D"), white, 4.5),
+         "danger_tint": lightest(danger_scale) if danger_scale else mix(white, hex2rgb("#E5484D"), .08)}
+    notes += []
     big = False
     if contrast(white, brand) >= 4.5: c["on_brand"] = white
     elif contrast(white, brand) >= 3:                                   # 채워진 버튼은 흰 글자가 자연스럽다 → 큰 굵은 글자로 AA-large

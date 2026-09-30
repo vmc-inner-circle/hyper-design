@@ -1,0 +1,183 @@
+{
+ "name": "당근",
+ "slug": "daangn",
+ "domain": "지역·생활",
+ "tags": [
+  "따뜻함",
+  "친근"
+ ],
+ "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+ "synthesized": false,
+ "ink": "#1a1c20",
+ "white": "#ffffff",
+ "scales": {
+  "carotene-color-palette-blue": {
+   "100": "#eff6ff",
+   "200": "#e2edfc",
+   "300": "#cbdffa",
+   "400": "#aacefd",
+   "500": "#85b8fd",
+   "600": "#5e98fe",
+   "700": "#217cf9",
+   "800": "#135fcd",
+   "900": "#0b4596"
+  },
+  "carotene-color-palette-carrot": {
+   "100": "#fff2ec",
+   "200": "#ffe8db",
+   "300": "#ffd5c0",
+   "400": "#ffb999",
+   "500": "#ff9364",
+   "600": "#ff6600",
+   "700": "#e14d00",
+   "800": "#b93901",
+   "900": "#862b00"
+  },
+  "carotene-color-palette-gray": {
+   "100": "#f7f8f9",
+   "200": "#f3f4f5",
+   "300": "#eeeff1",
+   "400": "#dcdee3",
+   "500": "#d1d3d8",
+   "600": "#b0b3ba",
+   "700": "#868b94",
+   "800": "#555d6d",
+   "900": "#2a3038"
+  },
+  "carotene-color-palette-green": {
+   "100": "#edfaf6",
+   "200": "#d9f6e9",
+   "300": "#b9e9d2",
+   "400": "#7ddcb3",
+   "500": "#42c593",
+   "600": "#10ab7d",
+   "700": "#079171",
+   "800": "#00745f",
+   "900": "#075445"
+  },
+  "carotene-color-palette-purple": {
+   "100": "#f5f3fe",
+   "200": "#efeafe",
+   "300": "#e1d8ff",
+   "400": "#d0c0ff",
+   "500": "#b8a1ff",
+   "600": "#9f84fb",
+   "700": "#8969ea",
+   "800": "#6d50cb",
+   "900": "#50379b"
+  },
+  "carotene-color-palette-red": {
+   "100": "#fdf0f0",
+   "200": "#fde7e7",
+   "300": "#fed4d2",
+   "400": "#feb7b3",
+   "500": "#fe928d",
+   "600": "#fc6a66",
+   "700": "#fa342c",
+   "800": "#ca1d13",
+   "900": "#921708"
+  },
+  "carotene-color-palette-yellow": {
+   "100": "#fff7de",
+   "200": "#fdefb9",
+   "300": "#fbdc65",
+   "400": "#e9c647",
+   "500": "#d4ab28",
+   "600": "#c49725",
+   "700": "#9b7821",
+   "800": "#755b22",
+   "900": "#4f3e1f"
+  },
+  "seed-color-palette-gray": {
+   "100": "#f7f8f9",
+   "200": "#f3f4f5",
+   "300": "#eeeff1",
+   "400": "#dcdee3",
+   "500": "#d1d3d8",
+   "600": "#b0b3ba",
+   "700": "#868b94",
+   "800": "#555d6d",
+   "900": "#2a3038"
+  },
+  "seed-color-palette-carrot": {
+   "100": "#fff2ec",
+   "200": "#ffe8db",
+   "300": "#ffd5c0",
+   "400": "#ffb999",
+   "500": "#ff9364",
+   "600": "#ff6600",
+   "700": "#e14d00",
+   "800": "#b93901",
+   "900": "#862b00"
+  },
+  "seed-color-palette-blue": {
+   "100": "#eff6ff",
+   "200": "#e2edfc",
+   "300": "#cbdffa",
+   "400": "#aacefd",
+   "500": "#85b8fd",
+   "600": "#5e98fe",
+   "700": "#217cf9",
+   "800": "#135fcd",
+   "900": "#0b4596"
+  },
+  "seed-color-palette-red": {
+   "100": "#fdf0f0",
+   "200": "#fde7e7",
+   "300": "#fed4d2",
+   "400": "#feb7b3",
+   "500": "#fe928d",
+   "600": "#fc6a66",
+   "700": "#fa342c",
+   "800": "#ca1d13",
+   "900": "#921708"
+  },
+  "seed-color-palette-green": {
+   "100": "#edfaf6",
+   "200": "#d9f6e9",
+   "300": "#b9e9d2",
+   "400": "#7ddcb3",
+   "500": "#42c593",
+   "600": "#10ab7d",
+   "700": "#079171",
+   "800": "#00745f",
+   "900": "#075445"
+  },
+  "seed-color-palette-yellow": {
+   "100": "#fff7de",
+   "200": "#fdefb9",
+   "300": "#fbdc65",
+   "400": "#e9c647",
+   "500": "#d4ab28",
+   "600": "#c49725",
+   "700": "#9b7821",
+   "800": "#755b22",
+   "900": "#4f3e1f"
+  },
+  "seed-color-palette-purple": {
+   "100": "#f5f3fe",
+   "200": "#efeafe",
+   "300": "#e1d8ff",
+   "400": "#d0c0ff",
+   "500": "#b8a1ff",
+   "600": "#9f84fb",
+   "700": "#8969ea",
+   "800": "#6d50cb",
+   "900": "#50379b"
+  }
+ },
+ "brand": "carotene-color-palette-carrot",
+ "brand_step": "600",
+ "mono": false,
+ "gray": "carotene-color-palette-gray",
+ "danger": "carotene-color-palette-red",
+ "bg_step": "200",
+ "line_step": "300",
+ "brand_confirmed": true,
+ "candidates": [],
+ "measured": {
+  "brand": "#ff6f0f",
+  "ink": "#1a1c20",
+  "bg": "#f3f4f5"
+ }
+}

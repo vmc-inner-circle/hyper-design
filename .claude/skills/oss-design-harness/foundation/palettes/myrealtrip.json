@@ -1,12 +1,15 @@
 {
- "name": "myrealtrip",
- "source": "https://www.myrealtrip.com/ :root CSS 변수 + 화면 요소 실사용 색 (2026-10-01 수집)",
- "notes": [
-  "--primary(#51abf3)는 선언만 있고 실제 주요 버튼은 --blue-500(#2b96ed)을 쓴다 → brand는 blue-500",
-  "본문 글자 #101418은 변수에 없지만 화면에서 가장 많이 쓰이는 먹색 → ink로 추가",
-  "보라 #8238fa/#e6d7fe는 이벤트 배너 색이라 제외"
+ "name": "마이리얼트립",
+ "slug": "myrealtrip",
+ "domain": "여행",
+ "tags": [
+  "밝음",
+  "여행",
+  "신뢰"
  ],
- "ink": "#101418",
+ "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+ "synthesized": false,
+ "ink": "#000000",
  "white": "#ffffff",
  "scales": {
   "gray": {
@@ -76,20 +79,35 @@
    "900": "#8d2115"
   }
  },
- "shadows": {
-  "elevation-z1": "0 2px 4px 0 rgba(33, 37, 41, 0.1)",
-  "elevation-z2": "0 4px 8px 0 rgba(33, 37, 41, 0.1)",
-  "elevation-z3": "0 8px 16px 0 rgba(33, 37, 41, 0.15)",
-  "elevation-z4": "0 12px 24px 0 rgba(33, 37, 41, 0.15)",
-  "elevation-z1-border": "0 2px 4px 0 rgba(0, 0, 0, 0.1),0 0 0 1px var(--gray-100)",
-  "elevation-z2-border": "0 4px 8px 0 rgba(33, 37, 41, 0.1),0 0 0 1px var(--gray-100)",
-  "elevation-z3-border": "0 8px 16px 0 rgba(33, 37, 41, 0.15),0 0 0 1px var(--gray-100)",
-  "elevation-z4-border": "0 12px 24px 0 rgba(33, 37, 41, 0.15),0 0 0 1px var(--gray-100)"
- },
  "brand": "blue",
  "brand_step": "500",
+ "mono": false,
+ "gray": "gray",
  "danger": "red",
- "success": "green",
  "bg_step": "80",
- "line_step": "100"
+ "line_step": "100",
+ "brand_confirmed": true,
+ "candidates": [
+  [
+   "#ec4937",
+   32
+  ],
+  [
+   "#f78000",
+   16
+  ],
+  [
+   "#1583db",
+   14
+  ],
+  [
+   "#2b96ed",
+   9
+  ]
+ ],
+ "measured": {
+  "brand": "#2b96ed",
+  "ink": "#000000",
+  "bg": "#f1f3f5"
+ }
 }
