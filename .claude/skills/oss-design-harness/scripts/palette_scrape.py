@@ -131,6 +131,7 @@ def main():
            "brand": brand_key, "brand_step": brand_step, "mono": mono, "gray": gray_key, "danger": danger_key,
            "bg_step": bg_step, "line_step": grays[min(len(grays) - 1, grays.index(bg_step) + 1)],
            "brand_confirmed": bool(a.brand), "candidates": [[hexs(c), score[c]] for c in cands],
+           "shadows": {k[2:]: v for k, v in raw.items() if re.search(r"shadow|elevation", k) and "px" in v}, 
            "measured": {"brand": hexs(btn), "ink": hexs(ink) if ink else None, "bg": hexs(bgc) if bgc else None}}
     pathlib.Path(a.out).mkdir(parents=True, exist_ok=True)
     (pathlib.Path(a.out) / f"{a.slug}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")

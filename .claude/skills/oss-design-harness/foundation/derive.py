@@ -42,6 +42,71 @@ FONTS = {
     }
 }
 
+
+def hue_deg(c): return colorsys.rgb_to_hls(*c)[0] * 360
+def hue_gap(a, b): d = abs(hue_deg(a) - hue_deg(b)) % 360; return min(d, 360 - d)
+def sat_of(c): return colorsys.rgb_to_hls(*c)[2]
+
+STATUS = {"success": (140, "#1F9D55"), "warning": (42, "#E8A100"), "info": (215, "#2F80ED")}
+
+def extend_roles(c, notes, S=None, P=None, mono=False):
+    """13개 기본 역할 → 표면·글자·선·브랜드 상태·의미색 4종·비활성·그림자까지 확장.
+    팔레트(S)에 해당 계열 스케일이 있으면 그 서비스 값을 쓰고, 없으면 공용 기본값.
+    의미색이 브랜드와 색상각이 가까우면(<25°) 피해 간다 — '확정'과 '바뀜'이 같은 색이 되지 않게."""
+    white, bg, ink, brand = c["surface"], c["bg"], c["text1"], c["brand"]
+    order = lambda sc: sorted(sc, key=int)
+    def scale_near(target):
+        best = None
+        for k, sc in (S or {}).items():
+            if P and k in (P.get("gray"), P.get("brand")): continue
+            mid = sc[order(sc)[len(sc) // 2]]
+            if sat_of(mid) < .3: continue
+            d = min(abs(hue_deg(mid) - target), 360 - abs(hue_deg(mid) - target))
+            if d < 30 and (best is None or d < best[0]): best = (d, k)
+        return best[1] if best else None
+    def from_scale(k, base):
+        if k:
+            sc = S[k]; fg = next((sc[st] for st in order(sc) if contrast(sc[st], white) >= 4.5), sc[order(sc)[-1]])
+            light = sc[order(sc)[0]]; tint = light if contrast(light, white) < 1.2 else mix(white, fg, .1)
+        else:
+            fg = darken_until(base, white, 4.5); tint = mix(white, base, .1)
+        return fg, tint, darken_until(fg, tint, 4.5)
+    out = {}
+    brand_chroma = not mono and sat_of(brand) > .25
+    for name, (h, default) in STATUS.items():
+        k = scale_near(h); base = hex2rgb(default)
+        fg, tint, tint_text = from_scale(k, base)
+        if brand_chroma and hue_gap(fg, brand) < 25:
+            if name == "warning":           # 주황 브랜드 → 주의는 노랑 쪽으로
+                fg, tint, tint_text = from_scale(None, hex2rgb("#C9A100")); notes.append("주의색이 브랜드와 겹쳐 노랑 쪽으로 이동")
+            else:                           # 파랑 브랜드의 정보, 초록 브랜드의 성공 → 무채색으로
+                fg, tint, tint_text = c["text2"], bg, c["text1"]; notes.append(f"{name}색이 브랜드와 겹쳐 무채색 배지로")
+        out[name], out[name + "_tint"], out[name + "_tint_text"] = fg, tint, tint_text
+    out["danger_tint_text"] = darken_until(c["danger"], c["danger_tint"], 4.5)
+    out["danger_icon"] = brand_chroma and hue_gap(c["danger"], brand) < 25
+    if out["danger_icon"]: notes.append("브랜드와 오류 색상각이 가까움 → 오류 문구에 아이콘 필수(.field-msg 아이콘)")
+    # 브랜드 눌림: 스케일의 한 단계 짙은 값, 없으면 명도 -8%
+    if S and P and not mono:
+        sc = S[P["brand"]]; st = order(sc); i = st.index(P["brand_step"]) if P["brand_step"] in st else -1
+        out["brand_pressed"] = sc[st[min(i + 1, len(st) - 1)]] if i >= 0 else mix(brand, ink, .12)
+    else:
+        out["brand_pressed"] = mix(brand, white, .18) if mono else mix(brand, ink, .12)
+    def gray_at(lo, hi, target):
+        t = 0.0
+        while t < 1 and contrast(mix(white, ink, t), white) < target: t += 0.01
+        return mix(white, ink, t)
+    out["line_strong"] = gray_at(1.5, 2.2, 1.8)
+    out["text_disabled"] = gray_at(2.3, 3.2, 2.6)
+    out["disabled_bg"] = c["line"]
+    out["focus"] = c["brand_text"]
+    r, g, b = (round(x * 255) for x in ink)
+    out["overlay"] = f"rgba({r}, {g}, {b}, .45)"
+    sh = [v for v in (P or {}).get("shadows", {}).values() if "var(" not in v][:2] if P else []
+    out["shadow_1"] = sh[0] if len(sh) > 0 else f"0 2px 8px rgba({r}, {g}, {b}, .08)"
+    out["shadow_2"] = sh[1] if len(sh) > 1 else f"0 8px 24px rgba({r}, {g}, {b}, .14)"
+    c.update(out)
+    return c
+
 def from_palette(path):
     """실제 서비스 팔레트(palettes/*.json)에서 역할 색을 고른다. 새 값을 만들지 않고 팔레트 단계 중
     대비 기준을 통과하는 가장 밝은 단계를 쓴다. 반환: (색 dict, 버튼 큰 글자 필요 여부, 노트)"""
@@ -87,6 +152,7 @@ def from_palette(path):
         c["on_brand"] = white; big = True; notes.append(f"버튼: 흰 글자 대비 {contrast(white, brand):.2f} → 버튼 글자 19px/700(큰 글씨 기준 3:1)")
     else:
         c["on_brand"] = white; c["brand"] = first_pass(P["brand"], white, 3); big = True; notes.append("버튼 색을 팔레트 안에서 한 단계 짙게")
+    extend_roles(c, notes, S, P, P.get("mono", False))
     return c, big, notes, P
 
 def derive(brand_hex, tone, shape, density, font, palette=None):
@@ -115,6 +181,7 @@ def derive(brand_hex, tone, shape, density, font, palette=None):
     c = {"bg": bg, "surface": surface, "line": line, "text1": text1, "text2": text2, "text3": text3,
          "brand": brand, "on_brand": on_brand, "brand_text": brand_text, "brand_tint": brand_tint,
          "brand_tint_text": brand_tint_text, "danger": danger, "danger_tint": danger_tint}
+    extend_roles(c, notes)
     return render_css(c, False, notes, f"--brand {brand_hex} --tone {tone}", shape, density, font)
 
 def render_css(c, big, notes, label, shape, density, font):
@@ -126,7 +193,10 @@ def render_css(c, big, notes, label, shape, density, font):
         "text-1/bg": contrast(text1, bg), "text-2/bg": contrast(text2, bg), "text-3/bg": contrast(text3, bg),
         "text-3/surface": contrast(text3, surface), ("on-brand/brand(큰 글씨 ≥3)" if big else "on-brand/brand"): contrast(on_brand, brand),
         "brand-text/surface": contrast(brand_text, surface), "tint-text/tint": contrast(brand_tint_text, brand_tint),
-        "danger/surface": contrast(danger, surface)}
+        "danger/surface": contrast(danger, surface),
+        "success/surface": contrast(c["success"], surface), "warning-tint-text/tint": contrast(c["warning_tint_text"], c["warning_tint"]),
+        "info-tint-text/tint": contrast(c["info_tint_text"], c["info_tint"]), "success-tint-text/tint": contrast(c["success_tint_text"], c["success_tint"]),
+        "danger-tint-text/tint": contrast(c["danger_tint_text"], c["danger_tint"])}
     def typo(scale):
         return "\n".join(f"  --fs-{k}: {v[0]}px; --fw-{k}: {v[1]}; --lh-{k}: {v[2]};" for k, v in scale.items())
     css = f"""/* foundation tokens — derive.py {label} --shape {shape} --density {density} --font {font}
@@ -148,6 +218,22 @@ def render_css(c, big, notes, label, shape, density, font):
   --c-brand-tint-text: {rgb2hex(brand_tint_text)};
   --c-danger: {rgb2hex(danger)};
   --c-danger-tint: {rgb2hex(danger_tint)};
+  --c-danger-tint-text: {rgb2hex(c["danger_tint_text"])};
+
+  /* 의미색 — 확정(브랜드)·바뀜(주의)·안내(정보)·완료(성공)가 같은 색이 되지 않게 */
+  --c-success: {rgb2hex(c["success"])}; --c-success-tint: {rgb2hex(c["success_tint"])}; --c-success-tint-text: {rgb2hex(c["success_tint_text"])};
+  --c-warning: {rgb2hex(c["warning"])}; --c-warning-tint: {rgb2hex(c["warning_tint"])}; --c-warning-tint-text: {rgb2hex(c["warning_tint_text"])};
+  --c-info: {rgb2hex(c["info"])}; --c-info-tint: {rgb2hex(c["info_tint"])}; --c-info-tint-text: {rgb2hex(c["info_tint_text"])};
+
+  /* 상호작용·비활성·겹침 */
+  --c-brand-pressed: {rgb2hex(c["brand_pressed"])};
+  --c-focus: {rgb2hex(c["focus"])};
+  --c-line-strong: {rgb2hex(c["line_strong"])};
+  --c-text-disabled: {rgb2hex(c["text_disabled"])};
+  --c-disabled-bg: {rgb2hex(c["disabled_bg"])};
+  --c-overlay: {c["overlay"]};
+  --shadow-1: {c["shadow_1"]};
+  --shadow-2: {c["shadow_2"]};
 
   /* 타이포 — {font} */
   --font: {f["family"]};

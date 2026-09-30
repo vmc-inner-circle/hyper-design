@@ -175,6 +175,12 @@
  "line_step": "300",
  "brand_confirmed": true,
  "candidates": [],
+ "shadows": {
+  "seed-shadow-s1": "0px 1px 4px 0px #00000014",
+  "seed-shadow-s2": "0px 2px 10px 0px #0000001a",
+  "seed-shadow-s3": "0px 4px 16px 0px #0000001f",
+  "carotene-shadow-default": "0px 2px 12px 0px rgba(0, 0, 0, .1)"
+ },
  "measured": {
   "brand": "#ff6f0f",
   "ink": "#1a1c20",

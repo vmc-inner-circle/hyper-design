@@ -134,6 +134,7 @@ MEASURE_JS = r"""
     if (tag === 'H1') res.h1++;
     if (el.hasAttribute('title') && el !== document.body) res.help.push('title:' + tag.toLowerCase());
     if (/tooltip|help/i.test(el.getAttribute('class') || '')) res.help.push('class:' + el.getAttribute('class'));
+    if (/(^|\s)badge(\s|$)/.test(el.getAttribute('class') || '')) { res.badges = res.badges || []; res.badges.push([(el.innerText||'').trim().slice(0,20), cs.backgroundColor]); }
     // touch
     const interactive = el.matches('a[href],button,[role=button],input:not([type=hidden]),select,textarea');
     if (interactive) {
@@ -179,6 +180,13 @@ def rgb_hsl(c):
 def is_chroma(c):
     h, s, l = rgb_hsl(c)
     return c[3] > 0 and s > 0.2 and 0.1 <= l <= 0.95
+
+
+def parse_css_color(v):
+    """'rgb(1, 2, 3)' / 'rgba(1, 2, 3, .5)' → (r, g, b, a)"""
+    m = re.findall(r"[\d.]+", v or "")
+    if len(m) < 3: return None
+    return (float(m[0]), float(m[1]), float(m[2]), float(m[3]) if len(m) > 3 else 1.0)
 
 
 HREF_RE = re.compile(r'''(?:href|src)\s*=\s*["']([^"']+)["']''', re.I)
@@ -374,8 +382,23 @@ def main():
             hues.add(int(rgb_hsl(c)[0] // 20))
         else:
             grays.add(tuple(int(round(v / 4) * 4) for v in c[:3]) + (round(c[3], 2),))
-    add("일관성", "chromatic_colors", len(hues), "<=2", len(hues) <= 2,
+    add("일관성", "chromatic_colors", len(hues), "<=6", len(hues) <= 6,   # 브랜드 1 + 의미색 4(틴트가 인접 구간으로 갈릴 여유)
         "hue 구간: " + ",".join(f"{h*20}-{h*20+19}" for h in sorted(hues)))
+    # 토큰 밖 유채색: 화면의 유채색은 전부 tokens*.css 값이어야 한다
+    tok = set()
+    for tf in OUT.rglob("tokens*.css"):
+        for h in re.findall(r"#([0-9a-fA-F]{6})\b", tf.read_text(encoding="utf-8")):
+            tok.add(tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)))
+    if tok:
+        off = sorted({c[:3] for c in colors if is_chroma(c) and min(sum((a - b) ** 2 for a, b in zip(c[:3], t)) for t in tok) > 36})
+        add("일관성", "off_token_colors", len(off), "0", not off, " ".join(f"rgb{x}" for x in off[:6]))
+    # 의미 배지: 서로 다른 뜻의 배지 3개 이상이 한 색이면 실패(확정·바뀜·궁금해요가 전부 브랜드 틴트였던 문제)
+    bmap = {}
+    for sid, r in per.items():
+        for t, bgc in r.get("badges", []) or []:
+            if t: bmap.setdefault(bgc, set()).add(re.sub(r"\s*\d+$", "", t))
+    worst = max(((bgc, v) for bgc, v in bmap.items() if (pc := parse_css_color(bgc)) and is_chroma(pc)), key=lambda x: len(x[1]), default=(None, set()))
+    add("위계", "badge_semantic", len(worst[1]), "<=2 뜻/색", len(worst[1]) <= 2, f"{worst[0]}: {', '.join(sorted(worst[1]))}" if worst[0] else "")
     add("일관성", "gray_steps", len(grays), "<=6", len(grays) <= 6,
         " ".join(f"rgb{g[:3]}" + (f"a{g[3]}" if g[3] < 1 else "") for g in sorted(grays))[:300])
     fs = sorted({round(v, 1) for v in agg("fontSizes")})

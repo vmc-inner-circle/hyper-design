@@ -90,21 +90,32 @@
  "candidates": [
   [
    "#ec4937",
-   32
-  ],
-  [
-   "#f78000",
-   16
+   29
   ],
   [
    "#1583db",
-   14
+   23
+  ],
+  [
+   "#f78000",
+   11
   ],
   [
    "#2b96ed",
    9
   ]
  ],
+ "shadows": {
+  "elevation-z1": "0 2px 4px 0 rgba(33, 37, 41, 0.1)",
+  "elevation-z2": "0 4px 8px 0 rgba(33, 37, 41, 0.1)",
+  "elevation-z3": "0 8px 16px 0 rgba(33, 37, 41, 0.15)",
+  "elevation-z4": "0 12px 24px 0 rgba(33, 37, 41, 0.15)",
+  "elevation-z0-border": "0 0 0 1px #e9ecef",
+  "elevation-z1-border": "0 2px 4px 0 rgba(0, 0, 0, 0.1),0 0 0 1px #e9ecef",
+  "elevation-z2-border": "0 4px 8px 0 rgba(33, 37, 41, 0.1),0 0 0 1px #e9ecef",
+  "elevation-z3-border": "0 8px 16px 0 rgba(33, 37, 41, 0.15),0 0 0 1px #e9ecef",
+  "elevation-z4-border": "0 12px 24px 0 rgba(33, 37, 41, 0.15),0 0 0 1px #e9ecef"
+ },
  "measured": {
   "brand": "#2b96ed",
   "ink": "#000000",

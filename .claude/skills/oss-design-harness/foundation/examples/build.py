@@ -23,6 +23,7 @@ P = {
     "sun": '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/>',
     "ticket": '<path d="M4 8a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v8a2 2 0 0 0-2 2H6a2 2 0 0 0-2-2z"/><path d="M13 6v12" stroke-dasharray="2 2"/>',
     "car": '<path d="M5 16V11l2-5h10l2 5v5M5 16h14M5 16v2M19 16v2"/><circle cx="8" cy="13.5" r="1"/><circle cx="16" cy="13.5" r="1"/>',
+    "alert": '<circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/>',
     "q": '<circle cx="12" cy="12" r="8.5"/><path d="M9.8 9.5a2.3 2.3 0 1 1 3.2 2.1c-.6.3-1 .8-1 1.4v.5M12 16.5v.2"/>',
     "link": '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
 }
@@ -63,7 +64,7 @@ S = {}
 
 # 역할 이름 없음: 모두가 보는 기본 화면(everyone, 큰 글자) + 편집 권한이 있으면 붙는 요소(editor)
 FLOW_ROWS = lambda href: f'''
-    {row("제주 도착 · 해비치 호텔", "비행기 10:05 출발", href, when("11/20", "금"), ("is-brand", "시간 바뀜"))}
+    {row("제주 도착 · 해비치 호텔", "비행기 10:05 출발", href, when("11/20", "금"), ("is-warning", "시간 바뀜"))}
     {row("오후 2시 섭지코지 산책", "저녁은 정하는 중", href, when("11/21", "토"))}
     {row("정하는 중", "11월 10일까지 정해요", href, when("11/22", "일"))}
     {row("호텔에서 나와 집으로", "김포 도착 오후 4시", href, when("11/23", "월"))}'''
@@ -129,7 +130,7 @@ S["home-edit"] = ("홈 · 일정을 짜는 사람", "editor", "일정을 짜는 
   </header>
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">정할 것</h2></div>
-    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "day-edit.html", art("meal"), ("is-brand", "어머니가 궁금해하세요"))}
+    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "day-edit.html", art("meal"), ("is-info", "어머니가 궁금해하세요"))}
     {row("11/22 일 하루", "아직 비어 있어요", "day-edit.html", art("calendar"))}
     {row("렌터카 보험", "완전자차 / 일반자차", "item-edit.html", art("car"))}
   </section>
@@ -176,7 +177,7 @@ S["day-edit"] = ("날짜 · 일정을 짜는 사람", "editor", "일정을 짜�
 form = lambda err: f'''{appbar("일정 고치기", "day-edit.html")}
 <main class="page">
   <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" value="흑돼지 '돈사돈'"></div>
-  <div class="field{' is-error' if err else ''}"><label class="label" for="t">시간</label><input class="input" id="t" value="{'' if err else '11월 21일 토 오후 6시 30분'}" placeholder="시간을 골라 주세요">{'<p class="field-msg">시간을 정해야 확정할 수 있어요</p>' if err else ''}</div>
+  <div class="field{' is-error' if err else ''}"><label class="label" for="t">시간</label><input class="input" id="t" value="{'' if err else '11월 21일 토 오후 6시 30분'}" placeholder="시간을 골라 주세요">{'<p class="field-msg">' + ic("alert") + '시간을 정해야 확정할 수 있어요</p>' if err else ''}</div>
   <div class="field"><label class="label" for="m">예약 메모</label><input class="input" id="m" value="6명 · 확인번호 DS-4821"></div>
   <div class="field"><span class="label">가족에게 어떻게 보일까요?</span>
     <div class="seg" role="radiogroup"><button class="seg-item" role="radio" aria-checked="false">정하는 중</button><button class="seg-item is-selected" role="radio" aria-checked="true">확정</button></div>
