@@ -1,0 +1,97 @@
+{
+  "$comment": "화면 HTML 머리에 들어가는 외부 자원(CDN)의 유일한 출처. 화면 머리는 status가 active인 자원을 layers 순서대로 넣는다. check.py가 이 파일로 점검한다. 스택을 바꿀 때는 이 파일의 status만 바꾸고, screen-generation.md §파일 머리 예시를 맞춘다.",
+  "status_legend": {
+    "active": "쓴다 — 모든 화면 머리에 넣는다 (없으면 check.py WARN)",
+    "candidate": "시험 중 — 화면에 넣지 않는다 (들어 있으면 WARN)",
+    "retired": "쓰지 않는다 — 들어 있으면 check.py FAIL"
+  },
+  "layers": [
+    {
+      "id": "utility",
+      "title": "유틸리티 CSS",
+      "note": "배치·간격·토큰 이름 클래스"
+    },
+    {
+      "id": "components",
+      "title": "컴포넌트 라이브러리",
+      "note": "버튼·카드 등 모양. 없으면 토큰 이름 + 유틸리티로 짠다"
+    },
+    {
+      "id": "font",
+      "title": "글꼴"
+    },
+    {
+      "id": "icons",
+      "title": "아이콘"
+    },
+    {
+      "id": "tokens",
+      "title": "토큰",
+      "note": "design/theme.js — 값은 화면마다가 아니라 여기서 한 번"
+    }
+  ],
+  "resources": [
+    {
+      "id": "tailwind-v4-browser",
+      "layer": "utility",
+      "status": "active",
+      "version": "4.3.3",
+      "tag": "<script src=\"https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3\"></script>",
+      "match": "@tailwindcss/browser",
+      "note": "빌드 없이 유틸리티 생성. theme.js의 @theme inline이 Basecoat 변수를 bg-primary·text-muted-foreground 등에 연결"
+    },
+    {
+      "id": "tailwind-v3-play",
+      "layer": "utility",
+      "status": "retired",
+      "version": "3 (play CDN, 버전 고정 없음)",
+      "tag": "<script src=\"https://cdn.tailwindcss.com\"></script>",
+      "match": "cdn.tailwindcss.com",
+      "note": "Basecoat 모양을 덮어쓴다 — Tailwind v4로 교체 (2026-09-30). 화면에 있으면 check.py FAIL"
+    },
+    {
+      "id": "basecoat",
+      "layer": "components",
+      "status": "active",
+      "version": "1.0.2",
+      "tag": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css\">",
+      "match": "basecoat.cdn.min.css",
+      "note": "shadcn/ui를 CSS 클래스로 (btn·card·badge·tabs·field…). :root에 기본값(무채색, --radius .625rem)을 갖고 있어 theme.js는 바꾸는 값만 적는다 — seed:basecoat. 선택 이유·비교: tasks 10 / RESULT.md"
+    },
+    {
+      "id": "basecoat-js",
+      "layer": "components",
+      "status": "active",
+      "version": "1.0.2",
+      "tag": "<script src=\"https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js\" defer></script>",
+      "match": "basecoat-css@1.0.2/dist/js",
+      "note": "탭·드롭다운·대화 상자 동작. defer라 머리에 두어도 본문 뒤에 실행"
+    },
+    {
+      "id": "pretendard",
+      "layer": "font",
+      "status": "active",
+      "version": "1.3.9 (Variable, dynamic subset)",
+      "tag": "<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css\">",
+      "match": "pretendard",
+      "note": "글꼴은 이것 하나. file은 캔버스가 컴포넌트 이미지에 넣는 글꼴 파일 (canvas/lib/capture.js가 여기서 읽음)",
+      "file": "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/packages/pretendard/dist/web/variable/woff2/PretendardVariable.woff2"
+    },
+    {
+      "id": "lucide",
+      "layer": "icons",
+      "status": "active",
+      "version": "1.48.0",
+      "tag": "<script src=\"https://unpkg.com/lucide@1.48.0\"></script>",
+      "match": "lucide",
+      "note": "theme.js가 DOMContentLoaded에 lucide.createIcons()"
+    },
+    {
+      "id": "theme",
+      "layer": "tokens",
+      "status": "active",
+      "tag": "<script src=\"../theme.js\"></script>",
+      "match": "theme.js"
+    }
+  ]
+}
