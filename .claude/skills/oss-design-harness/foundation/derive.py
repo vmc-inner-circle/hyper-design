@@ -42,7 +42,38 @@ FONTS = {
     }
 }
 
-def derive(brand_hex, tone, shape, density, font):
+def from_palette(path):
+    """실제 서비스 팔레트(palettes/*.json)에서 역할 색을 고른다. 새 값을 만들지 않고 팔레트 단계 중
+    대비 기준을 통과하는 가장 밝은 단계를 쓴다. 반환: (색 dict, 버튼 큰 글자 필요 여부, 노트)"""
+    import json
+    P = json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    S = {k: {st: hex2rgb(h) for st, h in sc.items()} for k, sc in P["scales"].items()}
+    order = lambda sc: sorted(sc, key=lambda st: int(st))            # 밝음 → 짙음
+    def first_pass(scale, bg, target):
+        for st in order(S[scale]):
+            if contrast(S[scale][st], bg) >= target: return S[scale][st]
+        return S[scale][order(S[scale])[-1]]
+    white = hex2rgb(P["white"]); bg = S["gray"][P["bg_step"]]; line = S["gray"][P["line_step"]]
+    brand = S[P["brand"]][P["brand_step"]]
+    tint = S[P["brand"]]["80"] if "80" in S[P["brand"]] else mix(white, brand, .1)
+    c = {"bg": bg, "surface": white, "line": line, "text1": hex2rgb(P["ink"]),
+         "text2": first_pass("gray", bg, 7), "text3": first_pass("gray", bg, 4.5),
+         "brand": brand, "brand_text": first_pass(P["brand"], white, 4.5),
+         "brand_tint": tint, "brand_tint_text": first_pass(P["brand"], tint, 4.5),
+         "danger": first_pass(P["danger"], white, 4.5), "danger_tint": S[P["danger"]]["50"]}
+    notes = list(P.get("notes", []))
+    big = False
+    if contrast(white, brand) >= 4.5: c["on_brand"] = white
+    elif contrast(white, brand) >= 3:                                   # 채워진 버튼은 흰 글자가 자연스럽다 → 큰 굵은 글자로 AA-large
+        c["on_brand"] = white; big = True; notes.append(f"버튼: 흰 글자 대비 {contrast(white, brand):.2f} → 버튼 글자 19px/700(큰 글씨 기준 3:1)")
+    else:
+        c["on_brand"] = white; c["brand"] = first_pass(P["brand"], white, 3); big = True; notes.append("버튼 색을 팔레트 안에서 한 단계 짙게")
+    return c, big, notes, P
+
+def derive(brand_hex, tone, shape, density, font, palette=None):
+    if palette:
+        c, big, notes, P = from_palette(palette)
+        return render_css(c, big, notes, f"palette {P['name']}", shape, density, font)
     th, ts = TONES[tone]
     surface = hls(th, 0.995 if tone != "neutral" else 1.0, ts)
     bg = hls(th, 0.955, ts + 0.04)
@@ -62,20 +93,29 @@ def derive(brand_hex, tone, shape, density, font):
     brand_tint_text = darken_until(brand, brand_tint, 4.5)
     danger = darken_until(hex2rgb("#E5484D"), surface, 4.5)
     danger_tint = mix(surface, hex2rgb("#E5484D"), 0.08)
+    c = {"bg": bg, "surface": surface, "line": line, "text1": text1, "text2": text2, "text3": text3,
+         "brand": brand, "on_brand": on_brand, "brand_text": brand_text, "brand_tint": brand_tint,
+         "brand_tint_text": brand_tint_text, "danger": danger, "danger_tint": danger_tint}
+    return render_css(c, False, notes, f"--brand {brand_hex} --tone {tone}", shape, density, font)
+
+def render_css(c, big, notes, label, shape, density, font):
+    bg, surface, line, text1, text2, text3 = c["bg"], c["surface"], c["line"], c["text1"], c["text2"], c["text3"]
+    brand, on_brand, brand_text, brand_tint, brand_tint_text = c["brand"], c["on_brand"], c["brand_text"], c["brand_tint"], c["brand_tint_text"]
+    danger, danger_tint = c["danger"], c["danger_tint"]
     r = SHAPES[shape]; d = DENSITY[density]; f = FONTS[font]
     checks = {
         "text-1/bg": contrast(text1, bg), "text-2/bg": contrast(text2, bg), "text-3/bg": contrast(text3, bg),
-        "text-3/surface": contrast(text3, surface), "on-brand/brand": contrast(on_brand, brand),
+        "text-3/surface": contrast(text3, surface), ("on-brand/brand(큰 글씨 ≥3)" if big else "on-brand/brand"): contrast(on_brand, brand),
         "brand-text/surface": contrast(brand_text, surface), "tint-text/tint": contrast(brand_tint_text, brand_tint),
         "danger/surface": contrast(danger, surface)}
     def typo(scale):
         return "\n".join(f"  --fs-{k}: {v[0]}px; --fw-{k}: {v[1]}; --lh-{k}: {v[2]};" for k, v in scale.items())
-    css = f"""/* foundation tokens — derive.py --brand {brand_hex} --tone {tone} --shape {shape} --density {density} --font {font}
+    css = f"""/* foundation tokens — derive.py {label} --shape {shape} --density {density} --font {font}
    이 파일은 생성물이다. 직접 고치지 말고 파라미터를 바꿔 다시 만든다. */
 @import url('{f["import"]}');
 
 :root {{
-  /* 색 — 포인트 1 + 표면 톤({tone}) */
+  /* 색 — {label} */
   --c-bg: {rgb2hex(bg)};
   --c-surface: {rgb2hex(surface)};
   --c-line: {rgb2hex(line)};
@@ -119,17 +159,19 @@ def derive(brand_hex, tone, shape, density, font):
 {typo(f["large"])}
 }}
 """
+    if big:
+        css += "\n/* 버튼: 흰 글자 대비가 4.5 미만 → 큰 굵은 글자(19px/700)로 WCAG 큰 글씨 기준(3:1) 충족 */\n.btn.primary { font-size: 19px; font-weight: 700; }\n"
     return css, checks, notes
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--brand", required=True); ap.add_argument("--tone", default="neutral", choices=TONES)
+    ap.add_argument("--brand"); ap.add_argument("--palette", help="palettes/*.json — 실제 서비스 팔레트에서 역할 색을 고른다"); ap.add_argument("--tone", default="neutral", choices=TONES)
     ap.add_argument("--shape", default="normal", choices=SHAPES); ap.add_argument("--density", default="comfy", choices=DENSITY)
     ap.add_argument("--font", default="pretendard", choices=FONTS); ap.add_argument("-o", "--out", required=True)
     a = ap.parse_args()
-    css, checks, notes = derive(a.brand, a.tone, a.shape, a.density, a.font)
+    css, checks, notes = derive(a.brand, a.tone, a.shape, a.density, a.font, a.palette)
     pathlib.Path(a.out).parent.mkdir(parents=True, exist_ok=True); pathlib.Path(a.out).write_text(css, encoding="utf-8")
-    bad = {k: v for k, v in checks.items() if v < 4.5}
+    bad = {k: v for k, v in checks.items() if v < (3 if "큰 글씨" in k else 4.5)}
     print(f"wrote {a.out}", *notes, sep="\n")
     print("대비:", ", ".join(f"{k} {v:.1f}" for k, v in checks.items()))
     sys.exit(1 if bad else 0)
