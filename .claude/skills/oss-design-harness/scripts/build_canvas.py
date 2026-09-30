@@ -49,6 +49,14 @@ for s in screens:
 <a class="hit" href="{s["file"]}" target="view" aria-label="{html.escape(s.get("title",""))} 크게 보기"></a></div>
 <div class="fdesc">{html.escape(s.get("purpose",""))}</div><div class="chips">{chips}</div></div>''')
 st = m.get("story") or {}
+pal_path = out / "palettes.json"
+pal = json.loads(pal_path.read_text(encoding="utf-8")) if pal_path.exists() else None
+pal_html = ""; credit = ""
+if pal:
+    credit = '<p class="credit">색 출처: ' + " · ".join(html.escape(o["name"]) + " 웹 팔레트" for o in pal["options"][:3]) + ' — 시안용 참고. 출시 전 자체 브랜드 색으로 교체하세요.</p>'
+    dots = "".join(f'<button class="dot" data-slug="{o["slug"]}" title="" aria-label="{html.escape(o["name"])} 색으로 보기" style="--dot:{o["brand"]}"><span></span>{html.escape(o["name"])}</button>' for o in pal["options"][:3])
+    pal_html = f'<div class="palette">색 {dots}</div>'
+
 def esc(x): return html.escape(str(x or ""))
 ideas = "".join(f'''<div class="idea"><div class="n">{i+1}</div><b>{esc(d.get("title"))}</b><p>{esc(d.get("desc"))}</p>
 <div class="refs">{esc(d.get("refs"))}{"".join(f' · <a href="{next((x["file"] for x in screens if x["id"]==sid), "#")}" target="view">{esc(next((x.get("title") for x in screens if x["id"]==sid), sid))}</a>' for sid in d.get("screens", []))}</div></div>''' for i, d in enumerate(st.get("ideas", [])[:3]))
@@ -81,17 +89,28 @@ svg path{{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)}} svg pat
 .idea .n{{width:30px;height:30px;border-radius:50%;background:#1c1c1c;color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:12px}}
 .idea b{{font-size:18px}} .idea p{{font-size:15px;line-height:1.6;color:#444;margin:8px 0 12px}} .refs{{font-size:13px;color:#777}} .refs a{{color:#e5484d}}
 .roles{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}} .role{{background:#fff;border-radius:16px;padding:22px}} .role b{{font-size:17px}} .role li{{font-size:15px;line-height:1.7;color:#444}}
+header{{display:flex;align-items:center;gap:12px;flex-wrap:wrap}} .palette{{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#555}}
+.dot{{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 8px;border-radius:999px;border:1px solid #d6d6d2;background:#fff;font:inherit;font-size:13px;color:#333;cursor:pointer}}
+.dot span{{width:18px;height:18px;border-radius:999px;background:var(--dot)}} .dot[aria-pressed="true"]{{border-color:#1c1c1c;box-shadow:inset 0 0 0 1px #1c1c1c}}
+.credit{{font-size:12px;color:#777;padding:0 60px 40px}}
 #viewer{{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}}
 #viewer.on{{display:flex}} #viewer iframe{{width:{W}px;height:{H}px;max-height:92vh;border:0;border-radius:28px;background:#fff}}
 #viewer button{{position:absolute;top:20px;right:28px;font-size:18px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}}
 </style>
-<header>전체 화면 한눈에 보기<span>화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 빨간 화살표는 화면 이동</span></header>
+<header>전체 화면 한눈에 보기<span>화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 빨간 화살표는 화면 이동</span>{pal_html}</header>
 {story_html}<div class="board">
 <svg><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e5484d" stroke="none"/></marker></defs>{''.join(arrows)}</svg>
 {''.join(labels)}{''.join(frames)}
 </div>
 <div id="viewer"><button onclick="v.classList.remove('on')">닫기</button><iframe name="view"></iframe></div>
+<script>
+(function(){{const K='hd-palette';const dots=[...document.querySelectorAll('.dot')];if(!dots.length)return;
+ let cur;try{{cur=localStorage.getItem(K)}}catch(e){{}} cur=cur||{json.dumps(pal["default"]) if pal else "null"};
+ const send=s=>{{document.querySelectorAll('iframe').forEach(f=>{{try{{f.contentWindow.postMessage({{type:'hd-palette',slug:s}},'*')}}catch(e){{}}}});dots.forEach(d=>d.setAttribute('aria-pressed',d.dataset.slug===s))}};
+ dots.forEach(d=>d.addEventListener('click',()=>{{try{{localStorage.setItem(K,d.dataset.slug)}}catch(e){{}};send(d.dataset.slug)}}));
+ window.addEventListener('load',()=>send(cur));}})();
+</script>
 <script>const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));</script>
-</html>"""
+{credit}</html>"""
 (out / "index.html").write_text(doc, encoding="utf-8")
 print("canvas:", len(screens), "screens,", len(arrows), "arrows,", len(groups), "groups")

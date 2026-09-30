@@ -1,0 +1,94 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 한눈에 보기</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#e9e9e6;font-family:-apple-system,'Pretendard',sans-serif;color:#1c1c1c;overflow:auto}
+header{position:sticky;top:0;left:0;z-index:5;background:#e9e9e6ee;padding:16px 60px;font-size:20px;font-weight:700;backdrop-filter:blur(6px)}
+header span{font-weight:400;color:#666;font-size:15px;margin-left:12px}
+.board{position:relative;width:1785.0px;height:2744.0px}
+svg{position:absolute;inset:0;width:1785.0px;height:2744.0px;pointer-events:none}
+svg path{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)} svg path.x{stroke-dasharray:6 6;opacity:.6}
+.glabel{position:absolute;font-size:22px;font-weight:700}
+.frame{position:absolute;width:187.5px}
+.ftitle{font-size:15px;font-weight:600;margin-bottom:8px}
+.phone{position:relative;width:187.5px;height:406.0px;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.phone iframe{width:375px;height:812px;border:0;transform:scale(0.5);transform-origin:0 0;pointer-events:none}
+.hit{position:absolute;inset:0} .hit:hover{outline:3px solid #e5484d;border-radius:18px}
+.fdesc{font-size:13px;color:#555;margin-top:8px;line-height:1.45}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .chip{font-size:12px;padding:4px 8px;border-radius:12px;background:#fff;color:#333;text-decoration:none}
+.story{padding:24px 60px 8px;max-width:1240px} .story h1{font-size:40px;line-height:1.25;letter-spacing:-.03em;margin:8px 0 14px} .story h1 em{font-style:normal;color:#e5484d}
+.story .sum{font-size:18px;line-height:1.6;color:#444;max-width:780px;margin:0 0 28px} .story h2{font-size:24px;margin:40px 0 16px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .idea{background:#fff;border-radius:16px;padding:22px}
+.idea .n{width:30px;height:30px;border-radius:50%;background:#1c1c1c;color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:12px}
+.idea b{font-size:18px} .idea p{font-size:15px;line-height:1.6;color:#444;margin:8px 0 12px} .refs{font-size:13px;color:#777} .refs a{color:#e5484d}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px} .role{background:#fff;border-radius:16px;padding:22px} .role b{font-size:17px} .role li{font-size:15px;line-height:1.7;color:#444}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap} .palette{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#555}
+.dot{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 8px;border-radius:999px;border:1px solid #d6d6d2;background:#fff;font:inherit;font-size:13px;color:#333;cursor:pointer}
+.dot span{width:18px;height:18px;border-radius:999px;background:var(--dot)} .dot[aria-pressed="true"]{border-color:#1c1c1c;box-shadow:inset 0 0 0 1px #1c1c1c}
+.credit{font-size:12px;color:#777;padding:0 60px 40px}
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}
+#viewer.on{display:flex} #viewer iframe{width:375px;height:812px;max-height:92vh;border:0;border-radius:28px;background:#fff}
+#viewer button{position:absolute;top:20px;right:28px;font-size:18px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}
+</style>
+<header>전체 화면 한눈에 보기<span>화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 빨간 화살표는 화면 이동</span><div class="palette">색 <button class="dot" data-slug="myrealtrip" title="" aria-label="마이리얼트립 색으로 보기" style="--dot:#2b96ed"><span></span>마이리얼트립</button><button class="dot" data-slug="airbnb" title="" aria-label="에어비앤비 색으로 보기" style="--dot:#da1249"><span></span>에어비앤비</button><button class="dot" data-slug="29cm" title="" aria-label="29CM 색으로 보기" style="--dot:#19191a"><span></span>29CM</button></div></header>
+<div class="board">
+<svg><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e5484d" stroke="none"/></marker></defs></svg>
+<div class="glabel" style="top:50.0px;left:60px">홈 — 시기마다 맨 위가 바뀐다</div><div class="glabel" style="top:706.0px;left:60px">일정을 짜는 사람에게만 더 보이는 것</div><div class="glabel" style="top:1362.0px;left:60px">홈에서 들어가는 곳</div><div class="glabel" style="top:2018.0px;left:60px">처음 들어올 때</div><div class="frame" style="left:60.0px;top:120.0px">
+<div class="ftitle">홈 · 출발 50일 전</div>
+<div class="phone"><iframe src="home.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="home.html" target="view" aria-label="홈 · 출발 50일 전 크게 보기"></a></div>
+<div class="fdesc">출발 50일 전 — 큰 흐름</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:120.0px">
+<div class="ftitle">홈 · 출발 3일 전</div>
+<div class="phone"><iframe src="home-d7.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="home-d7.html" target="view" aria-label="홈 · 출발 3일 전 크게 보기"></a></div>
+<div class="fdesc">출발 3일 전 — 모이는 곳·챙길 것</div><div class="chips"></div></div><div class="frame" style="left:615.0px;top:120.0px">
+<div class="ftitle">홈 · 여행 중</div>
+<div class="phone"><iframe src="home-trip.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="home-trip.html" target="view" aria-label="홈 · 여행 중 크게 보기"></a></div>
+<div class="fdesc">여행 중 — 오늘</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:776.0px">
+<div class="ftitle">홈 · 일정을 짜는 사람</div>
+<div class="phone"><iframe src="home-edit.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="home-edit.html" target="view" aria-label="홈 · 일정을 짜는 사람 크게 보기"></a></div>
+<div class="fdesc">일정 짜는 사람 — 정할 것</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:1432.0px">
+<div class="ftitle">날짜 상세</div>
+<div class="phone"><iframe src="day.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="day.html" target="view" aria-label="날짜 상세 크게 보기"></a></div>
+<div class="fdesc">날짜 상세 + 궁금해요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:776.0px">
+<div class="ftitle">날짜 · 일정을 짜는 사람</div>
+<div class="phone"><iframe src="day-edit.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="day-edit.html" target="view" aria-label="날짜 · 일정을 짜는 사람 크게 보기"></a></div>
+<div class="fdesc">날짜별 일정 편집</div><div class="chips"></div></div><div class="frame" style="left:615.0px;top:776.0px">
+<div class="ftitle">일정 고치기</div>
+<div class="phone"><iframe src="item-edit.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="item-edit.html" target="view" aria-label="일정 고치기 크게 보기"></a></div>
+<div class="fdesc">일정 고치기</div><div class="chips"></div></div><div class="frame" style="left:892.5px;top:776.0px">
+<div class="ftitle">일정 고치기 · 시간 없음</div>
+<div class="phone"><iframe src="item-edit--error.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="item-edit--error.html" target="view" aria-label="일정 고치기 · 시간 없음 크게 보기"></a></div>
+<div class="fdesc">시간 없이 저장하면</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:1432.0px">
+<div class="ftitle">내가 챙길 것</div>
+<div class="phone"><iframe src="checklist.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="checklist.html" target="view" aria-label="내가 챙길 것 크게 보기"></a></div>
+<div class="fdesc">내가 챙길 것</div><div class="chips"></div></div><div class="frame" style="left:1170.0px;top:776.0px">
+<div class="ftitle">할 일 나누기</div>
+<div class="phone"><iframe src="tasks.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="tasks.html" target="view" aria-label="할 일 나누기 크게 보기"></a></div>
+<div class="fdesc">할 일 나누기</div><div class="chips"></div></div><div class="frame" style="left:1447.5px;top:776.0px">
+<div class="ftitle">가족</div>
+<div class="phone"><iframe src="family.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="family.html" target="view" aria-label="가족 크게 보기"></a></div>
+<div class="fdesc">일정 같이 짜기 권한</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:2088.0px">
+<div class="ftitle">초대 링크 첫 화면</div>
+<div class="phone"><iframe src="join.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="join.html" target="view" aria-label="초대 링크 첫 화면 크게 보기"></a></div>
+<div class="fdesc">초대 링크로 처음 들어오는 화면</div><div class="chips"></div></div>
+</div>
+<div id="viewer"><button onclick="v.classList.remove('on')">닫기</button><iframe name="view"></iframe></div>
+<script>
+(function(){const K='hd-palette';const dots=[...document.querySelectorAll('.dot')];if(!dots.length)return;
+ let cur;try{cur=localStorage.getItem(K)}catch(e){} cur=cur||"myrealtrip";
+ const send=s=>{document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.postMessage({type:'hd-palette',slug:s},'*')}catch(e){}});dots.forEach(d=>d.setAttribute('aria-pressed',d.dataset.slug===s))};
+ dots.forEach(d=>d.addEventListener('click',()=>{try{localStorage.setItem(K,d.dataset.slug)}catch(e){};send(d.dataset.slug)}));
+ window.addEventListener('load',()=>send(cur));})();
+</script>
+<script>const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));</script>
+<p class="credit">색 출처: 마이리얼트립 웹 팔레트 · 에어비앤비 웹 팔레트 · 29CM 웹 팔레트 — 시안용 참고. 출시 전 자체 브랜드 색으로 교체하세요.</p></html>
