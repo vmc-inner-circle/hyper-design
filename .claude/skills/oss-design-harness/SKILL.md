@@ -3,7 +3,7 @@ name: oss-design-harness
 description: PRD(기획 문서) 한 장을 받아 비전문가에게 "보고 고르기" 질문 1~2번만 하고, 여러 화면짜리 모바일 앱 HTML 디자인(피그마식 캔버스 허브 포함)을 15분 안에 만든다. 사용자가 PRD·기획서·요구사항 문서를 붙여넣거나 "화면 만들어줘/디자인해줘/HTML로" 요청할 때 트리거.
 ---
 
-# oss-design-harness v4
+# oss-design-harness v5
 
 PRD → 질문 1회(무드 고르기) → 병렬 빌드 → 캔버스. 사용자는 디자인을 모른다고 가정한다.
 
@@ -100,6 +100,11 @@ PRD → 질문 1회(무드 고르기) → 병렬 빌드 → 캔버스. 사용자
   "sections":[{"name":"..","audience":"..","when":".."}],
   "traits":{"list_first_use":false,"form":false,"readonly_role":false},
   "states":[],"links":["detail"],"group":"부모 화면"}],
- "prd_coverage":{"F1":["..."],"US1":["..."]}}
+ "prd_coverage":{"F1":["..."],"US1":["..."]},
+ "story":{"headline":"PRD의 갈등을 이 앱이 어떻게 푸는지 한 문장(강조할 말은 <em>로)",
+   "summary":"왜 그 갈등이 생기고 이 앱은 무엇을 나눠서/묶어서 푸는지 2~3문장",
+   "ideas":[{"title":"핵심 설계 아이디어(짧게)","desc":"화면에서 실제로 어떻게 보이는지 2문장","refs":"US1 · F2","screens":["home"]}],
+   "roles":[{"name":"역할 이름","sees":["이 역할에게만 보이는/다르게 보이는 것"]}]}}
 ```
+`story`는 캔버스 맨 위 설명이 된다. ideas는 정확히 3개, roles는 PRD의 역할 수만큼. 전문 용어 없이, 비개발자가 읽고 "아 이래서 이렇게 만들었구나"가 되게 쓴다.
 `group`은 캔버스에서 한 줄로 묶일 흐름 이름(예: "계획 만들기", "부모가 보는 화면"). `links`가 캔버스 화살표가 된다.

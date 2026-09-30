@@ -48,6 +48,16 @@ for s in screens:
 <div class="phone"><iframe src="{s["file"]}" loading="eager" scrolling="no" tabindex="-1"></iframe>
 <a class="hit" href="{s["file"]}" target="view" aria-label="{html.escape(s.get("title",""))} 크게 보기"></a></div>
 <div class="fdesc">{html.escape(s.get("purpose",""))}</div><div class="chips">{chips}</div></div>''')
+st = m.get("story") or {}
+def esc(x): return html.escape(str(x or ""))
+ideas = "".join(f'''<div class="idea"><div class="n">{i+1}</div><b>{esc(d.get("title"))}</b><p>{esc(d.get("desc"))}</p>
+<div class="refs">{esc(d.get("refs"))}{"".join(f' · <a href="{next((x["file"] for x in screens if x["id"]==sid), "#")}" target="view">{esc(next((x.get("title") for x in screens if x["id"]==sid), sid))}</a>' for sid in d.get("screens", []))}</div></div>''' for i, d in enumerate(st.get("ideas", [])[:3]))
+roles = "".join(f'<div class="role"><b>{esc(r.get("name"))}</b><ul>{"".join(f"<li>{esc(x)}</li>" for x in r.get("sees", []))}</ul></div>' for r in st.get("roles", []))
+headline = st.get("headline", "")
+headline = html.escape(headline).replace("&lt;em&gt;", "<em>").replace("&lt;/em&gt;", "</em>")
+story_html = f'''<section class="story"><h1>{headline}</h1><p class="sum">{esc(st.get("summary"))}</p>
+<div class="ideas">{ideas}</div>{f'<h2>역할에 따라 다르게 보여요</h2><div class="roles">{roles}</div>' if roles else ""}
+<h2>전체 화면</h2></section>''' if st else ""
 doc = f"""<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>전체 화면 한눈에 보기</title>
 <style>
@@ -65,12 +75,18 @@ svg path{{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)}} svg pat
 .hit{{position:absolute;inset:0}} .hit:hover{{outline:3px solid #e5484d;border-radius:18px}}
 .fdesc{{font-size:13px;color:#555;margin-top:8px;line-height:1.45}}
 .chips{{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}} .chip{{font-size:12px;padding:4px 8px;border-radius:12px;background:#fff;color:#333;text-decoration:none}}
+.story{{padding:24px 60px 8px;max-width:1240px}} .story h1{{font-size:40px;line-height:1.25;letter-spacing:-.03em;margin:8px 0 14px}} .story h1 em{{font-style:normal;color:#e5484d}}
+.story .sum{{font-size:18px;line-height:1.6;color:#444;max-width:780px;margin:0 0 28px}} .story h2{{font-size:24px;margin:40px 0 16px}}
+.ideas{{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}} .idea{{background:#fff;border-radius:16px;padding:22px}}
+.idea .n{{width:30px;height:30px;border-radius:50%;background:#1c1c1c;color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:12px}}
+.idea b{{font-size:18px}} .idea p{{font-size:15px;line-height:1.6;color:#444;margin:8px 0 12px}} .refs{{font-size:13px;color:#777}} .refs a{{color:#e5484d}}
+.roles{{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}} .role{{background:#fff;border-radius:16px;padding:22px}} .role b{{font-size:17px}} .role li{{font-size:15px;line-height:1.7;color:#444}}
 #viewer{{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}}
 #viewer.on{{display:flex}} #viewer iframe{{width:{W}px;height:{H}px;max-height:92vh;border:0;border-radius:28px;background:#fff}}
 #viewer button{{position:absolute;top:20px;right:28px;font-size:18px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}}
 </style>
 <header>전체 화면 한눈에 보기<span>화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 빨간 화살표는 화면 이동</span></header>
-<div class="board">
+{story_html}<div class="board">
 <svg><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e5484d" stroke="none"/></marker></defs>{''.join(arrows)}</svg>
 {''.join(labels)}{''.join(frames)}
 </div>
