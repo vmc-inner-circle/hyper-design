@@ -253,6 +253,28 @@ for sid, (title, role, group, body, cls) in S.items():
 PURPOSE = {"join": "초대 링크로 처음 들어오는 화면", "home": "출발 50일 전 — 큰 흐름", "home-d7": "출발 3일 전 — 모이는 곳·챙길 것",
            "home-trip": "여행 중 — 오늘", "day": "날짜 상세 + 궁금해요", "checklist": "내가 챙길 것", "home-edit": "일정 짜는 사람 — 정할 것",
            "day-edit": "날짜별 일정 편집", "item-edit": "일정 고치기", "item-edit--error": "시간 없이 저장하면", "tasks": "할 일 나누기", "family": "일정 같이 짜기 권한"}
-manifest = {"screens": [{"id": sid, "file": f"{sid}.html", "title": t, "role": r, "group": g, "purpose": PURPOSE.get(sid, "")} for sid, (t, r, g, _, _) in S.items()]}
+POLICIES = {
+    "join": ["초대 링크는 7일 뒤 만료", "처음엔 '일정 같이 짜기' 꺼진 상태로 합류"],
+    "home": ["확정된 일정만 보인다 — 후보는 '정하는 중' 한 줄", "출발 7일 전부터 맨 위가 모이는 곳, 여행 중엔 '오늘'", "바뀐 항목은 3일 동안 '바뀜' 표시(알림 없음)"],
+    "home-d7": ["챙길 것은 본인 몫만", "날씨는 출발지·도착지 중 도착지 기준"],
+    "home-trip": ["여행 기간 동안 이 모습", "예약 확인번호는 모두에게 보인다"],
+    "day": ["'이날 궁금해요'는 하루 한 번", "누르면 짜는 사람 홈의 정할 것에 표시만 — 알림 없음"],
+    "checklist": ["누가 챙길지는 짜는 사람이 정한다", "체크는 본인과 짜는 사람 모두 가능"],
+    "home-edit": ["정할 것 = 후보 상태 항목 + 비어 있는 날", "'궁금해요'가 붙은 항목이 위로"],
+    "day-edit": ["끌어서 순서 바꾸기", "후보는 여러 개, 확정은 시간대당 하나"],
+    "item-edit": ["'확정'으로 저장하는 순간 가족 화면에 반영", "시간이 없으면 확정 불가('정하는 중'으로는 저장 가능)"],
+    "item-edit--error": ["시간 없이 '확정'으로 저장하려 할 때"],
+    "tasks": ["맡은 사람 1명, 마감일은 선택"],
+    "family": ["켜면 후보까지 보이고 고칠 수 있다", "큰 글자는 같이 짜지 않는 사람의 기본값"],
+}
+BRANCHES = {
+    "join": [{"to": "home", "label": "함께하기"}],
+    "home": [{"to": "home-edit", "label": "일정을 같이 짜는 사람이면"}],
+    "home-edit": [{"to": "day-edit", "label": "정할 것 누르기"}],
+    "item-edit": [{"to": "item-edit--error", "label": "시간 없이 확정"}],
+}
+GROUPS = ["처음 들어올 때", "홈 — 시기마다 맨 위가 바뀐다", "홈에서 들어가는 곳", "일정을 짜는 사람에게만 더 보이는 것"]
+manifest = {"groups": GROUPS, "screens": [{"id": sid, "file": f"{sid}.html", "title": t, "role": r, "group": g, "purpose": PURPOSE.get(sid, ""),
+             "policies": POLICIES.get(sid, []), "branches": BRANCHES.get(sid, [])} for sid, (t, r, g, _, _) in S.items()]}
 (HERE / "screens.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
 print(len(S), "screens")
