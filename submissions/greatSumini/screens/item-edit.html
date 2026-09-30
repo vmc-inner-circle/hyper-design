@@ -2,34 +2,42 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=375">
-<title>항목 추가</title>
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 일정 고치기</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-.picked { display: flex; align-items: center; gap: var(--space-8); padding: var(--space-20) var(--space-20) var(--space-24); }
+body { word-break: keep-all; }
+.form { padding: var(--space-24) var(--space-20); }
 </style>
 </head>
-<body class="has-cta">
+<body class="is-plain has-cta">
 <header class="appbar">
-  <a class="icon-btn" href="plan-day.html" aria-label="뒤로">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  <a class="appbar-btn left" href="planner-day.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
   </a>
-  <h1 class="appbar-title">항목 추가</h1>
-  <span class="icon-btn" aria-hidden="true"></span>
+  <h1>일정 고치기</h1>
 </header>
-<main>
-  <p class="picked"><span class="badge">활동</span><span class="muted">12월 11일(금)</span></p>
+<main class="form">
   <div class="field">
-    <label class="field-label" for="name">이름</label>
-    <input class="input" id="name" type="text" value="기온 산책">
+    <label class="label" for="name">이름</label>
+    <input class="input" id="name" type="text" value="우도 배편 (성산항)">
   </div>
   <div class="field">
-    <label class="field-label" for="time">시간</label>
-    <input class="input" id="time" type="time" value="14:00">
+    <label class="label" for="time">시간</label>
+    <input class="input" id="time" type="text" value="11월 21일 토 09:30">
+  </div>
+  <div class="field">
+    <p class="label" id="seg-label">부모님께 보일까요?</p>
+    <div class="segment" role="radiogroup" aria-labelledby="seg-label">
+      <button class="is-selected" type="button" role="radio" aria-checked="true">아직 후보</button>
+      <button type="button" role="radio" aria-checked="false">확정</button>
+    </div>
   </div>
 </main>
-<div class="bottom-cta">
-  <a class="btn btn-primary block" href="plan-day.html">후보로 저장</a>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="planner-day.html">저장</a>
 </div>
+
 </body>
 </html>

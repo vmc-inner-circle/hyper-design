@@ -2,70 +2,58 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=375">
-<title>12월 11일(금)</title>
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 둘째 날</title>
 <link rel="stylesheet" href="../tokens.css">
 <style>
-.done-bar { display: none; }
-#asked:target { display: flex; }
-.ask { padding: var(--space-32) var(--space-20) var(--space-24); display: flex; flex-direction: column; gap: var(--space-16); border-top: 8px solid var(--gray-1); }
-.row-over .badge { margin-left: var(--space-8); }
+.row-main .badge { margin-bottom: var(--space-4); }
 </style>
 </head>
-<body class="viewer has-tabbar">
-<p class="done-bar" id="asked" role="status">지은이에게 알렸어요</p>
+<body class="is-viewer has-cta">
 <header class="appbar">
-  <a class="icon-btn" href="parent-home.html" aria-label="뒤로">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  <a class="appbar-btn left" href="parent-home.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
   </a>
-  <h1 class="appbar-title">12월 11일(금)</h1>
-  <span class="icon-btn" aria-hidden="true"></span>
+  <h1>11월 21일 토요일</h1>
 </header>
-<main>
-  <ul class="list">
-    <li class="row">
-      <div class="row-body">
-        <p class="row-over">08:40</p>
-        <p class="row-title">료칸 앞에서 출발</p>
+
+<p class="done-bar" id="asked" hidden>지은이에게 알렸어요. 정해지면 소식으로 와요</p>
+<main class="page">
+  <section class="block is-list">
+    <div class="row">
+      <p class="row-time">14:00</p>
+      <div class="row-main">
+        <span class="badge is-fixed">확정</span>
+        <p class="row-title">섭지코지 산책</p>
+        <p class="row-sub">호텔에서 차로 40분 · 편한 신발</p>
       </div>
-    </li>
-    <li class="row">
-      <div class="row-body">
-        <p class="row-over">09:30</p>
-        <p class="row-title">아라시야마 대나무숲</p>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <div class="row">
+      <span class="row-icon">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+      </span>
+      <div class="row-main">
+        <p class="row-title">오전·저녁은 지은이가 정하는 중이에요</p>
+        <p class="row-sub">11월 10일까지 정해서 알려드려요</p>
       </div>
-    </li>
-    <li class="row">
-      <div class="row-body">
-        <p class="row-over">14:00</p>
-        <p class="row-title muted">오후 일정 <span class="badge">정하는 중</span></p>
-      </div>
-    </li>
-    <li class="row">
-      <div class="row-body">
-        <p class="row-over">18:00</p>
-        <p class="row-title">료칸 '하나야' 저녁 식사</p>
-      </div>
-    </li>
-  </ul>
-  <section class="ask">
-    <p>궁금하면 눌러 주세요. 지은이에게 살짝 알려 드려요</p>
-    <a class="btn btn-primary block" href="parent-day.html#asked">궁금해요</a>
+    </div>
   </section>
 </main>
-<nav class="tabbar" aria-label="주요 메뉴">
-  <a class="tab" href="parent-home.html">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>
-    홈
-  </a>
-  <a class="tab" href="parent-day.html" aria-current="page">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
-    일정
-  </a>
-  <a class="tab" href="my-checklist.html">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/></svg>
-    내 준비
-  </a>
-</nav>
+
+<div class="cta-area">
+  <button class="btn primary block-w" id="ask" type="button">지은이에게 궁금해요 보내기</button>
+</div>
+<script>
+document.getElementById('ask').addEventListener('click', function () {
+  var b = this; b.classList.add('is-loading');
+  setTimeout(function () {
+    b.classList.remove('is-loading'); b.disabled = true; b.textContent = '궁금해요를 보냈어요';
+    document.getElementById('asked').hidden = false;
+  }, 700);
+});
+</script>
 </body>
 </html>

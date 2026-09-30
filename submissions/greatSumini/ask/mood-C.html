@@ -3,26 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=375, initial-scale=1">
-<title>부모 홈 · 무드 C</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<title>함께가요 · 부모 홈</title>
 <style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
 :root {
-  /* color */
-  --point: #1D4ED8;
-  --point-tint: #EEF3FF;
+  /* 색 — 무채색 5단계 (포인트 = gray-4, 틴트 = gray-1) */
   --gray-0: #FFFFFF;
-  --gray-1: #F3F4F6;
-  --gray-2: #E3E5E8;
-  --gray-3: #6B6B6B;
-  --gray-4: #1A1A1A;
-  /* type */
-  --fs-1: 17px;
-  --fs-2: 20px;
-  --fs-3: 24px;
-  --fw-regular: 400;
-  --fw-semibold: 600;
-  --fw-bold: 700;
-  /* space */
+  --gray-1: #F2F4F6;
+  --gray-2: #B0B8C1;
+  --gray-3: #4E5968;
+  --gray-4: #191F28;
+  --point: var(--gray-4);
+  --tint: var(--gray-1);
+
+  /* 글자 크기 5종 */
+  --fs-tab: 12px;
+  --fs-body: 17px;
+  --fs-row: 18px;
+  --fs-section: 20px;
+  --fs-title: 26px;
+
+  /* 여백 */
   --space-4: 4px;
   --space-8: 8px;
   --space-12: 12px;
@@ -31,213 +33,280 @@
   --space-24: 24px;
   --space-32: 32px;
   --space-40: 40px;
-  /* radius */
-  --radius-s: 6px;
-  --radius-m: 12px;
-  --radius-round: 999px;
-  /* shadow (bottom-sheet only) */
-  --shadow-sheet: 0 -8px 24px rgba(0, 0, 0, 0.12);
-  /* layout */
-  --tabbar-h: 68px;
-  --tap-min: 44px;
+
+  /* 모서리 */
+  --radius-badge: 6px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  /* 크기 */
+  --row-h: 64px;
+  --btn-h: 56px;
+  --tab-h: 64px;
+  --touch: 44px;
+  --icon: 24px;
+  --icon-circle: 40px;
 }
-*, *::before, *::after { box-sizing: border-box; }
-html, body, h1, h2, p, ul, li { margin: 0; padding: 0; }
-ul { list-style: none; }
-a { color: inherit; text-decoration: none; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 button, input, select, textarea { font: inherit; }
-html { background: var(--gray-1); }
+a { color: inherit; text-decoration: none; }
+
+html, body { background: var(--gray-1); }
 body {
-  width: 375px;
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-4);
+  max-width: 375px;
   min-height: 812px;
   margin: 0 auto;
-  background: var(--gray-1);
-  color: var(--gray-4);
-  font-family: "Pretendard", system-ui, sans-serif;
-  font-size: var(--fs-1);
-  font-weight: var(--fw-regular);
-  line-height: 1.45;
-  padding-bottom: var(--tabbar-h);
   overflow-x: hidden;
+  padding-top: var(--space-12);
+  padding-bottom: calc(var(--tab-h) + var(--btn-h) + var(--space-24) + var(--space-24));
 }
+
 .section {
   background: var(--gray-0);
+  border-radius: var(--radius-md);
+  margin: 0 var(--space-12) var(--space-12);
+  padding: var(--space-20);
+}
+
+/* 헤드라인 블록 */
+.hero { padding: var(--space-32) var(--space-20) var(--space-24); }
+.trip {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--gray-3);
   margin-bottom: var(--space-12);
 }
-/* app bar */
-.appbar {
-  padding: var(--space-16) var(--space-20);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: var(--space-12);
-  border-bottom: 1px solid var(--gray-2);
+.trip strong { font-weight: 700; color: var(--gray-4); }
+h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-12);
 }
-.appbar .trip { font-size: var(--fs-1); font-weight: var(--fw-bold); }
-.appbar .dates { font-size: var(--fs-1); color: var(--gray-3); }
-.appbar .dday { font-size: var(--fs-1); font-weight: var(--fw-semibold); color: var(--gray-3); white-space: nowrap; }
-/* headline */
-.hero { padding: var(--space-24) var(--space-20); }
-.hero h1 { font-size: var(--fs-3); font-weight: var(--fw-bold); line-height: 1.35; }
-.hero .sub { margin-top: var(--space-8); color: var(--gray-3); }
-.btn-primary {
-  margin-top: var(--space-20);
-  width: 100%;
-  min-height: 52px;
-  border: 0;
-  border-radius: var(--radius-m);
-  background: var(--point);
-  color: var(--gray-0);
-  font-weight: var(--fw-semibold);
-  cursor: pointer;
+.place {
+  font-size: var(--fs-row);
+  font-weight: 400;
+  color: var(--gray-3);
 }
-/* sections */
-.section-title {
-  padding: var(--space-20) var(--space-20) var(--space-8);
-  font-size: var(--fs-2);
-  font-weight: var(--fw-bold);
+
+/* 배지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--tint);
+  border-radius: var(--radius-badge);
+  padding: 0 var(--space-8);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  white-space: nowrap;
 }
-.list li + li { border-top: 1px solid var(--gray-2); }
+.badge-strong { color: var(--gray-4); font-weight: 700; }
+.badge-soft { color: var(--gray-3); font-weight: 600; }
+
+/* 목록 행 */
 .row {
   display: flex;
   align-items: center;
   gap: var(--space-12);
-  min-height: var(--tap-min);
-  padding: var(--space-16) var(--space-12) var(--space-16) var(--space-20);
+  min-height: var(--row-h);
+  padding: var(--space-12) 0;
 }
-.row-body { flex: 1; min-width: 0; }
-.row-date { font-weight: var(--fw-semibold); }
-.row-text { margin-top: var(--space-4); }
-.chev { flex: none; color: var(--gray-3); }
-.badge {
-  display: inline-block;
-  padding: 0 var(--space-8);
-  border-radius: var(--radius-s);
-  background: var(--gray-1);
+.row-main { flex: 1; min-width: 0; }
+.row-title {
+  font-size: var(--fs-row);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.row-meta { margin-top: var(--space-4); }
+.chev {
+  flex: none;
+  width: var(--icon);
+  height: var(--icon);
   color: var(--gray-3);
-  font-size: var(--fs-1);
-  font-weight: var(--fw-semibold);
-  white-space: nowrap;
 }
-/* tab bar */
-.tabbar {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 375px;
-  height: var(--tabbar-h);
-  background: var(--gray-0);
-  border-top: 1px solid var(--gray-2);
-  display: flex;
-  align-items: center;
-  gap: var(--space-8);
-  padding: 0 var(--space-12);
+.news .section-link { padding: var(--space-4) 0; }
+.news .row-title { margin-top: var(--space-8); }
+
+.section-title {
+  font-size: var(--fs-section);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: var(--space-4);
 }
-.tab {
-  flex: 1;
-  min-height: 52px;
+
+.date {
+  flex: none;
+  width: 64px;
+  align-self: flex-start;
+  padding-top: var(--space-4);
+}
+.date b { display: block; font-size: var(--fs-row); font-weight: 700; line-height: 1.3; }
+.date span { display: block; font-size: var(--fs-body); font-weight: 400; color: var(--gray-3); }
+.row-title.muted { color: var(--gray-3); font-weight: 600; }
+
+.icon-circle {
+  flex: none;
+  width: var(--icon-circle);
+  height: var(--icon-circle);
+  border-radius: var(--radius-pill);
+  background: var(--tint);
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--gray-4);
+}
+.icon-circle svg { width: var(--icon); height: var(--icon); }
+
+/* 하단 고정 버튼 */
+.cta-wrap {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: var(--tab-h);
+  max-width: 375px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-20);
+  background: var(--gray-1);
+}
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--btn-h);
+  border-radius: var(--radius-md);
+  background: var(--point);
+  color: var(--gray-0);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+/* 탭바 */
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  max-width: 375px;
+  margin: 0 auto;
+  height: var(--tab-h);
+  background: var(--gray-0);
+  border-top: 1px solid var(--gray-1);
+  display: flex;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: var(--space-4);
-  border: 1px solid transparent;
-  border-radius: var(--radius-m);
+  min-height: var(--touch);
   color: var(--gray-3);
-  font-size: var(--fs-1);
-  font-weight: var(--fw-semibold);
+  font-size: var(--fs-tab);
+  font-weight: 600;
+  line-height: 1.2;
 }
-.tab[aria-current="page"] {
-  border-color: var(--point);
-  background: var(--point-tint);
-  color: var(--point);
-}
-.tab svg { flex: none; }
+.tab svg { width: var(--icon); height: var(--icon); }
+.tab[aria-current="page"] { color: var(--gray-4); font-weight: 700; }
 </style>
 </head>
 <body>
 
-<header class="section appbar">
-  <div>
-    <p class="trip">엄마 환갑 교토·오사카 여행</p>
-    <p class="dates">12월 10일(목) ~ 14일(월) · 4박 5일</p>
-  </div>
-  <span class="dday">D-71</span>
-</header>
-
 <main>
+  <!-- ① 다음 모일 곳 -->
   <section class="section hero">
-    <h1>여권 유효기간을 확인해 주세요</h1>
-    <p class="sub">지은이가 부탁했어요 · 10월 15일까지</p>
-    <button type="button" class="btn-primary">확인했어요</button>
+    <p class="trip">제주 가족여행 · <strong>D-51</strong></p>
+    <h1>11월 20일 금요일 아침 8시 30분, 김포공항에서 만나요</h1>
+    <p class="place">김포공항 국내선 1층 대한항공 카운터 앞</p>
   </section>
 
+  <!-- ② 새 소식 -->
+  <section class="section news">
+    <a class="row section-link" href="parent-news.html">
+      <div class="row-main">
+        <span class="badge badge-strong">새 소식</span>
+        <p class="row-title">가는 비행기가 10:05로 바뀌었어요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <!-- ③ 여행 흐름 -->
   <section class="section">
     <h2 class="section-title">여행 흐름</h2>
-    <ul class="list">
-      <li><a class="row" href="#day1">
-        <div class="row-body">
-          <p class="row-date">12월 10일(목)</p>
-          <p class="row-text">인천 → 간사이 09:05 출발 · 교토 료칸 '하나야'</p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-      <li><a class="row" href="#day2">
-        <div class="row-body">
-          <p class="row-date">12월 11일(금)</p>
-          <p class="row-text">아라시야마 대나무숲 · 오후는 <span class="badge">정하는 중</span></p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-      <li><a class="row" href="#day3">
-        <div class="row-body">
-          <p class="row-date">12월 12일(토)</p>
-          <p class="row-text">교토 → 오사카 · 난바 '스위소텔'</p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-      <li><a class="row" href="#day4">
-        <div class="row-body">
-          <p class="row-date">12월 13일(일)</p>
-          <p class="row-text"><span class="badge">정하는 중</span></p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-      <li><a class="row" href="#day5">
-        <div class="row-body">
-          <p class="row-date">12월 14일(월)</p>
-          <p class="row-text">간사이 12:10 출발 → 인천 14:00</p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-    </ul>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/20</b><span>금</span></div>
+      <div class="row-main">
+        <p class="row-title">제주 도착 · 해비치 호텔</p>
+        <div class="row-meta"><span class="badge badge-strong">확정</span></div>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/21</b><span>토</span></div>
+      <div class="row-main">
+        <p class="row-title">섭지코지 산책 · 나머지는 정하는 중</p>
+        <div class="row-meta"><span class="badge badge-soft">정하는 중</span></div>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/22</b><span>일</span></div>
+      <div class="row-main">
+        <p class="row-title muted">정하는 중 · 11월 10일까지</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/23</b><span>월</span></div>
+      <div class="row-main">
+        <p class="row-title">집으로 돌아와요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
   </section>
 
+  <!-- ④ 내 준비물 -->
   <section class="section">
-    <h2 class="section-title">지난 소식</h2>
-    <ul class="list">
-      <li><a class="row" href="#news">
-        <div class="row-body">
-          <p>9월 30일 · 바뀐 점 3개</p>
-        </div>
-        <svg class="chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-      </a></li>
-    </ul>
+    <h2 class="section-title">내 준비물</h2>
+    <a class="row" href="my-tasks.html">
+      <span class="icon-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 11l2 2 4-4"/><path d="M9 17h6"/></svg>
+      </span>
+      <div class="row-main">
+        <p class="row-title">어머니 몫 2가지 중 1가지 남았어요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
   </section>
 </main>
 
-<nav class="tabbar" aria-label="주요 메뉴">
-  <a class="tab" href="#home" aria-current="page">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9v11h14V9"/><path d="M10 20v-6h4v6"/></svg>
-    홈
+<div class="cta-wrap">
+  <a class="cta" href="meet-point.html">모이는 곳 보기</a>
+</div>
+
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a class="tab" href="parent-home.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    여행
   </a>
-  <a class="tab" href="#schedule">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/></svg>
-    일정
+  <a class="tab" href="my-tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M4 12h16"/></svg>
+    준비물
   </a>
-  <a class="tab" href="#prep">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 12l2 2 4-4"/></svg>
-    내 준비
+  <a class="tab" href="parent-news.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+    소식
   </a>
 </nav>
 

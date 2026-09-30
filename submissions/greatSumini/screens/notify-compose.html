@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 소식 모아 보내기</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .lead { padding: var(--space-20) var(--space-20) var(--space-8); }
+  .lead .section-title { margin-bottom: 0; }
+  .check-row .row-main > span { display: block; }
+  .is-muted .row-title { color: var(--gray-2); }
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar">
+  <a class="appbar-btn left" href="planner-home.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>소식 모아 보내기</h1>
+</header>
+
+<main class="page">
+  <div class="lead">
+    <p class="section-title">부모님께 <span class="num">2건</span>을 보내요</p>
+  </div>
+
+  <section class="block is-list">
+    <h2 class="section-title">보낼 소식</h2>
+    <button class="check-row" type="button" aria-pressed="true">
+      <span class="check is-selected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <span class="row-main">
+        <span class="row-title">가는 비행기 09:10 → 10:05</span>
+        <span class="row-sub">대한항공 KE1203 · 11월 20일</span>
+      </span>
+    </button>
+    <button class="check-row" type="button" aria-pressed="true">
+      <span class="check is-selected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <span class="row-main">
+        <span class="row-title">섭지코지 산책 확정</span>
+        <span class="row-sub">11월 21일 토 14:00</span>
+      </span>
+    </button>
+  </section>
+
+  <section class="block is-list">
+    <h2 class="section-title">알리지 않는 수정</h2>
+    <div class="row is-muted">
+      <div class="row-main">
+        <p class="row-title">우도 배편·성산일출봉 순서 바꿈</p>
+        <p class="row-sub">후보라서 부모님 화면에 보이지 않아요</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <h2 class="section-title">받는 분</h2>
+    <div class="row">
+      <div class="row-main">
+        <p class="row-title">아버지 김영호 · 어머니 박정숙</p>
+      </div>
+      <span class="row-value">2명</span>
+    </div>
+  </section>
+</main>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="notify-sent.html">부모님께 보내기</a>
+</div>
+</body>
+</html>
