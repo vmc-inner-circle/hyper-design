@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "canvas-state.schema.json",
+  "title": "canvas-state.json — Excalidraw 전용 복원 데이터",
+  "description": "새로고침해도 사용자가 그린 것·옮긴 화면·옮긴 컴포넌트를 되살리기 위한 파일. 에이전트는 읽지 않는다. 렌더러를 바꾸면 이 파일만 바뀐다. 키 형식은 lib/ids.js",
+  "examples": [
+    {
+      "scene": [],
+      "files": {},
+      "moved": {
+        "home": [
+          120,
+          0
+        ]
+      },
+      "saved_at": "2026-09-28T23:30:00",
+      "components": {
+        "img:detail@mobile:item-date": {
+          "rel": [
+            16,
+            104
+          ],
+          "w": 350,
+          "h": 48
+        }
+      }
+    }
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scene": {
+      "description": "사용자가 그린 Excalidraw 요소 원본 (AI가 만든 요소 제외). 피드백 상자에 적은 글은 containerId로 panel:{screen}을 가리킨다",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "files": {
+      "description": "사용자가 넣은 이미지 (Excalidraw BinaryFiles, fileId → dataURL)",
+      "type": "object"
+    },
+    "moved": {
+      "description": "사용자가 옮긴 화면 그룹의 이동량 [dx, dy]. 화면(그룹) 단위 — 기기 칸은 함께 움직인다",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "propertyNames": {
+        "pattern": "^[a-z0-9-]+$"
+      }
+    },
+    "saved_at": {
+      "type": "string"
+    },
+    "components": {
+      "description": "원래와 달라진 컴포넌트 이미지만. 키는 img:{screen}@{device}:{data-id}, rel은 기기 칸 기준 위치 [x, y]",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^img:[a-z0-9-]+@[a-z]+:.+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "rel",
+          "w",
+          "h"
+        ],
+        "properties": {
+          "rel": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "w": {
+            "type": "number"
+          },
+          "h": {
+            "type": "number"
+          },
+          "deleted": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "저장할 때의 board.json round — 다르면 복원하지 않는다"
+    }
+  }
+}

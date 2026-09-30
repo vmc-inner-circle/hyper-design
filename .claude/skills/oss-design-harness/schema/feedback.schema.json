@@ -1,0 +1,323 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "feedback.schema.json",
+  "title": "feedback.json — 캔버스가 쓰고 에이전트가 읽는 피드백 (렌더러 중립)",
+  "description": "사용자가 보드에 남긴 표시를 '어느 화면·어느 기기·어느 요소에 무슨 말'로 풀어 둔 것. 에이전트는 이 파일만 읽는다. Excalidraw 복원 데이터는 canvas-state.json에 따로 있다.",
+  "examples": [
+    {
+      "board": "예시 서비스",
+      "items": [
+        {
+          "id": "a1",
+          "type": "comment",
+          "text": "날짜 글자가 작아서 잘 안 보여요",
+          "color": "#1e1e1e",
+          "on": {
+            "screen": "home",
+            "panel": true
+          }
+        },
+        {
+          "id": "a2",
+          "type": "arrow",
+          "text": "여기로 바로 가게",
+          "color": "#1971c2",
+          "from": {
+            "screen": "home",
+            "device": "mobile",
+            "dataId": "summary-card"
+          },
+          "to": {
+            "screen": "detail",
+            "device": "mobile",
+            "dataId": "item-date"
+          }
+        },
+        {
+          "id": "a3",
+          "type": "text",
+          "text": "PC에선 사이드바가 너무 넓어요",
+          "color": "#e03131",
+          "on": {
+            "screen": "home",
+            "device": "desktop",
+            "x": 120,
+            "y": 400,
+            "near": {
+              "dataId": "side-nav",
+              "distance": 12
+            }
+          }
+        },
+        {
+          "id": "img:detail@mobile:item-date",
+          "type": "move",
+          "dx": 0,
+          "dy": -56,
+          "on": {
+            "screen": "detail",
+            "device": "mobile",
+            "dataId": "item-date"
+          },
+          "to": {
+            "screen": "detail",
+            "device": "mobile",
+            "dataId": "item-status",
+            "x": 190,
+            "y": 128
+          }
+        }
+      ],
+      "renderChecks": [
+        {
+          "type": "touch-target",
+          "screen": "home",
+          "device": "mobile",
+          "dataId": "add-btn",
+          "detail": "40×40 < 44"
+        }
+      ],
+      "saved_at": "2026-09-28T23:30:00",
+      "discovered": [
+        {
+          "id": "checklist",
+          "file": "screens/checklist.html",
+          "title": "준비물 체크",
+          "from": "detail"
+        }
+      ]
+    }
+  ],
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "items"
+  ],
+  "properties": {
+    "board": {
+      "type": "string"
+    },
+    "saved_at": {
+      "type": "string"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "description": "comment = 피드백 상자에 적은 글 / text = 캔버스에 쓴 글 / arrow·line = from→to 연결·이동 / rectangle·ellipse·diamond·freedraw = 강조 / image = 참고 이미지 / move = 컴포넌트를 끌어 옮김 (on = 원래 요소, to = 옮긴 자리에 있던 요소) / resize = 컴포넌트 크기 변경 / remove = 컴포넌트 삭제",
+            "enum": [
+              "comment",
+              "text",
+              "arrow",
+              "line",
+              "rectangle",
+              "ellipse",
+              "diamond",
+              "freedraw",
+              "image",
+              "move",
+              "resize",
+              "remove"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "description": "글 또는 도형·화살표의 라벨"
+          },
+          "color": {
+            "type": "string"
+          },
+          "on": {
+            "$ref": "#/$defs/target"
+          },
+          "from": {
+            "$ref": "#/$defs/target"
+          },
+          "to": {
+            "$ref": "#/$defs/target"
+          },
+          "dx": {
+            "type": "integer",
+            "description": "move: 기기 칸 기준 가로 이동 px"
+          },
+          "dy": {
+            "type": "integer",
+            "description": "move: 세로 이동 px"
+          },
+          "scale": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "resize: [가로 배율, 세로 배율]"
+          }
+        }
+      }
+    },
+    "renderChecks": {
+      "description": "캔버스가 화면을 기기 크기로 열어 자동으로 찾은 문제. 사용자 피드백이 아니라 에이전트가 스스로 고칠 것",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "screen",
+          "device"
+        ],
+        "properties": {
+          "type": {
+            "enum": [
+              "overflow-x",
+              "touch-target",
+              "devices-mismatch",
+              "below-fold"
+            ]
+          },
+          "screen": {
+            "type": "string"
+          },
+          "device": {
+            "$ref": "#/$defs/device"
+          },
+          "dataId": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "discovered": {
+      "description": "board.json에 없지만 화면 안 링크로 찾아 보드에 자동으로 올린 페이지. 에이전트가 board.json에 넣을지 판단한다",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "file",
+          "from"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string",
+            "description": "처음 링크를 발견한 화면 id"
+          }
+        }
+      }
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "이 피드백이 나온 라운드 (board.json round)"
+    }
+  },
+  "$defs": {
+    "device": {
+      "enum": [
+        "mobile",
+        "tablet",
+        "desktop"
+      ]
+    },
+    "target": {
+      "description": "표시가 가리키는 대상. null이면 빈 캔버스 위. screen이 있으면 device도 있다 (피드백 상자 panel은 기기와 무관해서 예외)",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "screen": {
+              "type": "string"
+            },
+            "device": {
+              "$ref": "#/$defs/device"
+            },
+            "dataId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "가리킨 요소. 없으면 near를 본다"
+            },
+            "text": {
+              "type": "string",
+              "description": "요소 안 글자 일부 (확인용)"
+            },
+            "x": {
+              "type": "integer",
+              "description": "기기 칸 안 좌표 px"
+            },
+            "y": {
+              "type": "integer"
+            },
+            "near": {
+              "type": "object",
+              "description": "요소 밖 빈 곳이면 가장 가까운 요소",
+              "properties": {
+                "dataId": {
+                  "type": "string"
+                },
+                "distance": {
+                  "type": "integer"
+                }
+              }
+            },
+            "userElement": {
+              "type": "string",
+              "description": "사용자가 그린 다른 요소를 가리킴 (그 요소의 text 참고)"
+            },
+            "error": {
+              "type": "string"
+            },
+            "panel": {
+              "type": "boolean",
+              "description": "화면 아래 피드백 상자에 적은 글 — 그 화면 전체에 대한 피드백"
+            }
+          },
+          "if": {
+            "required": [
+              "screen"
+            ],
+            "not": {
+              "required": [
+                "panel"
+              ]
+            }
+          },
+          "then": {
+            "required": [
+              "device"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

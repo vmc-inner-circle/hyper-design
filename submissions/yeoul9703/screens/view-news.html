@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>새 소식 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans text-lg">
+  <header data-id="view-header" class="sticky top-0 z-10 bg-background border-b border-border px-4 pt-12 pb-3 flex items-center gap-2">
+    <a data-id="back-btn" data-back href="view-home.html" class="btn size-12" data-variant="ghost" data-size="icon" aria-label="뒤로"><i data-lucide="chevron-left"></i></a>
+    <h1 class="text-xl font-semibold">새 소식</h1>
+  </header>
+
+  <main class="px-4 pt-4 pb-10 flex flex-col gap-6">
+    <section data-id="news-latest" class="flex flex-col gap-2">
+      <h2 class="font-semibold">어제 · 9월 29일(화) 저녁 8시</h2>
+      <a data-id="news-1" href="view-day.html" class="item min-h-14 text-lg" data-variant="outline">
+        <div class="flex-1 min-w-0">
+          <p class="text-base text-muted-foreground">새로 정해졌어요</p>
+          <p class="text-lg font-semibold">셋째 날 오전 10시 카멜리아힐</p>
+        </div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+      <a data-id="news-2" href="view-day.html" class="item min-h-14 text-lg" data-variant="outline">
+        <div class="flex-1 min-w-0">
+          <p class="text-base text-muted-foreground">새로 정해졌어요</p>
+          <p class="text-lg font-semibold">첫째 날 오후 3시 서귀포 숙소 체크인</p>
+        </div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+    </section>
+
+    <section data-id="news-earlier" class="flex flex-col gap-2">
+      <h2 class="font-semibold">9월 24일(목) 저녁 8시</h2>
+      <a data-id="news-3" href="view-day.html" class="item min-h-14 text-lg" data-variant="outline">
+        <div class="flex-1 min-w-0">
+          <p class="text-base text-muted-foreground">시간이 바뀌었어요</p>
+          <p class="text-lg font-semibold">넷째 날 돌아오는 비행기</p>
+          <p class="text-base"><span class="line-through text-muted-foreground">오후 2시 20분</span> → 오후 3시 40분</p>
+        </div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+      <a data-id="news-4" href="view-day.html" class="item min-h-14 text-lg" data-variant="outline">
+        <div class="flex-1 min-w-0">
+          <p class="text-base text-muted-foreground">새로 정해졌어요</p>
+          <p class="text-lg font-semibold">첫째 날 아침 9시 10분 제주행 비행기</p>
+        </div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+    </section>
+
+    <p data-id="news-note" class="text-base text-muted-foreground">소식은 하루 한 번, 저녁 8시에 모아서 와요. 바뀐 게 없는 날은 오지 않아요.</p>
+  </main>
+</body>
+</html>

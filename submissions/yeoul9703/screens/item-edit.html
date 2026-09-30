@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile desktop">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>항목 고치기 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans lg:flex">
+  <aside data-id="side-nav" data-nav class="hidden lg:flex w-56 shrink-0 flex-col gap-1 border-r border-border bg-card p-4 min-h-screen">
+    <p class="px-3 pb-3 font-semibold">제주 가족여행</p>
+    <a data-id="nav-plan" href="plan.html" aria-current="page" class="btn justify-start font-semibold" data-variant="secondary"><i data-lucide="calendar-days"></i>일정</a>
+    <a data-id="nav-packing" href="packing.html" class="btn justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="list"></i>준비물</a>
+    <a data-id="nav-members" href="members.html" class="btn justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="users"></i>가족</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header data-id="app-header" class="sticky top-0 z-10 bg-background border-b border-border px-4 pt-12 pb-3 flex items-center gap-2 lg:static lg:pt-6 lg:px-8">
+      <a data-id="back-btn" data-back href="plan.html" class="btn size-11 lg:hidden" data-variant="ghost" data-size="icon" aria-label="일정으로"><i data-lucide="chevron-left"></i></a>
+      <div class="flex-1 min-w-0">
+        <h1 class="text-lg font-semibold lg:text-2xl">항목 고치기</h1>
+        <p class="text-sm text-muted-foreground">첫째 날 · 11월 12일(목)</p>
+      </div>
+    </header>
+
+    <div class="px-4 pt-4 pb-40 lg:px-8 lg:pb-10 lg:grid lg:grid-cols-3 lg:gap-8 lg:max-w-content">
+      <form data-id="item-form" class="flex flex-col gap-4 lg:col-span-2" onsubmit="return false">
+        <div class="field">
+          <label for="when-day">날짜</label>
+          <select id="when-day" class="select h-11 w-full">
+            <option selected>첫째 날 · 11월 12일(목)</option>
+            <option>둘째 날 · 11월 13일(금)</option>
+            <option>셋째 날 · 11월 14일(토)</option>
+            <option>넷째 날 · 11월 15일(일)</option>
+          </select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="field">
+            <label for="when-time">시각</label>
+            <input id="when-time" type="time" value="12:30" class="input h-11">
+          </div>
+          <div class="field">
+            <label for="kind">종류</label>
+            <select id="kind" class="select h-11 w-full">
+              <option>이동</option><option>숙박</option><option>활동</option><option selected>식사</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="what">무엇을</label>
+          <input id="what" type="text" value="점심 고기국수" class="input h-11">
+        </div>
+        <div class="field">
+          <label for="where">어디서 (가족 화면에 크게 보여요)</label>
+          <input id="where" type="text" value="" placeholder="예: 자매국수 제주공항점" aria-invalid="true" class="input h-11">
+          <p class="text-sm text-destructive">확정하려면 장소를 하나로 적어 주세요. 지금은 두 곳을 고민 중이에요.</p>
+        </div>
+        <div class="field">
+          <label for="memo">나만 보는 메모</label>
+          <textarea id="memo" class="textarea" rows="2">자매국수 또는 올래국수. 엄마가 줄 서는 걸 힘들어하셔서 대기 짧은 쪽으로</textarea>
+        </div>
+      </form>
+
+      <section data-id="status-choice" class="flex flex-col gap-2 mt-6 lg:mt-0">
+        <h2 class="font-semibold">확정했나요?</h2>
+        <label class="item border-dashed" data-variant="outline">
+          <input type="radio" name="status" class="input" checked>
+          <div class="flex-1 min-w-0">
+            <p class="font-medium flex items-center gap-2">후보 <span class="badge" data-variant="outline">후보</span></p>
+            <p class="text-sm text-muted-foreground">나만 봐요. 가족 화면에는 보이지 않고, 고쳐도 소식이 가지 않아요.</p>
+          </div>
+        </label>
+        <label class="item" data-variant="outline">
+          <input type="radio" name="status" class="input">
+          <div class="flex-1 min-w-0">
+            <p class="font-medium flex items-center gap-2">확정 <span class="badge">확정</span></p>
+            <p class="text-sm text-muted-foreground">가족 화면에 보이고, 오늘 저녁 8시 소식에 들어가요.</p>
+          </div>
+        </label>
+        <div data-id="pc-actions" class="hidden lg:flex justify-end gap-2 pt-6">
+          <a data-back href="plan.html" class="btn" data-variant="outline">취소</a>
+          <a href="plan.html" class="btn">저장</a>
+        </div>
+        <button type="button" class="btn h-11 mt-2 text-destructive lg:h-9" data-variant="ghost"><i data-lucide="trash-2"></i>이 항목 지우기</button>
+      </section>
+    </div>
+
+    <div data-id="bottom-bar" class="fixed bottom-0 inset-x-0 bg-card border-t border-border px-4 pt-3 pb-8 shadow-lg lg:hidden">
+      <a data-id="save-btn" href="plan.html" class="btn h-11 w-full">저장</a>
+    </div>
+  </div>
+</body>
+</html>

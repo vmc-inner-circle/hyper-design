@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>여행 흐름 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans text-lg">
+  <header data-id="view-top" class="px-4 pt-12 pb-2">
+    <h1 class="text-2xl font-semibold">제주 가족여행</h1>
+    <p class="text-base text-muted-foreground mt-1">11월 12일(목)~15일(일) · 출발까지 43일</p>
+  </header>
+
+  <main class="px-4 pt-3 pb-10 flex flex-col gap-5">
+    <section data-id="next-meet" class="card">
+      <section class="flex flex-col gap-1">
+        <p class="text-lg text-muted-foreground">처음 모이는 때·곳</p>
+        <p class="text-3xl font-semibold">11월 12일(목) 아침 8시</p>
+        <p class="text-xl">김포공항 국내선 3층<br>B카운터 앞</p>
+        <p class="text-base text-muted-foreground mt-1">9시 10분 제주행 비행기를 함께 타요</p>
+      </section>
+    </section>
+
+    <a data-id="news-line" href="view-news.html" class="item min-h-16 text-xl" data-variant="muted">
+      <i data-lucide="bell" class="text-primary"></i>
+      <div class="flex-1 min-w-0"><p class="text-xl font-semibold">어제 저녁 새 소식 2가지</p><p class="text-lg text-muted-foreground">셋째 날 일정이 정해졌어요</p></div>
+      <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+    </a>
+
+    <section data-id="day-flow" class="flex flex-col gap-2">
+      <h2 class="text-2xl font-semibold">날짜별 흐름</h2>
+      <a data-id="day-1" href="view-day.html" class="item min-h-16 text-xl" data-variant="outline">
+        <div class="flex-1 min-w-0"><p class="text-xl font-semibold">첫째 날 · 12일(목)</p><p class="text-lg text-muted-foreground">김포에서 제주로, 서귀포 숙소</p></div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+      <div data-id="day-2" class="item min-h-16 text-xl" data-variant="outline">
+        <div class="flex-1 min-w-0"><p class="text-xl font-semibold">둘째 날 · 13일(금)</p><p class="text-lg text-muted-foreground">이날 일정은 정해지면 알려 드릴게요</p></div>
+      </div>
+      <a data-id="day-3" href="view-day.html" class="item min-h-16 text-xl" data-variant="outline">
+        <div class="flex-1 min-w-0"><p class="text-xl font-semibold">셋째 날 · 14일(토)</p><p class="text-lg text-muted-foreground">카멜리아힐, 오후 5시 가족사진</p></div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+      <a data-id="day-4" href="view-day.html" class="item min-h-16 text-xl" data-variant="outline">
+        <div class="flex-1 min-w-0"><p class="text-xl font-semibold">넷째 날 · 15일(일)</p><p class="text-lg text-muted-foreground">오후 3시 40분 비행기로 김포</p></div>
+        <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+      </a>
+    </section>
+
+    <a data-id="packing-line" href="view-packing.html" class="item min-h-16 text-xl" data-variant="outline">
+      <i data-lucide="list" class="text-muted-foreground"></i>
+      <div class="flex-1 min-w-0"><p class="text-xl font-semibold">챙길 것 10가지</p><p class="text-lg text-muted-foreground">신분증, 바람막이, 평소 드시는 약</p></div>
+      <i data-lucide="chevron-right" class="text-muted-foreground"></i>
+    </a>
+
+    <p data-id="news-note" class="text-base text-muted-foreground">새로 정해지거나 바뀐 일정은 하루 한 번, 저녁 8시에 모아서 알려 드려요.</p>
+  </main>
+</body>
+</html>

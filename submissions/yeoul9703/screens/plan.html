@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile desktop">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>일정 짜기 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans lg:flex">
+  <aside data-id="side-nav" data-nav class="hidden lg:flex w-56 shrink-0 flex-col gap-1 border-r border-border bg-card p-4 min-h-screen">
+    <p class="px-3 pb-3 font-semibold">제주 가족여행</p>
+    <a data-id="nav-plan" href="plan.html" aria-current="page" class="btn justify-start font-semibold" data-variant="secondary"><i data-lucide="calendar-days"></i>일정</a>
+    <a data-id="nav-packing" href="packing.html" class="btn justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="list"></i>준비물</a>
+    <a data-id="nav-members" href="members.html" class="btn justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="users"></i>가족</a>
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <header data-id="app-header" class="sticky top-0 z-10 bg-background border-b border-border px-4 pt-12 pb-3 flex items-center gap-2 lg:static lg:pt-6 lg:px-8">
+      <div class="flex-1 min-w-0">
+        <h1 class="text-lg font-semibold lg:text-2xl">제주 가족여행</h1>
+        <p class="text-sm text-muted-foreground">11월 12일(목)~15일(일) · 출발까지 43일 · 확정 7 · 후보 6</p>
+      </div>
+      <a data-id="add-btn" href="item-edit.html" class="btn h-11 shrink-0 text-base lg:h-10"><i data-lucide="plus"></i>항목 더하기</a>
+    </header>
+
+    <nav data-id="day-chips" class="flex gap-2 overflow-x-auto px-4 py-3 lg:px-8" aria-label="날짜로 이동">
+      <a href="#day-1" class="btn h-11 shrink-0" data-variant="secondary">첫째 날 12일</a>
+      <a href="#day-2" class="btn h-11 shrink-0" data-variant="outline">둘째 날 13일</a>
+      <a href="#day-3" class="btn h-11 shrink-0" data-variant="outline">셋째 날 14일</a>
+      <a href="#day-4" class="btn h-11 shrink-0" data-variant="outline">넷째 날 15일</a>
+    </nav>
+
+    <div class="px-4 pb-32 lg:px-8 lg:pb-10 lg:max-w-content">
+
+      <div data-id="day-list" class="flex flex-col gap-6 lg:grid lg:grid-cols-2 lg:gap-8">
+        <section id="day-1" class="flex flex-col gap-2">
+          <h2 class="font-semibold">첫째 날 · 11월 12일(목)</h2>
+          <a data-id="item-1" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">09:10 김포 → 제주 비행기</p><p class="text-sm text-muted-foreground">김포공항 국내선 3층 08:00 모임</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-2" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">11:30 렌터카 받기</p><p class="text-sm text-muted-foreground">제주공항 렌터카하우스 5번 구역</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-3" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">12:30 점심 고기국수</p><p class="text-sm text-muted-foreground">자매국수 또는 올래국수</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a data-id="item-4" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">15:00 숙소 체크인</p><p class="text-sm text-muted-foreground">서귀포 바다정원 리조트</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-5" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">18:30 저녁 흑돼지</p><p class="text-sm text-muted-foreground">숙소에서 차로 10분 거리 두 곳</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a href="item-edit.html" class="btn h-11 justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="plus"></i>이날 항목 더하기</a>
+        </section>
+
+        <section id="day-2" class="flex flex-col gap-2">
+          <h2 class="font-semibold">둘째 날 · 11월 13일(금)</h2>
+          <p class="text-sm text-muted-foreground">확정한 항목이 없어서 가족 화면에는 "정해지면 알려 드릴게요"로 보여요.</p>
+          <a data-id="item-6" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">10:00 성산일출봉</p><p class="text-sm text-muted-foreground">오르막이 길어 우도와 고민 중</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a data-id="item-7" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">13:00 점심 해산물</p><p class="text-sm text-muted-foreground">성산항 근처</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a href="item-edit.html" class="btn h-11 justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="plus"></i>이날 항목 더하기</a>
+        </section>
+
+        <section id="day-3" class="flex flex-col gap-2">
+          <h2 class="font-semibold">셋째 날 · 11월 14일(토)</h2>
+          <a data-id="item-8" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">10:00 카멜리아힐</p><p class="text-sm text-muted-foreground">숙소에서 차로 25분</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-9" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">17:00 가족사진 촬영</p><p class="text-sm text-muted-foreground">중문 바닷가 사진관 · 흰 상의</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-10" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">19:00 숙소 바비큐</p><p class="text-sm text-muted-foreground">예약 가능 여부 확인 중</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a href="item-edit.html" class="btn h-11 justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="plus"></i>이날 항목 더하기</a>
+        </section>
+
+        <section id="day-4" class="flex flex-col gap-2">
+          <h2 class="font-semibold">넷째 날 · 11월 15일(일)</h2>
+          <a data-id="item-11" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">11:00 체크아웃</p><p class="text-sm text-muted-foreground">서귀포 바다정원 리조트</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a data-id="item-12" href="item-edit.html" class="item border-dashed" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">13:00 공항 가는 길 점심</p><p class="text-sm text-muted-foreground">애월 쪽 한 곳</p></div>
+            <span class="badge" data-variant="outline">후보</span>
+          </a>
+          <a data-id="item-13" href="item-edit.html" class="item" data-variant="outline">
+            <i data-lucide="grip-vertical" class="text-muted-foreground"></i>
+            <div class="flex-1 min-w-0"><p class="font-medium">15:40 제주 → 김포 비행기</p><p class="text-sm text-muted-foreground">14:30까지 렌터카 반납</p></div>
+            <span class="badge">확정</span>
+          </a>
+          <a href="item-edit.html" class="btn h-11 justify-start text-muted-foreground" data-variant="ghost"><i data-lucide="plus"></i>이날 항목 더하기</a>
+        </section>
+      </div>
+    </div>
+
+
+    <nav data-id="plan-tab-bar" data-nav class="fixed bottom-0 inset-x-0 z-10 grid grid-cols-3 bg-card border-t border-border pb-8 lg:hidden">
+      <a data-id="tab-plan" href="plan.html" aria-current="page" class="btn h-14 flex-col gap-1 text-xs text-foreground font-semibold rounded-none" data-variant="ghost"><i data-lucide="calendar-days"></i><span>일정</span></a>
+      <a data-id="tab-packing" href="packing.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="list"></i><span>준비물</span></a>
+      <a data-id="tab-members" href="members.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="users"></i><span>가족</span></a>
+    </nav>
+  </div>
+</body>
+</html>
