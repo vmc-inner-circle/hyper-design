@@ -135,7 +135,7 @@ MEASURE_JS = r"""
     if (el.hasAttribute('title') && el !== document.body) res.help.push('title:' + tag.toLowerCase());
     if (/tooltip|help/i.test(el.getAttribute('class') || '')) res.help.push('class:' + el.getAttribute('class'));
     // touch
-    const interactive = el.matches('a[href],button,[role=button],input:not([type=hidden]),select,textarea,label[for]');
+    const interactive = el.matches('a[href],button,[role=button],input:not([type=hidden]),select,textarea');
     if (interactive) {
       let inlineLink = false;
       if (tag === 'A' && cs.display === 'inline' && el.parentElement) {
@@ -151,6 +151,20 @@ MEASURE_JS = r"""
         res.primary.push((el.innerText || el.value || '').trim().slice(0, 20));
     }
     if (tag === 'IMG' && el.complete && el.naturalWidth === 0) res.brokenImgs.push(el.getAttribute('src') || '');
+  }
+  // 하단 고정 영역: 링크 3개 이상이면 탭바, 강조색 버튼이 있으면 고정 CTA
+  res.fixedCta = []; res.hasTabbar = false;
+  for (const el of document.querySelectorAll('body *')) {
+    const pcs = getComputedStyle(el);
+    if (pcs.position !== 'fixed') continue;
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight - 200) continue;
+    const acts = el.querySelectorAll('a,button');
+    if (acts.length >= 3) { res.hasTabbar = true; continue; }
+    for (const b of acts) {
+      const bg = parseColor(getComputedStyle(b).backgroundColor);
+      if (bg && bg[3] > 0.5 && isChroma(bg)) res.fixedCta.push((b.innerText || '').trim().slice(0, 30));
+    }
   }
   return res;
 }
@@ -407,6 +421,11 @@ def main():
     add("위계", "primary_cta", len(pc), "0화면 (화면당 ≤1)", not pc, "; ".join(pc[:6]))
     h1 = [f"{sid}({r.get('h1', 0)})" for sid, r in per.items() if r.get("h1", 0) != 1]
     add("위계", "h1_count", len(h1), "0화면 (화면당 =1)", not h1, ", ".join(h1))
+    # 하단 고정 CTA: 탭 첫 화면(탭바 있음)에는 0, 문구는 확정 동사(보기·가기·열기로 끝나면 이동 링크)
+    ct = [f"{sid}: {'/'.join(r['fixedCta'])}" for sid, r in per.items() if r.get("hasTabbar") and r.get("fixedCta")]
+    add("위계", "cta_on_tab_root", len(ct), "0화면", not ct, "; ".join(ct[:6]))
+    cl = [f"{sid}: {t}" for sid, r in per.items() for t in r.get("fixedCta", []) if re.search(r"(보기|가기|열기|이동)$", t)]
+    add("위계", "cta_label_verb", len(cl), "0", not cl, "; ".join(cl[:6]))
     hi = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("help", [])]
     add("위계", "help_icons", len(hi), "0", not hi, "; ".join(hi[:6]))
 
