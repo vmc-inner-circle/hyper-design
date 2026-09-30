@@ -1,0 +1,162 @@
+<!doctype html>
+<!-- 프로토타입 보기 페이지 템플릿. 직접 고치지 않는다 — make_prototype.py가 board.json을 넣어 design/index.html로 만든다. -->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>프로토타입</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root { --bg:#f6f6f7; --panel:#fff; --line:#e4e4e7; --text:#18181b; --muted:#71717a; --accent:#18181b; --soft:#f4f4f5; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; }
+  body { font-family:"Pretendard Variable",Pretendard,system-ui,sans-serif; background:var(--bg); color:var(--text); display:flex; flex-direction:column; }
+  header { display:flex; align-items:center; gap:16px; padding:12px 20px; background:var(--panel); border-bottom:1px solid var(--line); }
+  header h1 { font-size:16px; font-weight:600; margin:0; flex:1; }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .seg button { border:0; background:transparent; padding:8px 14px; font:inherit; font-size:14px; cursor:pointer; color:var(--muted); min-height:36px; }
+  .seg button[aria-pressed="true"] { background:var(--accent); color:#fff; }
+  .seg button:disabled { opacity:.35; cursor:not-allowed; }
+  .wrap { flex:1; display:flex; min-height:0; }
+  aside { width:320px; flex:none; overflow:auto; background:var(--panel); border-right:1px solid var(--line); padding:16px; }
+  .flow { margin-bottom:20px; }
+  .flow h2 { font-size:12px; font-weight:600; color:var(--muted); margin:0 0 4px; }
+  .flow p { font-size:14px; margin:0 0 8px; line-height:1.45; }
+  .steps { display:flex; flex-direction:column; gap:4px; }
+  .steps a { display:flex; gap:8px; align-items:center; padding:8px 10px; border-radius:8px; text-decoration:none; color:var(--text); font-size:14px; min-height:40px; }
+  .steps a:hover { background:var(--soft); }
+  .steps a.on { background:var(--accent); color:#fff; }
+  .steps a .n { width:22px; height:22px; flex:none; border-radius:999px; border:1px solid currentColor; font-size:12px; display:grid; place-items:center; }
+  .steps a .d { margin-left:auto; font-size:11px; opacity:.6; }
+  main { flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; overflow:auto; padding:20px; gap:14px; }
+  .info { width:100%; max-width:1000px; display:flex; align-items:flex-start; gap:12px; }
+  .info .t { flex:1; }
+  .info h3 { margin:0; font-size:18px; }
+  .info p { margin:4px 0 0; color:var(--muted); font-size:14px; line-height:1.45; }
+  .nav { display:flex; gap:6px; }
+  .nav button, .nav a { border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:8px 12px; font:inherit; font-size:14px; cursor:pointer; color:var(--text); text-decoration:none; min-height:36px; }
+  .nav button:disabled { opacity:.35; cursor:not-allowed; }
+  .stage { flex:none; position:relative; }
+  .device { background:#111; border-radius:44px; padding:12px; box-shadow:0 12px 40px rgba(0,0,0,.15); }
+  .device iframe { display:block; border:0; border-radius:32px; background:#fff; width:390px; height:844px; }
+  .desk { background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden; box-shadow:0 12px 40px rgba(0,0,0,.08); }
+  .desk .bar { height:28px; background:var(--soft); border-bottom:1px solid var(--line); display:flex; align-items:center; gap:6px; padding:0 10px; }
+  .desk .bar i { width:10px; height:10px; border-radius:999px; background:var(--line); display:block; }
+  .desk .vp { overflow:hidden; }
+  .desk iframe { display:block; border:0; width:1280px; height:800px; transform-origin:0 0; background:#fff; }
+  .hint { font-size:12px; color:var(--muted); }
+  @media (max-width: 900px) { aside { display:none; } }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">프로토타입</h1>
+  <div class="seg" role="group" aria-label="기기">
+    <button id="b-mobile" aria-pressed="true">모바일</button>
+    <button id="b-desktop" aria-pressed="false">PC</button>
+  </div>
+</header>
+<div class="wrap">
+  <aside>
+    <div id="flows"></div>
+    <div class="flow">
+      <h2>모든 화면</h2>
+      <div class="steps" id="all"></div>
+    </div>
+  </aside>
+  <main>
+    <div class="info">
+      <div class="t"><h3 id="s-title"></h3><p id="s-purpose"></p></div>
+      <div class="nav">
+        <button id="prev">← 이전</button>
+        <button id="next">다음 →</button>
+        <a id="open" target="_blank" rel="noopener">새 창</a>
+      </div>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="hint">화면 안의 버튼을 눌러 보세요 — 실제로 다음 화면으로 넘어갑니다.</div>
+  </main>
+</div>
+<script id="board-data" type="application/json">__BOARD_JSON__</script>
+<script>
+(() => {
+  const board = JSON.parse(document.getElementById("board-data").textContent);
+  const screens = board.screens || [];
+  const byId = Object.fromEntries(screens.map(s => [s.id, s]));
+  const byFile = Object.fromEntries(screens.map(s => [s.file.split("/").pop(), s]));
+  const devOf = s => (s && (s.devices || board.devices)) || ["mobile"];
+  const flows = (board.flows || []).filter(f => (f.steps || []).some(id => byId[id]));
+  const $ = id => document.getElementById(id);
+  document.title = $("title").textContent = board.title || "프로토타입";
+
+  let cur = { flow: flows[0] ? 0 : -1, step: 0, id: flows[0] ? flows[0].steps[0] : (screens[0] || {}).id, device: "mobile" };
+  const link = (s, label, n, onclick) => {
+    const a = document.createElement("a");
+    a.href = s.file; a.target = "view"; a.dataset.id = s.id;
+    a.innerHTML = (n ? `<span class="n">${n}</span>` : "") + `<span></span>` + (devOf(s).includes("desktop") ? `<span class="d">+PC</span>` : "");
+    a.children[n ? 1 : 0].textContent = label;
+    a.addEventListener("click", e => { e.preventDefault(); onclick(); });
+    return a;
+  };
+  flows.forEach((f, fi) => {
+    const box = document.createElement("div"); box.className = "flow";
+    box.innerHTML = `<h2></h2><p></p><div class="steps"></div>`;
+    box.querySelector("h2").textContent = `흐름 ${f.id || fi + 1}`;
+    box.querySelector("p").textContent = f.title || "";
+    f.steps.filter(id => byId[id]).forEach((id, si) =>
+      box.querySelector(".steps").append(link(byId[id], byId[id].title || id, si + 1, () => go({ flow: fi, step: si, id }))));
+    $("flows").append(box);
+  });
+  screens.forEach(s => $("all").append(link(s, s.title || s.id, 0, () => go({ flow: -1, step: 0, id: s.id }))));
+
+  let frame;
+  function info() {  // 제목·목적·이전/다음·목록 강조 — 기기 틀은 건드리지 않는다
+    const s = byId[cur.id]; if (!s) return false;
+    const canPC = devOf(s).includes("desktop");
+    if (!canPC) cur.device = "mobile";
+    $("b-desktop").disabled = !canPC;
+    $("b-mobile").setAttribute("aria-pressed", cur.device === "mobile");
+    $("b-desktop").setAttribute("aria-pressed", cur.device === "desktop");
+    $("s-title").textContent = s.title || s.id;
+    $("s-purpose").textContent = s.purpose || "";
+    $("open").href = s.file;
+    const f = flows[cur.flow];
+    $("prev").disabled = !f || cur.step <= 0;
+    $("next").disabled = !f || cur.step >= f.steps.length - 1;
+    document.querySelectorAll(".steps a").forEach(a => a.classList.toggle("on",
+      a.dataset.id === cur.id && (a.closest("#all") ? cur.flow === -1 : a.closest(".flow") === $("flows").children[cur.flow])));
+    return s;
+  }
+  function render() {  // 기기 틀을 새로 그리고 현재 화면을 연다
+    const s = info(); if (!s) return;
+    const st = $("stage"); st.innerHTML = "";
+    if (cur.device === "mobile") {
+      st.innerHTML = `<div class="device"><iframe name="view" title="화면"></iframe></div>`;
+    } else {
+      const w = Math.min(1280, st.parentElement.clientWidth - 40), k = w / 1280;
+      st.innerHTML = `<div class="desk"><div class="bar"><i></i><i></i><i></i></div><div class="vp" style="width:${w}px;height:${800 * k}px"><iframe name="view" title="화면" style="transform:scale(${k})"></iframe></div></div>`;
+    }
+    frame = st.querySelector("iframe");
+    frame.addEventListener("load", sync);
+    frame.src = s.file;
+  }
+  function sync() {  // 화면 안 링크로 넘어가면 옆 목록·제목을 따라 바꾼다 (파일로 열면 브라우저가 막을 수 있음 — 그때는 그대로 둔다)
+    let name; try { name = frame.contentWindow.location.pathname.split("/").pop(); } catch { return; }
+    const s = byFile[name]; if (!s || s.id === cur.id) return;
+    const f = flows[cur.flow], si = f ? f.steps.indexOf(s.id) : -1;
+    if (si >= 0) cur.step = si;
+    else { const fi = flows.findIndex(x => x.steps.includes(s.id)); cur.flow = fi; cur.step = fi >= 0 ? flows[fi].steps.indexOf(s.id) : 0; }
+    cur.id = s.id;
+    if (!devOf(s).includes(cur.device)) render(); else info();
+  }
+  function go(n) { Object.assign(cur, n); render(); }
+  $("b-mobile").onclick = () => go({ device: "mobile" });
+  $("b-desktop").onclick = () => go({ device: "desktop" });
+  $("prev").onclick = () => { const f = flows[cur.flow]; go({ step: cur.step - 1, id: f.steps[cur.step - 1] }); };
+  $("next").onclick = () => { const f = flows[cur.flow]; go({ step: cur.step + 1, id: f.steps[cur.step + 1] }); };
+  addEventListener("resize", () => cur.device === "desktop" && render());
+  render();
+})();
+</script>
+</body>
+</html>
