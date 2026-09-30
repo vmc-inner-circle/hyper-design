@@ -79,8 +79,9 @@ def extend_roles(c, notes, S=None, P=None, mono=False):
         if brand_chroma and hue_gap(fg, brand) < 25:
             if name == "warning":           # 주황 브랜드 → 주의는 노랑 쪽으로
                 fg, tint, tint_text = from_scale(None, hex2rgb("#C9A100")); notes.append("주의색이 브랜드와 겹쳐 노랑 쪽으로 이동")
-            else:                           # 파랑 브랜드의 정보, 초록 브랜드의 성공 → 무채색으로
-                fg, tint, tint_text = c["text2"], bg, c["text1"]; notes.append(f"{name}색이 브랜드와 겹쳐 무채색 배지로")
+            else:                           # 파랑 브랜드의 정보 → 보라, 초록 브랜드의 성공 → 청록 (무채색은 '후보' 회색 배지와 겹친다)
+                alt = {"info": "#7B61FF", "success": "#0E9F8E"}[name]
+                fg, tint, tint_text = from_scale(None, hex2rgb(alt)); notes.append(f"{name}색이 브랜드와 겹쳐 {alt} 쪽으로 이동")
         out[name], out[name + "_tint"], out[name + "_tint_text"] = fg, tint, tint_text
     out["danger_tint_text"] = darken_until(c["danger"], c["danger_tint"], 4.5)
     out["danger_icon"] = brand_chroma and hue_gap(c["danger"], brand) < 25

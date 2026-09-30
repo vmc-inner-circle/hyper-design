@@ -16,7 +16,7 @@ button, input, select, textarea { font: inherit; color: inherit; letter-spacing:
 button { background: none; border: 0; cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
-svg { display: block; }
+svg { display: block; width: 24px; height: 24px; flex: none; }   /* 크기 없는 인라인 아이콘이 커지지 않게 — 부품별 규칙이 덮어쓴다 */
 
 /* ── 화면 골격 ───────────────────────────── */
 /* 하단 고정 CTA(.cta)는 폼·확인·결정·결과 화면에만. 탭 첫 화면(.has-tab)에는 두지 않는다. */
@@ -76,6 +76,7 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .badge.is-success { background: var(--c-success-tint); color: var(--c-success-tint-text); }   /* 완료 */
 
 /* 버튼 */
+.btn svg, .done svg, .block-note svg { width: 20px; height: 20px; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--stack-s); height: var(--h-btn); padding: 0 var(--block-pad); border-radius: var(--r-m); font-size: var(--fs-strong); font-weight: 600; }
 .btn.primary { background: var(--c-brand); color: var(--c-on-brand); }
 .btn.primary:active { background: var(--c-brand-pressed); }

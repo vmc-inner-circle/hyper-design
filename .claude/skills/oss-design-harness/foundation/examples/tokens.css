@@ -22,7 +22,7 @@
   /* 의미색 — 확정(브랜드)·바뀜(주의)·안내(정보)·완료(성공)가 같은 색이 되지 않게 */
   --c-success: #137B5E; --c-success-tint: #E6F8F3; --c-success-tint-text: #137B5E;
   --c-warning: #B94100; --c-warning-tint: #FFF8E1; --c-warning-tint-text: #B94100;
-  --c-info: #495056; --c-info-tint: #F1F3F5; --c-info-tint-text: #000000;
+  --c-info: #7257FF; --c-info-tint: #F2EFFF; --c-info-tint-text: #6A4DFF;
 
   /* 상호작용·비활성·겹침 */
   --c-brand-pressed: #1583DB;

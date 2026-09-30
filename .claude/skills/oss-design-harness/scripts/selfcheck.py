@@ -51,6 +51,9 @@ for s in S:
     if EMOJI.search(h): errs.append(f"{f.name}: 이모지 문자")
     if PASSIVE.search(re.sub(r"<[^>]+>", " ", h)): errs.append(f"{f.name}: 수동적 호칭(보기만·읽기 전용·게스트)")
     if re.search(r'\stitle="', h): errs.append(f"{f.name}: title 속성(툴팁)")
+    cards = re.findall(r'<section class="block">\s*<p class="(?:info|block-note)">(?:(?!</section>).)*?</p>\s*(?:<button[^>]*>[^<]*</button>\s*)?</section>', h, re.S)
+    if len(cards) > 1: errs.append(f"{f.name}: 설명 카드(설명 한 줄만 든 블록) {len(cards)}개 — 설명이 필요한 구조라는 신호(화면당 1개)")
+    if re.search(r'class="(?:info|block-note)"[^>]*>(?:(?!</p>).)*누르면', h, re.S): errs.append(f"{f.name}: 조작법 설명('~를 누르면') — 구조로 이해시킨다")
     if 'class="cta"' in h and 'class="tabbar"' in h: errs.append(f"{f.name}: 탭 첫 화면에 하단 고정 CTA")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")

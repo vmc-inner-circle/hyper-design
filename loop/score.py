@@ -344,7 +344,12 @@ def main():
                 page.wait_for_timeout(150)
                 r = page.evaluate(MEASURE_JS)
                 if shots:
-                    page.screenshot(path=str(shots / f"{f.stem}.png"), full_page=True)
+                    # 폰처럼 찍는다: 첫 화면 + 스크롤 끝. full_page 한 장은 고정 버튼·탭바를 본문 중간(812px)에 찍어
+                    # "버튼이 내용을 가린다"는 착시를 만든다(v8·v9 평가에서 반복된 오탐).
+                    page.screenshot(path=str(shots / f"{f.stem}.png"))
+                    if page.evaluate("document.documentElement.scrollHeight") > 812 + 8:
+                        page.evaluate("window.scrollTo(0, document.documentElement.scrollHeight)"); page.wait_for_timeout(150)
+                        page.screenshot(path=str(shots / f"{f.stem}-end.png"))
             except Exception as e:
                 r = None
                 errs.append(f"측정 실패: {e}"[:120])
