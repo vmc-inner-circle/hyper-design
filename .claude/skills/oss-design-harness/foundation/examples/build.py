@@ -51,6 +51,9 @@ A = "../assets/fluent/"
 def art(n): return f'<span class="row-art"><img src="{A}{n}.svg" alt=""></span>'
 def avatar(n): return f'<span class="avatar"><img src="{A}{n}.svg" alt=""></span>'
 def avatars(*ns): return '<span class="avatars" aria-hidden="true">' + "".join(avatar(n) for n in ns) + "</span>"
+def todo(title, sub, n, done=False):
+    chk = f'<button class="check" role="checkbox" aria-checked="{"true" if done else "false"}" aria-label="{title} 챙김"><span>{ic("done")}</span></button>'
+    return row(title, sub, None, art(n), cls="is-done" if done else "", trail=chk)
 def info_art(n, text): return f'<p class="info"><img src="{A}{n}.svg" alt=""><span>{text}</span></p>'
 def when(a, b=""): return f'<span class="row-date">{a}{"<br>" + b if b else ""}</span>'
 def info(n, text): return f'<p class="info">{ic(n)}<span>{text}</span></p>'
@@ -92,9 +95,9 @@ S["home-d7"] = ("홈 · 출발 3일 전", "everyone", "홈 — 시기마다 맨 
     <div class="block-head"><h2 class="h2">챙길 것 1가지 남았어요</h2></div>
     {info_art("weather", "제주 낮 17도, 바람이 불어요. 얇은 겉옷을 챙기세요.")}
     <div>
-    {row("신분증", "", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("혈압약 4일치", "", "checklist.html", lead("circle"))}
+    {todo("신분증", "", "idcard", True)}
+    {todo("편한 운동화", "하루 30분 정도 걸어요", "shoe", True)}
+    {todo("혈압약 4일치", "", "pill")}
     </div>
   </section>
   {flow("day.html")}
@@ -187,9 +190,9 @@ S["item-edit--error"] = ("일정 고치기 · 시간 없음", "editor", "일정�
 S["checklist"] = ("내가 챙길 것", "everyone", "홈에서 들어가는 곳", f'''{appbar("내가 챙길 것", "home.html")}
 <main class="page">
   <section class="block is-list">
-    {row("신분증", "", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("혈압약 4일치", "누르면 챙겼다고 표시돼요", "#", lead("circle"), trail="")}
+    {todo("신분증", "", "idcard", True)}
+    {todo("편한 운동화", "하루 30분 정도 걸어요", "shoe", True)}
+    {todo("혈압약 4일치", "", "pill")}
   </section>
   <section class="block">
     {info_art("umbrella", "우산, 상비약, 충전기는 지은이가 챙겨요")}
@@ -200,15 +203,15 @@ S["tasks"] = ("할 일 나누기", "editor", "일정을 짜는 사람에게만 �
 <main class="page">
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">남은 것 2가지</h2></div>
-    {row("렌터카 예약", "민수 · 11월 1일까지", "#", lead("circle"))}
-    {row("혈압약 4일치", "어머니", "#", lead("circle"))}
+    {todo("렌터카 예약", "민수 · 11월 1일까지", "car")}
+    {todo("혈압약 4일치", "어머니", "pill")}
     <a class="row is-add" href="#">{lead("plus")}<div class="row-main"><p class="row-title">할 일 추가</p></div></a>
   </section>
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">끝낸 것 3가지</h2></div>
-    {row("항공권 예약", "지은", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("호텔 예약", "지은", None, lead("done", "is-done"), cls="is-done", trail="")}
-    {row("신분증 확인", "아버지", None, lead("done", "is-done"), cls="is-done", trail="")}
+    {todo("항공권 예약", "지은", "plane", True)}
+    {todo("호텔 예약", "지은", "hotel", True)}
+    {todo("신분증 확인", "아버지", "idcard", True)}
   </section>
 </main>''', "")
 
