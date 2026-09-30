@@ -150,9 +150,14 @@ MEASURE_JS = r"""
       }
       if (el.matches('button,a,[role=button],input[type=submit],input[type=button]') && !el.matches('[aria-pressed=true],[aria-selected=true],[aria-checked=true],[aria-current],.is-selected,.selected') && bg && isChroma(bg))
         res.primary.push((el.innerText || el.value || '').trim().slice(0, 20));
+      if (el.matches('button,a,[role=button]') && bg && isChroma(bg) && (el.innerText||'').trim()) {
+        const fg = parseColor(cs.color); const lum = c => (0.2126*c[0] + 0.7152*c[1] + 0.0722*c[2]) / 255;
+        if (fg && lum(fg) < 0.35 && lum(bg) < 0.75) { res.darkOnFill = res.darkOnFill || []; res.darkOnFill.push((el.innerText||'').trim().slice(0, 16)); }
+      }
     }
     if (tag === 'IMG' && el.complete && el.naturalWidth === 0) res.brokenImgs.push(el.getAttribute('src') || '');
   }
+  res.text = (document.body.innerText || '').slice(0, 5000);
   // 하단 고정 영역: 링크 3개 이상이면 탭바, 강조색 버튼이 있으면 고정 CTA
   res.fixedCta = []; res.hasTabbar = false;
   for (const el of document.querySelectorAll('body *')) {
@@ -390,7 +395,7 @@ def main():
         for h in re.findall(r"#([0-9a-fA-F]{6})\b", tf.read_text(encoding="utf-8")):
             tok.add(tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)))
     if tok:
-        off = sorted({c[:3] for c in colors if is_chroma(c) and min(sum((a - b) ** 2 for a, b in zip(c[:3], t)) for t in tok) > 36})
+        off = sorted({tuple(c[:3]) for c in colors if is_chroma(c) and min(sum((a - b) ** 2 for a, b in zip(c[:3], t)) for t in tok) > 36})
         add("일관성", "off_token_colors", len(off), "0", not off, " ".join(f"rgb{x}" for x in off[:6]))
     # 의미 배지: 서로 다른 뜻의 배지 3개 이상이 한 색이면 실패(확정·바뀜·궁금해요가 전부 브랜드 틴트였던 문제)
     bmap = {}
@@ -451,6 +456,35 @@ def main():
     add("위계", "cta_label_verb", len(cl), "0", not cl, "; ".join(cl[:6]))
     hi = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("help", [])]
     add("위계", "help_icons", len(hi), "0", not hi, "; ".join(hi[:6]))
+    # 수동적 호칭(역할로 사람을 낮추는 말) — design-criteria §12
+    PASSIVE = re.compile(r"보기만|읽기 전용|게스트|확인만 하")
+    pv = [f"{sid}: {m.group(0)}" for sid, r in per.items() for m in PASSIVE.finditer(r.get("text", ""))]
+    add("위계", "passive_role_words", len(pv), "0", not pv, "; ".join(pv[:6]))
+    # 채워진 유채색 버튼 위 짙은 글자 — 대비는 넘어도 버튼답지 않다(아주 밝은 색 버튼은 예외)
+    dk = [f"{sid}: {t}" for sid, r in per.items() for t in (r.get("darkOnFill") or [])]
+    add("위계", "dark_text_on_filled_button", len(dk), "0", not dk, "; ".join(dk[:6]))
+    # 캔버스(index.html) 단순성 — success-criteria §9
+    idx = OUT / "index.html"
+    if idx.exists():
+        ih = idx.read_text(encoding="utf-8", errors="ignore")
+        sc = re.findall(r"scale\(([\d.]+)\)", ih)
+        scale = min(float(x) for x in sc) if sc else 1.0
+        add("캔버스", "canvas_scale", scale, ">=0.7", scale >= 0.7)
+        head = re.search(r"<header.*?</header>", ih, re.S)
+        nbtn = len(re.findall(r"<button\b", head.group(0))) if head else 0
+        add("캔버스", "canvas_controls", nbtn, "<=3", nbtn <= 3)
+        ext = re.findall(r"<script[^>]+src=[\"']https?://", ih)
+        add("캔버스", "canvas_external_libs", len(ext), "0", not ext)
+        try:
+            mm = json.loads((OUT / "screens.json").read_text(encoding="utf-8"))
+            nb = sum(len(x.get("branches", []) or []) for x in mm.get("screens", []))
+            ng = len({x.get("group") for x in mm.get("screens", [])})
+            na = len(re.findall(r"<path d=\"M", ih))
+            add("캔버스", "canvas_arrows", na, f"<= 갈래 {nb} + 흐름 {ng}", na <= nb + ng)
+            longpol = [x["id"] for x in mm.get("screens", []) if len(x.get("policies", []) or []) > 3 and "<details>" not in ih]
+            add("캔버스", "canvas_policy_lines", len(longpol), "0 (3줄 초과는 접기)", not longpol)
+        except Exception as e:
+            add("캔버스", "canvas_arrows", "n/a", "", False, str(e))
 
     # 슬롭
     em = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("emoji", [])]
@@ -467,7 +501,7 @@ def main():
 
     # ---------- 출력 ----------
     order = ["완결성", "상태", "일관성", "가독성", "위계", "슬롭"]
-    checks.sort(key=lambda c: order.index(c["group"]))
+    checks.sort(key=lambda c: order.index(c["group"]) if c["group"] in order else len(order))
     group = None
     for c in checks:
         if c["group"] != group:

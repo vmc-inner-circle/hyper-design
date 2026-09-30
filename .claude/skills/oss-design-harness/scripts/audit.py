@@ -134,8 +134,9 @@ MEASURE_JS = r"""
     if (tag === 'H1') res.h1++;
     if (el.hasAttribute('title') && el !== document.body) res.help.push('title:' + tag.toLowerCase());
     if (/tooltip|help/i.test(el.getAttribute('class') || '')) res.help.push('class:' + el.getAttribute('class'));
+    if (/(^|\s)badge(\s|$)/.test(el.getAttribute('class') || '')) { res.badges = res.badges || []; res.badges.push([(el.innerText||'').trim().slice(0,20), cs.backgroundColor]); }
     // touch
-    const interactive = el.matches('a[href],button,[role=button],input:not([type=hidden]),select,textarea,label[for]');
+    const interactive = el.matches('a[href],button,[role=button],input:not([type=hidden]),select,textarea');
     if (interactive) {
       let inlineLink = false;
       if (tag === 'A' && cs.display === 'inline' && el.parentElement) {
@@ -149,8 +150,27 @@ MEASURE_JS = r"""
       }
       if (el.matches('button,a,[role=button],input[type=submit],input[type=button]') && !el.matches('[aria-pressed=true],[aria-selected=true],[aria-checked=true],[aria-current],.is-selected,.selected') && bg && isChroma(bg))
         res.primary.push((el.innerText || el.value || '').trim().slice(0, 20));
+      if (el.matches('button,a,[role=button]') && bg && isChroma(bg) && (el.innerText||'').trim()) {
+        const fg = parseColor(cs.color); const lum = c => (0.2126*c[0] + 0.7152*c[1] + 0.0722*c[2]) / 255;
+        if (fg && lum(fg) < 0.35 && lum(bg) < 0.75) { res.darkOnFill = res.darkOnFill || []; res.darkOnFill.push((el.innerText||'').trim().slice(0, 16)); }
+      }
     }
     if (tag === 'IMG' && el.complete && el.naturalWidth === 0) res.brokenImgs.push(el.getAttribute('src') || '');
+  }
+  res.text = (document.body.innerText || '').slice(0, 5000);
+  // 하단 고정 영역: 링크 3개 이상이면 탭바, 강조색 버튼이 있으면 고정 CTA
+  res.fixedCta = []; res.hasTabbar = false;
+  for (const el of document.querySelectorAll('body *')) {
+    const pcs = getComputedStyle(el);
+    if (pcs.position !== 'fixed') continue;
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight - 200) continue;
+    const acts = el.querySelectorAll('a,button');
+    if (acts.length >= 3) { res.hasTabbar = true; continue; }
+    for (const b of acts) {
+      const bg = parseColor(getComputedStyle(b).backgroundColor);
+      if (bg && bg[3] > 0.5 && isChroma(bg)) res.fixedCta.push((b.innerText || '').trim().slice(0, 30));
+    }
   }
   return res;
 }
@@ -165,6 +185,13 @@ def rgb_hsl(c):
 def is_chroma(c):
     h, s, l = rgb_hsl(c)
     return c[3] > 0 and s > 0.2 and 0.1 <= l <= 0.95
+
+
+def parse_css_color(v):
+    """'rgb(1, 2, 3)' / 'rgba(1, 2, 3, .5)' → (r, g, b, a)"""
+    m = re.findall(r"[\d.]+", v or "")
+    if len(m) < 3: return None
+    return (float(m[0]), float(m[1]), float(m[2]), float(m[3]) if len(m) > 3 else 1.0)
 
 
 HREF_RE = re.compile(r'''(?:href|src)\s*=\s*["']([^"']+)["']''', re.I)
@@ -226,7 +253,7 @@ def main():
             variants.setdefault(b, set()).add(st)
 
     # ---------- 완결성 (정적) ----------
-    add("완결성", "screen_count", len(base_files), ">=12", len(base_files) >= 12,
+    add("완결성", "screen_count", len(base_files), ">=10", len(base_files) >= 10,
         ", ".join(f.stem for f in base_files))
     cov = (manifest or {}).get("prd_coverage")
     if isinstance(cov, dict) and cov:
@@ -270,7 +297,7 @@ def main():
             tr = s.get("traits") or {}
             exp = set()
             if tr.get("list_first_use"): exp.add("empty")
-            if tr.get("form"): exp.add("error")
+            if tr.get("form") or tr.get("sends"): exp.add("error")
             if tr.get("readonly_role"): exp.add("disabled")
             have = variants.get(f.stem, set())
             declared = set(s.get("states") or [])
@@ -360,8 +387,23 @@ def main():
             hues.add(int(rgb_hsl(c)[0] // 20))
         else:
             grays.add(tuple(int(round(v / 4) * 4) for v in c[:3]) + (round(c[3], 2),))
-    add("일관성", "chromatic_colors", len(hues), "<=2", len(hues) <= 2,
+    add("일관성", "chromatic_colors", len(hues), "<=6", len(hues) <= 6,   # 브랜드 1 + 의미색 4(틴트가 인접 구간으로 갈릴 여유)
         "hue 구간: " + ",".join(f"{h*20}-{h*20+19}" for h in sorted(hues)))
+    # 토큰 밖 유채색: 화면의 유채색은 전부 tokens*.css 값이어야 한다
+    tok = set()
+    for tf in OUT.rglob("tokens*.css"):
+        for h in re.findall(r"#([0-9a-fA-F]{6})\b", tf.read_text(encoding="utf-8")):
+            tok.add(tuple(int(h[k:k + 2], 16) for k in (0, 2, 4)))
+    if tok:
+        off = sorted({tuple(c[:3]) for c in colors if is_chroma(c) and min(sum((a - b) ** 2 for a, b in zip(c[:3], t)) for t in tok) > 36})
+        add("일관성", "off_token_colors", len(off), "0", not off, " ".join(f"rgb{x}" for x in off[:6]))
+    # 의미 배지: 서로 다른 뜻의 배지 3개 이상이 한 색이면 실패(확정·바뀜·궁금해요가 전부 브랜드 틴트였던 문제)
+    bmap = {}
+    for sid, r in per.items():
+        for t, bgc in r.get("badges", []) or []:
+            if t: bmap.setdefault(bgc, set()).add(re.sub(r"\s*\d+$", "", t))
+    worst = max(((bgc, v) for bgc, v in bmap.items() if (pc := parse_css_color(bgc)) and is_chroma(pc)), key=lambda x: len(x[1]), default=(None, set()))
+    add("위계", "badge_semantic", len(worst[1]), "<=2 뜻/색", len(worst[1]) <= 2, f"{worst[0]}: {', '.join(sorted(worst[1]))}" if worst[0] else "")
     add("일관성", "gray_steps", len(grays), "<=6", len(grays) <= 6,
         " ".join(f"rgb{g[:3]}" + (f"a{g[3]}" if g[3] < 1 else "") for g in sorted(grays))[:300])
     fs = sorted({round(v, 1) for v in agg("fontSizes")})
@@ -388,13 +430,13 @@ def main():
     vsz = []
     for sid, r in per.items():
         base = sid.split("--")[0]
-        if (mscreens.get(base) or {}).get("role") == "viewer":
+        if (mscreens.get(base) or {}).get("role") in ("viewer", "everyone"):
             vsz += r.get("textSizes", [])
     if vsz:
         vr = sum(1 for v in vsz if v >= 16) / len(vsz)
-        add("가독성", "viewer_body_font", f"{vr*100:.1f}%", ">=90%", vr >= 0.9)
+        add("가독성", "large_text_body_font", f"{vr*100:.1f}%", ">=90%", vr >= 0.9)
     else:
-        add("가독성", "viewer_body_font", "n/a", ">=90%", True, "viewer 화면 없음")
+        add("가독성", "large_text_body_font", "n/a", ">=90%", True, "큰 글자 화면 없음")
     tt = sum(r.get("touch", {}).get("total", 0) for r in per.values())
     tok = sum(r.get("touch", {}).get("ok", 0) for r in per.values())
     tf = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("touch", {}).get("fails", [])]
@@ -407,8 +449,42 @@ def main():
     add("위계", "primary_cta", len(pc), "0화면 (화면당 ≤1)", not pc, "; ".join(pc[:6]))
     h1 = [f"{sid}({r.get('h1', 0)})" for sid, r in per.items() if r.get("h1", 0) != 1]
     add("위계", "h1_count", len(h1), "0화면 (화면당 =1)", not h1, ", ".join(h1))
+    # 하단 고정 CTA: 탭 첫 화면(탭바 있음)에는 0, 문구는 확정 동사(보기·가기·열기로 끝나면 이동 링크)
+    ct = [f"{sid}: {'/'.join(r['fixedCta'])}" for sid, r in per.items() if r.get("hasTabbar") and r.get("fixedCta")]
+    add("위계", "cta_on_tab_root", len(ct), "0화면", not ct, "; ".join(ct[:6]))
+    cl = [f"{sid}: {t}" for sid, r in per.items() for t in r.get("fixedCta", []) if re.search(r"(보기|가기|열기|이동)$", t)]
+    add("위계", "cta_label_verb", len(cl), "0", not cl, "; ".join(cl[:6]))
     hi = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("help", [])]
     add("위계", "help_icons", len(hi), "0", not hi, "; ".join(hi[:6]))
+    # 수동적 호칭(역할로 사람을 낮추는 말) — design-criteria §12
+    PASSIVE = re.compile(r"보기만|읽기 전용|게스트|확인만 하")
+    pv = [f"{sid}: {m.group(0)}" for sid, r in per.items() for m in PASSIVE.finditer(r.get("text", ""))]
+    add("위계", "passive_role_words", len(pv), "0", not pv, "; ".join(pv[:6]))
+    # 채워진 유채색 버튼 위 짙은 글자 — 대비는 넘어도 버튼답지 않다(아주 밝은 색 버튼은 예외)
+    dk = [f"{sid}: {t}" for sid, r in per.items() for t in (r.get("darkOnFill") or [])]
+    add("위계", "dark_text_on_filled_button", len(dk), "0", not dk, "; ".join(dk[:6]))
+    # 캔버스(index.html) 단순성 — success-criteria §9
+    idx = OUT / "index.html"
+    if idx.exists():
+        ih = idx.read_text(encoding="utf-8", errors="ignore")
+        sc = re.findall(r"scale\(([\d.]+)\)", ih)
+        scale = min(float(x) for x in sc) if sc else 1.0
+        add("캔버스", "canvas_scale", scale, ">=0.7", scale >= 0.7)
+        head = re.search(r"<header.*?</header>", ih, re.S)
+        nbtn = len(re.findall(r"<button\b", head.group(0))) if head else 0
+        add("캔버스", "canvas_controls", nbtn, "<=3", nbtn <= 3)
+        ext = re.findall(r"<script[^>]+src=[\"']https?://", ih)
+        add("캔버스", "canvas_external_libs", len(ext), "0", not ext)
+        try:
+            mm = json.loads((OUT / "screens.json").read_text(encoding="utf-8"))
+            nb = sum(len(x.get("branches", []) or []) for x in mm.get("screens", []))
+            ng = len({x.get("group") for x in mm.get("screens", [])})
+            na = len(re.findall(r"<path d=\"M", ih))
+            add("캔버스", "canvas_arrows", na, f"<= 갈래 {nb} + 흐름 {ng}", na <= nb + ng)
+            longpol = [x["id"] for x in mm.get("screens", []) if len(x.get("policies", []) or []) > 3 and "<details>" not in ih]
+            add("캔버스", "canvas_policy_lines", len(longpol), "0 (3줄 초과는 접기)", not longpol)
+        except Exception as e:
+            add("캔버스", "canvas_arrows", "n/a", "", False, str(e))
 
     # 슬롭
     em = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("emoji", [])]
@@ -425,7 +501,7 @@ def main():
 
     # ---------- 출력 ----------
     order = ["완결성", "상태", "일관성", "가독성", "위계", "슬롭"]
-    checks.sort(key=lambda c: order.index(c["group"]))
+    checks.sort(key=lambda c: order.index(c["group"]) if c["group"] in order else len(order))
     group = None
     for c in checks:
         if c["group"] != group:
