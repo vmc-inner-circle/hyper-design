@@ -93,7 +93,7 @@ description: PRD(기획 문서) 한 장을 받아 사용자에게 아무것도 �
 
 ### 3단계 — 검증·수정 (목표 3분, 동시에)
 
-한 메시지에서 동시에:
+한 메시지에서 동시에(**포그라운드로 실행해 같은 턴에서 결과를 받는다 — 백그라운드로 돌려 놓고 "끝나면 알려드릴게요"로 턴을 끝내지 않는다. 턴이 끝나면 다시 이어지지 않는다**):
 - `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(색 점 3개, 갈래 화살표, 정책 3줄)
 - `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구
 - `python3 $SK/scripts/audit.py out --shots out/.shots` — 렌더링 측정(대비·토큰 밖 색·의미 배지·CTA·터치·캔버스) + 화면 캡처
@@ -119,7 +119,7 @@ description: PRD(기획 문서) 한 장을 받아 사용자에게 아무것도 �
 - 뺀 것(하네스가 떠올렸다 뺀 것 포함)은 캔버스 맨 위 "정한 것 · 뺀 것"에 있다고 안내
 - 하네스가 대신 정한 것 중 사용자가 알아야 할 것 2~3개
 - 남은 ❌ 항목(있으면)
-- 마지막 줄: `[[DONE out/index.html]]`
+- 마지막 줄: `[[DONE out/index.html]]` — 이 줄 없이 턴을 끝내면 미완성으로 처리된다. 기다릴 작업이 남았으면 기다린 뒤에 쓴다.
 
 ## 참고
 - 기준: `docs/success-criteria.md`, 근거: `docs/design-criteria.md`

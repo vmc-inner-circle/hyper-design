@@ -1,0 +1,117 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 한눈에 보기</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#EDEDEA;font-family:-apple-system,'Pretendard',sans-serif;color:#1c1c1c;word-break:keep-all}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EDEDEAee;backdrop-filter:blur(6px);padding:14px 190px 14px 64px}
+header h1{font-size:20px;margin:0} header .hint{font-size:14px;color:#666}
+.palette{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#555}
+.dot{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 8px;border-radius:999px;border:1px solid #d3d3cf;background:#fff;font:inherit;font-size:13px;color:#333;cursor:pointer}
+.dot span{width:18px;height:18px;border-radius:999px;background:var(--dot)} .dot[aria-pressed="true"]{border-color:#1c1c1c;box-shadow:inset 0 0 0 1px #1c1c1c}
+.story{padding:24px 64px 8px;max-width:1240px} .story h1{font-size:34px;line-height:1.3;margin:8px 0 12px} .story h1 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:17px;line-height:1.6;color:#444;max-width:760px;margin:0 0 20px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px} .idea{background:#fff;border-radius:14px;padding:18px} .idea b{font-size:16px} .idea p{font-size:14px;line-height:1.55;color:#555;margin:6px 0 0}
+.decisions{padding:8px 64px 0;max-width:1240px} .decisions h2{font-size:18px;margin:16px 0 6px} .decisions .core{font-size:15px;color:#333;margin:0 0 10px}
+.decisions ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.decisions li{background:#fff;border-radius:12px;padding:10px 14px;font-size:14px;line-height:1.5} .decisions b{margin-right:4px} .decisions .why{display:block;color:#666;font-size:13px}
+.v{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-right:6px;background:#eee;color:#444} .v-cut{background:#fde8e8;color:#9b1c1c} .v-lighten{background:#e7f0ff;color:#1d4ed8}
+.board{position:relative;width:2336px;height:3580px;margin-top:32px}
+svg.ar{position:absolute;inset:0;width:2336px;height:3580px;pointer-events:none;overflow:visible}
+svg.ar path{fill:none;stroke:#2563eb;stroke-width:2;marker-end:url(#h)}
+.alabel{position:absolute;transform:translate(-50%,-100%);max-width:150px;white-space:normal;text-align:center;background:#fff;border:1px solid #c7d6fb;color:#1d4ed8;font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.alabel.side{transform:translate(-100%,-50%);text-align:right}
+.glabel{position:absolute;font-size:20px;font-weight:700}
+.frame{position:absolute;width:270px}
+.phone{position:relative;width:270px;height:585px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+.phone iframe{width:375px;height:812px;border:0;transform:scale(0.72);transform-origin:0 0;pointer-events:none}
+.hit{position:absolute;inset:0;border-radius:20px} .hit:hover{outline:3px solid #2563eb}
+.ftitle{font-size:15px;font-weight:700;margin-top:10px} .state{font-size:11px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:6px;padding:2px 6px;margin-right:6px}
+.fdesc{font-size:13px;color:#555;margin-top:2px}
+.pol{margin:6px 0 0;padding-left:16px;font-size:12px;line-height:1.5;color:#444} details{font-size:12px;color:#666} summary{cursor:pointer}
+.credit{font-size:12px;color:#777;padding:0 64px 40px}
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}
+#viewer.on{display:flex} #viewer iframe{width:375px;height:812px;max-height:92vh;border:0;border-radius:28px;background:#fff}
+#viewer .close{position:absolute;top:20px;right:28px;font-size:16px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}
+</style>
+<header><h1>전체 화면 한눈에 보기</h1><span class="hint">화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래</span><div class="palette">색 <button class="dot" data-slug="myrealtrip" aria-label="마이리얼트립 색으로 보기" style="--dot:#2b96ed"><span></span>마이리얼트립</button><button class="dot" data-slug="airbnb" aria-label="에어비앤비 색으로 보기" style="--dot:#da1249"><span></span>에어비앤비</button><button class="dot" data-slug="29cm" aria-label="29CM 색으로 보기" style="--dot:#19191a"><span></span>29CM</button></div></header>
+<section class="story"><h1>후보는 짜는 사람끼리, <em>확정되면 그때 가족 모두에게</em> — 하루 한 번 모아서</h1><p class="sum">자녀는 미완성 계획을 마음껏 적고 고치지만, 부모 화면에는 확정된 것만 큰 글씨로 보이고 나머지는 &#x27;정하는 중&#x27; 한 줄이에요. 알림은 확정된 것이 바뀔 때만, 저녁 8시에 하루치를 모아서 한 번 가요. 부모가 묻고 싶을 땐 전화 대신 &#x27;궁금해요&#x27;를 한 번 누르면 짜는 사람 홈 맨 위에 조용히 올라가요.</p><div class="ideas"><div class="idea"><b>확정하면 곧 공유</b><p>따로 &#x27;공유하기&#x27;가 없어요. 확정 버튼이 곧 가족에게 보여주는 순간이에요.</p></div><div class="idea"><b>정하는 중 한 줄</b><p>후보 내용 대신 &#x27;12월 1일까지 정해요&#x27; — 부모는 언제 알게 될지만 알면 돼요.</p></div><div class="idea"><b>궁금해요 한 번</b><p>묻기 미안한 마음을 버튼 하나로. 알림이 아니라 짜는 사람 할 일 맨 위로 올라가요.</p></div></div></section>
+<section class="decisions"><h2>정한 것 · 뺀 것</h2><p class="core">자녀는 미완성 계획을 부담 없이 고치고, 부모는 묻지 않아도 확정된 큰 흐름을 안다 — &#x27;확정&#x27;이 곧 공유다.</p><ul><li><span class="v v-cut">뺌</span><b>채팅·댓글</b><span class="why">카톡 단톡방이 이미 한다 — 또 하나의 대화방은 새 알림</span></li><li><span class="v v-cut">뺌</span><b>후보 투표</b><span class="why">부모에게 결정 부담·새 할 일을 넘긴다</span></li><li><span class="v v-later">나중에</span><b>경비 정산</b><span class="why">여행 뒤 일이라 핵심 갈등과 무관, 정산 앱이 있다</span></li><li><span class="v v-cut">뺌</span><b>변경마다 &#x27;가족에게 알리기&#x27; 버튼</b><span class="why">자녀에게 &#x27;보내기&#x27;라는 새 할 일을 얹는다</span></li><li><span class="v v-cut">뺌</span><b>지도·길찾기</b><span class="why">지도 앱이 한다</span></li><li><span class="v v-later">나중에</span><b>후보 나란히 비교</b><span class="why">짜는 사람에겐 유용하나 핵심 갈등(부모와의 정보 전달)과 거리가 있음</span></li></ul></section>
+<div class="board">
+<svg class="ar"><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb" stroke="none"/></marker></defs><path d="M190,1051 H164 Q150,1051 150,1065 V2827 Q150,2841 164,2841 H186"/><path d="M325.0,2775 C325.0,2747 651.0,2747 651.0,2775"/><path d="M325.0,2775 C325.0,2747 1629.0,2747 1629.0,2775"/><path d="M977.0,1880 C977.0,1852 1303.0,1852 1303.0,1880"/><path d="M1629.0,1880 C1629.0,1852 1955.0,1852 1955.0,1880"/><path d="M651.0,2775 C651.0,2747 977.0,2747 977.0,2775"/><path d="M977.0,2775 C977.0,2747 1303.0,2747 1303.0,2775"/><path d="M1629.0,2775 C1629.0,2747 1955.0,2747 1955.0,2775"/></svg>
+<div class="glabel" style="top:0px;left:190px">처음 들어올 때</div><div class="glabel" style="top:895px;left:190px">홈 — 시기마다 맨 위가 바뀐다</div><div class="glabel" style="top:1790px;left:190px">홈에서 들어가는 곳</div><div class="glabel" style="top:2685px;left:190px">일정을 짜는 사람에게 더 붙는 것</div><div class="frame" style="left:190px;top:96px">
+<div class="phone"><iframe src="screens/join.html" loading="eager" scrolling="no" tabindex="-1" title="처음 들어올 때 · 나는 누구예요"></iframe>
+<a class="hit" href="screens/join.html" target="view" aria-label="처음 들어올 때 · 나는 누구예요 크게 보기"></a></div>
+<div class="ftitle">처음 들어올 때 · 나는 누구예요</div>
+<div class="fdesc">단톡방 링크로 들어와 내 얼굴 한 번 누르면 끝</div><ul class="pol"><li>가입·비밀번호 없음 — 초대 링크 + 이름 고르기</li><li>이미 고른 사람은 흐리게(선택 불가)</li><li>&#x27;여기 없어요&#x27;를 누르면 지은에게 초대 요청</li></ul></div><div class="frame" style="left:190px;top:991px">
+<div class="phone"><iframe src="screens/home.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 출발 70일 전"></iframe>
+<a class="hit" href="screens/home.html" target="view" aria-label="홈 · 출발 70일 전 크게 보기"></a></div>
+<div class="ftitle">홈 · 출발 70일 전</div>
+<div class="fdesc">확정된 큰 흐름만 — 날마다 한 줄</div><ul class="pol"><li>확정된 항목만 보인다 — 후보가 있는 날은 &#x27;지은이 정하는 중&#x27; 한 줄</li><li>&#x27;바뀜&#x27;은 내가 한 번 볼 때까지 남는다</li><li>출발 3일 전부터 맨 위가 &#x27;모이는 곳&#x27;, 여행 중엔 &#x27;오늘&#x27;</li></ul></div><div class="frame" style="left:190px;top:2781px">
+<div class="phone"><iframe src="screens/home-edit.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 일정을 짜는 사람"></iframe>
+<a class="hit" href="screens/home-edit.html" target="view" aria-label="홈 · 일정을 짜는 사람 크게 보기"></a></div>
+<div class="ftitle">홈 · 일정을 짜는 사람</div>
+<div class="fdesc">같은 홈 + 정할 것</div><ul class="pol"><li>정할 것 = 후보만 있는 날 + 빈 날, &#x27;어머니가 궁금해요&#x27;가 붙은 날이 맨 위</li><li>오늘 저녁 8시 소식에 담길 것 수를 한 줄로 — 8시 전에 되돌리면 빠진다</li></ul></div><div class="frame" style="left:516px;top:991px">
+<div class="phone"><iframe src="screens/home-d3.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 출발 3일 전"></iframe>
+<a class="hit" href="screens/home-d3.html" target="view" aria-label="홈 · 출발 3일 전 크게 보기"></a></div>
+<div class="ftitle">홈 · 출발 3일 전</div>
+<div class="fdesc">모이는 곳·내가 챙길 것이 맨 위</div><ul class="pol"><li>D-3부터 모이는 곳이 맨 위</li><li>이때부터 시간·모이는 곳이 바뀌면 바로 알림(모으지 않음)</li><li>챙길 것은 내 몫만, 남은 것만</li></ul></div><div class="frame" style="left:842px;top:991px">
+<div class="phone"><iframe src="screens/home-trip.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 여행 중"></iframe>
+<a class="hit" href="screens/home-trip.html" target="view" aria-label="홈 · 여행 중 크게 보기"></a></div>
+<div class="ftitle">홈 · 여행 중</div>
+<div class="fdesc">오늘 · 다음 · 숙소</div><ul class="pol"><li>여행 기간 동안 이 모습</li><li>예약 확인번호는 모두에게 보인다</li><li>지난 일정은 접힌다</li></ul></div><div class="frame" style="left:190px;top:1886px">
+<div class="phone"><iframe src="screens/day.html" loading="eager" scrolling="no" tabindex="-1" title="12월 12일 · 교토로 가는 날"></iframe>
+<a class="hit" href="screens/day.html" target="view" aria-label="12월 12일 · 교토로 가는 날 크게 보기"></a></div>
+<div class="ftitle">12월 12일 · 교토로 가는 날</div>
+<div class="fdesc">하루의 확정 일정 + 정하는 중 + 궁금해요</div><ul class="pol"><li>후보 내용 대신 &#x27;지은이 정하는 중 · 12월 1일까지&#x27; 한 줄</li><li>&#x27;궁금해요&#x27;는 하루 한 번 — 누르면 &#x27;지은에게 전했어요&#x27;로 바뀐다(알림 아님)</li></ul></div><div class="frame" style="left:516px;top:1886px">
+<div class="phone"><iframe src="screens/changes.html" loading="eager" scrolling="no" tabindex="-1" title="바뀐 것"></iframe>
+<a class="hit" href="screens/changes.html" target="view" aria-label="바뀐 것 크게 보기"></a></div>
+<div class="ftitle">바뀐 것</div>
+<div class="fdesc">저녁 8시 하루 한 번 모아 온 소식 — 전→후</div><ul class="pol"><li>확정된 것이 바뀌거나 새로 확정될 때만 쌓인다(후보 수정은 안 쌓임)</li><li>하루치를 저녁 8시에 한 번 알림 — D-3부터 시간·모이는 곳은 바로</li><li>바뀌기 전 → 후를 나란히</li></ul></div><div class="frame" style="left:842px;top:1886px">
+<div class="phone"><iframe src="screens/tasks.html" loading="eager" scrolling="no" tabindex="-1" title="할 일·준비물"></iframe>
+<a class="hit" href="screens/tasks.html" target="view" aria-label="할 일·준비물 크게 보기"></a></div>
+<div class="ftitle">할 일·준비물</div>
+<div class="fdesc">누가 무엇을 챙기는지 — 내 것 먼저</div><ul class="pol"><li>내 것이 맨 위, 가족 것은 그 아래 — 누가 무엇을 하는지 한 화면에</li><li>누구나 추가·체크할 수 있다(대신 눌러 줘도 된다)</li><li>마감 3일 전이면 &#x27;마감&#x27; — 그날 저녁 8시 소식에 한 번</li></ul></div><div class="frame" style="left:1168px;top:1886px">
+<div class="phone"><iframe src="screens/tasks--empty.html" loading="eager" scrolling="no" tabindex="-1" title="할 일·준비물 · 처음"></iframe>
+<a class="hit" href="screens/tasks--empty.html" target="view" aria-label="할 일·준비물 · 처음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>할 일·준비물 · 처음</div>
+<div class="fdesc">아직 할 일이 없을 때</div><ul class="pol"><li>자주 쓰는 준비물 3개를 한 번에 넣기</li></ul></div><div class="frame" style="left:1494px;top:1886px">
+<div class="phone"><iframe src="screens/task-edit.html" loading="eager" scrolling="no" tabindex="-1" title="할 일 추가"></iframe>
+<a class="hit" href="screens/task-edit.html" target="view" aria-label="할 일 추가 크게 보기"></a></div>
+<div class="ftitle">할 일 추가</div>
+<div class="fdesc">무엇을 · 누가 · 언제까지</div><ul class="pol"><li>&#x27;누가&#x27;를 먼저 — &#x27;각자&#x27;면 모두에게 한 줄씩 생긴다</li><li>담당자 없이 저장 불가</li><li>하윤처럼 계정 없는 사람 몫은 보호자에게</li></ul></div><div class="frame" style="left:1820px;top:1886px">
+<div class="phone"><iframe src="screens/task-edit--error.html" loading="eager" scrolling="no" tabindex="-1" title="할 일 추가 · 담당자 없음"></iframe>
+<a class="hit" href="screens/task-edit--error.html" target="view" aria-label="할 일 추가 · 담당자 없음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>할 일 추가 · 담당자 없음</div>
+<div class="fdesc">누가를 안 골랐을 때</div><ul class="pol"><li>&#x27;누가&#x27; 칸만 오류로 바뀐다</li></ul></div><div class="frame" style="left:516px;top:2781px">
+<div class="phone"><iframe src="screens/day-edit.html" loading="eager" scrolling="no" tabindex="-1" title="12월 12일 · 짜는 중"></iframe>
+<a class="hit" href="screens/day-edit.html" target="view" aria-label="12월 12일 · 짜는 중 크게 보기"></a></div>
+<div class="ftitle">12월 12일 · 짜는 중</div>
+<div class="fdesc">후보까지 다 보이고, 끌어서 순서 바꾸고, 확정하기</div><ul class="pol"><li>후보는 일정 짜기 권한이 있는 사람끼리만 보인다</li><li>&#x27;확정하기&#x27;를 누르는 순간 가족 화면에 보이고 저녁 8시 소식에 담긴다</li><li>&#x27;궁금해요&#x27;가 있으면 맨 위 한 줄</li></ul></div><div class="frame" style="left:842px;top:2781px">
+<div class="phone"><iframe src="screens/item-edit.html" loading="eager" scrolling="no" tabindex="-1" title="일정 고치기"></iframe>
+<a class="hit" href="screens/item-edit.html" target="view" aria-label="일정 고치기 크게 보기"></a></div>
+<div class="ftitle">일정 고치기</div>
+<div class="fdesc">종류 → 이름·시간·장소 → 확정/후보</div><ul class="pol"><li>이름만 적어도 &#x27;후보&#x27;로 저장 — 나머지는 나중에</li><li>&#x27;확정&#x27;은 시간이 있어야 저장 가능</li><li>예약 확인번호 칸 — 모두에게 보인다</li></ul></div><div class="frame" style="left:1168px;top:2781px">
+<div class="phone"><iframe src="screens/item-edit--error.html" loading="eager" scrolling="no" tabindex="-1" title="일정 고치기 · 시간 없음"></iframe>
+<a class="hit" href="screens/item-edit--error.html" target="view" aria-label="일정 고치기 · 시간 없음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>일정 고치기 · 시간 없음</div>
+<div class="fdesc">시간 없이 확정하려 할 때</div><ul class="pol"><li>&#x27;시간&#x27; 칸만 오류 — &#x27;후보로 저장&#x27;으로 빠져나갈 수 있다</li></ul></div><div class="frame" style="left:1494px;top:2781px">
+<div class="phone"><iframe src="screens/family.html" loading="eager" scrolling="no" tabindex="-1" title="함께 가는 사람"></iframe>
+<a class="hit" href="screens/family.html" target="view" aria-label="함께 가는 사람 크게 보기"></a></div>
+<div class="ftitle">함께 가는 사람</div>
+<div class="fdesc">초대 링크 · 일정 짜기 권한 켜기</div><ul class="pol"><li>초대 링크는 출발일까지 유효 — 카톡 단톡방에 붙여넣는다</li><li>일정 짜기 권한은 여행 만든 사람만 켜고 끈다</li><li>계정 없는 손주는 보호자 아래에</li></ul></div><div class="frame" style="left:1820px;top:2781px">
+<div class="phone"><iframe src="screens/family--done.html" loading="eager" scrolling="no" tabindex="-1" title="함께 가는 사람 · 링크 복사됨"></iframe>
+<a class="hit" href="screens/family--done.html" target="view" aria-label="함께 가는 사람 · 링크 복사됨 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>함께 가는 사람 · 링크 복사됨</div>
+<div class="fdesc">링크를 복사한 뒤</div><ul class="pol"><li>맨 위에 &#x27;복사했어요&#x27; 표시</li></ul></div><div class="alabel side" style="left:142px;top:1946.0px">일정 짜기 권한이 있으면</div><div class="alabel" style="left:488.0px;top:2743px">정할 것 누르기</div><div class="alabel" style="left:977.0px;top:2743px">함께 가는 사람</div><div class="alabel" style="left:1140.0px;top:1848px">아직 하나도 없으면</div><div class="alabel" style="left:1792.0px;top:1848px">누가를 안 고르고 저장</div><div class="alabel" style="left:814.0px;top:2743px">항목 누르기 · + 추가</div><div class="alabel" style="left:1140.0px;top:2743px">시간 없이 확정으로 저장</div><div class="alabel" style="left:1792.0px;top:2743px">초대 링크 복사</div>
+</div>
+<p class="credit">색 출처: 마이리얼트립 웹 팔레트 · 에어비앤비 웹 팔레트 · 29CM 웹 팔레트 — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>
+<div id="viewer"><button class="close" onclick="document.getElementById('viewer').classList.remove('on')">닫기</button><iframe name="view" title="크게 보기"></iframe></div>
+<script>
+const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));
+(function(){const K='hd-palette';const dots=[...document.querySelectorAll('.dot')];if(!dots.length)return;
+ let cur;try{cur=localStorage.getItem(K)}catch(e){} cur=cur||"myrealtrip";
+ const send=s=>{document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.postMessage({type:'hd-palette',slug:s},'*')}catch(e){}});dots.forEach(d=>d.setAttribute('aria-pressed',String(d.dataset.slug===s)))};
+ dots.forEach(d=>d.addEventListener('click',()=>{cur=d.dataset.slug;try{localStorage.setItem(K,cur)}catch(e){};send(cur)}));
+ document.querySelector('iframe[name=view]').addEventListener('load',()=>send(cur));
+ window.addEventListener('load',()=>send(cur));})();
+</script>
+</html>
