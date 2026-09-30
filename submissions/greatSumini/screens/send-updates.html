@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375"><title>소식 보내기</title><link rel="stylesheet" href="../tokens.css">
+<style>
+.lead{padding:var(--space-20) var(--space-20) 0;font-size:var(--fs-lg);font-weight:var(--fw-semibold)}
+.preview{font-size:var(--fs-md)}
+.preview li + li{margin-top:var(--space-8)}
+.preview-head{margin-bottom:var(--space-12);font-weight:var(--fw-bold)}
+.muted-row .row-title{color:var(--gray-3)}
+.more{padding:var(--space-8) var(--space-8) var(--space-24)}
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar">
+  <a class="icon-btn" href="planner-home.html" aria-label="뒤로">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </a>
+  <h1 class="appbar-title">소식 보내기</h1>
+  <span class="icon-btn" aria-hidden="true"></span>
+</header>
+<main>
+  <p class="lead">부모님께는 확정된 바뀐 점만 한 번에 가요</p>
+  <section class="section">
+    <h2 class="section-title">이번에 보낼 것</h2>
+    <ul class="list">
+      <li><div class="row"><button class="check is-selected" type="button" role="checkbox" aria-checked="true" aria-label="보내기에 넣기"><span class="check-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button><div class="row-body"><div class="row-title">12월 11일 오전 아라시야마 대나무숲 확정</div><div class="row-sub">오전 9:30</div></div></div></li>
+      <li><div class="row"><button class="check is-selected" type="button" role="checkbox" aria-checked="true" aria-label="보내기에 넣기"><span class="check-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button><div class="row-body"><div class="row-title">오사카 숙소 난바 '스위소텔'로 확정</div><div class="row-sub">12월 12일 ~ 14일 · 2박</div></div></div></li>
+      <li><div class="row"><button class="check is-selected" type="button" role="checkbox" aria-checked="true" aria-label="보내기에 넣기"><span class="check-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button><div class="row-body"><div class="row-title">12월 14일 귀국편 12:10 출발로 변경</div><div class="row-sub">13:30 → 12:10</div></div></div></li>
+    </ul>
+  </section>
+  <section class="section">
+    <h2 class="section-title">후보라 빠진 것</h2>
+    <ul class="list">
+      <li><div class="row muted-row"><div class="row-body"><div class="row-title">12월 11일 오후 후보 2개 추가 (금각사, 기온 산책)</div></div><span class="badge outline">후보</span></div></li>
+    </ul>
+  </section>
+  <section class="section">
+    <h2 class="section-title">부모님께 보이는 모습</h2>
+    <div class="box tint preview">
+      <p class="preview-head">9월 30일 소식 · 바뀐 점 3개</p>
+      <ul>
+        <li>12월 11일(금) 오전 9:30 아라시야마 대나무숲에 가요</li>
+        <li>오사카에서는 난바 '스위소텔'에서 자요</li>
+        <li>돌아오는 비행기가 12:10 출발로 바뀌었어요</li>
+      </ul>
+    </div>
+    <div class="more"><a class="btn btn-text" href="update-digest.html">크게 보기</a></div>
+  </section>
+</main>
+<div class="bottom-cta">
+  <a class="btn btn-primary block" href="planner-home.html#sent">3개 묶어 보내기</a>
+</div>
+</body></html>

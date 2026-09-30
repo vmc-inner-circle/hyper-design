@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375">
+<title>일정 · 12월 13일(일)</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.day-chips { flex-wrap: nowrap; overflow-x: auto; padding: var(--space-12) var(--space-20); border-bottom: 1px solid var(--gray-2); }
+.day-chips .chip { flex-shrink: 0; padding: 0 var(--space-12); }
+.note { padding: var(--space-12) var(--space-20) 0; }
+.plan-row { padding-left: var(--space-8); }
+.plan-row .row-body { display: block; }
+.row-over { display: flex; align-items: center; gap: var(--space-8); }
+</style>
+</head>
+<body class="has-tabbar has-cta">
+<header class="appbar">
+  <h1 class="appbar-title">일정</h1>
+</header>
+<nav class="chips day-chips" aria-label="날짜">
+  <a class="chip" href="plan-day.html">10일 목</a>
+  <a class="chip" href="plan-day.html">11일 금</a>
+  <a class="chip" href="plan-day.html">12일 토</a>
+  <a class="chip is-selected" href="plan-day.html" aria-current="page">13일 일</a>
+  <a class="chip" href="plan-day.html">14일 월</a>
+</nav>
+<main>
+  <div class="empty">
+    <p class="empty-title">아직 적어 둔 일정이 없어요</p>
+    <p class="muted">엄마가 이 날을 궁금해하세요</p>
+  </div>
+</main>
+<div class="bottom-cta">
+  <a class="btn btn-primary block" href="item-edit.html">항목 추가</a>
+</div>
+<nav class="tabbar" aria-label="주요 메뉴">
+  <a class="tab" href="planner-home.html">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>
+    홈
+  </a>
+  <a class="tab" href="plan-day.html" aria-current="page">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+    일정
+  </a>
+  <a class="tab" href="tasks.html">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/></svg>
+    할 일
+  </a>
+</nav>
+</body>
+</html>

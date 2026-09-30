@@ -1,0 +1,521 @@
+{
+ "screens": [
+  {
+   "id": "trip-create",
+   "file": "screens/trip-create.html",
+   "title": "여행 만들기",
+   "role": "planner",
+   "purpose": "여행 이름과 날짜만 정하면 계획을 시작할 수 있어요",
+   "primary_action": "다음",
+   "sections": [
+    {
+     "name": "여행 이름",
+     "audience": "지은",
+     "when": "처음 앱을 열 때"
+    },
+    {
+     "name": "날짜",
+     "audience": "지은",
+     "when": "처음 앱을 열 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "readonly_role": false
+   },
+   "states": [
+    "error"
+   ],
+   "links": [
+    "invite-family"
+   ],
+   "group": "계획 시작하기"
+  },
+  {
+   "id": "invite-family",
+   "file": "screens/invite-family.html",
+   "title": "가족 초대",
+   "role": "planner",
+   "purpose": "가족마다 '함께 계획'인지 '보기만'인지 정해서 초대해요",
+   "primary_action": "초대 링크 보내기",
+   "sections": [
+    {
+     "name": "구성원별 역할",
+     "audience": "지은",
+     "when": "여행을 만든 직후"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "planner-home"
+   ],
+   "group": "계획 시작하기"
+  },
+  {
+   "id": "planner-home",
+   "file": "screens/planner-home.html",
+   "title": "계획 홈",
+   "role": "planner",
+   "purpose": "가족에게 보낼 소식 3개가 모였어요",
+   "primary_action": "소식 보내기",
+   "sections": [
+    {
+     "name": "보낼 소식",
+     "audience": "지은",
+     "when": "매일"
+    },
+    {
+     "name": "궁금해요",
+     "audience": "지은",
+     "when": "부모가 눌렀을 때"
+    },
+    {
+     "name": "날짜별 일정",
+     "audience": "지은",
+     "when": "일정 고치러 갈 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "send-updates",
+    "plan-day",
+    "tasks"
+   ],
+   "group": "계획 만들기"
+  },
+  {
+   "id": "plan-day",
+   "file": "screens/plan-day.html",
+   "title": "하루 일정 편집",
+   "role": "planner",
+   "purpose": "12월 11일, 확정과 후보가 한눈에 구분돼요",
+   "primary_action": "항목 추가",
+   "sections": [
+    {
+     "name": "시간순 항목",
+     "audience": "지은",
+     "when": "일정을 고칠 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [
+    "empty"
+   ],
+   "links": [
+    "item-edit",
+    "planner-home",
+    "tasks"
+   ],
+   "group": "계획 만들기"
+  },
+  {
+   "id": "item-edit",
+   "file": "screens/item-edit.html",
+   "title": "항목 추가",
+   "role": "planner",
+   "purpose": "이름과 시간만 적으면 후보로 저장돼요",
+   "primary_action": "후보로 저장",
+   "sections": [
+    {
+     "name": "이름·시간",
+     "audience": "지은",
+     "when": "새 후보가 생각났을 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "readonly_role": false
+   },
+   "states": [
+    "error"
+   ],
+   "links": [
+    "plan-day"
+   ],
+   "group": "계획 만들기"
+  },
+  {
+   "id": "send-updates",
+   "file": "screens/send-updates.html",
+   "title": "소식 보내기",
+   "role": "planner",
+   "purpose": "부모님께는 확정된 바뀐 점만 한 번에 보내요",
+   "primary_action": "3개 묶어 보내기",
+   "sections": [
+    {
+     "name": "이번에 보낼 것",
+     "audience": "지은",
+     "when": "보내기 전"
+    },
+    {
+     "name": "후보라 빠진 것",
+     "audience": "지은",
+     "when": "보내기 전"
+    },
+    {
+     "name": "부모님께 보이는 모습",
+     "audience": "지은",
+     "when": "보내기 전"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "planner-home",
+    "update-digest"
+   ],
+   "group": "계획 만들기"
+  },
+  {
+   "id": "tasks",
+   "file": "screens/tasks.html",
+   "title": "할 일·준비물",
+   "role": "shared",
+   "purpose": "누가 무엇을 언제까지 준비하는지 한 번에 봐요",
+   "primary_action": "할 일 추가",
+   "sections": [
+    {
+     "name": "사람별 할 일",
+     "audience": "지은·민수",
+     "when": "준비 상황을 볼 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [
+    "empty"
+   ],
+   "links": [
+    "task-add",
+    "planner-home",
+    "plan-day"
+   ],
+   "group": "할 일 나누기"
+  },
+  {
+   "id": "task-add",
+   "file": "screens/task-add.html",
+   "title": "할 일 추가",
+   "role": "planner",
+   "purpose": "무엇을, 누가 할지만 정해요",
+   "primary_action": "추가하기",
+   "sections": [
+    {
+     "name": "할 일",
+     "audience": "지은",
+     "when": "할 일이 생각났을 때"
+    },
+    {
+     "name": "담당",
+     "audience": "지은",
+     "when": "같은 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "readonly_role": false
+   },
+   "states": [
+    "error"
+   ],
+   "links": [
+    "tasks"
+   ],
+   "group": "할 일 나누기"
+  },
+  {
+   "id": "join-invite",
+   "file": "screens/join-invite.html",
+   "title": "초대 받기",
+   "role": "viewer",
+   "purpose": "지은이가 엄마 환갑 여행에 초대했어요",
+   "primary_action": "들어가기",
+   "sections": [
+    {
+     "name": "여행 요약",
+     "audience": "부모",
+     "when": "초대 링크를 눌렀을 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "parent-home"
+   ],
+   "group": "부모가 보는 화면"
+  },
+  {
+   "id": "parent-home",
+   "file": "screens/parent-home.html",
+   "title": "부모 홈",
+   "role": "viewer",
+   "purpose": "여권 유효기간을 확인해 주세요",
+   "primary_action": "확인했어요",
+   "sections": [
+    {
+     "name": "내가 할 일",
+     "audience": "부모",
+     "when": "앱을 열 때마다"
+    },
+    {
+     "name": "여행 흐름",
+     "audience": "부모",
+     "when": "궁금할 때"
+    },
+    {
+     "name": "지난 소식",
+     "audience": "부모",
+     "when": "소식이 왔을 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "parent-day",
+    "update-digest",
+    "my-checklist"
+   ],
+   "group": "부모가 보는 화면"
+  },
+  {
+   "id": "parent-day",
+   "file": "screens/parent-day.html",
+   "title": "하루 보기",
+   "role": "viewer",
+   "purpose": "12월 11일, 확정된 것만 보이고 나머지는 '정하는 중'이에요",
+   "primary_action": "궁금해요",
+   "sections": [
+    {
+     "name": "확정된 일정",
+     "audience": "부모",
+     "when": "그날이 궁금할 때"
+    },
+    {
+     "name": "정하는 중",
+     "audience": "부모",
+     "when": "같은 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "parent-home",
+    "my-checklist"
+   ],
+   "group": "부모가 보는 화면"
+  },
+  {
+   "id": "update-digest",
+   "file": "screens/update-digest.html",
+   "title": "소식",
+   "role": "viewer",
+   "purpose": "9월 30일 소식, 바뀐 점 3개예요",
+   "primary_action": "전체 일정 보기",
+   "sections": [
+    {
+     "name": "바뀐 점",
+     "audience": "부모",
+     "when": "소식 알림을 받았을 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "parent-home"
+   ],
+   "group": "부모가 보는 화면"
+  },
+  {
+   "id": "my-checklist",
+   "file": "screens/my-checklist.html",
+   "title": "내 준비",
+   "role": "shared",
+   "purpose": "언제 어디로 가고, 무엇을 챙길지 내 것만 봐요",
+   "primary_action": "할 일 체크",
+   "sections": [
+    {
+     "name": "모이는 곳·시간",
+     "audience": "가족 모두",
+     "when": "출발 전"
+    },
+    {
+     "name": "내 준비물",
+     "audience": "가족 모두",
+     "when": "준비할 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "readonly_role": false
+   },
+   "states": [],
+   "links": [
+    "parent-home",
+    "parent-day"
+   ],
+   "group": "부모가 보는 화면"
+  }
+ ],
+ "prd_coverage": {
+  "F1": [
+   "plan-day",
+   "item-edit"
+  ],
+  "F2": [
+   "plan-day",
+   "parent-day"
+  ],
+  "F3": [
+   "invite-family",
+   "parent-home",
+   "parent-day",
+   "plan-day"
+  ],
+  "F4": [
+   "tasks",
+   "task-add",
+   "my-checklist"
+  ],
+  "F5": [
+   "send-updates",
+   "update-digest",
+   "planner-home"
+  ],
+  "US1": [
+   "item-edit",
+   "plan-day",
+   "send-updates"
+  ],
+  "US2": [
+   "parent-home",
+   "parent-day",
+   "update-digest"
+  ],
+  "US3": [
+   "my-checklist",
+   "tasks"
+  ],
+  "S1": [
+   "send-updates"
+  ],
+  "S2": [
+   "invite-family",
+   "tasks"
+  ],
+  "S3": [
+   "planner-home",
+   "parent-home"
+  ],
+  "S4": [
+   "plan-day"
+  ],
+  "S5": [
+   "join-invite",
+   "parent-home"
+  ],
+  "S6": [
+   "tasks",
+   "task-add"
+  ]
+ },
+ "story": {
+  "headline": "자녀는 <em>마음껏 고치고</em>, 부모는 <em>정해진 것만</em> 받아본다",
+  "summary": "부모는 묻는 게 미안하고, 자녀는 미완성 계획을 보여주기 조심스러워서 둘 다 말을 아낍니다. 그래서 이 앱은 자녀의 '고치는 공간'과 부모의 '보는 공간'을 나누고, 그 사이를 자녀가 직접 보내는 '소식' 한 통으로 잇습니다. 부모는 캐묻는 대신 '궁금해요'를 한 번 누르면 됩니다.",
+  "ideas": [
+   {
+    "title": "후보는 '정하는 중'으로만 보인다",
+    "desc": "자녀 화면에서는 후보가 점선 표시로 모두 보이고 얼마든지 바뀝니다. 부모 화면에서는 그 자리에 '오후는 정하는 중' 한 줄만 보여 오해할 일이 없습니다.",
+    "refs": "US1 · US2 · F2 · F3",
+    "screens": [
+     "plan-day",
+     "parent-day"
+    ]
+   },
+   {
+    "title": "알림은 모아서 한 통",
+    "desc": "확정된 변경만 '보낼 소식'에 쌓이고, 자녀가 보내기를 누를 때만 부모에게 한 번 알림이 갑니다. 후보가 바뀐 것은 자동으로 빠집니다.",
+    "refs": "F5 · S1",
+    "screens": [
+     "planner-home",
+     "send-updates",
+     "update-digest"
+    ]
+   },
+   {
+    "title": "묻는 대신 '궁금해요'",
+    "desc": "부모는 궁금한 날에 버튼 하나만 누릅니다. 자녀 홈에 '엄마가 12월 13일을 궁금해하세요'로 모여, 자녀가 편할 때 그 날부터 정하면 됩니다.",
+    "refs": "US2 · S5",
+    "screens": [
+     "parent-day",
+     "planner-home"
+    ]
+   }
+  ],
+  "roles": [
+   {
+    "name": "계획하는 자녀 (지은)",
+    "sees": [
+     "후보까지 모든 항목과 순서 바꾸기",
+     "부모에게 보낼 소식 모음과 미리보기",
+     "부모가 누른 '궁금해요'"
+    ]
+   },
+   {
+    "name": "보기만 하는 부모 (영호·순자)",
+    "sees": [
+     "확정된 일정만, 큰 글씨로 하루 한 줄",
+     "후보 대신 '정하는 중' 표시",
+     "지금 내가 할 일 하나와 '궁금해요' 버튼"
+    ]
+   },
+   {
+    "name": "함께 가는 가족 (민수·하나)",
+    "sees": [
+     "내 할 일·준비물만 모은 목록",
+     "모이는 곳과 시간"
+    ]
+   }
+  ]
+ }
+}

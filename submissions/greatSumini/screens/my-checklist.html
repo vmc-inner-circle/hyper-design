@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375"><title>내 준비</title><link rel="stylesheet" href="../tokens.css"><style>
+#checked{display:none}
+#checked:target{display:flex}
+.meet-time{font-size:var(--fs-xl);font-weight:var(--fw-bold)}
+.meet-place{margin-top:var(--space-4);font-size:var(--fs-md)}
+body:has(#checked:target) .task-passport .check-box{border-color:var(--point);background:var(--point-tint);color:var(--point)}
+body:has(#checked:target) .task-passport .row-title{color:var(--gray-3);text-decoration:line-through}
+</style></head>
+<body class="viewer has-tabbar">
+<header class="appbar">
+  <h1 class="appbar-title">내 준비</h1>
+</header>
+<p class="done-bar" id="checked" role="status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg> 확인했어요. 지은이에게도 보여요</p>
+<main>
+  <section class="section">
+    <h2 class="section-title">모이는 곳</h2>
+    <div class="box">
+      <p class="meet-time">12월 10일(목) 오전 7:00</p>
+      <p class="meet-place">인천공항 제1여객터미널 3층</p>
+      <p class="meet-place muted">대한항공 카운터 앞</p>
+    </div>
+    <div class="section-body"></div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">내가 챙길 것</h2>
+    <ul class="list">
+      <li class="row task-passport"><button class="check" type="button" aria-pressed="false" aria-label="여권 유효기간 확인 완료 표시"><span class="check-box"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button><div class="row-body"><div class="row-title">여권 유효기간 확인</div><div class="row-sub">10월 15일까지</div></div></li>
+    </ul>
+  </section>
+</main>
+<nav class="tabbar" aria-label="주요 메뉴">
+  <a class="tab" href="parent-home.html">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>
+    홈
+  </a>
+  <a class="tab" href="parent-day.html">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+    일정
+  </a>
+  <a class="tab" href="my-checklist.html" aria-current="page">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/></svg>
+    내 준비
+  </a>
+</nav>
+</body></html>

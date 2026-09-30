@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375">
+<title>항목 추가</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.picked { display: flex; align-items: center; gap: var(--space-8); padding: var(--space-20) var(--space-20) var(--space-24); }
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar">
+  <a class="icon-btn" href="plan-day.html" aria-label="뒤로">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </a>
+  <h1 class="appbar-title">항목 추가</h1>
+  <span class="icon-btn" aria-hidden="true"></span>
+</header>
+<main>
+  <p class="picked"><span class="badge">활동</span><span class="muted">12월 11일(금)</span></p>
+  <div class="field is-error">
+    <label class="field-label" for="name">이름</label>
+    <input class="input" id="name" type="text" value="" aria-invalid="true" aria-describedby="name-err">
+    <p class="field-error" id="name-err">이름을 적어 주세요</p>
+  </div>
+  <div class="field">
+    <label class="field-label" for="time">시간</label>
+    <input class="input" id="time" type="time" value="14:00">
+  </div>
+</main>
+<div class="bottom-cta">
+  <a class="btn btn-primary block" href="plan-day.html">후보로 저장</a>
+</div>
+</body>
+</html>

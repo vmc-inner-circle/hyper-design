@@ -1,0 +1,24 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375"><title>할 일 추가 (오류)</title><link rel="stylesheet" href="../tokens.css"><style>.form-main{padding-top:var(--space-24)}</style></head>
+<body class="has-cta">
+<header class="appbar">
+  <a class="icon-btn" href="tasks.html" aria-label="뒤로">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>
+  </a>
+  <h1 class="appbar-title">할 일 추가</h1>
+  <span class="icon-btn" aria-hidden="true"></span>
+</header>
+<main class="form-main">
+  <label class="field">
+    <span class="field-label">할 일</span>
+    <input class="input" type="text" value="엔화 환전 (30만 엔)">
+  </label>
+  <div class="field is-error" role="group" aria-labelledby="who-label" aria-describedby="who-err">
+    <span class="field-label" id="who-label">누가</span>
+    <div class="chips"><button class="chip" type="button" aria-pressed="false">지은</button><button class="chip" type="button" aria-pressed="false">영호(아빠)</button><button class="chip" type="button" aria-pressed="false">순자(엄마)</button><button class="chip" type="button" aria-pressed="false">민수</button><button class="chip" type="button" aria-pressed="false">하나</button></div>
+    <p class="field-error" id="who-err">누가 할지 골라 주세요</p>
+  </div>
+</main>
+<div class="bottom-cta">
+  <a class="btn btn-primary block" href="tasks.html">추가하기</a>
+</div>
+</body></html>

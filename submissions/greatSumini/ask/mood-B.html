@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부모 홈 · 무드 B</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root {
+  /* color */
+  --point: #C2410C;
+  --point-tint: #FFF1EA;
+  --gray-0: #FFFFFF;
+  --gray-1: #F4F4F5;
+  --gray-2: #E4E4E7;
+  --gray-3: #6B6B6B;
+  --gray-4: #1A1A1A;
+  /* type */
+  --font: "Pretendard", system-ui, -apple-system, sans-serif;
+  --fs-sm: 17px;
+  --fs-md: 19px;
+  --fs-lg: 22px;
+  --fs-xl: 26px;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  /* space */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-round: 999px;
+  /* shadow (bottom sheet only) */
+  --shadow-sheet: 0 -8px 24px rgba(26, 26, 26, 0.12);
+  /* size */
+  --tap-min: 44px;
+  --tabbar-h: 80px;
+  --icon: 24px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+button, input, select, textarea { font: inherit; }
+html { background: var(--gray-1); }
+body {
+  width: 375px;
+  min-height: 812px;
+  margin: 0 auto;
+  background: var(--gray-0);
+  color: var(--gray-4);
+  font-family: var(--font);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-regular);
+  line-height: 1.45;
+  padding-bottom: var(--tabbar-h);
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+svg { display: block; flex-shrink: 0; }
+
+/* app bar */
+.appbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-20);
+  border-bottom: 1px solid var(--gray-2);
+}
+.trip-name { font-size: var(--fs-md); font-weight: var(--fw-bold); }
+.trip-date { font-size: var(--fs-sm); color: var(--gray-3); }
+.dday { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--point); white-space: nowrap; }
+
+/* hero */
+.hero { padding: var(--space-32) var(--space-20) var(--space-24); }
+.hero h1 { font-size: var(--fs-xl); font-weight: var(--fw-bold); line-height: 1.35; }
+.hero p { margin-top: var(--space-8); font-size: var(--fs-sm); color: var(--gray-3); }
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  margin-top: var(--space-24);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: var(--point);
+  color: var(--gray-0);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+}
+
+/* sections */
+.section { padding-top: var(--space-24); }
+.section + .section { border-top: 1px solid var(--gray-1); }
+.section-title {
+  padding: 0 var(--space-20) var(--space-8);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+}
+.list { list-style: none; }
+.list li + li { border-top: 1px solid var(--gray-2); }
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--tap-min);
+  padding: var(--space-16) var(--space-20);
+}
+.row-body { flex: 1; min-width: 0; }
+.row-date { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--gray-3); }
+.row-text { font-size: var(--fs-md); font-weight: var(--fw-semibold); }
+.row-text .sub { font-weight: var(--fw-regular); }
+.row-chev { color: var(--gray-3); }
+.badge {
+  display: inline-block;
+  padding: 0 var(--space-8);
+  border-radius: var(--radius-sm);
+  background: var(--gray-1);
+  color: var(--gray-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  vertical-align: middle;
+}
+
+/* tab bar */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 375px;
+  height: var(--tabbar-h);
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-8) var(--space-12);
+  background: var(--gray-0);
+  border-top: 1px solid var(--gray-2);
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  height: 100%;
+  min-height: var(--tap-min);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: var(--gray-3);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+}
+.tab[aria-current="page"] {
+  border-color: var(--point);
+  background: var(--point-tint);
+  color: var(--point);
+}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div>
+    <div class="trip-name">엄마 환갑 교토·오사카 여행</div>
+    <div class="trip-date">12월 10일(목) ~ 14일(월) · 4박 5일</div>
+  </div>
+  <span class="dday">D-71</span>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>여권 유효기간을<br>확인해 주세요</h1>
+    <p>지은이가 부탁했어요 · 10월 15일까지</p>
+    <button class="btn-primary" type="button">확인했어요</button>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">여행 흐름</h2>
+    <ul class="list">
+      <li><a class="row" href="#day1">
+        <div class="row-body">
+          <div class="row-date">12월 10일(목)</div>
+          <div class="row-text">인천 → 간사이 09:05 출발<br><span class="sub">교토 료칸 '하나야'</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+      <li><a class="row" href="#day2">
+        <div class="row-body">
+          <div class="row-date">12월 11일(금)</div>
+          <div class="row-text">아라시야마 대나무숲<br><span class="sub">오후는</span> <span class="badge">정하는 중</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+      <li><a class="row" href="#day3">
+        <div class="row-body">
+          <div class="row-date">12월 12일(토)</div>
+          <div class="row-text">교토 → 오사카<br><span class="sub">난바 '스위소텔'</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+      <li><a class="row" href="#day4">
+        <div class="row-body">
+          <div class="row-date">12월 13일(일)</div>
+          <div class="row-text"><span class="badge">정하는 중</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+      <li><a class="row" href="#day5">
+        <div class="row-body">
+          <div class="row-date">12월 14일(월)</div>
+          <div class="row-text">간사이 12:10 출발<br><span class="sub">→ 인천 14:00</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">지난 소식</h2>
+    <ul class="list">
+      <li><a class="row" href="#news">
+        <div class="row-body">
+          <div class="row-text"><span class="sub">9월 30일 · 바뀐 점 3개</span></div>
+        </div>
+        <svg class="row-chev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a></li>
+    </ul>
+  </section>
+</main>
+
+<nav class="tabbar" aria-label="주요 메뉴">
+  <a class="tab" href="#home" aria-current="page">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>
+    홈
+  </a>
+  <a class="tab" href="#schedule">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+    일정
+  </a>
+  <a class="tab" href="#prep">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/></svg>
+    내 준비
+  </a>
+</nav>
+
+</body>
+</html>
