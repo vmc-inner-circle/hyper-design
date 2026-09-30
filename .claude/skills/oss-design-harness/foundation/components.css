@@ -107,7 +107,7 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 .empty .row-sub { max-width: 240px; }
 
 /* 탭바 — 선택은 색만 */
-.tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: var(--h-tab); display: flex; background: var(--c-surface); border-top: 1px solid var(--c-line); }
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; height: var(--h-tab); display: flex; background: var(--c-surface); border-top: 1px solid var(--c-bg); }
 .tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: var(--fs-caption); font-weight: 600; color: var(--c-text-3); }
 .tab svg { width: var(--icon); height: var(--icon); }
 .tab[aria-current="page"] { color: var(--c-text-1); }
@@ -115,3 +115,12 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 /* 바텀시트 */
 .dim { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); }
 .sheet { position: fixed; left: 0; right: 0; bottom: 0; background: var(--c-surface); border-radius: var(--r-l) var(--r-l) 0 0; padding: var(--block-pad) var(--page-x) calc(var(--block-pad) + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: var(--stack-m); }
+
+/* 준비물 체크 행 — 끝낸 항목은 옅게 */
+.row-lead.is-done { background: var(--c-brand-tint); color: var(--c-brand-tint-text); }
+.row.is-done .row-title { color: var(--c-text-3); text-decoration: line-through; }
+
+/* 부가 정보 한 줄(날씨·걷는 양 등) — 행보다 작고 조용하게 */
+.info { display: flex; align-items: flex-start; gap: var(--stack-s); font-size: var(--fs-sub); line-height: var(--lh-sub); color: var(--c-text-2); }
+.info svg { flex: none; width: 20px; height: 20px; color: var(--c-text-3); margin-top: 1px; }
+.code { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--c-text-1); }

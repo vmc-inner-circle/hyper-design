@@ -1,0 +1,102 @@
+{
+ "screens": [
+  {
+   "id": "parent-home",
+   "file": "parent-home.html",
+   "title": "부모 홈 · D-30 이전",
+   "role": "viewer",
+   "group": "부모님이 보는 모습"
+  },
+  {
+   "id": "parent-home-d7",
+   "file": "parent-home-d7.html",
+   "title": "부모 홈 · D-7",
+   "role": "viewer",
+   "group": "부모님이 보는 모습"
+  },
+  {
+   "id": "parent-home-trip",
+   "file": "parent-home-trip.html",
+   "title": "부모 홈 · 여행 중",
+   "role": "viewer",
+   "group": "부모님이 보는 모습"
+  },
+  {
+   "id": "parent-day",
+   "file": "parent-day.html",
+   "title": "날짜 상세",
+   "role": "viewer",
+   "group": "부모님이 보는 모습"
+  },
+  {
+   "id": "parent-checklist",
+   "file": "parent-checklist.html",
+   "title": "내 준비물",
+   "role": "viewer",
+   "group": "부모님이 보는 모습"
+  },
+  {
+   "id": "planner-home",
+   "file": "planner-home.html",
+   "title": "자녀 홈",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "planner-home-trip",
+   "file": "planner-home-trip.html",
+   "title": "자녀 홈 · 여행 중",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "planner-day",
+   "file": "planner-day.html",
+   "title": "일정",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "item-edit",
+   "file": "item-edit.html",
+   "title": "항목 편집",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "item-edit--error",
+   "file": "item-edit--error.html",
+   "title": "항목 편집 · 시간 없음",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "tasks",
+   "file": "tasks.html",
+   "title": "할 일·준비물",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "family",
+   "file": "family.html",
+   "title": "가족·역할",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "parent-preview",
+   "file": "parent-preview.html",
+   "title": "부모님께 보이는 모습",
+   "role": "planner",
+   "group": "계획하는 자녀"
+  },
+  {
+   "id": "join",
+   "file": "join.html",
+   "title": "초대 링크 첫 화면",
+   "role": "shared",
+   "group": "공통"
+  }
+ ]
+}
