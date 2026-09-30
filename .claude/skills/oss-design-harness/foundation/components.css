@@ -131,3 +131,17 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 .switch::after { content: ""; position: absolute; left: 4px; top: 10px; width: 24px; height: 24px; border-radius: var(--r-pill); background: var(--c-surface); }
 .switch[aria-checked="true"]::before { background: var(--c-text-1); }
 .switch[aria-checked="true"]::after { left: 24px; }
+
+/* 컬러 일러스트 — 사물·주제에만. 누르는 것(추가·뒤로·›·체크)은 선 아이콘을 유지해 구분한다 */
+.row-art { flex: none; width: 44px; height: 44px; display: grid; place-items: center; }
+.row-art img { width: 36px; height: 36px; }
+.info img { flex: none; width: 22px; height: 22px; }
+
+/* 사람 — 일러스트 아바타, 여럿이면 겹쳐서 */
+.avatar { flex: none; width: 44px; height: 44px; border-radius: var(--r-pill); background: var(--c-brand-tint); display: grid; place-items: center; overflow: hidden; }
+.avatar img { width: 34px; height: 34px; }
+.avatars { display: flex; align-items: center; }
+.avatars .avatar { width: 36px; height: 36px; border: 2px solid var(--c-bg); }
+.avatars .avatar + .avatar { margin-left: -8px; }
+.avatars .avatar img { width: 28px; height: 28px; }
+.block .avatars .avatar { border-color: var(--c-surface); }

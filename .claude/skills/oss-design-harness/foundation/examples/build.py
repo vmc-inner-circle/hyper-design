@@ -47,6 +47,11 @@ def row(title, sub="", href=None, lead="", badge=None, trail=CH, cls=""):
     t = f'<span class="row-trail">{trail}</span>' if (href and trail) else (f'<span class="row-trail">{trail}</span>' if trail and trail != CH else "")
     return f'<{tag} class="row {cls}"{h}>{lead}<div class="row-main">{b}<p class="row-title">{title}</p>{s}</div>{t}</{tag}>'
 def lead(n, cls=""): return f'<span class="row-lead {cls}">{ic(n)}</span>'
+A = "../assets/fluent/"
+def art(n): return f'<span class="row-art"><img src="{A}{n}.svg" alt=""></span>'
+def avatar(n): return f'<span class="avatar"><img src="{A}{n}.svg" alt=""></span>'
+def avatars(*ns): return '<span class="avatars" aria-hidden="true">' + "".join(avatar(n) for n in ns) + "</span>"
+def info_art(n, text): return f'<p class="info"><img src="{A}{n}.svg" alt=""><span>{text}</span></p>'
 def when(a, b=""): return f'<span class="row-date">{a}{"<br>" + b if b else ""}</span>'
 def info(n, text): return f'<p class="info">{ic(n)}<span>{text}</span></p>'
 FIXED = ("is-brand", "확정")
@@ -61,7 +66,7 @@ FLOW_ROWS = lambda href: f'''
     {row("호텔에서 나와 집으로", "김포 도착 오후 4시", href, when("11/23", "월"))}'''
 flow = lambda href: f'<section class="block is-list">\n    <div class="block-head"><h2 class="h2">여행 흐름</h2></div>{FLOW_ROWS(href)}\n  </section>'
 mine = f'''<section class="block is-list">
-    {row("내가 챙길 것 3가지", "천천히 준비해도 돼요", "checklist.html", lead("bag"))}
+    {row("내가 챙길 것 3가지", "천천히 준비해도 돼요", "checklist.html", art("luggage"))}
   </section>'''
 
 # ── 홈: 시기별 3가지 모습 (모두 같은 홈) ──
@@ -70,6 +75,7 @@ S["home"] = ("홈 · 출발 50일 전", "everyone", "홈 — 시기마다 맨 �
     <p class="eyebrow">지은이가 준비하는 여행 · <span class="num">D-51</span></p>
     <h1 class="title">11월 20일부터 3박&nbsp;4일, 제주에 가요</h1>
     <p class="lead">어머니, 아버지, 민수네 가족과 함께예요</p>
+    {avatars("mother", "father", "jieun", "minsu", "hayun")}
   </header>
   {flow("day.html")}
   {mine}
@@ -84,7 +90,7 @@ S["home-d7"] = ("홈 · 출발 3일 전", "everyone", "홈 — 시기마다 맨 
   </header>
   <section class="block">
     <div class="block-head"><h2 class="h2">챙길 것 1가지 남았어요</h2></div>
-    {info("sun", "제주 낮 17도, 바람이 불어요. 얇은 겉옷을 챙기세요.")}
+    {info_art("weather", "제주 낮 17도, 바람이 불어요. 얇은 겉옷을 챙기세요.")}
     <div>
     {row("신분증", "", None, lead("done", "is-done"), cls="is-done", trail="")}
     {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done", trail="")}
@@ -107,7 +113,7 @@ S["home-trip"] = ("홈 · 여행 중", "everyone", "홈 — 시기마다 맨 위
     {row("저녁 · 흑돼지 돈사돈", "예약 6명 · 확인번호 <span class='code'>DS-4821</span>", "day.html", when("18:30"), FIXED)}
   </section>
   <section class="block">
-    {info("walk", "오늘은 많이 걷지 않아요. 계단 없는 길이에요.")}
+    {info_art("walk", "오늘은 많이 걷지 않아요. 계단 없는 길이에요.")}
   </section>
 </main>''', "text-large")
 
@@ -120,15 +126,15 @@ S["home-edit"] = ("홈 · 일정을 짜는 사람", "editor", "일정을 짜는 
   </header>
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">정할 것</h2></div>
-    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "day-edit.html", lead("cal"), ("is-brand", "어머니가 궁금해하세요"))}
-    {row("11/22 일 하루", "아직 비어 있어요", "day-edit.html", lead("cal"))}
-    {row("렌터카 보험", "완전자차 / 일반자차", "item-edit.html", lead("car"))}
+    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "day-edit.html", art("meal"), ("is-brand", "어머니가 궁금해하세요"))}
+    {row("11/22 일 하루", "아직 비어 있어요", "day-edit.html", art("calendar"))}
+    {row("렌터카 보험", "완전자차 / 일반자차", "item-edit.html", art("car"))}
   </section>
   {flow("day-edit.html")}
   <section class="block is-list">
-    {row("할 일 5가지 중 2가지 남았어요", "민수: 렌터카 예약 · 어머니: 혈압약", "tasks.html", lead("check"))}
-    {row("가족 6명", "일정을 같이 짜는 사람 2명", "family.html", lead("users"))}
-    {row("가족에게 보이는 모습", "", "home.html", lead("eye"))}
+    {row("할 일 5가지 중 2가지 남았어요", "민수: 렌터카 예약 · 어머니: 혈압약", "tasks.html", art("clipboard"))}
+    {row("가족 6명", "일정을 같이 짜는 사람 2명", "family.html", avatars("jieun", "minsu", "mother"))}
+    {row("가족에게 보이는 모습", "", "home.html", art("phone"))}
   </section>
 </main>''', "")
 
@@ -160,7 +166,7 @@ S["day-edit"] = ("날짜 · 일정을 짜는 사람", "editor", "일정을 짜�
     <a class="row is-add" href="item-edit.html">{lead("plus")}<div class="row-main"><p class="row-title">일정 추가</p></div></a>
   </section>
   <section class="block">
-    {info("eye", "가족에게는 저녁이 '정하는 중'으로 보여요")}
+    {info_art("eyes", "가족에게는 저녁이 '정하는 중'으로 보여요")}
   </section>
 </main>''', "")
 
@@ -186,7 +192,7 @@ S["checklist"] = ("내가 챙길 것", "everyone", "홈에서 들어가는 곳",
     {row("혈압약 4일치", "누르면 챙겼다고 표시돼요", "#", lead("circle"), trail="")}
   </section>
   <section class="block">
-    {info("bag", "우산, 상비약, 충전기는 지은이가 챙겨요")}
+    {info_art("umbrella", "우산, 상비약, 충전기는 지은이가 챙겨요")}
   </section>
 </main>''', "text-large")
 
@@ -211,14 +217,14 @@ S["family"] = ("가족", "editor", "일정을 짜는 사람에게만 더 보이�
 <main class="page">
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">일정 같이 짜기</h2></div>
-    {row("지은 (나)", "", None, lead("users"), trail=SW(True))}
-    {row("민수", "하윤이(7살)와 함께", None, lead("users"), trail=SW(True))}
-    {row("어머니", "무릎이 안 좋아 오래 걷기 힘들어요", None, lead("users"), trail=SW(False))}
-    {row("아버지", "매운 음식은 피해요", None, lead("users"), trail=SW(False))}
+    {row("지은 (나)", "", None, avatar("jieun"), trail=SW(True))}
+    {row("민수", "하윤이(7살)와 함께", None, avatar("minsu"), trail=SW(True))}
+    {row("어머니", "무릎이 안 좋아 오래 걷기 힘들어요", None, avatar("mother"), trail=SW(False))}
+    {row("아버지", "매운 음식은 피해요", None, avatar("father"), trail=SW(False))}
     <a class="row is-add" href="join.html">{lead("plus")}<div class="row-main"><p class="row-title">가족 초대</p></div></a>
   </section>
   <section class="block">
-    {info("eye", "같이 짜지 않는 가족에게는 확정된 일정만 큰 글자로 보여요")}
+    {info_art("phone", "같이 짜지 않는 가족에게는 확정된 일정만 큰 글자로 보여요")}
   </section>
 </main>''', "")
 
@@ -227,11 +233,12 @@ S["join"] = ("초대 링크 첫 화면", "everyone", "처음 들어올 때", f''
     <p class="eyebrow">제주 가족여행</p>
     <h1 class="title">지은이가 여행에 초대했어요</h1>
     <p class="lead">지은이가 일정을 짜고 있어요. 여행 전까지 필요한 걸 여기서 알려드려요.</p>
+    {avatars("jieun", "mother", "father", "minsu", "hayun")}
   </header>
   <section class="block">
-    {info("cal", "11월 20일(금) ~ 23일(월), 3박 4일")}
-    {info("users", "어머니, 아버지, 지은, 민수네 가족 6명")}
-    {info("pin", "제주 · 해비치 호텔")}
+    {info_art("calendar", "11월 20일(금) ~ 23일(월), 3박 4일")}
+    {info_art("hotel", "해비치 호텔에서 3박")}
+    {info_art("plane", "김포 → 제주, 대한항공")}
   </section>
 </main>
 <div class="cta"><a class="btn primary full" href="home.html">함께하기</a></div>''', "text-large has-cta")
