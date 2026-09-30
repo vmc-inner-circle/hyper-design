@@ -31,8 +31,14 @@
 - 체크리스트: 왼쪽 `row-art`, **오른쪽** `<button class="check" role="checkbox" aria-checked="true|false"><span>(체크 선 아이콘)</span></button>`, 끝낸 행은 `class="row is-done"`
 - 켜기/끄기: 오른쪽에 `<button class="switch" role="switch" aria-checked="…">`
 
-## 배지 — 뜻마다 다른 색
+## 선택 상태 — 하나의 규칙
+칩·세그먼트·체크·스위치의 "선택됨"은 전부 브랜드 색(자동). 선택을 검정·다른 색으로 따로 칠하지 않는다.
+
+## 배지 — 뜻마다 다른 색, 앱 전체에서 하나의 표
 `is-brand`(확정·핵심) · `is-warning`(바뀜·마감 임박) · `is-info`(요청·안내) · `is-success`(완료) · `is-danger`(실패) · 클래스 없음(회색: 후보·정하는 중)
+- `screens.json`의 `"badges": {"확정": "is-brand", "바뀜": "is-warning", …}` 에 선언한 뜻→색 표만 쓴다(selfcheck가 대조). 한 색에 뜻 하나.
+- **시간·순서(지금·다음·~까지·D-3)는 배지가 아니라 글자**로. 배지는 상태에만.
+- 아직 정하지 않은 것(추천·후보)에 확정 색을 쓰지 않는다.
 
 ## 버튼
 - 하단 고정(폼·확인·결정·결과 화면에만): `<div class="cta"><button class="btn primary full">저장</button></div>` + body `has-cta`. **탭 첫 화면·홈에는 두지 않는다.** 문구는 확정 동사(저장·보내기·함께하기), "~보기"는 링크.
@@ -42,13 +48,17 @@
 
 ## 입력
 `<div class="field"><label class="label" for="x">이름</label><input class="input" id="x" value="…"></div>` · 오류: `field is-error` + `<p class="field-msg">(경고 선 아이콘)문구</p>` — 오류는 색만으로 전달하지 않는다(아이콘 필수).
+- **오류 상태 화면은 기본 화면과 같은 요소**에서 문제 칸만 `is-error`로 바꾼다. 버튼 아래 새 칸·새 블록을 붙이지 않는다.
+- 입력 순서: 뒤 입력의 규칙을 바꾸는 선택(예: 1:1인지, 누구와 함께인지)은 **앞에**.
 세그먼트: `<div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">…</button>…</div>` · 칩: `<div class="chips"><button class="chip is-selected">…</button></div>`
 
 ## 기타
 - 부가 정보 한 줄: `<p class="info"><img src="../assets/fluent/weather.svg" alt=""><span>…</span></p>`
 - 아바타 여럿: `<span class="avatars"><span class="avatar"><img src="../assets/fluent/mother.svg" alt=""></span>…</span>`
 - 탭바(목적지 3곳 이상일 때만): `<nav class="tabbar"><a class="tab" aria-current="page">(선 아이콘)라벨</a>…</nav>` + body `has-tab`
-- 바텀시트: `<div class="dim"></div><div class="sheet">…</div>`, 완료 표시: `<p class="done">…</p>`, 빈 상태: `<div class="empty">…</div>`
+- 바텀시트: `<div class="dim"></div><div class="sheet">…</div>`, 빈 상태: `<div class="empty">…</div>`
+- 완료 표시(`<id>--done` 상태, 링크 복사·초대·공유처럼 밖으로 내보낸 뒤): 같은 화면 맨 위에 `<p class="done">링크를 복사했어요 — 단톡방에 붙여넣으세요</p>`
+- 목록에 추가할 수 있으면 끝에 `row is-add`, 순서를 바꿀 수 있으면 행 오른쪽에 끌기 손잡이(선 아이콘 ≡), 지울 수 있으면 편집 화면에 "지우기"(btn secondary)
 
 ## 일러스트 (assets/fluent/, Fluent Emoji Color · MIT)
 beach · calendar · car · clipboard · coffee · eyes · father · hayun · hotel · idcard · invite · jieun · luggage · meal · minsu · mother · phone · pill · pin · plane · shoe · ticket · umbrella · walk · weather

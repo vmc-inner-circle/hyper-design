@@ -33,6 +33,7 @@ for s in S:
     exp = set()
     if t.get("list_first_use"): exp.add("empty")
     if t.get("form"): exp.add("error")
+    if t.get("shares"): exp.add("done")
     if "--" not in s["id"]:
         decl = set(s.get("states", []) or [])
         if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)}')
@@ -53,5 +54,19 @@ for s in S:
     if 'class="cta"' in h and 'class="tabbar"' in h: errs.append(f"{f.name}: 탭 첫 화면에 하단 고정 CTA")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
+# 배지 뜻→색 표: 선언한 표만 쓰고, 한 색에 뜻 하나
+BADGES = m.get("badges") or {}
+if not BADGES: errs.append("badges(뜻→색 표) 없음")
+cls_seen = {}
+for mean, cls in BADGES.items():
+    if cls and cls in cls_seen: errs.append(f"배지 표: '{mean}'와 '{cls_seen[cls]}'가 같은 색 {cls}")
+    cls_seen.setdefault(cls, mean)
+for s in S:
+    f = out / s["file"]
+    if not f.exists(): continue
+    for cls, text in re.findall(r'<span class="badge ?([^"]*)">([^<]+)</span>', f.read_text(encoding="utf-8")):
+        mean = next((k for k in BADGES if k in text), None)
+        if mean is None: errs.append(f"{f.name}: 표에 없는 배지 '{text}'(시간·순서라면 배지 말고 글자로)")
+        elif (BADGES[mean] or "") != cls.strip(): errs.append(f"{f.name}: '{text}' 배지 색 {cls or '회색'} ≠ 표 {BADGES[mean] or '회색'}")
 print("\n".join(errs) if errs else "selfcheck OK")
 sys.exit(1 if errs else 0)

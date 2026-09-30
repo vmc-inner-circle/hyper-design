@@ -8,7 +8,7 @@ from collections import deque
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 
-ALLOWED_STATES = {"empty", "error", "disabled"}
+ALLOWED_STATES = {"empty", "error", "disabled", "done"}   # done ← shares(링크·공유·초대의 결과 표시)
 VIEWPORT = {"width": 375, "height": 812}
 
 MEASURE_JS = r"""
@@ -298,6 +298,7 @@ def main():
             exp = set()
             if tr.get("list_first_use"): exp.add("empty")
             if tr.get("form") or tr.get("sends"): exp.add("error")
+            if tr.get("shares"): exp.add("done")
             if tr.get("readonly_role"): exp.add("disabled")
             have = variants.get(f.stem, set())
             declared = set(s.get("states") or [])
@@ -357,7 +358,8 @@ def main():
                 page.goto(index.resolve().as_uri(), wait_until="load", timeout=30000)
                 page.wait_for_timeout(800)
                 hgt = min(page.evaluate("document.documentElement.scrollHeight"), 16000)
-                page.set_viewport_size({"width": 1440, "height": hgt})  # 화면 밖 iframe 도 그리게
+                wid = min(page.evaluate("document.documentElement.scrollWidth"), 4000)
+                page.set_viewport_size({"width": max(1440, wid), "height": hgt})  # 화면 밖(오른쪽·아래) iframe 도 그리게
                 page.wait_for_timeout(2500)
                 page.screenshot(path=str(shots / "index.png"), full_page=True)
             except Exception as e:
@@ -385,7 +387,7 @@ def main():
     for c in colors:
         if is_chroma(c):
             hues.add(int(rgb_hsl(c)[0] // 20))
-        else:
+        elif rgb_hsl(c)[1] < 0.3:          # 진짜 무채색만 — 의미색의 아주 옅은 틴트(채도 높고 명도 0.95↑)는 회색으로 세지 않는다
             grays.add(tuple(int(round(v / 4) * 4) for v in c[:3]) + (round(c[3], 2),))
     add("일관성", "chromatic_colors", len(hues), "<=6", len(hues) <= 6,   # 브랜드 1 + 의미색 4(틴트가 인접 구간으로 갈릴 여유)
         "hue 구간: " + ",".join(f"{h*20}-{h*20+19}" for h in sorted(hues)))

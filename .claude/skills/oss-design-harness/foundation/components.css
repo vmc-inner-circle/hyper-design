@@ -22,7 +22,7 @@ svg { display: block; }
 /* 하단 고정 CTA(.cta)는 폼·확인·결정·결과 화면에만. 탭 첫 화면(.has-tab)에는 두지 않는다. */
 .page { padding: var(--stack-s) 0 var(--stack-l); display: flex; flex-direction: column; gap: var(--block-gap); }
 body.has-tab .page { padding-bottom: calc(var(--h-tab) + var(--stack-l)); }
-body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--stack-m)); }
+body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) * 2 + env(safe-area-inset-bottom)); }
 .plain { background: var(--c-surface); }                /* 폼·상세: 흰 바탕 한 장 */
 .plain .page { gap: var(--stack-l); padding-left: var(--page-x); padding-right: var(--page-x); }
 
@@ -96,7 +96,7 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 /* 칩·세그먼트 — 선택은 하나의 스타일 */
 .chips { display: flex; gap: var(--stack-s); overflow-x: auto; padding: 0 var(--page-x); scrollbar-width: none; }
 .chip { flex: none; min-height: 44px; padding: 0 var(--stack-m); border-radius: var(--r-pill); background: var(--c-surface); color: var(--c-text-2); font-size: var(--fs-sub); font-weight: 600; display: inline-flex; align-items: center; }
-.chip.is-selected, .seg-item.is-selected { background: var(--c-text-1); color: var(--c-surface); }
+.chip.is-selected, .seg-item.is-selected { background: var(--c-brand); color: var(--c-on-brand); }   /* 선택 = 브랜드 하나(체크·스위치와 같은 규칙) */
 .seg { display: flex; background: var(--c-bg); border-radius: var(--r-m); padding: 4px; }
 .seg-item { flex: 1; min-height: 44px; border-radius: var(--r-s); font-size: var(--fs-sub); font-weight: 600; color: var(--c-text-2); display: grid; place-items: center; }
 
@@ -137,7 +137,7 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 .switch { flex: none; position: relative; width: 52px; height: 44px; display: grid; place-items: center; }
 .switch::before { content: ""; width: 52px; height: 32px; border-radius: var(--r-pill); background: var(--c-line); }
 .switch::after { content: ""; position: absolute; left: 4px; top: 10px; width: 24px; height: 24px; border-radius: var(--r-pill); background: var(--c-surface); }
-.switch[aria-checked="true"]::before { background: var(--c-text-1); }
+.switch[aria-checked="true"]::before { background: var(--c-brand); }
 .switch[aria-checked="true"]::after { left: 24px; }
 
 /* 컬러 일러스트 — 사물·주제에만. 누르는 것(추가·뒤로·›·체크)은 선 아이콘을 유지해 구분한다 */

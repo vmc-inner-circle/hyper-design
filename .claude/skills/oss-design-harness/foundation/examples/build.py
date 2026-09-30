@@ -274,7 +274,8 @@ BRANCHES = {
     "item-edit": [{"to": "item-edit--error", "label": "시간 없이 확정"}],
 }
 GROUPS = ["처음 들어올 때", "홈 — 시기마다 맨 위가 바뀐다", "홈에서 들어가는 곳", "일정을 짜는 사람에게만 더 보이는 것"]
-manifest = {"groups": GROUPS, "screens": [{"id": sid, "file": f"{sid}.html", "title": t, "role": r, "group": g, "purpose": PURPOSE.get(sid, ""),
+BADGES = {"확정": "is-brand", "바뀜": "is-warning", "궁금해하세요": "is-info", "후보": ""}
+manifest = {"groups": GROUPS, "badges": BADGES, "screens": [{"id": sid, "file": f"{sid}.html", "title": t, "role": r, "group": g, "purpose": PURPOSE.get(sid, ""),
              "policies": POLICIES.get(sid, []), "branches": BRANCHES.get(sid, [])} for sid, (t, r, g, _, _) in S.items()]}
 (HERE / "screens.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), encoding="utf-8")
 print(len(S), "screens")
