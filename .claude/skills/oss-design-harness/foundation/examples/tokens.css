@@ -1,0 +1,58 @@
+/* foundation tokens — derive.py --brand #1B64DA --tone neutral --shape normal --density comfy --font pretendard
+   이 파일은 생성물이다. 직접 고치지 말고 파라미터를 바꿔 다시 만든다. */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+:root {
+  /* 색 — 포인트 1 + 표면 톤(neutral) */
+  --c-bg: #F3F3F4;
+  --c-surface: #FFFFFF;
+  --c-line: #E8E9EA;
+  --c-text-1: #1E2025;
+  --c-text-2: #4E525A;
+  --c-text-3: #6A6E76;
+  --c-brand: #1B64DA;
+  --c-on-brand: #FFFFFF;
+  --c-brand-text: #1B64DA;
+  --c-brand-tint: #E8F0FB;
+  --c-brand-tint-text: #1B64DA;
+  --c-danger: #E12D33;
+  --c-danger-tint: #FDF0F1;
+
+  /* 타이포 — pretendard */
+  --font: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --tracking: -0.02em;
+  --fs-title: 28px; --fw-title: 700; --lh-title: 1.36;
+  --fs-h2: 20px; --fw-h2: 700; --lh-h2: 1.4;
+  --fs-body: 16px; --fw-body: 400; --lh-body: 1.55;
+  --fs-strong: 16px; --fw-strong: 600; --lh-strong: 1.5;
+  --fs-sub: 14px; --fw-sub: 400; --lh-sub: 1.5;
+  --fs-caption: 12px; --fw-caption: 500; --lh-caption: 1.4;
+
+  /* 여백 — comfy */
+  --page-x: 24px;
+  --block-pad: 24px;
+  --block-gap: 12px;
+  --row-py: 16px;
+  --stack-s: 8px;
+  --stack-m: 16px;
+  --stack-l: 32px;
+
+  /* 모양 — normal */
+  --r-s: 8px;
+  --r-m: 12px;
+  --r-l: 16px;
+  --r-pill: 999px;
+
+  /* 크기 */
+  --h-appbar: 56px; --h-btn: 56px; --h-btn-s: 44px; --h-tab: 64px; --h-row: 64px; --icon: 24px;
+}
+
+/* 보기 전용 역할: 본문 계열만 한 단계 크게 */
+.is-viewer {
+  --fs-title: 28px; --fw-title: 700; --lh-title: 1.36;
+  --fs-h2: 20px; --fw-h2: 700; --lh-h2: 1.4;
+  --fs-body: 18px; --fw-body: 400; --lh-body: 1.55;
+  --fs-strong: 18px; --fw-strong: 600; --lh-strong: 1.5;
+  --fs-sub: 16px; --fw-sub: 400; --lh-sub: 1.5;
+  --fs-caption: 14px; --fw-caption: 500; --lh-caption: 1.4;
+}
