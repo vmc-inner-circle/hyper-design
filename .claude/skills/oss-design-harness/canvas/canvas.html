@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>캔버스</title>
+<!-- Excalidraw 0.18.1 — 빌드 없이 esm.sh로 로드 (https://docs.excalidraw.com/docs/@excalidraw/excalidraw/integration) -->
+<link rel="stylesheet" href="https://esm.sh/@excalidraw/excalidraw@0.18.1/dist/prod/index.css">
+<script>window.EXCALIDRAW_ASSET_PATH = "https://esm.sh/@excalidraw/excalidraw@0.18.1/dist/prod/";</script>
+<script type="importmap">
+{ "imports": {
+  "react": "https://esm.sh/react@19.0.0",
+  "react/jsx-runtime": "https://esm.sh/react@19.0.0/jsx-runtime",
+  "react-dom": "https://esm.sh/react-dom@19.0.0",
+  "react-dom/client": "https://esm.sh/react-dom@19.0.0/client"
+} }
+</script>
+<style>
+  html, body, #app { margin: 0; height: 100%; }
+  /* 화면(iframe)을 그림 레이어 아래로: 캔버스 배경을 투명하게 두고 바탕색은 여기서 칠한다.
+     그래야 화면 위에 그린 글·도형·화살표가 가려지지 않는다 */
+  .excalidraw__embeddable-container { z-index: 0 !important; }
+  .excalidraw { background: var(--board-bg, #f8f9fa); }
+  .excalidraw.theme--dark { background: #121212; }
+  /* 평가에 필요 없는 Excalidraw UI 숨김 (0.18.1 기준). 메뉴는 배경색·테마·도움말만 남김 */
+  .default-sidebar-trigger, .HintViewer, .App-toolbar__extra-tools-trigger,
+  [data-testid="search-menu-button"], .dropdown-menu-group:has(a[href*="github.com/excalidraw"]),
+  .dropdown-menu-group:has(a[href*="github.com/excalidraw"]) + .dropdown-menu-item-separator,
+  label:has([data-testid="toolbar-lock"]),
+  .App-toolbar .ToolIcon__lock + .App-toolbar__divider { display: none !important; }
+  /* 속성 패널: 메뉴가 열려 있으면 숨김(겹침 방지), AI가 만든 화면·상자만 선택했을 때도 숨김(꾸밀 대상이 아님) */
+  .excalidraw:has([data-testid="dropdown-menu"]) .App-menu__left,
+  body.sel-generated .App-menu__left { display: none !important; }
+  #goto { position: fixed; left: 50%; bottom: 108px; transform: translateX(-50%); z-index: 10; display: none; border: 0; border-radius: 999px;
+    padding: 10px 18px; background: #4f46e5; color: #fff; font: 600 14px system-ui, "Malgun Gothic", sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,.2); cursor: pointer; }
+  #view { position: fixed; right: 16px; top: 72px; z-index: 10; display: none; gap: 4px; background: #fff; border-radius: 999px; padding: 4px; box-shadow: 0 1px 6px rgba(0,0,0,.15); }
+  #view button { border: 0; border-radius: 999px; padding: 6px 14px; background: transparent; font: 600 13px system-ui, "Malgun Gothic", sans-serif; color: #555; cursor: pointer; }
+  #view button[aria-pressed="true"] { background: #1f1f1f; color: #fff; }
+  #status { position: fixed; left: 50%; bottom: 64px; transform: translateX(-50%); z-index: 10; background: #fff; border-radius: 999px; padding: 6px 14px; font: 13px system-ui, "Malgun Gothic", sans-serif; color: #555; box-shadow: 0 1px 6px rgba(0,0,0,.15); pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="status">불러오는 중…</div>
+<button id="goto"></button>
+<div id="view" role="group" aria-label="보기"></div>
+<script type="module">
+// 캔버스 껍데기 — Excalidraw를 띄우고 저장·새로고침·UI 조정만 한다. 규칙은 lib/에 있다 (README.md 참고)
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { Excalidraw } from "https://esm.sh/@excalidraw/excalidraw@0.18.1?external=react,react-dom";
+import { loadBoard, discover, makeFrames } from "/lib/board.js";
+import { createCapture } from "/lib/capture.js";
+import { buildScene, FONT } from "/lib/layout.js";
+import { interpret, componentsOf, movedOf, changeKey } from "/lib/feedback.js";
+import { parse } from "/lib/ids.js";
+
+const status = (t) => (document.getElementById("status").textContent = t);
+let api = null;
+
+// ---------- 1. 불러오기 → 하위 페이지 찾기 → 화면 읽기 → 배치 ----------
+const loadedBoard = await loadBoard();
+const { devices, board, screens } = loadedBoard;
+// 라운드가 다른 저장 상태는 지난 라운드 것이다 — 복원하지 않는다 (에이전트가 피드백을 반영하며 board.json round를 올림)
+const ROUND = board.round ?? 0;
+const state = (loadedBoard.state?.round ?? 0) === ROUND ? loadedBoard.state : null;
+document.title = board.title || "캔버스";
+status("화면 구조를 읽는 중…");
+const links = await discover(screens, devices);
+const frames = makeFrames(screens, devices);
+const capture = createCapture(devices, status);
+const components = Object.fromEntries(await Promise.all(frames.map(async (fr) => [fr.key, await capture.measureFrame(fr)])));
+// 보기 전환 (flows가 있는 보드): 전체 = 모바일 구간 + PC 구간, 모바일만, PC만. 좌표는 그대로라 그린 표시가 어긋나지 않는다.
+// 한쪽만 보는 동안에는 저장하지 않는다 — 가려진 구간의 피드백·옮긴 컴포넌트를 지우지 않으려고 (피드백은 '전체'에서)
+const hasWide = !!board.flows?.length && screens.some((s) => s.devices.includes("mobile") && s.devices.some((d) => d !== "mobile"));
+const VIEW = hasWide ? (new URLSearchParams(location.search).get("view") || "all") : "all";
+if (hasWide) {
+  const box = document.getElementById("view");
+  box.style.display = "flex";
+  [["all", "전체"], ["mobile", "모바일"], ["pc", "PC"]].forEach(([v, t]) => {
+    const b = document.createElement("button");
+    b.textContent = t; b.setAttribute("aria-pressed", String(v === VIEW));
+    b.onclick = () => { const u = new URL(location.href); v === "all" ? u.searchParams.delete("view") : u.searchParams.set("view", v); location.href = u.href; };
+    box.appendChild(b);
+  });
+}
+const generated = buildScene({ board, screens, frames, devices, links, components, state, view: VIEW });
+
+// 사용자가 그린 것 복원. 피드백 상자에 적은 글은 새로 만든 상자에 다시 붙인다
+const restored = (state?.scene || []).filter((e) => !e.customData?.generated);
+const genById = Object.fromEntries(generated.map((e) => [e.id, e]));
+restored.forEach((t) => {
+  const box = t.containerId && genById[t.containerId];
+  if (box) { box.boundElements = [...(box.boundElements || []), { type: "text", id: t.id }]; t.groupIds = box.groupIds; }
+});
+
+// ---------- 2. 저장: 한 번 보내면 서버가 feedback.json(에이전트용) / canvas-state.json(복원용)으로 나눈다 ----------
+let lastKey = changeKey([...generated, ...restored]), timer = null;
+async function save(all, files) {
+  if (VIEW !== "all") { status(`${VIEW === "pc" ? "PC" : "모바일"}만 보는 중 — 피드백은 '전체' 보기에서 남겨 주세요`); return; }
+  const { mine, items } = interpret(all, capture.elementAt);
+  const used = Object.fromEntries(mine.filter((e) => e.type === "image" && files[e.fileId]).map((e) => [e.fileId, files[e.fileId]]));
+  status("저장 중…");
+  try {
+    const r = await fetch("/api/feedback", { method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ board: board.title, round: ROUND, items, renderChecks: capture.renderChecks,
+        discovered: screens.filter((s) => s.discovered).map(({ id, file, title, from }) => ({ id, file, title, from })),
+        scene: mine, files: used, moved: movedOf(all), components: componentsOf(all) }) });
+    const auto = capture.renderChecks.length ? ` · 자동 점검 ${capture.renderChecks.length}건` : "";
+    status(r.ok ? `저장됨 · 피드백 ${items.length}개${auto} — 다 했으면 채팅에 "피드백 남겼어"`
+      : r.status === 409 ? "지난 라운드 화면이에요 — 새로고침합니다" : "저장 실패");
+    if (r.status === 409) setTimeout(() => location.reload(), 800);
+  } catch (e) { status("저장 실패 (서버 꺼짐?)"); }
+}
+
+// 피드백 상자에 적은 글은 메모처럼 왼쪽 위부터 (Excalidraw 기본은 가운데 정렬)
+function panelTextFixes(all) {
+  const byId = Object.fromEntries(all.map((e) => [e.id, e])), fixes = {};
+  all.filter((b) => parse(b.id).kind === "panel" && !b.isDeleted).forEach((b) => (b.boundElements || []).forEach(({ id }) => {
+    const t = byId[id]; if (!t || t.isDeleted) return;
+    const want = { x: b.x + 12, y: b.y + 12, textAlign: "left", verticalAlign: "top" };
+    if (Math.abs(t.x - want.x) > 1 || Math.abs(t.y - want.y) > 1 || t.textAlign !== "left" || t.verticalAlign !== "top") fixes[id] = { ...t, ...want };
+  }));
+  if (!Object.keys(fixes).length) return null;
+  return all.map((e) => fixes[e.id] ? { ...fixes[e.id], version: e.version + 1, versionNonce: e.versionNonce + 1 } : e);
+}
+
+function onChange(all, appState, files) {
+  // AI가 만든 화면·상자·표시만 골랐으면 속성 패널을 숨긴다 (꾸밀 대상이 아님)
+  const sel = Object.keys(appState.selectedElementIds || {});
+  const fixedOnly = new Set(all.filter((e) => e.customData?.generated && !e.customData?.component).map((e) => e.id));
+  document.body.classList.toggle("sel-generated", sel.length > 0 && sel.every((id) => fixedOnly.has(id)));
+  if (api && !appState.draggingElement && !appState.selectedElementsAreBeingDragged && !appState.editingTextElement) {
+    const fixed = panelTextFixes(all) || markFixes(all) || arrowFixes(all, focusedScreens(all, appState));
+    if (fixed) { setTimeout(() => api.updateScene({ elements: fixed })); return; }
+  }
+  updateGoto(all, appState);
+  // 배경색 메뉴에서 고른 색은 바탕에 입히고 캔버스는 투명 유지 (화면이 그림 아래에 깔려 있어서)
+  if (api && appState.viewBackgroundColor !== "transparent") {
+    document.documentElement.style.setProperty("--board-bg", appState.viewBackgroundColor);
+    setTimeout(() => api.updateScene({ appState: { viewBackgroundColor: "transparent" } }));
+  }
+  const key = changeKey(all);
+  if (key === lastKey) return;
+  lastKey = key;
+  clearTimeout(timer);
+  timer = setTimeout(() => save(all, files), 700);
+}
+
+// ---------- 3. 보조 동작 ----------
+// 보드의 화면에서는 컴포넌트를 숨긴다 — 그 자리를 이미지가 대신해서, 옮기면 빈자리가 드러난다
+function hideComponents(iframe) {
+  const doc = iframe.contentDocument; if (!doc?.head) return;
+  const st = doc.createElement("style");
+  st.textContent = "[data-id] { visibility: hidden !important; }";
+  doc.head.appendChild(st);
+}
+// 인터랙션 표시(빨간 테두리)는 감싼 버튼을 따라간다 — 버튼을 옮기면 같이, 지우면 사라진다
+function markFixes(all) {
+  const byId = Object.fromEntries(all.map((e) => [e.id, e])), fixes = {}, PAD = 4;
+  all.forEach((m) => {
+    const c = m.customData?.markOf && byId[m.customData.markOf]; if (!c || m.isDeleted) return;
+    const want = c.isDeleted ? { opacity: 0 } : { opacity: 100, x: c.x - PAD, y: c.y - PAD, width: c.width + PAD * 2, height: c.height + PAD * 2 };
+    if (Object.entries(want).some(([k, v]) => Math.abs((m[k] ?? 0) - v) > 0.5)) fixes[m.id] = want;
+  });
+  if (!Object.keys(fixes).length) return null;
+  return all.map((e) => fixes[e.id] ? { ...e, ...fixes[e.id], version: e.version + 1, versionNonce: e.versionNonce + 1 } : e);
+}
+
+// 관계 화살표 보이기 — 평소엔 앞으로 가는 흐름만. 화면(또는 화살표)을 고르면 그 화면과 이어진 화살표만 진하게, 되돌아가는 것도 보이게
+function focusedScreens(all, appState) {
+  const byId = Object.fromEntries(all.map((e) => [e.id, e])), set = new Set();
+  Object.keys(appState.selectedGroupIds || {}).forEach((g) => g.startsWith("g:") && set.add(g.slice(2)));
+  Object.keys(appState.selectedElementIds || {}).forEach((id) => {
+    const cd = byId[id]?.customData || {};
+    if (cd.rel) { set.add(cd.rel.from); set.add(cd.rel.to); } else if (cd.screen) set.add(cd.screen);
+  });
+  return set;
+}
+function arrowFixes(all, focus) {
+  const fixes = {};
+  all.forEach((e) => {
+    const rel = e.customData?.rel; if (!rel || e.isDeleted) return;
+    const near = focus.has(rel.from) || focus.has(rel.to);
+    const opacity = focus.size ? (near ? 100 : rel.back ? 0 : 15) : (rel.back ? 0 : 100), locked = opacity === 0;
+    if (e.opacity !== opacity || e.locked !== locked) fixes[e.id] = { opacity, locked };
+  });
+  if (!Object.keys(fixes).length) return null;
+  return all.map((e) => fixes[e.id] ? { ...e, ...fixes[e.id], version: e.version + 1, versionNonce: e.versionNonce + 1 } : e);
+}
+
+// 화면으로 이동: 화면 옆 ↗(Excalidraw 링크), 버튼·화살표를 골랐을 때 뜨는 "→ 이동" 버튼
+const titleOf = Object.fromEntries(screens.map((s) => [s.id, s.title || s.id]));
+const fileToId = Object.fromEntries(screens.map((s) => [new URL(s.file, location.href).pathname, s.id]));
+function goToScreenId(id) {
+  const t = id && api?.getSceneElements().filter((el) => el.customData?.screen === id || el.id === id);
+  if (t?.length) api.scrollToContent(t, { fitToViewport: true, viewportZoomFactor: 0.8, animate: true });
+  return !!t?.length;
+}
+const goToScreen = (url) => goToScreenId(fileToId[new URL(url, location.href).pathname]);
+const gotoBtn = document.getElementById("goto");
+gotoBtn.onclick = () => goToScreenId(gotoBtn.dataset.to);
+function updateGoto(all, appState) {
+  const sel = Object.keys(appState.selectedElementIds || {});
+  const to = sel.length === 1 && all.find((e) => e.id === sel[0])?.customData?.goto;
+  gotoBtn.style.display = to ? "block" : "none";
+  if (to) { gotoBtn.dataset.to = to; gotoBtn.textContent = to.startsWith("live") ? "→ 완성본으로 이동" : `→ ${titleOf[to]} 화면으로 이동`; }
+}
+// 에이전트가 board.json·theme.js·screens/를 고치면 자동으로 새로고침 (서버 /api/version)
+let version = null;
+setInterval(async () => {
+  try {
+    const v = await (await fetch("/api/version")).text();
+    if (version && v !== version) location.reload();
+    version = v;
+  } catch (e) {}
+}, 2000);
+// 속성 패널에서 글꼴 고르기만 숨긴다 (보드 글꼴은 Excalifont 하나)
+new MutationObserver(() => document.querySelectorAll(".App-menu__left legend").forEach((h) => {
+  const box = h.textContent.trim() === "글꼴" && h.closest("fieldset");
+  if (box && box.style.display !== "none") box.style.display = "none";
+})).observe(document.body, { childList: true, subtree: true });
+
+// ---------- 4. 띄우기 ----------
+createRoot(document.getElementById("app")).render(React.createElement(Excalidraw, {
+  langCode: "ko-KR",
+  initialData: { elements: [...generated, ...restored], files: { ...capture.files, ...(state?.files || {}) },
+    appState: { viewBackgroundColor: "transparent", currentItemFontFamily: FONT }, scrollToContent: true },
+  UIOptions: { canvasActions: { loadScene: false, saveToActiveFile: false, export: false, saveAsImage: false, clearCanvas: false } },
+  validateEmbeddable: true,
+  renderEmbeddable: (el) => el.customData?.live
+    ? React.createElement("iframe", { src: el.link, style: { width: "100%", height: "100%", border: 0, borderRadius: 8, background: "#fff" } })
+    : el.customData?.embed
+    ? React.createElement("iframe", { src: el.link, scrolling: "no", onLoad: (e) => hideComponents(e.target),
+        style: { width: "100%", height: "100%", border: 0, borderRadius: 8, background: "#fff" } })
+    : null,
+  excalidrawAPI: (a) => {
+    api = a;
+    window.excalidrawAPI = a;  // 디버그·테스트용
+    // 열자마자 한 번 저장 — 자동 점검(renderChecks)·발견한 페이지(discovered)를 feedback.json에 남긴다
+    setTimeout(() => { a.scrollToContent(undefined, { fitToContent: true, animate: false }); save(a.getSceneElementsIncludingDeleted(), a.getFiles()); }, 300);
+  },
+  onLinkOpen: (el, event) => { if (goToScreen(el.link)) event.preventDefault(); },
+  onChange,
+}));
+status(`화면 ${screens.length}개 · 빨간 테두리 = 다른 화면으로 넘어가는 버튼 · 화면 아래 노란 상자에 피드백 · 요소는 더블클릭해서 옮기거나 지우기`);
+</script>
+</body>
+</html>

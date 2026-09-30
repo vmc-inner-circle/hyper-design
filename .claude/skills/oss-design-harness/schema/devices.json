@@ -1,0 +1,30 @@
+{
+  "$comment": "기기 규격의 유일한 출처. canvas.html·check.py·screen-generation.md가 이 파일을 따른다. 키를 바꾸면 board.schema.json·feedback.schema.json의 device enum도 함께 바꾼다.",
+  "mobile": {
+    "label": "모바일",
+    "width": 390,
+    "height": { "mode": "fixed", "value": 844 },
+    "tailwind": "기본 (접두사 없음)",
+    "input": "touch",
+    "minTouch": 44,
+    "safeArea": { "top": 47, "bottom": 34 }
+  },
+  "tablet": {
+    "label": "태블릿",
+    "width": 834,
+    "height": { "mode": "fixed", "value": 1194 },
+    "tailwind": "md:",
+    "input": "touch",
+    "minTouch": 44,
+    "safeArea": { "top": 24, "bottom": 20 }
+  },
+  "desktop": {
+    "label": "PC",
+    "width": 1280,
+    "height": { "mode": "content", "value": 800, "max": 3000 },
+    "tailwind": "lg:",
+    "input": "mouse",
+    "minTouch": 0,
+    "safeArea": { "top": 0, "bottom": 0 }
+  }
+}
