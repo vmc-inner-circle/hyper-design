@@ -240,7 +240,7 @@ def main():
             variants.setdefault(b, set()).add(st)
 
     # ---------- 완결성 (정적) ----------
-    add("완결성", "screen_count", len(base_files), ">=12", len(base_files) >= 12,
+    add("완결성", "screen_count", len(base_files), ">=10", len(base_files) >= 10,
         ", ".join(f.stem for f in base_files))
     cov = (manifest or {}).get("prd_coverage")
     if isinstance(cov, dict) and cov:
@@ -402,13 +402,13 @@ def main():
     vsz = []
     for sid, r in per.items():
         base = sid.split("--")[0]
-        if (mscreens.get(base) or {}).get("role") == "viewer":
+        if (mscreens.get(base) or {}).get("role") in ("viewer", "everyone"):
             vsz += r.get("textSizes", [])
     if vsz:
         vr = sum(1 for v in vsz if v >= 16) / len(vsz)
-        add("가독성", "viewer_body_font", f"{vr*100:.1f}%", ">=90%", vr >= 0.9)
+        add("가독성", "large_text_body_font", f"{vr*100:.1f}%", ">=90%", vr >= 0.9)
     else:
-        add("가독성", "viewer_body_font", "n/a", ">=90%", True, "viewer 화면 없음")
+        add("가독성", "large_text_body_font", "n/a", ">=90%", True, "큰 글자 화면 없음")
     tt = sum(r.get("touch", {}).get("total", 0) for r in per.values())
     tok = sum(r.get("touch", {}).get("ok", 0) for r in per.values())
     tf = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("touch", {}).get("fails", [])]

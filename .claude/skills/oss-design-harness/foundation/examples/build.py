@@ -1,4 +1,4 @@
-"""가족여행 PRD 레퍼런스 화면 14장 생성기 (docs/scope-family-trip.md 범위).
+"""가족여행 PRD 레퍼런스 화면 12장 생성기 (docs/scope-family-trip.md 범위, 역할 이름 없이 편집 권한만).
 
 python3 build.py  →  이 폴더에 *.html + screens.json
 빌드 에이전트가 참고할 모범 답안이다. 파운데이션 클래스만 쓰고 인라인 style은 쓰지 않는다.
@@ -49,33 +49,33 @@ def row(title, sub="", href=None, lead="", badge=None, trail=CH, cls=""):
 def lead(n, cls=""): return f'<span class="row-lead {cls}">{ic(n)}</span>'
 def when(a, b=""): return f'<span class="row-date">{a}{"<br>" + b if b else ""}</span>'
 def info(n, text): return f'<p class="info">{ic(n)}<span>{text}</span></p>'
-KIDS = [("홈", "home", "planner-home.html"), ("일정", "cal", "planner-day.html"), ("준비", "check", "tasks.html"), ("가족", "users", "family.html")]
-def tabbar(cur): return '<nav class="tabbar" aria-label="아래 메뉴">' + "".join(
-    f'<a class="tab" href="{h}"{" aria-current=\"page\"" if h == cur else ""}>{ic(i)}{t}</a>' for t, i, h in KIDS) + "</nav>"
 FIXED = ("is-brand", "확정")
 S = {}
 
-# ───────── 부모 (보기만, 탭바 없음) ─────────
-flow = f'''<section class="block is-list">
-    <div class="block-head"><h2 class="h2">여행 흐름</h2></div>
-    {row("제주 도착 · 해비치 호텔", "비행기 10:05 출발", "parent-day.html", when("11/20", "금"), ("is-brand", "시간 바뀜"))}
-    {row("오후 2시 섭지코지 산책", "저녁은 정하는 중", "parent-day.html", when("11/21", "토"))}
-    {row("정하는 중", "11월 10일까지 정해요", "parent-day.html", when("11/22", "일"))}
-    {row("호텔에서 나와 집으로", "김포 도착 오후 4시", "parent-day.html", when("11/23", "월"))}
+
+# 역할 이름 없음: 모두가 보는 기본 화면(everyone, 큰 글자) + 편집 권한이 있으면 붙는 요소(editor)
+FLOW_ROWS = lambda href: f'''
+    {row("제주 도착 · 해비치 호텔", "비행기 10:05 출발", href, when("11/20", "금"), ("is-brand", "시간 바뀜"))}
+    {row("오후 2시 섭지코지 산책", "저녁은 정하는 중", href, when("11/21", "토"))}
+    {row("정하는 중", "11월 10일까지 정해요", href, when("11/22", "일"))}
+    {row("호텔에서 나와 집으로", "김포 도착 오후 4시", href, when("11/23", "월"))}'''
+flow = lambda href: f'<section class="block is-list">\n    <div class="block-head"><h2 class="h2">여행 흐름</h2></div>{FLOW_ROWS(href)}\n  </section>'
+mine = f'''<section class="block is-list">
+    {row("내가 챙길 것 3가지", "천천히 준비해도 돼요", "checklist.html", lead("bag"))}
   </section>'''
-S["parent-home"] = ("부모 홈 · D-30 이전", "viewer", "부모님이 보는 모습", f'''<main class="page">
+
+# ── 홈: 시기별 3가지 모습 (모두 같은 홈) ──
+S["home"] = ("홈 · 출발 50일 전", "everyone", "홈 — 시기마다 맨 위가 바뀐다", f'''<main class="page">
   <header class="hero">
     <p class="eyebrow">지은이가 준비하는 여행 · <span class="num">D-51</span></p>
     <h1 class="title">11월 20일부터 3박&nbsp;4일, 제주에 가요</h1>
     <p class="lead">어머니, 아버지, 민수네 가족과 함께예요</p>
   </header>
-  {flow}
-  <section class="block is-list">
-    {row("챙기실 것 3가지", "천천히 준비하셔도 돼요", "parent-checklist.html", lead("bag"))}
-  </section>
-</main>''', "is-viewer")
+  {flow("day.html")}
+  {mine}
+</main>''', "text-large")
 
-S["parent-home-d7"] = ("부모 홈 · D-7", "viewer", "부모님이 보는 모습", f'''<main class="page">
+S["home-d7"] = ("홈 · 출발 3일 전", "everyone", "홈 — 시기마다 맨 위가 바뀐다", f'''<main class="page">
   <header class="hero">
     <p class="eyebrow">제주 가족여행 · <span class="num">D-3</span></p>
     <h1 class="title">금요일 아침 8시 30분, 김포공항에서 만나요</h1>
@@ -83,18 +83,18 @@ S["parent-home-d7"] = ("부모 홈 · D-7", "viewer", "부모님이 보는 모�
     <a class="hero-more" href="#">지도에서 보기{CH}</a>
   </header>
   <section class="block">
-    <div class="block-head"><h2 class="h2">챙기실 것 1가지 남았어요</h2></div>
+    <div class="block-head"><h2 class="h2">챙길 것 1가지 남았어요</h2></div>
     {info("sun", "제주 낮 17도, 바람이 불어요. 얇은 겉옷을 챙기세요.")}
     <div>
-    {row("신분증", "", None, lead("done", "is-done"), cls="is-done")}
-    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done")}
-    {row("혈압약 4일치", "", None, lead("circle"), trail="")}
+    {row("신분증", "", None, lead("done", "is-done"), cls="is-done", trail="")}
+    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done", trail="")}
+    {row("혈압약 4일치", "", "checklist.html", lead("circle"))}
     </div>
   </section>
-  {flow}
-</main>''', "is-viewer")
+  {flow("day.html")}
+</main>''', "text-large")
 
-S["parent-home-trip"] = ("부모 홈 · 여행 중", "viewer", "부모님이 보는 모습", f'''<main class="page">
+S["home-trip"] = ("홈 · 여행 중", "everyone", "홈 — 시기마다 맨 위가 바뀐다", f'''<main class="page">
   <header class="hero">
     <p class="eyebrow">여행 2일째 · 11월 21일 토요일</p>
     <h1 class="title">오늘은 섭지코지에 가요</h1>
@@ -103,76 +103,49 @@ S["parent-home-trip"] = ("부모 홈 · 여행 중", "viewer", "부모님이 보
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">오늘 하루</h2></div>
     {row("호텔 조식", "1층 식당 · 10시까지", None, when("08:00"), trail="")}
-    {row("섭지코지 산책", "차로 40분 · 평지 30분 걷기", "parent-day.html", when("14:00"), FIXED)}
-    {row("저녁 · 흑돼지 돈사돈", "호텔에서 차로 15분", "parent-day.html", when("18:30"), FIXED)}
+    {row("섭지코지 산책", "차로 40분 · 평지 30분 걷기", "day.html", when("14:00"), FIXED)}
+    {row("저녁 · 흑돼지 돈사돈", "예약 6명 · 확인번호 <span class='code'>DS-4821</span>", "day.html", when("18:30"), FIXED)}
   </section>
   <section class="block">
     {info("walk", "오늘은 많이 걷지 않아요. 계단 없는 길이에요.")}
   </section>
-</main>''', "is-viewer")
+</main>''', "text-large")
 
-S["parent-day"] = ("날짜 상세", "viewer", "부모님이 보는 모습", f'''{appbar("11월 21일 토요일", "parent-home.html")}
+# ── 편집 권한이 있을 때 같은 홈에 붙는 것 ──
+S["home-edit"] = ("홈 · 일정을 짜는 사람", "editor", "일정을 짜는 사람에게만 더 보이는 것", f'''<main class="page">
+  <header class="hero">
+    <p class="eyebrow">제주 가족여행 · <span class="num">D-51</span></p>
+    <h1 class="title">정할 게 3개 남았어요</h1>
+    <p class="lead">정하기 전까지 가족에게는 '정하는 중'으로 보여요</p>
+  </header>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">정할 것</h2></div>
+    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "day-edit.html", lead("cal"), ("is-brand", "어머니가 궁금해하세요"))}
+    {row("11/22 일 하루", "아직 비어 있어요", "day-edit.html", lead("cal"))}
+    {row("렌터카 보험", "완전자차 / 일반자차", "item-edit.html", lead("car"))}
+  </section>
+  {flow("day-edit.html")}
+  <section class="block is-list">
+    {row("할 일 5가지 중 2가지 남았어요", "민수: 렌터카 예약 · 어머니: 혈압약", "tasks.html", lead("check"))}
+    {row("가족 6명", "일정을 같이 짜는 사람 2명", "family.html", lead("users"))}
+    {row("가족에게 보이는 모습", "", "home.html", lead("eye"))}
+  </section>
+</main>''', "")
+
+# ── 날짜 ──
+S["day"] = ("날짜 상세", "everyone", "홈에서 들어가는 곳", f'''{appbar("11월 21일 토요일", "home.html")}
 <main class="page">
   <section class="block is-list">
     {row("섭지코지 산책", "호텔에서 차로 40분 · 평지 30분", None, when("14:00"), FIXED, trail="")}
     {row("저녁은 지은이가 정하는 중이에요", "11월 10일까지 정해요", None, when("저녁"), trail="")}
   </section>
   <section class="block">
-    <p class="block-note">이날이 궁금하시면 눌러 주세요. 지은이에게 조용히 표시만 가요.</p>
+    <p class="block-note">이날이 궁금하면 눌러 주세요. 지은이에게 조용히 표시만 가요.</p>
     <button class="btn secondary">이날 궁금해요</button>
   </section>
-</main>''', "is-viewer")
+</main>''', "text-large")
 
-S["parent-checklist"] = ("내 준비물", "viewer", "부모님이 보는 모습", f'''{appbar("챙기실 것", "parent-home.html")}
-<main class="page">
-  <section class="block is-list">
-    {row("신분증", "", None, lead("done", "is-done"), cls="is-done")}
-    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done")}
-    {row("혈압약 4일치", "누르면 챙겼다고 표시돼요", "#", lead("circle"), trail="")}
-  </section>
-  <section class="block">
-    {info("bag", "나머지 짐은 지은이가 챙겨요 — 우산, 상비약, 충전기")}
-  </section>
-</main>''', "is-viewer")
-
-# ───────── 자식 (계획하는 사람) ─────────
-S["planner-home"] = ("자녀 홈", "planner", "계획하는 자녀", f'''<main class="page">
-  <header class="hero">
-    <p class="eyebrow">제주 가족여행 · <span class="num">D-51</span></p>
-    <h1 class="title">정할 게 3개 남았어요</h1>
-    <p class="lead">정하기 전까지 부모님께는 '정하는 중'으로 보여요</p>
-  </header>
-  <section class="block is-list">
-    <div class="block-head"><h2 class="h2">정할 것</h2></div>
-    {row("11/21 토 저녁", "후보 2곳 · 11월 10일까지", "planner-day.html", lead("cal"), ("is-brand", "어머니가 궁금해하세요"))}
-    {row("11/22 일 하루", "아직 비어 있어요", "planner-day.html", lead("cal"))}
-    {row("렌터카 보험", "완전자차 / 일반자차", "item-edit.html", lead("car"))}
-  </section>
-  <section class="block is-list">
-    {row("할 일 5가지 중 2가지 남았어요", "민수: 렌터카 예약 · 어머니: 혈압약", "tasks.html", lead("check"))}
-    {row("부모님께 보이는 모습", "", "parent-preview.html", lead("eye"))}
-  </section>
-</main>
-{tabbar("planner-home.html")}''', "has-tab")
-
-S["planner-home-trip"] = ("자녀 홈 · 여행 중", "planner", "계획하는 자녀", f'''<main class="page">
-  <header class="hero">
-    <p class="eyebrow">여행 2일째 · 11월 21일 토요일</p>
-    <h1 class="title">다음은 오후 2시 섭지코지</h1>
-    <p class="lead">1시 30분 로비 출발 · 차로 40분</p>
-  </header>
-  <section class="block is-list">
-    <div class="block-head"><h2 class="h2">오늘 예약</h2></div>
-    {row("흑돼지 돈사돈 · 6명", "확인번호 <span class='code'>DS-4821</span>", "item-edit.html", when("18:30"))}
-    {row("해비치 호텔 · 2박째", "확인번호 <span class='code'>HB-20931</span>", "item-edit.html", lead("bed"))}
-  </section>
-  <section class="block is-list">
-    {row("내일 일정", "우도 배편 · 오전 9시 30분", "planner-day.html", lead("cal"))}
-  </section>
-</main>
-{tabbar("planner-home.html")}''', "has-tab")
-
-S["planner-day"] = ("일정", "planner", "계획하는 자녀", f'''{appbar("일정", "planner-home.html")}
+S["day-edit"] = ("날짜 · 일정을 짜는 사람", "editor", "일정을 짜는 사람에게만 더 보이는 것", f'''{appbar("일정", "home-edit.html")}
 <main class="page">
   <div class="chips" role="tablist" aria-label="날짜">
     <button class="chip" role="tab" aria-selected="false">11/20 금</button>
@@ -187,80 +160,73 @@ S["planner-day"] = ("일정", "planner", "계획하는 자녀", f'''{appbar("일
     <a class="row is-add" href="item-edit.html">{lead("plus")}<div class="row-main"><p class="row-title">일정 추가</p></div></a>
   </section>
   <section class="block">
-    {info("eye", "부모님께는 저녁이 '정하는 중'으로 보여요")}
+    {info("eye", "가족에게는 저녁이 '정하는 중'으로 보여요")}
   </section>
-</main>
-{tabbar("planner-day.html")}''', "has-tab")
+</main>''', "")
 
-form = lambda err: f'''{appbar("일정 고치기", "planner-day.html")}
+form = lambda err: f'''{appbar("일정 고치기", "day-edit.html")}
 <main class="page">
   <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" value="흑돼지 '돈사돈'"></div>
   <div class="field{' is-error' if err else ''}"><label class="label" for="t">시간</label><input class="input" id="t" value="{'' if err else '11월 21일 토 오후 6시 30분'}" placeholder="시간을 골라 주세요">{'<p class="field-msg">시간을 정해야 확정할 수 있어요</p>' if err else ''}</div>
   <div class="field"><label class="label" for="m">예약 메모</label><input class="input" id="m" value="6명 · 확인번호 DS-4821"></div>
-  <div class="field"><span class="label">부모님께 어떻게 보일까요?</span>
+  <div class="field"><span class="label">가족에게 어떻게 보일까요?</span>
     <div class="seg" role="radiogroup"><button class="seg-item" role="radio" aria-checked="false">정하는 중</button><button class="seg-item is-selected" role="radio" aria-checked="true">확정</button></div>
   </div>
 </main>
 <div class="cta"><button class="btn primary full">저장</button></div>'''
-S["item-edit"] = ("항목 편집", "planner", "계획하는 자녀", form(False), "plain has-cta")
-S["item-edit--error"] = ("항목 편집 · 시간 없음", "planner", "계획하는 자녀", form(True), "plain has-cta")
+S["item-edit"] = ("일정 고치기", "editor", "일정을 짜는 사람에게만 더 보이는 것", form(False), "plain has-cta")
+S["item-edit--error"] = ("일정 고치기 · 시간 없음", "editor", "일정을 짜는 사람에게만 더 보이는 것", form(True), "plain has-cta")
 
-S["tasks"] = ("할 일·준비물", "planner", "계획하는 자녀", f'''<main class="page">
-  <header class="hero">
-    <p class="eyebrow">함께 준비해요</p>
-    <h1 class="title">5가지 중 2가지 남았어요</h1>
-  </header>
+# ── 준비 ──
+S["checklist"] = ("내가 챙길 것", "everyone", "홈에서 들어가는 곳", f'''{appbar("내가 챙길 것", "home.html")}
+<main class="page">
   <section class="block is-list">
-    <div class="block-head"><h2 class="h2">남은 것</h2></div>
+    {row("신분증", "", None, lead("done", "is-done"), cls="is-done", trail="")}
+    {row("편한 운동화", "하루 30분 정도 걸어요", None, lead("done", "is-done"), cls="is-done", trail="")}
+    {row("혈압약 4일치", "누르면 챙겼다고 표시돼요", "#", lead("circle"), trail="")}
+  </section>
+  <section class="block">
+    {info("bag", "우산, 상비약, 충전기는 지은이가 챙겨요")}
+  </section>
+</main>''', "text-large")
+
+S["tasks"] = ("할 일 나누기", "editor", "일정을 짜는 사람에게만 더 보이는 것", f'''{appbar("할 일", "home-edit.html")}
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">남은 것 2가지</h2></div>
     {row("렌터카 예약", "민수 · 11월 1일까지", "#", lead("circle"))}
     {row("혈압약 4일치", "어머니", "#", lead("circle"))}
     <a class="row is-add" href="#">{lead("plus")}<div class="row-main"><p class="row-title">할 일 추가</p></div></a>
   </section>
   <section class="block is-list">
-    <div class="block-head"><h2 class="h2">끝낸 것</h2></div>
+    <div class="block-head"><h2 class="h2">끝낸 것 3가지</h2></div>
     {row("항공권 예약", "지은", None, lead("done", "is-done"), cls="is-done", trail="")}
     {row("호텔 예약", "지은", None, lead("done", "is-done"), cls="is-done", trail="")}
     {row("신분증 확인", "아버지", None, lead("done", "is-done"), cls="is-done", trail="")}
   </section>
-</main>
-{tabbar("tasks.html")}''', "has-tab")
+</main>''', "")
 
-S["family"] = ("가족·역할", "planner", "계획하는 자녀", f'''<main class="page">
-  <header class="hero">
-    <p class="eyebrow">함께 가는 사람 6명</p>
-    <h1 class="title">부모님은 보기만 하세요</h1>
-    <p class="lead">계획은 지은이와 민수가 함께 짜요</p>
-  </header>
+SW = lambda on: f'<button class="switch" role="switch" aria-checked="{"true" if on else "false"}" aria-label="일정 같이 짜기"></button>'
+S["family"] = ("가족", "editor", "일정을 짜는 사람에게만 더 보이는 것", f'''{appbar("가족 6명", "home-edit.html")}
+<main class="page">
   <section class="block is-list">
-    {row("어머니", "무릎이 안 좋으셔서 오래 걷기 힘들어요", "#", lead("users"), ("", "보기만"))}
-    {row("아버지", "매운 음식은 피해요", "#", lead("users"), ("", "보기만"))}
-    {row("민수", "하윤이(7살)와 함께", "#", lead("users"), ("is-brand", "함께 계획"))}
+    <div class="block-head"><h2 class="h2">일정 같이 짜기</h2></div>
+    {row("지은 (나)", "", None, lead("users"), trail=SW(True))}
+    {row("민수", "하윤이(7살)와 함께", None, lead("users"), trail=SW(True))}
+    {row("어머니", "무릎이 안 좋아 오래 걷기 힘들어요", None, lead("users"), trail=SW(False))}
+    {row("아버지", "매운 음식은 피해요", None, lead("users"), trail=SW(False))}
     <a class="row is-add" href="join.html">{lead("plus")}<div class="row-main"><p class="row-title">가족 초대</p></div></a>
   </section>
-</main>
-{tabbar("family.html")}''', "has-tab")
-
-S["parent-preview"] = ("부모님께 보이는 모습", "planner", "계획하는 자녀", f'''{appbar("부모님께 보이는 모습", "planner-home.html")}
-<main class="page">
   <section class="block">
-    <p class="block-note">후보는 부모님께 보이지 않아요. 확정하면 바로 부모님 화면에 나타나요.</p>
-  </section>
-  <section class="block is-list">
-    <div class="block-head"><h2 class="h2">11월 21일 토요일</h2></div>
-    {row("섭지코지 산책", "그대로 보여요", None, when("14:00"), FIXED, trail="")}
-    {row("저녁은 지은이가 정하는 중이에요", "후보 2곳은 보이지 않아요", None, when("저녁"), trail="")}
-  </section>
-  <section class="block is-list">
-    {row("부모님 화면 그대로 보기", "", "parent-home.html", lead("eye"))}
+    {info("eye", "같이 짜지 않는 가족에게는 확정된 일정만 큰 글자로 보여요")}
   </section>
 </main>''', "")
 
-# ───────── 공통 ─────────
-S["join"] = ("초대 링크 첫 화면", "shared", "공통", f'''<main class="page">
+S["join"] = ("초대 링크 첫 화면", "everyone", "처음 들어올 때", f'''<main class="page">
   <header class="hero">
     <p class="eyebrow">제주 가족여행</p>
     <h1 class="title">지은이가 여행에 초대했어요</h1>
-    <p class="lead">보기만 하셔도 돼요. 계획은 지은이가 짜요.</p>
+    <p class="lead">지은이가 일정을 짜고 있어요. 여행 전까지 필요한 걸 여기서 알려드려요.</p>
   </header>
   <section class="block">
     {info("cal", "11월 20일(금) ~ 23일(월), 3박 4일")}
@@ -268,11 +234,9 @@ S["join"] = ("초대 링크 첫 화면", "shared", "공통", f'''<main class="pa
     {info("pin", "제주 · 해비치 호텔")}
   </section>
 </main>
-<div class="cta"><a class="btn primary full" href="parent-home.html">함께하기</a></div>''', "has-cta")
+<div class="cta"><a class="btn primary full" href="home.html">함께하기</a></div>''', "text-large has-cta")
 
-# ───────── 파일 쓰기 + 매니페스트 ─────────
-GROUP = {"viewer": "부모님이 보는 모습", "planner": "계획하는 자녀", "shared": "공통"}
-LINKS = {}
+for old in HERE.glob("*.html"): old.unlink()
 for sid, (title, role, group, body, cls) in S.items():
     (HERE / f"{sid}.html").write_text(doc(title, body, cls), encoding="utf-8")
 manifest = {"screens": [{"id": sid, "file": f"{sid}.html", "title": t, "role": r, "group": g} for sid, (t, r, g, _, _) in S.items()]}

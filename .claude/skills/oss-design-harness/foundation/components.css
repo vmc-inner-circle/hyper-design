@@ -124,3 +124,10 @@ body.has-cta .page { padding-bottom: calc(var(--h-btn) + var(--stack-l) + var(--
 .info { display: flex; align-items: flex-start; gap: var(--stack-s); font-size: var(--fs-sub); line-height: var(--lh-sub); color: var(--c-text-2); }
 .info svg { flex: none; width: 20px; height: 20px; color: var(--c-text-3); margin-top: 1px; }
 .code { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--c-text-1); }
+
+/* 켜기/끄기 — 선택 표시는 칩과 같은 짙은 색 */
+.switch { flex: none; position: relative; width: 52px; height: 44px; display: grid; place-items: center; }
+.switch::before { content: ""; width: 52px; height: 32px; border-radius: var(--r-pill); background: var(--c-line); }
+.switch::after { content: ""; position: absolute; left: 4px; top: 10px; width: 24px; height: 24px; border-radius: var(--r-pill); background: var(--c-surface); }
+.switch[aria-checked="true"]::before { background: var(--c-text-1); }
+.switch[aria-checked="true"]::after { left: 24px; }

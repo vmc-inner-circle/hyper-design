@@ -4,7 +4,7 @@ python3 derive.py --brand "#1B64DA" --tone neutral --shape normal --density comf
 
 - 색: 포인트 색 1개 + 표면 톤(warm/neutral/cool)에서 글자·배경·선·틴트를 계산하고,
   모든 글자/배경 조합이 WCAG AA(4.5:1)를 넘도록 명도만 조정한다(채도는 유지 → 탁해지지 않음).
-- 타이포: 폰트별 세트. 제목÷본문 ≥ 1.5, 굵기 차 ≥ 200. 보기 전용 역할(.is-viewer)은 본문 계열만 한 단계 크게.
+- 타이포: 폰트별 세트. 제목÷본문 ≥ 1.5, 굵기 차 ≥ 200. 큰 글자 화면(.text-large)은 본문 계열만 한 단계 크게 — 편집하지 않는 사람의 기본값. 역할 이름을 붙이지 않는다.
 - 여백: 4pt 스케일 위 "넉넉한 기본값". 밀도 comfy/normal.
 """
 import argparse, colorsys, sys, pathlib
@@ -37,7 +37,7 @@ FONTS = {
         # 역할: (크기, 굵기, 줄간격)
         "base":   {"title": (28, 700, 1.36), "h2": (20, 700, 1.4), "body": (16, 400, 1.55),
                    "strong": (16, 600, 1.5), "sub": (14, 400, 1.5), "caption": (12, 500, 1.4)},
-        "viewer": {"title": (28, 700, 1.36), "h2": (20, 700, 1.4), "body": (18, 400, 1.55),
+        "large": {"title": (28, 700, 1.36), "h2": (20, 700, 1.4), "body": (18, 400, 1.55),
                    "strong": (18, 600, 1.5), "sub": (16, 400, 1.5), "caption": (14, 500, 1.4)},
     }
 }
@@ -114,9 +114,9 @@ def derive(brand_hex, tone, shape, density, font):
   --h-appbar: 56px; --h-btn: 56px; --h-btn-s: 44px; --h-tab: 64px; --h-row: 64px; --icon: 24px;
 }}
 
-/* 보기 전용 역할: 본문 계열만 한 단계 크게 */
-.is-viewer {{
-{typo(f["viewer"])}
+/* 큰 글자: 편집하지 않는 사람의 기본값(화면에 표시 없음) */
+.text-large {{
+{typo(f["large"])}
 }}
 """
     return css, checks, notes

@@ -47,8 +47,8 @@
   --h-appbar: 56px; --h-btn: 56px; --h-btn-s: 44px; --h-tab: 64px; --h-row: 64px; --icon: 24px;
 }
 
-/* 보기 전용 역할: 본문 계열만 한 단계 크게 */
-.is-viewer {
+/* 큰 글자: 편집하지 않는 사람의 기본값(화면에 표시 없음) */
+.text-large {
   --fs-title: 28px; --fw-title: 700; --lh-title: 1.36;
   --fs-h2: 20px; --fw-h2: 700; --lh-h2: 1.4;
   --fs-body: 18px; --fw-body: 400; --lh-body: 1.55;
