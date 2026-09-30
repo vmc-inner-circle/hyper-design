@@ -4,7 +4,7 @@ out = pathlib.Path(sys.argv[1])
 m = json.loads((out / "screens.json").read_text(encoding="utf-8"))
 screens = m["screens"]
 W, H, S = 375, 812, 0.5          # 실제 크기, 축소 배율
-CW, CH, GX, GY, TOP, LEFT = W * S, H * S, 90, 150, 110, 60
+CW, CH, GX, GY, TOP, LEFT = W * S, H * S, 90, 250, 120, 60
 groups = []
 for s in screens:
     g = s.get("group") or "기타"
@@ -16,7 +16,8 @@ for gi, g in enumerate(groups):
         pos[s["id"]] = (LEFT + i * (CW + GX), TOP + gi * (CH + GY))
 width = LEFT * 2 + max(len(r) for r in rows.values()) * (CW + GX)
 height = TOP + len(groups) * (CH + GY)
-arrows = []
+arrows = []; seen = set()
+first = {rows[g][0]["id"] for g in groups}
 for s in screens:
     for t in s.get("links", []):
         if t not in pos or t == s["id"]: continue
@@ -25,11 +26,15 @@ for s in screens:
             a, b = (x1 + CW, y1 + CH * .35), (x2, y2 + CH * .35)
             d = f"M{a[0]},{a[1]} C{a[0]+40},{a[1]} {b[0]-40},{b[1]} {b[0]},{b[1]}"
         else:
+            gs, gt = s.get("group"), next(x.get("group") for x in screens if x["id"] == t)
+            if t not in first or (gs, gt) in seen or gs == gt: continue
+            seen.add((gs, gt))
             a = (x1 + CW / 2, y1 + CH); b = (x2 + CW / 2, y2 - 8)
             if y2 <= y1: a = (x1 + CW / 2, y1 - 8); b = (x2 + CW / 2, y2 + CH)
             my = (a[1] + b[1]) / 2
             d = f"M{a[0]},{a[1]} C{a[0]},{my} {b[0]},{my} {b[0]},{b[1]}"
-        arrows.append(f'<path d="{d}"/>')
+        cls = "" if abs(y1 - y2) < 1 else ' class="x"'
+        arrows.append(f'<path{cls} d="{d}"/>')
 frames, labels = [], []
 for gi, g in enumerate(groups):
     labels.append(f'<div class="glabel" style="top:{TOP + gi*(CH+GY) - 70}px;left:{LEFT}px">{html.escape(g)}</div>')
@@ -40,7 +45,7 @@ for s in screens:
     chips = "".join(f'<a class="chip" href="screens/{s["id"]}--{st}.html" target="view">{ko.get(st, st)}</a>' for st in states)
     frames.append(f'''<div class="frame" style="left:{x}px;top:{y}px">
 <div class="ftitle">{html.escape(s.get("title", s["id"]))}</div>
-<div class="phone"><iframe src="{s["file"]}" scrolling="no" tabindex="-1"></iframe>
+<div class="phone"><iframe src="{s["file"]}" loading="eager" scrolling="no" tabindex="-1"></iframe>
 <a class="hit" href="{s["file"]}" target="view" aria-label="{html.escape(s.get("title",""))} 크게 보기"></a></div>
 <div class="fdesc">{html.escape(s.get("purpose",""))}</div><div class="chips">{chips}</div></div>''')
 doc = f"""<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -51,7 +56,7 @@ header{{position:sticky;top:0;left:0;z-index:5;background:#e9e9e6ee;padding:16px
 header span{{font-weight:400;color:#666;font-size:15px;margin-left:12px}}
 .board{{position:relative;width:{width}px;height:{height}px}}
 svg{{position:absolute;inset:0;width:{width}px;height:{height}px;pointer-events:none}}
-svg path{{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)}}
+svg path{{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)}} svg path.x{{stroke-dasharray:6 6;opacity:.6}}
 .glabel{{position:absolute;font-size:22px;font-weight:700}}
 .frame{{position:absolute;width:{CW}px}}
 .ftitle{{font-size:15px;font-weight:600;margin-bottom:8px}}
