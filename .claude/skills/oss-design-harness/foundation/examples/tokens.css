@@ -1,4 +1,4 @@
-/* foundation tokens — derive.py --brand #1B64DA --tone neutral --shape normal --density comfy --font pretendard
+/* foundation tokens — derive.py --brand #08A7E1 --tone neutral --shape normal --density comfy --font pretendard
    이 파일은 생성물이다. 직접 고치지 말고 파라미터를 바꿔 다시 만든다. */
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
 
@@ -10,11 +10,11 @@
   --c-text-1: #1E2025;
   --c-text-2: #4E525A;
   --c-text-3: #6A6E76;
-  --c-brand: #1B64DA;
-  --c-on-brand: #FFFFFF;
-  --c-brand-text: #1B64DA;
-  --c-brand-tint: #E8F0FB;
-  --c-brand-tint-text: #1B64DA;
+  --c-brand: #08A7E1;
+  --c-on-brand: #1E2025;
+  --c-brand-text: #067FAB;
+  --c-brand-tint: #E6F6FC;
+  --c-brand-tint-text: #0677A1;
   --c-danger: #E12D33;
   --c-danger-tint: #FDF0F1;
 
