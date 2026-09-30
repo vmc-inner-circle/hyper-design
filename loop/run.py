@@ -40,16 +40,20 @@ while turns < MAX_TURNS:
     trans.write(json.dumps({"turn": turns, "sec": round(dt), "user": msg[:300], "assistant": text}, ensure_ascii=False) + "\n"); trans.flush()
     print(f"[turn {turns}] {dt:.0f}s :: {text[-300:]!r}", flush=True)
     if "[[DONE" in text: status = "done"; break
-    m = re.search(r"\[\[ASK ([^\]]+)\]\](.*)", text, re.S)
+    m = re.search(r"\[\[ASK(?: ([^\]]+))?\]\](.*)", text, re.S)
     if not m: status = "no_marker"; break
-    page, q = work / m.group(1).strip(), m.group(2).strip()
     png = run / f"ask-{turns}.png"
-    try: shoot(page, png)
-    except Exception as e: print("shot fail", e)
+    if m.group(1):                                   # 화면을 보여주는 질문
+        page, q = work / m.group(1).strip(), m.group(2).strip()
+        try: shoot(page, png)
+        except Exception as e: print("shot fail", e)
+    else:                                            # 글로만 묻는 확인(제품 판단) — 마커 앞 본문이 질문
+        q = text[:m.start()].strip()[-1200:]
+        png = "(없음)"
     ans = claude(SIM.replace("{{QUESTION}}", q).replace("{{IMAGE}}", str(png)).replace("{{ASSISTANT}}", text[-1500:]),
                  run, model="claude-sonnet-5-5").get("result", "").strip().splitlines()[-1].strip()
     log[-1] += ""
-    log.append(f"> (AI 질문) {q}\n")
+    log.append("> (AI 질문) " + q.replace("\n", "\n> ") + "\n")
     msg = ans
 end = datetime.datetime.now()
 if (work / "out").exists(): shutil.copytree(work / "out", run / "out")

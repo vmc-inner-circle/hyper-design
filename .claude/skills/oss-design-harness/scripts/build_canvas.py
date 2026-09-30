@@ -96,6 +96,16 @@ if st:
     head = esc(st.get("headline")).replace("&lt;em&gt;", "<em>").replace("&lt;/em&gt;", "</em>")
     story = f'<section class="story"><h1>{head}</h1><p class="sum">{esc(st.get("summary"))}</p><div class="ideas">{ideas}</div></section>'
 
+dec_path = out / "decisions.json"
+decisions = ""
+if dec_path.exists():
+    D = json.loads(dec_path.read_text(encoding="utf-8"))
+    label = {"lighten": "가볍게", "cut": "뺌", "later": "나중에"}
+    items = [i for i in D.get("items", []) if i.get("verdict") in label][:6]
+    lis = "".join(f'<li><span class="v v-{esc(i["verdict"])}">{label[i["verdict"]]}</span><b>{esc(i.get("name"))}</b>'
+                  f'{(" → " + esc(i.get("how"))) if i.get("how") and i["verdict"] == "lighten" else ""}<span class="why">{esc(i.get("why"))}</span></li>' for i in items)
+    decisions = (f'<section class="decisions"><h2>정한 것 · 뺀 것</h2><p class="core">{esc(D.get("core"))}</p><ul>{lis}</ul></section>') if (items or D.get("core")) else ""
+
 pal_path = out / "palettes.json"
 pal = json.loads(pal_path.read_text(encoding="utf-8")) if pal_path.exists() else None
 dots, credit, default = "", "", "null"
@@ -118,6 +128,10 @@ header h1{{font-size:20px;margin:0}} header .hint{{font-size:14px;color:#666}}
 .story{{padding:24px 64px 8px;max-width:1240px}} .story h1{{font-size:34px;line-height:1.3;margin:8px 0 12px}} .story h1 em{{font-style:normal;color:#2563eb}}
 .story .sum{{font-size:17px;line-height:1.6;color:#444;max-width:760px;margin:0 0 20px}}
 .ideas{{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}} .idea{{background:#fff;border-radius:14px;padding:18px}} .idea b{{font-size:16px}} .idea p{{font-size:14px;line-height:1.55;color:#555;margin:6px 0 0}}
+.decisions{{padding:8px 64px 0;max-width:1240px}} .decisions h2{{font-size:18px;margin:16px 0 6px}} .decisions .core{{font-size:15px;color:#333;margin:0 0 10px}}
+.decisions ul{{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}}
+.decisions li{{background:#fff;border-radius:12px;padding:10px 14px;font-size:14px;line-height:1.5}} .decisions b{{margin-right:4px}} .decisions .why{{display:block;color:#666;font-size:13px}}
+.v{{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-right:6px;background:#eee;color:#444}} .v-cut{{background:#fde8e8;color:#9b1c1c}} .v-lighten{{background:#e7f0ff;color:#1d4ed8}}
 .board{{position:relative;width:{width}px;height:{height}px;margin-top:32px}}
 svg.ar{{position:absolute;inset:0;width:{width}px;height:{height}px;pointer-events:none;overflow:visible}}
 svg.ar path{{fill:none;stroke:#2563eb;stroke-width:2;marker-end:url(#h)}}
@@ -138,6 +152,7 @@ svg.ar path{{fill:none;stroke:#2563eb;stroke-width:2;marker-end:url(#h)}}
 </style>
 <header><h1>전체 화면 한눈에 보기</h1><span class="hint">화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래</span>{dots}</header>
 {story}
+{decisions}
 <div class="board">
 <svg class="ar"><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb" stroke="none"/></marker></defs>{''.join(arrows)}</svg>
 {''.join(frames)}{''.join(labels)}

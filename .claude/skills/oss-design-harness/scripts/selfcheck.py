@@ -57,6 +57,16 @@ for s in S:
     if 'class="cta"' in h and 'class="tabbar"' in h: errs.append(f"{f.name}: 탭 첫 화면에 하단 고정 CTA")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
+# 제품 판단 장부: PRD 요구사항을 빼거나 가볍게 바꿨으면 반드시 물었어야 한다
+try:
+    D = json.loads((out / "decisions.json").read_text(encoding="utf-8"))
+    if not D.get("core"): errs.append("decisions.json: core(핵심 한 문장) 없음")
+    for it in D.get("items", []):
+        if it.get("source") == "PRD" and it.get("verdict") in ("cut", "lighten") and not it.get("ask"):
+            errs.append(f"decisions.json: PRD 요구사항 '{it.get('name')}'을 묻지 않고 {it['verdict']}")
+        if not it.get("why"): errs.append(f"decisions.json: '{it.get('name')}' 판단 이유 없음")
+except Exception as e:
+    errs.append(f"decisions.json 없음/깨짐: {e}")
 # 배지 뜻→색 표: 선언한 표만 쓰고, 한 색에 뜻 하나
 BADGES = m.get("badges") or {}
 if not BADGES: errs.append("badges(뜻→색 표) 없음")
