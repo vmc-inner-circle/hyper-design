@@ -1,0 +1,62 @@
+<!-- ===== 공통 마크업 원본 — 그대로 복사해서 쓰고, 현재 탭만 aria-current="page" ===== -->
+
+<!-- 앱바 (뒤로 가기 + 가운데 제목). 홈 화면에는 쓰지 않고 큰 제목(.big-title h1)을 쓴다 -->
+<header class="appbar">
+  <a class="appbar-btn left" href="BACK.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>화면 제목</h1>
+</header>
+
+<!-- 닫기(X) 버튼이 필요한 앱바 -->
+<a class="appbar-btn left" href="BACK.html" aria-label="닫기">
+  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+</a>
+
+<!-- 목록 행 오른쪽 화살표 -->
+<svg class="row-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+
+<!-- 끌어서 순서 바꾸기 손잡이 -->
+<span class="drag-handle" aria-label="끌어서 순서 바꾸기">
+  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M5 9h14M5 15h14"/></svg>
+</span>
+
+<!-- 체크 표시 (체크박스·라디오 안) -->
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+
+<!-- 하단 고정 버튼 영역 (주요 버튼 1개) -->
+<div class="cta-area">
+  <a class="btn primary block-w" href="NEXT.html">주요 행동</a>
+</div>
+
+<!-- ===== 탭바: 계획하는 사람(지은) ===== -->
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a class="tab" href="planner-home.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4v-5h-6v5H5a1 1 0 0 1-1-1z"/></svg>
+    홈
+  </a>
+  <a class="tab" href="planner-day.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>
+    일정
+  </a>
+  <a class="tab" href="tasks-all.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l2 2 4-4"/><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+    할 일
+  </a>
+</nav>
+
+<!-- ===== 탭바: 보기만 하는 사람(부모) ===== -->
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a class="tab" href="parent-home.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    여행
+  </a>
+  <a class="tab" href="my-tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="3"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
+    준비물
+  </a>
+  <a class="tab" href="parent-news.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+    소식
+  </a>
+</nav>

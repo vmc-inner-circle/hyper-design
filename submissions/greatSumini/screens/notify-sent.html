@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 보냈어요</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .result { padding: var(--space-40) var(--space-20) var(--space-24); }
+  .result-icon {
+    width: var(--icon-circle); height: var(--icon-circle);
+    border-radius: var(--radius-pill);
+    background: var(--tint); color: var(--point);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: var(--space-20);
+  }
+  .result .big-title { margin-bottom: var(--space-8); }
+  .list-title { padding: var(--space-12) var(--space-20) var(--space-8); }
+</style>
+</head>
+<body class="is-plain has-cta">
+<main>
+  <div class="result">
+    <div class="result-icon">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+    </div>
+    <h1 class="big-title">아버지·어머니께<br>소식 <span class="num">2건</span>을 보냈어요</h1>
+    <p class="sub">읽으시면 여기서 보여요</p>
+  </div>
+
+  <section>
+    <h2 class="section-title list-title">읽음</h2>
+    <div class="row">
+      <div class="row-main"><p class="row-title">아버지 김영호</p></div>
+      <span class="badge is-fixed">읽었어요</span>
+    </div>
+    <div class="row">
+      <div class="row-main"><p class="row-title">어머니 박정숙</p></div>
+      <span class="badge">아직이에요</span>
+    </div>
+    <a class="row" href="parent-news.html">
+      <div class="row-main"><p class="row-title">부모님이 받은 화면 보기</p></div>
+      <svg class="row-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+</main>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="planner-home.html">홈으로</a>
+</div>
+</body>
+</html>

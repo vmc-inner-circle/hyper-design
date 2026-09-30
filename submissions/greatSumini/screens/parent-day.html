@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 둘째 날</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.row-main .badge { margin-bottom: var(--space-4); }
+</style>
+</head>
+<body class="is-viewer has-cta">
+<header class="appbar">
+  <a class="appbar-btn left" href="parent-home.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>11월 21일 토요일</h1>
+</header>
+
+<p class="done-bar" id="asked" hidden>지은이에게 알렸어요. 정해지면 소식으로 와요</p>
+<main class="page">
+  <section class="block is-list">
+    <div class="row">
+      <p class="row-time">14:00</p>
+      <div class="row-main">
+        <span class="badge is-fixed">확정</span>
+        <p class="row-title">섭지코지 산책</p>
+        <p class="row-sub">호텔에서 차로 40분 · 편한 신발</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <div class="row">
+      <span class="row-icon">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>
+      </span>
+      <div class="row-main">
+        <p class="row-title">오전·저녁은 지은이가 정하는 중이에요</p>
+        <p class="row-sub">11월 10일까지 정해서 알려드려요</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="cta-area">
+  <button class="btn primary block-w" id="ask" type="button">지은이에게 궁금해요 보내기</button>
+</div>
+<script>
+document.getElementById('ask').addEventListener('click', function () {
+  var b = this; b.classList.add('is-loading');
+  setTimeout(function () {
+    b.classList.remove('is-loading'); b.disabled = true; b.textContent = '궁금해요를 보냈어요';
+    document.getElementById('asked').hidden = false;
+  }, 700);
+});
+</script>
+</body>
+</html>

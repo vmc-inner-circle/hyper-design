@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 · 부모 홈</title>
+<style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+:root {
+  /* 색 — 무채색 5단계 (포인트 = gray-4, 틴트 = gray-1) */
+  --gray-0: #FFFFFF;
+  --gray-1: #F2F4F6;
+  --gray-2: #B0B8C1;
+  --gray-3: #4E5968;
+  --gray-4: #191F28;
+  --point: var(--gray-4);
+  --tint: var(--gray-1);
+
+  /* 글자 크기 5종 */
+  --fs-tab: 12px;
+  --fs-body: 17px;
+  --fs-row: 18px;
+  --fs-section: 20px;
+  --fs-title: 26px;
+
+  /* 여백 */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+
+  /* 모서리 */
+  --radius-badge: 6px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-pill: 999px;
+
+  /* 크기 */
+  --row-h: 64px;
+  --btn-h: 56px;
+  --tab-h: 64px;
+  --touch: 44px;
+  --icon: 24px;
+  --icon-circle: 40px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+button, input, select, textarea { font: inherit; }
+a { color: inherit; text-decoration: none; }
+
+html, body { background: var(--gray-1); }
+body {
+  font-family: 'Pretendard', -apple-system, sans-serif;
+  font-size: var(--fs-body);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--gray-4);
+  max-width: 375px;
+  min-height: 812px;
+  margin: 0 auto;
+  overflow-x: hidden;
+  padding-top: var(--space-12);
+  padding-bottom: calc(var(--tab-h) + var(--btn-h) + var(--space-24) + var(--space-24));
+}
+
+.section {
+  background: var(--gray-0);
+  border-radius: var(--radius-md);
+  margin: 0 var(--space-12) var(--space-12);
+  padding: var(--space-20);
+}
+
+/* 헤드라인 블록 */
+.hero { padding: var(--space-32) var(--space-20) var(--space-24); }
+.trip {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--gray-3);
+  margin-bottom: var(--space-12);
+}
+.trip strong { font-weight: 700; color: var(--gray-4); }
+h1 {
+  font-size: var(--fs-title);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-12);
+}
+.place {
+  font-size: var(--fs-row);
+  font-weight: 400;
+  color: var(--gray-3);
+}
+
+/* 배지 */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--tint);
+  border-radius: var(--radius-badge);
+  padding: 0 var(--space-8);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.badge-strong { color: var(--gray-4); font-weight: 700; }
+.badge-soft { color: var(--gray-3); font-weight: 600; }
+
+/* 목록 행 */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-height: var(--row-h);
+  padding: var(--space-12) 0;
+}
+.row-main { flex: 1; min-width: 0; }
+.row-title {
+  font-size: var(--fs-row);
+  font-weight: 600;
+  line-height: 1.4;
+}
+.row-meta { margin-top: var(--space-4); }
+.chev {
+  flex: none;
+  width: var(--icon);
+  height: var(--icon);
+  color: var(--gray-3);
+}
+.news .section-link { padding: var(--space-4) 0; }
+.news .row-title { margin-top: var(--space-8); }
+
+.section-title {
+  font-size: var(--fs-section);
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: var(--space-4);
+}
+
+.date {
+  flex: none;
+  width: 64px;
+  align-self: flex-start;
+  padding-top: var(--space-4);
+}
+.date b { display: block; font-size: var(--fs-row); font-weight: 700; line-height: 1.3; }
+.date span { display: block; font-size: var(--fs-body); font-weight: 400; color: var(--gray-3); }
+.row-title.muted { color: var(--gray-3); font-weight: 600; }
+
+.icon-circle {
+  flex: none;
+  width: var(--icon-circle);
+  height: var(--icon-circle);
+  border-radius: var(--radius-pill);
+  background: var(--tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-4);
+}
+.icon-circle svg { width: var(--icon); height: var(--icon); }
+
+/* 하단 고정 버튼 */
+.cta-wrap {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: var(--tab-h);
+  max-width: 375px;
+  margin: 0 auto;
+  padding: var(--space-12) var(--space-20);
+  background: var(--gray-1);
+}
+.cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--btn-h);
+  border-radius: var(--radius-md);
+  background: var(--point);
+  color: var(--gray-0);
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+
+/* 탭바 */
+.tabbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  max-width: 375px;
+  margin: 0 auto;
+  height: var(--tab-h);
+  background: var(--gray-0);
+  border-top: 1px solid var(--gray-1);
+  display: flex;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  min-height: var(--touch);
+  color: var(--gray-3);
+  font-size: var(--fs-tab);
+  font-weight: 600;
+  line-height: 1.2;
+}
+.tab svg { width: var(--icon); height: var(--icon); }
+.tab[aria-current="page"] { color: var(--gray-4); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<main>
+  <!-- ① 다음 모일 곳 -->
+  <section class="section hero">
+    <p class="trip">제주 가족여행 · <strong>D-51</strong></p>
+    <h1>11월 20일 금요일 아침 8시 30분, 김포공항에서 만나요</h1>
+    <p class="place">김포공항 국내선 1층 대한항공 카운터 앞</p>
+  </section>
+
+  <!-- ② 새 소식 -->
+  <section class="section news">
+    <a class="row section-link" href="parent-news.html">
+      <div class="row-main">
+        <span class="badge badge-strong">새 소식</span>
+        <p class="row-title">가는 비행기가 10:05로 바뀌었어요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <!-- ③ 여행 흐름 -->
+  <section class="section">
+    <h2 class="section-title">여행 흐름</h2>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/20</b><span>금</span></div>
+      <div class="row-main">
+        <p class="row-title">제주 도착 · 해비치 호텔</p>
+        <div class="row-meta"><span class="badge badge-strong">확정</span></div>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/21</b><span>토</span></div>
+      <div class="row-main">
+        <p class="row-title">섭지코지 산책 · 나머지는 정하는 중</p>
+        <div class="row-meta"><span class="badge badge-soft">정하는 중</span></div>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/22</b><span>일</span></div>
+      <div class="row-main">
+        <p class="row-title muted">정하는 중 · 11월 10일까지</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+
+    <a class="row" href="parent-day.html">
+      <div class="date"><b>11/23</b><span>월</span></div>
+      <div class="row-main">
+        <p class="row-title">집으로 돌아와요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+
+  <!-- ④ 내 준비물 -->
+  <section class="section">
+    <h2 class="section-title">내 준비물</h2>
+    <a class="row" href="my-tasks.html">
+      <span class="icon-circle">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 11l2 2 4-4"/><path d="M9 17h6"/></svg>
+      </span>
+      <div class="row-main">
+        <p class="row-title">어머니 몫 2가지 중 1가지 남았어요</p>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+</main>
+
+<div class="cta-wrap">
+  <a class="cta" href="meet-point.html">모이는 곳 보기</a>
+</div>
+
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a class="tab" href="parent-home.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    여행
+  </a>
+  <a class="tab" href="my-tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="2"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M4 12h16"/></svg>
+    준비물
+  </a>
+  <a class="tab" href="parent-news.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+    소식
+  </a>
+</nav>
+
+</body>
+</html>
