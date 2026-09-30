@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>준비물 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans">
+  <header data-id="app-header" class="sticky top-0 z-10 bg-background border-b border-border px-4 pt-12 pb-3 flex items-center gap-2">
+    <div class="flex-1 min-w-0">
+      <h1 class="text-lg font-semibold">준비물</h1>
+      <p class="text-sm text-muted-foreground">가족 모두 이 목록을 그대로 봐요 · 10가지</p>
+    </div>
+    <button type="button" data-id="header-add" class="btn h-11 shrink-0" data-variant="outline"><i data-lucide="plus"></i>더하기</button>
+  </header>
+
+  <main class="px-4 pt-4 pb-32 flex flex-col gap-5">
+
+    <section data-id="group-docs" class="flex flex-col gap-2">
+      <h2 class="font-semibold">서류</h2>
+      <div class="item-group">
+        <div class="item" data-variant="outline"><div class="flex-1"><p>신분증</p><p class="text-sm text-muted-foreground">비행기 탈 때 꼭 필요해요</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>운전면허증</p><p class="text-sm text-muted-foreground">렌터카 운전하는 사람</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+      </div>
+    </section>
+
+    <section data-id="group-clothes" class="flex flex-col gap-2">
+      <h2 class="font-semibold">옷</h2>
+      <div class="item-group">
+        <div class="item" data-variant="outline"><div class="flex-1"><p>바람막이</p><p class="text-sm text-muted-foreground">11월 제주는 바람이 세요</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>편한 운동화</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>흰 상의</p><p class="text-sm text-muted-foreground">셋째 날 가족사진</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+      </div>
+    </section>
+
+    <section data-id="group-medicine" class="flex flex-col gap-2">
+      <h2 class="font-semibold">약</h2>
+      <div class="item-group">
+        <div class="item" data-variant="outline"><div class="flex-1"><p>평소 드시는 약 4일치</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>멀미약</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+      </div>
+    </section>
+
+    <section data-id="group-etc" class="flex flex-col gap-2">
+      <h2 class="font-semibold">기타</h2>
+      <div class="item-group">
+        <div class="item" data-variant="outline"><div class="flex-1"><p>휴대폰 충전기</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>보조배터리</p><p class="text-sm text-muted-foreground">비행기에는 들고 타요</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+        <div class="item" data-variant="outline"><div class="flex-1"><p>서윤 카시트</p><p class="text-sm text-muted-foreground">렌터카에 신청해 둠, 따로 안 챙겨도 돼요</p></div><button type="button" class="btn size-11" data-variant="ghost" data-size="icon" aria-label="고치기"><i data-lucide="pencil"></i></button></div>
+      </div>
+    </section>
+  </main>
+
+  <nav data-id="plan-tab-bar" data-nav class="fixed bottom-0 inset-x-0 z-10 grid grid-cols-3 bg-card border-t border-border pb-8 lg:hidden">
+    <a data-id="tab-plan" href="plan.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="calendar-days"></i><span>일정</span></a>
+    <a data-id="tab-packing" href="packing.html" aria-current="page" class="btn h-14 flex-col gap-1 text-xs text-foreground font-semibold rounded-none" data-variant="ghost"><i data-lucide="list"></i><span>준비물</span></a>
+    <a data-id="tab-members" href="members.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="users"></i><span>가족</span></a>
+  </nav>
+</body>
+</html>

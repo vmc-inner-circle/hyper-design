@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko" data-devices="mobile">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>가족 — 제주 가족여행</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.3.3"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/basecoat.cdn.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/basecoat-css@1.0.2/dist/js/all.min.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <script src="https://unpkg.com/lucide@1.48.0"></script>
+  <script src="../theme.js"></script>
+</head>
+<body class="bg-background text-foreground font-sans">
+  <header data-id="app-header" class="sticky top-0 z-10 bg-background border-b border-border px-4 pt-12 pb-3 flex items-center gap-2">
+    <div class="flex-1 min-w-0">
+      <h1 class="text-lg font-semibold">가족</h1>
+      <p class="text-sm text-muted-foreground">함께 가는 6명 · 앱을 쓰는 5명</p>
+    </div>
+  </header>
+
+  <main class="px-4 pt-4 pb-32 flex flex-col gap-6">
+    <section data-id="invite" class="rounded-lg border border-border bg-card p-4 flex flex-col gap-3">
+      <p class="font-semibold">가족 초대하기</p>
+      <p class="text-sm text-muted-foreground">받는 사람에 맞는 링크를 보내 주세요. 부모님은 확인용 링크를 누르면 바로 여행 흐름이 열려요.</p>
+      <button type="button" data-id="invite-viewer" class="btn h-11 w-full"><i data-lucide="link"></i>확인용 초대 링크 복사</button>
+      <button type="button" data-id="invite-planner" class="btn h-11 w-full" data-variant="outline"><i data-lucide="link"></i>함께 짜는 사람 초대 링크 복사</button>
+      <a data-id="preview-viewer" href="view-home.html" class="btn h-11 w-full" data-variant="ghost">확인하는 가족에게 보이는 화면 보기</a>
+    </section>
+    <section data-id="planners" class="flex flex-col gap-2">
+      <h2 class="font-semibold">짜는 사람</h2>
+      <p class="text-sm text-muted-foreground">후보까지 모두 보고 고칠 수 있어요.</p>
+      <div class="item" data-variant="outline">
+        <div class="avatar size-10 rounded-full bg-muted flex items-center justify-center font-medium">지은</div>
+        <div class="flex-1"><p class="font-medium">김지은 (나)</p></div>
+      </div>
+    </section>
+
+    <section data-id="viewers" class="flex flex-col gap-2">
+      <h2 class="font-semibold">확인만 하는 사람</h2>
+      <p class="text-sm text-muted-foreground">확정된 일정만 보고, 소식은 하루 한 번 저녁 8시에 받아요.</p>
+      <div class="item-group">
+        <div class="item" data-variant="outline"><div class="avatar size-10 rounded-full bg-muted flex items-center justify-center text-sm">엄마</div><div class="flex-1"><p class="font-medium">박정희</p><p class="text-sm text-muted-foreground">어제 저녁 소식 읽음</p></div></div>
+        <div class="item" data-variant="outline"><div class="avatar size-10 rounded-full bg-muted flex items-center justify-center text-sm">아빠</div><div class="flex-1"><p class="font-medium">김영수</p><p class="text-sm text-muted-foreground">어제 저녁 소식 읽음</p></div></div>
+        <div class="item" data-variant="outline"><div class="avatar size-10 rounded-full bg-muted flex items-center justify-center text-sm">준호</div><div class="flex-1"><p class="font-medium">김준호</p><p class="text-sm text-muted-foreground">초대 수락함</p></div></div>
+        <div class="item" data-variant="outline"><div class="avatar size-10 rounded-full bg-muted flex items-center justify-center text-sm">수진</div><div class="flex-1"><p class="font-medium">이수진</p><p class="text-sm text-muted-foreground">초대 링크 보냄</p></div></div>
+      </div>
+    </section>
+
+    <section data-id="companions" class="flex flex-col gap-2">
+      <h2 class="font-semibold">함께 가요</h2>
+      <div class="item" data-variant="muted">
+        <div class="avatar size-10 rounded-full bg-background flex items-center justify-center text-sm">서윤</div>
+        <div class="flex-1"><p class="font-medium">김서윤 (7살)</p><p class="text-sm text-muted-foreground">앱 없이 인원에만 들어가요</p></div>
+      </div>
+    </section>
+
+  </main>
+
+  <nav data-id="plan-tab-bar" data-nav class="fixed bottom-0 inset-x-0 z-10 grid grid-cols-3 bg-card border-t border-border pb-8 lg:hidden">
+    <a data-id="tab-plan" href="plan.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="calendar-days"></i><span>일정</span></a>
+    <a data-id="tab-packing" href="packing.html" class="btn h-14 flex-col gap-1 text-xs text-muted-foreground rounded-none" data-variant="ghost"><i data-lucide="list"></i><span>준비물</span></a>
+    <a data-id="tab-members" href="members.html" aria-current="page" class="btn h-14 flex-col gap-1 text-xs text-foreground font-semibold rounded-none" data-variant="ghost"><i data-lucide="users"></i><span>가족</span></a>
+  </nav>
+</body>
+</html>

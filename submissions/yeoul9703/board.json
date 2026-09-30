@@ -1,0 +1,119 @@
+{
+  "title": "제주 가족여행 — 짜는 사람 / 확인만 하는 사람",
+  "round": 3,
+  "devices": [
+    "mobile"
+  ],
+  "screens": [
+    {
+      "id": "plan",
+      "file": "screens/plan.html",
+      "title": "일정 짜기",
+      "devices": [
+        "mobile",
+        "desktop"
+      ],
+      "purpose": "날짜별 항목을 적고 순서를 바꾸고, 후보를 확정한다. 오늘 저녁 갈 소식을 미리 본다"
+    },
+    {
+      "id": "item-edit",
+      "file": "screens/item-edit.html",
+      "title": "항목 고치기",
+      "devices": [
+        "mobile",
+        "desktop"
+      ],
+      "purpose": "항목 하나를 적거나 고치고 확정/후보를 정한다"
+    },
+    {
+      "id": "view-home-empty",
+      "file": "screens/view-home-empty.html",
+      "title": "여행 흐름 (아직 확정 없음)",
+      "purpose": "아직 확정된 게 없을 때, 언제 소식이 오는지 안다"
+    },
+    {
+      "id": "view-home",
+      "file": "screens/view-home.html",
+      "title": "여행 흐름",
+      "purpose": "다음에 모일 때·곳과 날짜별 흐름을 한 화면에서 본다"
+    },
+    {
+      "id": "view-day",
+      "file": "screens/view-day.html",
+      "title": "그날 일정",
+      "purpose": "그날 언제 어디에 있어야 하는지 본다"
+    },
+    {
+      "id": "view-news",
+      "file": "screens/view-news.html",
+      "title": "새 소식",
+      "purpose": "하루 한 번 모아 온 확정·변경 소식을 본다"
+    },
+    {
+      "id": "packing",
+      "file": "screens/packing.html",
+      "title": "준비물 (짜는 사람)",
+      "purpose": "함께 볼 준비 목록을 더하고 고친다"
+    },
+    {
+      "id": "view-packing",
+      "file": "screens/view-packing.html",
+      "title": "챙길 것 (확인하는 사람)",
+      "purpose": "준비할 것을 읽는다"
+    },
+    {
+      "id": "members",
+      "file": "screens/members.html",
+      "title": "가족",
+      "purpose": "가족마다 역할을 보고 역할별 초대 링크를 보낸다"
+    }
+  ],
+  "flows": [
+    {
+      "id": "1",
+      "title": "후보를 편하게 적고 고치다가, 정해진 것만 확정하기",
+      "refs": "짜는 사람 · PRD §2-1 §4-1 §4-2 · G2 G5 G9 G10",
+      "steps": [
+        "plan",
+        "item-edit"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "묻지 않고 여행 흐름과 그날 모일 때·곳 보기",
+      "refs": "확인하는 사람 · PRD §2-2 §2-3 · G1 G6 G7 G8",
+      "steps": [
+        "view-home-empty",
+        "view-home",
+        "view-day"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "저녁 8시에 모아 온 소식으로 바뀐 것 알기",
+      "refs": "확인하는 사람 · PRD §4-5 · G5",
+      "steps": [
+        "view-news",
+        "view-day"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "준비물을 한 목록으로 함께 보기",
+      "refs": "두 역할 · PRD §4-4 · G4",
+      "steps": [
+        "packing",
+        "view-packing"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "가족을 역할에 맞게 초대하고, 확인하는 가족의 화면 확인하기",
+      "refs": "짜는 사람 · PRD §4-3 · G3 G12",
+      "steps": [
+        "members",
+        "view-home"
+      ]
+    }
+  ]
+}
