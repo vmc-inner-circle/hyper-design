@@ -13,7 +13,7 @@ for s in m["screens"]:
     exp = set()
     t = s.get("traits", {})
     if t.get("list_first_use"): exp.add("empty")
-    if t.get("form") or t.get("sends"): exp.add("error")
+    if t.get("form"): exp.add("error")
     if t.get("readonly_role"): exp.add("disabled")
     decl = set(s.get("states", []))
     if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)}')

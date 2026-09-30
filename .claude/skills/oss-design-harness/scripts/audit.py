@@ -270,7 +270,7 @@ def main():
             tr = s.get("traits") or {}
             exp = set()
             if tr.get("list_first_use"): exp.add("empty")
-            if tr.get("form") or tr.get("sends"): exp.add("error")
+            if tr.get("form"): exp.add("error")
             if tr.get("readonly_role"): exp.add("disabled")
             have = variants.get(f.stem, set())
             declared = set(s.get("states") or [])
