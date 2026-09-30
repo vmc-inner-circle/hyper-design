@@ -117,7 +117,7 @@ out/  (→ submissions/<id>/ 로 그대로 복사)
 ```
 packages/
   core/                    플랫폼 무관, 웹·모바일 공유
-    tokens/                base.css · theme-a/b/c.css · toggles.css
+    tokens/                base.css · toggles.css (분위기·버튼 색은 scripts/looks.js가 PRD마다 계산)
     icons/                 lucide-sprite.svg(원본) · allowlist.json(의미→아이콘 1:1)
     canvas/                렌더러. *.css·*.js를 build.js가 이름순으로 이어 붙인다
       00-core.js           HX 전역 · mountFrame(fullHeight·트리거 박스) · 확대 모달
@@ -133,7 +133,6 @@ packages/
     components/*.css       컴포넌트 스타일. 토큰만 참조
     snippets/*.md          조각 HTML (screen-writer의 유일한 재료). 00-rules.md가 조립 규칙
     patterns/              화면 뼈대: shell · list-detail · form · settings · dashboard · onboarding · timeline · board
-    gallery.html           컴포넌트 전시 (검수용)
   mobile/                  2차. web과 같은 구조, 390 프레임
 scripts/                   Node, 의존성 0
   build.js                 run 폴더 → out/board.html | out/index.html (단일 파일). --open: 사용자 브라우저로 띄움

@@ -11,7 +11,7 @@
  *
  *   <html lang="ko" data-mode="board|final" data-platform="web|mobile"
  *         data-theme="<look id>" data-type="large" data-swatch="<swatch id>">   ← 분위기·버튼 색은 scripts/looks.js가 CSS로 계산
- *   <head> … <style>base + theme-a/b/c + toggles + components + canvas.css</style>
+ *   <head> … <style>base + toggles + 분위기(looks.js) + components + canvas.css</style>
  *   <body>
  *     <svg id="hx-sprite" hidden><defs><symbol id="i-…">…</symbol>…</defs></svg>   ← 사용된 아이콘만 (보드는 허용 아이콘 전부)
  *     <script type="application/json" id="hx-icons">[{name,key}]</script>          ← 보드만: 아이콘 바꾸기 목록
@@ -65,12 +65,10 @@ const coreDir = path.join(ROOT, "packages/core");
 // ---------- CSS ----------
 const cssParts = [
   read(path.join(coreDir, "tokens/base.css")),
-  read(path.join(coreDir, "tokens/theme-a.css")),
-  read(path.join(coreDir, "tokens/theme-b.css")),
-  read(path.join(coreDir, "tokens/theme-c.css")),
   read(path.join(coreDir, "tokens/toggles.css")),
-  LOOKS.looksCss(looks),   // 분위기·버튼 색 토큰 (screens.json looks → 계산)
+  LOOKS.looksCss(looks),   // 분위기·버튼 색 토큰 (screens.json looks → 계산, 없으면 기본 분위기)
 ];
+const TOKEN_PARTS = cssParts.length;   // 최종 화면별 페이지에 넣을 토큰 CSS 개수
 // 디렉터리 안 파일을 이름순으로 모두 읽는다 (00-, 10- 접두로 순서 제어)
 const readDir = (dir, ext) =>
   exists(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(ext)).sort().map((f) => `/* ${f} */\n` + read(path.join(dir, f))) : [];
@@ -224,7 +222,7 @@ if (mode === "final") {
   const pageDir = path.join(path.dirname(out), "screens");
   fs.rmSync(pageDir, { recursive: true, force: true });
   fs.mkdirSync(pageDir, { recursive: true });
-  const pageCss = cssParts.slice(0, 6 + compParts.length).join("\n\n");   // 토큰 + 분위기 + 컴포넌트 (보드·캔버스 CSS 제외)
+  const pageCss = cssParts.slice(0, TOKEN_PARTS + compParts.length).join("\n\n");   // 토큰 + 분위기 + 컴포넌트 (보드·캔버스 CSS 제외)
   const files = pageFiles(S, F);
   const order = Object.keys(files);
   order.forEach((slug, i) => {
