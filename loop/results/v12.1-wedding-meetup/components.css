@@ -96,7 +96,7 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 
 /* 칩·세그먼트 — 선택은 하나의 스타일 */
 .chips { display: flex; gap: var(--stack-s); overflow-x: auto; padding: 0 var(--page-x); scrollbar-width: none; }
-.chip { flex: none; min-height: 44px; padding: 0 var(--stack-m); border-radius: var(--r-pill); background: var(--c-surface); box-shadow: inset 0 0 0 1px var(--c-line-strong); color: var(--c-text-2); font-size: var(--fs-sub); font-weight: 600; display: inline-flex; align-items: center; }
+.chip { flex: none; min-height: 44px; padding: 0 var(--stack-m); border-radius: var(--r-pill); background: var(--c-surface); color: var(--c-text-2); font-size: var(--fs-sub); font-weight: 600; display: inline-flex; align-items: center; }
 .chip.is-selected, .seg-item.is-selected { background: var(--c-brand-tint); color: var(--c-brand-tint-text); box-shadow: inset 0 0 0 1.5px var(--c-brand); }
 /* 선택 = 브랜드 계열 하나. 글자가 있는 칩·세그먼트는 틴트+브랜드 글자(대비 4.5 유지), 글자 없는 체크·스위치는 브랜드 채움 */
 .seg { display: flex; background: var(--c-bg); border-radius: var(--r-m); padding: 4px; }
