@@ -154,7 +154,6 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 /* 사람 — 일러스트 아바타, 여럿이면 겹쳐서 */
 .avatar { flex: none; width: 44px; height: 44px; border-radius: var(--r-pill); background: var(--c-brand-tint); display: grid; place-items: center; overflow: hidden; }
 .avatar img { width: 34px; height: 34px; }
-.avatar.is-text { color: var(--c-brand-tint-text); font-size: var(--fs-sub); font-weight: 700; }
 .avatars { display: flex; align-items: center; }
 .avatars .avatar { width: 36px; height: 36px; border: 2px solid var(--c-bg); }
 .avatars .avatar + .avatar { margin-left: -8px; }

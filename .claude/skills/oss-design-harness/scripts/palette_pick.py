@@ -3,7 +3,7 @@
 python3 palette_pick.py <out_dir> --domain 여행 --tags "따뜻함,편안함,신뢰" --temp warm
 → out_dir/tokens.css(기본값) + tokens-<slug>.css ×3 + palettes.json(선택 이유)
 
-점수: 도메인 일치 3 · 성격 태그 겹침 1씩 · 감정 온도(--temp warm|cool) 일치 +1.5 / 반대 -1.5 · 흰 글자 버튼이 성립(대비 3 이상)하지 않으면 -2 · 합성 팔레트 -0.5 · 브랜드가 오류 빨강과 겹치면 -0.5
+점수: 도메인 일치 3 · 성격 태그 겹침 1씩 · 감정 온도(--temp warm|cool) 일치 +1.5 / 반대 -1.5 · 흰 글자 버튼이 성립(대비 3 이상)하지 않으면 -2 · 합성 팔레트 -0.5 · 브랜드가 오류 빨강과 겹치면 -1.5(확정과 주의가 같은 붉은색이 된다)
 대안: 기본값과 브랜드 색상각이 40° 이상 다른 것(모노 1개까지) — 원클릭 교체 때 확실히 달라 보이게
 """
 import argparse, json, pathlib, subprocess, sys, colorsys
@@ -30,9 +30,9 @@ def main():
             h = hue(b); warm = h < 60 or h >= 300; cool = 160 <= h < 260
             if (a.temp == "warm" and warm) or (a.temp == "cool" and cool): s += 1.5; why.append("감정 온도(" + ("따뜻한" if warm else "차가운") + " 색)")
             elif (a.temp == "warm" and cool) or (a.temp == "cool" and warm): s -= 1.5; why.append("감정 온도와 반대")
-        if not P.get("mono") and contrast((1, 1, 1), b) < 3: s -= 2; why.append("흰 글자 버튼 불가")
+        if not P.get("mono") and not any(contrast((1, 1, 1), hex2rgb(v)) >= 3 and gap(hex2rgb(v), b) < 12 for v in P["scales"][P["brand"]].values()): s -= 2; why.append("흰 글자 버튼 불가")
         if P.get("synthesized"): s -= .5; why.append("측정 합성")
-        if not P.get("mono") and gap(b, (0.9, 0.28, 0.3)) < 25: s -= .5; why.append("브랜드가 오류 빨강과 겹침")
+        if not P.get("mono") and gap(b, (0.9, 0.28, 0.3)) < 25: s -= 1.5; why.append("브랜드가 오류 빨강과 겹침")
         scored.append((s, slug, why))
     scored.sort(key=lambda x: -x[0])
     default = scored[0][1]; picks = [default]; mono_used = pals[default].get("mono", False)

@@ -55,6 +55,7 @@
 
 ## 기타
 - 부가 정보 한 줄: `<p class="info"><img src="../assets/fluent/weather.svg" alt=""><span>…</span></p>`
+- 아바타: 인물 일러스트는 mother·father·jieun·minsu·hayun만, 나이·관계가 맞을 때. 그 밖의 사람은 글자 아바타 `<span class="avatar is-text">수</span>`. 사물 일러스트를 사람 자리에 쓰지 않는다.
 - 아바타 여럿: `<span class="avatars"><span class="avatar"><img src="../assets/fluent/mother.svg" alt=""></span>…</span>`
 - 탭바(목적지 3곳 이상일 때만): `<nav class="tabbar"><a class="tab" aria-current="page">(선 아이콘)라벨</a>…</nav>` + body `has-tab`
 - 바텀시트: `<div class="dim"></div><div class="sheet">…</div>`, 빈 상태: `<div class="empty">…</div>`

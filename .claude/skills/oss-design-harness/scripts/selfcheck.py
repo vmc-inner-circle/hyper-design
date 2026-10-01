@@ -21,6 +21,7 @@ if not (out / "journey.md").exists(): errs.append("journey.md(여정표) 없음 
 
 PLACE = re.compile(r"lorem|TODO|>\s*(텍스트|제목|내용)\s*<|여행\s*1\b", re.I)
 EMOJI = re.compile("[\U0001F300-\U0001FAFF☀-➿]")
+PERSON = {"mother", "father", "jieun", "minsu", "hayun"}
 PASSIVE = re.compile(r"보기만|읽기 전용|게스트|확인만 하")
 for s in S:
     for key in ("title", "group", "purpose", "file"):
@@ -62,6 +63,8 @@ for s in S:
             errs.append(f"{f.name}: '+ 추가' 행이 다른 화면·시트로 이어지지 않음(누른 뒤 모습 없음)")
     if t.get("large_list") and 'type="search"' not in h:
         errs.append(f"{f.name}: 수십 개 목록(large_list)인데 검색 칸 없음")
+    for img in re.findall(r'class="avatar[^"]*">\s*<img src="[^"]*/([a-z]+)\.svg"', h):
+        if img not in PERSON: errs.append(f"{f.name}: 사람 자리(avatar)에 사물 일러스트 {img} — 글자 아바타(avatar is-text)로")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
 # 제품 판단 장부: PRD 요구사항을 빼거나 가볍게 바꿨으면 반드시 물었어야 한다

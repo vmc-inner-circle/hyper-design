@@ -1,0 +1,540 @@
+{
+ "groups": [
+  "처음 들어올 때",
+  "모임 — 할 일이 있는 상태가 맨 위",
+  "새 모임 만들기",
+  "두 사람의 주말",
+  "지인 풀",
+  "초대받은 사람이 링크로 여는 곳"
+ ],
+ "story": {
+  "headline": "단톡방 수십 개 대신, <em>겹침이 보이는 링크 하나</em>로 청첩장 날을 잡는다",
+  "summary": "지은과 민수는 같은 지인 풀과 같은 모임 목록을 본다. 후보를 고르는 순간, 확정하는 순간, 주말을 훑는 순간마다 '같은 사람이 같은 때 두 곳'인 겹침이 같은 자리에 뜬다. 초대받은 사람은 설치 없이 링크로 답하고, 다른 커플 모임과의 겹침도 그 자리에서 본다.",
+  "ideas": [
+   {
+    "title": "상태가 할 일을 알려 준다",
+    "desc": "마감이 지나면 '정할 차례'로 홈 맨 위에 올라온다. 알림을 하나 더 만들지 않는다."
+   },
+   {
+    "title": "확정 = 공유",
+    "desc": "단톡방에 붙였던 같은 링크에 확정 날짜가 뜬다. 다시 알릴 일이 없다."
+   },
+   {
+    "title": "어디 넣지? 를 고르는 자리에서",
+    "desc": "두 무리에 걸친 사람은 '대학 동기 모임에 있어요'가 붙어, 묶는 순간에 판단한다."
+   }
+  ]
+ },
+ "screens": [
+  {
+   "id": "pair",
+   "file": "screens/pair.html",
+   "title": "함께 쓰기 시작",
+   "group": "처음 들어올 때",
+   "purpose": "결혼식 날짜를 넣고 민수를 부른다",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "결혼식 날짜는 마감 기본값(3주 안이면 '내일')의 기준",
+    "부른 사람도 모든 지인·모임을 똑같이 고칠 수 있다 — 쪽은 권한이 아니다",
+    "링크는 카톡으로 직접 보낸다(앱은 복사만)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false
+   },
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "pair--done",
+   "file": "screens/pair--done.html",
+   "title": "함께 쓰기 · 링크 복사함",
+   "group": "처음 들어올 때",
+   "purpose": "링크를 복사한 뒤",
+   "role": "editor",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "모임 · D-72",
+   "group": "모임 — 할 일이 있는 상태가 맨 위",
+   "purpose": "모임 8개를 상태 4가지로 — 정할 차례가 맨 위",
+   "role": "editor",
+   "kind": "home",
+   "policies": [
+    "순서: 정할 차례 → 답 기다림 → 확정 → 다녀옴",
+    "마감이 지나면 자동 확정하지 않고 '정할 차례'로 올라온다",
+    "날짜가 지나면 확정 → 다녀옴으로 저절로 바뀐다"
+   ],
+   "branches": [
+    {
+     "to": "meetup-decide",
+     "label": "정할 차례 모임"
+    },
+    {
+     "to": "meetup",
+     "label": "답 기다림 모임"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "meetup",
+   "file": "screens/meetup.html",
+   "title": "지은 대학 동기 · 답 기다림",
+   "group": "모임 — 할 일이 있는 상태가 맨 위",
+   "purpose": "누가 어느 날 되는지, 누가 아직인지",
+   "role": "editor",
+   "kind": "detail",
+   "policies": [
+    "답 없는 사람에게는 '링크 다시 복사' — 재촉은 단톡방에서",
+    "마감 뒤 늦게 온 답도 받아서 보여 준다",
+    "겹치는 후보는 회신 수와 상관없이 '겹침' 표시"
+   ],
+   "branches": [
+    {
+     "to": "meetup-decide",
+     "label": "마감이 지나거나 모두 답하면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "meetup-decide",
+   "file": "screens/meetup-decide.html",
+   "title": "민수 개발팀 · 날짜 정하기",
+   "group": "모임 — 할 일이 있는 상태가 맨 위",
+   "purpose": "겹침을 보고 날짜 하나를 확정",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "후보마다 되는 사람 수 + 우리 다른 모임과 겹치는지",
+    "확정하면 같은 링크에 확정 날짜가 뜬다 — 따로 알리지 않아도 된다",
+    "시간·장소는 확정할 때 한 줄로(예약은 지도 앱에서)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false
+   },
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "meetup-decide--done",
+   "file": "screens/meetup-decide--done.html",
+   "title": "민수 개발팀 · 확정함",
+   "group": "모임 — 할 일이 있는 상태가 맨 위",
+   "purpose": "확정 뒤 — 단톡방용 링크 복사",
+   "role": "editor",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "meetup-new",
+   "file": "screens/meetup-new.html",
+   "title": "새 모임 · 사람 고르기",
+   "group": "새 모임 만들기",
+   "purpose": "여럿이/1:1을 먼저, 그다음 사람 고르기",
+   "role": "editor",
+   "kind": "list",
+   "policies": [
+    "이미 다른 모임에 있는 사람은 '~모임에 있어요' — 고를 수는 있다",
+    "1:1이면 한 명만 고를 수 있다",
+    "무리 칩으로 거르고, 검색은 이름으로"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": true
+   },
+   "states": []
+  },
+  {
+   "id": "meetup-dates",
+   "file": "screens/meetup-dates.html",
+   "title": "새 모임 · 후보와 마감",
+   "group": "새 모임 만들기",
+   "purpose": "후보 날짜를 고르면 그 자리에서 겹침이 보인다",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "'때'는 점심·저녁 둘만",
+    "겹치는 후보도 넣을 수는 있지만 '겹침'이 붙는다",
+    "결혼식 3주 안이면 마감 기본 '내일'"
+   ],
+   "branches": [
+    {
+     "to": "date-pick",
+     "label": "후보 더하기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": true,
+    "large_list": false
+   },
+   "states": [
+    "done",
+    "error"
+   ]
+  },
+  {
+   "id": "date-pick",
+   "file": "screens/date-pick.html",
+   "title": "새 모임 · 후보 날짜 고르기",
+   "group": "새 모임 만들기",
+   "purpose": "주말의 점심·저녁 칸에서 고르면 그 자리에서 겹침이 보인다",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "겹침 기준은 이 모임에 나가는 사람(지은)",
+    "겹치는 칸도 고를 수는 있다 — 고르면 후보에 '겹침'이 따라간다",
+    "확정된 모임만 겹침으로 친다(다른 모임 후보는 아님)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "meetup-dates--error",
+   "file": "screens/meetup-dates--error.html",
+   "title": "새 모임 · 후보 없음",
+   "group": "새 모임 만들기",
+   "purpose": "후보가 0개일 때",
+   "role": "editor",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "meetup-dates--done",
+   "file": "screens/meetup-dates--done.html",
+   "title": "새 모임 · 링크 복사함",
+   "group": "새 모임 만들기",
+   "purpose": "링크를 복사한 뒤",
+   "role": "editor",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "calendar",
+   "file": "screens/calendar.html",
+   "title": "주말 · 10월",
+   "group": "두 사람의 주말",
+   "purpose": "지은·민수의 확정 모임과 후보를 주말 단위로 — 겹침 표시",
+   "role": "editor",
+   "kind": "list",
+   "policies": [
+    "겹침 = 같은 날 같은 때 같은 사람(지은 또는 민수)이 두 곳",
+    "후보는 회색 '후보', 확정만 진하게",
+    "나가는 사람(지은·민수·둘 다)을 행마다 아바타로"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "people",
+   "file": "screens/people.html",
+   "title": "지인 · 52명",
+   "group": "지인 풀",
+   "purpose": "두 사람의 지인을 찾고, 아직 모임 없는 사람을 고른다",
+   "role": "editor",
+   "kind": "list",
+   "policies": [
+    "한 사람이 여러 무리에 — 무리 칩은 겹쳐 셀 수 있다",
+    "연락처 불러오기는 권한을 거부하면 직접 입력으로",
+    "'아직 모임 없음' 칩 = 청첩장 줄 날이 아직 없는 사람"
+   ],
+   "branches": [
+    {
+     "to": "people--empty",
+     "label": "처음 쓸 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "shares": false,
+    "large_list": true
+   },
+   "states": [
+    "empty"
+   ]
+  },
+  {
+   "id": "people--empty",
+   "file": "screens/people--empty.html",
+   "title": "지인 · 처음",
+   "group": "지인 풀",
+   "purpose": "아직 아무도 없을 때",
+   "role": "editor",
+   "kind": "list",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "person-edit",
+   "file": "screens/person-edit.html",
+   "title": "지인 고치기 · 이수진",
+   "group": "지인 풀",
+   "purpose": "이름·쪽·무리(여럿)·1:1 여부",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "무리는 여러 개 고를 수 있다",
+    "'따로 만나기'를 켜면 모임 만들 때 1:1로 추천",
+    "지우면 들어 있던 모임에서도 빠진다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false
+   },
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "person-edit--error",
+   "file": "screens/person-edit--error.html",
+   "title": "지인 고치기 · 이름 빈칸",
+   "group": "지인 풀",
+   "purpose": "이름이 빈칸일 때",
+   "role": "editor",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "circles",
+   "file": "screens/circles.html",
+   "title": "무리 · 8개",
+   "group": "지인 풀",
+   "purpose": "무리를 만들고 이름을 바꾸고 순서를 바꾼다",
+   "role": "editor",
+   "kind": "list",
+   "policies": [
+    "무리는 사용자가 만든다(대학·직장·동네…)",
+    "지워도 사람은 남는다",
+    "끌어서 순서 바꾸기 — 칩 순서도 따라 바뀐다"
+   ],
+   "branches": [
+    {
+     "to": "circle-edit",
+     "label": "무리를 누르면 이름 바꾸기·지우기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "circle-edit",
+   "file": "screens/circle-edit.html",
+   "title": "무리 고치기 · 대학 동기",
+   "group": "지인 풀",
+   "purpose": "무리 이름·쪽 바꾸기, 지우기",
+   "role": "editor",
+   "kind": "form",
+   "policies": [
+    "이름을 바꾸면 모든 칩에 바로 반영",
+    "지워도 사람은 남는다",
+    "새 무리 만들기도 이 화면(빈 칸으로)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  },
+  {
+   "id": "invite",
+   "file": "screens/invite.html",
+   "title": "수진 · 지은·민수의 요청에 답하기",
+   "group": "초대받은 사람이 링크로 여는 곳",
+   "purpose": "설치 없이 되는 날을 고른다 — 내 다른 모임과 겹침도 보인다",
+   "role": "everyone",
+   "kind": "form",
+   "policies": [
+    "설치·가입 없이 이름만 확인하고 답한다",
+    "내 다른 확정 모임과 겹치는 후보에는 '겹침' — 고를 수는 있다",
+    "'다 안 돼요'에는 한 줄 메모(선택)"
+   ],
+   "branches": [
+    {
+     "to": "my-weekends",
+     "label": "전화번호를 확인하면(선택)"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": true,
+    "large_list": false
+   },
+   "states": [
+    "done",
+    "error"
+   ]
+  },
+  {
+   "id": "invite--error",
+   "file": "screens/invite--error.html",
+   "title": "수진 · 아무것도 안 고름",
+   "group": "초대받은 사람이 링크로 여는 곳",
+   "purpose": "아무 후보도 '다 안 돼요'도 안 고르고 보낼 때",
+   "role": "everyone",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "invite--done",
+   "file": "screens/invite--done.html",
+   "title": "수진 · 답 보냄",
+   "group": "초대받은 사람이 링크로 여는 곳",
+   "purpose": "답을 보낸 뒤 — 같은 링크에서 고칠 수 있다",
+   "role": "everyone",
+   "kind": "form",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": []
+  },
+  {
+   "id": "my-weekends",
+   "file": "screens/my-weekends.html",
+   "title": "수진 · 이번 시즌 받은 요청",
+   "group": "초대받은 사람이 링크로 여는 곳",
+   "purpose": "여러 커플 요청과 내 확정 모임을 한 장에",
+   "role": "everyone",
+   "kind": "list",
+   "policies": [
+    "전화번호 확인 한 번으로 같은 번호에 온 요청이 모인다",
+    "답할 차례가 위, 확정이 아래",
+    "확정되면 이 목록에 날짜가 저절로 뜬다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false
+   },
+   "states": []
+  }
+ ],
+ "badges": {
+  "확정": "is-brand",
+  "정할 차례": "is-warning",
+  "답 기다림": "is-info",
+  "다녀옴": "is-success",
+  "겹침": "is-danger",
+  "후보": ""
+ },
+ "prd_coverage": {
+  "F1": [
+   "people",
+   "person-edit",
+   "circles",
+   "circle-edit"
+  ],
+  "F2": [
+   "meetup-new"
+  ],
+  "F3": [
+   "meetup-dates",
+   "meetup",
+   "invite"
+  ],
+  "F4": [
+   "meetup-decide",
+   "meetup-decide--done",
+   "my-weekends"
+  ],
+  "F5": [
+   "calendar",
+   "meetup-decide",
+   "meetup-dates",
+   "date-pick"
+  ],
+  "F6": [
+   "home"
+  ],
+  "US1": [
+   "meetup-new",
+   "person-edit"
+  ],
+  "US2": [
+   "invite",
+   "my-weekends"
+  ],
+  "US3": [
+   "calendar",
+   "pair"
+  ]
+ }
+}
