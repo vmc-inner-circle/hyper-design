@@ -168,3 +168,11 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .check[aria-checked="true"] span { background: var(--c-brand); border-color: var(--c-brand); }
 .row-trail .check[aria-checked="true"] span svg { visibility: visible; }
 .row.is-done .row-art img { filter: grayscale(1); opacity: .45; }
+
+/* 좌우 여백은 한 곳만 책임진다 — 페이지 가장자리(page-x) 또는 블록 안(block-pad). 겹쳐 놓아도 두 번 들어가지 않게 */
+.plain .page > .hero, .plain .chips { margin-left: calc(var(--page-x) * -1); margin-right: calc(var(--page-x) * -1); }
+.plain .search { margin-left: 0; margin-right: 0; }
+.plain .block { margin-left: calc(var(--stack-m) - var(--page-x)); margin-right: calc(var(--stack-m) - var(--page-x)); }
+.block .hero { padding-left: 0; padding-right: 0; }
+.block .search { margin-left: 0; margin-right: 0; }
+.block .chips { margin-left: calc(var(--block-pad) * -1); margin-right: calc(var(--block-pad) * -1); padding-left: var(--block-pad); padding-right: var(--block-pad); }
