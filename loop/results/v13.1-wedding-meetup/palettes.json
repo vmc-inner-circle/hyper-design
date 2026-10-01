@@ -1,0 +1,35 @@
+{
+ "default": "daangn",
+ "options": [
+  {
+   "slug": "daangn",
+   "name": "당근",
+   "brand": "#ff6600",
+   "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(따뜻함,친근)",
+    "감정 온도(따뜻한 색)"
+   ]
+  },
+  {
+   "slug": "airbnb",
+   "name": "에어비앤비",
+   "brand": "#da1249",
+   "source": "https://www.airbnb.co.kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(따뜻함)",
+    "감정 온도(따뜻한 색)",
+    "브랜드가 오류 빨강과 겹침"
+   ]
+  },
+  {
+   "slug": "29cm",
+   "name": "29CM",
+   "brand": "#19191a",
+   "source": "https://www.29cm.co.kr/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+   "why": [
+    "측정 합성"
+   ]
+  }
+ ]
+}

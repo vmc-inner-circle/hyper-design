@@ -1,0 +1,5 @@
+[
+  {"slot": "invitation", "screens": ["start", "reply"], "what": "청첩장 카드와 봉투가 테이블 위에 놓인 사진(사람 얼굴 없음)", "ratio": "16:9", "kind": "photo", "query": "wedding invitation card envelope"},
+  {"slot": "restaurant-yeonnam", "screens": ["meeting-confirmed", "reply-confirmed"], "what": "아늑한 작은 식당/브런치 카페 실내, 테이블", "ratio": "16:9", "kind": "photo", "query": "cozy small restaurant interior table"},
+  {"slot": "meal-table", "screens": ["home"], "what": "여럿이 식사하는 테이블을 위에서/손 위주로(얼굴 없음)", "ratio": "16:9", "kind": "photo", "query": "friends dinner table hands"}
+]
