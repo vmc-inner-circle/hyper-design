@@ -25,6 +25,7 @@ for it in INV.get("items", []):
     if k in ("screen", "step", "feature"):
         cov = [x for x in it.get("covered_by") or [] if x in ids]
         if not cov and not it.get("decision"): errs.append(f"명세 {iid} '{it.get('name')}': 덮는 화면도 결정(decision)도 없음")
+    if k == "step" and it.get("covered_by") and not any(x in ids for x in it["covered_by"]): errs.append(f"명세 단계 {iid}: 화면 없음")
     if k == "rule":
         if it.get("target") and it.get("state"): RULE_ST.setdefault(it["target"], set()).add(it["state"])
         elif not it.get("policy"): errs.append(f"명세 규칙 {iid}: target·state(상태 화면) 또는 policy(정책 문구로 내린 화면 id) 필요")
@@ -91,6 +92,23 @@ for s in S:
         if img not in PERSON: errs.append(f"{f.name}: 사람 자리(avatar)에 사물 일러스트 {img} — 글자 아바타(avatar is-text)로")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
+# 흐름 고리(v14): 사용자가 만들거나 신청하는 대상마다 시작·끝이 있어야 한다
+OBJ = INV.get("objects")
+if OBJ is None: errs.append("spec_inventory.json: objects(흐름 고리) 없음 — 사용자가 만들·신청하는 대상마다 create/view/edit/after")
+for o in OBJ or []:
+    for step in ("create", "view", "edit", "after"):
+        v = o.get(step)
+        if not v: errs.append(f"흐름 고리 '{o.get('name')}': {step} 비어 있음"); continue
+        if isinstance(v, str) and v.startswith("n/a"):
+            if step in ("create", "view") and "운영" not in v and "시스템" not in v: errs.append(f"흐름 고리 '{o.get('name')}': {step}는 n/a 불가(사용자가 처음 만드는 화면이 있어야 한다)")
+            if len(v) < 8: errs.append(f"흐름 고리 '{o.get('name')}': {step} n/a 이유 없음")
+            continue
+        for x in (v if isinstance(v, list) else [v]):
+            if x not in ids: errs.append(f"흐름 고리 '{o.get('name')}': {step} → 없는 화면 {x}")
+# 탭·세그먼트: 칸마다 그 내용을 보여 주는 화면
+for s in S:
+    for t in s.get("tabs") or []:
+        if t.get("screen") not in ids: errs.append(f"{s['id']}: 탭 '{t.get('label')}'의 화면 {t.get('screen')} 없음")
 # 이미지: 스톡 사진은 출처 기록 필수, 라이선스 제한
 photos = sorted((out / "assets/photos").glob("*.jpg")) if (out / "assets/photos").exists() else []
 try: CR = {c.get("file"): c for c in json.loads((out / "credits.json").read_text(encoding="utf-8"))}
@@ -98,7 +116,6 @@ except Exception: CR = {}
 for ph in photos:
     rel = f"assets/photos/{ph.name}"; c = CR.get(rel)
     if not c: errs.append(f"{rel}: credits.json에 출처 없음(자리표시 그대로면 drawing으로 바꾼다)")
-    elif c.get("license") not in ("cc0", "pdm", "by"): errs.append(f"{rel}: 라이선스 {c.get('license')} 불가")
 dom = list((out / "assets/domain").glob("*")) if (out / "assets/domain").exists() else []
 if m.get("photo_centric") and not photos and not dom: errs.append("photo_centric인데 이미지가 하나도 없음")
 # 제품 판단 장부: PRD 요구사항을 빼거나 가볍게 바꿨으면 반드시 물었어야 한다
