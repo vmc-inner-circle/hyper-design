@@ -1,0 +1,38 @@
+{
+  "id": "p-send",
+  "title": "이번 소식 보내기",
+  "role": "planner",
+  "icon": "send",
+  "features": ["F5"],
+  "layout": "split",
+  "blocks": [
+    {"t": "header", "title": "이번 소식 보내기", "sub": "제3호 · 10월 4일 일요일 저녁 8시 예정", "back": true, "to": "p-home"},
+    {"t": "checklist", "title": "이번 소식에 넣을 변경 3건", "items": [
+      {"title": "료칸 산소 무라타 2박 확정", "sub": "11월 28일 ~ 30일 · 유후인", "checked": true, "who": "지윤"},
+      {"title": "긴린코 호수 산책 10:00 확정", "sub": "3일차 · 11월 29일 일요일", "checked": true, "who": "지윤"},
+      {"title": "귀국편 11:30 확인", "sub": "12월 1일 후쿠오카 출발 · 시간 변동 없음", "checked": true, "who": "지윤"}
+    ]},
+    {"t": "checklist", "title": "넣지 않은 것 · 이번 주에 손댄 후보 2건", "items": [
+      {"title": "2일차 유후인 가는 방법", "sub": "아직 후보 · 넣지 않음", "checked": false},
+      {"title": "3일차 점심", "sub": "아직 후보 · 넣지 않음", "checked": false}
+    ]},
+    {"t": "section", "title": "알림 3단계 미리보기", "right": "누가 · 언제 · 어떻게"},
+    {"t": "table", "cols": ["단계", "건수", "누구에게", "언제", "어떻게"], "rows": [
+      ["조용히", "0건", "아무에게도 가지 않아요", "-", "앱 안에만 기록돼요"],
+      ["모아서", "3건", "어머니 · 아버지 · 지훈 · 수민 (초대를 열면)", "일요일 20:00", "카톡 알림톡 1통으로 묶어서"],
+      ["바로", "0건", "해당되는 사람만", "-", "보내는 즉시 카톡 알림톡"]
+    ]},
+    {"t": "buttons", "items": [
+      {"label": "일요일에 보내기", "icon": "clock", "primary": true, "to": "p-home"},
+      {"label": "지금 바로 보내기", "icon": "send", "to": "p-home"}
+    ]}
+  ],
+  "side": [
+    {"t": "list", "title": "알림 3단계는 이렇게 달라요", "items": [
+      {"title": "조용히", "sub": "후보 수정 · 메모 · 순서 바꾸기. 아무에게도 가지 않아요.", "icon": "bell-off"},
+      {"title": "모아서", "sub": "확정한 것의 사소한 변경. 소식 약속 시각에 한 번만 가요.", "icon": "clock"},
+      {"title": "바로", "sub": "출발 7일 안이거나 항공 · 숙소 · 집합시간이 바뀔 때. 해당되는 사람에게만 즉시 가요.", "icon": "bell-ring"}
+    ]},
+    {"t": "banner", "tone": "info", "icon": "info", "text": "바로 알려야 하는 건 출발 7일 안, 또는 항공·숙소·집합시간이 바뀔 때만"}
+  ]
+}

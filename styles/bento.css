@@ -1,0 +1,44 @@
+/* 타일 상자 (bento) — 요즘 유행. 크기 다른 둥근 타일 · 아주 큰 숫자 · 반투명 떠 있는 탭바 */
+.app{background:var(--bg)}
+.app .h1{font-size:34px!important;font-weight:800;letter-spacing:-.035em;line-height:1.15}
+.app .sec b{font-size:1.15em;font-weight:800;letter-spacing:-.02em}
+.app .card{background:var(--surface);border:0;border-radius:var(--r);box-shadow:none;padding:18px 18px}
+.app .body{gap:14px}
+.app .stats{gap:10px} .app .stat{padding:18px 16px 16px;min-height:112px;display:flex;flex-direction:column;justify-content:space-between}
+.app .stat b{font-size:2.4em;font-weight:800;letter-spacing:-.04em;order:2}
+.app .stat span{order:1;font-weight:600;color:var(--muted)}
+.app .stats .stat:first-child{grid-column:span 2;background:var(--accent);color:var(--accent-ink)} .app .stats .stat:first-child span{color:inherit;opacity:.8}
+.app .li{border-bottom:0;padding:12px 0} .app .li+.li{border-top:1px solid var(--line)}
+.app .dot{border-radius:12px;width:40px;height:40px;background:color-mix(in srgb,var(--accent) 12%,var(--bg))}
+.app .badge{border-radius:8px;padding:3px 8px;font-weight:700}
+.app .btn{border-radius:16px;min-height:54px;border:0;background:color-mix(in srgb,var(--ink) 6%,var(--surface))}
+.app .btn.p{background:var(--ink);color:var(--surface)}
+.app .banner{border-radius:var(--r);padding:16px 18px;font-weight:600}
+.app .hero{border-radius:var(--r);min-height:200px}
+.app .cards{gap:10px} .app .cardi img{height:170px}
+.app .gridb{gap:10px} .app .tile{min-height:120px;justify-content:space-between;border-radius:var(--r)} .app .tile b{font-size:1.6em;letter-spacing:-.03em}
+.app .chip{border:0;background:color-mix(in srgb,var(--ink) 6%,var(--surface));font-weight:600} .app .chip.a{background:var(--ink);color:var(--surface)}
+.app .seg{border-radius:14px} .app .seg span{border-radius:11px}
+.app .tl:before{border-left-width:3px;border-color:color-mix(in srgb,var(--ink) 10%,transparent)}
+.app .tli:before{width:14px;height:14px;left:-23px}
+.app .bign b{font-size:4.2em;font-weight:800;letter-spacing:-.05em;color:var(--ink)}
+.app .tabbar{background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:0;margin:0 12px 10px;border-radius:22px;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+.app .tabbar a.a{color:var(--ink)}
+.app .side-nav{background:var(--bg);border-right:0} .app .side-nav a.a{background:var(--surface);color:var(--ink)}
+.app .empty .ic{border-radius:22px;width:76px;height:76px}
+.app .quote{border-radius:var(--r);background:var(--surface)}
+.app .fld .in{border:0;background:color-mix(in srgb,var(--ink) 5%,var(--surface));border-radius:14px;padding:14px}
+.app .cal span{border-radius:12px}
+.app .poster{border-radius:0 0 var(--r) var(--r)}
+@container (min-width:900px){
+ .app .h1{font-size:44px!important}
+ .app .stats{grid-template-columns:repeat(4,minmax(0,1fr))!important} .app .stats .stat:first-child{grid-column:span 2}
+ .app .body{gap:18px}
+}
+/* 여러 색 · 도형: 둥근 네모 타일 조각 */
+.app .stats .stat:nth-child(2){background:color-mix(in srgb,var(--a2) 18%,var(--surface))} .app .stats .stat:nth-child(3){background:color-mix(in srgb,var(--a3) 16%,var(--surface))} .app .stats .stat:nth-child(4){background:color-mix(in srgb,var(--a4) 16%,var(--surface))}
+.app .li:nth-child(4n+2) .dot{background:color-mix(in srgb,var(--a2) 18%,var(--bg));color:var(--a2)} .app .li:nth-child(4n+3) .dot{background:color-mix(in srgb,var(--a3) 16%,var(--bg));color:var(--a3)} .app .li:nth-child(4n) .dot{background:color-mix(in srgb,var(--a4) 16%,var(--bg));color:var(--a4)}
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:18px;top:18px;width:54px;height:54px;border-radius:16px;background:var(--a2);transform:rotate(12deg);z-index:0}
+.app .body:after{content:"";position:absolute;right:62px;top:46px;width:26px;height:26px;border-radius:50%;background:var(--a3);z-index:0}
+.app .tile:nth-child(4n+2){background:color-mix(in srgb,var(--a2) 16%,var(--surface))} .app .tile:nth-child(4n+3){background:color-mix(in srgb,var(--a3) 14%,var(--surface))}

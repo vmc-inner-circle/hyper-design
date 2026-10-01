@@ -1,0 +1,38 @@
+/* 티켓과 여권 (ticket) — 따뜻한. 양옆이 파인 티켓 카드 · 점선 절취선 · 고정폭 숫자 · 스탬프 */
+.app{background:var(--bg)}
+.app .h1{font-size:30px!important;font-weight:800;letter-spacing:-.02em}
+.app .sec b{font-size:.78em;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.app .card{background:var(--surface);border:0;border-radius:var(--r);position:relative;
+  -webkit-mask:radial-gradient(circle 11px at 0 50%,transparent 10px,#000 11px) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 10px,#000 11px) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 50%,transparent 10px,#000 11px) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 50%,transparent 10px,#000 11px) right/51% 100% no-repeat;
+  box-shadow:none;padding:16px 20px}
+.app .stats .card,.app .sheet{-webkit-mask:none;mask:none}
+.app .stat{border:1.5px dashed var(--line);background:transparent} .app .stat b{font-family:"IBM Plex Sans KR",monospace;font-weight:600;font-size:1.9em;letter-spacing:-.02em}
+.app .li{border-bottom:1.5px dashed var(--line)} .app .li:last-child{border-bottom:0}
+.app .li .muted,.app .tli .muted{font-variant-numeric:tabular-nums}
+.app .dot{background:transparent;border:1.5px solid var(--accent);color:var(--accent)}
+.app .badge{background:transparent!important;border:2px solid currentColor;border-radius:6px;font-weight:800;letter-spacing:.06em;transform:rotate(-4deg);font-size:.68em;padding:2px 7px;text-transform:uppercase}
+.app .badge.b-ok{border-radius:50%;padding:6px 6px;transform:rotate(8deg)}
+.app .btn{border-radius:calc(var(--r) - 4px);border:1.5px solid var(--ink);background:transparent;font-weight:700}
+.app .btn.p{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.app .banner{border-radius:calc(var(--r) - 4px);border:1.5px dashed currentColor;background:transparent!important}
+.app .hero{border-radius:var(--r)} .app .hero .cap{border-top:2px dashed rgba(255,255,255,.7)}
+.app .cardi{padding:0!important} .app .cardi .in{border-top:2px dashed var(--line)}
+.app .tile{border-left:5px solid var(--accent)}
+.app .chip{border:1.5px dashed var(--muted);background:transparent} .app .chip.a{border-style:solid;background:var(--ink);color:var(--surface)}
+.app .tl:before{border-left:2px dashed var(--muted)} .app .tli:before{border-radius:3px;transform:rotate(45deg)}
+.app .tabbar{border-top:2px dashed var(--line)}
+.app .side-nav{border-right:2px dashed var(--line)} .app .side-nav .brand{letter-spacing:.18em;text-transform:uppercase;font-size:.9em}
+.app .side-nav a.a{background:color-mix(in srgb,var(--accent) 12%,transparent)}
+.app .fld .in{border:1.5px dashed var(--muted);background:transparent}
+.app .cal span{font-variant-numeric:tabular-nums} .app .cal .m-accent{border-radius:50%;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--accent)}
+.app .bign b{font-family:"IBM Plex Sans KR",monospace;font-weight:600;color:var(--accent)}
+.app .quote{border-left:4px double var(--accent);background:transparent}
+.app .empty{-webkit-mask:none;mask:none;border:2px dashed var(--line);background:transparent}
+/* 여러 색 · 도형: 티켓 색띠·스탬프 링 */
+.app .body>.card{border-top:6px solid var(--accent)} .app .body>.card:nth-of-type(3n+2){border-top-color:var(--a2)} .app .body>.card:nth-of-type(3n){border-top-color:var(--a3)}
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:16px;top:8px;width:78px;height:78px;background:var(--a3);opacity:.35;-webkit-mask:var(--m-ring) center/contain no-repeat;mask:var(--m-ring) center/contain no-repeat;transform:rotate(-14deg);z-index:0}
+.app .body:after{content:"";position:absolute;right:30px;top:34px;width:28px;height:28px;background:var(--a2);-webkit-mask:var(--m-star) center/contain no-repeat;mask:var(--m-star) center/contain no-repeat;z-index:0;opacity:.8}
+.app .li:nth-child(3n+2) .dot{border-color:var(--a2);color:var(--a2)} .app .li:nth-child(3n) .dot{border-color:var(--a3);color:var(--a3)}
+.app .badge.b-info{color:var(--a2)!important} .app .badge.b-ok{color:var(--a3)!important}

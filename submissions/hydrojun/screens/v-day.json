@@ -1,0 +1,26 @@
+{
+  "id": "v-day",
+  "title": "하루 자세히",
+  "role": "viewer",
+  "icon": "calendar-days",
+  "features": ["F1", "F2"],
+  "layout": "center",
+  "blocks": [
+    {"t": "header", "title": "3일 · 11월 29일 일요일 · 유후인", "back": true, "to": "v-home"},
+    {"t": "segment", "items": ["1일", "2일", "3일", "4일", "5일"], "active": "3일"},
+    {"t": "timeline", "items": [
+      {"time": "10:00", "title": "긴린코 호수 산책", "sub": "료칸에서 걸어서 20분", "badge": "확정", "state": "fixed"},
+      {"time": "점심", "title": "점심", "sub": "이 시간은 정하는 중이에요", "badge": "정하는 중", "state": "draft"},
+      {"time": "18:30", "title": "료칸 가이세키 저녁", "sub": "료칸 산소 무라타 · 방에서 식사", "badge": "확정", "state": "fixed"},
+      {"time": "20:30", "title": "가족탕", "sub": "이 시간은 정하는 중이에요", "badge": "정하는 중", "state": "draft"}
+    ]},
+    {"t": "buttons", "items": [{"label": "이 날이 궁금해요", "icon": "circle-help", "primary": true, "to": "v-ask"}]}
+  ],
+  "side": [
+    {"t": "list", "title": "유후인 날씨와 옷차림", "items": [
+      {"title": "기온 3~11도", "sub": "11월 말 유후인은 아침저녁이 쌀쌀해요", "icon": "thermometer"},
+      {"title": "겉옷 챙기기", "sub": "온천 후 식지 않게 겉옷을 걸쳐요", "icon": "shirt"},
+      {"title": "걷기 편한 신발", "sub": "호수 산책길이 20분쯤 돼요", "icon": "footprints"}
+    ]}
+  ]
+}

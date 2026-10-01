@@ -1,0 +1,485 @@
+{
+ "_설명": "스타일 라이브러리(09-28). palettes = [bg, surface, ink, muted, line, accent, accent2, accent3, accent4] — 강조색 4개(--a1~--a4)를 카드·통계·아이콘이 돌려 쓴다. 도형은 scripts/shapes.py. 개성 후보 = 여기서 성격이 다른 4개를 골라 같은 홈에 입힌 것. css 는 엔진 부품 클래스를 다시 입히는 레시피(색은 tokens 변수를 따름). 고른 뒤 이 서비스에 맞게 style.css 로 복사해 고친다.",
+ "styles": [
+  {
+   "id": "bento",
+   "name": "타일 상자",
+   "tag": "요즘 유행",
+   "look": "크기가 다른 네모 타일에 큰 숫자·굵은 제목. 애플·토스 같은 요즘 앱 느낌",
+   "signature": [
+    "둥근 큰 타일",
+    "아주 큰 숫자",
+    "떠 있는 반투명 탭바"
+   ],
+   "tokens": {
+    "font": "sans",
+    "headFont": "sans",
+    "radius": 26,
+    "card": "flat",
+    "density": "normal",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#F2F2F4",
+     "#FFFFFF",
+     "#111114",
+     "#6B6B73",
+     "#E4E4E8",
+     "#2F6BFF",
+     "#FFB020",
+     "#19C37D",
+     "#FF5C8A"
+    ],
+    [
+     "#F4F1EC",
+     "#FFFFFF",
+     "#1C1A17",
+     "#77716A",
+     "#E7E1D8",
+     "#E0592A",
+     "#2FA3A6",
+     "#F2B33D",
+     "#7A5CFA"
+    ]
+   ],
+   "refs": [
+    "toss",
+    "apple fitness",
+    "bento dashboard"
+   ]
+  },
+  {
+   "id": "brutal",
+   "name": "굵은 선 포스터",
+   "tag": "과감한",
+   "look": "까만 굵은 테두리, 튀는 원색, 그림자가 옆으로 딱 떨어지는 대담한 스타일",
+   "signature": [
+    "2px 검은 테두리",
+    "번지지 않는 딱딱한 그림자",
+    "원색 면"
+   ],
+   "tokens": {
+    "font": "sans",
+    "headFont": "black-han",
+    "radius": 6,
+    "card": "flat",
+    "density": "normal",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#FFF6E0",
+     "#FFFFFF",
+     "#111111",
+     "#444444",
+     "#111111",
+     "#FF5C39",
+     "#FFD23F",
+     "#3BCEAC",
+     "#5B8CFF"
+    ],
+    [
+     "#E9F3FF",
+     "#FFFFFF",
+     "#0D0D0D",
+     "#3A3A3A",
+     "#0D0D0D",
+     "#FFC800",
+     "#FF6B6B",
+     "#4ECDC4",
+     "#A06CD5"
+    ]
+   ],
+   "refs": [
+    "gumroad",
+    "neo brutalism app"
+   ]
+  },
+  {
+   "id": "editorial",
+   "name": "잡지",
+   "tag": "오래 가는",
+   "look": "큰 명조 제목과 가는 가로줄, 넉넉한 여백. 카드 대신 줄로 나누는 잡지 지면",
+   "signature": [
+    "큰 명조 제목",
+    "가는 가로줄 구분",
+    "작은 대문자풍 라벨"
+   ],
+   "tokens": {
+    "font": "sans",
+    "headFont": "noto-serif",
+    "radius": 2,
+    "card": "flat",
+    "density": "airy",
+    "heading": "serif"
+   },
+   "palettes": [
+    [
+     "#FAF8F4",
+     "#FAF8F4",
+     "#1A1917",
+     "#6E6A63",
+     "#D9D4CB",
+     "#9A3B2E",
+     "#C9A227",
+     "#3E6B5C",
+     "#B5654A"
+    ],
+    [
+     "#F5F6F4",
+     "#F5F6F4",
+     "#141816",
+     "#5F6863",
+     "#CFD5D0",
+     "#1F5C4A",
+     "#8C6A3F",
+     "#A33A3A",
+     "#3F5E8C"
+    ]
+   ],
+   "refs": [
+    "medium",
+    "kinfolk",
+    "editorial magazine app"
+   ]
+  },
+  {
+   "id": "swiss",
+   "name": "스위스 격자",
+   "tag": "오래 가는",
+   "look": "모서리 없는 반듯한 격자, 굵은 고딕, 흑백에 색 하나. 정돈되고 믿음직함",
+   "signature": [
+    "모서리 0",
+    "구역 위 굵은 선",
+    "번호 붙은 목록"
+   ],
+   "tokens": {
+    "font": "gothic-a1",
+    "headFont": "gothic-a1",
+    "radius": 0,
+    "card": "flat",
+    "density": "normal",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#FFFFFF",
+     "#FFFFFF",
+     "#000000",
+     "#5C5C5C",
+     "#DADADA",
+     "#E30613",
+     "#FFC400",
+     "#0047BB",
+     "#00A676"
+    ],
+    [
+     "#F4F4F0",
+     "#FFFFFF",
+     "#101010",
+     "#5A5A5A",
+     "#D6D6D0",
+     "#0047BB",
+     "#E30613",
+     "#FFC400",
+     "#111111"
+    ]
+   ],
+   "refs": [
+    "swiss design app",
+    "braun",
+    "notion calendar"
+   ]
+  },
+  {
+   "id": "paper",
+   "name": "종이와 문구",
+   "tag": "따뜻한",
+   "look": "종이 질감, 마스킹테이프, 도장, 손글씨 한 줄. 다이어리를 펼친 느낌",
+   "signature": [
+    "종이 질감 배경",
+    "테이프 붙인 카드",
+    "기울어진 도장 배지"
+   ],
+   "tokens": {
+    "font": "gowun",
+    "headFont": "gowun-batang",
+    "radius": 4,
+    "card": "flat",
+    "density": "normal",
+    "heading": "serif"
+   },
+   "palettes": [
+    [
+     "#F3EEE4",
+     "#FFFDF8",
+     "#2D2823",
+     "#7A7064",
+     "#E2D8C8",
+     "#C2553B",
+     "#E8B04A",
+     "#6F9A8B",
+     "#D98A9A"
+    ],
+    [
+     "#EEF0E8",
+     "#FFFFFB",
+     "#252A24",
+     "#6C7466",
+     "#D9DDCF",
+     "#4C7A5A",
+     "#D6923E",
+     "#C2553B",
+     "#7E8FB8"
+    ]
+   ],
+   "refs": [
+    "day one journal",
+    "stationery app",
+    "planner app"
+   ]
+  },
+  {
+   "id": "ticket",
+   "name": "티켓과 여권",
+   "tag": "따뜻한",
+   "look": "양옆이 파인 티켓 카드와 점선 절취선, 스탬프. 여행·예약·초대 느낌",
+   "signature": [
+    "양옆 반원 홈 카드",
+    "점선 절취선",
+    "고정폭 숫자"
+   ],
+   "tokens": {
+    "font": "sans",
+    "headFont": "hahmlet",
+    "radius": 14,
+    "card": "flat",
+    "density": "normal",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#F1ECE2",
+     "#FFFFFF",
+     "#23201C",
+     "#76706A",
+     "#E0D8CA",
+     "#2E5E8C",
+     "#E3A33B",
+     "#C2553B",
+     "#4C8A6A"
+    ],
+    [
+     "#F6ECEA",
+     "#FFFFFF",
+     "#2A1F1E",
+     "#806B68",
+     "#EAD9D5",
+     "#A33A4A",
+     "#2E5E8C",
+     "#E3A33B",
+     "#5E8C6A"
+    ]
+   ],
+   "refs": [
+    "airline boarding pass",
+    "event ticket app",
+    "passport stamp"
+   ]
+  },
+  {
+   "id": "soft",
+   "name": "말랑 파스텔",
+   "tag": "요즘 유행",
+   "look": "통통한 알약 모양, 부드러운 겹그림자, 파스텔 면. 귀엽고 다정함",
+   "signature": [
+    "알약 모양 버튼·배지",
+    "부드러운 겹그림자",
+    "파스텔 색 면"
+   ],
+   "tokens": {
+    "font": "sunflower",
+    "headFont": "dohyeon",
+    "radius": 24,
+    "card": "flat",
+    "density": "airy",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#F6F1FF",
+     "#FFFFFF",
+     "#2B2440",
+     "#7A7390",
+     "#ECE5FA",
+     "#7B61FF",
+     "#FFB86B",
+     "#5FD3A8",
+     "#FF8FB1"
+    ],
+    [
+     "#FFF3EC",
+     "#FFFFFF",
+     "#3A2A22",
+     "#8C7468",
+     "#F8E3D6",
+     "#FF7A59",
+     "#7B9CFF",
+     "#FFC857",
+     "#6FD3C0"
+    ]
+   ],
+   "refs": [
+    "headspace",
+    "duolingo",
+    "clay 3d ui"
+   ]
+  },
+  {
+   "id": "dark",
+   "name": "어두운 계기판",
+   "tag": "요즘 유행",
+   "look": "어두운 바탕에 빛나는 강조색, 가는 선과 격자, 기계 같은 숫자. 집중·프로 느낌",
+   "signature": [
+    "어두운 바탕 + 빛나는 선",
+    "모눈 배경",
+    "기계식 숫자"
+   ],
+   "tokens": {
+    "font": "sans",
+    "headFont": "orbit",
+    "radius": 10,
+    "card": "outline",
+    "density": "normal",
+    "heading": "bold",
+    "dark": true
+   },
+   "palettes": [
+    [
+     "#0E1116",
+     "#161B22",
+     "#E6EDF3",
+     "#8B949E",
+     "#262D36",
+     "#3DDC97",
+     "#5B9DFF",
+     "#FF6B9A",
+     "#FFB547"
+    ],
+    [
+     "#111014",
+     "#1B1A20",
+     "#EDEAF2",
+     "#9993A6",
+     "#2A2733",
+     "#FFB547",
+     "#3DDC97",
+     "#FF6B6B",
+     "#5B9DFF"
+    ]
+   ],
+   "refs": [
+    "linear app",
+    "raycast",
+    "trading dashboard dark"
+   ]
+  },
+  {
+   "id": "organic",
+   "name": "자연과 곡선",
+   "tag": "오래 가는",
+   "look": "흙·잎 색, 둥글게 번진 곡선 면, 부드러운 명조. 느긋하고 편안함",
+   "signature": [
+    "물방울 곡선 면",
+    "흙·잎 색",
+    "부드러운 명조 제목"
+   ],
+   "tokens": {
+    "font": "gowun",
+    "headFont": "gowun-batang",
+    "radius": 20,
+    "card": "flat",
+    "density": "airy",
+    "heading": "serif"
+   },
+   "palettes": [
+    [
+     "#F2EFE6",
+     "#FBF9F3",
+     "#2C3326",
+     "#6E7563",
+     "#DDD9C8",
+     "#6B8F4E",
+     "#D9A441",
+     "#B8683D",
+     "#7E9CB0"
+    ],
+    [
+     "#F4EEE8",
+     "#FCF8F4",
+     "#35291F",
+     "#7D6D60",
+     "#E6DBD0",
+     "#B8683D",
+     "#6B8F4E",
+     "#D9A441",
+     "#9C6B8E"
+    ]
+   ],
+   "refs": [
+    "aesop",
+    "calm app",
+    "nature wellness app"
+   ]
+  },
+  {
+   "id": "pop",
+   "name": "스티커 팝",
+   "tag": "과감한",
+   "look": "살짝 기운 스티커, 굵은 외곽선, 여러 색이 번갈아. 발랄하고 시끌벅적",
+   "signature": [
+    "기울어진 스티커 배지",
+    "굵은 외곽선",
+    "카드마다 다른 색"
+   ],
+   "tokens": {
+    "font": "sunflower",
+    "headFont": "black-han",
+    "radius": 18,
+    "card": "flat",
+    "density": "normal",
+    "heading": "bold"
+   },
+   "palettes": [
+    [
+     "#FFFBEF",
+     "#FFFFFF",
+     "#1E1A16",
+     "#6A625A",
+     "#1E1A16",
+     "#FF4F8B",
+     "#FFD23F",
+     "#5BC0EB",
+     "#9BE564"
+    ],
+    [
+     "#F0FAFF",
+     "#FFFFFF",
+     "#141A1E",
+     "#5B6670",
+     "#141A1E",
+     "#00A870",
+     "#FF4F8B",
+     "#FFD23F",
+     "#7B61FF"
+    ]
+   ],
+   "refs": [
+    "figma community stickers",
+    "playful app ui",
+    "gen z brand"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,118 @@
+{
+ "id": "m-todo",
+ "title": "준비물·할 일",
+ "role": "member",
+ "icon": "list-checks",
+ "features": [
+  "F4"
+ ],
+ "layout": "split",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "준비물·할 일",
+   "sub": "김지훈님이 여행 전에 챙길 것 · 출발까지 D-58"
+  },
+  {
+   "t": "segment",
+   "items": [
+    "내 것",
+    "전체"
+   ],
+   "active": "내 것"
+  },
+  {
+   "t": "checklist",
+   "title": "내 것 3개",
+   "items": [
+    {
+     "title": "이심(eSIM) 신청",
+     "sub": "마감 11.10(화) · 후쿠오카 공항에서 바로 켜져요",
+     "checked": true,
+     "who": "지훈"
+    },
+    {
+     "title": "여행자보험 가입",
+     "sub": "마감 11.15(일) · 어른 3명, 하윤 포함",
+     "checked": false,
+     "who": "지훈"
+    },
+    {
+     "title": "아이 여권 사본(하윤) 준비",
+     "sub": "수민과 한 장씩 나눠 가져요 · 마감 11.20(금)",
+     "checked": false,
+     "who": "지훈"
+    }
+   ]
+  },
+  {
+   "t": "section",
+   "title": "아직 맡은 사람이 없는 것",
+   "right": "2개"
+  },
+  {
+   "t": "list",
+   "items": [
+    {
+     "title": "료칸 식사 알레르기 전달",
+     "sub": "료칸 산소 무라타에 하윤 알레르기 알리기 · 마감 11.10",
+     "right": "맡기",
+     "icon": "hand",
+     "state": "todo"
+    },
+    {
+     "title": "아이 멀미약",
+     "sub": "유후인 가는 산길 대비 · 하윤용 시럽형",
+     "right": "맡기",
+     "icon": "hand",
+     "state": "todo"
+    }
+   ]
+  },
+  {
+   "t": "text",
+   "text": "'맡기'를 누르면 '내가 맡을게요'로 바뀌고, 가족 모두의 목록에 지훈 이름이 붙어요.",
+   "size": "sm",
+   "tone": "muted"
+  }
+ ],
+ "side": [
+  {
+   "t": "progress",
+   "value": 0.18,
+   "label": "전체 11개 중 2개 완료"
+  },
+  {
+   "t": "avatars",
+   "items": [
+    {
+     "name": "지윤",
+     "sub": "2개"
+    },
+    {
+     "name": "지훈",
+     "sub": "3개"
+    },
+    {
+     "name": "수민",
+     "sub": "2개"
+    },
+    {
+     "name": "어머니",
+     "sub": "3개"
+    },
+    {
+     "name": "아버지",
+     "sub": "1개"
+    }
+   ]
+  },
+  {
+   "t": "text",
+   "text": "누가 무엇을 맡았는지는 가족 모두에게 같이 보여요.",
+   "size": "sm",
+   "tone": "muted"
+  }
+ ],
+ "navLabel": "준비물"
+}

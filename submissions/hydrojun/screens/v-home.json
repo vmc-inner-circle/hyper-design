@@ -1,0 +1,14 @@
+{
+ "id": "v-home",
+ "title": "이번 여행",
+ "role": "viewer",
+ "icon": "map",
+ "features": [
+  "F1",
+  "F2",
+  "F3"
+ ],
+ "layout": "stack",
+ "htmlFile": "v-home.html",
+ "navLabel": "여행"
+}

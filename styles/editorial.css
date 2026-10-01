@@ -1,0 +1,39 @@
+/* 잡지 (editorial) — 오래 가는. 큰 명조 제목 · 가는 가로줄 구분 · 작은 대문자풍 라벨 · 카드 대신 지면 */
+.app{background:var(--bg)}
+.app .body{gap:22px}
+.app .h1{font-size:36px!important;font-weight:600;line-height:1.12;letter-spacing:-.02em}
+.app .h1+.muted,.app .row .muted{font-size:.8em;letter-spacing:.14em;text-transform:uppercase}
+.app .sec{border-top:1px solid var(--ink);padding-top:10px;margin-top:10px}
+.app .sec b{font-weight:600;font-size:1.25em;font-style:italic}
+.app .sec .muted{letter-spacing:.12em;font-size:.72em;text-transform:uppercase}
+.app .card{background:transparent;border:0;border-radius:0;padding:0;box-shadow:none}
+.app .stats{border-top:1px solid var(--ink);border-bottom:1px solid var(--line);padding:12px 0;gap:0}
+.app .stat{padding:0 12px;border-left:1px solid var(--line)} .app .stat:first-child{border-left:0;padding-left:0}
+.app .stat b{font-size:2.6em;font-weight:400;font-style:italic}
+.app .stat span{letter-spacing:.12em;font-size:.7em;text-transform:uppercase}
+.app .li{border-bottom:1px solid var(--line);padding:14px 0} .app .li b{font-weight:600;font-size:1.05em}
+.app .dot{background:transparent;border:1px solid var(--ink);color:var(--ink);width:26px;height:26px}
+.app .badge{background:transparent!important;border:1px solid currentColor;border-radius:0;font-weight:600;letter-spacing:.08em;font-size:.66em;text-transform:uppercase;padding:2px 6px}
+.app .btn{border-radius:0;border:1px solid var(--ink);background:transparent;font-weight:600;letter-spacing:.04em}
+.app .btn.p{background:var(--ink);color:var(--bg)}
+.app .banner{border-radius:0;border-left:3px solid var(--accent);background:transparent!important;color:var(--ink)!important;font-style:italic;padding:4px 0 4px 14px}
+.app .hero{border-radius:0;min-height:260px} .app .hero .cap b{font-size:1.8em;font-weight:500}
+.app .cardi img{height:200px;filter:saturate(.85) contrast(1.05)} .app .cardi .in{padding:10px 0}
+.app .tile{border-top:1px solid var(--ink);padding:12px 0}
+.app .chip{border-radius:0;border:0;border-bottom:1px solid var(--line);background:transparent;padding:4px 2px} .app .chip.a{background:transparent;color:var(--ink);border-bottom:2px solid var(--ink)}
+.app .seg{background:transparent;border-bottom:1px solid var(--line);border-radius:0} .app .seg span.a{box-shadow:none;background:transparent;border-bottom:2px solid var(--ink);border-radius:0}
+.app .tl:before{border-left:1px solid var(--ink)} .app .tli:before{width:9px;height:9px;left:-20px;background:var(--ink)}
+.app .quote{border-radius:0;background:transparent;border-left:1px solid var(--ink);font-style:italic;font-size:1.1em}
+.app .tabbar{border-top:1px solid var(--ink);background:var(--bg)} .app .tabbar a{letter-spacing:.06em}
+.app .side-nav{background:var(--bg);border-right:1px solid var(--ink)} .app .side-nav .brand{font-style:italic;font-weight:600;font-size:1.4em} .app .side-nav a.a{background:transparent;color:var(--ink);text-decoration:underline;text-underline-offset:5px}
+.app .fld .in{border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;padding:10px 0}
+.app .bign b{font-weight:400;font-style:italic;color:var(--ink);font-size:4.4em}
+.app .poster h2{font-weight:500;font-size:2.4em}
+@container (min-width:900px){ .app .h1{font-size:52px!important} .app .body{gap:28px} }
+/* 여러 색 · 도형: 가는 아치 선과 색 점 */
+.app .sec b:after{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--a2);margin-left:8px;vertical-align:.2em}
+.app .body section:nth-of-type(odd) .sec b:after,.app .sec:nth-of-type(3n) b:after{background:var(--a3)}
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:-10px;top:4px;width:120px;height:120px;background:var(--a2);opacity:.5;-webkit-mask:var(--m-arc) center/contain no-repeat;mask:var(--m-arc) center/contain no-repeat;z-index:0}
+.app .badge.b-ok{color:var(--a3)!important} .app .badge.b-info{color:var(--a2)!important} .app .badge.b-warn{color:var(--a4)!important}
+.app .li:nth-child(3n+2) .dot{border-color:var(--a2);color:var(--a2)} .app .li:nth-child(3n) .dot{border-color:var(--a3);color:var(--a3)}

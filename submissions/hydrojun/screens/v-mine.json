@@ -1,0 +1,67 @@
+{
+ "id": "v-mine",
+ "title": "내 준비물",
+ "role": "viewer",
+ "icon": "backpack",
+ "features": [
+  "F4",
+  "F3"
+ ],
+ "layout": "center",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "내 준비물",
+   "sub": "어머니가 챙기실 것이에요"
+  },
+  {
+   "t": "checklist",
+   "items": [
+    {
+     "title": "상비약·멀미약 챙기기",
+     "sub": "마감 11월 20일",
+     "checked": false,
+     "who": "어머니"
+    },
+    {
+     "title": "편한 신발 하나",
+     "sub": "신던 것이면 충분해요",
+     "checked": true,
+     "who": "어머니"
+    },
+    {
+     "title": "여권 사본 지갑에 넣기",
+     "sub": "복사본 한 장이면 돼요",
+     "checked": false,
+     "who": "어머니"
+    }
+   ]
+  },
+  {
+   "t": "progress",
+   "value": 0.33,
+   "label": "3개 중 1개 했어요"
+  },
+  {
+   "t": "quote",
+   "text": "나머지 준비물은 제가 챙길게요.",
+   "who": "지윤이 챙겨요"
+  },
+  {
+   "t": "text",
+   "size": "small",
+   "tone": "muted",
+   "text": "이 화면에는 어머니 몫만 보여요. 다른 가족 몫은 보이지 않아요."
+  }
+ ],
+ "side": [
+  {
+   "t": "bignum",
+   "cls": "folio",
+   "value": "D-58",
+   "label": "출발까지",
+   "sub": "11월 27일 금요일에 떠나요"
+  }
+ ],
+ "navLabel": "준비물"
+}

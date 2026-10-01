@@ -1,0 +1,13 @@
+{
+ "id": "m-home",
+ "title": "나의 여행",
+ "role": "member",
+ "icon": "backpack",
+ "features": [
+  "F3",
+  "F4"
+ ],
+ "layout": "stack",
+ "htmlFile": "m-home.html",
+ "navLabel": "나의 여행"
+}

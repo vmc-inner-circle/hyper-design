@@ -1,0 +1,39 @@
+/* 스티커 팝 (pop) — 과감한. 기울어진 스티커 배지 · 굵은 외곽선 · 카드마다 다른 색 */
+.app{background:var(--bg)}
+.app .h1{font-size:32px!important;line-height:1.1;letter-spacing:-.01em}
+.app .sec b{font-size:1.2em;display:inline-block;background:var(--ink);color:var(--surface);padding:2px 10px;border-radius:8px;transform:rotate(-1.5deg)}
+.app .card{background:var(--surface);border:2.5px solid var(--ink);border-radius:var(--r);box-shadow:0 4px 0 var(--ink)}
+.app .body>.card:nth-of-type(3n+1){background:color-mix(in srgb,var(--accent) 14%,var(--surface))}
+.app .body>.card:nth-of-type(3n+2){background:color-mix(in srgb,#FFD23F 30%,var(--surface))}
+.app .body>.card:nth-of-type(3n){background:color-mix(in srgb,#5BC0EB 22%,var(--surface))}
+.app .stat:nth-child(1){background:var(--accent);color:#fff} .app .stat:nth-child(2){background:#FFD23F} .app .stat:nth-child(3){background:#5BC0EB} .app .stat:nth-child(4){background:#9BE564}
+.app .stat{transform:rotate(-1deg)} .app .stat:nth-child(even){transform:rotate(1.2deg)} .app .stat b{font-size:2.3em} .app .stat span{color:inherit;font-weight:700}
+.app .li{border-bottom:2px dashed color-mix(in srgb,var(--ink) 25%,transparent)}
+.app .dot{border:2.5px solid var(--ink);background:#FFD23F;color:var(--ink);width:36px;height:36px}
+.app .li:nth-child(3n+2) .dot{background:#5BC0EB} .app .li:nth-child(3n) .dot{background:var(--accent);color:#fff}
+.app .badge{border:2px solid var(--ink);border-radius:999px;background:#FFD23F!important;color:var(--ink)!important;font-weight:800;transform:rotate(-5deg);box-shadow:2px 2px 0 var(--ink)}
+.app .badge.b-ok{background:#9BE564!important;transform:rotate(4deg)} .app .badge.b-warn{background:var(--accent)!important;color:#fff!important} .app .badge.b-info{background:#5BC0EB!important}
+.app .btn{border:2.5px solid var(--ink);border-radius:999px;box-shadow:0 4px 0 var(--ink);background:var(--surface);font-weight:800}
+.app .btn.p{background:var(--accent);color:#fff}
+.app .banner{border:2.5px solid var(--ink);box-shadow:0 4px 0 var(--ink);background:#FFD23F!important;color:var(--ink)!important;font-weight:700}
+.app .hero{border:2.5px solid var(--ink);box-shadow:0 5px 0 var(--ink)}
+.app .cardi img{border-bottom:2.5px solid var(--ink)}
+.app .chip{border:2px solid var(--ink);font-weight:700} .app .chip.a{background:var(--ink);color:#FFD23F}
+.app .seg{border:2.5px solid var(--ink);background:var(--surface)} .app .seg span.a{background:#FFD23F;box-shadow:none}
+.app .tl:before{border-left:3px solid var(--ink)} .app .tli:before{border:2.5px solid var(--ink);background:#FFD23F;width:14px;height:14px}
+.app .tabbar{border-top:2.5px solid var(--ink)} .app .tabbar a.a{color:var(--ink)} .app .tabbar a.a svg{background:#FFD23F;border:2px solid var(--ink);border-radius:999px;padding:3px 10px;width:auto;height:1.6em;box-sizing:content-box}
+.app .side-nav{border-right:2.5px solid var(--ink)} .app .side-nav a.a{background:#FFD23F;color:var(--ink);border:2px solid var(--ink);box-shadow:2px 2px 0 var(--ink)}
+.app .fld .in{border:2.5px solid var(--ink)}
+.app .cal .m-accent{border:2px solid var(--ink);background:var(--accent);color:#fff}
+.app .bign b{color:var(--ink);text-shadow:3px 3px 0 #FFD23F}
+.app .empty .ic{border:2.5px solid var(--ink);background:#FFD23F;color:var(--ink);transform:rotate(-6deg)}
+.app .quote{border:2.5px solid var(--ink);background:#fff;transform:rotate(-1deg)}
+.app .bub{border:2.5px solid var(--ink)} .app .bub.me{background:var(--accent);border-color:var(--ink)}
+/* 여러 색 · 도형: 별·반짝이·물결 스티커 */
+.app .body>.card:nth-of-type(4n+2){background:color-mix(in srgb,var(--a2) 30%,var(--surface))} .app .body>.card:nth-of-type(4n+3){background:color-mix(in srgb,var(--a3) 22%,var(--surface))} .app .body>.card:nth-of-type(4n){background:color-mix(in srgb,var(--a4) 22%,var(--surface))}
+.app .stat:nth-child(2){background:var(--a2)} .app .stat:nth-child(3){background:var(--a3)} .app .stat:nth-child(4){background:var(--a4)}
+.app .li:nth-child(3n+1) .dot{background:var(--a2)} .app .li:nth-child(3n+2) .dot{background:var(--a3)} .app .li:nth-child(3n) .dot{background:var(--a4);color:var(--ink)}
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:12px;top:6px;width:58px;height:58px;background:var(--a2);-webkit-mask:var(--m-sparkle) center/contain no-repeat;mask:var(--m-sparkle) center/contain no-repeat;transform:rotate(10deg);z-index:0}
+.app .body:after{content:"";position:absolute;right:70px;top:44px;width:64px;height:26px;background:var(--a3);-webkit-mask:var(--m-squiggle) center/contain no-repeat;mask:var(--m-squiggle) center/contain no-repeat;z-index:0}
+.app .badge.b-muted{background:var(--a3)!important}

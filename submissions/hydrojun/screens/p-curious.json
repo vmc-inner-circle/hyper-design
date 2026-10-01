@@ -1,0 +1,100 @@
+{
+ "id": "p-curious",
+ "title": "궁금해하는 곳",
+ "role": "planner",
+ "icon": "circle-help",
+ "features": [
+  "F3",
+  "F5"
+ ],
+ "layout": "split",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "궁금해하는 곳",
+   "sub": "부모님이 '궁금해요'를 누른 곳을 눌린 순서대로 모았어요"
+  },
+  {
+   "t": "stats",
+   "items": [
+    {
+     "label": "궁금해요",
+     "value": "3곳"
+    },
+    {
+     "label": "확정하면 자동으로 가는 답",
+     "value": "3건"
+    },
+    {
+     "label": "누른 사람",
+     "value": "2명"
+    }
+   ]
+  },
+  {
+   "t": "list",
+   "title": "눌린 순서",
+   "items": [
+    {
+     "title": "아버지 · 4일차 온천",
+     "sub": "9월 27일 일요일 저녁 7:12에 눌렀어요 (3일 전) · 정해지면 자동으로 답이 가요",
+     "right": "3일 전",
+     "badge": "후보",
+     "state": "draft",
+     "icon": "circle-help",
+     "who": "아버지",
+     "to": "p-day"
+    },
+    {
+     "title": "어머니 · 3일차 점심",
+     "sub": "9월 29일 화요일 밤 9:05에 눌렀어요 (어제) · 정해지면 자동으로 답이 가요",
+     "right": "어제",
+     "badge": "후보",
+     "state": "draft",
+     "icon": "circle-help",
+     "who": "어머니",
+     "to": "p-day"
+    },
+    {
+     "title": "어머니 · 2일차 가는 방법",
+     "sub": "오늘 오전 8:40에 눌렀어요 · 정해지면 자동으로 답이 가요",
+     "right": "오늘 오전",
+     "badge": "후보",
+     "state": "draft",
+     "icon": "circle-help",
+     "who": "어머니",
+     "to": "p-day"
+    }
+   ]
+  },
+  {
+   "t": "buttons",
+   "items": [
+    {
+     "label": "이 날 고치기",
+     "icon": "pencil",
+     "primary": true,
+     "to": "p-day"
+    },
+    {
+     "label": "정해지면 알려줄게요",
+     "icon": "check"
+    }
+   ]
+  }
+ ],
+ "side": [
+  {
+   "t": "banner",
+   "cls": "slip",
+   "tone": "info",
+   "icon": "inbox",
+   "text": "재촉이 아니에요. 부모님이 누른 '궁금해요'는 메시지로 오지 않고 여기에 모아서 도착해요. 급히 답할 필요 없이, 확정하는 날 자동으로 답이 가요."
+  },
+  {
+   "t": "text",
+   "text": "확정하면 어머니·아버지 화면에 답이 저절로 올라가요. 그때는 소식 약속 시각(일요일 저녁 8시)에 다른 변경과 함께 한 번에 가요."
+  }
+ ],
+ "navLabel": "궁금해요"
+}

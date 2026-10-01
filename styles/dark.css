@@ -1,0 +1,35 @@
+/* 어두운 계기판 (dark) — 요즘 유행. 어두운 바탕 + 빛나는 선 · 모눈 배경 · 기계식 숫자. tokens.dark = true 와 함께 */
+.app{background-color:var(--bg);background-image:linear-gradient(color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--ink) 5%,transparent) 1px,transparent 1px);background-size:28px 28px}
+.app .h1{font-size:30px!important;letter-spacing:.01em}
+.app .sec b{font-size:.78em;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.app .sec b:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);margin-right:8px;vertical-align:.15em}
+.app .card{background:color-mix(in srgb,var(--surface) 88%,transparent);border:1px solid var(--line);border-radius:var(--r);box-shadow:inset 0 1px 0 color-mix(in srgb,var(--ink) 6%,transparent)}
+.app .stat b{font-family:"Orbit","IBM Plex Sans KR",monospace;font-size:2.2em;font-weight:400;color:var(--accent);text-shadow:0 0 18px color-mix(in srgb,var(--accent) 45%,transparent)}
+.app .stat span{letter-spacing:.1em;font-size:.72em;text-transform:uppercase}
+.app .li{border-bottom:1px solid var(--line)}
+.app .dot{background:transparent;border:1px solid var(--line);color:var(--accent);border-radius:8px}
+.app .st-done .dot{background:color-mix(in srgb,var(--accent) 18%,transparent);border-color:var(--accent);color:var(--accent)}
+.app .badge{background:transparent!important;border:1px solid currentColor;border-radius:4px;font-weight:600;letter-spacing:.06em;font-family:"IBM Plex Sans KR",monospace}
+.app .badge.b-ok{color:var(--accent)!important;box-shadow:0 0 10px color-mix(in srgb,var(--accent) 35%,transparent)}
+.app .btn{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);color:var(--ink)}
+.app .btn.p{background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 0 22px color-mix(in srgb,var(--accent) 45%,transparent)}
+.app .banner{border:1px solid currentColor;background:color-mix(in srgb,currentColor 8%,transparent)!important}
+.app .hero{border:1px solid var(--line)} .app .cardi img{filter:saturate(.7) brightness(.85)}
+.app .chip{border:1px solid var(--line);background:transparent} .app .chip.a{border-color:var(--accent);color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.app .seg{background:var(--surface);border:1px solid var(--line)} .app .seg span.a{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.app .tl:before{border-left:1px solid var(--line)} .app .tli:before{box-shadow:0 0 10px var(--accent)}
+.app .bar{background:var(--line)} .app .bar i{box-shadow:0 0 12px var(--accent)}
+.app .tabbar{background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line)} .app .tabbar a.a{color:var(--accent);text-shadow:0 0 12px var(--accent)}
+.app .side-nav{background:color-mix(in srgb,var(--bg) 92%,transparent);border-right:1px solid var(--line)} .app .side-nav a.a{background:transparent;color:var(--accent);box-shadow:inset 2px 0 0 var(--accent)}
+.app .fld .in{background:var(--bg);border:1px solid var(--line)}
+.app .cal span{font-family:"IBM Plex Sans KR",monospace} .app .cal .m-accent{box-shadow:0 0 14px var(--accent)}
+.app .bign b{font-family:"Orbit",monospace;font-weight:400;color:var(--accent);text-shadow:0 0 24px color-mix(in srgb,var(--accent) 50%,transparent)}
+.app .empty .ic{background:transparent;border:1px solid var(--accent);box-shadow:0 0 18px color-mix(in srgb,var(--accent) 30%,transparent)}
+.app .map{filter:invert(.88) hue-rotate(180deg)}
+/* 여러 색 · 도형: 빛나는 링·점 */
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:10px;top:6px;width:90px;height:90px;background:var(--a2);opacity:.55;-webkit-mask:var(--m-ring) center/contain no-repeat;mask:var(--m-ring) center/contain no-repeat;filter:drop-shadow(0 0 10px var(--a2));z-index:0}
+.app .body:after{content:"";position:absolute;right:48px;top:44px;width:14px;height:14px;border-radius:50%;background:var(--a3);box-shadow:0 0 14px var(--a3);z-index:0}
+.app .stat:nth-child(2) b{color:var(--a2);text-shadow:0 0 18px color-mix(in srgb,var(--a2) 45%,transparent)} .app .stat:nth-child(3) b{color:var(--a3);text-shadow:0 0 18px color-mix(in srgb,var(--a3) 45%,transparent)} .app .stat:nth-child(4) b{color:var(--a4)}
+.app .li:nth-child(3n+2) .dot{color:var(--a2)} .app .li:nth-child(3n) .dot{color:var(--a3)}
+.app .badge.b-info{color:var(--a2)!important} .app .badge.b-warn{color:var(--a4)!important}

@@ -1,0 +1,196 @@
+{
+ "id": "p-day",
+ "title": "3일차 · 11.29(일) 편집",
+ "role": "planner",
+ "icon": "list-ordered",
+ "features": [
+  "F1",
+  "F2"
+ ],
+ "layout": "split",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "3일차 · 11.29(일) 편집",
+   "sub": "유후인 · 순서를 바꾸고, 확정으로 올리고, 어디까지 보일지 골라요",
+   "back": true,
+   "to": "p-home"
+  },
+  {
+   "t": "timeline",
+   "title": "이 날의 흐름",
+   "items": [
+    {
+     "time": "10:00",
+     "title": "긴린코 호수 산책",
+     "sub": "료칸에서 걸어서 15분 · 하윤 유모차 없이 가능",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "온 가족"
+    },
+    {
+     "time": "12:30",
+     "title": "점심",
+     "sub": "유후인 거리 안에서 아직 고르는 중",
+     "badge": "후보",
+     "state": "draft",
+     "who": "온 가족"
+    },
+    {
+     "time": "18:30",
+     "title": "료칸 가이세키",
+     "sub": "료칸 산소 무라타 · 알레르기 전달은 수민이 맡음",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "온 가족"
+    },
+    {
+     "time": "20:30",
+     "title": "가족탕 예약",
+     "sub": "45분 · 확정 필요, 오늘 안에 정하면 좋아요",
+     "badge": "후보 · 확정 필요",
+     "state": "draft",
+     "who": "온 가족"
+    }
+   ]
+  },
+  {
+   "t": "section",
+   "title": "손보기",
+   "right": "선택한 항목: 가족탕 예약 20:30"
+  },
+  {
+   "t": "list",
+   "items": [
+    {
+     "title": "긴린코 호수 산책 10:00",
+     "sub": "확정된 항목이에요. 순서만 바꿀 수 있어요",
+     "right": "위로 · 아래로",
+     "icon": "arrow-up",
+     "state": "done"
+    },
+    {
+     "title": "점심 12:30",
+     "sub": "후보예요. 순서를 바꾸거나 확정으로 올려요",
+     "right": "위로 · 아래로 · 확정으로",
+     "icon": "arrow-down",
+     "state": "draft"
+    },
+    {
+     "title": "료칸 가이세키 18:30",
+     "sub": "확정된 항목이에요. 순서만 바꿀 수 있어요",
+     "right": "위로 · 아래로",
+     "icon": "arrow-up",
+     "state": "done"
+    },
+    {
+     "title": "가족탕 예약 20:30",
+     "sub": "후보예요. 확정으로 올리면 부모님 화면에 나가요",
+     "right": "위로 · 아래로 · 확정으로",
+     "icon": "check",
+     "state": "draft"
+    }
+   ]
+  },
+  {
+   "t": "buttons",
+   "items": [
+    {
+     "label": "위로 올리기",
+     "icon": "arrow-up"
+    },
+    {
+     "label": "아래로 내리기",
+     "icon": "arrow-down"
+    },
+    {
+     "label": "확정으로 올리기",
+     "icon": "check",
+     "primary": true
+    }
+   ]
+  },
+  {
+   "t": "section",
+   "title": "공개 단계",
+   "right": "가족탕 예약 20:30"
+  },
+  {
+   "t": "segment",
+   "items": [
+    "나만 보기",
+    "가족에게 '바뀔 수 있음'으로",
+    "확정"
+   ],
+   "active": "나만 보기",
+   "cls": "pubseg"
+  },
+  {
+   "t": "text",
+   "text": "순서를 바꾸는 것은 조용히 저장돼요. 아무에게도 알리지 않아요.",
+   "size": "sm"
+  },
+  {
+   "t": "buttons",
+   "items": [
+    {
+     "label": "일정 적기",
+     "icon": "plus",
+     "to": "p-add"
+    }
+   ]
+  }
+ ],
+ "side": [
+  {
+   "t": "section",
+   "title": "어머니 화면에서는"
+  },
+  {
+   "t": "timeline",
+   "items": [
+    {
+     "time": "10:00",
+     "title": "긴린코 호수 산책",
+     "badge": "확정",
+     "state": "fixed"
+    },
+    {
+     "time": "낮",
+     "title": "이 시간은 정하는 중이에요",
+     "badge": "정하는 중",
+     "state": "draft"
+    },
+    {
+     "time": "18:30",
+     "title": "료칸 가이세키",
+     "badge": "확정",
+     "state": "fixed"
+    }
+   ]
+  },
+  {
+   "t": "text",
+   "text": "확정된 것만 보이고, 후보의 이름은 나가지 않아요.",
+   "size": "sm"
+  },
+  {
+   "t": "list",
+   "title": "이 날 궁금해하는 사람",
+   "items": [
+    {
+     "title": "어머니 박경희",
+     "sub": "3일차가 궁금해요 · 9.28(월) 오전 9:12",
+     "right": "확정하면 답이 가요",
+     "icon": "circle-help"
+    },
+    {
+     "title": "아버지 김철수",
+     "sub": "3일차가 궁금해요 · 9.29(화) 저녁 7:40",
+     "right": "확정하면 답이 가요",
+     "icon": "circle-help"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+/* 굵은 선 포스터 (brutal) — 과감한. 2px 검은 테두리 · 번지지 않는 딱딱한 그림자 · 원색 면 */
+.app{background:var(--bg)}
+.app .h1{font-size:32px!important;line-height:1.1;letter-spacing:-.01em;text-transform:uppercase}
+.app .sec{border-bottom:2px solid var(--ink);padding-bottom:6px} .app .sec b{font-size:1.1em;letter-spacing:.02em}
+.app .card{background:var(--surface);border:2px solid var(--ink);border-radius:var(--r);box-shadow:5px 5px 0 var(--ink)}
+.app .stat{background:var(--accent);color:var(--ink)} .app .stat:nth-child(2){background:var(--surface)} .app .stat:nth-child(3){background:color-mix(in srgb,var(--accent) 35%,var(--surface))}
+.app .stat b{font-size:2.3em} .app .stat span{color:var(--ink);font-weight:700}
+.app .li{border-bottom:2px solid var(--ink)} .app .li:last-child{border-bottom:0}
+.app .dot{border:2px solid var(--ink);background:var(--surface);color:var(--ink);border-radius:6px}
+.app .st-done .dot{background:var(--accent);color:var(--ink)}
+.app .badge{border:2px solid var(--ink);border-radius:4px;background:var(--surface)!important;color:var(--ink)!important;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+.app .badge.b-warn{background:var(--accent)!important}
+.app .btn{border:2px solid var(--ink);border-radius:var(--r);box-shadow:4px 4px 0 var(--ink);background:var(--surface);font-weight:800;transition:transform .08s}
+.app .btn:active{transform:translate(4px,4px);box-shadow:none}
+.app .btn.p{background:var(--accent);color:var(--ink);border-color:var(--ink)}
+.app .banner{border:2px solid var(--ink);box-shadow:4px 4px 0 var(--ink);border-radius:var(--r);background:var(--surface)!important;color:var(--ink)!important;font-weight:700}
+.app .tone-warn{background:var(--accent)!important}
+.app .hero{border:2px solid var(--ink);box-shadow:6px 6px 0 var(--ink)}
+.app .cardi img{border-bottom:2px solid var(--ink)}
+.app .chip{border:2px solid var(--ink);border-radius:4px;font-weight:700} .app .chip.a{background:var(--ink);color:var(--accent)}
+.app .seg{border:2px solid var(--ink);border-radius:var(--r);background:var(--surface);padding:0} .app .seg span{border-radius:0} .app .seg span.a{background:var(--ink);color:var(--accent);box-shadow:none}
+.app .utabs{border-bottom:2px solid var(--ink)} .app .utabs span.a{border-bottom:4px solid var(--ink)}
+.app .tl:before{border-left:2px solid var(--ink)} .app .tli:before{border-radius:2px;background:var(--accent);border:2px solid var(--ink)}
+.app .tabbar{border-top:2px solid var(--ink)} .app .tabbar a.a{color:var(--ink)} .app .tabbar a.a svg{background:var(--accent);border:2px solid var(--ink);border-radius:6px;padding:2px;width:1.6em;height:1.6em}
+.app .side-nav{border-right:2px solid var(--ink)} .app .side-nav a.a{background:var(--accent);color:var(--ink);border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink)}
+.app .topnav{border-bottom:2px solid var(--ink)}
+.app .fld .in{border:2px solid var(--ink);border-radius:var(--r)}
+.app .cal span{border:2px solid transparent} .app .cal .m-accent{border-color:var(--ink);background:var(--accent);color:var(--ink)}
+.app .bign b{color:var(--ink);-webkit-text-stroke:0;text-shadow:4px 4px 0 var(--accent)}
+.app .empty .ic{border:2px solid var(--ink);border-radius:8px;background:var(--accent);color:var(--ink)}
+.app .quote{border:2px solid var(--ink);background:var(--surface)}
+.app .bub{border:2px solid var(--ink)} .app .bub.me{background:var(--accent);color:var(--ink);border-color:var(--ink)}
+.app .map{border:2px solid var(--ink)} .app .pin i{border:2px solid var(--ink)}
+@container (min-width:900px){ .app .h1{font-size:46px!important} }
+/* 여러 색 · 도형: 별·삼각형 스티커 */
+.app .body>.card:nth-of-type(4n+2){box-shadow:5px 5px 0 var(--a2)} .app .body>.card:nth-of-type(4n+3){box-shadow:5px 5px 0 var(--a3)} .app .body>.card:nth-of-type(4n){box-shadow:5px 5px 0 var(--a4)}
+.app .stat:nth-child(4){background:var(--a3)} .app .stat:nth-child(2){background:var(--a2)}
+.app .li:nth-child(3n+2) .dot{background:var(--a2)} .app .li:nth-child(3n) .dot{background:var(--a3)}
+.app .body{position:relative} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:14px;top:10px;width:64px;height:64px;background:var(--a2);-webkit-mask:var(--m-star) center/contain no-repeat;mask:var(--m-star) center/contain no-repeat;transform:rotate(-12deg);z-index:0;filter:drop-shadow(3px 3px 0 var(--ink))}
+.app .body:after{content:"";position:absolute;right:78px;top:52px;width:30px;height:30px;background:var(--a3);-webkit-mask:var(--m-triangle) center/contain no-repeat;mask:var(--m-triangle) center/contain no-repeat;transform:rotate(18deg);z-index:0}

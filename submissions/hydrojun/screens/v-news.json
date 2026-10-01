@@ -1,0 +1,66 @@
+{
+ "id": "v-news",
+ "title": "소식 모음",
+ "role": "viewer",
+ "icon": "newspaper",
+ "features": [
+  "F5"
+ ],
+ "layout": "center",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "소식 모음",
+   "sub": "지윤이 보낸 소식을 모아 뒀어요"
+  },
+  {
+   "t": "poster",
+   "kicker": "제2호 · 9월 27일",
+   "title": "료칸이 정해졌어요",
+   "text": "유후인 산소 무라타에서 2박 해요",
+   "cta": "자세히 보기",
+   "to": "s-book"
+  },
+  {
+   "t": "banner",
+   "cls": "slip",
+   "tone": "info",
+   "icon": "calendar-clock",
+   "text": "다음 소식 · 제3호 10월 4일 일요일 저녁 8시 예정"
+  },
+  {
+   "t": "timeline",
+   "title": "지난 소식",
+   "items": [
+    {
+     "time": "9월 13일",
+     "title": "제1호 · 항공권이 확정됐어요",
+     "sub": "바뀐 점 2가지 · 가는 비행기, 오는 비행기",
+     "badge": "확정",
+     "state": "fixed"
+    },
+    {
+     "time": "9월 27일",
+     "title": "제2호 · 료칸이 정해졌어요",
+     "sub": "바뀐 점 2가지 · 료칸 이름, 묵는 날",
+     "badge": "확정",
+     "state": "fixed"
+    }
+   ]
+  },
+  {
+   "t": "text",
+   "text": "바로 알려드리는 것은 비행기·숙소·모이는 시간이 바뀔 때뿐이에요."
+  }
+ ],
+ "side": [
+  {
+   "t": "bignum",
+   "cls": "folio",
+   "value": "0건",
+   "label": "이번 소식 이후 바뀐 점",
+   "sub": "지난 소식 뒤로 바뀐 것이 없어요. 바뀌면 다음 소식에 모아 알려드려요."
+  }
+ ],
+ "navLabel": "소식"
+}

@@ -1,0 +1,88 @@
+{
+ "id": "v-ask",
+ "title": "궁금해요",
+ "role": "viewer",
+ "icon": "circle-help",
+ "features": [
+  "F3",
+  "F5"
+ ],
+ "layout": "center",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "궁금해요",
+   "sub": "누르면 지윤에게 모아서 전해져요. 정해지면 여기로 답이 와요.",
+   "back": true,
+   "to": "v-home"
+  },
+  {
+   "t": "list",
+   "items": [
+    {
+     "title": "1일 · 후쿠오카",
+     "sub": "11월 27일 금요일",
+     "badge": "확정됐어요",
+     "state": "done",
+     "icon": "check"
+    },
+    {
+     "title": "2일 · 유후인으로",
+     "sub": "11월 28일 토요일",
+     "badge": "지윤에게 전했어요",
+     "icon": "check"
+    },
+    {
+     "title": "3일 · 유후인",
+     "sub": "11월 29일 일요일",
+     "icon": "chevron-right",
+     "to": "v-home"
+    },
+    {
+     "title": "4일 · 벳푸",
+     "sub": "11월 30일 월요일",
+     "icon": "chevron-right",
+     "to": "v-home"
+    },
+    {
+     "title": "5일 · 귀국",
+     "sub": "12월 1일 화요일",
+     "icon": "chevron-right",
+     "to": "v-home"
+    }
+   ]
+  },
+  {
+   "t": "banner",
+   "cls": "slip",
+   "icon": "mail-check",
+   "text": "재촉이 아니에요. 지윤은 궁금해하는 곳을 모아서 한 번에 봐요."
+  }
+ ],
+ "side": [
+  {
+   "t": "section",
+   "title": "누르면 이렇게 돼요"
+  },
+  {
+   "t": "list",
+   "items": [
+    {
+     "title": "1. 지윤에게 모아서 가요",
+     "sub": "바로 울리는 알림이 아니에요. '궁금해하는 곳' 목록에 쌓여요.",
+     "icon": "inbox"
+    },
+    {
+     "title": "2. 정해지면 답이 와요",
+     "sub": "지윤이 확정하는 날, 이 화면과 소식 모음에 자동으로 나와요.",
+     "icon": "message-circle-reply"
+    },
+    {
+     "title": "3. 또 눌러도 괜찮아요",
+     "sub": "같은 날을 여러 번 눌러도 한 번으로 묶여요.",
+     "icon": "check-check"
+    }
+   ]
+  }
+ ]
+}

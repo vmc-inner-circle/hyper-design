@@ -1,0 +1,15 @@
+{
+ "id": "p-home",
+ "title": "작업대",
+ "role": "planner",
+ "icon": "map",
+ "features": [
+  "F1",
+  "F2",
+  "F3",
+  "F5"
+ ],
+ "layout": "stack",
+ "htmlFile": "p-home.html",
+ "navLabel": "작업대"
+}

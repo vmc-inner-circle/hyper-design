@@ -1,0 +1,35 @@
+/* 말랑 파스텔 (soft) — 요즘 유행. 알약 모양 · 부드러운 겹그림자 · 파스텔 면 · 통통한 글자 */
+.app{background:var(--bg)}
+.app .h1{font-size:30px!important;font-weight:400;letter-spacing:-.01em}
+.app .sec b{font-size:1.15em;font-weight:700}
+.app .card{background:var(--surface);border:0;border-radius:var(--r);box-shadow:0 1px 2px rgba(40,30,80,.04),0 6px 14px rgba(40,30,80,.06),0 18px 36px -12px rgba(40,30,80,.12)}
+.app .stat{background:color-mix(in srgb,var(--accent) 12%,var(--surface))} .app .stat:nth-child(2){background:color-mix(in srgb,#FFC56B 28%,var(--surface))} .app .stat:nth-child(3){background:color-mix(in srgb,#6BD7B0 24%,var(--surface))} .app .stat:nth-child(4){background:color-mix(in srgb,#FF9EB5 22%,var(--surface))}
+.app .stat b{font-size:2.1em;font-weight:700}
+.app .li{border-bottom:0;padding:10px 0}
+.app .dot{width:42px;height:42px;border-radius:16px;background:color-mix(in srgb,var(--accent) 14%,var(--surface))}
+.app .li:nth-child(3n+2) .dot{background:color-mix(in srgb,#FFC56B 30%,var(--surface));color:#9A6400} .app .li:nth-child(3n) .dot{background:color-mix(in srgb,#6BD7B0 26%,var(--surface));color:#16734F}
+.app .badge{border-radius:999px;padding:4px 10px;font-weight:700}
+.app .btn{border-radius:999px;border:0;min-height:56px;background:var(--surface);box-shadow:0 4px 12px rgba(40,30,80,.08),inset 0 -3px 0 rgba(0,0,0,.05)}
+.app .btn.p{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 40%,transparent),inset 0 -4px 0 rgba(0,0,0,.12),inset 0 2px 0 rgba(255,255,255,.25)}
+.app .banner{border-radius:var(--r);padding:16px 18px}
+.app .hero{border-radius:calc(var(--r) + 8px)}
+.app .cardi img{border-radius:calc(var(--r) - 6px);margin:8px;width:calc(100% - 16px)}
+.app .tile{border-radius:var(--r)}
+.app .chip{border:0;border-radius:999px;background:var(--surface);box-shadow:0 2px 8px rgba(40,30,80,.08);padding:8px 14px} .app .chip.a{background:var(--accent);color:var(--accent-ink)}
+.app .seg{border-radius:999px;padding:4px} .app .seg span{border-radius:999px}
+.app .tl:before{border-left:3px dotted color-mix(in srgb,var(--accent) 40%,transparent)} .app .tli:before{width:14px;height:14px;box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 18%,transparent)}
+.app .tabbar{margin:0 14px 12px;border-radius:999px;border:0;box-shadow:0 10px 30px rgba(40,30,80,.14)} .app .tabbar a.a svg{background:color-mix(in srgb,var(--accent) 16%,transparent);border-radius:999px;padding:4px 10px;width:auto;height:1.7em;box-sizing:content-box}
+.app .side-nav{border-right:0;background:var(--bg)} .app .side-nav a{border-radius:999px} .app .side-nav a.a{background:var(--surface);box-shadow:0 4px 12px rgba(40,30,80,.08)}
+.app .fld .in{border:0;border-radius:18px;background:var(--surface);box-shadow:inset 0 2px 4px rgba(40,30,80,.06)}
+.app .cal span{border-radius:12px} .app .cal .m-accent{box-shadow:0 6px 14px color-mix(in srgb,var(--accent) 40%,transparent)}
+.app .bign b{color:var(--accent)}
+.app .empty .ic{width:84px;height:84px;border-radius:30px;box-shadow:0 10px 24px color-mix(in srgb,var(--accent) 25%,transparent)}
+.app .quote{border-radius:var(--r) var(--r) var(--r) 6px;background:var(--surface);box-shadow:0 6px 14px rgba(40,30,80,.06)}
+.app .bub{border:0;box-shadow:0 4px 12px rgba(40,30,80,.07)}
+/* 여러 색 · 도형: 떠다니는 물방울 */
+.app .body{position:relative;overflow:hidden} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:-40px;top:-30px;width:170px;height:170px;background:color-mix(in srgb,var(--a2) 45%,transparent);-webkit-mask:var(--m-blob) center/contain no-repeat;mask:var(--m-blob) center/contain no-repeat;z-index:0}
+.app .body:after{content:"";position:absolute;right:90px;top:40px;width:60px;height:60px;background:color-mix(in srgb,var(--a3) 50%,transparent);-webkit-mask:var(--m-blob2) center/contain no-repeat;mask:var(--m-blob2) center/contain no-repeat;z-index:0}
+.app .stat:nth-child(2){background:color-mix(in srgb,var(--a2) 28%,var(--surface))} .app .stat:nth-child(3){background:color-mix(in srgb,var(--a3) 24%,var(--surface))} .app .stat:nth-child(4){background:color-mix(in srgb,var(--a4) 22%,var(--surface))}
+.app .li:nth-child(3n+2) .dot{background:color-mix(in srgb,var(--a2) 30%,var(--surface));color:var(--ink)} .app .li:nth-child(3n) .dot{background:color-mix(in srgb,var(--a3) 26%,var(--surface));color:var(--ink)}
+.app .badge.b-info{background:color-mix(in srgb,var(--a2) 22%,var(--surface))!important;color:var(--ink)!important} .app .badge.b-ok{background:color-mix(in srgb,var(--a3) 22%,var(--surface))!important;color:var(--ink)!important}

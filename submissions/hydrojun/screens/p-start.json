@@ -1,0 +1,34 @@
+{
+  "id": "p-start",
+  "title": "새 여행 만들기",
+  "role": "planner",
+  "icon": "sparkles",
+  "features": ["F1"],
+  "layout": "center",
+  "blocks": [
+    {"t": "header", "title": "새 여행 만들기", "sub": "3단계 · 함께 갈 가족", "back": true, "to": "p-home"},
+    {"t": "steps", "items": ["여행 이름·날짜", "가는 곳", "함께 갈 가족", "소식 약속"], "active": 2},
+    {"t": "section", "title": "함께 갈 가족", "right": "6명 중 5명 추가"},
+    {"t": "avatars", "items": [
+      {"name": "아버지", "sub": "김철수 · 67세", "done": true},
+      {"name": "어머니", "sub": "박경희 · 64세", "done": true},
+      {"name": "지훈", "sub": "김지훈 · 33세", "done": true},
+      {"name": "수민", "sub": "이수민 · 31세", "done": true},
+      {"name": "하윤", "sub": "6세 · 아직 추가 전", "done": false}
+    ]},
+    {"t": "form", "fields": [
+      {"label": "이름", "value": "김하윤", "kind": "text"},
+      {"label": "누구예요", "value": "손주 · 부모님과 같이 다녀요", "kind": "select"},
+      {"label": "초대", "value": "폰이 없어서 초대 없이 이름만 올려요", "hint": "부모님은 카카오톡 링크로 초대해요", "kind": "select"}
+    ], "submit": "하윤 추가하기", "to": "p-start"},
+    {"t": "buttons", "items": [
+      {"label": "다음 단계", "icon": "arrow-right", "primary": true, "to": "p-family"},
+      {"label": "건너뛰기", "icon": "skip-forward", "to": "p-home"}
+    ]}
+  ],
+  "side": [
+    {"t": "section", "title": "4단계 소식 약속 미리보기"},
+    {"t": "banner", "cls": "slip", "tone": "info", "icon": "calendar-clock", "text": "다음 소식은 일요일 저녁 8시(10.4 일 20:00)에 나가요. 바꿀 수 있어요."},
+    {"t": "text", "text": "그 사이에 바뀐 확정 일정은 이 시각에 한 번에 모아서 부모님께 전해요. 후보는 나가지 않아요.", "size": "sm"}
+  ]
+}

@@ -1,0 +1,147 @@
+{
+ "id": "m-where",
+ "title": "나는 언제 어디에",
+ "role": "member",
+ "icon": "map-pin",
+ "features": [
+  "F1",
+  "F3"
+ ],
+ "layout": "split",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "나는 언제 어디에",
+   "sub": "김지훈님이 있어야 하는 시간과 장소만 모았어요"
+  },
+  {
+   "t": "segment",
+   "items": [
+    "1일",
+    "2일",
+    "3일",
+    "4일",
+    "5일"
+   ],
+   "active": "1일"
+  },
+  {
+   "t": "timeline",
+   "title": "1일 · 11.27(금)",
+   "items": [
+    {
+     "time": "06:30",
+     "title": "인천공항 제2터미널 D 카운터 앞 집합",
+     "sub": "가족 6명이 여기서 모여요",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "지훈"
+    },
+    {
+     "time": "09:05",
+     "title": "인천 출발 (대한항공)",
+     "sub": "후쿠오카 10:45 도착",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "지훈"
+    },
+    {
+     "time": "15:00",
+     "title": "하카타 그랜드 호텔 체크인",
+     "sub": "수민과 하윤이 먼저 도착해도 로비에서 기다려요",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "지훈"
+    }
+   ]
+  },
+  {
+   "t": "timeline",
+   "title": "2일 · 11.28(토)",
+   "items": [
+    {
+     "time": "09:40",
+     "title": "하카타 버스센터 집합",
+     "sub": "이 시간은 정하는 중이에요",
+     "badge": "정하는 중",
+     "state": "draft",
+     "who": "지훈"
+    }
+   ]
+  },
+  {
+   "t": "timeline",
+   "title": "3일 · 11.29(일)",
+   "items": [
+    {
+     "time": "10:00",
+     "title": "료칸 로비 집합",
+     "sub": "긴린코 호수 산책을 함께 나가요",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "지훈"
+    }
+   ]
+  },
+  {
+   "t": "timeline",
+   "title": "5일 · 12.1(화)",
+   "items": [
+    {
+     "time": "08:30",
+     "title": "호텔 로비 집합",
+     "sub": "체크아웃 후 함께 공항으로 이동",
+     "badge": "확정",
+     "state": "fixed",
+     "who": "지훈"
+    }
+   ]
+  },
+  {
+   "t": "banner",
+   "text": "'정하는 중'인 시간이 바뀌거나 정해지면 지윤이 바로 알려줘요.",
+   "tone": "info",
+   "icon": "bell"
+  },
+  {
+   "t": "text",
+   "text": "4일차(11.30)는 지훈님이 따로 맞춰야 하는 시간이 아직 없어요.",
+   "size": "sm",
+   "tone": "muted"
+  }
+ ],
+ "side": [
+  {
+   "t": "list",
+   "title": "내가 맡은 일 3개",
+   "items": [
+    {
+     "title": "이심(eSIM) 신청",
+     "sub": "마감 11.10",
+     "state": "done",
+     "icon": "smartphone"
+    },
+    {
+     "title": "여행자보험 가입",
+     "sub": "마감 11.15",
+     "state": "todo",
+     "icon": "shield-check",
+     "to": "m-todo"
+    },
+    {
+     "title": "아이 여권 사본(하윤) 준비",
+     "sub": "마감 11.20",
+     "state": "todo",
+     "icon": "file-text",
+     "to": "m-todo"
+    }
+   ]
+  },
+  {
+   "t": "quote",
+   "text": "하윤(6세): 공항 집합 06:30이라 전날 9시 전에 재우고, 기내용 색칠 공책과 얇은 담요, 갈아입을 옷 한 벌을 손가방에 넣어 주세요.",
+   "who": "하윤 챙길 것"
+  }
+ ],
+ "navLabel": "내 일정"
+}

@@ -1,0 +1,39 @@
+/* 스위스 격자 (swiss) — 오래 가는. 모서리 0 · 구역 위 굵은 선 · 번호 붙은 목록 · 흑백 + 색 하나 */
+.app{background:var(--bg);counter-reset:sec}
+.app .h1{font-size:34px!important;font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.app .sec{border-top:6px solid var(--ink);padding-top:8px;counter-increment:sec}
+.app .sec b{font-weight:800;font-size:1.05em} .app .sec b:before{content:counter(sec,decimal-leading-zero) "  ";color:var(--accent)}
+.app .card{border-radius:0;border:0;background:var(--surface);box-shadow:none}
+.app .stats{gap:0;border-top:1px solid var(--ink)} .app .stat{border-radius:0;background:transparent;border-right:1px solid var(--line);padding:12px 10px 4px 0}
+.app .stat b{font-size:2.8em;font-weight:800;letter-spacing:-.05em}
+.app .stat.tone-warn b,.app .stat:first-child b{color:var(--accent)}
+.app .list,.app .card:has(.li){counter-reset:li}
+.app .li{counter-increment:li;border-bottom:1px solid var(--ink);padding:12px 0}
+.app .li:before{content:counter(li,decimal-leading-zero);font-weight:800;font-size:.8em;color:var(--muted);width:22px;flex:none}
+.app .dot{border-radius:0;background:var(--ink);color:var(--surface);width:28px;height:28px}
+.app .st-alert .dot{background:var(--accent);color:#fff}
+.app .badge{border-radius:0;background:var(--ink)!important;color:var(--surface)!important;font-weight:700}
+.app .badge.b-warn{background:var(--accent)!important} .app .badge.b-muted{background:var(--line)!important;color:var(--ink)!important}
+.app .btn{border-radius:0;border:2px solid var(--ink);background:transparent;font-weight:800;justify-content:space-between}
+.app .btn:after{content:"→"} .app .btn.p{background:var(--accent);border-color:var(--accent);color:#fff}
+.app .banner{border-radius:0;border-top:3px solid var(--accent);background:var(--surface)!important;color:var(--ink)!important}
+.app .hero{border-radius:0} .app .cardi img{filter:grayscale(1) contrast(1.1)}
+.app .tile{border-top:3px solid var(--ink)}
+.app .chip{border-radius:0;border:1px solid var(--ink)} .app .chip.a{background:var(--ink);color:var(--surface)}
+.app .seg{border-radius:0;border:1px solid var(--ink);background:transparent;padding:0} .app .seg span{border-radius:0} .app .seg span.a{background:var(--ink);color:var(--surface);box-shadow:none}
+.app .tl:before{border-left:2px solid var(--ink);left:6px} .app .tli:before{border-radius:0;width:12px;height:12px;background:var(--ink)} .app .tli.draft:before{background:var(--surface);border:2px solid var(--ink)}
+.app .tabbar{border-top:3px solid var(--ink)} .app .tabbar a.a{color:var(--accent)}
+.app .side-nav{border-right:0;background:var(--ink);color:var(--surface)} .app .side-nav a{color:color-mix(in srgb,var(--surface) 60%,transparent);border-radius:0} .app .side-nav a.a{background:var(--accent);color:#fff}
+.app .fld .in{border-radius:0;border:0;border-bottom:2px solid var(--ink);background:transparent}
+.app .cal span{border-radius:0} .app .cal .m-accent{background:var(--accent)}
+.app .bign b{color:var(--ink);font-size:5em;font-weight:800;letter-spacing:-.06em}
+.app .empty .ic{border-radius:0;background:var(--ink);color:var(--surface)}
+.app .quote{border-radius:0;border-left:6px solid var(--accent);background:transparent}
+@container (min-width:900px){ .app .h1{font-size:56px!important} }
+/* 여러 색 · 도형: 큰 원과 반원 면 */
+.app .body{position:relative;overflow:hidden} .app .body>*{position:relative;z-index:1}
+.app .body:before{content:"";position:absolute;right:-60px;top:-60px;width:190px;height:190px;border-radius:50%;background:var(--a2);z-index:0}
+.app .body:after{content:"";position:absolute;right:70px;top:40px;width:70px;height:35px;background:var(--a3);-webkit-mask:var(--m-half) center/contain no-repeat;mask:var(--m-half) center/contain no-repeat;z-index:0}
+.app .stat:nth-child(2) b{color:var(--a3)} .app .stat:nth-child(3) b{color:var(--ink)} .app .stat:nth-child(4) b{color:var(--a2)}
+.app .li:nth-child(3n+2) .dot{background:var(--a3)} .app .li:nth-child(3n) .dot{background:var(--a2);color:var(--ink)}
+.app .sec:nth-of-type(3n+2){border-top-color:var(--a3)}

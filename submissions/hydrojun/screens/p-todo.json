@@ -1,0 +1,174 @@
+{
+ "id": "p-todo",
+ "title": "할 일·준비물 배정",
+ "role": "planner",
+ "icon": "list-checks",
+ "features": [
+  "F4"
+ ],
+ "layout": "wide",
+ "blocks": [
+  {
+   "t": "header",
+   "title": "할 일·준비물 배정",
+   "sub": "사람별로 누가 무엇을 준비하는지 · 출발까지 D-58"
+  },
+  {
+   "t": "stats",
+   "items": [
+    {
+     "label": "전체",
+     "value": "11개"
+    },
+    {
+     "label": "완료",
+     "value": "2",
+     "tone": "ok"
+    },
+    {
+     "label": "마감 임박",
+     "value": "1",
+     "tone": "warn"
+    }
+   ]
+  },
+  {
+   "t": "kanban",
+   "cols": [
+    {
+     "title": "지윤",
+     "items": [
+      {
+       "title": "엔화 환전",
+       "sub": "마감 11.20",
+       "who": "지윤"
+      },
+      {
+       "title": "유후인 버스 예약",
+       "sub": "마감 10.20",
+       "who": "지윤"
+      }
+     ]
+    },
+    {
+     "title": "지훈",
+     "items": [
+      {
+       "title": "이심 신청",
+       "sub": "마감 11.10",
+       "who": "지훈"
+      },
+      {
+       "title": "여행자보험 가입",
+       "sub": "마감 11.15",
+       "who": "지훈"
+      },
+      {
+       "title": "아이 여권 사본(하윤) 준비",
+       "sub": "마감 11.20",
+       "who": "지훈"
+      }
+     ]
+    },
+    {
+     "title": "수민",
+     "items": [
+      {
+       "title": "하윤 짐 싸기",
+       "sub": "마감 11.24",
+       "who": "수민"
+      },
+      {
+       "title": "료칸 식사 알레르기 전달",
+       "sub": "마감 11.10",
+       "who": "수민"
+      }
+     ]
+    },
+    {
+     "title": "어머니",
+     "items": [
+      {
+       "title": "상비약·멀미약(어른용)",
+       "sub": "마감 11.20",
+       "who": "어머니"
+      },
+      {
+       "title": "편한 신발 하나",
+       "sub": "신던 것 · 끝났어요",
+       "who": "어머니"
+      },
+      {
+       "title": "여권 사본 지갑에 넣기",
+       "sub": "마감 11.20",
+       "who": "어머니"
+      }
+     ]
+    },
+    {
+     "title": "아버지",
+     "items": [
+      {
+       "title": "여권 유효기간 확인",
+       "sub": "마감 10.15",
+       "who": "아버지",
+       "badge": "마감 임박"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "t": "banner",
+   "text": "누가 무엇을 하는지 가족 모두에게 같이 보여요. 배정을 바꾸면 해당하는 사람에게만 소식이 가요.",
+   "tone": "info",
+   "icon": "users"
+  },
+  {
+   "t": "cols",
+   "cols": [
+    [
+     {
+      "t": "list",
+      "title": "아직 맡은 사람이 없는 것",
+      "items": [
+       {
+        "title": "아이 멀미약(하윤용)",
+        "sub": "시럽형 · 유후인 산길 대비",
+        "icon": "circle-dashed",
+        "state": "todo"
+       },
+       {
+        "title": "가족 비상 연락처 카드 인쇄",
+        "sub": "료칸·호텔 주소와 전화번호 포함",
+        "icon": "circle-dashed",
+        "state": "todo"
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "t": "buttons",
+      "items": [
+       {
+        "label": "할 일 추가",
+        "icon": "plus",
+        "primary": true
+       },
+       {
+        "label": "준비물 추가",
+        "icon": "package-plus"
+       },
+       {
+        "label": "담당자 바꾸기",
+        "icon": "arrow-left-right"
+       }
+      ]
+     }
+    ]
+   ]
+  }
+ ],
+ "navLabel": "할 일"
+}

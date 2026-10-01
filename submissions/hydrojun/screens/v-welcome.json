@@ -1,0 +1,103 @@
+{
+ "id": "v-welcome",
+ "title": "초대받은 첫 화면",
+ "role": "viewer",
+ "icon": "hand-heart",
+ "features": [
+  "F3",
+  "F5"
+ ],
+ "layout": "center",
+ "blocks": [
+  {
+   "t": "header",
+   "cls": "mast",
+   "title": "지윤이 보낸 여행 소식",
+   "sub": "규슈 4박 5일 · 가족 6명"
+  },
+  {
+   "t": "text",
+   "text": "앱을 설치하거나 로그인하지 않아도 돼요"
+  },
+  {
+   "t": "section",
+   "title": "글자 크기"
+  },
+  {
+   "t": "chips",
+   "items": [
+    "보통",
+    "크게",
+    "아주 크게"
+   ],
+   "active": "크게"
+  },
+  {
+   "t": "section",
+   "title": "소식 받는 방법"
+  },
+  {
+   "t": "segment",
+   "items": [
+    "카카오톡으로",
+    "문자로",
+    "안 받고 직접 볼게요"
+   ],
+   "active": "카카오톡으로"
+  },
+  {
+   "t": "banner",
+   "cls": "slip",
+   "icon": "calendar-clock",
+   "text": "다음 소식은 일요일 저녁 8시에 알려드려요. 그 사이에 바뀌는 건 모아서 한 번만 보내요."
+  },
+  {
+   "t": "buttons",
+   "items": [
+    {
+     "label": "여행 보러 가기",
+     "icon": "arrow-right",
+     "primary": true,
+     "to": "v-home"
+    }
+   ]
+  }
+ ],
+ "side": [
+  {
+   "t": "section",
+   "title": "이 링크로 볼 수 있는 것"
+  },
+  {
+   "t": "list",
+   "items": [
+    {
+     "title": "이번 여행의 큰 흐름",
+     "sub": "다섯 날, 어디로 가는지",
+     "icon": "map"
+    },
+    {
+     "title": "확정된 예약",
+     "sub": "비행기와 숙소",
+     "icon": "ticket"
+    },
+    {
+     "title": "소식 모음",
+     "sub": "지윤이 보낸 소식을 한 곳에",
+     "icon": "newspaper"
+    },
+    {
+     "title": "내 준비물",
+     "sub": "어머니 몫만 보여요",
+     "icon": "backpack"
+    }
+   ]
+  },
+  {
+   "t": "text",
+   "text": "아직 정해지지 않은 것은 '정하는 중이에요'로만 나와요. 자주 묻지 않으셔도 돼요.",
+   "size": "sm",
+   "tone": "muted"
+  }
+ ]
+}
