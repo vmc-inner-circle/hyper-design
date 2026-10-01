@@ -110,15 +110,14 @@ for o in OBJ or []:
             byid = {x["id"]: x for x in S}
             res = [x for x in (v if isinstance(v, list) else [v]) if x in byid and (x.endswith("--done") or byid[x].get("kind") == "result")]
             if not res: errs.append(f"흐름 고리 '{o.get('name')}': after에 결과 화면이 없음({v}) — 목록·상세가 아니라 그 행동이 끝난 모습(kind: result 또는 --done)")
-# 사람 카드(v16): 이 앱이 누구를 위한 것인가 — 사람마다 처음 오는 이유·성공한 순간·첫 화면
+# 사람 카드(v16): 이 앱이 누구를 위한 것인가 — 사람마다 처음 오는 이유·마음·성공한 순간
 PEOPLE = m.get("people") or []
 if not 1 <= len(PEOPLE) <= 4: errs.append(f"people(사람 카드) {len(PEOPLE)}명 — 1~4명, journey.md 사람 카드를 옮긴다")
 if PEOPLE and sum(1 for p in PEOPLE if p.get("core")) != 1: errs.append("people: 핵심 사람(core: true)은 한 명")
 for p in PEOPLE:
     nm = p.get("name") or "?"
-    for k in ("who", "why", "feels", "win", "entry"):
+    for k in ("who", "why", "feels", "win"):
         if not p.get(k): errs.append(f"people '{nm}': {k} 없음")
-    if p.get("entry") and p["entry"] not in ids: errs.append(f"people '{nm}': 첫 화면 {p['entry']} 없음")
     for x in p.get("screens") or []:
         if x not in ids: errs.append(f"people '{nm}': 없는 화면 {x}")
     if not p.get("screens"): errs.append(f"people '{nm}': screens(주로 쓰는 화면) 없음")
