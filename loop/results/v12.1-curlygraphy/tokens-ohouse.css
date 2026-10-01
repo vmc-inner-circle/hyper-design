@@ -1,0 +1,77 @@
+/* foundation tokens — derive.py palette 오늘의집 --shape normal --density comfy --font pretendard
+   이 파일은 생성물이다. 직접 고치지 말고 파라미터를 바꿔 다시 만든다. */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
+
+:root {
+  /* 색 — palette 오늘의집 */
+  --c-bg: #F5F5F5;
+  --c-surface: #FFFFFF;
+  --c-line: #F5F5F5;
+  --c-text-1: #2F3438;
+  --c-text-2: #4B4F52;
+  --c-text-3: #686C6F;
+  --c-brand: #0084D1;
+  --c-on-brand: #FFFFFF;
+  --c-brand-text: #006DAD;
+  --c-brand-tint: #E0F4FF;
+  --c-brand-tint-text: #006DAD;
+  --c-danger: #D81F25;
+  --c-danger-tint: #FDF2F2;
+  --c-danger-tint-text: #D81F25;
+
+  /* 의미색 — 확정(브랜드)·바뀜(주의)·안내(정보)·완료(성공)가 같은 색이 되지 않게 */
+  --c-success: #1B8849; --c-success-tint: #E9F5EE; --c-success-tint-text: #187B43;
+  --c-warning: #9B6C00; --c-warning-tint: #FDF6E6; --c-warning-tint-text: #966800;
+  --c-info: #7257FF; --c-info-tint: #F2EFFF; --c-info-tint-text: #6A4DFF;
+
+  /* 상호작용·비활성·겹침 */
+  --c-brand-pressed: #0084D1;
+  --c-focus: #006DAD;
+  --c-line-strong: #BFC0C1;
+  --c-text-disabled: #9DA0A1;
+  --c-disabled-bg: #F5F5F5;
+  --c-overlay: rgba(47, 52, 56, .45);
+  --shadow-1: 0 2px 8px rgba(47, 52, 56, .08);
+  --shadow-2: 0 8px 24px rgba(47, 52, 56, .14);
+
+  /* 타이포 — pretendard */
+  --font: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  --tracking: -0.02em;
+  --fs-title: 28px; --fw-title: 700; --lh-title: 1.36;
+  --fs-h2: 20px; --fw-h2: 700; --lh-h2: 1.4;
+  --fs-body: 16px; --fw-body: 400; --lh-body: 1.55;
+  --fs-strong: 16px; --fw-strong: 600; --lh-strong: 1.5;
+  --fs-sub: 14px; --fw-sub: 400; --lh-sub: 1.5;
+  --fs-caption: 12px; --fw-caption: 500; --lh-caption: 1.4;
+
+  /* 여백 — comfy */
+  --page-x: 24px;
+  --block-pad: 24px;
+  --block-gap: 12px;
+  --row-py: 16px;
+  --stack-s: 8px;
+  --stack-m: 16px;
+  --stack-l: 32px;
+
+  /* 모양 — normal */
+  --r-s: 8px;
+  --r-m: 12px;
+  --r-l: 16px;
+  --r-pill: 999px;
+
+  /* 크기 */
+  --h-appbar: 56px; --h-btn: 56px; --h-btn-s: 44px; --h-tab: 64px; --h-row: 64px; --icon: 24px;
+}
+
+/* 큰 글자: 편집하지 않는 사람의 기본값(화면에 표시 없음) */
+.text-large {
+  --fs-title: 28px; --fw-title: 700; --lh-title: 1.36;
+  --fs-h2: 20px; --fw-h2: 700; --lh-h2: 1.4;
+  --fs-body: 18px; --fw-body: 400; --lh-body: 1.55;
+  --fs-strong: 18px; --fw-strong: 600; --lh-strong: 1.5;
+  --fs-sub: 16px; --fw-sub: 400; --lh-sub: 1.5;
+  --fs-caption: 14px; --fw-caption: 500; --lh-caption: 1.4;
+}
+
+/* 버튼: 흰 글자 대비가 4.5 미만 → 큰 굵은 글자(19px/700)로 WCAG 큰 글씨 기준(3:1) 충족 */
+.btn.primary { font-size: 19px; font-weight: 700; }

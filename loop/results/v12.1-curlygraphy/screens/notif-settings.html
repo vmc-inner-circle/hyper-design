@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>알림 설정</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">알림 설정</h1><span></span></header>
+<main class="page">
+<section class="block is-list">
+<div class="row"><div class="row-main"><p class="row-title">기록 알림</p><p class="row-sub">오늘 기록을 남길 시간이에요</p></div><button class="switch" role="switch" aria-checked="true" aria-label="기록 알림"></button></div>
+<div class="row"><div class="row-main"><p class="row-title">다시 와요 알림</p><p class="row-sub">며칠 기록이 없을 때</p></div><button class="switch" role="switch" aria-checked="false" aria-label="다시 와요 알림"></button></div>
+<div class="row"><div class="row-main"><p class="row-title">비슷한 머리 새 글</p><p class="row-sub">조건에 맞는 새 글이 올라올 때</p></div><button class="switch" role="switch" aria-checked="true" aria-label="비슷한 머리 새 글"></button></div>
+</section>
+<section class="block"><div class="block-head"><h2 class="h2">비슷한 머리 조건</h2></div>
+<p class="row-sub">곱슬 타입</p><div class="chips">
+<button class="chip">2B</button>
+<button class="chip is-selected">2C</button>
+<button class="chip is-selected">3A</button>
+<button class="chip">3B</button>
+</div>
+<p class="row-sub">공극률</p><div class="chips">
+<button class="chip">저공성</button>
+<button class="chip is-selected">중공성</button>
+<button class="chip">다공성</button>
+</div>
+<p class="row-sub">굵기</p><div class="chips">
+<button class="chip">가는모발</button>
+<button class="chip">보통</button>
+<button class="chip is-selected">굵은모발</button>
+</div>
+<p class="row-sub">두피</p><div class="chips">
+<button class="chip is-selected">전체</button>
+<button class="chip">지성</button>
+<button class="chip">보통</button>
+<button class="chip">건성</button>
+</div>
+</section>
+<section class="block is-list">
+<div class="row"><div class="row-main"><p class="row-title">좋아요</p><p class="row-sub">내 기록에 좋아요가 달릴 때</p></div><button class="switch" role="switch" aria-checked="true" aria-label="좋아요"></button></div>
+<div class="row"><div class="row-main"><p class="row-title">기념일</p><p class="row-sub">탈매직 완료 100일, 마지막 매직 6개월 등</p></div><button class="switch" role="switch" aria-checked="true" aria-label="기념일"></button></div>
+<div class="row"><div class="row-main"><p class="row-title">서비스 소식</p><p class="row-sub">제품 추가 완료, 기능 업데이트</p></div><button class="switch" role="switch" aria-checked="false" aria-label="서비스 소식"></button></div>
+</section>
+</main>
+</body></html>
