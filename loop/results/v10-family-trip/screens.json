@@ -1,0 +1,399 @@
+{
+ "groups": [
+  "처음 들어올 때",
+  "홈 — 시기마다 맨 위가 바뀐다",
+  "홈에서 들어가는 곳",
+  "일정 짜기 권한이 있으면 더 붙는 것"
+ ],
+ "story": {
+  "headline": "<em>확정을 누르는 순간이 곧 공유</em> — 짜는 사람은 따로 알리지 않고, 부모는 묻지 않아도 흐름을 안다",
+  "summary": "후보는 일정을 짜는 사람 화면에만 쌓이고, 모두의 홈에는 확정된 것과 '정하는 중' 한 줄만 보입니다. 확정·변경은 하루 한 번 저녁 소식으로 묶여 전해지고, 궁금한 부모는 말 대신 '궁금해요'를 한 번 누릅니다.",
+  "ideas": [
+   {
+    "title": "확정하면 곧 공유",
+    "desc": "공유 버튼이 없다. 후보→확정 전환이 모두의 홈에 반영되는 유일한 경로다."
+   },
+   {
+    "title": "하루 한 번 묶음 소식",
+    "desc": "후보 수정은 조용히, 확정·변경은 저녁 7시 한 번. 출발 7일 전부터만 즉시."
+   },
+   {
+    "title": "궁금해요 한 번",
+    "desc": "부모가 날짜에 한 번 누르면 짜는 사람의 '정할 것' 맨 위로. 알림도 재촉도 없다."
+   },
+   {
+    "title": "같은 홈, 권한이면 더 붙는다",
+    "desc": "모두 같은 홈을 보고, 일정 짜기 권한이 있으면 후보·정할 것·끌기 손잡이가 붙는다."
+   }
+  ]
+ },
+ "badges": {
+  "확정": "is-brand",
+  "바뀜": "is-warning",
+  "궁금해요": "is-info",
+  "완료": "is-success",
+  "마감 지남": "is-danger",
+  "후보": ""
+ },
+ "screens": [
+  {
+   "id": "invite",
+   "file": "screens/invite.html",
+   "title": "가족 초대",
+   "group": "처음 들어올 때",
+   "purpose": "가족을 불러 모으고 일정 짜기 권한을 정한다",
+   "role": "editor",
+   "policies": [
+    "초대 링크는 하나, 단톡방에 붙여넣는다(앱이 메시지를 보내지 않음)",
+    "일정 짜기 권한은 사람마다 스위치 — 기본은 꺼짐",
+    "들어온 사람은 이름 옆에 표시, 7일 넘게 안 들어오면 '아직' 그대로"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true
+   },
+   "states": [
+    "done"
+   ],
+   "kind": "list"
+  },
+  {
+   "id": "invite--done",
+   "file": "screens/invite--done.html",
+   "title": "가족 초대 · 링크 복사 뒤",
+   "group": "처음 들어올 때",
+   "purpose": "링크를 복사했고, 누가 들어왔는지 보인다",
+   "role": "editor",
+   "policies": [
+    "복사 표시는 화면을 떠나면 사라진다"
+   ],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "list"
+  },
+  {
+   "id": "join",
+   "file": "screens/join.html",
+   "title": "초대 받고 들어오기",
+   "group": "처음 들어올 때",
+   "purpose": "링크를 연 가족이 이름 한 번 고르고 함께한다",
+   "role": "everyone",
+   "policies": [
+    "가입·비밀번호 없음 — 초대 명단에서 내 이름을 고르면 끝",
+    "명단에 내 이름이 없으면 '다른 이름으로' 직접 적기",
+    "알림 허용을 거부해도 들어올 수 있다 — 홈에서 소식은 그대로 보인다"
+   ],
+   "branches": [
+    {
+     "to": "home",
+     "label": "함께하기 누르면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "홈 · 출발 63일 전",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "확정된 큰 흐름만 — 날짜별 한 줄",
+   "role": "everyone",
+   "policies": [
+    "확정된 것만 보인다 — 후보만 있는 날은 '정하는 중 · ~까지 정해요'",
+    "바뀐 항목은 3일 동안 '바뀜' 표시",
+    "출발 7일 전부터 맨 위가 '모이는 곳'으로 바뀐다"
+   ],
+   "branches": [
+    {
+     "to": "home-edit",
+     "label": "일정 짜기 권한이 있으면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "home"
+  },
+  {
+   "id": "home-d7",
+   "file": "screens/home-d7.html",
+   "title": "홈 · 출발 2일 전",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "언제 어디서 모이는지, 내가 챙길 것",
+   "role": "everyone",
+   "policies": [
+    "맨 위는 모이는 시간·장소, 지도 앱으로 넘김",
+    "이 시기엔 확정 항목이 바뀌면 바로 알림",
+    "챙길 것은 내 몫만, 남은 개수로"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "home"
+  },
+  {
+   "id": "home-trip",
+   "file": "screens/home-trip.html",
+   "title": "홈 · 여행 둘째 날",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "오늘 지금·다음, 다시 모이는 시간",
+   "role": "everyone",
+   "policies": [
+    "여행 기간엔 오늘 하루만 크게",
+    "다시 모이는 시간·장소는 늘 맨 위",
+    "예약 확인번호는 모두에게 보인다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "home"
+  },
+  {
+   "id": "day",
+   "file": "screens/day.html",
+   "title": "날짜 상세 · 12월 6일",
+   "group": "홈에서 들어가는 곳",
+   "purpose": "이날 정해진 것과 궁금해요 한 번",
+   "role": "everyone",
+   "policies": [
+    "후보는 보이지 않고 '정하는 중 · 11월 15일까지 정해요'",
+    "'궁금해요'는 날짜당 한 번, 누르면 짜는 사람 홈 '정할 것' 맨 위로 — 알림 없음",
+    "누른 뒤엔 '궁금해요 보냈어요'로 바뀌고 다시 누를 수 없다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "detail"
+  },
+  {
+   "id": "news",
+   "file": "screens/news.html",
+   "title": "바뀐 소식",
+   "group": "홈에서 들어가는 곳",
+   "purpose": "하루 한 번 묶인 확정·변경 소식",
+   "role": "everyone",
+   "policies": [
+    "후보를 적고 고친 것은 소식이 되지 않는다",
+    "하루 소식은 저녁 7시 한 번으로 묶는다",
+    "바뀐 것은 전→후를 함께 보여준다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "list"
+  },
+  {
+   "id": "checklist",
+   "file": "screens/checklist.html",
+   "title": "내가 챙길 것",
+   "group": "홈에서 들어가는 곳",
+   "purpose": "내 몫만, 체크 한 번",
+   "role": "everyone",
+   "policies": [
+    "내 이름으로 된 것 + '각자' 항목만",
+    "체크하면 할 일 목록에도 완료로 반영",
+    "내가 직접 더할 수 있다(나만 보는 준비물)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "list"
+  },
+  {
+   "id": "home-edit",
+   "file": "screens/home-edit.html",
+   "title": "홈 · 일정 짜기 권한",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "같은 홈 위에 '정할 것'이 붙는다",
+   "role": "editor",
+   "policies": [
+    "정할 것 = 후보만 있는 날 + 궁금해요 받은 날 + 마감 지난 할 일",
+    "궁금해요 받은 날이 맨 위",
+    "아래 여행 흐름은 모두가 보는 것과 같다"
+   ],
+   "branches": [
+    {
+     "to": "day-edit",
+     "label": "정할 것 누르기"
+    },
+    {
+     "to": "tasks",
+     "label": "할 일 나누기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "home"
+  },
+  {
+   "id": "day-edit",
+   "file": "screens/day-edit.html",
+   "title": "12월 6일 짜기",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "후보를 적고 끌어 순서를 바꾸고 확정한다",
+   "role": "editor",
+   "policies": [
+    "후보는 몇 개든 조용히 — 적고 고쳐도 소식이 되지 않는다",
+    "'확정'을 누르면 그날 저녁 소식에 실린다",
+    "끌기 손잡이로 순서 바꾸기"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "list"
+  },
+  {
+   "id": "item-edit",
+   "file": "screens/item-edit.html",
+   "title": "일정 고치기",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "한 항목의 종류·시간·장소·확정 여부",
+   "role": "editor",
+   "policies": [
+    "종류(이동·숙박·활동)를 먼저 — 아래 칸이 달라진다",
+    "확정 항목의 시간을 바꾸면 '바뀜'이 3일 붙고 저녁 소식에 실린다",
+    "확정 항목을 지우면 저녁 소식에 '빠졌어요'로 실린다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false
+   },
+   "states": [
+    "error"
+   ],
+   "kind": "form"
+  },
+  {
+   "id": "item-edit--error",
+   "file": "screens/item-edit--error.html",
+   "title": "일정 고치기 · 시간 겹침",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "확정 일정과 시간이 겹칠 때",
+   "role": "editor",
+   "policies": [
+    "겹치는 확정 항목 이름을 문구에 적는다"
+   ],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "tasks",
+   "file": "screens/tasks.html",
+   "title": "할 일 나누기",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "누가 무엇을 언제까지",
+   "role": "editor",
+   "policies": [
+    "목록 끝에 바로 적고, 맡을 사람을 고르면 그 사람의 '내가 챙길 것'에 들어간다",
+    "'각자'는 모두의 챙길 것에",
+    "마감이 지나면 빨간 표시 + 짜는 사람 '정할 것'에 올라온다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "shares": false
+   },
+   "states": [
+    "empty"
+   ],
+   "kind": "list"
+  },
+  {
+   "id": "tasks--empty",
+   "file": "screens/tasks--empty.html",
+   "title": "할 일 나누기 · 처음",
+   "group": "일정 짜기 권한이 있으면 더 붙는 것",
+   "purpose": "첫 할 일을 적게 한다",
+   "role": "editor",
+   "policies": [
+    "자주 쓰는 할 일 3개를 눌러서 바로 추가"
+   ],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "list"
+  }
+ ],
+ "prd_coverage": {
+  "F1 일정 작성·수정": [
+   "day-edit",
+   "item-edit"
+  ],
+  "F2 확정 여부": [
+   "home",
+   "day",
+   "day-edit"
+  ],
+  "F3 역할별 보기": [
+   "home",
+   "home-edit",
+   "invite"
+  ],
+  "F4 할 일·준비물": [
+   "tasks",
+   "checklist"
+  ],
+  "F5 변경 전달": [
+   "news",
+   "home-d7"
+  ],
+  "US1 자녀": [
+   "home-edit",
+   "day-edit"
+  ],
+  "US2 부모": [
+   "home",
+   "day"
+  ],
+  "US3 구성원": [
+   "checklist",
+   "home-d7",
+   "home-trip"
+  ]
+ }
+}

@@ -1,0 +1,15 @@
+[
+{"slot":"studio-soom","screens":["studio","find-list","find-map","home","timetable"],"what":"리포머 기구가 줄지어 있는 밝은 필라테스 스튜디오 내부, 사람 없음","ratio":"16:9","kind":"photo","queries":["필라테스 리포머 스튜디오 내부","pilates reformer studio interior bright"]},
+{"slot":"studio-soom-2","screens":["studio"],"what":"필라테스 스튜디오 탈의실 또는 락커, 깨끗한 실내","ratio":"1:1","kind":"photo","queries":["필라테스 탈의실 락커","gym locker room clean interior"]},
+{"slot":"studio-soom-3","screens":["studio"],"what":"캐딜락·체어 필라테스 기구가 있는 공간","ratio":"1:1","kind":"photo","queries":["필라테스 캐딜락 기구","pilates cadillac chair equipment studio"]},
+{"slot":"studio-onyu","screens":["find-list","home-new","passes","pass-select","pay","pay-done"],"what":"나무 바닥과 요가 매트가 깔린 따뜻한 요가 스튜디오","ratio":"4:3","kind":"photo","queries":["요가 스튜디오 나무 바닥 매트","yoga studio wooden floor mats natural light"]},
+{"slot":"studio-bareun","screens":["find-list","find-map","home-new"],"what":"넓은 창이 있는 필라테스 스튜디오, 기구 여러 대","ratio":"4:3","kind":"photo","queries":["필라테스 스튜디오 창가","pilates studio large windows machines"]},
+{"slot":"studio-haru","screens":["find-list","home-new"],"what":"매트 필라테스 소도구(링·볼)가 정리된 작은 스튜디오","ratio":"4:3","kind":"photo","queries":["매트 필라테스 소도구 스튜디오","pilates mat ring ball small studio"]},
+{"slot":"teacher-han","screens":["studio","instructor","class"],"what":"30대 여성 필라테스 강사 상반신 프로필, 운동복","ratio":"1:1","kind":"photo","queries":["필라테스 강사 프로필 여성","female pilates instructor portrait"]},
+{"slot":"teacher-jung","screens":["studio","instructor"],"what":"20대 후반 여성 필라테스 강사 프로필, 밝은 배경","ratio":"1:1","kind":"photo","queries":["요가 강사 여성 프로필 사진","yoga instructor woman smiling portrait"]},
+{"slot":"teacher-oh","screens":["studio","instructor"],"what":"30대 남성 필라테스 강사 프로필, 운동복","ratio":"1:1","kind":"photo","queries":["남자 필라테스 강사","male pilates instructor portrait"]},
+{"slot":"onboard-1","screens":["onboarding-1"],"what":"동네 골목의 작은 운동 스튜디오 외관 또는 동네 거리 풍경","ratio":"3:4","kind":"photo","queries":["동네 골목 운동 스튜디오 외관","small fitness studio storefront street"]},
+{"slot":"onboard-2","screens":["onboarding-2"],"what":"리포머 위에서 운동하는 여성 뒷모습 또는 측면","ratio":"3:4","kind":"photo","queries":["리포머 필라테스 운동하는 여성","woman exercising pilates reformer side view"]},
+{"slot":"onboard-3","screens":["onboarding-3"],"what":"요가 매트 위에 놓인 휴대폰과 물병, 수업 전","ratio":"3:4","kind":"photo","queries":["요가 매트 위 휴대폰","yoga mat smartphone water bottle"]},
+{"slot":"class-reformer","screens":["class","book-confirm","promote","waitlist"],"what":"기구 필라테스 그룹 수업 장면, 여러 명이 리포머에서 운동","ratio":"16:9","kind":"photo","queries":["기구 필라테스 그룹 수업","group pilates reformer class"]}
+]

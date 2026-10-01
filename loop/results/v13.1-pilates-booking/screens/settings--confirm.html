@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>설정 · 탈퇴 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class=" text-large">
+<header class="appbar"><a class="appbar-btn" href="mypage.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">설정</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">알림</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">전체 알림</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">예약·대기</p><p class="row-sub">예약 확정·취소·휴강</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">대기 승급</p><p class="row-sub">대기 중인 수업이 있을 때만 와요</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" disabled aria-disabled="true"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">리마인드</p><p class="row-sub">전날 21시 · 2시간 전 · 무료 취소 마감 3시간 전</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">마케팅</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="false"></button></span></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">휴대폰 설정</h2></div>
+    <a class="row" href="app-settings:"><div class="row-main"><p class="row-title">위치 권한</p><p class="row-sub">허용 안 함</p></div><span class="row-trail">휴대폰 설정 열기<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 5h5v5"/><path d="M19 5l-8 8"/><path d="M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg></span></a>
+    <p class="block-note">글자 크기는 휴대폰 설정을 따라요</p>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">계정</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">연결된 계정</p></div><span class="row-trail">카카오</span></div>
+    <a class="row" href="login.html"><div class="row-main"><p class="row-title">로그아웃</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="settings--confirm.html"><div class="row-main"><p class="row-title">회원 탈퇴</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">정보</h2></div>
+    <a class="row" href="signup-terms.html"><div class="row-main"><p class="row-title">약관</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <div class="row"><div class="row-main"><p class="row-title">오픈소스 라이선스</p></div></div>
+    <div class="row"><div class="row-main"><p class="row-title">버전</p></div><span class="row-trail">2.0.0</span></div>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-labelledby="leave-t">
+  <h2 class="h2" id="leave-t">탈퇴하면 남은 수강권이 사라져요</h2>
+  <div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-title">숨결필라테스 망원 20회권</p><p class="row-sub">잔여 7회</p></div></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-title">고요요가 합정 10회권</p><p class="row-sub">잔여 3회</p></div></div>
+  </div>
+  <p class="info"><img src="../assets/fluent/phone.svg" alt=""><span>환불은 스튜디오에 먼저 문의하세요 · <a class="num" href="tel:023341182">숨결 02-334-1182</a></span></p>
+  <p class="info"><img src="../assets/fluent/calendar.svg" alt=""><span>예정된 예약 2개는 자동 취소돼요</span></p>
+  <a class="btn primary full" href="settings.html">돌아가기</a>
+  <a class="btn secondary full is-danger" href="login.html">탈퇴하기</a>
+</div>
+</body></html>

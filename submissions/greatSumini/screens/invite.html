@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 가족 초대</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .row-icon { font-weight: 600; }
+  .check-row .row-title, .check-row .row-sub { display: block; }
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar">
+  <a class="appbar-btn left" href="planner-home.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>가족 초대</h1>
+</header>
+
+<main class="page">
+  <section class="block is-list" role="radiogroup" aria-labelledby="role-title">
+    <h2 class="section-title" id="role-title">어떤 역할로 초대할까요?</h2>
+    <button class="check-row" type="button" role="radio" aria-checked="true">
+      <span class="radio is-selected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+      <span class="row-main">
+        <span class="row-title">보기만 하기</span>
+        <span class="row-sub">확정된 일정과 모이는 곳만 보여요</span>
+      </span>
+    </button>
+    <button class="check-row" type="button" role="radio" aria-checked="false">
+      <span class="radio"></span>
+      <span class="row-main">
+        <span class="row-title">같이 짜기</span>
+        <span class="row-sub">후보까지 보고 고칠 수 있어요</span>
+      </span>
+    </button>
+  </section>
+
+  <section class="block is-list">
+    <h2 class="section-title">함께하는 가족</h2>
+    <ul>
+      <li class="row">
+        <span class="row-icon" aria-hidden="true">지</span>
+        <div class="row-main"><p class="row-title">김지은</p><p class="row-sub">계획</p></div>
+      </li>
+      <li class="row">
+        <span class="row-icon" aria-hidden="true">민</span>
+        <div class="row-main"><p class="row-title">김민수</p><p class="row-sub">같이 가요</p></div>
+      </li>
+      <li class="row">
+        <span class="row-icon" aria-hidden="true">영</span>
+        <div class="row-main"><p class="row-title">아버지 김영호</p><p class="row-sub">보기만</p></div>
+        <span class="row-value">들어왔어요</span>
+      </li>
+      <li class="row">
+        <span class="row-icon" aria-hidden="true">정</span>
+        <div class="row-main"><p class="row-title">어머니 박정숙</p><p class="row-sub">보기만</p></div>
+        <span class="row-value">들어왔어요</span>
+      </li>
+      <li class="row">
+        <span class="row-icon" aria-hidden="true">하</span>
+        <div class="row-main"><p class="row-title">이하윤</p><p class="row-sub">6살 · 계정 없이 함께</p></div>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="join.html">카카오톡으로 초대 보내기</a>
+</div>
+</body>
+</html>

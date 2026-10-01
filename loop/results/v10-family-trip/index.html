@@ -1,0 +1,108 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 한눈에 보기</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#EDEDEA;font-family:-apple-system,'Pretendard',sans-serif;color:#1c1c1c;word-break:keep-all}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EDEDEAee;backdrop-filter:blur(6px);padding:14px 190px 14px 64px}
+header h1{font-size:20px;margin:0} header .hint{font-size:14px;color:#666}
+.palette{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#555}
+.dot{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 8px;border-radius:999px;border:1px solid #d3d3cf;background:#fff;font:inherit;font-size:13px;color:#333;cursor:pointer}
+.dot span{width:18px;height:18px;border-radius:999px;background:var(--dot)} .dot[aria-pressed="true"]{border-color:#1c1c1c;box-shadow:inset 0 0 0 1px #1c1c1c}
+.story{padding:24px 64px 8px;max-width:1240px} .story h1{font-size:34px;line-height:1.3;margin:8px 0 12px} .story h1 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:17px;line-height:1.6;color:#444;max-width:760px;margin:0 0 20px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px} .idea{background:#fff;border-radius:14px;padding:18px} .idea b{font-size:16px} .idea p{font-size:14px;line-height:1.55;color:#555;margin:6px 0 0}
+.board{position:relative;width:2336px;height:3580px;margin-top:32px}
+svg.ar{position:absolute;inset:0;width:2336px;height:3580px;pointer-events:none;overflow:visible}
+svg.ar path{fill:none;stroke:#2563eb;stroke-width:2;marker-end:url(#h)}
+.alabel{position:absolute;transform:translate(-50%,-100%);max-width:150px;white-space:normal;text-align:center;background:#fff;border:1px solid #c7d6fb;color:#1d4ed8;font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.alabel.side{transform:translate(-100%,-50%);text-align:right}
+.glabel{position:absolute;font-size:20px;font-weight:700}
+.frame{position:absolute;width:270px}
+.phone{position:relative;width:270px;height:585px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+.phone iframe{width:375px;height:812px;border:0;transform:scale(0.72);transform-origin:0 0;pointer-events:none}
+.hit{position:absolute;inset:0;border-radius:20px} .hit:hover{outline:3px solid #2563eb}
+.ftitle{font-size:15px;font-weight:700;margin-top:10px} .state{font-size:11px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:6px;padding:2px 6px;margin-right:6px}
+.fdesc{font-size:13px;color:#555;margin-top:2px}
+.pol{margin:6px 0 0;padding-left:16px;font-size:12px;line-height:1.5;color:#444} details{font-size:12px;color:#666} summary{cursor:pointer}
+.credit{font-size:12px;color:#777;padding:0 64px 40px}
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}
+#viewer.on{display:flex} #viewer iframe{width:375px;height:812px;max-height:92vh;border:0;border-radius:28px;background:#fff}
+#viewer .close{position:absolute;top:20px;right:28px;font-size:16px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}
+</style>
+<header><h1>전체 화면 한눈에 보기</h1><span class="hint">화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래</span><div class="palette">색 <button class="dot" data-slug="myrealtrip" aria-label="마이리얼트립 색으로 보기" style="--dot:#2b96ed"><span></span>마이리얼트립</button><button class="dot" data-slug="airbnb" aria-label="에어비앤비 색으로 보기" style="--dot:#da1249"><span></span>에어비앤비</button><button class="dot" data-slug="29cm" aria-label="29CM 색으로 보기" style="--dot:#19191a"><span></span>29CM</button></div></header>
+<section class="story"><h1><em>확정을 누르는 순간이 곧 공유</em> — 짜는 사람은 따로 알리지 않고, 부모는 묻지 않아도 흐름을 안다</h1><p class="sum">후보는 일정을 짜는 사람 화면에만 쌓이고, 모두의 홈에는 확정된 것과 &#x27;정하는 중&#x27; 한 줄만 보입니다. 확정·변경은 하루 한 번 저녁 소식으로 묶여 전해지고, 궁금한 부모는 말 대신 &#x27;궁금해요&#x27;를 한 번 누릅니다.</p><div class="ideas"><div class="idea"><b>확정하면 곧 공유</b><p>공유 버튼이 없다. 후보→확정 전환이 모두의 홈에 반영되는 유일한 경로다.</p></div><div class="idea"><b>하루 한 번 묶음 소식</b><p>후보 수정은 조용히, 확정·변경은 저녁 7시 한 번. 출발 7일 전부터만 즉시.</p></div><div class="idea"><b>궁금해요 한 번</b><p>부모가 날짜에 한 번 누르면 짜는 사람의 &#x27;정할 것&#x27; 맨 위로. 알림도 재촉도 없다.</p></div></div></section>
+<div class="board">
+<svg class="ar"><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb" stroke="none"/></marker></defs><path d="M842,156 H164 Q150,156 150,170 V1037 Q150,1051 164,1051 H186"/><path d="M190,1051 H150 Q136,1051 136,1065 V2827 Q136,2841 150,2841 H186"/><path d="M325.0,2775 C325.0,2747 651.0,2747 651.0,2775"/><path d="M325.0,2775 C325.0,2747 1629.0,2747 1629.0,2775"/></svg>
+<div class="glabel" style="top:0px;left:190px">처음 들어올 때</div><div class="glabel" style="top:895px;left:190px">홈 — 시기마다 맨 위가 바뀐다</div><div class="glabel" style="top:1790px;left:190px">홈에서 들어가는 곳</div><div class="glabel" style="top:2685px;left:190px">일정 짜기 권한이 있으면 더 붙는 것</div><div class="frame" style="left:190px;top:96px">
+<div class="phone"><iframe src="screens/invite.html" loading="eager" scrolling="no" tabindex="-1" title="가족 초대"></iframe>
+<a class="hit" href="screens/invite.html" target="view" aria-label="가족 초대 크게 보기"></a></div>
+<div class="ftitle">가족 초대</div>
+<div class="fdesc">가족을 불러 모으고 일정 짜기 권한을 정한다</div><ul class="pol"><li>초대 링크는 하나, 단톡방에 붙여넣는다(앱이 메시지를 보내지 않음)</li><li>일정 짜기 권한은 사람마다 스위치 — 기본은 꺼짐</li><li>들어온 사람은 이름 옆에 표시, 7일 넘게 안 들어오면 &#x27;아직&#x27; 그대로</li></ul></div><div class="frame" style="left:516px;top:96px">
+<div class="phone"><iframe src="screens/invite--done.html" loading="eager" scrolling="no" tabindex="-1" title="가족 초대 · 링크 복사 뒤"></iframe>
+<a class="hit" href="screens/invite--done.html" target="view" aria-label="가족 초대 · 링크 복사 뒤 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>가족 초대 · 링크 복사 뒤</div>
+<div class="fdesc">링크를 복사했고, 누가 들어왔는지 보인다</div><ul class="pol"><li>복사 표시는 화면을 떠나면 사라진다</li></ul></div><div class="frame" style="left:842px;top:96px">
+<div class="phone"><iframe src="screens/join.html" loading="eager" scrolling="no" tabindex="-1" title="초대 받고 들어오기"></iframe>
+<a class="hit" href="screens/join.html" target="view" aria-label="초대 받고 들어오기 크게 보기"></a></div>
+<div class="ftitle">초대 받고 들어오기</div>
+<div class="fdesc">링크를 연 가족이 이름 한 번 고르고 함께한다</div><ul class="pol"><li>가입·비밀번호 없음 — 초대 명단에서 내 이름을 고르면 끝</li><li>명단에 내 이름이 없으면 &#x27;다른 이름으로&#x27; 직접 적기</li><li>알림 허용을 거부해도 들어올 수 있다 — 홈에서 소식은 그대로 보인다</li></ul></div><div class="frame" style="left:190px;top:991px">
+<div class="phone"><iframe src="screens/home.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 출발 63일 전"></iframe>
+<a class="hit" href="screens/home.html" target="view" aria-label="홈 · 출발 63일 전 크게 보기"></a></div>
+<div class="ftitle">홈 · 출발 63일 전</div>
+<div class="fdesc">확정된 큰 흐름만 — 날짜별 한 줄</div><ul class="pol"><li>확정된 것만 보인다 — 후보만 있는 날은 &#x27;정하는 중 · ~까지 정해요&#x27;</li><li>바뀐 항목은 3일 동안 &#x27;바뀜&#x27; 표시</li><li>출발 7일 전부터 맨 위가 &#x27;모이는 곳&#x27;으로 바뀐다</li></ul></div><div class="frame" style="left:516px;top:991px">
+<div class="phone"><iframe src="screens/home-d7.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 출발 2일 전"></iframe>
+<a class="hit" href="screens/home-d7.html" target="view" aria-label="홈 · 출발 2일 전 크게 보기"></a></div>
+<div class="ftitle">홈 · 출발 2일 전</div>
+<div class="fdesc">언제 어디서 모이는지, 내가 챙길 것</div><ul class="pol"><li>맨 위는 모이는 시간·장소, 지도 앱으로 넘김</li><li>이 시기엔 확정 항목이 바뀌면 바로 알림</li><li>챙길 것은 내 몫만, 남은 개수로</li></ul></div><div class="frame" style="left:842px;top:991px">
+<div class="phone"><iframe src="screens/home-trip.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 여행 둘째 날"></iframe>
+<a class="hit" href="screens/home-trip.html" target="view" aria-label="홈 · 여행 둘째 날 크게 보기"></a></div>
+<div class="ftitle">홈 · 여행 둘째 날</div>
+<div class="fdesc">오늘 지금·다음, 다시 모이는 시간</div><ul class="pol"><li>여행 기간엔 오늘 하루만 크게</li><li>다시 모이는 시간·장소는 늘 맨 위</li><li>예약 확인번호는 모두에게 보인다</li></ul></div><div class="frame" style="left:190px;top:1886px">
+<div class="phone"><iframe src="screens/day.html" loading="eager" scrolling="no" tabindex="-1" title="날짜 상세 · 12월 6일"></iframe>
+<a class="hit" href="screens/day.html" target="view" aria-label="날짜 상세 · 12월 6일 크게 보기"></a></div>
+<div class="ftitle">날짜 상세 · 12월 6일</div>
+<div class="fdesc">이날 정해진 것과 궁금해요 한 번</div><ul class="pol"><li>후보는 보이지 않고 &#x27;정하는 중 · 11월 15일까지 정해요&#x27;</li><li>&#x27;궁금해요&#x27;는 날짜당 한 번, 누르면 짜는 사람 홈 &#x27;정할 것&#x27; 맨 위로 — 알림 없음</li><li>누른 뒤엔 &#x27;궁금해요 보냈어요&#x27;로 바뀌고 다시 누를 수 없다</li></ul></div><div class="frame" style="left:516px;top:1886px">
+<div class="phone"><iframe src="screens/news.html" loading="eager" scrolling="no" tabindex="-1" title="바뀐 소식"></iframe>
+<a class="hit" href="screens/news.html" target="view" aria-label="바뀐 소식 크게 보기"></a></div>
+<div class="ftitle">바뀐 소식</div>
+<div class="fdesc">하루 한 번 묶인 확정·변경 소식</div><ul class="pol"><li>후보를 적고 고친 것은 소식이 되지 않는다</li><li>하루 소식은 저녁 7시 한 번으로 묶는다</li><li>바뀐 것은 전→후를 함께 보여준다</li></ul></div><div class="frame" style="left:842px;top:1886px">
+<div class="phone"><iframe src="screens/checklist.html" loading="eager" scrolling="no" tabindex="-1" title="내가 챙길 것"></iframe>
+<a class="hit" href="screens/checklist.html" target="view" aria-label="내가 챙길 것 크게 보기"></a></div>
+<div class="ftitle">내가 챙길 것</div>
+<div class="fdesc">내 몫만, 체크 한 번</div><ul class="pol"><li>내 이름으로 된 것 + &#x27;각자&#x27; 항목만</li><li>체크하면 할 일 목록에도 완료로 반영</li><li>내가 직접 더할 수 있다(나만 보는 준비물)</li></ul></div><div class="frame" style="left:190px;top:2781px">
+<div class="phone"><iframe src="screens/home-edit.html" loading="eager" scrolling="no" tabindex="-1" title="홈 · 일정 짜기 권한"></iframe>
+<a class="hit" href="screens/home-edit.html" target="view" aria-label="홈 · 일정 짜기 권한 크게 보기"></a></div>
+<div class="ftitle">홈 · 일정 짜기 권한</div>
+<div class="fdesc">같은 홈 위에 &#x27;정할 것&#x27;이 붙는다</div><ul class="pol"><li>정할 것 = 후보만 있는 날 + 궁금해요 받은 날 + 마감 지난 할 일</li><li>궁금해요 받은 날이 맨 위</li><li>아래 여행 흐름은 모두가 보는 것과 같다</li></ul></div><div class="frame" style="left:516px;top:2781px">
+<div class="phone"><iframe src="screens/day-edit.html" loading="eager" scrolling="no" tabindex="-1" title="12월 6일 짜기"></iframe>
+<a class="hit" href="screens/day-edit.html" target="view" aria-label="12월 6일 짜기 크게 보기"></a></div>
+<div class="ftitle">12월 6일 짜기</div>
+<div class="fdesc">후보를 적고 끌어 순서를 바꾸고 확정한다</div><ul class="pol"><li>후보는 몇 개든 조용히 — 적고 고쳐도 소식이 되지 않는다</li><li>&#x27;확정&#x27;을 누르면 그날 저녁 소식에 실린다</li><li>끌기 손잡이로 순서 바꾸기</li></ul></div><div class="frame" style="left:842px;top:2781px">
+<div class="phone"><iframe src="screens/item-edit.html" loading="eager" scrolling="no" tabindex="-1" title="일정 고치기"></iframe>
+<a class="hit" href="screens/item-edit.html" target="view" aria-label="일정 고치기 크게 보기"></a></div>
+<div class="ftitle">일정 고치기</div>
+<div class="fdesc">한 항목의 종류·시간·장소·확정 여부</div><ul class="pol"><li>종류(이동·숙박·활동)를 먼저 — 아래 칸이 달라진다</li><li>확정 항목의 시간을 바꾸면 &#x27;바뀜&#x27;이 3일 붙고 저녁 소식에 실린다</li><li>확정 항목을 지우면 저녁 소식에 &#x27;빠졌어요&#x27;로 실린다</li></ul></div><div class="frame" style="left:1168px;top:2781px">
+<div class="phone"><iframe src="screens/item-edit--error.html" loading="eager" scrolling="no" tabindex="-1" title="일정 고치기 · 시간 겹침"></iframe>
+<a class="hit" href="screens/item-edit--error.html" target="view" aria-label="일정 고치기 · 시간 겹침 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>일정 고치기 · 시간 겹침</div>
+<div class="fdesc">확정 일정과 시간이 겹칠 때</div><ul class="pol"><li>겹치는 확정 항목 이름을 문구에 적는다</li></ul></div><div class="frame" style="left:1494px;top:2781px">
+<div class="phone"><iframe src="screens/tasks.html" loading="eager" scrolling="no" tabindex="-1" title="할 일 나누기"></iframe>
+<a class="hit" href="screens/tasks.html" target="view" aria-label="할 일 나누기 크게 보기"></a></div>
+<div class="ftitle">할 일 나누기</div>
+<div class="fdesc">누가 무엇을 언제까지</div><ul class="pol"><li>목록 끝에 바로 적고, 맡을 사람을 고르면 그 사람의 &#x27;내가 챙길 것&#x27;에 들어간다</li><li>&#x27;각자&#x27;는 모두의 챙길 것에</li><li>마감이 지나면 빨간 표시 + 짜는 사람 &#x27;정할 것&#x27;에 올라온다</li></ul></div><div class="frame" style="left:1820px;top:2781px">
+<div class="phone"><iframe src="screens/tasks--empty.html" loading="eager" scrolling="no" tabindex="-1" title="할 일 나누기 · 처음"></iframe>
+<a class="hit" href="screens/tasks--empty.html" target="view" aria-label="할 일 나누기 · 처음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>할 일 나누기 · 처음</div>
+<div class="fdesc">첫 할 일을 적게 한다</div><ul class="pol"><li>자주 쓰는 할 일 3개를 눌러서 바로 추가</li></ul></div><div class="alabel side" style="left:142px;top:603.5px">함께하기 누르면</div><div class="alabel side" style="left:128px;top:1946.0px">일정 짜기 권한이 있으면</div><div class="alabel" style="left:488.0px;top:2743px">정할 것 누르기</div><div class="alabel" style="left:977.0px;top:2743px">할 일 나누기</div>
+</div>
+<p class="credit">색 출처: 마이리얼트립 웹 팔레트 · 에어비앤비 웹 팔레트 · 29CM 웹 팔레트 — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>
+<div id="viewer"><button class="close" onclick="document.getElementById('viewer').classList.remove('on')">닫기</button><iframe name="view" title="크게 보기"></iframe></div>
+<script>
+const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));
+(function(){const K='hd-palette';const dots=[...document.querySelectorAll('.dot')];if(!dots.length)return;
+ let cur;try{cur=localStorage.getItem(K)}catch(e){} cur=cur||"myrealtrip";
+ const send=s=>{document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.postMessage({type:'hd-palette',slug:s},'*')}catch(e){}});dots.forEach(d=>d.setAttribute('aria-pressed',String(d.dataset.slug===s)))};
+ dots.forEach(d=>d.addEventListener('click',()=>{cur=d.dataset.slug;try{localStorage.setItem(K,cur)}catch(e){};send(cur)}));
+ document.querySelector('iframe[name=view]').addEventListener('load',()=>send(cur));
+ window.addEventListener('load',()=>send(cur));})();
+</script>
+</html>

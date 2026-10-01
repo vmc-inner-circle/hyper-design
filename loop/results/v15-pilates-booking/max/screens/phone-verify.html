@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>전화번호 인증</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="login.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">전화번호 인증</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemax="3" aria-label="가입 3단계 중 1단계"><span class="is-on"></span><span></span><span></span></div>
+  <header class="hero"><p class="title">문자로 받은 6자리를 넣어 주세요</p><p class="lead">수업 알림과 예약 확인에 쓰는 번호예요</p></header>
+  <div class="field"><label class="label" for="phone">전화번호</label><input class="input" id="phone" type="tel" value="010-****-5512" readonly></div>
+  <div class="field"><label class="label" for="code">인증번호</label><input class="input code" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="6자리 숫자">
+    <p class="block-note">남은 시간 <span class="num">2:41</span></p>
+  </div>
+  <section class="block">
+    <button class="btn small secondary" disabled>인증번호 다시 받기</button>
+    <p class="block-note">다시 받기는 보낸 지 30초 뒤부터, 하루 5번까지 돼요</p>
+  </section>
+</main>
+<div class="cta"><a class="btn primary full" href="signup-terms.html">다음</a></div>
+</body></html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 모이는 곳</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+.big-title { margin-bottom: var(--space-12); }
+.map {
+  height: calc(var(--space-40) * 4);
+  margin-top: var(--space-20);
+  border-radius: var(--radius-block);
+  background: var(--gray-1);
+  color: var(--gray-3);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--space-8);
+  font-weight: 600;
+}
+</style>
+</head>
+<body class="is-viewer has-cta">
+<header class="appbar">
+  <a class="appbar-btn left" href="parent-home.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>모이는 곳</h1>
+</header>
+
+<main class="page">
+  <section class="block">
+    <p class="big-title">11월 20일 금 아침 8:30</p>
+    <p class="sub">김포공항 국내선 1층 대한항공 카운터 앞</p>
+    <div class="map" role="img" aria-label="김포공항 국내선 위치">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+      <span>김포공항 국내선</span>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <div class="row">
+      <span class="row-icon">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14l18-7-4 12-5-4-3 4v-5z"/></svg>
+      </span>
+      <div class="row-main">
+        <p class="row-title">비행기 10:05 출발</p>
+        <p class="row-sub">대한항공 KE1203</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <h2 class="section-title">챙겨 오세요</h2>
+    <div class="row">
+      <div class="row-main">
+        <p class="row-title">신분증</p>
+        <p class="row-sub">모두</p>
+      </div>
+    </div>
+    <a class="row" href="my-tasks.html">
+      <div class="row-main">
+        <p class="row-title">무릎 보호대·상비약</p>
+        <p class="row-sub">어머니</p>
+      </div>
+      <svg class="row-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+</main>
+
+<div class="cta-area">
+  <button class="btn primary block-w" type="button">지도 열기</button>
+</div>
+</body>
+</html>

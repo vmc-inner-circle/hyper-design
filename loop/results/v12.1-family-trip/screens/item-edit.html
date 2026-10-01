@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>일정 고치기</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="day-edit.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">일정 고치기</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label">상태</span>
+    <div class="seg" role="radiogroup" aria-label="상태"><button class="seg-item is-selected" role="radio" aria-checked="true">후보</button><button class="seg-item" role="radio" aria-checked="false">확정</button></div>
+    <p class="info"><img src="../assets/fluent/eyes.svg" alt=""><span>확정으로 저장하면 가족 화면에 바로 보여요</span></p>
+  </div>
+  <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" value="오설록 티뮤지엄"></div>
+  <div class="field"><label class="label" for="d">날짜</label><input class="input" id="d" value="3일째 · 11/22(일)"></div>
+  <div class="field"><label class="label" for="t">시간</label><input class="input" id="t" value="" placeholder="예: 14:00"></div>
+  <div class="field"><span class="label">종류</span>
+    <div class="chips" role="radiogroup" aria-label="종류"><button class="chip" role="radio" aria-checked="false">이동</button><button class="chip" role="radio" aria-checked="false">숙박</button><button class="chip is-selected" role="radio" aria-checked="true">활동</button></div>
+  </div>
+  <div class="field"><label class="label" for="m">메모</label><input class="input" id="m" value="" placeholder="예약번호나 챙길 것"></div>
+  <a class="btn secondary full" href="day-edit.html">지우기</a>
+</main>
+<div class="cta"><a class="btn primary full" href="day-edit.html">저장</a></div>
+</body></html>

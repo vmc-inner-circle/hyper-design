@@ -1,0 +1,257 @@
+{
+ "core": "수강생이 카톡으로 묻지 않아도 '자리 있는지·몇 회 남았는지·지금 취소하면 차감되는지'를 그 순간 알게 하고, 빈자리는 기다리는 사람에게 저절로 가게 한다",
+ "items": [
+  {
+   "id": "F1",
+   "name": "회원가입/로그인",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "카카오·Apple·전화번호 + 둘러보기",
+   "why": "예약·구매의 전제",
+   "ask": false
+  },
+  {
+   "id": "F2",
+   "name": "동네 설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "검색 기본, 현재 위치는 누를 때만 권한 요청",
+   "why": "권한 거부율을 낮추면서 첫 경험은 한 번 검색으로 끝",
+   "ask": false
+  },
+  {
+   "id": "F3",
+   "name": "스튜디오 찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "목록 기본 + 지도 전환, 마지막 방식 기억",
+   "why": "박서연의 비교 탐색이 핵심 진입",
+   "ask": false
+  },
+  {
+   "id": "F4",
+   "name": "스튜디오 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "시설은 아이콘 없는 2열 표, 시간표 버튼 하단 고정",
+   "why": "새 스튜디오 결정 근거",
+   "ask": false
+  },
+  {
+   "id": "F5",
+   "name": "수업 시간표",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "날짜 줄 + 하루 목록, 상태는 글자·배지 표",
+   "why": "하루 15개도 한 줄씩",
+   "ask": false
+  },
+  {
+   "id": "F6",
+   "name": "수업 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "무료 취소 마감을 실제 시각으로",
+   "why": "취소 분쟁(문제 3)의 핵심",
+   "ask": false
+  },
+  {
+   "id": "F7",
+   "name": "수강권 구매",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "회당 가격을 크게, 결제는 간편결제 앱으로 넘김",
+   "why": "매출 경로",
+   "ask": false
+  },
+  {
+   "id": "F8",
+   "name": "수업 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "예약 확인 한 장에서 차감·규정 확인",
+   "why": "core",
+   "ask": false
+  },
+  {
+   "id": "F9",
+   "name": "대기 신청·자동 승급",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "순번·확정 마감 카운트다운",
+   "why": "문제 4 — 운영자가 기억할 필요 제거",
+   "ask": false
+  },
+  {
+   "id": "F10",
+   "name": "예약 취소",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "무료/차감을 한 줄로, 차감이면 확인 대화상자",
+   "why": "문제 3",
+   "ask": false
+  },
+  {
+   "id": "F11",
+   "name": "내 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "예정·대기 중·지난 수업 세그먼트",
+   "why": "가장 잦은 확인",
+   "ask": false
+  },
+  {
+   "id": "F12",
+   "name": "출석 체크",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "QR 또는 도착 확인, 실패 시 강사 수동 안내",
+   "why": "노쇼 판정의 근거",
+   "ask": false
+  },
+  {
+   "id": "F13",
+   "name": "수강권 관리·일시정지",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "잔여(예약 포함) 한 숫자, 정지는 만료일 미리보기",
+   "why": "문제 2",
+   "ask": false
+  },
+  {
+   "id": "F14",
+   "name": "리뷰",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "별점+좋았던 점 칩+글 10자부터",
+   "why": "신규 탐색자의 판단 근거",
+   "ask": false
+  },
+  {
+   "id": "S22-photo",
+   "name": "리뷰 사진 첨부",
+   "source": "PRD",
+   "verdict": "later",
+   "how": "1차 업데이트로 미룸(PRD 논의점 3에 이미 '허용 미정')",
+   "why": "탈의실·타 회원 노출, 운영자 3곳 반대 — 검수 체계 없이 열면 사고",
+   "ask": false
+  },
+  {
+   "id": "F15",
+   "name": "알림·알림함",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "대기 승급 알림은 끌 수 없음",
+   "why": "대기 기능의 전제",
+   "ask": false
+  },
+  {
+   "id": "F16",
+   "name": "마이·설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "노쇼 현황 포함",
+   "why": "분쟁 예방",
+   "ask": false
+  },
+  {
+   "id": "F17",
+   "name": "즐겨찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "스튜디오 상세 하트 + 마이 목록(디자인만 먼저)",
+   "why": "PRD가 디자인 선제작 요청",
+   "ask": false
+  },
+  {
+   "id": "F18",
+   "name": "체험 수업",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "찾기 필터 '체험 가능' + 수강권 고르기의 체험 1회권",
+   "why": "박서연의 체험→구매 패턴",
+   "ask": false
+  },
+  {
+   "id": "NAV",
+   "name": "주요 메뉴",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "4개(홈·찾기·내 예약·마이), 수강권은 홈 요약·마이 맨 위",
+   "why": "이정호를 위해 단순하게 — 수강권 확인은 홈에서 이미 된다",
+   "ask": false
+  },
+  {
+   "id": "H1",
+   "name": "스튜디오 1:1 채팅",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "카톡·전화가 이미 함 — 전화하기 버튼으로 충분",
+   "ask": false
+  },
+  {
+   "id": "H2",
+   "name": "출석 통계 그래프",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "마이에 '이번 달 출석 3회' 한 줄",
+   "why": "데이터가 빈약한 통계는 장식",
+   "ask": false
+  },
+  {
+   "id": "H3",
+   "name": "강사 팔로우·새 수업 알림",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "새 알림을 얹는 기능, 핵심 갈등과 무관",
+   "ask": false
+  },
+  {
+   "id": "H4",
+   "name": "집/회사 동네 2개",
+   "source": "하네스",
+   "verdict": "later",
+   "how": "",
+   "why": "PRD가 이후 검토로 명시",
+   "ask": false
+  },
+  {
+   "id": "H5",
+   "name": "대기 자동 확정(승급 즉시 예약)",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "PRD는 2시간 확정 단계를 둠 — 원치 않는 차감 분쟁 위험",
+   "ask": false
+  },
+  {
+   "id": "H6",
+   "name": "대기자가 채우면 늦은 취소도 복원",
+   "source": "여정",
+   "verdict": "later",
+   "how": "취소 화면에 '대기 1명' 사실만 보여 줌",
+   "why": "PRD R2를 바꾸는 운영 정책 — 운영자 합의 필요",
+   "ask": false
+  },
+  {
+   "id": "H7",
+   "name": "홈 다음 수업에서 바로 취소",
+   "source": "여정",
+   "verdict": "keep",
+   "how": "다음 수업 블록에 '취소' 링크",
+   "why": "오후 5시 야근각 — 4번 누르던 것을 2번으로",
+   "ask": false
+  },
+  {
+   "id": "H8",
+   "name": "큰 글씨 모드",
+   "source": "여정",
+   "verdict": "lighten",
+   "how": "별도 설정 없이 휴대폰 글자 크기를 따름",
+   "why": "이정호 님 — 설정을 찾게 하지 않는다",
+   "ask": false
+  }
+ ]
+}

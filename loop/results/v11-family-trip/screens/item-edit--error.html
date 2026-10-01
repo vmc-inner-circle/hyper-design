@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>일정 고치기 · 시간 없음</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="day-edit.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">일정 고치기</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label">종류</span>
+    <div class="seg" role="radiogroup" aria-label="종류"><button class="seg-item" role="radio" aria-checked="false">이동</button><button class="seg-item" role="radio" aria-checked="false">숙박</button><button class="seg-item is-selected" role="radio" aria-checked="true">활동</button></div>
+  </div>
+  <div class="field"><label class="label" for="n">이름 <span class="num">필수</span></label><input class="input" id="n" value="기요미즈데라"></div>
+  <div class="field"><label class="label" for="d">날짜</label><input class="input" id="d" value="12월 12일 토"></div>
+  <div class="field is-error"><label class="label" for="t">시간</label><input class="input" id="t" value="" placeholder="시간을 골라 주세요"><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>확정하려면 시간이 필요해요 · 아직 모르면 '후보'로 저장하세요</p></div>
+  <div class="field"><label class="label" for="p">장소</label><input class="input" id="p" value="" placeholder="장소 이름이나 주소"></div>
+  <div class="field"><label class="label" for="c">예약 확인번호</label><input class="input" id="c" value="" placeholder="있으면 적어요 · 모두에게 보여요"></div>
+  <div class="field"><span class="label">상태</span>
+    <div class="seg" role="radiogroup" aria-label="상태"><button class="seg-item" role="radio" aria-checked="false">후보</button><button class="seg-item is-selected" role="radio" aria-checked="true">확정</button></div>
+    <p class="block-note">확정하면 가족 화면에 보이고, 저녁 8시 소식에 담겨요</p>
+  </div>
+  <button class="btn secondary full">지우기</button>
+</main>
+<div class="cta"><button class="btn primary full">저장</button></div>
+</body></html>

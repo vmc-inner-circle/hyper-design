@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>일정 고치기 · 시간 없음</title>
+<link id="tokens" rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="day-edit.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">일정 고치기</h1><span></span></header>
+<main class="page">
+  <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" value="흑돼지 '돈사돈'"></div>
+  <div class="field is-error"><label class="label" for="t">시간</label><input class="input" id="t" value="" placeholder="시간을 골라 주세요"><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>시간을 정해야 확정할 수 있어요</p></div>
+  <div class="field"><label class="label" for="m">예약 메모</label><input class="input" id="m" value="6명 · 확인번호 DS-4821"></div>
+  <div class="field"><span class="label">가족에게 어떻게 보일까요?</span>
+    <div class="seg" role="radiogroup"><button class="seg-item" role="radio" aria-checked="false">정하는 중</button><button class="seg-item is-selected" role="radio" aria-checked="true">확정</button></div>
+  </div>
+</main>
+<div class="cta"><button class="btn primary full">저장</button></div>
+</body></html>

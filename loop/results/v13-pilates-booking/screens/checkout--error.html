@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>결제 · 체험 1회 · 오류</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="pass-select.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">결제</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">상품</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-title">체험 1회 · 25,000원</p><p class="row-sub">숨필라테스 망원점 · 7일 안에 사용</p></div></div>
+  </section>
+  <div class="field"><label class="label" for="coupon">쿠폰</label><input class="input" id="coupon" placeholder="쿠폰 번호 입력"></div>
+  <div class="field is-error"><label class="label" for="pm">결제 수단</label>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">카드</button><button class="chip" aria-pressed="false">카카오페이</button><button class="chip" aria-pressed="false">네이버페이</button><button class="chip" aria-pressed="false">토스페이</button></div>
+    <input class="input" id="pm" value="신한카드" readonly><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>한도 초과로 결제되지 않았어요 · 다른 수단을 골라주세요</p><p class="block-note">수강권은 발급되지 않았어요</p>
+  </div>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">최종 금액</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">상품 금액</p></div><span class="row-trail"><span class="num">25,000원</span></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">쿠폰 할인</p></div><span class="row-trail"><span class="num">0원</span></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">결제할 금액</p></div><span class="row-trail"><span class="code">25,000원</span></span></div>
+  </section>
+  <section class="block is-list">
+    <div class="row"><div class="row-main"><p class="row-title">환불 규정에 동의해요 (필수)</p><p class="row-sub">사용 후 체험권은 환불되지 않아요</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="환불 규정 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+  </section>
+</main>
+<div class="cta"><a class="btn primary full" href="checkout-done.html">25,000원 결제</a></div>
+</body></html>

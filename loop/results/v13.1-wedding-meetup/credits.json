@@ -1,0 +1,29 @@
+[
+ {
+  "slot": "invitation",
+  "file": "assets/photos/invitation.jpg",
+  "title": "Wedding Invitations",
+  "author": "matt hutchinson",
+  "license": "by",
+  "license_version": "2.0",
+  "url": "https://www.flickr.com/photos/17524395@N00/5997835332"
+ },
+ {
+  "slot": "restaurant-yeonnam",
+  "file": "assets/photos/restaurant-yeonnam.jpg",
+  "title": "Inside the Lobster Shack",
+  "author": "Bernt Rostad",
+  "license": "by",
+  "license_version": "2.0",
+  "url": "https://www.flickr.com/photos/67975030@N00/4662273611"
+ },
+ {
+  "slot": "meal-table",
+  "file": "assets/photos/meal-table.jpg",
+  "title": "#Sharing: Friday night pizza",
+  "author": "Dai Lygad",
+  "license": "by",
+  "license_version": "2.0",
+  "url": "https://www.flickr.com/photos/126337928@N05/17405004226"
+ }
+]

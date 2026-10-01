@@ -1,0 +1,467 @@
+{
+ "groups": [
+  "처음 시작할 때",
+  "둘이 함께 보는 곳",
+  "지인 풀",
+  "모임 묶고 날짜 맞추기",
+  "링크로 받은 지인"
+ ],
+ "story": {
+  "headline": "단톡방 수십 개 대신 <em>링크 하나</em> — 답도, 확정도, 겹침도 한곳에",
+  "summary": "예비부부는 지인을 무리로 묶어 모임을 만들고 날짜 후보 링크를 단톡방에 붙인다. 지인은 설치 없이 답하고, 확정되면 같은 링크가 확정 화면으로 바뀐다. 둘의 모임은 한 달력에 모여 같은 날 두 곳이면 '겹침'으로 보인다.",
+  "ideas": [
+   {
+    "title": "확정 = 공유",
+    "desc": "확정하면 이미 보낸 링크가 확정 화면으로 바뀐다. 공지를 다시 돌리지 않는다."
+   },
+   {
+    "title": "상태는 저절로 넘어간다",
+    "desc": "마감이 지나면 확정 앞둠, 날짜가 지나면 다녀옴. 누를 버튼이 없다."
+   },
+   {
+    "title": "여러 무리에 걸친 사람",
+    "desc": "사람을 고를 때 '다른 모임에도 있어요'로 알려 주고 막지는 않는다."
+   }
+  ]
+ },
+ "screens": [
+  {
+   "id": "start",
+   "file": "screens/start.html",
+   "title": "시작 · 결혼식 날짜와 함께 쓸 사람",
+   "group": "처음 시작할 때",
+   "purpose": "결혼식 날짜를 넣고 배우자를 불러 둘이 같은 앱을 쓴다",
+   "role": "editor",
+   "policies": [
+    "결혼식 날짜는 필수 — 모든 모임 날짜 후보가 이 날짜 앞으로만 열린다",
+    "배우자 초대 링크는 7일 뒤 만료, 들어오기 전까지 홈 맨 위에 '민수 님을 기다려요'",
+    "두 사람은 같은 화면·같은 권한 — 누구 쪽 지인인지만 표시"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": true
+   },
+   "states": [
+    "error",
+    "done"
+   ],
+   "kind": "form"
+  },
+  {
+   "id": "start--error",
+   "file": "screens/start--error.html",
+   "title": "시작 · 날짜를 안 넣었을 때",
+   "group": "처음 시작할 때",
+   "purpose": "결혼식 날짜 칸만 오류로 바뀐다",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "start--done",
+   "file": "screens/start--done.html",
+   "title": "시작 · 초대 링크 복사 뒤",
+   "group": "처음 시작할 때",
+   "purpose": "링크를 복사했다는 결과 표시",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "모임 · D-79 둘이 함께 보는 홈",
+   "group": "둘이 함께 보는 곳",
+   "purpose": "지금 손댈 모임과 진행 상태 4단계를 한 화면에",
+   "role": "editor",
+   "policies": [
+    "맨 위는 할 일이 있을 때만: 확정할 모임(마감 지남·전원 답함) → 겹침 순",
+    "상태는 사람이 누르지 않는다 — 마감 지나면 '확정 앞둠', 날짜 지나면 '다녀옴'",
+    "지은·민수 둘 다 같은 홈, 행마다 누구 쪽인지 아바타"
+   ],
+   "branches": [
+    {
+     "to": "gathering-decide",
+     "label": "확정 앞둔 모임"
+    },
+    {
+     "to": "gathering",
+     "label": "회신 중인 모임"
+    },
+    {
+     "to": "calendar",
+     "label": "겹침이 있으면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "home"
+  },
+  {
+   "id": "calendar",
+   "file": "screens/calendar.html",
+   "title": "달력 · 둘의 주말 한눈에",
+   "group": "둘이 함께 보는 곳",
+   "purpose": "지은·민수 쪽을 합친 확정 모임을 주말별로, 겹치는 날을 표시",
+   "role": "editor",
+   "policies": [
+    "확정·다녀옴만 보인다 — 회신 중인 모임은 '후보' 회색 한 줄",
+    "같은 사람이 같은 날 두 모임이면 '겹침'",
+    "거르기: 모두 / 지은 / 민수 / 함께"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "list"
+  },
+  {
+   "id": "people",
+   "file": "screens/people.html",
+   "title": "지인 · 무리별 지인 풀",
+   "group": "지인 풀",
+   "purpose": "누구에게 아직 청첩장을 못 줬는지 무리별로",
+   "role": "editor",
+   "policies": [
+    "한 사람이 여러 무리에 동시에 들어갈 수 있다(행에 무리 이름 모두)",
+    "연락처 불러오기 거부 시 직접 추가로, 불러오는 중에도 목록은 쓸 수 있다",
+    "다녀온 모임에 못 온 사람은 자동으로 '아직 모임 없음'으로 돌아간다"
+   ],
+   "branches": [
+    {
+     "to": "person-edit",
+     "label": "사람 추가·고치기"
+    }
+   ],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "shares": false
+   },
+   "states": [
+    "empty"
+   ],
+   "kind": "list"
+  },
+  {
+   "id": "people--empty",
+   "file": "screens/people--empty.html",
+   "title": "지인 · 처음 들어왔을 때",
+   "group": "지인 풀",
+   "purpose": "아직 아무도 없는 지인 풀",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "person-edit",
+   "file": "screens/person-edit.html",
+   "title": "지인 추가·고치기",
+   "group": "지인 풀",
+   "purpose": "누구 쪽인지·어느 무리인지·1:1인지",
+   "role": "editor",
+   "policies": [
+    "누구 쪽(지은/민수/함께 아는 사람)을 먼저 — 무리 목록이 거기에 맞게 바뀐다",
+    "무리는 여러 개 고를 수 있고 새 무리를 바로 만든다",
+    "1:1로 만나기를 켜면 여럿 모임에 넣을 때 '따로 만나는 분' 표시"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false
+   },
+   "states": [
+    "error"
+   ],
+   "kind": "form"
+  },
+  {
+   "id": "person-edit--error",
+   "file": "screens/person-edit--error.html",
+   "title": "지인 추가 · 연락처 오류",
+   "group": "지인 풀",
+   "purpose": "연락처 칸만 오류로 바뀐다",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "gathering-new",
+   "file": "screens/gathering-new.html",
+   "title": "모임 만들기 · 누구와",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "무리에서 사람을 골라 한 모임으로 묶는다",
+   "role": "editor",
+   "policies": [
+    "여럿 / 1:1을 먼저 고른다 — 1:1이면 한 명만 고를 수 있다",
+    "다른 모임에 이미 있는 사람은 행에 '○○ 모임에도 있어요' — 막지는 않는다",
+    "한 명 이상 고르기 전까지 버튼이 꺼져 있다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "gathering-dates",
+   "file": "screens/gathering-dates.html",
+   "title": "모임 만들기 · 날짜 후보와 마감",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "날짜 후보 여러 개와 회신 마감을 정해 링크를 만든다",
+   "role": "editor",
+   "policies": [
+    "이미 확정된 모임이 있는 날은 후보 옆에 누구 모임인지 표시",
+    "마감은 하루·3일·5일·일주일 — 결혼식 2주 전부터는 하루가 기본",
+    "링크 하나로 구성원 전원이 답한다(앱 설치 없음)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true
+   },
+   "states": [
+    "done"
+   ],
+   "kind": "form"
+  },
+  {
+   "id": "gathering-dates--done",
+   "file": "screens/gathering-dates--done.html",
+   "title": "날짜 후보 · 링크 복사 뒤",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "링크를 복사했다는 결과 표시",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "gathering",
+   "file": "screens/gathering.html",
+   "title": "모임 · 회신 중",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "후보별 가능 인원과 아직 답 없는 사람",
+   "role": "editor",
+   "policies": [
+    "후보는 가능 인원이 많은 순, 확정 전까지 회색",
+    "답 없는 사람 이름이 들어간 재촉 문구 한 줄을 복사해 단톡방에 붙인다",
+    "마감이 지나거나 전원이 답하면 '확정 앞둠'으로 넘어간다"
+   ],
+   "branches": [
+    {
+     "to": "gathering-decide",
+     "label": "마감이 지나면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true
+   },
+   "states": [
+    "done"
+   ],
+   "kind": "detail"
+  },
+  {
+   "id": "gathering--done",
+   "file": "screens/gathering--done.html",
+   "title": "모임 · 재촉 문구 복사 뒤",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "재촉 문구를 복사했다는 결과 표시",
+   "role": "editor",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "gathering-decide",
+   "file": "screens/gathering-decide.html",
+   "title": "모임 · 확정 앞둠",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "답 없는 사람을 빼고 날짜를 정한다, 다 안 되면 새 후보",
+   "role": "editor",
+   "policies": [
+    "답 없는 사람은 빼고 정한다 — 그 사람은 지인 목록에서 '아직 모임 없음'",
+    "전부 안 되는 날뿐이면 새 후보 보내기(같은 링크 유지)",
+    "확정하면 이미 보낸 링크가 확정 화면으로 바뀐다 — 따로 보낼 것 없음"
+   ],
+   "branches": [
+    {
+     "to": "gathering-dates",
+     "label": "다 안 되면 새 후보"
+    },
+    {
+     "to": "gathering-confirmed",
+     "label": "확정"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "result"
+  },
+  {
+   "id": "gathering-confirmed",
+   "file": "screens/gathering-confirmed.html",
+   "title": "모임 · 확정",
+   "group": "모임 묶고 날짜 맞추기",
+   "purpose": "확정 날짜·장소와 구성원이 무엇을 보고 있는지",
+   "role": "editor",
+   "policies": [
+    "구성원은 같은 링크에서 날짜·장소를 본다",
+    "날짜를 다시 정하면 링크 맨 위에 '날짜가 바뀌었어요' 한 줄이 3일 동안 보인다",
+    "날짜가 지나면 자동으로 '다녀옴'"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "detail"
+  },
+  {
+   "id": "respond",
+   "file": "screens/respond.html",
+   "title": "링크 · 날짜 회신 (하윤)",
+   "group": "링크로 받은 지인",
+   "purpose": "날짜마다 된다/안 된다를 누른다 — 설치 없이",
+   "role": "everyone",
+   "policies": [
+    "앱 설치·가입 없이 이름만 확인",
+    "이 앱으로 받은 다른 커플 모임이 있는 날은 후보 옆에 표시",
+    "'다 안 돼요'도 답, 마감 전까지 같은 링크로 고칠 수 있다"
+   ],
+   "branches": [
+    {
+     "to": "respond-mine",
+     "label": "회신 보낸 뒤"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false
+   },
+   "states": [
+    "error"
+   ],
+   "kind": "form"
+  },
+  {
+   "id": "respond--error",
+   "file": "screens/respond--error.html",
+   "title": "링크 · 답 안 한 날짜가 있을 때",
+   "group": "링크로 받은 지인",
+   "purpose": "비어 있는 날짜 줄만 오류로",
+   "role": "everyone",
+   "policies": [],
+   "branches": [],
+   "traits": {},
+   "states": [],
+   "kind": "form"
+  },
+  {
+   "id": "respond-mine",
+   "file": "screens/respond-mine.html",
+   "title": "링크 · 하윤 님이 받은 청첩장모임",
+   "group": "링크로 받은 지인",
+   "purpose": "이번 시즌 받은 모임을 한 번에 — 확정·회신 중",
+   "role": "everyone",
+   "policies": [
+    "같은 전화번호로 받은 링크를 묶는다",
+    "확정된 모임이 맨 위, 회신 중인 모임은 마감이 가까운 순",
+    "마감 전 모임은 눌러서 답을 고친다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false
+   },
+   "states": [],
+   "kind": "list"
+  }
+ ],
+ "badges": {
+  "확정 앞둠": "",
+  "후보": "",
+  "확정": "is-brand",
+  "겹침": "is-warning",
+  "회신 중": "is-info",
+  "다녀옴": "is-success"
+ },
+ "prd_coverage": {
+  "F1": [
+   "people",
+   "person-edit"
+  ],
+  "F2": [
+   "gathering-new"
+  ],
+  "F3": [
+   "gathering-dates",
+   "gathering",
+   "respond"
+  ],
+  "F4": [
+   "gathering-decide",
+   "gathering-confirmed"
+  ],
+  "F5": [
+   "calendar",
+   "home"
+  ],
+  "F6": [
+   "home"
+  ],
+  "US1": [
+   "gathering-new",
+   "person-edit"
+  ],
+  "US2": [
+   "respond",
+   "respond-mine"
+  ],
+  "US3": [
+   "calendar",
+   "start"
+  ]
+ }
+}

@@ -1,0 +1,96 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 한눈에 보기</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#e9e9e6;font-family:-apple-system,'Pretendard',sans-serif;color:#1c1c1c;overflow:auto}
+header{position:sticky;top:0;left:0;z-index:5;background:#e9e9e6ee;padding:16px 60px;font-size:20px;font-weight:700;backdrop-filter:blur(6px)}
+header span{font-weight:400;color:#666;font-size:15px;margin-left:12px}
+.board{position:relative;width:1230.0px;height:3400.0px}
+svg{position:absolute;inset:0;width:1230.0px;height:3400.0px;pointer-events:none}
+svg path{fill:none;stroke:#e5484d;stroke-width:2.5;marker-end:url(#h)} svg path.x{stroke-dasharray:6 6;opacity:.6}
+.glabel{position:absolute;font-size:22px;font-weight:700}
+.frame{position:absolute;width:187.5px}
+.ftitle{font-size:15px;font-weight:600;margin-bottom:8px}
+.phone{position:relative;width:187.5px;height:406.0px;border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.phone iframe{width:375px;height:812px;border:0;transform:scale(0.5);transform-origin:0 0;pointer-events:none}
+.hit{position:absolute;inset:0} .hit:hover{outline:3px solid #e5484d;border-radius:18px}
+.fdesc{font-size:13px;color:#555;margin-top:8px;line-height:1.45}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .chip{font-size:12px;padding:4px 8px;border-radius:12px;background:#fff;color:#333;text-decoration:none}
+.story{padding:24px 60px 8px;max-width:1240px} .story h1{font-size:40px;line-height:1.25;letter-spacing:-.03em;margin:8px 0 14px} .story h1 em{font-style:normal;color:#e5484d}
+.story .sum{font-size:18px;line-height:1.6;color:#444;max-width:780px;margin:0 0 28px} .story h2{font-size:24px;margin:40px 0 16px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .idea{background:#fff;border-radius:16px;padding:22px}
+.idea .n{width:30px;height:30px;border-radius:50%;background:#1c1c1c;color:#fff;display:grid;place-items:center;font-weight:700;margin-bottom:12px}
+.idea b{font-size:18px} .idea p{font-size:15px;line-height:1.6;color:#444;margin:8px 0 12px} .refs{font-size:13px;color:#777} .refs a{color:#e5484d}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px} .role{background:#fff;border-radius:16px;padding:22px} .role b{font-size:17px} .role li{font-size:15px;line-height:1.7;color:#444}
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}
+#viewer.on{display:flex} #viewer iframe{width:375px;height:812px;max-height:92vh;border:0;border-radius:28px;background:#fff}
+#viewer button{position:absolute;top:20px;right:28px;font-size:18px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}
+</style>
+<header>전체 화면 한눈에 보기<span>화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 빨간 화살표는 화면 이동</span></header>
+<section class="story"><h1>자녀는 <em>마음껏 고치고</em>, 부모님은 <em>확정된 것만</em> 받아봅니다</h1><p class="sum">부모님은 묻기 미안하고, 자녀는 덜 정해진 계획을 보여주기 조심스럽습니다. 그래서 같은 일정을 두 가지로 보여줍니다. 자녀 화면에는 후보까지 모두 보이고, 부모님 화면에는 확정된 일정과 모이는 시간·장소만 크게 보입니다. 바뀐 일정은 확정된 것만 모아서 한 번에 알립니다.</p>
+<div class="ideas"><div class="idea"><div class="n">1</div><b>후보는 &#x27;정하는 중&#x27;으로 접혀요</b><p>지은이 후보를 몇 개 적든, 부모님 화면에는 &#x27;정하는 중 · 11월 10일까지&#x27; 한 줄만 보입니다. 언제 정해질지 알면 굳이 묻지 않아도 됩니다.</p>
+<div class="refs">US1 · US2 · F2 · F3 · <a href="screens/planner-day.html" target="view">둘째 날 일정</a> · <a href="screens/share-preview.html" target="view">부모님께 보이는 모습</a> · <a href="screens/parent-day.html" target="view">둘째 날 (부모)</a></div></div><div class="idea"><div class="n">2</div><b>알림은 확정된 것만, 모아서 한 번</b><p>후보를 고치거나 순서를 바꾼 건 알리지 않습니다. 비행기 시간처럼 확정된 것이 바뀌면 쌓아 뒀다가 지은이 한 번에 보내고, 부모님은 바뀌기 전과 후를 한 장에서 봅니다.</p>
+<div class="refs">F5 · S1 · <a href="screens/notify-compose.html" target="view">소식 모아 보내기</a> · <a href="screens/parent-news.html" target="view">바뀐 소식 (부모)</a> · <a href="screens/notify-sent.html" target="view">보냈어요</a></div></div><div class="idea"><div class="n">3</div><b>부모님 홈 첫 줄은 &#x27;언제 어디서 만나요&#x27;</b><p>부모님 화면을 열면 가장 먼저 모이는 시간과 장소가 보이고, 그 아래 날짜별 흐름과 내 준비물이 이어집니다. 궁금한 게 있으면 &#x27;궁금해요&#x27;를 한 번 누르면 됩니다.</p>
+<div class="refs">US2 · US3 · S5 · <a href="screens/parent-home.html" target="view">부모 홈</a> · <a href="screens/meet-point.html" target="view">모이는 곳</a> · <a href="screens/my-tasks.html" target="view">내 준비물 (어머니)</a></div></div></div><h2>역할에 따라 다르게 보여요</h2><div class="roles"><div class="role"><b>계획하는 자녀 (지은)</b><ul><li>후보와 확정 모두 · 순서 바꾸기</li><li>부모님께 보이는 모습 미리보기</li><li>아직 알리지 않은 변경 수와 보내기</li><li>누가 무엇을 준비하는지 전체</li></ul></div><div class="role"><b>함께 가는 부모님 (아버지·어머니)</b><ul><li>확정된 일정만 큰 글자로</li><li>후보는 &#x27;정하는 중 · 언제까지&#x27;로 한 줄</li><li>첫 줄에 모이는 시간·장소</li><li>내 몫의 준비물만</li><li>&#x27;궁금해요&#x27; 한 번 누르기</li></ul></div></div>
+<h2>전체 화면</h2></section><div class="board">
+<svg><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#e5484d" stroke="none"/></marker></defs><path class="x" d="M153.75,526.0 C153.75,647.0 153.75,647.0 153.75,768.0"/><path d="M247.5,262.1 C287.5,262.1 297.5,262.1 337.5,262.1"/><path d="M247.5,262.1 C287.5,262.1 852.5,262.1 892.5,262.1"/><path class="x" d="M153.75,526.0 C153.75,975.0 153.75,975.0 153.75,1424.0"/><path d="M525.0,262.1 C565.0,262.1 575.0,262.1 615.0,262.1"/><path d="M525.0,262.1 C565.0,262.1 852.5,262.1 892.5,262.1"/><path d="M247.5,918.1 C287.5,918.1 297.5,918.1 337.5,918.1"/><path class="x" d="M153.75,768.0 C153.75,647.0 153.75,647.0 153.75,526.0"/><path d="M525.0,918.1 C565.0,918.1 575.0,918.1 615.0,918.1"/><path class="x" d="M708.75,1182.0 C708.75,1631.0 153.75,1631.0 153.75,2080.0"/><path d="M247.5,1574.1 C287.5,1574.1 297.5,1574.1 337.5,1574.1"/><path class="x" d="M153.75,1424.0 C153.75,975.0 153.75,975.0 153.75,526.0"/><path class="x" d="M431.25,1838.0 C431.25,1959.0 153.75,1959.0 153.75,2080.0"/><path d="M247.5,2230.1 C287.5,2230.1 575.0,2230.1 615.0,2230.1"/><path d="M247.5,2230.1 C287.5,2230.1 297.5,2230.1 337.5,2230.1"/><path class="x" d="M153.75,2494.0 C153.75,2615.0 153.75,2615.0 153.75,2736.0"/><path class="x" d="M153.75,2736.0 C153.75,2615.0 153.75,2615.0 153.75,2494.0"/><path class="x" d="M431.25,2736.0 C431.25,1631.0 153.75,1631.0 153.75,526.0"/></svg>
+<div class="glabel" style="top:50.0px;left:60px">① 계획 짜기 (지은)</div><div class="glabel" style="top:706.0px;left:60px">② 바뀐 것 알리기</div><div class="glabel" style="top:1362.0px;left:60px">③ 부모님 모시기</div><div class="glabel" style="top:2018.0px;left:60px">④ 부모님이 보는 화면</div><div class="glabel" style="top:2674.0px;left:60px">⑤ 할 일·준비물</div><div class="frame" style="left:60.0px;top:120.0px">
+<div class="ftitle">계획 홈 (지은)</div>
+<div class="phone"><iframe src="screens/planner-home.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/planner-home.html" target="view" aria-label="계획 홈 (지은) 크게 보기"></a></div>
+<div class="fdesc">부모님께 알릴 변경이 2건 쌓였어요 — 모아서 한 번에 보내요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:120.0px">
+<div class="ftitle">둘째 날 일정</div>
+<div class="phone"><iframe src="screens/planner-day.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/planner-day.html" target="view" aria-label="둘째 날 일정 크게 보기"></a></div>
+<div class="fdesc">11월 21일 — 확정 1·후보 2. 끌어서 순서 바꾸고, 눌러서 고쳐요</div><div class="chips"><a class="chip" href="screens/planner-day--empty.html" target="view">비어 있을 때</a></div></div><div class="frame" style="left:615.0px;top:120.0px">
+<div class="ftitle">일정 고치기</div>
+<div class="phone"><iframe src="screens/item-edit.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/item-edit.html" target="view" aria-label="일정 고치기 크게 보기"></a></div>
+<div class="fdesc">우도 배편은 아직 후보예요 — 확정으로 바꾸면 부모님 화면에 나타나요</div><div class="chips"><a class="chip" href="screens/item-edit--error.html" target="view">입력이 틀렸을 때</a></div></div><div class="frame" style="left:892.5px;top:120.0px">
+<div class="ftitle">부모님께 보이는 모습</div>
+<div class="phone"><iframe src="screens/share-preview.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/share-preview.html" target="view" aria-label="부모님께 보이는 모습 크게 보기"></a></div>
+<div class="fdesc">부모님께는 확정된 것만 크게, 후보는 &#x27;정하는 중&#x27;으로 접혀 보여요</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:776.0px">
+<div class="ftitle">소식 모아 보내기</div>
+<div class="phone"><iframe src="screens/notify-compose.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/notify-compose.html" target="view" aria-label="소식 모아 보내기 크게 보기"></a></div>
+<div class="fdesc">확정된 것이 바뀐 2건만 보내요. 후보 수정은 알리지 않아요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:776.0px">
+<div class="ftitle">보냈어요</div>
+<div class="phone"><iframe src="screens/notify-sent.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/notify-sent.html" target="view" aria-label="보냈어요 크게 보기"></a></div>
+<div class="fdesc">아버지·어머니께 소식 2건을 보냈어요. 읽으시면 여기서 보여요</div><div class="chips"></div></div><div class="frame" style="left:615.0px;top:776.0px">
+<div class="ftitle">바뀐 소식 (부모)</div>
+<div class="phone"><iframe src="screens/parent-news.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/parent-news.html" target="view" aria-label="바뀐 소식 (부모) 크게 보기"></a></div>
+<div class="fdesc">가는 비행기가 09:10에서 10:05로 바뀌었어요</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:1432.0px">
+<div class="ftitle">가족 초대</div>
+<div class="phone"><iframe src="screens/invite.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/invite.html" target="view" aria-label="가족 초대 크게 보기"></a></div>
+<div class="fdesc">링크 하나로 부모님을 &#x27;보기만 하는 분&#x27;으로 모셔요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:1432.0px">
+<div class="ftitle">초대 받기 (부모)</div>
+<div class="phone"><iframe src="screens/join.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/join.html" target="view" aria-label="초대 받기 (부모) 크게 보기"></a></div>
+<div class="fdesc">지은이가 제주 가족여행에 초대했어요 — 버튼 하나면 들어가요</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:2088.0px">
+<div class="ftitle">부모 홈</div>
+<div class="phone"><iframe src="screens/parent-home.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/parent-home.html" target="view" aria-label="부모 홈 크게 보기"></a></div>
+<div class="fdesc">11월 20일 금요일 아침 8시 30분, 김포공항에서 만나요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:2088.0px">
+<div class="ftitle">둘째 날 (부모)</div>
+<div class="phone"><iframe src="screens/parent-day.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/parent-day.html" target="view" aria-label="둘째 날 (부모) 크게 보기"></a></div>
+<div class="fdesc">11월 21일 토요일 — 오후 2시 섭지코지 산책, 나머지는 지은이가 정하는 중</div><div class="chips"></div></div><div class="frame" style="left:615.0px;top:2088.0px">
+<div class="ftitle">모이는 곳</div>
+<div class="phone"><iframe src="screens/meet-point.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/meet-point.html" target="view" aria-label="모이는 곳 크게 보기"></a></div>
+<div class="fdesc">11월 20일 08:30, 김포공항 국내선 1층 대한항공 카운터 앞</div><div class="chips"></div></div><div class="frame" style="left:60.0px;top:2744.0px">
+<div class="ftitle">내 준비물 (어머니)</div>
+<div class="phone"><iframe src="screens/my-tasks.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/my-tasks.html" target="view" aria-label="내 준비물 (어머니) 크게 보기"></a></div>
+<div class="fdesc">어머니 몫은 2가지, 1가지 남았어요</div><div class="chips"></div></div><div class="frame" style="left:337.5px;top:2744.0px">
+<div class="ftitle">할 일 나누기 (지은)</div>
+<div class="phone"><iframe src="screens/tasks-all.html" loading="eager" scrolling="no" tabindex="-1"></iframe>
+<a class="hit" href="screens/tasks-all.html" target="view" aria-label="할 일 나누기 (지은) 크게 보기"></a></div>
+<div class="fdesc">5가지 중 3가지가 남았어요 — 누가 할지 정해 두세요</div><div class="chips"><a class="chip" href="screens/tasks-all--empty.html" target="view">비어 있을 때</a></div></div>
+</div>
+<div id="viewer"><button onclick="v.classList.remove('on')">닫기</button><iframe name="view"></iframe></div>
+<script>const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));</script>
+</html>

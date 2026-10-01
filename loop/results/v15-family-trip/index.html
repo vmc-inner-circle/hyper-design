@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>전체 화면 한눈에 보기</title>
+<!-- 캔버스 템플릿(정적). build_canvas.py 가 아래 hd-data 에 데이터만 끼워 넣는다. 외부 라이브러리 없음. -->
+<link id="tokens" rel="stylesheet" href="tokens.css" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{display:flex;flex-direction:column;background:#ECECE8;color:#1c1c1c;font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Apple SD Gothic Neo',sans-serif;word-break:keep-all;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+
+/* ---------- 헤더: 제목 · 탭 · 팔레트 · 보기 (조작 그룹 3개) ---------- */
+.hd{flex:none;display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;padding:8px 16px;background:#fff;border-bottom:1px solid #dcdcd7;position:relative;z-index:5}
+.hd h1{font-size:17px;font-weight:700;margin:0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
+.tabs{display:flex;gap:2px;background:#EFEFEB;border-radius:12px;padding:3px}
+.tab{min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:9px;background:transparent;font-size:15px;font-weight:600;color:#5a5a55;cursor:pointer}
+.tab[aria-selected="true"]{background:#fff;color:#1c1c1c;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.pal{display:flex;align-items:center;gap:2px;margin-left:auto}
+.pal-label{font-size:13px;color:#777;margin-right:4px}
+.dot{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 10px;border:0;border-radius:999px;background:transparent;font-size:14px;color:#444;cursor:pointer}
+.dot i{flex:none;width:22px;height:22px;border-radius:999px;background:var(--dot);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.dot[aria-pressed="true"]{background:#F1F1ED;color:#1c1c1c;font-weight:700}
+.dot[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff,0 0 0 4px #1c1c1c}
+.dot:hover{background:#F5F5F2}
+.view{display:flex;align-items:center;gap:4px}
+.vbtn{min-height:44px;min-width:44px;padding:0 14px;border:1px solid #dcdcd7;border-radius:10px;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.vbtn:hover{background:#F5F5F2}
+.zoom{min-width:64px;font-variant-numeric:tabular-nums;color:#555}
+body:not([data-tab="screens"]) .view{visibility:hidden}
+@media (max-width:760px){
+  .hd{padding:6px 10px;gap:4px 8px}
+  .hd h1{flex:1 1 0;font-size:16px;order:1;max-width:none}
+  .pal{order:2;margin-left:0}
+  .tabs{order:3}
+  .view{order:4;margin-left:auto}
+  .tab{padding:0 7px;font-size:13px}
+  .fit-long{display:none}
+  .zoom{min-width:52px}
+  .dot{padding:0}
+  .dot{justify-content:center}
+  .dot b,.pal-label{display:none}
+  .vbtn{padding:0 10px}
+}
+
+/* ---------- 판 ---------- */
+.panes{flex:1;position:relative;overflow:hidden}
+.pane{position:absolute;inset:0}
+.pane[hidden]{display:none}
+.pane iframe.doc{width:100%;height:100%;border:0;display:block;background:#F6F6F3}
+#screens{overflow:hidden;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+#screens.dragging{cursor:grabbing}
+#screens.dragging .cover{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;width:max-content;will-change:transform}
+
+/* 판 안의 글 — 첫 배율 0.72 기준으로 읽히게 크게 쓴다(22px → 약 16px) */
+.intro{padding:48px 0 0;max-width:1760px}
+.intro-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:start}
+.hint{font-size:20px;color:#6b6b66;margin:0 0 18px}
+.story h2{font-size:42px;line-height:1.3;margin:0 0 14px}
+.story h2 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:22px;line-height:1.6;color:#444;margin:0 0 24px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.idea{background:#fff;border-radius:20px;padding:22px}
+.idea b{font-size:22px}
+.idea p{font-size:19px;line-height:1.55;color:#555;margin:8px 0 0}
+.decisions{margin-top:6px}
+.narrow .ideas,.narrow .decisions ul,.narrow .intro-grid{grid-template-columns:1fr}
+.narrow .decisions{margin-top:0}
+.narrow .story h2{font-size:38px}
+.decisions h3{font-size:27px;margin:0 0 8px}
+.decisions .core{font-size:21px;color:#333;margin:0 0 14px}
+.decisions ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.decisions li{background:#fff;border-radius:16px;padding:14px 18px;font-size:19px;line-height:1.45}
+.decisions li b{margin-right:4px}
+.decisions .why{display:block;color:#666;font-size:18px}
+.v{display:inline-block;font-size:15px;font-weight:700;border-radius:8px;padding:2px 9px;margin-right:8px;background:#eee;color:#444;vertical-align:2px}
+.v-cut{background:#fde8e8;color:#9b1c1c}
+.v-lighten{background:#e7f0ff;color:#1d4ed8}
+
+.rows{position:relative;padding-bottom:40px}
+.flow{padding-top:90px}
+.glabel{font-size:31px;font-weight:700;margin:0 0 104px;white-space:nowrap}
+.cards{display:flex;gap:84px;align-items:flex-start}
+.card{flex:none;width:375px}
+.phone{position:relative;width:375px;height:812px;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+.phone iframe{display:block;width:375px;height:812px;border:0;pointer-events:none;background:#fff}
+.cover{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:transparent;border-radius:28px;cursor:pointer}
+.cover:hover,.cover:focus-visible{outline:4px solid #2563eb;outline-offset:0}
+.ftitle{font-size:22px;font-weight:700;margin-top:16px;line-height:1.35}
+.state{display:inline-block;font-size:15px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+.fdesc{font-size:18px;color:#555;margin-top:4px;line-height:1.45}
+.pol{margin:8px 0 0;padding-left:22px;font-size:17px;line-height:1.5;color:#444}
+.more{font-size:17px;color:#666;margin-top:4px}
+.more summary,.foot summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.more .pol{margin-top:0}
+svg.ar{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+svg.ar path.ln{fill:none;stroke:#2563eb;stroke-width:3;marker-start:url(#hd-dot);marker-end:url(#hd-head)}
+.alabel{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1.5px solid #c7d6fb;color:#1d4ed8;font-size:17px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.alabel.side{transform:translate(-100%,-50%);white-space:normal;max-width:220px;text-align:right;border-radius:14px}
+.foot{padding:20px 0 120px;font-size:17px;color:#777;max-width:1500px}
+.foot p{margin:0 0 6px}
+.foot ul{margin:4px 0 0;padding-left:22px;line-height:1.6}
+.foot a{color:#555}
+
+/* ---------- 크게 보기 ---------- */
+#modal{position:fixed;inset:0;z-index:20;background:rgba(20,20,20,.62);display:flex;align-items:center;justify-content:center}
+#modal[hidden]{display:none}
+#modal .box{position:relative;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#modal iframe{display:block;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
+#modal .close{position:absolute;top:max(10px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:#fff;font-size:15px;font-weight:600;cursor:pointer;z-index:2}
+#modal .mtitle{position:absolute;top:max(10px,env(safe-area-inset-top));left:16px;right:96px;color:#fff;font-size:15px;font-weight:600;min-height:44px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body data-tab="screens">
+<header class="hd">
+  <h1 id="title">전체 화면 한눈에 보기</h1>
+  <div class="tabs" role="tablist" data-group="tabs">
+    <button class="tab" role="tab" data-tab="screens" aria-selected="true">Screens</button>
+    <button class="tab" role="tab" data-tab="foundation" aria-selected="false">Foundation</button>
+    <button class="tab" role="tab" data-tab="components" aria-selected="false">Components</button>
+  </div>
+  <div class="pal" data-group="palette" aria-label="색 바꾸기"></div>
+  <div class="view" data-group="view">
+    <button class="vbtn" id="fit" title="모든 화면이 한 번에 들어오게">전체<span class="fit-long"> 보기</span></button>
+    <button class="vbtn zoom" id="zoom" title="처음 배율로">72%</button>
+  </div>
+</header>
+<main class="panes">
+  <section class="pane" id="screens" aria-label="화면 판">
+    <div id="stage" style="transform:translate(0px,0px) scale(0.72)">
+      <div class="intro" id="intro"></div>
+      <div class="rows" id="rows"></div>
+      <div class="foot" id="foot"></div>
+    </div>
+  </section>
+  <section class="pane" id="foundation" hidden><iframe class="doc" title="Foundation — 색·글자·여백" data-src="foundation.html"></iframe></section>
+  <section class="pane" id="components" hidden><iframe class="doc" title="Components — 이 앱이 쓴 부품" data-src="components.html"></iframe></section>
+</main>
+<div id="modal" hidden role="dialog" aria-modal="true" aria-label="화면 크게 보기">
+  <div class="mtitle" id="mtitle"></div>
+  <button class="close" id="mclose">닫기</button>
+  <div class="box" id="mbox"><iframe id="mframe" title="크게 보기"></iframe></div>
+</div>
+<noscript id="hd-links"><ul><li><a href="screens/trip-new.html">여행 만들기</a></li><li><a href="screens/invite.html">가족 초대</a></li><li><a href="screens/invite--done.html">가족 초대 · 보낸 뒤</a></li><li><a href="screens/join.html">초대 링크로 들어왔을 때</a></li><li><a href="screens/home.html">홈 · 출발 50일 전</a></li><li><a href="screens/home-d3.html">홈 · 출발 3일 전</a></li><li><a href="screens/home-trip.html">홈 · 여행 중 2일째</a></li><li><a href="screens/day.html">2일째 · 11월 22일(일)</a></li><li><a href="screens/day--done.html">2일째 · 11월 22일(일) · 보낸 뒤</a></li><li><a href="screens/checklist.html">내가 챙길 것</a></li><li><a href="screens/checklist--done.html">내가 챙길 것 · 보낸 뒤</a></li><li><a href="screens/tasks.html">모두의 할 일</a></li><li><a href="screens/task-new.html">할 일 나누기</a></li><li><a href="screens/news.html">10월 1일 저녁 7시 소식</a></li><li><a href="screens/home-edit.html">홈 · 일정 같이 짜기 켜짐</a></li><li><a href="screens/day-edit.html">2일째 고치기</a></li><li><a href="screens/item-new.html">일정 추가</a></li><li><a href="screens/item-edit.html">일정 고치기 · 2일째 오후</a></li><li><a href="screens/item-confirmed.html">확정했어요</a></li><li><a href="screens/family.html">가족 · 일정 같이 짜기</a></li><li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>
+<script id="hd-data" type="application/json">{"title": "전체 화면 한눈에 보기", "scale": 0.72, "card": {"w": 375, "h": 812}, "modal": {"w": 390, "h": 844}, "story": {"headline": "<em>확정하는 순간이 곧 공유<\/em> — 후보는 짜는 사람끼리, 가족에겐 정해진 큰 흐름만", "summary": "자녀는 후보를 마음껏 적고 고쳐도 가족에게 알림이 가지 않습니다. 부모는 같은 홈에서 확정된 것만 큰 글자로 보고, 궁금하면 '궁금해요'를 한 번 누릅니다. 바뀐 것은 하루 한 번 저녁 7시에 묶어 전합니다.", "ideas": [{"title": "확정하면 곧 공유", "desc": "따로 '공유하기'가 없다. 후보를 확정으로 바꾸는 순간 가족 화면에 나타나고, 정해지지 않은 시간대는 '정하는 중' 한 줄로만 보인다."}, {"title": "하루 한 번 저녁 7시 소식", "desc": "확정·바뀜만 묶어서 하루 한 번. 후보를 고친 것은 담지 않는다. 출발 3일 전부터 모이는 곳·항공 시간만 바로."}, {"title": "미안하지 않게 묻는 '궁금해요'", "desc": "부모가 누르면 짜는 사람 홈의 '정할 것' 맨 위로 올라갈 뿐, 알림은 가지 않는다."}, {"title": "시기마다 맨 위가 바뀌는 홈", "desc": "50일 전엔 큰 흐름, 3일 전엔 모이는 곳·챙길 것, 여행 중엔 오늘."}]}, "decisions": {"core": "자녀는 미완성 후보를 마음껏 고치고, 부모는 묻지 않아도 확정된 큰 흐름을 안다 — 확정하는 순간이 곧 공유다.", "items": [{"verdict": "cut", "label": "뺌", "name": "가족 채팅", "how": "", "why": "가족 단톡방이 이미 한다"}, {"verdict": "cut", "label": "뺌", "name": "후보 투표", "how": "", "why": "부모에게 새 할 일이 생기고, 미완성 후보를 보여 주는 셈이라 core와 충돌"}, {"verdict": "cut", "label": "뺌", "name": "경비 정산", "how": "", "why": "송금 앱이 한다, 갈등과 무관"}, {"verdict": "cut", "label": "뺌", "name": "지도·길찾기", "how": "", "why": "지도 앱이 한다"}, {"verdict": "later", "label": "나중에", "name": "예약 메일 불러오기", "how": "", "why": "편하지만 갈등을 푸는 것은 아니다"}, {"verdict": "later", "label": "나중에", "name": "후보 줄에서 바로 확정", "how": "", "why": "확정 순간에 '언제 가족에게 가는지'를 보여 주는 게 core라 한 단계를 남긴다"}]}, "stage": "go", "pending": 6, "rows": [{"group": "처음 만들고 초대할 때", "screens": [{"id": "trip-new", "file": "screens/trip-new.html", "title": "여행 만들기", "purpose": "여행 이름·날짜만 적으면 시작", "policies": ["필수는 여행 이름·가는 날·오는 날 세 칸", "만든 사람은 자동으로 '일정 같이 짜기' 켜짐", "항공·숙소는 만든 뒤 일정에서 적는다"], "state": false}, {"id": "invite", "file": "screens/invite.html", "title": "가족 초대", "purpose": "링크 하나를 단톡방에 붙이면 끝", "policies": ["초대 링크는 7일 동안 열린다", "들어온 사람은 '일정 같이 짜기' 꺼진 채로 합류", "하윤처럼 계정 없는 가족은 이름만 더한다"], "state": false}, {"id": "invite--done", "file": "screens/invite--done.html", "title": "가족 초대 · 보낸 뒤", "purpose": "보낸 뒤 모습", "policies": [], "state": true}, {"id": "join", "file": "screens/join.html", "title": "초대 링크로 들어왔을 때", "purpose": "부모가 링크를 열고 한 번 누르면 들어온다", "policies": ["가입 단계 없이 이름 확인 + 함께하기 한 번", "큰 글자가 기본으로 켜져 있다", "링크가 지났으면 지은에게 다시 받기 안내"], "state": false}]}, {"group": "홈 — 시기마다 맨 위가 바뀐다", "screens": [{"id": "home", "file": "screens/home.html", "title": "홈 · 출발 50일 전", "purpose": "확정된 큰 흐름만, 날짜별 한 줄", "policies": ["확정된 항목만 보인다 — 후보는 '정하는 중' 한 줄", "바뀐 항목은 3일 동안 '바뀜' 표시", "출발 3일 전부터 맨 위가 '모이는 곳'으로 바뀐다"], "state": false}, {"id": "home-d3", "file": "screens/home-d3.html", "title": "홈 · 출발 3일 전", "purpose": "언제 어디서 모이고 무엇을 챙기나", "policies": ["맨 위는 모이는 곳·시간", "챙길 것은 내 몫만", "모이는 곳·항공 시간이 바뀌면 이때부터는 바로 알림"], "state": false}, {"id": "home-trip", "file": "screens/home-trip.html", "title": "홈 · 여행 중 2일째", "purpose": "오늘 무엇을 하고 다음은 어디인가", "policies": ["여행 기간 동안 맨 위는 '오늘'", "지난 일정은 접힌다", "숙소 주소·확인번호는 모두에게 보인다"], "state": false}]}, {"group": "날짜별 일정", "screens": [{"id": "day", "file": "screens/day.html", "title": "2일째 · 11월 22일(일)", "purpose": "그날의 확정 일정과 정하는 중인 시간대", "policies": ["후보 내용은 보이지 않고 '정하는 중' 한 줄", "'궁금해요'는 시간대마다 한 번, 짜는 사람에게 알림 없이 정할 것 맨 위로", "확인번호는 누르면 복사"], "state": false}, {"id": "day--done", "file": "screens/day--done.html", "title": "2일째 · 11월 22일(일) · 보낸 뒤", "purpose": "보낸 뒤 모습", "policies": [], "state": true}]}, {"group": "할 일·준비물", "screens": [{"id": "checklist", "file": "screens/checklist.html", "title": "내가 챙길 것", "purpose": "내 몫만 보고 체크한다", "policies": ["내 몫만 보인다 — 가족 전체는 '모두의 할 일'", "체크는 본인과 일정 같이 짜는 사람 모두 가능", "체크하면 짜는 사람 화면에도 보인다(알림 없음)"], "state": false}, {"id": "checklist--done", "file": "screens/checklist--done.html", "title": "내가 챙길 것 · 보낸 뒤", "purpose": "보낸 뒤 모습", "policies": [], "state": true}, {"id": "tasks", "file": "screens/tasks.html", "title": "모두의 할 일", "purpose": "누가 무엇을 언제까지 맡았나", "policies": ["맡은 사람별로 묶어 보인다", "공용 준비물(환전·어댑터)은 한 사람에게만", "마감이 가까우면 '11월 14일까지'를 글자로 강조"], "state": false}, {"id": "task-new", "file": "screens/task-new.html", "title": "할 일 나누기", "purpose": "무엇을 누가 언제까지", "policies": ["맡은 사람은 1명(모두 각자면 '모두')", "마감일은 선택", "하윤처럼 계정 없는 가족 몫은 지은이 맡는다"], "state": false}]}, {"group": "바뀐 것 전하기", "screens": [{"id": "news", "file": "screens/news.html", "title": "10월 1일 저녁 7시 소식", "purpose": "하루 한 번, 바뀐 것과 새로 확정된 것만", "policies": ["하루에 한 번 저녁 7시, 바뀐 게 없으면 보내지 않는다", "후보를 고친 것은 담지 않는다", "출발 3일 전부터 모이는 곳·항공 시간은 바로"], "state": false}]}, {"group": "일정을 같이 짜는 사람에게 더 붙는 것", "screens": [{"id": "home-edit", "file": "screens/home-edit.html", "title": "홈 · 일정 같이 짜기 켜짐", "purpose": "같은 홈에 '정할 것'이 붙는다", "policies": ["정할 것 = 후보 상태 항목", "'궁금해요'가 붙은 항목이 맨 위", "가족에게 보이는 모습은 home과 같다"], "state": false}, {"id": "day-edit", "file": "screens/day-edit.html", "title": "2일째 고치기", "purpose": "후보를 마음껏 적고 끌어서 순서를 바꾼다", "policies": ["후보는 같이 짜는 사람끼리만 보인다", "끌어서 순서 바꾸기 — 시간이 있으면 시간 순이 우선", "후보를 고쳐도 알림은 가지 않는다"], "state": false}, {"id": "item-new", "file": "screens/item-new.html", "title": "일정 추가", "purpose": "새 항목은 '후보'로 편하게 적는다", "policies": ["기본 상태는 후보 — 가족에게 보이지 않는다", "종류(이동·숙박·활동)를 먼저 고른다", "시간은 비워도 된다"], "state": false}, {"id": "item-edit", "file": "screens/item-edit.html", "title": "일정 고치기 · 2일째 오후", "purpose": "후보 중 하나를 골라 확정한다", "policies": ["'확정'으로 저장하는 순간 가족 화면에 보인다", "확정은 시간이 있어야 한다", "지우기는 이 화면 맨 아래"], "state": false}, {"id": "item-confirmed", "file": "screens/item-confirmed.html", "title": "확정했어요", "purpose": "확정 결과와 언제 가족에게 전해지는지", "policies": ["오늘 저녁 7시 묶음 소식에 담긴다", "저녁 7시 전에 다시 고치면 마지막 모습만 전해진다", "되돌리면 다시 후보"], "state": false}, {"id": "family", "file": "screens/family.html", "title": "가족 · 일정 같이 짜기", "purpose": "누가 후보까지 보고 고칠지 정한다", "policies": ["켜면 후보까지 보이고 고칠 수 있다", "여행을 만든 사람만 켜고 끈다", "소식 시간은 가족 모두 저녁 7시"], "state": false}]}], "arrows": [{"from": "join", "to": "home", "label": "함께하기"}, {"from": "home", "to": "home-edit", "label": "일정 같이 짜기가 켜진 사람이면"}, {"from": "home-edit", "to": "day-edit", "label": "정할 것 누르기"}, {"from": "day", "to": "day-edit", "label": "일정 같이 짜기가 켜진 사람이면"}, {"from": "day-edit", "to": "item-edit", "label": "항목 누르기"}, {"from": "day-edit", "to": "item-new", "label": "+ 일정 추가"}, {"from": "item-edit", "to": "item-confirmed", "label": "확정으로 저장"}, {"from": "tasks", "to": "task-new", "label": "+ 할 일 추가"}, {"from": "task-new", "to": "tasks", "label": "저장"}, {"from": "family", "to": "invite", "label": "+ 가족 초대"}], "palettes": {"default": "myrealtrip", "options": [{"slug": "myrealtrip", "name": "마이리얼트립", "brand": "#2b96ed", "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}, {"slug": "airbnb", "name": "에어비앤비", "brand": "#da1249", "source": "https://www.airbnb.co.kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}, {"slug": "daangn", "name": "당근", "brand": "#ff6600", "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}]}, "credits": [{"slot": "yufuin-view", "file": "assets/photos/yufuin-view.jpg", "title": "유후다케 뷰가 환상적인 유후인 료칸과 여행 코스 총정리 | 트립스토어 블로그", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.tripstore.kr/blog/유후다케-유후인-료칸-코스"}, {"slot": "dazaifu", "file": "assets/photos/dazaifu.jpg", "title": "후쿠오카현_학문의 신을 모시는 다자이후 텐만구 | 두피디아 여행기", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.doopedia.co.kr/travel/viewContent.do?idx=160127000014512"}, {"slot": "kinrinko", "file": "assets/photos/kinrinko.jpg", "title": "아침 물안개가 유명한 유후인의 '긴린코 호수' > 여행지 소개 | 투투에이전시", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.two2agency.co.kr/bbs/board.php?bo_table=ap2&wr_id=198"}, {"slot": "ryokan", "file": "assets/photos/ryokan.jpg", "title": "후쿠오카 유후인·벳푸 하이엔드 노천탕 료칸 가이드: 프라이빗 가이세키 마스터 및 클룩 숙박 예약 팁", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://hotdealscan.com/fukuoka-yufuin-beppu-high-end-private-onsen-ryokan-kaiseki-guide/"}, {"slot": "yufuin-train", "file": "assets/photos/yufuin-train.jpg", "title": "Yufuin no Mori Train & Umi Jigoku & Dazaifu Tenmangu Shrine & Yufuin ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.klook.com/en-CA/activity/201310-yufuin-no-mori-beppu-yufuin-day-tour/"}, {"slot": "nakasu-river", "file": "assets/photos/nakasu-river.jpg", "title": "일본 후쿠오카 텐진거리 나카스강변 야경 : 네이버 블로그", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://blog.naver.com/365happytree/223939914801"}, {"slot": "canal-city", "file": "assets/photos/canal-city.jpg", "title": "Canal City | Japan Cheapo", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://japancheapo.com/place/canal-city/"}, {"slot": "motsunabe", "file": "assets/photos/motsunabe.jpg", "title": "후쿠오카 모츠나베 맛집 BEST 10 - KKday Korea 공식 블로그", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.kkday.com/ko/blog/37037/asia-japan-fukuoka-motsunabe"}]}</script>
+<script>
+(function () {
+'use strict';
+var D = JSON.parse(document.getElementById('hd-data').textContent || '{}');
+var Z0 = D.scale || 0.72, ZMIN = 0.25, ZMAX = 1.5;
+var CARD = D.card || {w: 375, h: 812}, MW = (D.modal || {}).w || 390, MH = (D.modal || {}).h || 844;
+var LEFT = 300;                                  // 카드 왼쪽 통로(줄을 넘는 화살표가 지나는 곳)
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+if (D.title) { $('#title').textContent = D.title; document.title = D.title; }
+var pane = $('#screens'), stage = $('#stage'), rowsEl = $('#rows');
+
+/* ---------- 판 내용 ---------- */
+var intro = '';
+var st = D.story;
+if (st && (st.headline || st.summary)) {
+  var head = esc(st.headline).replace(/&lt;(\/?)em&gt;/g, '<$1em>');
+  intro += '<section class="story"><h2>' + head + '</h2>' + (st.summary ? '<p class="sum">' + esc(st.summary) + '</p>' : '') +
+    '<div class="ideas">' + (st.ideas || []).slice(0, 3).map(function (d) {
+      return '<div class="idea"><b>' + esc(d.title) + '</b><p>' + esc(d.desc) + '</p></div>'; }).join('') + '</div></section>';
+}
+var dc = D.decisions;
+if (dc && ((dc.items || []).length || dc.core)) {
+  intro += '<section class="decisions"><h3>정한 것 · 뺀 것</h3>' + (dc.core ? '<p class="core">' + esc(dc.core) + '</p>' : '') +
+    '<ul>' + (dc.items || []).map(function (i) {
+      return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
+        (i.how ? ' → ' + esc(i.how) : '') + '<span class="why">' + esc(i.why) + '</span></li>'; }).join('') + '</ul></section>';
+}
+$('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래' + (D.stage === 'go' && D.pending ? ' · 오류·확인·빈 화면 같은 상태 ' + D.pending + '개는 <b>/hyper-design:max</b>로 더할 수 있어요' : '') + '</p><div class="intro-grid">' + intro + '</div>';
+$('#intro').style.marginLeft = LEFT + 'px';
+
+var html = '<svg class="ar" id="ar" width="1" height="1"><defs><marker id="hd-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="hd-dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4"><circle cx="5" cy="5" r="4" fill="#2563eb"/></marker></defs></svg>';
+(D.rows || []).forEach(function (row) {
+  html += '<div class="flow"><div class="glabel">' + esc(row.group) + '</div><div class="cards">';
+  row.screens.forEach(function (s) {
+    var pol = s.policies || [];
+    var shown = pol.slice(0, 3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+    var more = pol.length > 3 ? '<details class="more"><summary>정책 ' + (pol.length - 3) + '개 더</summary><ul class="pol">' +
+      pol.slice(3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></details>' : '';
+    html += '<div class="card" data-id="' + esc(s.id) + '"><div class="phone"><iframe scrolling="no" tabindex="-1" title="' + esc(s.title) +
+      '" data-src="' + esc(s.file) + '"></iframe><button class="cover" data-file="' + esc(s.file) + '" data-title="' + esc(s.title) +
+      '" aria-label="' + esc(s.title) + ' 크게 보기"></button></div>' +
+      '<div class="ftitle">' + (s.state ? '<span class="state">상태</span>' : '') + esc(s.title) + '</div>' +
+      (s.purpose ? '<div class="fdesc">' + esc(s.purpose) + '</div>' : '') + (shown ? '<ul class="pol">' + shown + '</ul>' : '') + more + '</div>';
+  });
+  html += '</div></div>';
+});
+rowsEl.innerHTML = html;
+rowsEl.style.paddingLeft = LEFT + 'px';
+
+var foot = '';
+var P = D.palettes;
+if (P && P.options && P.options.length) {
+  foot += '<p>색 출처: ' + P.options.map(function (o) { return esc(o.name) + ' 웹 팔레트'; }).join(' · ') +
+    ' — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>';
+}
+if (D.credits && D.credits.length) {
+  foot += '<details><summary>사진 출처 ' + D.credits.length + '장</summary><ul>' + D.credits.map(function (c) {
+    var t = esc(c.title || c.file || c.slot);
+    var link = c.url ? '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + t + '</a>' : t;
+    return '<li>' + (c.slot ? esc(c.slot) + ' — ' : '') + link + (c.author ? ' · ' + esc(c.author) : '') + (c.license ? ' · ' + esc(c.license) : '') + '</li>';
+  }).join('') + '</ul></details>';
+}
+$('#foot').innerHTML = foot;
+$('#foot').style.marginLeft = LEFT + 'px';
+
+/* ---------- 화살표: 갈래(branches)에만. 같은 줄은 위쪽 호, 다른 줄은 왼쪽 통로로 우회 ---------- */
+var contentLeft = LEFT;
+function roundPath(pts, r) {
+  var d = 'M' + pts[0][0] + ',' + pts[0][1];
+  for (var i = 1; i < pts.length - 1; i++) {
+    var p = pts[i - 1], c = pts[i], n = pts[i + 1];
+    var l1 = Math.hypot(c[0] - p[0], c[1] - p[1]), l2 = Math.hypot(n[0] - c[0], n[1] - c[1]);
+    var rr = Math.min(r, l1 / 2, l2 / 2);
+    if (rr < 1) { d += ' L' + c[0] + ',' + c[1]; continue; }
+    var a = [c[0] - (c[0] - p[0]) / l1 * rr, c[1] - (c[1] - p[1]) / l1 * rr];
+    var b = [c[0] + (n[0] - c[0]) / l2 * rr, c[1] + (n[1] - c[1]) / l2 * rr];
+    d += ' L' + a[0].toFixed(1) + ',' + a[1].toFixed(1) + ' Q' + c[0] + ',' + c[1] + ' ' + b[0].toFixed(1) + ',' + b[1].toFixed(1);
+  }
+  var e = pts[pts.length - 1];
+  return d + ' L' + e[0] + ',' + e[1];
+}
+function drawArrows() {
+  var svg = $('#ar'), box = {};
+  $$('.card', rowsEl).forEach(function (c) {
+    box[c.dataset.id] = {x: c.offsetLeft, y: c.offsetTop, row: c.parentNode};   // offsetParent = .rows
+  });
+  $$('.alabel', rowsEl).forEach(function (n) { n.remove(); });
+  $$('path.ln', svg).forEach(function (n) { n.remove(); });
+  var paths = '', labels = '', k = 0, minX = LEFT;
+  (D.arrows || []).forEach(function (a) {
+    var s = box[a.from], t = box[a.to]; if (!s || !t) return;
+    var d, lx, ly, side = false;
+    if (s.row === t.row) {
+      var ax = s.x + CARD.w / 2, cx = t.x + CARD.w / 2, y = s.y - 10, peak = s.y - 58;
+      d = 'M' + ax + ',' + y + ' C' + ax + ',' + peak + ' ' + cx + ',' + peak + ' ' + cx + ',' + (y - 2);
+      lx = (ax + cx) / 2; ly = peak + 6;
+    } else {
+      var lane = LEFT - 56 - 22 * (k % 4), off = 22 + 12 * (k % 4);
+      var sx = s.x + 60 + 24 * (k % 3), tx = t.x + 60 + 24 * (k % 3);
+      var sg = s.y - off, tg = t.y - off;
+      d = roundPath([[sx, s.y - 6], [sx, sg], [lane, sg], [lane, tg], [tx, tg], [tx, t.y - 8]], 18);
+      lx = lane - 12; ly = (sg + tg) / 2; side = true; k++;
+      minX = Math.min(minX, lane - 240);
+    }
+    paths += '<path class="ln" d="' + d + '"/>';
+    if (a.label) labels += '<div class="alabel' + (side ? ' side' : '') + '" style="left:' + lx + 'px;top:' + ly + 'px">' + esc(a.label) + '</div>';
+  });
+  svg.insertAdjacentHTML('beforeend', paths);
+  rowsEl.insertAdjacentHTML('beforeend', labels);
+  if (labels) $$('.alabel.side', rowsEl).forEach(function (n) { minX = Math.min(minX, n.offsetLeft - n.offsetWidth); });
+  contentLeft = Math.max(0, minX - 24);
+}
+
+/* ---------- 이동·확대 ---------- */
+var z = Z0, tx = 0, ty = 0;
+function apply() {
+  stage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
+  stage.dataset.zoom = z.toFixed(4);
+  $('#zoom').textContent = Math.round(z * 100) + '%';
+  scheduleVisible();
+}
+var fitMin = ZMIN;                                // 전체 보기가 0.25 보다 작아야 하면 그만큼은 허용
+function clampZ(v) { return Math.min(ZMAX, Math.max(fitMin, v)); }
+function zoomAt(px, py, nz) {
+  nz = clampZ(nz);
+  var bx = (px - tx) / z, by = (py - ty) / z;
+  z = nz; tx = px - bx * z; ty = py - by * z; apply();
+}
+function home() {
+  z = Z0;
+  tx = pane.clientWidth < 600 ? 12 - LEFT * z : 24 - contentLeft * z;   // 폰: 화면 줄이 바로 보이게 통로는 화면 밖으로
+  ty = 0; apply();
+}
+function fit() {
+  var w = stage.offsetWidth - contentLeft, h = stage.offsetHeight;
+  var pw = pane.clientWidth, ph = pane.clientHeight;
+  var fz = Math.min((pw - 32) / w, (ph - 32) / h);
+  fitMin = Math.min(ZMIN, fz);
+  z = clampZ(fz);
+  tx = (pw - w * z) / 2 - contentLeft * z;
+  ty = Math.max(16, (ph - h * z) / 2);
+  apply();
+}
+$('#fit').addEventListener('click', fit);
+$('#zoom').addEventListener('click', home);
+
+pane.addEventListener('wheel', function (e) {
+  e.preventDefault();
+  var r = pane.getBoundingClientRect(), k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pane.clientHeight : 1;
+  var dx = e.deltaX * k, dy = e.deltaY * k;
+  if (e.ctrlKey || e.metaKey) { zoomAt(e.clientX - r.left, e.clientY - r.top, z * Math.exp(-dy * 0.0022)); return; }
+  if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+  tx -= dx; ty -= dy; apply();
+}, {passive: false});
+
+var ptrs = new Map(), drag = null, pinch = null, justDragged = false;
+function mid() { var a = Array.from(ptrs.values()); return {x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) || 1}; }
+function startDrag(id, p, type) { drag = {id: id, x: p.x, y: p.y, tx: tx, ty: ty, moved: false, thr: type === 'touch' ? 8 : 4}; }
+pane.addEventListener('pointerdown', function (e) {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  justDragged = false;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  if (ptrs.size === 1) startDrag(e.pointerId, {x: e.clientX, y: e.clientY}, e.pointerType);
+  else if (ptrs.size === 2) {
+    var m = mid(); pinch = {m: m, z: z, tx: tx, ty: ty};
+    if (drag) drag.moved = true;
+    try { ptrs.forEach(function (_, id) { pane.setPointerCapture(id); }); } catch (err) {}
+  }
+});
+pane.addEventListener('pointermove', function (e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  var r = pane.getBoundingClientRect();
+  if (pinch && ptrs.size >= 2) {
+    var m = mid(), nz = clampZ(pinch.z * m.d / pinch.m.d);
+    var bx = (pinch.m.x - r.left - pinch.tx) / pinch.z, by = (pinch.m.y - r.top - pinch.ty) / pinch.z;
+    z = nz; tx = m.x - r.left - bx * z; ty = m.y - r.top - by * z; apply();
+    return;
+  }
+  if (!drag || drag.id !== e.pointerId) return;
+  var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.moved && Math.hypot(dx, dy) > drag.thr) {
+    drag.moved = true; pane.classList.add('dragging');
+    try { pane.setPointerCapture(e.pointerId); } catch (err) {}
+  }
+  if (drag.moved) { tx = drag.tx + dx; ty = drag.ty + dy; apply(); }
+});
+function endPtr(e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId);
+  if (drag && drag.moved) justDragged = true;
+  if (ptrs.size === 1) {                          // 핀치 끝 → 남은 손가락으로 이어서 이동
+    pinch = null;
+    var id = ptrs.keys().next().value, p = ptrs.get(id);
+    startDrag(id, p, 'touch'); drag.moved = true;
+  } else if (ptrs.size === 0) { drag = null; pinch = null; pane.classList.remove('dragging'); }
+}
+pane.addEventListener('pointerup', endPtr);
+pane.addEventListener('pointercancel', endPtr);
+pane.addEventListener('click', function (e) {
+  if (justDragged) { justDragged = false; e.preventDefault(); e.stopPropagation(); return; }
+  var c = e.target.closest && e.target.closest('.cover');
+  if (c) openModal(c.dataset.file, c.dataset.title);
+}, true);
+
+/* ---------- 보이는 카드만 로드(이동·확대 후 100ms 묶어서) ---------- */
+var visT = 0;
+function loadVisible() {
+  var pr = pane.getBoundingClientRect();
+  if (!pr.width || pane.hidden) return;
+  $$('.phone iframe[data-src]', rowsEl).forEach(function (f) {
+    var r = f.parentNode.getBoundingClientRect();
+    if (r.right > pr.left - 80 && r.left < pr.right + 80 && r.bottom > pr.top - 80 && r.top < pr.bottom + 80) {
+      f.addEventListener('load', function () { sendTo(f); });
+      f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+    }
+  });
+}
+function scheduleVisible() { clearTimeout(visT); visT = setTimeout(loadVisible, 100); }
+addEventListener('resize', scheduleVisible);
+
+/* ---------- 크게 보기 ---------- */
+var modal = $('#modal'), mframe = $('#mframe'), mbox = $('#mbox');
+function sizeModal() {
+  var s = Math.min(1, (innerHeight - 72) / MH, (innerWidth - 16) / MW);
+  mframe.style.transform = s < 1 ? 'scale(' + s.toFixed(4) + ')' : '';
+  mbox.style.width = Math.floor(MW * s) + 'px'; mbox.style.height = Math.floor(MH * s) + 'px';
+  mbox.style.marginTop = '48px';
+}
+function openModal(file, title) {
+  sizeModal(); $('#mtitle').textContent = title || '';
+  mframe.src = file; modal.hidden = false; $('#mclose').focus();
+}
+function closeModal() { modal.hidden = true; mframe.removeAttribute('src'); }
+mframe.addEventListener('load', function () { sendTo(mframe); });
+$('#mclose').addEventListener('click', closeModal);
+modal.addEventListener('click', function (e) { if (e.target === modal || e.target.id === 'mtitle') closeModal(); });
+addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+addEventListener('resize', function () { if (!modal.hidden) sizeModal(); });
+
+/* ---------- 탭 ---------- */
+function showTab(name) {
+  document.body.dataset.tab = name;
+  $$('.tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === name)); });
+  $$('.pane').forEach(function (p) { p.hidden = p.id !== name; });
+  var f = $('#' + name + ' iframe.doc');
+  if (f && f.hasAttribute('data-src')) {
+    f.addEventListener('load', function () { sendTo(f); });
+    f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+  }
+  if (name === 'screens') scheduleVisible();
+  try { history.replaceState(null, '', name === 'screens' ? location.pathname + location.search : '#' + name); } catch (e) {}
+}
+$$('.tab').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+
+/* ---------- 팔레트: #tokens 교체 + 모든 iframe 에 postMessage + localStorage ---------- */
+var KEY = 'hd-palette', cur = null;
+function sendTo(f) { if (!cur) return; try { f.contentWindow.postMessage({type: 'hd-palette', slug: cur}, '*'); } catch (e) {} }
+function setPalette(slug) {
+  cur = slug;
+  var l = $('#tokens'), base = l.getAttribute('data-base') || l.getAttribute('href');
+  l.setAttribute('data-base', base);
+  l.setAttribute('href', base.replace(/tokens(-[^/]*)?\.css$/, 'tokens-' + slug + '.css'));
+  $$('iframe').forEach(sendTo);
+  $$('.dot').forEach(function (d) { d.setAttribute('aria-pressed', String(d.dataset.slug === slug)); });
+}
+if (P && P.options && P.options.length) {
+  var pal = $('.pal');
+  pal.innerHTML = '<span class="pal-label">색</span>' + P.options.slice(0, 3).map(function (o) {
+    return '<button class="dot" data-slug="' + esc(o.slug) + '" style="--dot:' + esc(o.brand) + '" aria-pressed="false" title="' +
+      esc(o.name) + ' 색으로 보기' + (o.source ? ' — ' + esc(o.source) : '') + '" aria-label="' + esc(o.name) + ' 색으로 보기"><i></i><b>' + esc(o.name) + '</b></button>';
+  }).join('');
+  $$('.dot').forEach(function (d) {
+    d.addEventListener('click', function () { setPalette(d.dataset.slug); try { localStorage.setItem(KEY, cur); } catch (e) {} });
+  });
+  var start = new URLSearchParams(location.search).get('p');
+  try { start = start || localStorage.getItem(KEY); } catch (e) {}
+  if (!start || !P.options.some(function (o) { return o.slug === start; })) start = P.default || P.options[0].slug;
+  setPalette(start);
+}
+
+/* ---------- 시작 ---------- */
+(function () {                                    // 판 위 글은 첫 배율에서 화면 폭에 들어오게
+  var pw = pane.clientWidth, narrow = pw < 600;
+  if (narrow) stage.classList.add('narrow');
+  var left = narrow ? 12 : 24 + LEFT * Z0;
+  var mw = Math.round((pw - left - 24) / Z0) + 'px';
+  $('#intro').style.maxWidth = mw; $('#foot').style.maxWidth = mw;
+})();
+drawArrows();
+home();
+loadVisible();
+var hashTab = (location.hash || '').slice(1);
+if (hashTab === 'foundation' || hashTab === 'components') showTab(hashTab);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawArrows(); });
+window.__hdReady = performance.now();
+})();
+</script>
+</body>
+</html>

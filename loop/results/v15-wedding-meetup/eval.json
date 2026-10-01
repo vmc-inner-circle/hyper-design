@@ -1,0 +1,104 @@
+{
+ "score_pass": "43/43",
+ "failed_checks": [],
+ "judge": {
+  "p0": [
+   {
+    "screen": "start → (민수 쪽 진입)",
+    "issue": "Start says '민수 님께 보낼 링크', '링크로 들어오면 신랑 쪽으로 붙어요', but there is no screen for what the second user (민수) sees when joining by link or the first home they land on. The partner's starting screen is missing in an app the couple uses together.",
+    "cause": "The start/end check only covers the person who made the thing. When an invite link makes someone else a user, their entry screen isn't treated as a required start."
+   },
+   {
+    "screen": "home · 다녀옴 5 rows (›)",
+    "issue": "The PRD requires a separate '이미 다녀온 모임' (past meetup) state. Its rows have a ›, but no detail or result screen exists for a past meetup.",
+    "cause": "The rule 'every list row with › needs a target screen of matching state' isn't enforced. The reachability check passes as long as some screen is linked."
+   }
+  ],
+  "p1": [
+   {
+    "screen": "start--done · meetup-dates--done · guest-respond--done",
+    "issue": "The finish of three flows is a message (toast) stuck on top of the same input form. The user can't see the meetup they made, or where they're going next. Start--done still shows the '시작하기' button, so it's unclear whether starting actually happened.",
+    "cause": "--done is allowed to be drawn as 'form + toast'. Rule: the end of a create/request action must move to a result screen (the created item's detail or the hub) where the new item shows up."
+   },
+   {
+    "screen": "calendar",
+    "issue": "The key overview for PRD #5 encodes 지/민/둘 initials and bold vs light weight, then explains them with a legend sentence. The cells are cramped and the weekday headers are misaligned, so the meetups and clashes don't read at a glance.",
+    "cause": "There's no rule against a UI that needs an explanatory sentence (a legend). Rule: a calendar marks owner and state with dots or colour plus the selected-date list, and a legend sentence is a failure."
+   }
+  ],
+  "p2": [
+   {
+    "screen": "meetup-confirm--done",
+    "issue": "It says '새로 보낼 필요 없어요' (no need to send anything), then offers a '단톡방 안내 문구 복사' button right below. That contradicts itself and adds a manual task.",
+    "cause": "After deciding 'confirm = share' as a side effect of an existing action, a leftover share button wasn't removed. Rule: once a manual task is ruled out in the assumptions log, its button must be gone."
+   },
+   {
+    "screen": "people-end",
+    "issue": "A filled '이 중에서 모임 만들기' button inside the 지인 tab list duplicates '새 모임' on the 모임 tab, with a primary filled button on a tab root.",
+    "cause": "The tab-root CTA check only looks at fixed bottom buttons. Inline filled buttons and duplicate CTAs across tabs aren't checked."
+   },
+   {
+    "screen": "groups",
+    "issue": "The heading says '지은 쪽 무리 9개', but it lists about 13 groups including 민수's (사촌, 대학 선배, 회사 대표), and there's no 민수 section. The PRD story about each person managing their own pool falls apart here.",
+    "cause": "Count/label mismatches in dummy data aren't checked. Rule: section count = number of items in it."
+   },
+   {
+    "screen": "people tab bar",
+    "issue": "The 모임 and 지인 tab icons change shape from tab to tab (house → people, group → single person).",
+    "cause": "The tab bar isn't fixed as a single shared component."
+   },
+   {
+    "screen": "people-added",
+    "issue": "A stock photo of an unrelated restaurant group is placed on the 'contact added' screen as decoration.",
+    "cause": "The rule 'one photo per result screen' leads to photos with no link to the content. Allow photos only where they relate."
+   },
+   {
+    "screen": "meetup-dates · meetup-edit · person-edit",
+    "issue": "The same 3D calendar illustration is repeated on every date candidate row, so it reads as decoration rather than information.",
+    "cause": "Repeated subject illustrations inside a list aren't capped. Rule: one illustration per screen or section, none on list rows."
+   },
+   {
+    "screen": "meetup-detail vs meetup-edit",
+    "issue": "The same person's avatar uses the surname (박) on one screen and the given name (서연) on the other. The couple are 3D illustrations while everyone else is an initial circle, which looks mixed.",
+    "cause": "The avatar rule isn't tokenized."
+   },
+   {
+    "screen": "home first screen",
+    "issue": "The couple's avatars sit alone under '아직 모임 없는 12명' with no purpose.",
+    "cause": "Decorative elements with no clear 'who, when' aren't detected."
+   },
+   {
+    "screen": "badges",
+    "issue": "'확정' (brown-tint beige) and '회신 기다림' (grey beige) have similar backgrounds and are hard to tell apart at small size.",
+    "cause": "The badge_semantic check only compares the hue of the text colour. Also enforce a minimum difference between tint backgrounds (ΔE)."
+   }
+  ],
+  "p3": [
+   {
+    "screen": "guest-confirmed",
+    "issue": "'지도 앱에서 열기' is plain text, so it doesn't look tappable.",
+    "cause": "Weak link styling."
+   },
+   {
+    "screen": "index",
+    "issue": "The '정한 것·뺀 것' cards are text-heavy, so the canvas's first impression starts with a document rather than screens.",
+    "cause": "There's no limit on the amount of rationale text at the top of the canvas."
+   }
+  ],
+  "rubric": {
+   "hierarchy": 4,
+   "subtraction": 3,
+   "consistency": 3,
+   "prd_fit": 4,
+   "role_diff": 3,
+   "polish": 3
+  },
+  "top3_harness_fixes": [
+   "Expand the start/end check from 'per created thing' to 'per user and per state'. List required start screens for every user an invite link creates (partner, guest), and require a destination screen for every state the PRD names (예: 다녀옴) whose list row has a ›.",
+   "Ban the '--done = same form + toast' pattern. The end of a create/request action must be on a different screen from the form, where the new item is visible (detail or hub with it highlighted). Add a machine check: screenshot similarity between the --done and default screens must be below a threshold.",
+   "Detect 'UI that needs an explanatory sentence' (legend / '= 뜻' patterns, initials for codes) and inline filled CTAs on tab roots, and fail on them. Also cap repeated illustrations per screen and check label counts against dummy data."
+  ],
+  "one_line": "The guest and confirm flows are solid, but the partner's start and the past-meetup end are missing, and three flows finish with a toast on the same form."
+ },
+ "vs_vanilla": "5/5"
+}
