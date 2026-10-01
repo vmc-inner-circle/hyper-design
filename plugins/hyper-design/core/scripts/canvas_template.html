@@ -66,12 +66,11 @@ body:not([data-tab="screens"]) .view{visibility:hidden}
 .idea{background:#fff;border-radius:20px;padding:22px}
 .idea b{font-size:22px}
 .idea p{font-size:19px;line-height:1.55;color:#555;margin:8px 0 0}
-.people{margin-top:24px}
-.people h3{font-size:27px;margin:0 0 12px}
-.people ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.people li{background:#fff;border-radius:16px;padding:16px 18px;font-size:19px;line-height:1.5;color:#555}
-.people li b{display:block;font-size:21px;color:#1c1c1c;margin-bottom:4px}
-.people li .wants{display:block;font-size:17px;color:#777;margin-top:6px}
+.people{margin-top:20px}
+.people h3{font-size:22px;margin:0 0 10px}
+.people ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.people li{background:#fff;border-radius:16px;padding:14px 16px;font-size:17px;line-height:1.45;color:#555}
+.people li b{display:block;font-size:18px;color:#1c1c1c;margin-bottom:2px}
 .people li .win{display:block;color:#1c1c1c;margin-top:4px}
 .decisions{margin-top:6px}
 .narrow .ideas,.narrow .decisions ul,.narrow .people ul,.narrow .intro-grid{grid-template-columns:1fr}
@@ -177,7 +176,7 @@ if (st && (st.headline || st.summary)) {
     '<div class="ideas">' + (st.ideas || []).slice(0, 3).map(function (d) {
       return '<div class="idea"><b>' + esc(d.title) + '</b><p>' + esc(d.desc) + '</p></div>'; }).join('') + '</div>' +
     ((D.people || []).length ? '<div class="people"><h3>누구를 위한 앱인가</h3><ul>' + D.people.map(function (p) {
-      return '<li><b>' + esc(p.name) + (p.core ? ' · 핵심' : '') + '</b>' + esc(p.why) + ((p.wants || []).length ? '<span class="wants">궁금한 것: ' + p.wants.map(esc).join(' · ') + '</span>' : '') + '<span class="win">→ ' + esc(p.win) + '</span>' + '</li>'; }).join('') + '</ul></div>' : '') + '</section>';
+      return '<li><b>' + esc(p.name) + (p.core ? ' · 핵심' : '') + '</b>' + esc(p.why) + '<span class="win">→ ' + esc(p.win) + '</span>' + '</li>'; }).join('') + '</ul></div>' : '') + '</section>';
 }
 var dc = D.decisions;
 if (dc && ((dc.items || []).length || dc.core)) {
