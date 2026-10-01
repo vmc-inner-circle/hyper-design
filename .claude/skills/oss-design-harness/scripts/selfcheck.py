@@ -10,6 +10,24 @@ try:
 except Exception as e:
     print("screens.json 읽기 실패:", e); sys.exit(1)
 S = m.get("screens", []); ids = {s["id"] for s in S}
+# 명세 목록(v13): 원문 인용 · 커버 · 규칙 → 상태
+INV = {}
+try: INV = json.loads((out / "spec_inventory.json").read_text(encoding="utf-8"))
+except Exception as e: errs.append(f"spec_inventory.json 없음/깨짐: {e}")
+PRD = (out / "prd.md").read_text(encoding="utf-8") if (out / "prd.md").exists() else ""
+if not PRD: errs.append("out/prd.md 없음 — save_prd.py로 원문을 저장한다")
+norm = lambda x: re.sub(r"\s+", "", x or "")
+NPRD = norm(PRD)
+RULE_ST = {}
+for it in INV.get("items", []):
+    iid, k = it.get("id"), it.get("kind")
+    if PRD and it.get("quote") and norm(it["quote"])[:60] not in NPRD: errs.append(f"명세 {iid}: quote가 PRD 원문에 없음(지어낸 항목)")
+    if k in ("screen", "step", "feature"):
+        cov = [x for x in it.get("covered_by") or [] if x in ids]
+        if not cov and not it.get("decision"): errs.append(f"명세 {iid} '{it.get('name')}': 덮는 화면도 결정(decision)도 없음")
+    if k == "rule":
+        if it.get("target") and it.get("state"): RULE_ST.setdefault(it["target"], set()).add(it["state"])
+        elif not it.get("policy"): errs.append(f"명세 규칙 {iid}: target·state(상태 화면) 또는 policy(정책 문구로 내린 화면 id) 필요")
 base = [s for s in S if "--" not in s["id"]]
 if len(base) < 10: errs.append(f"기본 화면 {len(base)}장 < 10")
 for k, v in (m.get("prd_coverage") or {}).items():
@@ -35,10 +53,13 @@ for s in S:
     if t.get("list_first_use"): exp.add("empty")
     if t.get("form"): exp.add("error")
     if t.get("shares"): exp.add("done")
+    if t.get("long_task"): exp.add("progress")
+    exp |= RULE_ST.get(s["id"], set())
     if "large_list" not in t and s.get("kind") == "list" and "--" not in s["id"]: errs.append(f'{s["id"]}: traits.large_list(30개 넘게 쌓이는 목록인가) 미선언')
     if "--" not in s["id"]:
         decl = set(s.get("states", []) or [])
-        if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)}')
+        if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)} — expand_states.py를 다시 돌린다')
+        if len(exp) > 3: errs.append(f'{s["id"]}: 상태 {len(exp)}개 > 3')
         for st in exp:
             if f'{s["id"]}--{st}' not in ids: errs.append(f'{s["id"]}: 상태 화면 {s["id"]}--{st} 없음')
     f = out / s["file"]
@@ -47,7 +68,8 @@ for s in S:
     n = len(re.findall(r"<h1[\s>]", h))
     if n != 1: errs.append(f"{f.name}: h1 {n}개")
     if 'id="tokens"' not in h or "palette.js" not in h: errs.append(f"{f.name}: <link id=\"tokens\"> 또는 palette.js 없음(원클릭 팔레트 교체 불가)")
-    if re.search(r'\sstyle="', h): errs.append(f"{f.name}: 인라인 style")
+    for st in re.findall(r'\sstyle="([^"]*)"', h):   # CSS 변수 지정(--from 등)만 예외
+        if any(not d.strip().startswith("--") for d in st.split(";") if d.strip()): errs.append(f"{f.name}: 인라인 style"); break
     if re.search(r"#[0-9a-fA-F]{3,6}\b", re.sub(r"<svg.*?</svg>", "", h, flags=re.S)): errs.append(f"{f.name}: 색 값 하드코딩")
     if PLACE.search(h): errs.append(f"{f.name}: 플레이스홀더 문구")
     if EMOJI.search(h): errs.append(f"{f.name}: 이모지 문자")
@@ -57,6 +79,8 @@ for s in S:
     if len(cards) > 1: errs.append(f"{f.name}: 설명 카드(설명 한 줄만 든 블록) {len(cards)}개 — 설명이 필요한 구조라는 신호(화면당 1개)")
     if re.search(r'class="(?:info|block-note)"[^>]*>(?:(?!</p>).)*누르면', h, re.S): errs.append(f"{f.name}: 조작법 설명('~를 누르면') — 구조로 이해시킨다")
     if 'class="cta"' in h and 'class="tabbar"' in h: errs.append(f"{f.name}: 탭 첫 화면에 하단 고정 CTA")
+    for blk in re.findall(r'<(?:div|figure|span) class="(?:photo|thumb)[^"]*"[^>]*>(.*?)</(?:div|figure|span)>', h, re.S):
+        if "<img" not in blk: errs.append(f"{f.name}: 사진 자리에 이미지 없음(글자만) — assets/photos 또는 assets/domain 이미지를 넣는다")
     for tag in re.findall(r'<[a-z]+ class="row is-add[^"]*"[^>]*>', h):
         hm = re.search(r'href="([^"#]*)', tag)
         if not hm or not hm.group(1) or pathlib.Path(hm.group(1)).name == f.name:
@@ -67,10 +91,23 @@ for s in S:
         if img not in PERSON: errs.append(f"{f.name}: 사람 자리(avatar)에 사물 일러스트 {img} — 글자 아바타(avatar is-text)로")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
+# 이미지: 스톡 사진은 출처 기록 필수, 라이선스 제한
+photos = sorted((out / "assets/photos").glob("*.jpg")) if (out / "assets/photos").exists() else []
+try: CR = {c.get("file"): c for c in json.loads((out / "credits.json").read_text(encoding="utf-8"))}
+except Exception: CR = {}
+for ph in photos:
+    rel = f"assets/photos/{ph.name}"; c = CR.get(rel)
+    if not c: errs.append(f"{rel}: credits.json에 출처 없음(자리표시 그대로면 drawing으로 바꾼다)")
+    elif c.get("license") not in ("cc0", "pdm", "by"): errs.append(f"{rel}: 라이선스 {c.get('license')} 불가")
+dom = list((out / "assets/domain").glob("*")) if (out / "assets/domain").exists() else []
+if m.get("photo_centric") and not photos and not dom: errs.append("photo_centric인데 이미지가 하나도 없음")
 # 제품 판단 장부: PRD 요구사항을 빼거나 가볍게 바꿨으면 반드시 물었어야 한다
 try:
     D = json.loads((out / "decisions.json").read_text(encoding="utf-8"))
     if not D.get("core"): errs.append("decisions.json: core(핵심 한 문장) 없음")
+    if INV.get("mode") == "spec":
+        pc = [i for i in D.get("items", []) if i.get("source") == "PRD" and i.get("verdict") == "cut"]
+        if len(pc) > 3: errs.append(f"명세 모드에서 PRD 요구사항 {len(pc)}개 cut > 3 — 과삭제, 되살린다")
     for it in D.get("items", []):
         if it.get("source") == "PRD" and it.get("verdict") in ("cut", "lighten") and not it.get("ask"):
             errs.append(f"decisions.json: PRD 요구사항 '{it.get('name')}'을 묻지 않고 {it['verdict']}")
