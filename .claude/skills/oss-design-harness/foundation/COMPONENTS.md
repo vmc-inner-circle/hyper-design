@@ -1,6 +1,6 @@
 # 부품 요약 — 화면 파일은 이 클래스만 조합한다
 
-인라인 `style`·임의 색/크기 금지. 색·글자·여백은 전부 `tokens.css`(팔레트에서 생성) 변수. 모범 답안: `foundation/examples/*.html`(구조만 참고, 내용 베끼지 말 것).
+인라인 `style`·임의 색/크기 금지(예외 하나: `.range`의 `style="--from:…;--to:…"` — 아래 "공통 부품"). 색·글자·여백은 전부 `tokens.css`(팔레트에서 생성) 변수. 모범 답안: `foundation/examples/*.html`(구조만 참고, 내용 베끼지 말 것).
 
 ## 화면 파일 뼈대 (out/screens/<id>.html)
 
@@ -66,3 +66,17 @@
 beach · calendar · car · clipboard · coffee · eyes · father · hayun · hotel · idcard · invite · jieun · luggage · meal · minsu · mother · phone · pill · pin · plane · shoe · ticket · umbrella · walk · weather
 
 용도: 사물·주제 = 컬러 일러스트 / 누르는 것(+·뒤로·›·체크·스위치) = 선 아이콘(stroke 1.75, 24px, currentColor) / 사람 = 아바타. 유니코드 이모지 금지.
+
+## 공통 부품
+견본: `foundation/specimens.html`(부품마다 `<section class="spec" data-key="…">`, 상태별 모습).
+- 진행 막대(여러 단계 입력·온보딩에서 지금 몇 단계인지): `<div class="progress" role="progressbar" aria-valuenow="2" aria-valuemax="5"><span class="is-on"></span><span class="is-on"></span><span></span><span></span><span></span></div>` — 칸 수 = 전체 단계, `is-on` = 지나온 단계.
+- 별점 표시(후기·평점 보여줄 때): `<div class="rating" role="img" aria-label="5점 중 4점"><svg class="is-on" …>(별 선 아이콘)</svg>…5개</div>` — 별 svg는 HTML 인라인(fill 없이 stroke만), 채운 별은 `is-on`.
+- 별점 입력(후기 쓰기): `<div class="rating is-input" role="radiogroup"><button class="is-on" role="radio" aria-checked="false" aria-label="1점">(별 svg)</button>…</div>` — 각 별이 44px 버튼, 고른 점수까지 `is-on`, 고른 버튼만 `aria-checked="true"`.
+- 범위 표시(가격대·기간처럼 "어디부터 어디까지"를 보여줄 때): `<div class="range" style="--from:20%;--to:60%"><div class="range-track"></div><div class="range-ticks"><span>0</span>…<span>10만</span></div></div>`
+  - **인라인 style 예외는 이것 하나**: `.range`에 CSS 변수 `--from`·`--to`(0~100%)만 설정한다. 다른 속성·다른 요소의 인라인 style은 계속 금지.
+- 타임라인(진행 이력·예약/시술 경과처럼 날짜 순 기록): `<ol class="timeline"><li class="tl-item"><p class="tl-date">3월 2일</p><div class="tl-body"><p>첫 상담</p></div></li><li class="tl-item is-now">…</li></ol>` — 지금 항목만 `is-now`(점이 브랜드 색).
+- 전·후 비교(시술·수리·정리 결과처럼 바뀐 모습을 증명할 때): `<div class="compare"><div class="photo is-3x4"><img src="…" alt="전"><span class="compare-label">전</span></div><div class="photo is-3x4"><img src="…" alt="후"><span class="compare-label">후</span></div></div>`
+- 사진(상품·장소·결과물을 크게 보여줄 때): `<div class="photo is-16x9"><img src="…" alt="…"></div>` — 비율 `is-3x4`·`is-1x1`·`is-16x9`(없으면 4:3).
+- 썸네일(목록 행 왼쪽의 작은 사진): `<span class="thumb"><img src="…" alt=""></span>` · 크게 `thumb is-l`(72px).
+- 사진 모음(후기 사진·갤러리 3열): `<div class="photo-grid"><img src="…" alt="">…</div>`
+- **사진 자리(`.photo`·`.thumb`·`.photo-grid`·`.compare`)에는 반드시 `<img>`를 넣는다.** 회색 칸에 "사진 1"·"이미지" 같은 글자만 넣지 않는다. `alt`는 무엇의 사진인지 적는다(꾸밈용이면 `alt=""`).

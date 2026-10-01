@@ -176,3 +176,59 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .block .hero { padding-left: 0; padding-right: 0; }
 .block .search { margin-left: 0; margin-right: 0; }
 .block .chips { margin-left: calc(var(--block-pad) * -1); margin-right: calc(var(--block-pad) * -1); padding-left: var(--block-pad); padding-right: var(--block-pad); }
+
+/* ── 공통 부품 ─────────────────────────────
+   진행·별점·범위·타임라인·사진. 색은 토큰만. 범위(.range)만 위치 값을 CSS 변수(--from·--to) 인라인 style로 받는다. */
+
+/* 진행 막대 — 단계형. 켜진 칸 = 지나온 단계 */
+.progress { display: flex; gap: 4px; height: 4px; }
+.progress > span { flex: 1; border-radius: var(--r-pill); background: var(--c-line-strong); }
+.progress > span.is-on { background: var(--c-brand); }
+
+/* 별점 — 선 아이콘 별 5개(svg는 HTML 인라인). 채운 별 = .is-on */
+.rating { display: inline-flex; align-items: center; gap: 4px; color: var(--c-line-strong); }
+.rating svg { width: 20px; height: 20px; fill: none; }
+.rating .is-on { color: var(--c-brand); }
+.rating svg.is-on, .rating .is-on svg { fill: currentColor; }
+.rating.is-input { gap: 0; }
+.rating.is-input button { width: 44px; height: 44px; display: grid; place-items: center; color: var(--c-line-strong); }
+.rating.is-input button.is-on { color: var(--c-brand); }
+.rating.is-input svg { width: 32px; height: 32px; }
+.rating.is-input button:focus-visible { outline: 2px solid var(--c-focus); outline-offset: -4px; border-radius: var(--r-s); }
+
+/* 범위 표시 — style="--from:20%;--to:45%" 만 허용 */
+.range { --from: 0%; --to: 100%; display: flex; flex-direction: column; gap: 4px; padding: 0 12px; }
+.range-track { position: relative; height: 24px;
+  background: linear-gradient(to right, var(--c-line-strong) var(--from), var(--c-brand) var(--from), var(--c-brand) var(--to), var(--c-line-strong) var(--to)) center / 100% 4px no-repeat; }
+.range-track::before, .range-track::after { content: ""; position: absolute; top: 50%; width: 20px; height: 20px; border-radius: var(--r-pill); background: var(--c-surface); border: 2px solid var(--c-brand); box-shadow: var(--shadow-1); transform: translate(-50%, -50%); }
+.range-track::before { left: var(--from); }
+.range-track::after { left: var(--to); }
+.range-ticks { display: flex; justify-content: space-between; margin: 0 -12px; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); font-variant-numeric: tabular-nums; }
+
+/* 타임라인 — 왼쪽 점 + 세로선. 현재 항목 = .is-now */
+.timeline { display: flex; flex-direction: column; }
+.tl-item { position: relative; padding: 0 0 var(--stack-m) var(--stack-l); display: flex; flex-direction: column; gap: 4px; }
+.tl-item::before { content: ""; position: absolute; left: 0; top: calc(var(--fs-sub) * var(--lh-sub) / 2); transform: translateY(-50%); width: 12px; height: 12px; border-radius: var(--r-pill); background: var(--c-surface); border: 2px solid var(--c-line-strong); z-index: 1; }
+.tl-item::after { content: ""; position: absolute; left: 0; top: calc(var(--fs-sub) * var(--lh-sub) / 2); bottom: calc(var(--fs-sub) * var(--lh-sub) / -2); width: 12px; background: linear-gradient(var(--c-line-strong), var(--c-line-strong)) center / 2px 100% no-repeat; }
+.tl-item:last-child { padding-bottom: 0; }
+.tl-item:last-child::after { display: none; }
+.tl-item.is-now::before { background: var(--c-brand); border-color: var(--c-brand); box-shadow: 0 0 0 4px var(--c-brand-tint); }
+.tl-date { font-size: var(--fs-sub); line-height: var(--lh-sub); font-weight: 600; color: var(--c-text-2); }
+.tl-item.is-now .tl-date { color: var(--c-brand-text); }
+.tl-body { display: flex; flex-direction: column; gap: 4px; font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-1); }
+
+/* 사진 — 자리에는 반드시 <img>. 비율은 수정자로 */
+.photo { position: relative; overflow: hidden; border-radius: var(--r-m); background: var(--c-bg); aspect-ratio: 4 / 3; }
+.photo.is-3x4 { aspect-ratio: 3 / 4; }
+.photo.is-1x1 { aspect-ratio: 1 / 1; }
+.photo.is-16x9 { aspect-ratio: 16 / 9; }
+.photo img, .thumb img, .photo-grid img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.thumb { flex: none; width: 56px; height: 56px; border-radius: var(--r-s); overflow: hidden; background: var(--c-bg); }
+.thumb.is-l { width: 72px; height: 72px; }
+.photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; border-radius: var(--r-m); overflow: hidden; }
+.photo-grid > * { aspect-ratio: 1 / 1; overflow: hidden; background: var(--c-bg); border-radius: 0; }
+
+/* 전·후 비교 — 사진 두 장 나란히, 라벨은 사진 위 왼쪽에 겹쳐 */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: var(--stack-s); }
+.compare-label { position: absolute; top: 8px; left: 8px; display: inline-flex; align-items: center; height: 24px; padding: 0 var(--stack-s); border-radius: var(--r-s); background: var(--c-surface); color: var(--c-text-1); font-size: var(--fs-caption); font-weight: 600; line-height: 1; box-shadow: var(--shadow-1); }
+.compare .photo:last-child .compare-label { background: var(--c-brand-tint); color: var(--c-brand-tint-text); }
