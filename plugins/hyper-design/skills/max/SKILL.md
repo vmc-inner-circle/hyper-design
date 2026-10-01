@@ -26,7 +26,7 @@ description: hyper-design의 끝까지 버전 — 1차(모든 흐름의 처음�
   - 1차 화면은 고치지 않는다(사용자가 이미 봤다). 상태 화면으로 가는 링크가 필요하면 그 한 줄만 추가한다.
 
 ## 3. 검증·수정 (3분)
-한 메시지에서 동시에(포그라운드): `build_canvas.py out` · `selfcheck.py out` · `audit.py out --shots out/.shots` + 사실 대조 서브에이전트 1개. 비평 체크리스트는 `$SK/references/checklist.md`. 수정은 1회, 상태 화면 위주로 흐름별 병렬.
+한 메시지에서 동시에(포그라운드): `build_canvas.py out` · `selfcheck.py out` · `audit.py out --shots out/.shots` + 사실 대조 서브에이전트 1개, 캡처가 생기면 그 사람의 눈 서브에이전트(1차 지시문 3단계, 이번에 더한 상태 화면만). 비평 체크리스트는 `$SK/references/checklist.md`. 수정은 1회, 상태 화면 위주로 흐름별 병렬.
 
 ## 끝 — 마지막 메시지
 - 무엇을 더했는지 2줄(상태 화면 수, 대표적인 예외 순간 2~3개)
