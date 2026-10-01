@@ -53,7 +53,8 @@ MEASURE_JS = r"""
     textSizes: [], contrastFails: [], touch: {total: 0, ok: 0, fails: []}, primary: [], h1: 0, help: [],
     emoji: [], gradients: [], textGradient: 0, cardDeep: 0, boxTotal: 0, boxRadius: 0,
     placeholders: [], brokenImgs: [], scrollWidth: document.documentElement.scrollWidth,
-    insets: [...new Set([...document.querySelectorAll('.hero .title, .search, .chip:first-child, .field, .block-head, .block > .info, .block-note, .seg')]
+    rowSqueeze: [...document.querySelectorAll('.row')].filter(r => r.querySelector('.row-trail .btn') && r.querySelector('.row-title')).map(r => { const t = r.querySelector('.row-title'); const lh = parseFloat(getComputedStyle(t).lineHeight) || 24; return Math.round(t.getBoundingClientRect().height / lh); }).filter(n => n >= 3).length,
+    insets: [...new Set([...document.querySelectorAll('.hero .title, .search, .chip:first-child, .field, .block-head, .block > .info, .block > .block-note, .seg, .page > .info, .page > p, .page > .block-note')]
       .map(e => e.getBoundingClientRect()).filter(r => r.width && r.left < 120).map(r => Math.round(r.left)))],
     insetOk: (() => { const v = n => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n)) || 0;
       return [Math.round(v('--page-x')), Math.round(v('--stack-m') + v('--block-pad'))]; })() };
@@ -459,6 +460,8 @@ def main():
     add("가독성", "touch_target", f"{(tok/tt*100 if tt else 100):.1f}%", "100%", tok == tt, "; ".join(tf[:6]))
     ov = [f"{sid}({r.get('scrollWidth')})" for sid, r in per.items() if (r.get("scrollWidth") or 0) > 375]
     add("가독성", "h_overflow", len(ov), "0", not ov, ", ".join(ov))
+    sq = [f"{sid}({r.get('rowSqueeze')})" for sid, r in per.items() if r.get("rowSqueeze")]
+    add("가독성", "row_squeeze", len(sq), "0", not sq, ", ".join(sq) + (" — 행 오른쪽 버튼 때문에 제목이 3줄 이상" if sq else ""))
     ins = [f"{sid}{sorted(r.get('insets', []))}" for sid, r in per.items() if set(r.get("insets", [])) - set(r.get("insetOk", []))]
     add("가독성", "x_inset_kinds", len(ins), "0", not ins, "; ".join(ins[:6]) + (" — 페이지 여백(page-x)·블록 안 여백 외의 시작선(여백이 겹쳐 들어감)" if ins else ""))
 
