@@ -1,0 +1,152 @@
+{
+ "score_pass": "39/43",
+ "failed_checks": [
+  {
+   "id": "gray_steps",
+   "group": "일관성",
+   "value": 7,
+   "threshold": "<=6",
+   "detail": "rgb(64, 88, 80) rgb(92, 116, 112) rgb(152, 160, 160) rgb(188, 192, 192) rgb(228, 236, 236) rgb(240, 248, 244) rgb(256, 256, 256)",
+   "pass": false
+  },
+  {
+   "id": "radius_kinds",
+   "group": "일관성",
+   "value": 5,
+   "threshold": "<=4",
+   "detail": "12px 12px 12px 12px | 16px 16px 0px 0px | 16px 16px 16px 16px | 8px 8px 8px 8px | 999px 999px 999px 999px",
+   "pass": false
+  },
+  {
+   "id": "contrast_aa",
+   "group": "가독성",
+   "value": 5,
+   "threshold": "0",
+   "detail": "pause--error: button \"일시정지 신청\" 2.23<4.5; phone-verify--error: button \"확인\" 2.23<4.5; review-write--error: button \"리뷰 올리기\" 2.23<4.5; signup-terms--error: button \"다음\" 2.23<4.5; waitlist--error: button \"대기 신청\" 2.23<4.5",
+   "pass": false
+  },
+  {
+   "id": "x_inset_kinds",
+   "group": "가독성",
+   "value": 3,
+   "threshold": "0",
+   "detail": "checkin--error[40, 48]; checkin[40, 48]; pass-detail[40, 72] — 페이지 여백(page-x)·블록 안 여백 외의 시작선(여백이 겹쳐 들어감)",
+   "pass": false
+  }
+ ],
+ "judge": {
+  "p0": [
+   {
+    "screen": "출석 체크(checkin)",
+    "issue": "PRD S19 lists '완료 안내(수업명, 시간)' as an item, but there is no check-in success screen, only default and error. Users have no way to know check-in worked.",
+    "cause": "States are derived only as default/error/empty, so the success screen of a one-time action (출석·리뷰 올리기 등) is never drawn. Every one-time action needs a 'just pressed' screen."
+   },
+   {
+    "screen": "내 예약 › 지난 수업 탭",
+    "issue": "The tab exists but there is no screen for it. Past-class statuses from PRD S18/R3 (출석·노쇼·무료 취소·차감 취소·휴강, 리뷰 미작성 → 리뷰 쓰기) appear nowhere, so the review flow has no starting point.",
+    "cause": "The coverage check matches screen IDs only. Tabs and segments inside a screen, and the status values the PRD lists, are not checked one by one."
+   }
+  ],
+  "p1": [
+   {
+    "screen": "결제 실패(checkout--error)·출석 QR 오류(checkin--error)",
+    "issue": "The first screen looks the same as default except for the CTA label ('다시 결제하기'). The error reason only appears at the very bottom of the scroll, so users can't tell why it failed.",
+    "cause": "Error messages are placed only next to the field that caused them. The rule should be: in an error state, the message must be visible in the first viewport (812px), as a summary banner at the top or by scrolling to it."
+   },
+   {
+    "screen": "예약 확인 – 예약 제한(book--error)",
+    "issue": "The R4 block keeps the booking form (cancellation rules, confirm check) as-is and swaps the fixed CTA for '노쇼 현황 확인'. Moving to a screen gets a fixed button, and the release date isn't the headline.",
+    "cause": "Blocked states reuse the default layout and only replace the CTA. The rule should be: if the action can't be done, the headline becomes the reason and release time, the form is removed, and navigation is shown as a link, not a fixed CTA."
+   },
+   {
+    "screen": "수업 상세 – 시간 겹침(class--error)",
+    "issue": "'리포머 기초 예약 취소하기', which cancels a different booking, is the main filled CTA. This can trigger a charge from late cancellation and pushes a destructive action.",
+    "cause": "The fastest fix for the error is promoted to the primary CTA without checking whether it can be undone or costs something. Destructive or charging fixes should be text links or secondary buttons, with the main action disabled."
+   },
+   {
+    "screen": "스튜디오 찾기(find)",
+    "issue": "The PRD R-policy '결과 0개 → 3km로 넓혀볼까요?' empty state is missing. Network errors and camera/location permission denial are also missing everywhere, including check-in.",
+    "cause": "State derivation doesn't pull in the PRD's empty, error and permission sentences and the 'common states' note (네트워크·권한 거부)."
+   },
+   {
+    "screen": "수강권·결제 전체",
+    "issue": "Every pass shown is a session pass. The period pass (persona C's 3개월권), choosing a start date (오늘/첫 수업일/직접 선택), weekly-limit display and expired-pass booking (R8) are never shown.",
+    "cause": "Sample data only fills one product type. When the PRD defines several product types or variants, the sample data should include at least one of each."
+   }
+  ],
+  "p2": [
+   {
+    "screen": "수업 시간표",
+    "issue": "Only '마감 임박' gets a badge; the more important '마감·대기 마감' are plain text. '내가 예약함·대기 중(순번)' never show up on the timetable.",
+    "cause": "There's no rule that badges go to states that need attention or action first. Badges are assigned per state value without ranking."
+   },
+   {
+    "screen": "전 화면",
+    "issue": "Every section is a white rounded card on a gray background (radius 88%), so screens look samey and AI-made. 'Card > photo > sub-card' nesting shows up on the photo and map screens.",
+    "cause": "Card is the default container. The rule should be: lists and settings use rows and dividers; cards are only for single units you can tap."
+   },
+   {
+    "screen": "리뷰 목록",
+    "issue": "The rating distribution is 5 text rows with no bars, and it fills the whole first screen.",
+    "cause": "Distribution and ratio data have no rule to use a compact chart."
+   },
+   {
+    "screen": "알림함·마이",
+    "issue": "A sneaker icon means both reminders and attendance, and a coffee cup means pause. Text gets squeezed between the icon, time and chevron and wraps to 3–4 lines.",
+    "cause": "Illustration icons are picked by mood, not meaning, with no mapping table. Rows with a time stamp should drop the icon or move the time under the title."
+   },
+   {
+    "screen": "홈",
+    "issue": "The location name in the app bar starts at x=8, misaligned with the content at 24px. In the next-class card, '취소' is attached to the end of a sentence like loose text.",
+    "cause": "App-bar horizontal margin isn't tied to the page-x token. Inline actions have no rule to sit on their own row."
+   },
+   {
+    "screen": "전화번호 인증 오류",
+    "issue": "The '다시 받기' button is shown in its active style while resending is locked until 17:26.",
+    "cause": "When an error locks a button, its disabled state isn't derived automatically."
+   },
+   {
+    "screen": "로그인",
+    "issue": "The Kakao button is brand green tint, not the usual Kakao yellow, so it's hard to recognize.",
+    "cause": "Social login buttons aren't exempt from the brand token, even though platform rules say they should be."
+   },
+   {
+    "screen": "취소 확인 시트",
+    "issue": "'취소하면 대기 1번 분께 자리가 가요' exposes the waitlist, which the PRD says students shouldn't see, and adds pressure.",
+    "cause": "Policy sentences saying 'not visible to the user' aren't treated as a ban on showing it."
+   },
+   {
+    "screen": "내 예약",
+    "issue": "The tab says '예정 2' but the list shows 3 items, because the promotion item from the waitlist is in the upcoming tab.",
+    "cause": "Tab counts and list contents aren't checked against each other."
+   },
+   {
+    "screen": "캔버스(index)",
+    "issue": "The headline highlight and arrows are blue, unlike the green brand. Arrows cross over each other above the screens and look busy.",
+    "cause": "Canvas chrome colors don't follow the selected palette. Arrows aren't routed to avoid crossing."
+   }
+  ],
+  "p3": [
+   {
+    "screen": "결제 중복 확인 시트",
+    "issue": "3 buttons, with 'paying again' in red, which isn't a destructive action. Two buttons (결제 내역 확인 / 한 번 더 결제) would be enough.",
+    "cause": "Red danger styling is used for anything that needs attention."
+   }
+  ],
+  "rubric": {
+   "hierarchy": 4,
+   "subtraction": 3,
+   "consistency": 3,
+   "prd_fit": 3,
+   "role_diff": 3,
+   "polish": 3
+  },
+  "top3_harness_fixes": [
+   "Error and blocked state rule: in an error or blocked state, the cause sentence must show in the first 812px viewport (top banner or headline). If the action is impossible, remove the form and make the reason and release time the headline. Navigation is a link, never a fixed CTA. Destructive or charging fixes are never the primary CTA.",
+   "PRD coverage check: count all segment tabs, status values and product types the PRD lists (지난 수업 statuses, 횟수권/기간권, 완료 안내), not just screen IDs, and check each has its own screen or sample data. Add a 'just pressed / success' state for one-time actions (출석·제출·결제) to the required derivation rules.",
+   "Container and icon rules: card containers only for single tappable units; use rows and dividers for lists and settings. Map illustration icons 1:1 to meaning in a table (reminder ≠ attendance). Badges go to the states that need attention or action most."
+  ],
+  "one_line": "Showing PRD rules with real dates and counts is strong, but the check-in success and past-classes screens are missing, and error states either don't change the first screen or offer the wrong fix."
+ },
+ "vs_vanilla": "1/5"
+}
