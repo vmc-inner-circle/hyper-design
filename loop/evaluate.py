@@ -19,6 +19,14 @@ if not bshots.exists():
             pg.screenshot(path=str(bshots / f"{i:02d}-{h.stem}.png"))            # 폰 첫 화면(하네스 캡처와 같은 방식)
             pg.evaluate("window.scrollTo(0, document.body.scrollHeight)"); pg.wait_for_timeout(200)
             pg.screenshot(path=str(bshots / f"{i:02d}-{h.stem}-end.png"))
+        if len(htmls) < 3 and (base / "out/index.html").exists():   # 한 페이지 앱(SPA) — 전체를 큰 화면으로
+            pg2 = b.new_page(viewport={"width": 1440, "height": 900})
+            pg2.goto((base / "out/index.html").as_uri()); pg2.wait_for_timeout(2500)
+            pg2.screenshot(path=str(bshots / "index-full.png"), full_page=True)
+            H = pg2.evaluate("document.documentElement.scrollHeight")
+            for k, y in enumerate(range(0, min(H, 900 * 12), 900)):
+                pg2.evaluate(f"window.scrollTo(0,{y})"); pg2.wait_for_timeout(300)
+                pg2.screenshot(path=str(bshots / f"index-{k:02d}.png"))
         b.close()
 def claude(prompt, cwd, model="claude-opus-5-5"):
     r = subprocess.run(["claude", "-p", "--model", model, "--dangerously-skip-permissions", "--output-format", "json"],

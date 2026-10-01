@@ -65,7 +65,7 @@ def main():
         if sc and sc[0][0] > 0:
             v, sd, why = sc[0]; seed = sd
             slug = "seed-" + sd["slug"]
-            subprocess.run([sys.executable, str(HERE / "derive.py"), "--brand", sd["hex"], "--tone", sd.get("tone", "neutral"), "-o", str(out / f"tokens-{slug}.css")], check=True, capture_output=True)
+            subprocess.run([sys.executable, str(HERE / "derive.py"), "--brand", sd["hex"], "--tone", "brand", "-o", str(out / f"tokens-{slug}.css")], check=True, capture_output=True)
             pals[slug] = {"name": sd["name"], "scales": {"b": {"s": sd["hex"]}}, "brand": "b", "brand_step": "s", "source": "브랜드 시드(" + sd.get("source", "") + ")"}
             scored.insert(0, (v, slug, ["라이브러리에 맞는 도메인이 없어 시드로 만듦"] + why))
             alts = [p for p in picks if p != default][:1] + [default]

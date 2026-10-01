@@ -1,0 +1,2790 @@
+{
+ "mode": "spec",
+ "items": [
+  {
+   "id": "S01",
+   "kind": "screen",
+   "name": "스플래시 / 첫 실행 안내",
+   "quote": "### S01. 스플래시 / 첫 실행 안내",
+   "covered_by": [
+    "splash"
+   ]
+  },
+  {
+   "id": "P01b",
+   "kind": "step",
+   "name": "첫 실행 안내 — 소개 2~3장",
+   "quote": "(최초 1회) 소개 2~3장 — \"동네 스튜디오 한 번에\", \"남은 횟수 바로 확인\", \"자리 나면 자동 알",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "S02",
+   "kind": "screen",
+   "name": "로그인 / 가입 방법 선택",
+   "quote": "### S02. 로그인 / 가입 방법 선택",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "S03",
+   "kind": "screen",
+   "name": "전화번호 인증",
+   "quote": "### S03. 전화번호 인증",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "S04",
+   "kind": "screen",
+   "name": "약관 동의 + 기본 정보",
+   "quote": "### S04. 약관 동의 + 기본 정보",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "S05",
+   "kind": "screen",
+   "name": "동네 설정",
+   "quote": "### S05. 동네 설정",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "S06",
+   "kind": "screen",
+   "name": "홈",
+   "quote": "### S06. 홈",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "S07",
+   "kind": "screen",
+   "name": "스튜디오 찾기 (지도)",
+   "quote": "### S07. 스튜디오 찾기 (지도 / 목록)",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "P07b",
+   "kind": "step",
+   "name": "스튜디오 찾기 — 목록 보기",
+   "quote": "목록: 대표 사진, 이름, 종목, 거리, 별점(리뷰 수), \"1회 ○○원~\"",
+   "covered_by": [
+    "search-list"
+   ]
+  },
+  {
+   "id": "S08",
+   "kind": "screen",
+   "name": "스튜디오 상세",
+   "quote": "### S08. 스튜디오 상세",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "S09",
+   "kind": "screen",
+   "name": "강사 상세",
+   "quote": "### S09. 강사 상세",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "S10",
+   "kind": "screen",
+   "name": "수업 시간표 (주간)",
+   "quote": "### S10. 수업 시간표 (주간)",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "S11",
+   "kind": "screen",
+   "name": "수업 상세",
+   "quote": "### S11. 수업 상세",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "S12",
+   "kind": "screen",
+   "name": "수강권 선택",
+   "quote": "### S12. 수강권 선택",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "S13",
+   "kind": "screen",
+   "name": "결제",
+   "quote": "### S13. 결제 / 결제 완료",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "P13b",
+   "kind": "step",
+   "name": "결제 완료",
+   "quote": "성공 → 완료(구매 수강권 요약, \"바로 예약하기\", \"홈으로\")",
+   "covered_by": [
+    "checkout-done"
+   ]
+  },
+  {
+   "id": "S14",
+   "kind": "screen",
+   "name": "예약 확인",
+   "quote": "### S14. 예약 확인 / 예약 완료",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "P14b",
+   "kind": "step",
+   "name": "예약 완료",
+   "quote": "완료 후: 캘린더 추가, 내 예약 보기, 위치 보기",
+   "covered_by": [
+    "booking-done"
+   ]
+  },
+  {
+   "id": "S15",
+   "kind": "screen",
+   "name": "대기 신청",
+   "quote": "### S15. 대기 신청",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "S16",
+   "kind": "screen",
+   "name": "대기 승급 확정",
+   "quote": "### S16. 대기 승급 확정",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "S17",
+   "kind": "screen",
+   "name": "예약 취소",
+   "quote": "### S17. 예약 취소",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "S18",
+   "kind": "screen",
+   "name": "내 예약 목록",
+   "quote": "### S18. 내 예약 목록",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "S19",
+   "kind": "screen",
+   "name": "출석 체크",
+   "quote": "### S19. 출석 체크",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "S20",
+   "kind": "screen",
+   "name": "수강권 관리",
+   "quote": "### S20. 수강권 관리",
+   "covered_by": [
+    "passes",
+    "pass-detail"
+   ]
+  },
+  {
+   "id": "S21",
+   "kind": "screen",
+   "name": "수강권 일시정지",
+   "quote": "### S21. 수강권 일시정지",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "S22",
+   "kind": "screen",
+   "name": "리뷰 작성",
+   "quote": "### S22. 리뷰 작성 / 리뷰 목록",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "P22b",
+   "kind": "step",
+   "name": "리뷰 목록",
+   "quote": "**표시(목록)**: 평균 별점, 분포, 상위 키워드, 리뷰(닉네임, 날짜, 수업/강사, 별점, 내용)",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "S23",
+   "kind": "screen",
+   "name": "알림함",
+   "quote": "### S23. 알림함",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "S24",
+   "kind": "screen",
+   "name": "마이페이지",
+   "quote": "### S24. 마이페이지",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "S25",
+   "kind": "screen",
+   "name": "설정",
+   "quote": "### S25. 설정",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E01",
+   "kind": "feature",
+   "name": "서비스 로고",
+   "quote": "서비스 로고",
+   "screen_hint": "S01",
+   "covered_by": [
+    "splash"
+   ]
+  },
+  {
+   "id": "E02",
+   "kind": "feature",
+   "name": "소개 넘기기/건너뛰기",
+   "quote": "넘기기/건너뛰기 → 로그인",
+   "screen_hint": "P01b",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "E03",
+   "kind": "feature",
+   "name": "카카오로 시작",
+   "quote": "카카오로 시작",
+   "screen_hint": "S02",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "E04",
+   "kind": "feature",
+   "name": "Apple로 시작",
+   "quote": "Apple로 시작(Android 노출 여부 확인 중)",
+   "screen_hint": "S02",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "E05",
+   "kind": "feature",
+   "name": "전화번호로 시작",
+   "quote": "전화번호로 시작",
+   "screen_hint": "S02",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "E06",
+   "kind": "feature",
+   "name": "약관 링크",
+   "quote": "약관 링크",
+   "screen_hint": "S02",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "E07",
+   "kind": "feature",
+   "name": "둘러보기(비로그인 탐색)",
+   "quote": "\"둘러보기\"(비로그인 탐색)",
+   "screen_hint": "S02",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "E08",
+   "kind": "feature",
+   "name": "전화번호 입력",
+   "quote": "번호 입력",
+   "screen_hint": "S03",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "E09",
+   "kind": "feature",
+   "name": "인증번호 6자리 입력",
+   "quote": "인증번호 6자리",
+   "screen_hint": "S03",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "E10",
+   "kind": "feature",
+   "name": "남은 시간 타이머",
+   "quote": "남은 시간 3:00",
+   "screen_hint": "S03",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "E11",
+   "kind": "feature",
+   "name": "인증번호 재전송",
+   "quote": "재전송",
+   "screen_hint": "S03",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "E12",
+   "kind": "feature",
+   "name": "문자 자동 채우기",
+   "quote": "문자 자동 채우기 지원",
+   "screen_hint": "S03",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "E13",
+   "kind": "feature",
+   "name": "전체 동의",
+   "quote": "전체 동의",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E14",
+   "kind": "feature",
+   "name": "필수 약관 동의",
+   "quote": "[필수] 이용약관·개인정보·만 14세 이상",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E15",
+   "kind": "feature",
+   "name": "선택 마케팅 수신 동의",
+   "quote": "[선택] 마케팅 수신",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E16",
+   "kind": "feature",
+   "name": "이름(실명) 입력",
+   "quote": "이름(실명)",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E17",
+   "kind": "feature",
+   "name": "닉네임 입력",
+   "quote": "닉네임",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E18",
+   "kind": "feature",
+   "name": "성별·생년(선택)",
+   "quote": "성별·생년(선택)",
+   "screen_hint": "S04",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "E19",
+   "kind": "feature",
+   "name": "현재 위치로 설정",
+   "quote": "현재 위치로 설정",
+   "screen_hint": "S05",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "E20",
+   "kind": "feature",
+   "name": "동 이름 검색·결과",
+   "quote": "동 이름 검색·결과",
+   "screen_hint": "S05",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "E21",
+   "kind": "feature",
+   "name": "최근 동네(최대 3)",
+   "quote": "최근 동네(최대 3)",
+   "screen_hint": "S05",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "E22",
+   "kind": "feature",
+   "name": "현재 동네명",
+   "quote": "현재 동네명",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E23",
+   "kind": "feature",
+   "name": "알림(안 읽은 개수)",
+   "quote": "알림(안 읽은 개수)",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E24",
+   "kind": "feature",
+   "name": "다음 수업 카드",
+   "quote": "**다음 수업**: 일시, 스튜디오, 수업명, 강사",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E25",
+   "kind": "feature",
+   "name": "출석하기(30분 전부터)",
+   "quote": "\"출석하기\"(30분 전부터)",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E26",
+   "kind": "feature",
+   "name": "내 수강권 요약",
+   "quote": "내 수강권 요약: 만료 임박 순 1개의 잔여/만료일 + \"외 n개\"",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E27",
+   "kind": "feature",
+   "name": "대기 중 순번·확정 필요 승급",
+   "quote": "대기 중 수업 순번, 확정 필요한 승급 건",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E28",
+   "kind": "feature",
+   "name": "오늘 빈자리 있는 수업",
+   "quote": "오늘 빈자리 있는 수업(다니는 스튜디오)",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E29",
+   "kind": "feature",
+   "name": "동네 추천 스튜디오",
+   "quote": "동네 추천 스튜디오",
+   "screen_hint": "S06",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "E30",
+   "kind": "feature",
+   "name": "지도/목록 전환",
+   "quote": "지도/목록 전환",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E31",
+   "kind": "feature",
+   "name": "스튜디오명 검색",
+   "quote": "스튜디오명 검색",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E32",
+   "kind": "feature",
+   "name": "종목 필터",
+   "quote": "종목(기구 필라테스/매트/요가)",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E33",
+   "kind": "feature",
+   "name": "거리 필터",
+   "quote": "거리(500m/1km/3km)",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E34",
+   "kind": "feature",
+   "name": "시간대 필터",
+   "quote": "시간대(오전/오후/저녁/주말)",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E35",
+   "kind": "feature",
+   "name": "체험 가능 필터",
+   "quote": "체험 가능",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E36",
+   "kind": "feature",
+   "name": "정렬",
+   "quote": "정렬: 거리순, 리뷰 많은 순, 별점순",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E37",
+   "kind": "feature",
+   "name": "지도 위치 표시·선택 요약",
+   "quote": "지도: 위치 표시, 선택 시 요약(이름, 거리, 별점, 사진, 오늘 빈자리 수)",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E38",
+   "kind": "feature",
+   "name": "목록 항목",
+   "quote": "목록: 대표 사진, 이름, 종목, 거리, 별점(리뷰 수), \"1회 ○○원~\"",
+   "screen_hint": "P07b",
+   "covered_by": [
+    "search-list"
+   ]
+  },
+  {
+   "id": "E39",
+   "kind": "feature",
+   "name": "이 지역에서 다시 찾기",
+   "quote": "지도 이동 후 \"이 지역에서 다시 찾기\"",
+   "screen_hint": "S07",
+   "covered_by": [
+    "search-map",
+    "search-list"
+   ]
+  },
+  {
+   "id": "E40",
+   "kind": "feature",
+   "name": "사진 갤러리(최대 10장)",
+   "quote": "사진(최대 10장, 전체 보기)",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E41",
+   "kind": "feature",
+   "name": "기본 정보",
+   "quote": "이름, 종목, 별점·리뷰 수, 주소, 거리",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E42",
+   "kind": "feature",
+   "name": "소개·운영시간·휴무일",
+   "quote": "소개, 운영시간, 휴무일",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E43",
+   "kind": "feature",
+   "name": "강사 목록",
+   "quote": "**강사**: 사진, 이름, 한 줄 소개 → S09",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E44",
+   "kind": "feature",
+   "name": "시설 정보",
+   "quote": "**시설**: 주차, 샤워실, 탈의실, 락커, 운동복 대여, 기구 종류(리포머/캐딜락/체어 등), 정원 규모",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E45",
+   "kind": "feature",
+   "name": "수강권 상품·취소 규정 요약",
+   "quote": "수강권 상품(가격, 횟수/기간, 유효기간), 취소 규정 요약",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E46",
+   "kind": "feature",
+   "name": "리뷰 요약 + 최근 3개",
+   "quote": "리뷰 요약 + 최근 3개 → S22",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E47",
+   "kind": "feature",
+   "name": "길찾기·전화·즐겨찾기",
+   "quote": "지도·길찾기(외부 지도 앱), 전화하기, 즐겨찾기",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E48",
+   "kind": "feature",
+   "name": "시간표 보기/예약하기",
+   "quote": "**시간표 보기/예약하기** (항상 접근 가능)",
+   "screen_hint": "S08",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "E49",
+   "kind": "feature",
+   "name": "강사 프로필",
+   "quote": "사진, 이름, 경력, 자격증, 전문 분야(재활, 산전산후 등)",
+   "screen_hint": "S09",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "E50",
+   "kind": "feature",
+   "name": "강사 이번 주 수업",
+   "quote": "이번 주 수업",
+   "screen_hint": "S09",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "E51",
+   "kind": "feature",
+   "name": "강사 리뷰",
+   "quote": "강사 리뷰",
+   "screen_hint": "S09",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "E52",
+   "kind": "feature",
+   "name": "스튜디오 전환",
+   "quote": "스튜디오명(여러 곳 다니면 전환)",
+   "screen_hint": "S10",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "E53",
+   "kind": "feature",
+   "name": "주간 날짜 이동",
+   "quote": "주간 날짜(이번 주·다음 주, 이전/다음 이동)",
+   "screen_hint": "S10",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "E54",
+   "kind": "feature",
+   "name": "수업 항목",
+   "quote": "선택일 수업: 시작~종료, 수업명, 강사, 종목/난이도, 잔여석 \"3/6\", 상태",
+   "screen_hint": "S10",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "E55",
+   "kind": "feature",
+   "name": "수업 상태 표시",
+   "quote": "상태: 예약 가능 / 마감 임박(1~2석) / 마감(대기 n명) / 대기 마감 / 내가 예약함 / 대기 중(",
+   "screen_hint": "S10",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "E56",
+   "kind": "feature",
+   "name": "시간표 필터",
+   "quote": "필터: 강사, 종목, 시간대",
+   "screen_hint": "S10",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "E57",
+   "kind": "feature",
+   "name": "수업 기본 정보",
+   "quote": "수업명, 일시, 소요시간, 스튜디오, 강사(→S09), 종목, 난이도(입문~고급), 소개",
+   "screen_hint": "S11",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "E58",
+   "kind": "feature",
+   "name": "정원·잔여석·대기·준비물",
+   "quote": "정원·잔여석, 대기 인원, 준비물/유의사항(\"양말 필수\" 등)",
+   "screen_hint": "S11",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "E59",
+   "kind": "feature",
+   "name": "취소 규정(실제 날짜 계산)",
+   "quote": "**취소 규정**: \"○월 ○일 ○○:○○까지 무료 취소, 이후 1회 차감\" — 실제 날짜로 계산",
+   "screen_hint": "S11",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "E60",
+   "kind": "feature",
+   "name": "사용할 수강권(자동 선택, 변경)",
+   "quote": "사용할 수강권(자동 선택, 변경 가능)",
+   "screen_hint": "S11",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "E61",
+   "kind": "feature",
+   "name": "상태별 행동 버튼",
+   "quote": "상태별 행동: 예약 / 대기 신청 / 예약 취소 / 대기 취소 / 출석 / 리뷰 쓰기",
+   "screen_hint": "S11",
+   "covered_by": [
+    "class",
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "E62",
+   "kind": "feature",
+   "name": "횟수권 상품",
+   "quote": "**횟수권**(체험 1회/10회/20회/30회)",
+   "screen_hint": "S12",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "E63",
+   "kind": "feature",
+   "name": "기간권 상품",
+   "quote": "**기간권**(1·3·6개월, 주 n회 제한 가능)",
+   "screen_hint": "S12",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "E64",
+   "kind": "feature",
+   "name": "상품별 가격·조건",
+   "quote": "상품별 가격·회당 가격·유효기간(10회 2개월 등)·일시정지 가능 여부",
+   "screen_hint": "S12",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "E65",
+   "kind": "feature",
+   "name": "환불 규정 요약",
+   "quote": "환불 규정 요약",
+   "screen_hint": "S12",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "E66",
+   "kind": "feature",
+   "name": "결제 상품 정보",
+   "quote": "상품 정보",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E67",
+   "kind": "feature",
+   "name": "시작일 선택(기간권)",
+   "quote": "시작일(기간권만: 오늘/첫 수업일/직접 선택, 30일 이내)",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E68",
+   "kind": "feature",
+   "name": "쿠폰 입력",
+   "quote": "쿠폰 입력",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E69",
+   "kind": "feature",
+   "name": "결제 수단",
+   "quote": "결제 수단(카드, 카카오페이, 네이버페이, 토스페이)",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E70",
+   "kind": "feature",
+   "name": "최종 금액",
+   "quote": "최종 금액",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E71",
+   "kind": "feature",
+   "name": "환불 규정 동의(필수)",
+   "quote": "환불 규정 동의(필수)",
+   "screen_hint": "S13",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "E72",
+   "kind": "feature",
+   "name": "구매 수강권 요약·바로 예약하기·홈으로",
+   "quote": "완료(구매 수강권 요약, \"바로 예약하기\", \"홈으로\")",
+   "screen_hint": "P13b",
+   "covered_by": [
+    "checkout-done"
+   ]
+  },
+  {
+   "id": "E73",
+   "kind": "feature",
+   "name": "수업 요약·사용 수강권",
+   "quote": "수업 요약, 사용 수강권",
+   "screen_hint": "S14",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "E74",
+   "kind": "feature",
+   "name": "차감 미리보기",
+   "quote": "\"10회 → 9회 (예약 시 차감, 무료 취소 시 복원)\"",
+   "screen_hint": "S14",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "E75",
+   "kind": "feature",
+   "name": "취소 규정 + 확인 체크",
+   "quote": "취소 규정(매번 표시, \"확인했습니다\" 체크는 첫 예약만)",
+   "screen_hint": "S14",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "E76",
+   "kind": "feature",
+   "name": "예약 확정",
+   "quote": "예약 확정",
+   "screen_hint": "S14",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "E77",
+   "kind": "feature",
+   "name": "캘린더 추가·내 예약 보기·위치 보기",
+   "quote": "캘린더 추가, 내 예약 보기, 위치 보기",
+   "screen_hint": "P14b",
+   "covered_by": [
+    "booking-done"
+   ]
+  },
+  {
+   "id": "E78",
+   "kind": "feature",
+   "name": "대기 인원·예상 순번",
+   "quote": "현재 대기 인원, 내 예상 순번",
+   "screen_hint": "S15",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "E79",
+   "kind": "feature",
+   "name": "대기 규칙 안내",
+   "quote": "규칙 안내(순서대로 알림, 2시간 내 확정, 시작 3시간 전 자동 해제)",
+   "screen_hint": "S15",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "E80",
+   "kind": "feature",
+   "name": "대기 사용할 수강권",
+   "quote": "사용할 수강권",
+   "screen_hint": "S15",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "E81",
+   "kind": "feature",
+   "name": "자리가 났어요 + 수업 정보",
+   "quote": "\"자리가 났어요!\", 수업 정보",
+   "screen_hint": "S16",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "E82",
+   "kind": "feature",
+   "name": "확정 마감 카운트다운",
+   "quote": "확정 마감 카운트다운 \"1시간 42분 남음\"",
+   "screen_hint": "S16",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "E83",
+   "kind": "feature",
+   "name": "확정 / 이번엔 포기",
+   "quote": "확정 / 이번엔 포기",
+   "screen_hint": "S16",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "E84",
+   "kind": "feature",
+   "name": "무료 취소 여부 안내",
+   "quote": "**무료 취소 여부** — \"지금 취소하면 횟수를 돌려받아요\" vs \"무료 취소 기간(○일 ○시)이 지나 1",
+   "screen_hint": "S17",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "E85",
+   "kind": "feature",
+   "name": "취소 사유(선택)",
+   "quote": "취소 사유(선택)",
+   "screen_hint": "S17",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "E86",
+   "kind": "feature",
+   "name": "취소 확정",
+   "quote": "취소 확정",
+   "screen_hint": "S17",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "E87",
+   "kind": "feature",
+   "name": "예정 수업 항목",
+   "quote": "예정: 일시, 스튜디오, 수업명, 강사, D-day, 무료 취소 마감까지 남은 시간",
+   "screen_hint": "S18",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "E88",
+   "kind": "feature",
+   "name": "대기 중 항목",
+   "quote": "대기 중: 수업 정보, 현재 순번, 확정 필요 건 강조",
+   "screen_hint": "S18",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "E89",
+   "kind": "feature",
+   "name": "지난 수업 항목",
+   "quote": "지난 수업: 출석 / 노쇼 / 무료 취소 / 차감 취소 / 휴강, 리뷰 작성 여부",
+   "screen_hint": "S18",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "E90",
+   "kind": "feature",
+   "name": "리뷰 미작성 → 작성",
+   "quote": "리뷰 미작성 → S21",
+   "screen_hint": "S18",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "E91",
+   "kind": "feature",
+   "name": "QR 스캔",
+   "quote": "**QR 스캔**(데스크 비치 QR)",
+   "screen_hint": "S19",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "E92",
+   "kind": "feature",
+   "name": "도착 확인(반경 100m)",
+   "quote": "**도착 확인**(스튜디오 반경 100m)",
+   "screen_hint": "S19",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "E93",
+   "kind": "feature",
+   "name": "출석 완료 안내",
+   "quote": "완료 안내(수업명, 시간)",
+   "screen_hint": "S19",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "E94",
+   "kind": "feature",
+   "name": "카메라 권한 → 스캔",
+   "quote": "QR → 카메라 권한 → 스캔 성공 시 출석",
+   "screen_hint": "S19",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "E95",
+   "kind": "feature",
+   "name": "스튜디오별 수강권 목록",
+   "quote": "스튜디오별 수강권: 상품명, **잔여/전체**, 시작~만료일, 남은 일수, 상태(사용 중/일시정지/만료/소진",
+   "screen_hint": "S20",
+   "covered_by": [
+    "passes",
+    "pass-detail"
+   ]
+  },
+  {
+   "id": "E96",
+   "kind": "feature",
+   "name": "만료 7일 이내 강조",
+   "quote": "만료 7일 이내 강조",
+   "screen_hint": "S20",
+   "covered_by": [
+    "passes",
+    "pass-detail"
+   ]
+  },
+  {
+   "id": "E97",
+   "kind": "feature",
+   "name": "수강권 상세 내역",
+   "quote": "상세: 사용 내역(날짜, 수업, 차감/복원 사유), 일시정지 이력, 남은 정지 횟수·일수",
+   "screen_hint": "S20",
+   "covered_by": [
+    "passes",
+    "pass-detail"
+   ]
+  },
+  {
+   "id": "E98",
+   "kind": "feature",
+   "name": "수강권 구매·일시정지 신청",
+   "quote": "수강권 구매, 일시정지 신청 → S21",
+   "screen_hint": "S20",
+   "covered_by": [
+    "passes",
+    "pass-detail"
+   ]
+  },
+  {
+   "id": "E99",
+   "kind": "feature",
+   "name": "남은 정지 횟수·일수",
+   "quote": "남은 정지 횟수(최대 2회)·일수(총 30일)",
+   "screen_hint": "S21",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "E100",
+   "kind": "feature",
+   "name": "시작일/종료일",
+   "quote": "시작일/종료일",
+   "screen_hint": "S21",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "E101",
+   "kind": "feature",
+   "name": "변경 만료일 미리보기",
+   "quote": "변경 만료일 미리보기 \"12.10 → 12.24\"",
+   "screen_hint": "S21",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "E102",
+   "kind": "feature",
+   "name": "정지 기간 내 예약 목록",
+   "quote": "정지 기간 내 예약 목록 + \"자동 무료 취소됩니다\"",
+   "screen_hint": "S21",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "E103",
+   "kind": "feature",
+   "name": "조기 해제",
+   "quote": "정지 중 \"조기 해제\" 가능",
+   "screen_hint": "S21",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "E104",
+   "kind": "feature",
+   "name": "리뷰 대상 수업 정보",
+   "quote": "**표시(작성)**: 수업 정보",
+   "screen_hint": "S22",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "E105",
+   "kind": "feature",
+   "name": "별점 1~5",
+   "quote": "별점 1~5",
+   "screen_hint": "S22",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "E106",
+   "kind": "feature",
+   "name": "좋았던 점 복수 선택",
+   "quote": "좋았던 점 복수 선택(친절해요/자세 교정 꼼꼼/시설 깨끗/강도 적당/주차 편함…)",
+   "screen_hint": "S22",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "E107",
+   "kind": "feature",
+   "name": "리뷰 텍스트",
+   "quote": "텍스트(10~500자)",
+   "screen_hint": "S22",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "E108",
+   "kind": "feature",
+   "name": "평균 별점·분포·상위 키워드",
+   "quote": "평균 별점, 분포, 상위 키워드",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E109",
+   "kind": "feature",
+   "name": "리뷰 항목",
+   "quote": "리뷰(닉네임, 날짜, 수업/강사, 별점, 내용)",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E110",
+   "kind": "feature",
+   "name": "리뷰 정렬",
+   "quote": "정렬(최신/높은순/낮은순)",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E111",
+   "kind": "feature",
+   "name": "리뷰 강사 필터",
+   "quote": "강사 필터",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E112",
+   "kind": "feature",
+   "name": "운영자 답글",
+   "quote": "운영자 답글",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E113",
+   "kind": "feature",
+   "name": "리뷰 신고",
+   "quote": "신고",
+   "screen_hint": "P22b",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "E114",
+   "kind": "feature",
+   "name": "리뷰 수정·삭제",
+   "quote": "수정·삭제 가능",
+   "screen_hint": "S22",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "E115",
+   "kind": "feature",
+   "name": "알림 항목",
+   "quote": "종류, 내용, 시간, 읽음 여부",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E116",
+   "kind": "feature",
+   "name": "알림: 예약 확정/취소 완료/휴강",
+   "quote": "예약 확정 / 취소 완료 / 휴강",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E117",
+   "kind": "feature",
+   "name": "알림: 리마인드·무료 취소 마감",
+   "quote": "리마인드(전날 21시 + 2시간 전), 무료 취소 마감 3시간 전",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E118",
+   "kind": "feature",
+   "name": "알림: 대기 승급/자동 해제",
+   "quote": "대기 승급(확정 필요) / 대기 자동 해제",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E119",
+   "kind": "feature",
+   "name": "알림: 수강권 만료 임박/잔여 1회",
+   "quote": "수강권 만료 임박(7일·1일 전) / 잔여 1회",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E120",
+   "kind": "feature",
+   "name": "알림: 노쇼 처리·예약 제한",
+   "quote": "노쇼 처리, 예약 제한",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E121",
+   "kind": "feature",
+   "name": "알림: 리뷰 요청·결제 완료/실패",
+   "quote": "리뷰 요청(종료 1시간 후), 결제 완료/실패",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E122",
+   "kind": "feature",
+   "name": "알림 선택 → 관련 화면",
+   "quote": "선택 → 관련 화면",
+   "screen_hint": "S23",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "E123",
+   "kind": "feature",
+   "name": "프로필·수정",
+   "quote": "프로필(닉네임, 이름, 전화번호)·수정",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E124",
+   "kind": "feature",
+   "name": "이번 달 출석 횟수",
+   "quote": "이번 달 출석 횟수",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E125",
+   "kind": "feature",
+   "name": "마이 수강권 요약",
+   "quote": "수강권 요약, 결제 내역·영수증",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E126",
+   "kind": "feature",
+   "name": "결제 내역·영수증",
+   "quote": "결제 내역·영수증",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E127",
+   "kind": "feature",
+   "name": "내가 쓴 리뷰",
+   "quote": "내가 쓴 리뷰",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E128",
+   "kind": "feature",
+   "name": "즐겨찾는 스튜디오",
+   "quote": "즐겨찾는 스튜디오",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E129",
+   "kind": "feature",
+   "name": "노쇼 현황",
+   "quote": "**노쇼 현황**(최근 30일 n회, 제한 중이면 해제일)",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E130",
+   "kind": "feature",
+   "name": "동네 설정·설정 진입",
+   "quote": "동네 설정, 설정, 고객센터",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E131",
+   "kind": "feature",
+   "name": "고객센터",
+   "quote": "고객센터(FAQ, 카카오톡 채널)",
+   "screen_hint": "S24",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "E132",
+   "kind": "feature",
+   "name": "알림 설정",
+   "quote": "알림 설정(전체/예약·대기/리마인드/마케팅)",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E133",
+   "kind": "feature",
+   "name": "위치 권한 상태 + 시스템 설정 이동",
+   "quote": "위치 권한 상태 + 시스템 설정 이동",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E134",
+   "kind": "feature",
+   "name": "연결된 로그인 계정",
+   "quote": "연결된 로그인 계정",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E135",
+   "kind": "feature",
+   "name": "약관·라이선스·버전",
+   "quote": "약관·라이선스·버전",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E136",
+   "kind": "feature",
+   "name": "로그아웃",
+   "quote": "로그아웃",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "E137",
+   "kind": "feature",
+   "name": "회원 탈퇴",
+   "quote": "회원 탈퇴",
+   "screen_hint": "S25",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "Q01",
+   "kind": "rule",
+   "name": "로그인 유지 시 바로 홈",
+   "quote": "로그인 유지 중이면 바로 홈",
+   "screen_hint": "S01",
+   "state_hint": "policy",
+   "policy": "splash",
+   "covered_by": [
+    "splash"
+   ]
+  },
+  {
+   "id": "Q02",
+   "kind": "rule",
+   "name": "강제 업데이트 스토어 이동",
+   "quote": "강제 업데이트 버전이면 스토어 이동 안내",
+   "screen_hint": "S01",
+   "state_hint": "error",
+   "target": "splash",
+   "state": "confirm",
+   "covered_by": [
+    "splash"
+   ]
+  },
+  {
+   "id": "Q03",
+   "kind": "rule",
+   "name": "이미 가입된 번호 안내",
+   "quote": "같은 전화번호로 다른 방식 가입 이력 있으면 \"이미 ○○로 가입된 번호\" 안내",
+   "screen_hint": "S02",
+   "state_hint": "error",
+   "target": "phone-verify",
+   "state": "error",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "Q04",
+   "kind": "rule",
+   "name": "둘러보기 중 예약·구매 시 로그인",
+   "quote": "둘러보기 중 예약·구매 시도 시 이 화면으로",
+   "screen_hint": "S02",
+   "state_hint": "policy",
+   "policy": "login",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "Q05",
+   "kind": "rule",
+   "name": "카카오·애플 신규 가입 시 전화번호 필수",
+   "quote": "카카오·애플 신규 가입 중(전화번호 필수)",
+   "screen_hint": "S03",
+   "state_hint": "policy",
+   "policy": "phone-verify",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "Q06",
+   "kind": "rule",
+   "name": "인증번호 유효 3분",
+   "quote": "유효 3분",
+   "screen_hint": "S03",
+   "state_hint": "error",
+   "target": "phone-verify",
+   "state": "error",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "Q07",
+   "kind": "rule",
+   "name": "재전송 30초 후·하루 5회",
+   "quote": "재전송 30초 후·하루 5회",
+   "screen_hint": "S03",
+   "state_hint": "error",
+   "target": "phone-verify",
+   "state": "error",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "Q08",
+   "kind": "rule",
+   "name": "5회 오입력 시 10분 제한",
+   "quote": "5회 오입력 시 10분 제한",
+   "screen_hint": "S03",
+   "state_hint": "error",
+   "target": "phone-verify",
+   "state": "error",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "Q09",
+   "kind": "rule",
+   "name": "필수 체크 + 이름 입력 시 다음",
+   "quote": "필수 체크 + 이름 입력 시 다음 → S05",
+   "screen_hint": "S04",
+   "state_hint": "error",
+   "target": "signup-info",
+   "state": "error",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "Q10",
+   "kind": "rule",
+   "name": "이름은 운영자에게만 공개",
+   "quote": "이름은 스튜디오 출석부용, 운영자에게만 공개",
+   "screen_hint": "S04",
+   "state_hint": "policy",
+   "policy": "signup-info",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "Q11",
+   "kind": "rule",
+   "name": "리뷰엔 닉네임만",
+   "quote": "리뷰엔 닉네임만",
+   "screen_hint": "S04",
+   "state_hint": "policy",
+   "policy": "signup-info",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "Q12",
+   "kind": "rule",
+   "name": "닉네임 중복 허용",
+   "quote": "닉네임 중복 허용(으로 가정)",
+   "screen_hint": "S04",
+   "state_hint": "policy",
+   "policy": "signup-info",
+   "covered_by": [
+    "signup-info"
+   ]
+  },
+  {
+   "id": "Q13",
+   "kind": "rule",
+   "name": "위치 권한 거부해도 검색 가능",
+   "quote": "권한 거부해도 검색으로 설정 가능",
+   "screen_hint": "S05",
+   "state_hint": "error",
+   "target": "neighborhood",
+   "state": "error",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "Q14",
+   "kind": "rule",
+   "name": "동네는 1개만",
+   "quote": "동네는 1개만(집/회사 2개는 이후 검토)",
+   "screen_hint": "S05",
+   "state_hint": "policy",
+   "policy": "neighborhood",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "Q15",
+   "kind": "rule",
+   "name": "예약 없음 빈 상태",
+   "quote": "예약 없음 → \"예정된 수업이 없어요\" + 시간표 유도",
+   "screen_hint": "S06",
+   "state_hint": "policy",
+   "policy": "home",
+   "covered_by": [
+    "home"
+   ]
+  },
+  {
+   "id": "Q16",
+   "kind": "rule",
+   "name": "수강권 없음 → 구매 유도",
+   "quote": "수강권 없음 → 구매 유도",
+   "screen_hint": "S06",
+   "state_hint": "policy",
+   "policy": "home-new",
+   "covered_by": [
+    "home-new"
+   ]
+  },
+  {
+   "id": "Q17",
+   "kind": "rule",
+   "name": "신규는 찾기 영역 우선",
+   "quote": "다니는 스튜디오 없는 신규는 찾기 영역 우선",
+   "screen_hint": "S06",
+   "state_hint": "policy",
+   "policy": "home-new",
+   "covered_by": [
+    "home-new"
+   ]
+  },
+  {
+   "id": "Q18",
+   "kind": "rule",
+   "name": "다음 수업 최우선 노출",
+   "quote": "페르소나 C 때문에 \"다음 수업\"이 가장 먼저 보였으면 함",
+   "screen_hint": "S06",
+   "state_hint": "policy",
+   "policy": "home",
+   "covered_by": [
+    "home"
+   ]
+  },
+  {
+   "id": "Q19",
+   "kind": "rule",
+   "name": "권한 없으면 설정 동네 중심",
+   "quote": "권한 없으면 설정 동네 중심",
+   "screen_hint": "S07",
+   "state_hint": "policy",
+   "policy": "search-map",
+   "covered_by": [
+    "search-map"
+   ]
+  },
+  {
+   "id": "Q20",
+   "kind": "rule",
+   "name": "결과 0개 → 3km 제안",
+   "quote": "결과 0개 → \"3km로 넓혀볼까요?\"",
+   "screen_hint": "S07",
+   "state_hint": "error",
+   "target": "search-list",
+   "state": "error",
+   "covered_by": [
+    "search-list"
+   ]
+  },
+  {
+   "id": "Q21",
+   "kind": "rule",
+   "name": "입점 스튜디오만 노출",
+   "quote": "입점 스튜디오만 노출",
+   "screen_hint": "S07",
+   "state_hint": "policy",
+   "policy": "search-map",
+   "covered_by": [
+    "search-map"
+   ]
+  },
+  {
+   "id": "Q22",
+   "kind": "rule",
+   "name": "일시 휴업 시 예약 진입 막음",
+   "quote": "일시 휴업이면 안내 + 예약 진입 막음",
+   "screen_hint": "S08",
+   "state_hint": "error",
+   "target": "studio",
+   "state": "error",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "Q23",
+   "kind": "rule",
+   "name": "사진 없으면 기본 이미지",
+   "quote": "사진 없는 스튜디오 대비 기본 이미지",
+   "screen_hint": "S08",
+   "state_hint": "policy",
+   "policy": "studio",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "Q24",
+   "kind": "rule",
+   "name": "강사 스튜디오별 별도 프로필",
+   "quote": "여러 스튜디오 출강 강사도 MVP에선 스튜디오별 별도 프로필",
+   "screen_hint": "S09",
+   "state_hint": "policy",
+   "policy": "instructor",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "Q25",
+   "kind": "rule",
+   "name": "14일 이후 수업 오픈일 표시",
+   "quote": "14일 이후 수업은 \"○월 ○일 오픈\" 표시(R14)",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "timetable",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "Q26",
+   "kind": "rule",
+   "name": "휴무일 표시",
+   "quote": "휴무일은 \"휴무\"(R12)",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "timetable",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "Q27",
+   "kind": "rule",
+   "name": "하루 15개 이상 수업도 보기 편하게",
+   "quote": "하루 15개 넘는 스튜디오도 있어 많아도 보기 편해야 함",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "timetable",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "Q28",
+   "kind": "rule",
+   "name": "수강권 없음 안내 → 수강권 선택",
+   "quote": "수강권 없음 → \"이 스튜디오 수강권이 없어요\" + S12",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "policy": "class-nopass",
+   "covered_by": [
+    "class-nopass"
+   ]
+  },
+  {
+   "id": "Q29",
+   "kind": "rule",
+   "name": "예약한 수업은 예약 정보 표시",
+   "quote": "예약한 수업이면 예약 정보(예약 시각, 사용 수강권) 함께",
+   "screen_hint": "S11",
+   "state_hint": "policy",
+   "policy": "class",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "Q30",
+   "kind": "rule",
+   "name": "시간 겹치는 예약 불가",
+   "quote": "시간 겹치는 예약 있으면 불가(R10)",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "target": "class",
+   "state": "error",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "Q31",
+   "kind": "rule",
+   "name": "휴강 사유 표시",
+   "quote": "휴강 시 사유 표시(R13)",
+   "screen_hint": "S11",
+   "state_hint": "policy",
+   "policy": "class",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "Q32",
+   "kind": "rule",
+   "name": "체험권은 첫 구매자만",
+   "quote": "체험권은 해당 스튜디오 첫 구매자만",
+   "screen_hint": "S12",
+   "state_hint": "policy",
+   "policy": "pass-select",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "Q33",
+   "kind": "rule",
+   "name": "앱 예약은 그룹 수업만",
+   "quote": "앱 예약은 그룹 수업만",
+   "screen_hint": "S12",
+   "state_hint": "policy",
+   "policy": "pass-select",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "Q34",
+   "kind": "rule",
+   "name": "같은 스튜디오 수강권 여러 개 보유 가능",
+   "quote": "같은 스튜디오 수강권 여러 개 보유 가능",
+   "screen_hint": "S12",
+   "state_hint": "policy",
+   "policy": "pass-select",
+   "covered_by": [
+    "pass-select"
+   ]
+  },
+  {
+   "id": "Q35",
+   "kind": "rule",
+   "name": "시작일 30일 이내",
+   "quote": "시작일(기간권만: 오늘/첫 수업일/직접 선택, 30일 이내)",
+   "screen_hint": "S13",
+   "state_hint": "error",
+   "target": "checkout",
+   "state": "error",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "Q36",
+   "kind": "rule",
+   "name": "수업 상세에서 왔으면 예약으로 이어주기",
+   "quote": "수업 상세에서 왔으면 그 수업 예약으로 바로 이어주기",
+   "screen_hint": "P13b",
+   "state_hint": "done",
+   "policy": "checkout-done",
+   "covered_by": [
+    "checkout-done"
+   ]
+  },
+  {
+   "id": "Q37",
+   "kind": "rule",
+   "name": "영수증은 마이페이지 결제 내역",
+   "quote": "영수증은 마이페이지 결제 내역",
+   "screen_hint": "S13",
+   "state_hint": "policy",
+   "policy": "checkout",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "Q38",
+   "kind": "rule",
+   "name": "확정 순간 마감 → 대기 제안",
+   "quote": "확정 순간 마감됐으면 \"방금 마감됐어요. 대기할까요?\"",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking",
+   "state": "confirm",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "Q39",
+   "kind": "rule",
+   "name": "예약 제한 중 불가 + 해제일",
+   "quote": "예약 제한 중(R4)이면 불가 + 해제일",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking",
+   "state": "error",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "Q40",
+   "kind": "rule",
+   "name": "차감 시점은 예약 시",
+   "quote": "차감 시점은 **예약 시**(출석 시 아님 — 잔여 초과 예약 방지)",
+   "screen_hint": "S14",
+   "state_hint": "policy",
+   "policy": "booking",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "Q41",
+   "kind": "rule",
+   "name": "규정 확인 체크는 첫 예약만",
+   "quote": "\"확인했습니다\" 체크는 첫 예약만",
+   "screen_hint": "S14",
+   "state_hint": "policy",
+   "policy": "booking",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "Q42",
+   "kind": "rule",
+   "name": "대기 신청 시 차감 없음",
+   "quote": "신청 시 차감 없음(확정 시 차감)",
+   "screen_hint": "S15",
+   "state_hint": "policy",
+   "policy": "waitlist",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "Q43",
+   "kind": "rule",
+   "name": "대기 최대 5명",
+   "quote": "최대 5명(R5)",
+   "screen_hint": "S15",
+   "state_hint": "error",
+   "target": "waitlist",
+   "state": "error",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "Q44",
+   "kind": "rule",
+   "name": "겹치는 시간대 대기 가능",
+   "quote": "겹치는 시간대 대기는 가능, 확정 때 체크(R10)",
+   "screen_hint": "S15",
+   "state_hint": "policy",
+   "policy": "waitlist",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "Q45",
+   "kind": "rule",
+   "name": "포기 → 다음 순번",
+   "quote": "포기 → 다음 순번으로",
+   "screen_hint": "S16",
+   "state_hint": "done",
+   "target": "promotion",
+   "state": "done",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "Q46",
+   "kind": "rule",
+   "name": "잔여 0·만료면 확정 불가",
+   "quote": "확정 시점에 잔여 0·만료면 확정 불가 → 다음 순번",
+   "screen_hint": "S16",
+   "state_hint": "error",
+   "target": "promotion",
+   "state": "error",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "Q47",
+   "kind": "rule",
+   "name": "취소 완료 후 잔여 안내",
+   "quote": "완료 → 변경된 잔여 안내",
+   "screen_hint": "S17",
+   "state_hint": "done",
+   "target": "cancel",
+   "state": "done",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "Q48",
+   "kind": "rule",
+   "name": "대기자 승급 자동(비노출)",
+   "quote": "대기자 승급은 자동(수강생에겐 안 보임)",
+   "screen_hint": "S17",
+   "state_hint": "policy",
+   "policy": "cancel",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "Q49",
+   "kind": "rule",
+   "name": "수업 시작 후 취소 불가",
+   "quote": "수업 시작 후 취소 불가(노쇼)",
+   "screen_hint": "S17",
+   "state_hint": "error",
+   "target": "cancel",
+   "state": "error",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "Q50",
+   "kind": "rule",
+   "name": "대기 취소는 언제든 무료",
+   "quote": "대기 취소는 언제든 무료",
+   "screen_hint": "S17",
+   "state_hint": "policy",
+   "policy": "cancel",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "Q51",
+   "kind": "rule",
+   "name": "지난 수업 최근 3개월 + 더 보기",
+   "quote": "지난 수업은 최근 3개월 + 더 보기",
+   "screen_hint": "S18",
+   "state_hint": "policy",
+   "policy": "my-bookings",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "Q52",
+   "kind": "rule",
+   "name": "예정 0개 → 시간표 유도",
+   "quote": "예정 0개면 시간표 유도",
+   "screen_hint": "S18",
+   "state_hint": "policy",
+   "policy": "my-bookings",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "Q53",
+   "kind": "rule",
+   "name": "출석 방식 스튜디오별 설정",
+   "quote": "방식은 스튜디오별 설정(QR만/도착만/둘 다)",
+   "screen_hint": "S19",
+   "state_hint": "policy",
+   "policy": "checkin",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "Q54",
+   "kind": "rule",
+   "name": "다른 스튜디오 QR 에러",
+   "quote": "다른 스튜디오 QR이면 에러",
+   "screen_hint": "S19",
+   "state_hint": "error",
+   "target": "checkin",
+   "state": "error",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "Q55",
+   "kind": "rule",
+   "name": "위치 실패 시 대안 안내",
+   "quote": "위치 실패 시 \"QR로 출석하거나 강사님께 말씀해주세요\"(강사 수동 출석 가능)",
+   "screen_hint": "S19",
+   "state_hint": "error",
+   "target": "checkin",
+   "state": "error",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "Q56",
+   "kind": "rule",
+   "name": "만료·소진은 지난 수강권으로",
+   "quote": "만료·소진은 \"지난 수강권\"으로 따로",
+   "screen_hint": "S20",
+   "state_hint": "policy",
+   "policy": "passes",
+   "covered_by": [
+    "passes"
+   ]
+  },
+  {
+   "id": "Q57",
+   "kind": "rule",
+   "name": "환불은 스튜디오 전화 연결",
+   "quote": "환불은 앱 신청 X, 스튜디오 전화 연결",
+   "screen_hint": "S20",
+   "state_hint": "policy",
+   "policy": "passes",
+   "covered_by": [
+    "passes"
+   ]
+  },
+  {
+   "id": "Q58",
+   "kind": "rule",
+   "name": "잔여에 예약분 함께 표시",
+   "quote": "잔여는 **\"잔여 7회 (예약 2회 포함)\"**처럼 예약분을 같이 표시",
+   "screen_hint": "S20",
+   "state_hint": "policy",
+   "policy": "passes",
+   "covered_by": [
+    "passes"
+   ]
+  },
+  {
+   "id": "Q59",
+   "kind": "rule",
+   "name": "일시정지 신청 즉시 적용",
+   "quote": "신청 즉시 적용(운영자 승인 없음)",
+   "screen_hint": "S21",
+   "state_hint": "done",
+   "target": "pause",
+   "state": "done",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "Q60",
+   "kind": "rule",
+   "name": "정지 시작일 오늘 이후만",
+   "quote": "시작일은 오늘 이후만",
+   "screen_hint": "S21",
+   "state_hint": "error",
+   "target": "pause",
+   "state": "error",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "Q61",
+   "kind": "rule",
+   "name": "출석한 수업만 리뷰",
+   "quote": "출석한 수업만, 수업 후 14일 이내, 1회당 1개",
+   "screen_hint": "S22",
+   "state_hint": "policy",
+   "policy": "review-write",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "Q62",
+   "kind": "rule",
+   "name": "리뷰 텍스트 10~500자",
+   "quote": "텍스트(10~500자)",
+   "screen_hint": "S22",
+   "state_hint": "error",
+   "target": "review-write",
+   "state": "error",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "Q63",
+   "kind": "rule",
+   "name": "욕설 필터",
+   "quote": "욕설 필터",
+   "screen_hint": "S22",
+   "state_hint": "error",
+   "target": "review-write",
+   "state": "error",
+   "covered_by": [
+    "review-write"
+   ]
+  },
+  {
+   "id": "Q64",
+   "kind": "rule",
+   "name": "답글 작성은 운영자 웹",
+   "quote": "답글 작성은 운영자 웹",
+   "screen_hint": "P22b",
+   "state_hint": "policy",
+   "policy": "review-list",
+   "covered_by": [
+    "review-list"
+   ]
+  },
+  {
+   "id": "Q65",
+   "kind": "rule",
+   "name": "알림 90일 보관",
+   "quote": "90일 보관",
+   "screen_hint": "S23",
+   "state_hint": "policy",
+   "policy": "notifications",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "Q66",
+   "kind": "rule",
+   "name": "확정 마감 지난 승급 알림 만료됨",
+   "quote": "확정 마감 지난 승급 알림은 \"만료됨\"",
+   "screen_hint": "S23",
+   "state_hint": "policy",
+   "policy": "notifications",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "Q67",
+   "kind": "rule",
+   "name": "노쇼 현황 일단 표시",
+   "quote": "분쟁 예방 차원에서 일단 표시",
+   "screen_hint": "S24",
+   "state_hint": "policy",
+   "policy": "my",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "Q68",
+   "kind": "rule",
+   "name": "대기 승급 알림 끌 수 없음",
+   "quote": "대기 승급 알림은 끌 수 없게(또는 끄면 대기 불가)",
+   "screen_hint": "S25",
+   "state_hint": "confirm",
+   "policy": "settings",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "Q69",
+   "kind": "rule",
+   "name": "탈퇴 시 잔여 수강권 소멸 경고",
+   "quote": "탈퇴 시 잔여 수강권 있으면 \"소멸됩니다, 환불은 스튜디오에 먼저 문의\" 경고 + 재확인",
+   "screen_hint": "S25",
+   "state_hint": "confirm",
+   "target": "settings",
+   "state": "confirm",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "Q70",
+   "kind": "rule",
+   "name": "탈퇴 시 예정 예약 자동 취소 안내",
+   "quote": "예정 예약은 자동 취소 안내",
+   "screen_hint": "S25",
+   "state_hint": "confirm",
+   "target": "settings",
+   "state": "confirm",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "Q71",
+   "kind": "rule",
+   "name": "공통: 네트워크 오류",
+   "quote": "네트워크 오류",
+   "screen_hint": "common",
+   "state_hint": "error",
+   "target": "home",
+   "state": "error",
+   "covered_by": [
+    "home"
+   ]
+  },
+  {
+   "id": "Q72",
+   "kind": "rule",
+   "name": "공통: 서버 점검",
+   "quote": "서버 점검",
+   "screen_hint": "common",
+   "state_hint": "error",
+   "policy": "splash",
+   "covered_by": [
+    "splash"
+   ]
+  },
+  {
+   "id": "Q73",
+   "kind": "rule",
+   "name": "공통: 권한 거부(위치·카메라·알림)",
+   "quote": "권한 거부(위치·카메라·알림)",
+   "screen_hint": "common",
+   "state_hint": "error",
+   "target": "neighborhood",
+   "state": "error",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "Q74",
+   "kind": "rule",
+   "name": "공통: 빈 상태",
+   "quote": "빈 상태 화면도 필요합니다",
+   "screen_hint": "common",
+   "state_hint": "policy",
+   "policy": "home",
+   "covered_by": [
+    "home"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "무료 취소 24시간 전까지",
+   "quote": "**R1. 무료 취소**: 수업 시작 **24시간 전까지** 취소 시 횟수 복원.",
+   "screen_hint": "S17",
+   "state_hint": "confirm",
+   "policy": "cancel",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "늦은 취소 1회 차감",
+   "quote": "**R2. 늦은 취소**: 시작 24시간 이내~시작 전 취소 시 **1회 차감**.",
+   "screen_hint": "S17",
+   "state_hint": "confirm",
+   "policy": "cancel",
+   "covered_by": [
+    "cancel"
+   ]
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "노쇼 1회 차감 + 누적",
+   "quote": "**R3. 노쇼**: 예약 후 미출석 시 **1회 차감** + 노쇼 1회 누적. 판정은 수업 종료 후 운영자",
+   "screen_hint": "S18",
+   "state_hint": "policy",
+   "policy": "my-bookings",
+   "covered_by": [
+    "my-bookings"
+   ]
+  },
+  {
+   "id": "R4",
+   "kind": "rule",
+   "name": "노쇼 3회 시 7일 예약 제한",
+   "quote": "**R4. 예약 제한**: 최근 30일 노쇼 **3회 누적 시 7일간 신규 예약·대기 불가**(전 스튜디오 ",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking",
+   "state": "error",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "R5",
+   "kind": "rule",
+   "name": "대기 최대 5명",
+   "quote": "**R5. 대기 정원**: 정원 초과 시 대기 가능, 수업당 **최대 5명**.",
+   "screen_hint": "S15",
+   "state_hint": "error",
+   "target": "waitlist",
+   "state": "error",
+   "covered_by": [
+    "waitlist"
+   ]
+  },
+  {
+   "id": "R6",
+   "kind": "rule",
+   "name": "대기 승급 2시간 내 확정",
+   "quote": "**R6. 대기 승급**: 자리가 나면 1순번에 승급 알림. **2시간 내 미확정 시 자동 포기 → 다음 순",
+   "screen_hint": "S16",
+   "state_hint": "policy",
+   "policy": "promotion",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "R7",
+   "kind": "rule",
+   "name": "가용 잔여 0이면 예약·확정 불가",
+   "quote": "**R7. 잔여 0**: 가용 잔여(예약분 제외)가 **0이면 예약·승급 확정 불가**. 대기 신청은 가능,",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking",
+   "state": "error",
+   "covered_by": [
+    "booking"
+   ]
+  },
+  {
+   "id": "R8",
+   "kind": "rule",
+   "name": "만료 수강권 사용 불가",
+   "quote": "**R8. 만료**: **만료일 지난 수강권 사용 불가**. 수업 날짜가 만료일 이후면 그 수강권으로 예약 ",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "policy": "class",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "R9",
+   "kind": "rule",
+   "name": "일시정지 최대 2회·30일",
+   "quote": "**R9. 일시정지**: 수강권당 **최대 2회, 합산 최대 30일**, 1회 최소 3일.",
+   "screen_hint": "S21",
+   "state_hint": "error",
+   "target": "pause",
+   "state": "error",
+   "covered_by": [
+    "pause"
+   ]
+  },
+  {
+   "id": "R10",
+   "kind": "rule",
+   "name": "시간 겹치는 중복 예약 금지",
+   "quote": "**R10. 중복 예약 금지**: 1분이라도 **시간이 겹치는 수업은 스튜디오가 달라도 중복 예약 불가**.",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "target": "class",
+   "state": "error",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "R11",
+   "kind": "rule",
+   "name": "결제 실패 처리",
+   "quote": "**R11. 결제 실패**: 실패 시 수강권 미발급, 사유(한도 초과, 잔액 부족, 사용자 취소 등) 안내 ",
+   "screen_hint": "S13",
+   "state_hint": "error",
+   "target": "checkout",
+   "state": "error",
+   "covered_by": [
+    "checkout"
+   ]
+  },
+  {
+   "id": "R12",
+   "kind": "rule",
+   "name": "휴무일",
+   "quote": "**R12. 휴무일**: 정기·임시 휴무일에는 수업이 없고 시간표에 \"휴무\" 표시.",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "timetable",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "R13",
+   "kind": "rule",
+   "name": "휴강 시 자동 취소·복원",
+   "quote": "**R13. 휴강**: 휴강 시 예약자 자동 취소 + 횟수 복원 + 알림, 대기자 자동 해제.",
+   "screen_hint": "S11",
+   "state_hint": "policy",
+   "policy": "class",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "R14",
+   "kind": "rule",
+   "name": "예약 오픈 14일 전~시작",
+   "quote": "**R14. 예약 오픈/마감**: 수업 시작 14일 전부터 시작 시각까지 예약 가능. 시작 후 취소 불가.",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "timetable",
+   "covered_by": [
+    "timetable"
+   ]
+  },
+  {
+   "id": "R15",
+   "kind": "rule",
+   "name": "출석 시간 30분 전~15분 후",
+   "quote": "**R15. 출석 시간**: 시작 30분 전~시작 후 15분까지 앱 출석. 이후는 강사 수동 출석만.",
+   "screen_hint": "S19",
+   "state_hint": "error",
+   "target": "checkin",
+   "state": "error",
+   "covered_by": [
+    "checkin"
+   ]
+  },
+  {
+   "id": "R16",
+   "kind": "rule",
+   "name": "수강권 범위·자동 선택",
+   "quote": "**R16. 수강권 범위**: 구매한 스튜디오에서만 사용. 여러 개면 **만료일 빠른 것부터** 자동 선택.",
+   "screen_hint": "S11",
+   "state_hint": "policy",
+   "policy": "class",
+   "covered_by": [
+    "class"
+   ]
+  }
+ ]
+}

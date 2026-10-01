@@ -75,7 +75,7 @@ def sheet(keep, outpng):
         b = p.chromium.launch(channel="chrome"); pg = b.new_page(viewport={"width": 360, "height": 330}, device_scale_factor=1)
         for i, x in enumerate(keep):
             d = tmp / f"{i}"; d.mkdir(exist_ok=True)
-            subprocess.run([sys.executable, str(HERE / "derive.py"), "--brand", x["hex"], "--tone", x["tone"], "-o", str(d / "tokens.css")], check=True, capture_output=True)
+            subprocess.run([sys.executable, str(HERE / "derive.py"), "--brand", x["hex"], "--tone", "brand", "-o", str(d / "tokens.css")], check=True, capture_output=True)
             (d / "c.html").write_text(CELL.format(comp=str(HERE / "components.css")), encoding="utf-8")
             pg.goto((d / "c.html").as_uri()); pg.wait_for_timeout(150); pg.screenshot(path=str(d / "s.png")); shots.append(d / "s.png")
         b.close()

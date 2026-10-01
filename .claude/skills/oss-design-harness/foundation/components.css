@@ -27,7 +27,8 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .plain .page { gap: var(--stack-l); padding-left: var(--page-x); padding-right: var(--page-x); }
 
 /* 앱바 */
-.appbar { position: sticky; top: 0; z-index: 5; height: var(--h-appbar); display: grid; grid-template-columns: 48px 1fr 48px; align-items: center; padding: 0 var(--stack-s); background: var(--c-bg); }
+.appbar a, .appbar button { white-space: nowrap; }
+.appbar { position: sticky; top: 0; z-index: 5; height: var(--h-appbar); display: grid; grid-template-columns: minmax(48px, auto) 1fr minmax(48px, auto); align-items: center; padding: 0 var(--stack-s); background: var(--c-bg); }
 .plain .appbar { background: var(--c-surface); }
 .appbar-title { text-align: center; font-size: var(--fs-strong); font-weight: var(--fw-strong); }
 .appbar-btn { width: 44px; height: 44px; display: grid; place-items: center; color: var(--c-text-1); }

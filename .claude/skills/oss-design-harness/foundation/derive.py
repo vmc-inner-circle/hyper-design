@@ -160,7 +160,11 @@ def derive(brand_hex, tone, shape, density, font, palette=None):
     if palette:
         c, big, notes, P = from_palette(palette)
         return render_css(c, big, notes, f"palette {P['name']}", shape, density, font)
-    th, ts = TONES[tone]
+    if tone == "brand":                                   # 브랜드 색상각으로 아주 옅게 물든 바탕(브랜드 정체성) — 시드 팔레트 기본
+        import colorsys as _cs
+        th, ts = _cs.rgb_to_hls(*hex2rgb(brand_hex))[0] * 360, 0.16
+    else:
+        th, ts = TONES[tone]
     surface = hls(th, 0.995 if tone != "neutral" else 1.0, ts)
     bg = hls(th, 0.955, ts + 0.04)
     line = hls(th, 0.915, ts + 0.02)
@@ -272,7 +276,7 @@ def render_css(c, big, notes, label, shape, density, font):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--brand"); ap.add_argument("--palette", help="palettes/*.json — 실제 서비스 팔레트에서 역할 색을 고른다"); ap.add_argument("--tone", default="neutral", choices=TONES)
+    ap.add_argument("--brand"); ap.add_argument("--palette", help="palettes/*.json — 실제 서비스 팔레트에서 역할 색을 고른다"); ap.add_argument("--tone", default="neutral", choices=list(TONES) + ["brand"])
     ap.add_argument("--shape", default="normal", choices=SHAPES); ap.add_argument("--density", default="comfy", choices=DENSITY)
     ap.add_argument("--font", default="pretendard", choices=FONTS); ap.add_argument("-o", "--out", required=True)
     a = ap.parse_args()

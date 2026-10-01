@@ -1,0 +1,200 @@
+[
+ {
+  "slot": "studio-soom-1",
+  "screens": [
+   "search-list",
+   "search-map",
+   "studio",
+   "home",
+   "home-new",
+   "timetable"
+  ],
+  "what": "숨필라테스 대표 사진: 밝은 필라테스 스튜디오, 리포머 여러 대",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "pilates studio reformer"
+ },
+ {
+  "slot": "studio-soom-2",
+  "screens": [
+   "studio"
+  ],
+  "what": "리포머 근접",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "pilates reformer machine"
+ },
+ {
+  "slot": "studio-soom-3",
+  "screens": [
+   "studio"
+  ],
+  "what": "캐딜락·체어 기구",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "pilates cadillac equipment"
+ },
+ {
+  "slot": "studio-soom-4",
+  "screens": [
+   "studio"
+  ],
+  "what": "탈의실/락커 또는 스튜디오 입구",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "gym locker room"
+ },
+ {
+  "slot": "studio-core",
+  "screens": [
+   "search-list",
+   "search-map",
+   "home-new"
+  ],
+  "what": "매트 필라테스 수업 공간",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "pilates mat class"
+ },
+ {
+  "slot": "studio-onyoga",
+  "screens": [
+   "search-list",
+   "search-map",
+   "home-new"
+  ],
+  "what": "요가 스튜디오 나무 바닥",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "yoga studio wooden floor"
+ },
+ {
+  "slot": "studio-bareun",
+  "screens": [
+   "search-list",
+   "search-map",
+   "home-new"
+  ],
+  "what": "기구 필라테스 스튜디오",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "pilates equipment studio"
+ },
+ {
+  "slot": "studio-haru",
+  "screens": [
+   "search-list",
+   "search-map",
+   "home-new"
+  ],
+  "what": "요가 공간 창가",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "yoga room window"
+ },
+ {
+  "slot": "class-reformer",
+  "screens": [
+   "class",
+   "class-nopass",
+   "booking",
+   "promotion"
+  ],
+  "what": "리포머 위 운동하는 사람(얼굴 주인공 아님)",
+  "ratio": "16:9",
+  "kind": "photo",
+  "query": "woman exercising pilates reformer"
+ },
+ {
+  "slot": "class-chair",
+  "screens": [
+   "waitlist",
+   "promotion"
+  ],
+  "what": "필라테스 체어 운동",
+  "ratio": "16:9",
+  "kind": "drawing",
+  "query": "pilates chair exercise"
+ },
+ {
+  "slot": "instructor-han",
+  "screens": [
+   "instructor",
+   "studio"
+  ],
+  "what": "필라테스 강사 인물(얼굴 크롭·뒷모습·손 위주)",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "pilates instructor"
+ },
+ {
+  "slot": "instructor-jung",
+  "screens": [
+   "studio"
+  ],
+  "what": "강사 인물(얼굴 주인공 아님)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "yoga instructor"
+ },
+ {
+  "slot": "instructor-yoon",
+  "screens": [
+   "studio"
+  ],
+  "what": "강사 인물(얼굴 주인공 아님)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "yoga teacher back"
+ },
+ {
+  "slot": "onboarding-1",
+  "screens": [
+   "onboarding"
+  ],
+  "what": "동네 지도 위 핀 여러 개",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": ""
+ },
+ {
+  "slot": "onboarding-2",
+  "screens": [
+   "onboarding"
+  ],
+  "what": "수강권 카드와 남은 칸",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": ""
+ },
+ {
+  "slot": "onboarding-3",
+  "screens": [
+   "onboarding"
+  ],
+  "what": "종 + 빈 매트 한 자리",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": ""
+ },
+ {
+  "slot": "map-mangwon",
+  "screens": [
+   "search-map"
+  ],
+  "what": "망원동 일대 추상 지도(도로·한강 곡선·블록)",
+  "ratio": "9:10",
+  "kind": "drawing",
+  "query": ""
+ },
+ {
+  "slot": "qr-desk",
+  "screens": [
+   "checkin"
+  ],
+  "what": "데스크 위 QR 스탠드 도식",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": ""
+ }
+]

@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>전화번호 인증 · 오류</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="login.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">전화번호 인증</h1><span></span></header>
+<main class="page">
+  <p class="lead">카카오로 가입 중이에요. 번호만 확인하면 끝나요.</p>
+  <div class="field"><label class="label" for="tel">휴대폰 번호</label><input class="input" id="tel" type="tel" value="010-4821-3075"></div>
+  <div class="field is-error"><label class="label" for="code">인증번호 6자리</label><input class="input" id="code" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="482913" disabled><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>5번 틀려서 10분 동안 입력할 수 없어요</p></div>
+  <p class="block-note">10분 뒤 새 인증번호를 받을 수 있어요. 새 번호는 3분 동안 유효해요.</p>
+  <button class="btn small secondary" disabled>재전송 · 오늘 3회 남음</button>
+</main>
+<div class="cta"><button class="btn primary full">확인</button></div>
+</body></html>
