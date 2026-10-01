@@ -19,6 +19,7 @@ def main():
     a = ap.parse_args(); out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
     tags = {t.strip() for t in a.tags.split(",") if t.strip()}
     pals = {f.stem: json.loads(f.read_text(encoding="utf-8")) for f in sorted((HERE / "palettes").glob("*.json"))}
+    pals = {k: v for k, v in pals.items() if isinstance(v, dict) and isinstance(v.get("scales"), dict)}   # seeds.json·seed_candidates.json 제외
     scored = []
     for slug, P in pals.items():
         b = brand_of(P); why = []
@@ -44,7 +45,36 @@ def main():
         elif all(pals[p].get("mono") or gap(brand_of(P), brand_of(pals[p])) >= 40 for p in picks):
             picks.append(slug)
         if len(picks) == 3: break
+    # custom 모드(v13): 라이브러리 1위가 도메인 불일치 + 성격 겹침 ≤1 → 승인된 브랜드 시드에서 기본값을 만든다
+    best = pals[default]; best_hit = len(tags & set(best.get("tags", [])))
+    dom_hit = a.domain and any(d in best.get("domain", "") for d in a.domain.split(","))
+    seeds_f = HERE / "palettes" / "seeds.json"
+    seed = None
+    if not dom_hit and best_hit <= 1 and seeds_f.exists():
+        sc = []
+        for sd in json.loads(seeds_f.read_text(encoding="utf-8")):
+            v, why = 0, []
+            if a.domain and any(d in x for d in a.domain.split(",") for x in sd.get("domains", [])): v += 3; why.append("도메인(" + "·".join(sd["domains"]) + ")")
+            hit = tags & set(sd.get("tags", []))
+            if hit: v += len(hit); why.append("성격(" + ",".join(sorted(hit)) + ")")
+            if a.temp and sd.get("tone") in ("warm", "cool"):
+                if sd["tone"] == a.temp: v += 1.5; why.append("감정 온도")
+                else: v -= 1.5
+            sc.append((v, sd, why))
+        sc.sort(key=lambda x: -x[0])
+        if sc and sc[0][0] > 0:
+            v, sd, why = sc[0]; seed = sd
+            slug = "seed-" + sd["slug"]
+            subprocess.run([sys.executable, str(HERE / "derive.py"), "--brand", sd["hex"], "--tone", sd.get("tone", "neutral"), "-o", str(out / f"tokens-{slug}.css")], check=True, capture_output=True)
+            pals[slug] = {"name": sd["name"], "scales": {"b": {"s": sd["hex"]}}, "brand": "b", "brand_step": "s", "source": "브랜드 시드(" + sd.get("source", "") + ")"}
+            scored.insert(0, (v, slug, ["라이브러리에 맞는 도메인이 없어 시드로 만듦"] + why))
+            alts = [p for p in picks if p != default][:1] + [default]
+            picks = [slug] + [p for p in alts if gap(brand_of(pals[p]), hex2rgb(sd["hex"])) >= 40 or pals[p].get("mono")][:2]
+            if len(picks) < 3:
+                picks += [x for _, x, _ in scored if x not in picks and not x.startswith("seed-")][: 3 - len(picks)]
+            default = slug
     for slug in picks:
+        if slug.startswith("seed-"): continue
         subprocess.run([sys.executable, str(HERE / "derive.py"), "--palette", str(HERE / "palettes" / f"{slug}.json"), "-o", str(out / f"tokens-{slug}.css")], check=True, capture_output=True)
     (out / "tokens.css").write_text((out / f"tokens-{default}.css").read_text(encoding="utf-8"), encoding="utf-8")
     info = {"default": default, "options": [{"slug": s, "name": pals[s]["name"], "brand": pals[s]["scales"][pals[s]["brand"]][pals[s]["brand_step"]],

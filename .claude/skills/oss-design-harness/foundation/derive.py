@@ -168,12 +168,13 @@ def derive(brand_hex, tone, shape, density, font, palette=None):
     text2 = darken_until(hls(th, 0.36, ts * 0.6 + 0.05), bg, 7)
     text3 = darken_until(hls(th, 0.47, ts * 0.5 + 0.04), bg, 4.5)     # 가장 옅은 글자도 AA
     brand = hex2rgb(brand_hex)
-    notes = []
+    notes = []; big = False
     if contrast((1, 1, 1), brand) >= 4.5: on_brand = (1, 1, 1)
-    elif contrast(text1, brand) >= 4.5: on_brand = text1                   # 노랑처럼 밝은 포인트
-    else:
-        nb = darken_until(brand, (1, 1, 1), 4.5); notes.append(f"brand {brand_hex}→{rgb2hex(nb)} (흰 글자 대비 확보)")
-        brand, on_brand = nb, (1, 1, 1)
+    elif contrast((1, 1, 1), brand) >= 3:                               # 시드 색 그대로 + 버튼 글자를 크게(큰 글씨 3:1)
+        on_brand, big = (1, 1, 1), True
+    else:                                                               # 탁해지지 않게 3:1까지만 어둡게
+        nb = darken_until(brand, (1, 1, 1), 3); notes.append(f"brand {brand_hex}→{rgb2hex(nb)} (흰 글자 큰 글씨 대비 확보)")
+        brand, on_brand, big = nb, (1, 1, 1), True
     brand_text = darken_until(brand, surface, 4.5)                 # 포인트 색을 글자로 쓸 때
     brand_tint = mix(surface, brand, 0.10)
     brand_tint_text = darken_until(brand, brand_tint, 4.5)
@@ -183,7 +184,7 @@ def derive(brand_hex, tone, shape, density, font, palette=None):
          "brand": brand, "on_brand": on_brand, "brand_text": brand_text, "brand_tint": brand_tint,
          "brand_tint_text": brand_tint_text, "danger": danger, "danger_tint": danger_tint}
     extend_roles(c, notes)
-    return render_css(c, False, notes, f"--brand {brand_hex} --tone {tone}", shape, density, font)
+    return render_css(c, big, notes, f"--brand {brand_hex} --tone {tone}", shape, density, font)
 
 def render_css(c, big, notes, label, shape, density, font):
     bg, surface, line, text1, text2, text3 = c["bg"], c["surface"], c["line"], c["text1"], c["text2"], c["text3"]

@@ -1,0 +1,68 @@
+[
+ {
+  "slug": "designer-olive",
+  "name": "디자이너 올리브",
+  "hex": "#829618",
+  "domains": [
+   "뷰티",
+   "헤어",
+   "기록"
+  ],
+  "source": "실제 디자이너 결과(비공개 PRD)",
+  "tags": [
+   "자연",
+   "차분",
+   "기록"
+  ]
+ },
+ {
+  "slug": "slack-aubergine",
+  "name": "Slack 오버진",
+  "hex": "#4A154B",
+  "domains": [
+   "업무",
+   "커뮤니티"
+  ],
+  "source": "Slack 브랜드 가이드"
+ },
+ {
+  "slug": "starbucks-green",
+  "name": "스타벅스 그린",
+  "hex": "#00704A",
+  "domains": [
+   "음식",
+   "카페"
+  ],
+  "source": "Starbucks 브랜드 가이드"
+ },
+ {
+  "slug": "samsung-blue",
+  "name": "삼성 블루",
+  "hex": "#1428A0",
+  "domains": [
+   "전자",
+   "플랫폼"
+  ],
+  "source": "Samsung 브랜드 가이드"
+ },
+ {
+  "slug": "claude-clay",
+  "name": "Claude 클레이",
+  "hex": "#D97757",
+  "domains": [
+   "AI",
+   "도구"
+  ],
+  "source": "Anthropic 브랜드"
+ },
+ {
+  "slug": "twitch-purple",
+  "name": "Twitch 퍼플",
+  "hex": "#9146FF",
+  "domains": [
+   "영상",
+   "커뮤니티"
+  ],
+  "source": "Twitch 브랜드 가이드"
+ }
+]
