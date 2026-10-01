@@ -5,7 +5,7 @@ python3 expand_states.py out
 파생: list_first_use→empty · form→error · shares→done · long_task→progress · rule(state=error|confirm|done)
 - 같은 화면·같은 상태의 규칙 여럿은 상태 화면 하나로 묶고, 규칙 이름은 그 화면 policies에 한 줄씩
 - 기본 화면의 states를 채우고 <id>--<state> 항목을 추가(이미 있으면 필요한 필드만 보충), 파생되지 않는 상태 항목은 지운다
-- 화면당 상태 > 3이면 종료코드 1(규칙 일부를 정책 문구로 내린다)
+- 화면당 상태 > 2(기본 포함 3)면 종료코드 1(규칙 일부를 정책 문구로 내린다)
 """
 import sys, json, pathlib
 out = pathlib.Path(sys.argv[1])
@@ -32,7 +32,7 @@ for s in base:
     states = [v for k, v in TRAIT.items() if t.get(k)]
     for (tid, st) in rules:
         if tid == s["id"] and st not in states: states.append(st)
-    if len(states) > 3: errs.append(f"{s['id']}: 상태 {len(states)}개 > 3 — 규칙 일부를 정책 문구로 내릴 것")
+    if len(states) > 2: errs.append(f"{s["id"]}: 상태 {len(states)}개 > 2(기본 포함 3) — 규칙 일부를 정책 문구로 내릴 것")
     s["states"] = states
     new.append(s)
     for st in states:

@@ -8,7 +8,7 @@ from collections import deque
 from pathlib import Path
 from urllib.parse import urlparse, unquote
 
-ALLOWED_STATES = {"empty", "error", "disabled", "done"}   # done ← shares(링크·공유·초대의 결과 표시)
+ALLOWED_STATES = {"empty", "error", "disabled", "done", "confirm", "progress"}   # v13: confirm ← 명세 규칙(되돌릴 수 없음·중복), progress ← long_task   # done ← shares(링크·공유·초대의 결과 표시)
 VIEWPORT = {"width": 375, "height": 812}
 
 MEASURE_JS = r"""
@@ -296,6 +296,11 @@ def main():
     # ---------- 상태 (정적) ----------
     if manifest:
         missing, excess, over = [], [], []
+        rule_st = {}
+        try:
+            for it in json.loads((OUT / "spec_inventory.json").read_text(encoding="utf-8")).get("items", []):
+                if it.get("kind") == "rule" and it.get("target") and it.get("state"): rule_st.setdefault(it["target"], set()).add(it["state"])
+        except Exception: pass
         for f in base_files:
             s = mscreens.get(f.stem, {})
             tr = s.get("traits") or {}
@@ -304,6 +309,8 @@ def main():
             if tr.get("form") or tr.get("sends"): exp.add("error")
             if tr.get("shares"): exp.add("done")
             if tr.get("readonly_role"): exp.add("disabled")
+            if tr.get("long_task"): exp.add("progress")
+            exp |= rule_st.get(f.stem, set())
             have = variants.get(f.stem, set())
             declared = set(s.get("states") or [])
             for st in exp - have:
@@ -362,15 +369,12 @@ def main():
             per[f.stem] = r
             page.close()
         if shots and index.exists():
+            # 캔버스 캡처 = Screens 탭 첫 화면(1440×900) — 사람이 처음 여는 모습 그대로
             page = browser.new_page(viewport={"width": 1440, "height": 900})
             try:
                 page.goto(index.resolve().as_uri(), wait_until="load", timeout=30000)
-                page.wait_for_timeout(800)
-                hgt = min(page.evaluate("document.documentElement.scrollHeight"), 16000)
-                wid = min(page.evaluate("document.documentElement.scrollWidth"), 4000)
-                page.set_viewport_size({"width": max(1440, wid), "height": hgt})  # 화면 밖(오른쪽·아래) iframe 도 그리게
-                page.wait_for_timeout(2500)
-                page.screenshot(path=str(shots / "index.png"), full_page=True)
+                page.wait_for_timeout(2500)     # 보이는 카드 iframe 로드(100ms 디바운스 + 화면 로드)
+                page.screenshot(path=str(shots / "index.png"))
             except Exception as e:
                 print(f"index 스크린샷 실패: {e}", file=sys.stderr)
             page.close()
@@ -476,28 +480,54 @@ def main():
     # 채워진 유채색 버튼 위 짙은 글자 — 대비는 넘어도 버튼답지 않다(아주 밝은 색 버튼은 예외)
     dk = [f"{sid}: {t}" for sid, r in per.items() for t in (r.get("darkOnFill") or [])]
     add("위계", "dark_text_on_filled_button", len(dk), "0", not dk, "; ".join(dk[:6]))
-    # 캔버스(index.html) 단순성 — success-criteria §9
+    # 캔버스(index.html) 단순성 — success-criteria §9 · v13-spec §7
     idx = OUT / "index.html"
     if idx.exists():
         ih = idx.read_text(encoding="utf-8", errors="ignore")
-        sc = re.findall(r"scale\(([\d.]+)\)", ih)
-        scale = min(float(x) for x in sc) if sc else 1.0
+        hdm = re.search(r'<script id="hd-data" type="application/json">(.*?)</script>', ih, re.S)
+        try:
+            hd = json.loads(hdm.group(1)) if hdm else {}
+        except Exception:
+            hd = {}
+        if hd.get("scale"):                                   # v3 템플릿: 첫 배율은 데이터에
+            scale = float(hd["scale"])
+        else:
+            sc = re.findall(r"scale\(([\d.]+)\)", ih)
+            scale = min(float(x) for x in sc) if sc else 1.0
         add("캔버스", "canvas_scale", scale, ">=0.7", scale >= 0.7)
         head = re.search(r"<header.*?</header>", ih, re.S)
-        nbtn = len(re.findall(r"<button\b", head.group(0))) if head else 0
-        add("캔버스", "canvas_controls", nbtn, "<=3", nbtn <= 3)
+        hh = head.group(0) if head else ""
+        cg = sorted(set(re.findall(r'data-group="([^"]+)"', hh)))
+        add("캔버스", "canvas_control_groups", len(cg), "<=3 (탭·팔레트·보기)", 0 < len(cg) <= 3, ", ".join(cg))
+        modes = re.findall(r"data-mode=|<button[^>]*>[^<]*(?:편집|선택 모드|범위|모드|손 도구|Edit|Select|Mode)[^<]*<", hh)
+        add("캔버스", "canvas_modes", len(modes), "0", not modes, "; ".join(modes[:3]))
         ext = re.findall(r"<script[^>]+src=[\"']https?://", ih)
         add("캔버스", "canvas_external_libs", len(ext), "0", not ext)
         try:
             mm = json.loads((OUT / "screens.json").read_text(encoding="utf-8"))
             nb = sum(len(x.get("branches", []) or []) for x in mm.get("screens", []))
             ng = len({x.get("group") for x in mm.get("screens", [])})
-            na = len(re.findall(r"<path d=\"M", ih))
+            na = len(hd["arrows"]) if "arrows" in hd else len(re.findall(r"<path d=\"M", ih))
             add("캔버스", "canvas_arrows", na, f"<= 갈래 {nb} + 흐름 {ng}", na <= nb + ng)
-            longpol = [x["id"] for x in mm.get("screens", []) if len(x.get("policies", []) or []) > 3 and "<details>" not in ih]
+            longpol = [x["id"] for x in mm.get("screens", []) if len(x.get("policies", []) or []) > 3 and "<details" not in ih]
             add("캔버스", "canvas_policy_lines", len(longpol), "0 (3줄 초과는 접기)", not longpol)
         except Exception as e:
             add("캔버스", "canvas_arrows", "n/a", "", False, str(e))
+        # 상호작용 테스트(Playwright): 드래그 이동·카드 모달·확대·Foundation/Components 탭·팔레트 전환·콘솔 에러·로드 시간
+        import subprocess
+        here = Path(__file__).resolve().parent
+        ct = next((c for c in (here / "canvas_test.py",
+                               here.parent / ".claude/skills/oss-design-harness/scripts/canvas_test.py") if c.exists()), None)
+        if ct:
+            try:
+                r = subprocess.run([sys.executable, str(ct), str(OUT)], capture_output=True, text=True, timeout=180)
+                res = json.loads(r.stdout)
+                fails = [f"{c['id']}({c.get('value')})" for c in res["checks"] if not c["pass"]]
+                add("캔버스", "canvas_interaction", f"{res['passed']}/{res['total']}", "전부 통과", res["pass"], "; ".join(fails))
+            except Exception as e:
+                add("캔버스", "canvas_interaction", "n/a", "전부 통과", False, str(e)[:200])
+        else:
+            add("캔버스", "canvas_interaction", "n/a", "전부 통과", False, "canvas_test.py 없음")
 
     # 슬롭
     em = [f"{sid}: {x}" for sid, r in per.items() for x in r.get("emoji", [])]

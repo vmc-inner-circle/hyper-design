@@ -64,7 +64,7 @@ description: PRD(기획 문서) 한 장을 받아 사용자에게 아무것도 �
 
   - 화면은 **여정의 궁금해지는 순간**에서 끌어낸다. 같은 화면이 시기에 따라 달라지면 별도 화면 id로(예: `home`, `home-d7`, `home-trip`).
   - `kind: "list"` 화면은 `large_list`(30개 넘게 쌓일 수 있나)를 반드시 적는다 — true면 검색 칸 필수(selfcheck).
-  - **기본 화면만 쓴다. 상태 화면 항목·`states`는 손으로 쓰지 않는다** — `expand_states.py`가 traits와 명세 규칙에서 펼친다: 목록 + 첫 사용 → `empty`, 폼 → `error`, 밖으로 내보내는 행동·한 번 누르는 요청 → `done`, 사용자가 지켜봐야 하는 긴 작업(사진 여러 장 업로드 등, `long_task`) → `progress`, 명세 규칙 → 그 규칙의 `error`(같은 요소 오류) 또는 `confirm`(되돌릴 수 없음·중복 경고 대화상자). `loading`·`success`는 상태가 아니다. 화면당 상태 3개 이하 — 넘으면 규칙을 정책 문구로 내린다.
+  - **기본 화면만 쓴다. 상태 화면 항목·`states`는 손으로 쓰지 않는다** — `expand_states.py`가 traits와 명세 규칙에서 펼친다: 목록 + 첫 사용 → `empty`, 폼 → `error`, 밖으로 내보내는 행동·한 번 누르는 요청 → `done`, 사용자가 지켜봐야 하는 긴 작업(사진 여러 장 업로드 등, `long_task`) → `progress`, 명세 규칙 → 그 규칙의 `error`(같은 요소 오류) 또는 `confirm`(되돌릴 수 없음·중복 경고 대화상자). `loading`·`success`는 상태가 아니다. 화면당 상태 2개 이하(기본 포함 3) — 넘으면 규칙을 정책 문구로 내린다.
   - `photo_centric`: 사진·이미지가 사용자가 만들거나 보는 **핵심 콘텐츠**면 true.
   - `branches`는 **갈래에만**(조건에 따라 다른 곳으로 가는 경우). 순서대로 이어지는 흐름은 적지 않는다 — 캔버스가 배치로 보여준다.
   - brief는 10~16장(하한을 채우려고 늘리지 않는다). spec은 명세 목록대로 — 명세에 없어도 여정의 시기별 변형(예: 단계별 홈)은 그대로 끌어낸다.
@@ -107,7 +107,7 @@ description: PRD(기획 문서) 한 장을 받아 사용자에게 아무것도 �
 ### 3단계 — 검증·수정 (목표 3분, 동시에)
 
 한 메시지에서 동시에(**포그라운드로 실행해 같은 턴에서 결과를 받는다 — 백그라운드로 돌려 놓고 "끝나면 알려드릴게요"로 턴을 끝내지 않는다. 턴이 끝나면 다시 이어지지 않는다**):
-- `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(색 점 3개, 갈래 화살표, 정책 3줄)
+- `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(Screens·Foundation·Components 탭, 드래그 이동, 색 점 3개, 갈래 화살표, 정책 3줄 — 스크립트가 만들고 AI는 손대지 않는다)
 - `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구
 - `python3 $SK/scripts/audit.py out --shots out/.shots` — 렌더링 측정(대비·토큰 밖 색·의미 배지·CTA·터치·캔버스) + 화면 캡처
 - **사실 대조 서브에이전트 1개**(같은 메시지에서): `journey.md` 사실 표와 모든 `screens/*.html`의 글자를 대조해 어긋남(날짜·시간·인원·겹침·상태 이름)과 "누른 뒤 갈 곳이 없는 조작"만 목록으로 돌려준다. 고치지는 않는다.

@@ -59,7 +59,7 @@ for s in S:
     if "--" not in s["id"]:
         decl = set(s.get("states", []) or [])
         if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)} — expand_states.py를 다시 돌린다')
-        if len(exp) > 3: errs.append(f'{s["id"]}: 상태 {len(exp)}개 > 3')
+        if len(exp) > 2: errs.append(f'{s["id"]}: 상태 {len(exp)}개 > 2(기본 포함 3)')
         for st in exp:
             if f'{s["id"]}--{st}' not in ids: errs.append(f'{s["id"]}: 상태 화면 {s["id"]}--{st} 없음')
     f = out / s["file"]
