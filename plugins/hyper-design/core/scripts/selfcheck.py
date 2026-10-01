@@ -110,7 +110,7 @@ for o in OBJ or []:
             byid = {x["id"]: x for x in S}
             res = [x for x in (v if isinstance(v, list) else [v]) if x in byid and (x.endswith("--done") or byid[x].get("kind") == "result")]
             if not res: errs.append(f"흐름 고리 '{o.get('name')}': after에 결과 화면이 없음({v}) — 목록·상세가 아니라 그 행동이 끝난 모습(kind: result 또는 --done)")
-# 사람 카드(v16): 이 앱이 누구를 위한 것인가 — 사람마다 처음 오는 이유·마음·성공한 순간, 화면마다 for(누가 여는가)·first(첫눈에 볼 것)
+# 사람 카드(v16): 이 앱이 누구를 위한 것인가 — 사람마다 처음 오는 이유·마음·성공한 순간, 화면마다 for(누가 여는가)·needs(그 사람에게 필요한 정보)
 PEOPLE = m.get("people") or []; PNAMES = {p.get("name") for p in PEOPLE} | {"모두"}
 if not 1 <= len(PEOPLE) <= 4: errs.append(f"people(사람 카드) {len(PEOPLE)}명 — 1~4명, journey.md 사람 카드를 옮긴다")
 if PEOPLE and sum(1 for p in PEOPLE if p.get("core")) != 1: errs.append("people: 핵심 사람(core: true)은 한 명")
@@ -120,7 +120,7 @@ for p in PEOPLE:
 for s in S:
     if "--" in s["id"]: continue
     if s.get("for") not in PNAMES: errs.append(f'{s["id"]}: for(이 화면을 여는 사람) {s.get("for")!r} — people의 name 또는 "모두"')
-    if not s.get("first"): errs.append(f'{s["id"]}: first(그 사람이 첫눈에 봐야 할 데이터) 없음')
+    if not s.get("needs"): errs.append(f'{s["id"]}: needs(그 사람에게 필요한 정보) 없음')
 # 탭·세그먼트: 칸마다 그 내용을 보여 주는 화면
 for s in S:
     for t in s.get("tabs") or []:
