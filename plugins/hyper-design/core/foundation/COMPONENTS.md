@@ -28,7 +28,8 @@
   <span class="row-trail">(› 선 아이콘)</span></a>
 ```
 - 왼쪽: 사물 `row-art`(컬러 일러스트) · 사람 `avatar` · 시간/날짜 `row-date` · 누르는 추가 행은 `class="row is-add"` + `row-lead`(선 + 아이콘)
-- 행 오른쪽 버튼(`row-trail` 안 `btn small`)은 **6자 이내 동사**("리뷰 쓰기"). 기한·횟수 같은 부가 정보는 버튼이 아니라 `row-sub`에 쓴다.
+- 행의 행동 버튼(`row-trail` 안 `btn small`)은 글 아래 줄에 글 칸 너비로 자동 배치된다(가운데 글자). 문구는 짧은 동사("리뷰 쓰기"), 기한은 덧붙여도 된다("리뷰 쓰기 · 10/23까지").
+- **한 번뿐인 행동을 이미 했으면 같은 자리에 비활성 버튼으로 결과를 적는다**: `<span class="btn small is-done" aria-disabled="true">리뷰 완료</span>` — 글자만 남기거나 버튼을 없애지 않는다(목록에서 했는지/안 했는지가 같은 모양으로 비교된다).
 - 안내 한 줄(`info`)·설명은 블록 안에 둔다. 블록 밖에 둘 때는 페이지에 바로(여백 자동).
 - 체크리스트: 왼쪽 `row-art`, **오른쪽** `<button class="check" role="checkbox" aria-checked="true|false"><span>(체크 선 아이콘)</span></button>`, 끝낸 행은 `class="row is-done"`
 - 켜기/끄기: 오른쪽에 `<button class="switch" role="switch" aria-checked="…">`

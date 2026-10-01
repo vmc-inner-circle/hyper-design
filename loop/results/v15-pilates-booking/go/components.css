@@ -237,11 +237,15 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 /* 페이지에 바로 놓인 글·입력은 페이지 여백을 갖는다(블록 밖 안내 한 줄이 화면 끝에 붙지 않게) */
 body:not(.plain) .page > :is(.info, p, .block-note, .field, .seg, .btn, .done, .empty, .avatars) { margin-left: var(--page-x); margin-right: var(--page-x); }
 body:not(.plain) .page > div:not([class]) > .hero, body:not(.plain) .page > section:not([class]) > .hero { padding-left: var(--page-x); padding-right: var(--page-x); }
-/* 행 오른쪽 버튼이 제목을 짓누르지 않게: 버튼 글자는 한 줄, 자리가 모자라면 버튼이 다음 줄 오른쪽으로 내려간다 */
+/* 행의 행동 버튼은 글 아래 줄에, 글 칸(제목 왼쪽 끝)부터 오른쪽 끝까지 — 제목을 짓누르지 않고 눌러야 할 곳이 분명하게 */
 .row:has(> .row-trail .btn) { flex-wrap: wrap; row-gap: var(--stack-s); }
-.row:has(> .row-trail .btn) > .row-main { flex: 1 1 150px; }
-.row-trail .btn { white-space: nowrap; }
-.row:has(> .row-trail .btn) > .row-trail { margin-left: auto; }
+.row:has(> .row-trail .btn) > .row-main { flex: 1 1 0; }
+.row:has(> .row-trail .btn) > .row-trail { flex: 1 0 100%; }
+.row:has(> :is(.row-art, .row-lead, .avatar)):has(> .row-trail .btn) > .row-trail { padding-left: calc(44px + var(--stack-m)); }
+.row:has(> .row-date):has(> .row-trail .btn) > .row-trail { padding-left: calc(52px + var(--stack-m)); }
+.row-trail .btn { flex: 1; justify-content: center; text-align: center; white-space: nowrap; }
 /* 폼(plain) 화면의 제목은 어디에 들어 있든 페이지 여백 한 번만 */
 .plain .hero { padding-left: 0; padding-right: 0; }
 .plain .page > .hero { margin-left: 0; margin-right: 0; }
+/* 이미 한 행동의 결과 표시(리뷰 완료·출석 완료) — 누를 수 없지만 읽혀야 한다: 비활성 바탕 + 보조 글자색 */
+.btn.is-done { background: var(--c-disabled-bg); color: var(--c-text-2); pointer-events: none; }
