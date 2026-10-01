@@ -127,12 +127,12 @@ for p in PEOPLE:
     for x in p.get("screens") or []:
         if x not in ids: errs.append(f"people '{nm}': 없는 화면 {x}")
     if not p.get("screens"): errs.append(f"people '{nm}': screens(주로 쓰는 화면) 없음")
-for s in S:                                   # 질문은 위계에만 — 화면 문구로 쓰면 질답지가 된다
+for s in S:                                   # 질문은 위계에만 — 한 화면에 질문 문장이 여럿이면 질답지(큐레이션 제목 하나는 허용)
     f = out / s["file"]
     if not f.exists(): continue
     txt = re.sub(r"[\s?？.]", "", re.sub(r"<[^>]+>", " ", f.read_text(encoding="utf-8")))
-    for q in WANTS_Q:
-        if len(q) >= 8 and q in txt: errs.append(f"{f.name}: 사람 카드의 질문 '{q}'를 화면 문구로 씀(질답지) — 데이터의 자리·크기로 답한다")
+    hit = [q for q in WANTS_Q if len(q) >= 8 and q in txt]
+    if len(hit) >= 2: errs.append(f"{f.name}: 사람 카드의 질문 {len(hit)}개를 화면 문구로 씀(질답지) — 큐레이션 제목 하나 말고는 데이터의 자리·크기로 답한다")
 # 탭·세그먼트: 칸마다 그 내용을 보여 주는 화면
 for s in S:
     for t in s.get("tabs") or []:
