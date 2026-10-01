@@ -1,9 +1,9 @@
 """팔레트 라이브러리에서 기본값 1 + 대안 2를 고르고 토큰 파일을 만든다 — 사용자에게 묻지 않는다.
 
-python3 palette_pick.py <out_dir> --domain 여행 --tags "따뜻함,편안함,신뢰"
+python3 palette_pick.py <out_dir> --domain 여행 --tags "따뜻함,편안함,신뢰" --temp warm
 → out_dir/tokens.css(기본값) + tokens-<slug>.css ×3 + palettes.json(선택 이유)
 
-점수: 도메인 일치 3 · 성격 태그 겹침 1씩 · 흰 글자 버튼이 성립(대비 3 이상)하지 않으면 -2 · 합성 팔레트 -0.5 · 브랜드가 오류 빨강과 겹치면 -0.5
+점수: 도메인 일치 3 · 성격 태그 겹침 1씩 · 감정 온도(--temp warm|cool) 일치 +1.5 / 반대 -1.5 · 흰 글자 버튼이 성립(대비 3 이상)하지 않으면 -2 · 합성 팔레트 -0.5 · 브랜드가 오류 빨강과 겹치면 -0.5
 대안: 기본값과 브랜드 색상각이 40° 이상 다른 것(모노 1개까지) — 원클릭 교체 때 확실히 달라 보이게
 """
 import argparse, json, pathlib, subprocess, sys, colorsys
@@ -15,7 +15,7 @@ def hue(c): return colorsys.rgb_to_hls(*c)[0] * 360
 def gap(a, b): d = abs(hue(a) - hue(b)) % 360; return min(d, 360 - d)
 
 def main():
-    ap = argparse.ArgumentParser(); ap.add_argument("out"); ap.add_argument("--domain", default=""); ap.add_argument("--tags", default="")
+    ap = argparse.ArgumentParser(); ap.add_argument("out"); ap.add_argument("--domain", default=""); ap.add_argument("--tags", default=""); ap.add_argument("--temp", default="", choices=["", "warm", "cool"])
     a = ap.parse_args(); out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
     tags = {t.strip() for t in a.tags.split(",") if t.strip()}
     pals = {f.stem: json.loads(f.read_text(encoding="utf-8")) for f in sorted((HERE / "palettes").glob("*.json"))}
@@ -26,6 +26,10 @@ def main():
         if a.domain and any(d in P.get("domain", "") for d in a.domain.split(",")): s += 3; why.append(f"도메인({P['domain']})")
         hit = tags & set(P.get("tags", []))
         if hit: s += len(hit); why.append("성격(" + ",".join(sorted(hit)) + ")")
+        if a.temp and not P.get("mono"):
+            h = hue(b); warm = h < 60 or h >= 300; cool = 160 <= h < 260
+            if (a.temp == "warm" and warm) or (a.temp == "cool" and cool): s += 1.5; why.append("감정 온도(" + ("따뜻한" if warm else "차가운") + " 색)")
+            elif (a.temp == "warm" and cool) or (a.temp == "cool" and warm): s -= 1.5; why.append("감정 온도와 반대")
         if not P.get("mono") and contrast((1, 1, 1), b) < 3: s -= 2; why.append("흰 글자 버튼 불가")
         if P.get("synthesized"): s -= .5; why.append("측정 합성")
         if not P.get("mono") and gap(b, (0.9, 0.28, 0.3)) < 25: s -= .5; why.append("브랜드가 오류 빨강과 겹침")

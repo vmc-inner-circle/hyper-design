@@ -206,7 +206,7 @@ S["tasks"] = ("할 일 나누기", "editor", "일정을 짜는 사람에게만 �
     <div class="block-head"><h2 class="h2">남은 것 2가지</h2></div>
     {todo("렌터카 예약", "민수 · 11월 1일까지", "car")}
     {todo("혈압약 4일치", "어머니", "pill")}
-    <a class="row is-add" href="#">{lead("plus")}<div class="row-main"><p class="row-title">할 일 추가</p></div></a>
+    <a class="row is-add" href="item-edit.html">{lead("plus")}<div class="row-main"><p class="row-title">할 일 추가</p></div></a>
   </section>
   <section class="block is-list">
     <div class="block-head"><h2 class="h2">끝낸 것 3가지</h2></div>

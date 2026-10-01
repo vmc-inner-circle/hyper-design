@@ -36,7 +36,7 @@
 
 ## 배지 — 뜻마다 다른 색, 앱 전체에서 하나의 표
 `is-brand`(확정·핵심) · `is-warning`(바뀜·마감 임박) · `is-info`(요청·안내) · `is-success`(완료) · `is-danger`(실패) · 클래스 없음(회색: 후보·정하는 중)
-- `screens.json`의 `"badges": {"확정": "is-brand", "바뀜": "is-warning", …}` 에 선언한 뜻→색 표만 쓴다(selfcheck가 대조). 한 색에 뜻 하나.
+- `screens.json`의 `"badges": {"확정": "is-brand", "바뀜": "is-warning", …}` 에 선언한 뜻→색 표만 쓴다(selfcheck가 대조). 한 색에 뜻 하나 — **회색도 뜻 하나**. 내가 해야 할 일(확정 앞둠·답 필요)은 회색 금지(가장 눈에 띄어야 한다). 같은 대상은 모든 화면에서 같은 배지 이름으로 부른다.
 - **시간·순서(지금·다음·~까지·D-3)는 배지가 아니라 글자**로. 배지는 상태에만.
 - 아직 정하지 않은 것(추천·후보)에 확정 색을 쓰지 않는다.
 
@@ -50,6 +50,7 @@
 `<div class="field"><label class="label" for="x">이름</label><input class="input" id="x" value="…"></div>` · 오류: `field is-error` + `<p class="field-msg">(경고 선 아이콘)문구</p>` — 오류는 색만으로 전달하지 않는다(아이콘 필수).
 - **오류 상태 화면은 기본 화면과 같은 요소**에서 문제 칸만 `is-error`로 바꾼다. 버튼 아래 새 칸·새 블록을 붙이지 않는다.
 - 입력 순서: 뒤 입력의 규칙을 바꾸는 선택(예: 1:1인지, 누구와 함께인지)은 **앞에**.
+- 검색(목록이 30개를 넘을 수 있으면 목록 블록 맨 위): `<label class="search">(돋보기 선 아이콘)<input type="search" placeholder="이름으로 찾기"></label>` + 그 아래 걸러 보는 칩(전체·아직 모임 없음 등). **제목이 "~ 23명"처럼 일부를 약속하면 그 칩이 선택된 모습으로 23명만 보여 준다.**
 세그먼트: `<div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">…</button>…</div>` · 칩: `<div class="chips"><button class="chip is-selected">…</button></div>`
 
 ## 기타
@@ -58,7 +59,7 @@
 - 탭바(목적지 3곳 이상일 때만): `<nav class="tabbar"><a class="tab" aria-current="page">(선 아이콘)라벨</a>…</nav>` + body `has-tab`
 - 바텀시트: `<div class="dim"></div><div class="sheet">…</div>`, 빈 상태: `<div class="empty">…</div>`
 - 완료 표시(`<id>--done` 상태, 링크 복사·초대·공유처럼 밖으로 내보낸 뒤): 같은 화면 맨 위에 `<p class="done">링크를 복사했어요 — 단톡방에 붙여넣으세요</p>`
-- 목록에 추가할 수 있으면 끝에 `row is-add`, 순서를 바꿀 수 있으면 행 오른쪽에 끌기 손잡이(선 아이콘 ≡), 지울 수 있으면 편집 화면에 "지우기"(btn secondary)
+- 목록에 추가할 수 있으면 끝에 `row is-add`(**반드시 다른 화면·시트로 가는 `<a href>`** — 자기 화면으로 가면 누른 뒤 모습이 없는 것), 순서를 바꿀 수 있으면 행 오른쪽에 끌기 손잡이(선 아이콘 ≡), 지울 수 있으면 편집 화면에 "지우기"(btn secondary)
 
 ## 일러스트 (assets/fluent/, Fluent Emoji Color · MIT)
 beach · calendar · car · clipboard · coffee · eyes · father · hayun · hotel · idcard · invite · jieun · luggage · meal · minsu · mother · phone · pill · pin · plane · shoe · ticket · umbrella · walk · weather

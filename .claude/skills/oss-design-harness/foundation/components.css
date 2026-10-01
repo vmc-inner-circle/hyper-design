@@ -107,6 +107,10 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .label { font-size: var(--fs-sub); font-weight: 600; color: var(--c-text-2); }
 .input { height: var(--h-btn); padding: 0 var(--stack-m); border-radius: var(--r-m); background: var(--c-bg); border: 1px solid transparent; font-size: var(--fs-body); }
 .input:focus { outline: none; border-color: var(--c-focus); background: var(--c-surface); }
+.search { display: flex; align-items: center; gap: var(--stack-s); height: var(--h-btn); margin: 0 var(--page-x) var(--stack-m); padding: 0 var(--stack-m); border-radius: var(--r-m); background: var(--c-bg); color: var(--c-text-3); }
+.search input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font: inherit; font-size: var(--fs-body); color: var(--c-text); }
+.search input:focus { outline: none; }
+.search:focus-within { box-shadow: inset 0 0 0 1.5px var(--c-focus); background: var(--c-surface); }
 .field.is-error .input { border-color: var(--c-danger); background: var(--c-danger-tint); }
 .field-msg { font-size: var(--fs-sub); color: var(--c-danger); display: flex; align-items: center; gap: 4px; }
 .field-msg svg { flex: none; width: 18px; height: 18px; }   /* 오류는 색만으로 전달하지 않는다 — 브랜드가 빨강이어도 구분되게 */

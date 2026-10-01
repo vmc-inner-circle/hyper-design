@@ -34,6 +34,7 @@ for s in S:
     if t.get("list_first_use"): exp.add("empty")
     if t.get("form"): exp.add("error")
     if t.get("shares"): exp.add("done")
+    if "large_list" not in t and s.get("kind") == "list" and "--" not in s["id"]: errs.append(f'{s["id"]}: traits.large_list(30개 넘게 쌓이는 목록인가) 미선언')
     if "--" not in s["id"]:
         decl = set(s.get("states", []) or [])
         if decl != exp: errs.append(f'{s["id"]}: states {sorted(decl)} ≠ 파생 {sorted(exp)}')
@@ -55,6 +56,12 @@ for s in S:
     if len(cards) > 1: errs.append(f"{f.name}: 설명 카드(설명 한 줄만 든 블록) {len(cards)}개 — 설명이 필요한 구조라는 신호(화면당 1개)")
     if re.search(r'class="(?:info|block-note)"[^>]*>(?:(?!</p>).)*누르면', h, re.S): errs.append(f"{f.name}: 조작법 설명('~를 누르면') — 구조로 이해시킨다")
     if 'class="cta"' in h and 'class="tabbar"' in h: errs.append(f"{f.name}: 탭 첫 화면에 하단 고정 CTA")
+    for tag in re.findall(r'<[a-z]+ class="row is-add[^"]*"[^>]*>', h):
+        hm = re.search(r'href="([^"#]*)', tag)
+        if not hm or not hm.group(1) or pathlib.Path(hm.group(1)).name == f.name:
+            errs.append(f"{f.name}: '+ 추가' 행이 다른 화면·시트로 이어지지 않음(누른 뒤 모습 없음)")
+    if t.get("large_list") and 'type="search"' not in h:
+        errs.append(f"{f.name}: 수십 개 목록(large_list)인데 검색 칸 없음")
     for href in re.findall(r'(?:href|src)="([^"#:]+\.(?:html|svg|css|js))"', h):
         if not (f.parent / href).exists(): errs.append(f"{f.name}: 깨진 참조 {href}")
 # 제품 판단 장부: PRD 요구사항을 빼거나 가볍게 바꿨으면 반드시 물었어야 한다
@@ -72,7 +79,7 @@ BADGES = m.get("badges") or {}
 if not BADGES: errs.append("badges(뜻→색 표) 없음")
 cls_seen = {}
 for mean, cls in BADGES.items():
-    if cls and cls in cls_seen: errs.append(f"배지 표: '{mean}'와 '{cls_seen[cls]}'가 같은 색 {cls}")
+    if cls in cls_seen: errs.append(f"배지 표: '{mean}'와 '{cls_seen[cls]}'가 같은 색 {cls}")
     cls_seen.setdefault(cls, mean)
 for s in S:
     f = out / s["file"]
