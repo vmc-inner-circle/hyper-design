@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>새 모임 · 사람 고르기</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">새 모임</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-label="사람 고르기, 2단계 중 1단계" aria-valuenow="1" aria-valuemax="2"><span class="is-on"></span><span></span></div>
+
+  <div class="field"><span class="label">누구 쪽 모임인가요?</span>
+    <div class="seg" role="radiogroup" aria-label="누구 쪽 모임">
+      <button class="seg-item is-selected" role="radio" aria-checked="true">지은 쪽</button>
+      <button class="seg-item" role="radio" aria-checked="false">민수 쪽</button>
+      <button class="seg-item" role="radio" aria-checked="false">둘 다</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="row-main"><p class="row-title">1:1로 만나야 하는 사람만</p></div>
+    <button class="switch" role="switch" aria-checked="false" aria-label="1:1로 만나야 하는 사람만"></button>
+  </div>
+
+  <div class="field"><label class="label" for="name">모임 이름</label><input class="input" id="name" value="전 회사 동료"></div>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">사람 고르기</h2><a class="block-link" href="groups.html">무리 관리</a></div>
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="이름으로 찾기" aria-label="이름으로 찾기"></label>
+    <div class="chips" role="tablist" aria-label="걸러 보기">
+      <button class="chip is-selected" role="tab" aria-selected="true">아직 모임 없음 11</button>
+      <button class="chip" role="tab" aria-selected="false">전 회사 동료</button>
+      <button class="chip" role="tab" aria-selected="false">대학 동기</button>
+      <button class="chip" role="tab" aria-selected="false">현 회사</button>
+      <button class="chip" role="tab" aria-selected="false">고등학교</button>
+      <button class="chip" role="tab" aria-selected="false">동네 친구</button>
+    </div>
+
+    <div class="row"><span class="avatar is-text">수진</span><div class="row-main"><p class="row-title">이수진</p><p class="row-sub">전 회사 동료</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="이수진"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">예린</span><div class="row-main"><p class="row-title">장예린</p><p class="row-sub">전 회사 동료</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="장예린"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">가영</span><div class="row-main"><p class="row-title">문가영</p><p class="row-sub">전 회사 동료</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="문가영"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">정숙</span><div class="row-main"><p class="row-title">윤정숙 교수님</p><p class="row-sub">대학 교수님 · 1:1</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="윤정숙 교수님"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">소율</span><div class="row-main"><p class="row-title">김소율</p><p class="row-sub">필라테스</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="김소율"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">지수</span><div class="row-main"><p class="row-title">백지수</p><p class="row-sub">필라테스</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="백지수"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">은영</span><div class="row-main"><p class="row-title">이은영</p><p class="row-sub">가족</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="이은영"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">은지</span><div class="row-main"><p class="row-title">이은지</p><p class="row-sub">가족</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="이은지"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">은서</span><div class="row-main"><p class="row-title">이은서</p><p class="row-sub">가족</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="이은서"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">하린</span><div class="row-main"><p class="row-title">노하린</p><p class="row-sub">현 회사</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="노하린"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">유리</span><div class="row-main"><p class="row-title">전유리</p><p class="row-sub">현 회사</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="전유리"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">같은 무리인데 다른 모임에 있어요</h2></div>
+    <div class="row"><span class="avatar is-text">서연</span><div class="row-main"><p class="row-title">박서연</p><p class="row-sub">대학 동기 · 전 회사 동료 · 대학 동기 모임에 있어요</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="박서연"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></button></span></div>
+  </section>
+</main>
+<div class="cta"><a class="btn primary full" href="meetup-dates.html">3명으로 다음</a></div>
+</body></html>

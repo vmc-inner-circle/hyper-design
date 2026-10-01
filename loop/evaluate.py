@@ -45,6 +45,12 @@ if designer:
 추가 — 같은 PRD의 실제 디자이너 결과 캡처가 {designer} 에 있다(일부 영역, 흐릴 수 있음). 전부 열어 본 뒤 하네스 결과와 비교해
 JSON에 "vs_designer": {{"scope": 1~5, "edge": 1~5, "visual": 1~5, "gaps": ["디자이너에는 있고 하네스에는 없는 것"]}} 를 추가하라
 (scope = 흐름·화면을 명세만큼 덮었나, edge = 규칙·예외 상황, visual = 색·이미지·완성도. 5 = 디자이너와 동급)."""
+try: STAGE = json.loads((run / OUTN / "screens.json").read_text(encoding="utf-8")).get("stage", "")
+except Exception: STAGE = ""
+if STAGE == "go":
+    J += """
+
+중요 — 이 결과물은 1차(/hyper-design:go)다. 설계상 1차는 모든 흐름의 시작·보기·고치기·끝(결과) 화면과 사진까지만 그리고, 오류·확인 대화상자·빈 상태·진행 중·네트워크/권한 실패 같은 **상태 화면은 2차(/hyper-design:max)가 더한다**(캔버스 맨 위에 그 개수가 안내돼 있다). 상태 화면이 없는 것은 P0·P1로 세지 말고, 흐름의 시작·끝·단계 누락과 화면 품질을 평가하라."""
 C = (ROOT / "loop/compare.md").read_text().replace("{{PRD}}", str(prd))
 def cmp(i):
     flip = random.random() < .5

@@ -1,0 +1,10 @@
+[
+ {"slot": "yufuin-view", "screens": ["home", "join", "trip-new"], "what": "유후다케 산 아래 유후인 마을 풍경, 가을 단풍, 사람 없이", "ratio": "16:9", "kind": "photo", "queries": ["유후인 유후다케 마을 풍경 가을", "Yufuin town Mount Yufu autumn landscape"]},
+ {"slot": "dazaifu", "screens": ["day", "home-trip", "home"], "what": "다자이후 텐만구 본전과 참배길, 낮", "ratio": "4:3", "kind": "photo", "queries": ["다자이후 텐만구 본전", "Dazaifu Tenmangu shrine main hall"]},
+ {"slot": "kinrinko", "screens": ["home", "home-d3"], "what": "유후인 긴린코 호수의 아침 물안개", "ratio": "4:3", "kind": "photo", "queries": ["긴린코 호수 아침 안개", "Kinrinko lake Yufuin morning mist"]},
+ {"slot": "ryokan", "screens": ["home", "day-edit"], "what": "유후인 료칸 다다미 객실 또는 노천탕, 사람 없이", "ratio": "4:3", "kind": "photo", "queries": ["유후인 료칸 노천탕 객실", "Yufuin ryokan private open air bath room"]},
+ {"slot": "yufuin-train", "screens": ["home", "home-d3"], "what": "초록색 유후인노모리 관광 열차가 역에 서 있는 모습", "ratio": "4:3", "kind": "photo", "queries": ["유후인노모리 열차", "Yufuin no Mori train green"]},
+ {"slot": "nakasu-river", "screens": ["home", "day"], "what": "후쿠오카 나카스 강변 저녁 풍경, 강과 불빛", "ratio": "4:3", "kind": "photo", "queries": ["후쿠오카 나카스 강변 야경", "Fukuoka Nakasu river night"]},
+ {"slot": "canal-city", "screens": ["item-edit", "item-confirmed", "day-edit"], "what": "캐널시티 하카타 쇼핑몰 내부의 운하와 분수", "ratio": "4:3", "kind": "photo", "queries": ["캐널시티 하카타 분수", "Canal City Hakata fountain canal"]},
+ {"slot": "motsunabe", "screens": ["day-edit", "item-edit"], "what": "냄비에 끓는 모츠나베(곱창 전골), 위에서", "ratio": "1:1", "kind": "photo", "queries": ["후쿠오카 모츠나베", "motsunabe hot pot Fukuoka top view"]}
+]

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>일정 추가</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="day-edit.html" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a><h1 class="appbar-title">일정 추가</h1><span></span></header>
+<main class="page">
+  <p class="block-note">1일째 11월 21일(토)에 추가해요</p>
+  <div class="field"><span class="label">종류</span>
+    <div class="seg" role="radiogroup" aria-label="종류"><button class="seg-item" role="radio" aria-checked="false">이동</button><button class="seg-item" role="radio" aria-checked="false">숙박</button><button class="seg-item is-selected" role="radio" aria-checked="true">활동</button></div>
+  </div>
+  <div class="field"><span class="label">상태</span>
+    <div class="seg" role="radiogroup" aria-label="상태"><button class="seg-item is-selected" role="radio" aria-checked="true">후보</button><button class="seg-item" role="radio" aria-checked="false">확정</button></div>
+    <p class="block-note">후보는 가족에게 보이지 않아요</p>
+  </div>
+  <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" placeholder="예: 나카스 포장마차"></div>
+  <div class="field"><label class="label" for="t">시간</label><input class="input" id="t" placeholder="비워도 돼요"></div>
+  <div class="field"><label class="label" for="m">메모</label><input class="input" id="m" placeholder="예약 번호, 가는 법 등"></div>
+</main>
+<div class="cta"><a class="btn primary full" href="day-edit.html">후보로 저장</a></div>
+</body></html>
