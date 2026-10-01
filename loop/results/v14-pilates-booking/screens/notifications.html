@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>알림</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">알림</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="수업·스튜디오 이름으로 찾기"></label>
+    <div class="chips" role="group" aria-label="알림 종류">
+      <button class="chip is-selected" aria-pressed="true">전체</button>
+      <button class="chip" aria-pressed="false">예약</button>
+      <button class="chip" aria-pressed="false">대기</button>
+      <button class="chip" aria-pressed="false">수강권</button>
+    </div>
+    <p class="block-note">안 읽은 알림 <span class="num">3개</span></p>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">오늘</h2></div>
+    <a class="row" href="promote.html"><span class="row-art"><img src="../assets/fluent/invite.svg" alt=""></span>
+      <div class="row-main"><span class="badge is-info">확정 필요</span><p class="row-title">10월 17일(토) 11:00 매트 필라테스 자리가 났어요</p><p class="row-sub">18:52까지 확정 · 대기 승급 · 16:52 · 안 읽음</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="passes.html"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span>
+      <div class="row-main"><p class="row-title">온유 요가 1개월 기간권이 10월 20일에 끝나요</p><p class="row-sub">수강권 만료 임박 · 08:00 · 안 읽음</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">어제</h2></div>
+    <a class="row" href="class.html"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span>
+      <div class="row-main"><p class="row-title">내일 20:00 기구 필라테스 중급 · 숨 필라테스</p><p class="row-sub">리마인드 · 21:00 · 안 읽음</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="class.html"><span class="row-art"><img src="../assets/fluent/clipboard.svg" alt=""></span>
+      <div class="row-main"><p class="row-title">10월 14일(수) 20:00 수업 · 20:00까지 무료 취소</p><p class="row-sub">무료 취소 마감 3시간 전 · 17:00</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">지난 알림</h2></div>
+    <a class="row" href="review-write.html"><span class="row-art"><img src="../assets/fluent/eyes.svg" alt=""></span>
+      <div class="row-main"><p class="row-title">오늘 수업 어떠셨어요?</p><p class="row-sub">리뷰 요청 · 10월 12일 21:50</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="my-bookings.html"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span>
+      <div class="row-main"><span class="badge is-brand">예약 확정</span><p class="row-title">10월 16일(금) 20:00 기구 필라테스 중급</p><p class="row-sub">10월 11일 09:12</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/invite.svg" alt=""></span>
+      <div class="row-main"><p class="row-title">대기 승급</p><p class="row-sub">만료됨 · 10월 3일 10:02</p></div></div>
+  </section>
+
+  <p class="block-note">알림은 90일 동안 보관해요</p>
+</main>
+</body></html>

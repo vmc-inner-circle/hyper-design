@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>전체 화면 한눈에 보기</title>
+<!-- 캔버스 템플릿(정적). build_canvas.py 가 아래 hd-data 에 데이터만 끼워 넣는다. 외부 라이브러리 없음. -->
+<link id="tokens" rel="stylesheet" href="tokens.css" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{display:flex;flex-direction:column;background:#ECECE8;color:#1c1c1c;font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Apple SD Gothic Neo',sans-serif;word-break:keep-all;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+
+/* ---------- 헤더: 제목 · 탭 · 팔레트 · 보기 (조작 그룹 3개) ---------- */
+.hd{flex:none;display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;padding:8px 16px;background:#fff;border-bottom:1px solid #dcdcd7;position:relative;z-index:5}
+.hd h1{font-size:17px;font-weight:700;margin:0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
+.tabs{display:flex;gap:2px;background:#EFEFEB;border-radius:12px;padding:3px}
+.tab{min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:9px;background:transparent;font-size:15px;font-weight:600;color:#5a5a55;cursor:pointer}
+.tab[aria-selected="true"]{background:#fff;color:#1c1c1c;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.pal{display:flex;align-items:center;gap:2px;margin-left:auto}
+.pal-label{font-size:13px;color:#777;margin-right:4px}
+.dot{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 10px;border:0;border-radius:999px;background:transparent;font-size:14px;color:#444;cursor:pointer}
+.dot i{flex:none;width:22px;height:22px;border-radius:999px;background:var(--dot);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.dot[aria-pressed="true"]{background:#F1F1ED;color:#1c1c1c;font-weight:700}
+.dot[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff,0 0 0 4px #1c1c1c}
+.dot:hover{background:#F5F5F2}
+.view{display:flex;align-items:center;gap:4px}
+.vbtn{min-height:44px;min-width:44px;padding:0 14px;border:1px solid #dcdcd7;border-radius:10px;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.vbtn:hover{background:#F5F5F2}
+.zoom{min-width:64px;font-variant-numeric:tabular-nums;color:#555}
+body:not([data-tab="screens"]) .view{visibility:hidden}
+@media (max-width:760px){
+  .hd{padding:6px 10px;gap:4px 8px}
+  .hd h1{flex:1 1 0;font-size:16px;order:1;max-width:none}
+  .pal{order:2;margin-left:0}
+  .tabs{order:3}
+  .view{order:4;margin-left:auto}
+  .tab{padding:0 7px;font-size:13px}
+  .fit-long{display:none}
+  .zoom{min-width:52px}
+  .dot{padding:0}
+  .dot{justify-content:center}
+  .dot b,.pal-label{display:none}
+  .vbtn{padding:0 10px}
+}
+
+/* ---------- 판 ---------- */
+.panes{flex:1;position:relative;overflow:hidden}
+.pane{position:absolute;inset:0}
+.pane[hidden]{display:none}
+.pane iframe.doc{width:100%;height:100%;border:0;display:block;background:#F6F6F3}
+#screens{overflow:hidden;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+#screens.dragging{cursor:grabbing}
+#screens.dragging .cover{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;width:max-content;will-change:transform}
+
+/* 판 안의 글 — 첫 배율 0.72 기준으로 읽히게 크게 쓴다(22px → 약 16px) */
+.intro{padding:48px 0 0;max-width:1760px}
+.intro-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:start}
+.hint{font-size:20px;color:#6b6b66;margin:0 0 18px}
+.story h2{font-size:42px;line-height:1.3;margin:0 0 14px}
+.story h2 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:22px;line-height:1.6;color:#444;margin:0 0 24px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.idea{background:#fff;border-radius:20px;padding:22px}
+.idea b{font-size:22px}
+.idea p{font-size:19px;line-height:1.55;color:#555;margin:8px 0 0}
+.decisions{margin-top:6px}
+.narrow .ideas,.narrow .decisions ul,.narrow .intro-grid{grid-template-columns:1fr}
+.narrow .decisions{margin-top:0}
+.narrow .story h2{font-size:38px}
+.decisions h3{font-size:27px;margin:0 0 8px}
+.decisions .core{font-size:21px;color:#333;margin:0 0 14px}
+.decisions ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.decisions li{background:#fff;border-radius:16px;padding:14px 18px;font-size:19px;line-height:1.45}
+.decisions li b{margin-right:4px}
+.decisions .why{display:block;color:#666;font-size:18px}
+.v{display:inline-block;font-size:15px;font-weight:700;border-radius:8px;padding:2px 9px;margin-right:8px;background:#eee;color:#444;vertical-align:2px}
+.v-cut{background:#fde8e8;color:#9b1c1c}
+.v-lighten{background:#e7f0ff;color:#1d4ed8}
+
+.rows{position:relative;padding-bottom:40px}
+.flow{padding-top:90px}
+.glabel{font-size:31px;font-weight:700;margin:0 0 104px;white-space:nowrap}
+.cards{display:flex;gap:84px;align-items:flex-start}
+.card{flex:none;width:375px}
+.phone{position:relative;width:375px;height:812px;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+.phone iframe{display:block;width:375px;height:812px;border:0;pointer-events:none;background:#fff}
+.cover{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:transparent;border-radius:28px;cursor:pointer}
+.cover:hover,.cover:focus-visible{outline:4px solid #2563eb;outline-offset:0}
+.ftitle{font-size:22px;font-weight:700;margin-top:16px;line-height:1.35}
+.state{display:inline-block;font-size:15px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+.fdesc{font-size:18px;color:#555;margin-top:4px;line-height:1.45}
+.pol{margin:8px 0 0;padding-left:22px;font-size:17px;line-height:1.5;color:#444}
+.more{font-size:17px;color:#666;margin-top:4px}
+.more summary,.foot summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.more .pol{margin-top:0}
+svg.ar{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+svg.ar path.ln{fill:none;stroke:#2563eb;stroke-width:3;marker-start:url(#hd-dot);marker-end:url(#hd-head)}
+.alabel{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1.5px solid #c7d6fb;color:#1d4ed8;font-size:17px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.alabel.side{transform:translate(-100%,-50%);white-space:normal;max-width:220px;text-align:right;border-radius:14px}
+.foot{padding:20px 0 120px;font-size:17px;color:#777;max-width:1500px}
+.foot p{margin:0 0 6px}
+.foot ul{margin:4px 0 0;padding-left:22px;line-height:1.6}
+.foot a{color:#555}
+
+/* ---------- 크게 보기 ---------- */
+#modal{position:fixed;inset:0;z-index:20;background:rgba(20,20,20,.62);display:flex;align-items:center;justify-content:center}
+#modal[hidden]{display:none}
+#modal .box{position:relative;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#modal iframe{display:block;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
+#modal .close{position:absolute;top:max(10px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:#fff;font-size:15px;font-weight:600;cursor:pointer;z-index:2}
+#modal .mtitle{position:absolute;top:max(10px,env(safe-area-inset-top));left:16px;right:96px;color:#fff;font-size:15px;font-weight:600;min-height:44px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body data-tab="screens">
+<header class="hd">
+  <h1 id="title">전체 화면 한눈에 보기</h1>
+  <div class="tabs" role="tablist" data-group="tabs">
+    <button class="tab" role="tab" data-tab="screens" aria-selected="true">Screens</button>
+    <button class="tab" role="tab" data-tab="foundation" aria-selected="false">Foundation</button>
+    <button class="tab" role="tab" data-tab="components" aria-selected="false">Components</button>
+  </div>
+  <div class="pal" data-group="palette" aria-label="색 바꾸기"></div>
+  <div class="view" data-group="view">
+    <button class="vbtn" id="fit" title="모든 화면이 한 번에 들어오게">전체<span class="fit-long"> 보기</span></button>
+    <button class="vbtn zoom" id="zoom" title="처음 배율로">72%</button>
+  </div>
+</header>
+<main class="panes">
+  <section class="pane" id="screens" aria-label="화면 판">
+    <div id="stage" style="transform:translate(0px,0px) scale(0.72)">
+      <div class="intro" id="intro"></div>
+      <div class="rows" id="rows"></div>
+      <div class="foot" id="foot"></div>
+    </div>
+  </section>
+  <section class="pane" id="foundation" hidden><iframe class="doc" title="Foundation — 색·글자·여백" data-src="foundation.html"></iframe></section>
+  <section class="pane" id="components" hidden><iframe class="doc" title="Components — 이 앱이 쓴 부품" data-src="components.html"></iframe></section>
+</main>
+<div id="modal" hidden role="dialog" aria-modal="true" aria-label="화면 크게 보기">
+  <div class="mtitle" id="mtitle"></div>
+  <button class="close" id="mclose">닫기</button>
+  <div class="box" id="mbox"><iframe id="mframe" title="크게 보기"></iframe></div>
+</div>
+<noscript id="hd-links"><ul><li><a href="screens/onboarding-1.html">첫 실행 안내 1/3</a></li><li><a href="screens/onboarding-2.html">첫 실행 안내 2/3</a></li><li><a href="screens/onboarding-3.html">첫 실행 안내 3/3</a></li><li><a href="screens/login.html">로그인 / 가입 방법</a></li><li><a href="screens/login--error.html">로그인 / 가입 방법 · 오류</a></li><li><a href="screens/phone.html">전화번호 인증</a></li><li><a href="screens/phone--error.html">전화번호 인증 · 오류</a></li><li><a href="screens/signup-info.html">약관 동의 · 기본 정보</a></li><li><a href="screens/signup-info--error.html">약관 동의 · 기본 정보 · 오류</a></li><li><a href="screens/neighborhood.html">동네 설정</a></li><li><a href="screens/neighborhood--error.html">동네 설정 · 오류</a></li><li><a href="screens/home.html">홈 · 수업이 있는 날</a></li><li><a href="screens/home-new.html">홈 · 처음 쓰는 사람</a></li><li><a href="screens/find-list.html">스튜디오 찾기 · 목록</a></li><li><a href="screens/find-list--error.html">스튜디오 찾기 · 목록 · 오류</a></li><li><a href="screens/find-map.html">스튜디오 찾기 · 지도</a></li><li><a href="screens/studio.html">스튜디오 상세</a></li><li><a href="screens/instructor.html">강사 상세</a></li><li><a href="screens/timetable.html">수업 시간표</a></li><li><a href="screens/class.html">수업 상세</a></li><li><a href="screens/class--error.html">수업 상세 · 오류</a></li><li><a href="screens/book-confirm.html">예약 확인</a></li><li><a href="screens/book-confirm--confirm.html">예약 확인 · 확인</a></li><li><a href="screens/book-confirm--error.html">예약 확인 · 오류</a></li><li><a href="screens/book-done.html">예약 완료</a></li><li><a href="screens/waitlist.html">대기 신청</a></li><li><a href="screens/waitlist--done.html">대기 신청 · 보낸 뒤</a></li><li><a href="screens/waitlist--error.html">대기 신청 · 오류</a></li><li><a href="screens/promote.html">대기 승급 확정</a></li><li><a href="screens/promote--error.html">대기 승급 확정 · 오류</a></li><li><a href="screens/cancel.html">예약 취소</a></li><li><a href="screens/cancel--confirm.html">예약 취소 · 확인</a></li><li><a href="screens/cancel--error.html">예약 취소 · 오류</a></li><li><a href="screens/my-bookings.html">내 예약 · 예정</a></li><li><a href="screens/my-bookings--empty.html">내 예약 · 예정 · 처음(비어 있음)</a></li><li><a href="screens/my-bookings-wait.html">내 예약 · 대기 중</a></li><li><a href="screens/my-bookings-past.html">내 예약 · 지난 수업</a></li><li><a href="screens/attend.html">출석 체크</a></li><li><a href="screens/attend--error.html">출석 체크 · 오류</a></li><li><a href="screens/review-write.html">리뷰 쓰기</a></li><li><a href="screens/review-write--error.html">리뷰 쓰기 · 오류</a></li><li><a href="screens/reviews.html">리뷰 목록</a></li><li><a href="screens/passes.html">수강권</a></li><li><a href="screens/passes--empty.html">수강권 · 처음(비어 있음)</a></li><li><a href="screens/pass-detail.html">수강권 상세</a></li><li><a href="screens/pause.html">수강권 일시정지</a></li><li><a href="screens/pause--error.html">수강권 일시정지 · 오류</a></li><li><a href="screens/pass-select.html">수강권 고르기</a></li><li><a href="screens/pay.html">결제</a></li><li><a href="screens/pay--error.html">결제 · 오류</a></li><li><a href="screens/pay--confirm.html">결제 · 확인</a></li><li><a href="screens/pay-done.html">결제 완료</a></li><li><a href="screens/notifications.html">알림함</a></li><li><a href="screens/mypage.html">마이</a></li><li><a href="screens/settings.html">설정</a></li><li><a href="screens/settings--confirm.html">설정 · 확인</a></li><li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>
+<script id="hd-data" type="application/json">{"title": "전체 화면 한눈에 보기", "scale": 0.72, "card": {"w": 375, "h": 812}, "modal": {"w": 390, "h": 844}, "story": {"headline": "예약·잔여·취소 규정을 <em>누르기 전에 실제 날짜로<\/em> 보여 줘서, 카톡으로 묻지 않아도 되게", "summary": "수강생이 매번 물어보던 세 가지 — 자리 있나요, 몇 회 남았나요, 지금 취소하면 차감되나요 — 를 해당 버튼 바로 옆에 계산된 답으로 둡니다. 홈 맨 위는 언제나 다음 수업, 자리가 나면 확정할 시각까지 보여 줍니다.", "ideas": [{"title": "취소 규정을 날짜로", "desc": "'24시간 전'이 아니라 '10월 20일(화) 20:00까지 무료'로 계산해 수업 상세·예약 확인·내 예약·취소에 같은 문장으로."}, {"title": "잔여는 두 숫자", "desc": "'잔여 7회 (예약 2회 포함) · 사용 가능 5회' — 예약 시 차감 정책을 헷갈리지 않게."}, {"title": "홈 맨 위는 다음 수업", "desc": "이정호 님처럼 '다음 수업만' 보는 사람을 위해. 30분 전부터 같은 카드에 출석하기."}, {"title": "탭 4개", "desc": "홈·찾기·내 예약·마이. 수강권은 홈 요약과 마이 맨 위."}]}, "decisions": {"core": "수강생이 '자리 있나요·몇 회 남았나요·지금 취소하면 차감되나요'를 스튜디오에 묻지 않고 누르기 전에 안다", "items": [{"verdict": "later", "label": "나중에", "name": "리뷰 사진", "how": "", "why": "논의점 — 운영자 3/8 반대, 얼굴·탈의실 노출 검수 부담"}, {"verdict": "cut", "label": "뺌", "name": "강사별 리뷰 화면", "how": "", "why": "같은 목록을 둘로 만들지 않는다"}, {"verdict": "cut", "label": "뺌", "name": "캘린더 동기화 자동", "how": "", "why": "이미 쓰는 캘린더 앱이 한다"}, {"verdict": "cut", "label": "뺌", "name": "스튜디오에 메시지", "how": "", "why": "카톡·전화가 이미 한다"}, {"verdict": "cut", "label": "뺌", "name": "대기 순번 실시간 변화 알림", "how": "", "why": "새 알림을 늘리지 않는다"}]}, "rows": [{"group": "처음 들어올 때", "screens": [{"id": "onboarding-1", "file": "screens/onboarding-1.html", "title": "첫 실행 안내 1/3", "purpose": "동네 스튜디오를 한 앱에서 찾는다", "policies": ["최초 1회만, 건너뛰기 → 로그인", "로그인 유지 중이면 바로 홈", "강제 업데이트 버전이면 스토어 이동 안내"], "state": false}, {"id": "onboarding-2", "file": "screens/onboarding-2.html", "title": "첫 실행 안내 2/3", "purpose": "남은 횟수를 바로 확인한다", "policies": ["넘기기·건너뛰기"], "state": false}, {"id": "onboarding-3", "file": "screens/onboarding-3.html", "title": "첫 실행 안내 3/3", "purpose": "자리 나면 자동으로 알려 준다", "policies": ["마지막 장의 '시작하기' → 로그인"], "state": false}, {"id": "login", "file": "screens/login.html", "title": "로그인 / 가입 방법", "purpose": "카카오·Apple·전화번호로 시작, 둘러보기", "policies": ["같은 번호로 다른 방식 가입 이력이 있으면 그 방식 안내(R1)", "Apple은 iOS에만(Android 노출은 확인 중)", "둘러보기 중 예약·구매·대기를 누르면 이 화면"], "state": false}, {"id": "login--error", "file": "screens/login--error.html", "title": "로그인 / 가입 방법 · 오류", "purpose": "이미 다른 방식으로 가입된 번호", "policies": ["[R1] 이미 다른 방식으로 가입된 번호"], "state": true}, {"id": "phone", "file": "screens/phone.html", "title": "전화번호 인증", "purpose": "번호 인증 6자리", "policies": ["유효 3분, 재전송은 30초 후·하루 5회", "5회 틀리면 10분 제한", "문자 자동 채우기"], "state": false}, {"id": "phone--error", "file": "screens/phone--error.html", "title": "전화번호 인증 · 오류", "purpose": "인증 3분·재전송 제한·5회 오입력 10분 제한", "policies": ["[R2] 인증 3분·재전송 제한·5회 오입력 10분 제한"], "state": true}, {"id": "signup-info", "file": "screens/signup-info.html", "title": "약관 동의 · 기본 정보", "purpose": "필수 약관 + 실명 이름", "policies": ["이름은 출석부용 — 운영자에게만 보임, 리뷰엔 닉네임", "닉네임 중복 허용", "필수 약관 + 이름이 있어야 다음"], "state": false}, {"id": "signup-info--error", "file": "screens/signup-info--error.html", "title": "약관 동의 · 기본 정보 · 오류", "purpose": "오류 모습", "policies": [], "state": true}, {"id": "neighborhood", "file": "screens/neighborhood.html", "title": "동네 설정", "purpose": "내 동네 하나 정하기", "policies": ["위치 권한은 '현재 위치로'를 누를 때만 요청", "거부해도 동 이름 검색으로 설정(R3)", "동네는 1개, 최근 동네 최대 3"], "state": false}, {"id": "neighborhood--error", "file": "screens/neighborhood--error.html", "title": "동네 설정 · 오류", "purpose": "위치 권한 거부 시 검색으로 동네 설정", "policies": ["[R3] 위치 권한 거부 시 검색으로 동네 설정"], "state": true}]}, {"group": "홈 — 예약이 있을 때와 처음일 때", "screens": [{"id": "home", "file": "screens/home.html", "title": "홈 · 수업이 있는 날", "purpose": "다음 수업이 맨 위 — 오늘 20:00", "policies": ["출석하기는 수업 30분 전부터 생긴다", "수강권 요약은 만료 임박 순 1개 + 외 n개", "확정 필요한 승급 건이 있으면 다음 수업 바로 아래"], "state": false}, {"id": "home-new", "file": "screens/home-new.html", "title": "홈 · 처음 쓰는 사람", "purpose": "수업이 없으면 찾기가 맨 위", "policies": ["예약 없음 → '예정된 수업이 없어요' + 찾기", "수강권 없음 → 체험 가능 스튜디오 먼저", "동네 추천은 거리순"], "state": false}]}, {"group": "스튜디오 찾기·둘러보기", "screens": [{"id": "find-list", "file": "screens/find-list.html", "title": "스튜디오 찾기 · 목록", "purpose": "사진·별점·가격으로 비교", "policies": ["기본 보기는 목록, 마지막 본 방식을 기억", "입점 스튜디오만", "결과 0개면 '3km로 넓혀볼까요?'(R4)"], "state": false}, {"id": "find-list--error", "file": "screens/find-list--error.html", "title": "스튜디오 찾기 · 목록 · 오류", "purpose": "찾기 결과 0개 — 범위 넓히기 제안", "policies": ["[R4] 찾기 결과 0개 — 범위 넓히기 제안"], "state": true}, {"id": "find-map", "file": "screens/find-map.html", "title": "스튜디오 찾기 · 지도", "purpose": "동네 지도에서 고르기", "policies": ["위치 권한 없으면 설정 동네(망원동) 중심", "지도를 옮기면 '이 지역에서 다시 찾기'", "핀 선택 시 요약 카드"], "state": false}, {"id": "studio", "file": "screens/studio.html", "title": "스튜디오 상세", "purpose": "이곳에 다닐지 결정할 정보 한 장", "policies": ["일시 휴업이면 안내 + 예약 진입 막음(R5)", "취소 규정은 플랫폼 공통 24시간", "시간표 보기는 항상 하단에"], "state": false}, {"id": "instructor", "file": "screens/instructor.html", "title": "강사 상세", "purpose": "강사의 경력·이번 주 수업", "policies": ["여러 스튜디오 출강 강사도 스튜디오별 프로필", "강사 리뷰는 스튜디오 리뷰를 강사로 걸러 본 것"], "state": false}]}, {"group": "예약·대기·취소", "screens": [{"id": "timetable", "file": "screens/timetable.html", "title": "수업 시간표", "purpose": "이번 주 하루씩, 상태 한눈에", "policies": ["14일 이후 수업은 '○월 ○일 오픈'(R14)", "휴무일은 '휴무', 휴강은 사유와 함께", "하루 15개 넘어도 시간대 칩으로 거른다"], "state": false}, {"id": "class", "file": "screens/class.html", "title": "수업 상세", "purpose": "예약 전 취소 마감을 실제 날짜로", "policies": ["취소 규정은 실제 날짜·시각으로 계산", "수강권은 만료일 빠른 것부터 자동 선택(R16)", "수강권 없으면 '이 스튜디오 수강권이 없어요' + 사기"], "state": false}, {"id": "class--error", "file": "screens/class--error.html", "title": "수업 상세 · 오류", "purpose": "수강권 없음·잔여 0·만료로 예약 불가 · 시간 겹치는 수업 중복 예약 불가", "policies": ["[R7] 수강권 없음·잔여 0·만료로 예약 불가", "[R8] 시간 겹치는 수업 중복 예약 불가"], "state": true}, {"id": "book-confirm", "file": "screens/book-confirm.html", "title": "예약 확인", "purpose": "차감과 취소 규정을 보고 확정", "policies": ["예약 시 1회 차감, 무료 취소 시 복원", "'확인했습니다' 체크는 첫 예약만, 규정은 매번 표시", "확정 순간 마감이면 대기 제안(R9)"], "state": false}, {"id": "book-confirm--confirm", "file": "screens/book-confirm--confirm.html", "title": "예약 확인 · 확인", "purpose": "확정 순간 마감 — 대기 전환 제안", "policies": ["[R9] 확정 순간 마감 — 대기 전환 제안"], "state": true}, {"id": "book-confirm--error", "file": "screens/book-confirm--error.html", "title": "예약 확인 · 오류", "purpose": "노쇼 3회 누적 7일 예약·대기 제한", "policies": ["[R10] 노쇼 3회 누적 7일 예약·대기 제한"], "state": true}, {"id": "book-done", "file": "screens/book-done.html", "title": "예약 완료", "purpose": "예약 확정 — 캘린더에 넣기", "policies": ["완료 후 남은 횟수 표시", "캘린더 추가는 기기 캘린더 앱"], "state": false}, {"id": "waitlist", "file": "screens/waitlist.html", "title": "대기 신청", "purpose": "몇 번째인지, 어떻게 연락 오는지", "policies": ["신청 때는 차감 없음, 확정 때 차감", "수업당 대기 최대 5명(R5)", "겹치는 시간대도 대기는 가능, 확정 때 확인(R10)"], "state": false}, {"id": "waitlist--done", "file": "screens/waitlist--done.html", "title": "대기 신청 · 보낸 뒤", "purpose": "보낸 뒤 모습", "policies": [], "state": true}, {"id": "waitlist--error", "file": "screens/waitlist--error.html", "title": "대기 신청 · 오류", "purpose": "대기 수업당 최대 5명(대기 마감)", "policies": ["[R13] 대기 수업당 최대 5명(대기 마감)"], "state": true}, {"id": "promote", "file": "screens/promote.html", "title": "대기 승급 확정", "purpose": "자리가 났어요 — 18:52까지 확정", "policies": ["2시간 안에 확정하지 않으면 다음 순번(R6)", "시작 2시간 미만 승급이면 마감은 시작 30분 전", "확정 때 잔여 0·만료·겹침이면 불가"], "state": false}, {"id": "promote--error", "file": "screens/promote--error.html", "title": "대기 승급 확정 · 오류", "purpose": "승급 2시간 내 미확정 자동 포기·잔여0/만료 시 확정 불가", "policies": ["[R14] 승급 2시간 내 미확정 자동 포기·잔여0/만료 시 확정 불가"], "state": true}, {"id": "cancel", "file": "screens/cancel.html", "title": "예약 취소", "purpose": "지금 취소하면 차감되는지 먼저", "policies": ["24시간 전까지 무료, 이후 1회 차감(R1·R2)", "기간권은 늦은 취소 차감 없음(임시)", "대기 취소는 언제든 무료"], "state": false}, {"id": "cancel--confirm", "file": "screens/cancel--confirm.html", "title": "예약 취소 · 확인", "purpose": "무료 취소 기간 지나 1회 차감 취소", "policies": ["[R11] 무료 취소 기간 지나 1회 차감 취소"], "state": true}, {"id": "cancel--error", "file": "screens/cancel--error.html", "title": "예약 취소 · 오류", "purpose": "수업 시작 후 취소 불가", "policies": ["[R12] 수업 시작 후 취소 불가"], "state": true}, {"id": "my-bookings", "file": "screens/my-bookings.html", "title": "내 예약 · 예정", "purpose": "다가오는 수업과 무료 취소 마감", "policies": ["예정 0개면 시간표로 유도", "무료 취소 마감까지 남은 시간 표시"], "state": false}, {"id": "my-bookings--empty", "file": "screens/my-bookings--empty.html", "title": "내 예약 · 예정 · 처음(비어 있음)", "purpose": "처음(비어 있음) 모습", "policies": [], "state": true}, {"id": "my-bookings-wait", "file": "screens/my-bookings-wait.html", "title": "내 예약 · 대기 중", "purpose": "내 순번과 확정 필요 건", "policies": ["확정 필요 건이 맨 위", "대기 취소는 언제든 무료"], "state": false}]}, {"group": "출석·리뷰", "screens": [{"id": "my-bookings-past", "file": "screens/my-bookings-past.html", "title": "내 예약 · 지난 수업", "purpose": "출석·노쇼·취소 기록과 리뷰", "policies": ["최근 3개월 + 더 보기", "리뷰는 출석한 수업만, 14일 이내"], "state": false}, {"id": "attend", "file": "screens/attend.html", "title": "출석 체크", "purpose": "QR 또는 도착 확인으로 출석", "policies": ["시작 30분 전 ~ 시작 후 15분(R15)", "방식은 스튜디오 설정(숨: 둘 다)", "위치 실패 시 QR 또는 강사님께"], "state": false}, {"id": "attend--error", "file": "screens/attend--error.html", "title": "출석 체크 · 오류", "purpose": "출석 가능 시간·다른 스튜디오 QR·위치 실패", "policies": ["[R15] 출석 가능 시간·다른 스튜디오 QR·위치 실패"], "state": true}, {"id": "review-write", "file": "screens/review-write.html", "title": "리뷰 쓰기", "purpose": "별점 + 좋았던 점 고르기", "policies": ["출석한 수업만, 수업 후 14일 이내, 1회 1개(R19)", "사진은 MVP 제외", "10~500자, 수정·삭제 가능"], "state": false}, {"id": "review-write--error", "file": "screens/review-write--error.html", "title": "리뷰 쓰기 · 오류", "purpose": "오류 모습", "policies": [], "state": true}, {"id": "reviews", "file": "screens/reviews.html", "title": "리뷰 목록", "purpose": "평균·분포·키워드 후 최신 리뷰", "policies": ["강사 필터, 정렬 최신/높은순/낮은순", "운영자 답글은 읽기만", "신고는 리뷰마다"], "state": false}]}, {"group": "수강권 — 사기·확인·멈추기", "screens": [{"id": "passes", "file": "screens/passes.html", "title": "수강권", "purpose": "스튜디오별 잔여·만료", "policies": ["잔여는 '잔여 7회 (예약 2회 포함)'처럼", "만료 7일 이내 강조", "만료·소진은 '지난 수강권'으로"], "state": false}, {"id": "passes--empty", "file": "screens/passes--empty.html", "title": "수강권 · 처음(비어 있음)", "purpose": "처음(비어 있음) 모습", "policies": [], "state": true}, {"id": "pass-detail", "file": "screens/pass-detail.html", "title": "수강권 상세", "purpose": "사용 내역과 일시정지", "policies": ["차감·복원 사유를 내역에", "환불은 앱 신청 없이 스튜디오 전화", "정지 중이면 '조기 해제'"], "state": false}, {"id": "pause", "file": "screens/pause.html", "title": "수강권 일시정지", "purpose": "만료일이 얼마나 늘어나는지 미리", "policies": ["최대 2회·합산 30일·1회 최소 3일(R9)", "정지 기간 예약은 자동 무료 취소", "신청 즉시 적용, 시작일은 오늘 이후"], "state": false}, {"id": "pause--error", "file": "screens/pause--error.html", "title": "수강권 일시정지 · 오류", "purpose": "일시정지 최대 2회·합산 30일·최소 3일", "policies": ["[R18] 일시정지 최대 2회·합산 30일·최소 3일"], "state": true}, {"id": "pass-select", "file": "screens/pass-select.html", "title": "수강권 고르기", "purpose": "회당 가격으로 비교해 고르기", "policies": ["체험권은 그 스튜디오 첫 구매자만", "1:1 개인레슨은 상품만, 예약은 스튜디오와 직접", "같은 스튜디오 수강권 여러 개 가능"], "state": false}, {"id": "pay", "file": "screens/pay.html", "title": "결제", "purpose": "시작일·결제 수단·환불 규정 동의", "policies": ["기간권만 시작일 선택(30일 이내)", "실패 시 사유 + 재시도(R11)", "같은 상품 1분 내 재결제는 확인"], "state": false}, {"id": "pay--error", "file": "screens/pay--error.html", "title": "결제 · 오류", "purpose": "결제 실패 사유 안내·재시도", "policies": ["[R16] 결제 실패 사유 안내·재시도"], "state": true}, {"id": "pay--confirm", "file": "screens/pay--confirm.html", "title": "결제 · 확인", "purpose": "같은 상품 1분 내 재결제 확인", "policies": ["[R17] 같은 상품 1분 내 재결제 확인"], "state": true}, {"id": "pay-done", "file": "screens/pay-done.html", "title": "결제 완료", "purpose": "구매한 수강권 요약", "policies": ["수업 상세에서 왔으면 그 수업 예약으로 바로", "영수증은 마이 > 결제 내역"], "state": false}]}, {"group": "알림·마이·설정", "screens": [{"id": "notifications", "file": "screens/notifications.html", "title": "알림함", "purpose": "할 일 있는 알림이 먼저", "policies": ["90일 보관", "확정 마감 지난 승급 알림은 '만료됨'"], "state": false}, {"id": "mypage", "file": "screens/mypage.html", "title": "마이", "purpose": "프로필·수강권·노쇼 현황", "policies": ["노쇼 현황은 분쟁 예방용으로 표시", "제한 중이면 해제일"], "state": false}, {"id": "settings", "file": "screens/settings.html", "title": "설정", "purpose": "알림·위치·계정", "policies": ["대기 승급 알림은 끌 수 없다", "탈퇴 시 남은 수강권 소멸 경고 + 재확인", "예정 예약은 자동 취소"], "state": false}, {"id": "settings--confirm", "file": "screens/settings--confirm.html", "title": "설정 · 확인", "purpose": "탈퇴 시 잔여 수강권 소멸 경고·재확인", "policies": ["[R20] 탈퇴 시 잔여 수강권 소멸 경고·재확인"], "state": true}]}], "arrows": [{"from": "login", "to": "phone", "label": "전화번호로 시작"}, {"from": "login", "to": "find-list", "label": "둘러보기"}, {"from": "home", "to": "promote", "label": "확정 필요 건이 있으면"}, {"from": "home", "to": "home-new", "label": "다니는 스튜디오가 없으면"}, {"from": "studio", "to": "pass-select", "label": "수강권 사기"}, {"from": "class", "to": "waitlist", "label": "마감이면 대기 신청"}, {"from": "class", "to": "pass-select", "label": "수강권이 없으면"}], "palettes": {"default": "seed-mindbody", "options": [{"slug": "seed-mindbody", "name": "Mindbody", "brand": "#008363", "source": "브랜드 시드(https://www.mindbodyonline.com)"}, {"slug": "daangn", "name": "당근", "brand": "#ff6600", "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}, {"slug": "myrealtrip", "name": "마이리얼트립", "brand": "#2b96ed", "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}]}, "credits": [{"slot": "studio-soom", "file": "assets/photos/studio-soom.jpg", "title": "Pilates Studio - Baiss Designs", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://baissdesigns.com.au/news/project/pilates-studio/"}, {"slot": "studio-soom-2", "file": "assets/photos/studio-soom-2.jpg", "title": "Bamboo vs Cotton Towels: Which One Is Better for You?", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://cottonbeachtowel.com/bamboo-vs-cotton-towels-which-one-is-better/"}, {"slot": "studio-soom-3", "file": "assets/photos/studio-soom-3.jpg", "title": "What is a Pilates Cadillac and what are the benefits?", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://complete-pilates.co.uk/what-is-a-pilates-cadillac/"}, {"slot": "studio-onyu", "file": "assets/photos/studio-onyu.jpg", "title": "Serene yoga studio with polished wooden flooring and natural light ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.artofit.org/image-gallery/2111131072166269/serene-yoga-studio-with-polished-wooden-flooring-and-natural-light/"}, {"slot": "studio-bareun", "file": "assets/photos/studio-bareun.jpg", "title": "Free Serene Pilates Studio Image - Pilates, Studio, Serene | Download ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://stockcake.com/i/serene-pilates-studio_330805_225705"}, {"slot": "studio-haru", "file": "assets/photos/studio-haru.jpg", "title": "Yoga props including mats, blocks, and straps in studio.", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://yuneyoga.com/blogs/yoga-blog/essential-yoga-material-the-ultimate-guide-to-choosing-the-right-props-and-accessories-for-your-practice"}, {"slot": "teacher-han", "file": "assets/photos/teacher-han.jpg", "title": "강사프로필 - THE 엘더스필라테스", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "http://www.pilateselders.com/강사프로필/"}, {"slot": "teacher-jung", "file": "assets/photos/teacher-jung.jpg", "title": "스타 요가강사 故 이유주, 오늘(18일) 1주기… 팬들 여전히 추모 | 스포츠 월드", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.sportsworldi.com/newsView/20260218505168"}, {"slot": "teacher-oh", "file": "assets/photos/teacher-oh.jpg", "title": "네이버 인플루언서", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://in.naver.com/alodia/topic/791485901767040"}, {"slot": "onboard-1", "file": "assets/photos/onboard-1.jpg", "title": "Fitness | Cycle - Cycle 45 - Performance | Event on 04/13/2025 in ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://outinoldtown.com/event/04-13-2025-9am-cycle-cycle-45-performance-at-zweet-sport-total-fitness-studio"}, {"slot": "onboard-2", "file": "assets/photos/onboard-2.jpg", "title": "[100+] Pilates Wallpapers | Wallpapers.com", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://wallpapers.com/pilates"}, {"slot": "onboard-3", "file": "assets/photos/onboard-3.jpg", "title": "🧘‍♀️ Ready to Flow, Ready to Thrive 🌟 Unroll your ANCARTA yoga mat ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.pinterest.com/pin/ancarta-on-instagram-ready-to-flow-ready-to-thrive-unroll-your-ancarta-yoga-mat-grab-your-ecofriendly-water-bottle-and-step-into-your-powercraft--1082763935427034901/"}, {"slot": "class-reformer", "file": "assets/photos/class-reformer.jpg", "title": "요나필라테스앤요가 - 6:1 기구필라테스 원장직강수업 요즘들어 그룹수업이 많이 활성화 되고있어서...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.facebook.com/yonapilates/posts/61-기구필라테스-원장직강수업-요즘들어-그룹수업이-많이-활성화-되고있어서-뿌듯합니다필라테스-등록시-요가하고-싶은날은-요가까지-같이-이용가능합니다/724162109230641/"}]}</script>
+<script>
+(function () {
+'use strict';
+var D = JSON.parse(document.getElementById('hd-data').textContent || '{}');
+var Z0 = D.scale || 0.72, ZMIN = 0.25, ZMAX = 1.5;
+var CARD = D.card || {w: 375, h: 812}, MW = (D.modal || {}).w || 390, MH = (D.modal || {}).h || 844;
+var LEFT = 300;                                  // 카드 왼쪽 통로(줄을 넘는 화살표가 지나는 곳)
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+if (D.title) { $('#title').textContent = D.title; document.title = D.title; }
+var pane = $('#screens'), stage = $('#stage'), rowsEl = $('#rows');
+
+/* ---------- 판 내용 ---------- */
+var intro = '';
+var st = D.story;
+if (st && (st.headline || st.summary)) {
+  var head = esc(st.headline).replace(/&lt;(\/?)em&gt;/g, '<$1em>');
+  intro += '<section class="story"><h2>' + head + '</h2>' + (st.summary ? '<p class="sum">' + esc(st.summary) + '</p>' : '') +
+    '<div class="ideas">' + (st.ideas || []).slice(0, 3).map(function (d) {
+      return '<div class="idea"><b>' + esc(d.title) + '</b><p>' + esc(d.desc) + '</p></div>'; }).join('') + '</div></section>';
+}
+var dc = D.decisions;
+if (dc && ((dc.items || []).length || dc.core)) {
+  intro += '<section class="decisions"><h3>정한 것 · 뺀 것</h3>' + (dc.core ? '<p class="core">' + esc(dc.core) + '</p>' : '') +
+    '<ul>' + (dc.items || []).map(function (i) {
+      return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
+        (i.how ? ' → ' + esc(i.how) : '') + '<span class="why">' + esc(i.why) + '</span></li>'; }).join('') + '</ul></section>';
+}
+$('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래</p><div class="intro-grid">' + intro + '</div>';
+$('#intro').style.marginLeft = LEFT + 'px';
+
+var html = '<svg class="ar" id="ar" width="1" height="1"><defs><marker id="hd-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="hd-dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4"><circle cx="5" cy="5" r="4" fill="#2563eb"/></marker></defs></svg>';
+(D.rows || []).forEach(function (row) {
+  html += '<div class="flow"><div class="glabel">' + esc(row.group) + '</div><div class="cards">';
+  row.screens.forEach(function (s) {
+    var pol = s.policies || [];
+    var shown = pol.slice(0, 3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+    var more = pol.length > 3 ? '<details class="more"><summary>정책 ' + (pol.length - 3) + '개 더</summary><ul class="pol">' +
+      pol.slice(3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></details>' : '';
+    html += '<div class="card" data-id="' + esc(s.id) + '"><div class="phone"><iframe scrolling="no" tabindex="-1" title="' + esc(s.title) +
+      '" data-src="' + esc(s.file) + '"></iframe><button class="cover" data-file="' + esc(s.file) + '" data-title="' + esc(s.title) +
+      '" aria-label="' + esc(s.title) + ' 크게 보기"></button></div>' +
+      '<div class="ftitle">' + (s.state ? '<span class="state">상태</span>' : '') + esc(s.title) + '</div>' +
+      (s.purpose ? '<div class="fdesc">' + esc(s.purpose) + '</div>' : '') + (shown ? '<ul class="pol">' + shown + '</ul>' : '') + more + '</div>';
+  });
+  html += '</div></div>';
+});
+rowsEl.innerHTML = html;
+rowsEl.style.paddingLeft = LEFT + 'px';
+
+var foot = '';
+var P = D.palettes;
+if (P && P.options && P.options.length) {
+  foot += '<p>색 출처: ' + P.options.map(function (o) { return esc(o.name) + ' 웹 팔레트'; }).join(' · ') +
+    ' — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>';
+}
+if (D.credits && D.credits.length) {
+  foot += '<details><summary>사진 출처 ' + D.credits.length + '장</summary><ul>' + D.credits.map(function (c) {
+    var t = esc(c.title || c.file || c.slot);
+    var link = c.url ? '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + t + '</a>' : t;
+    return '<li>' + (c.slot ? esc(c.slot) + ' — ' : '') + link + (c.author ? ' · ' + esc(c.author) : '') + (c.license ? ' · ' + esc(c.license) : '') + '</li>';
+  }).join('') + '</ul></details>';
+}
+$('#foot').innerHTML = foot;
+$('#foot').style.marginLeft = LEFT + 'px';
+
+/* ---------- 화살표: 갈래(branches)에만. 같은 줄은 위쪽 호, 다른 줄은 왼쪽 통로로 우회 ---------- */
+var contentLeft = LEFT;
+function roundPath(pts, r) {
+  var d = 'M' + pts[0][0] + ',' + pts[0][1];
+  for (var i = 1; i < pts.length - 1; i++) {
+    var p = pts[i - 1], c = pts[i], n = pts[i + 1];
+    var l1 = Math.hypot(c[0] - p[0], c[1] - p[1]), l2 = Math.hypot(n[0] - c[0], n[1] - c[1]);
+    var rr = Math.min(r, l1 / 2, l2 / 2);
+    if (rr < 1) { d += ' L' + c[0] + ',' + c[1]; continue; }
+    var a = [c[0] - (c[0] - p[0]) / l1 * rr, c[1] - (c[1] - p[1]) / l1 * rr];
+    var b = [c[0] + (n[0] - c[0]) / l2 * rr, c[1] + (n[1] - c[1]) / l2 * rr];
+    d += ' L' + a[0].toFixed(1) + ',' + a[1].toFixed(1) + ' Q' + c[0] + ',' + c[1] + ' ' + b[0].toFixed(1) + ',' + b[1].toFixed(1);
+  }
+  var e = pts[pts.length - 1];
+  return d + ' L' + e[0] + ',' + e[1];
+}
+function drawArrows() {
+  var svg = $('#ar'), box = {};
+  $$('.card', rowsEl).forEach(function (c) {
+    box[c.dataset.id] = {x: c.offsetLeft, y: c.offsetTop, row: c.parentNode};   // offsetParent = .rows
+  });
+  $$('.alabel', rowsEl).forEach(function (n) { n.remove(); });
+  $$('path.ln', svg).forEach(function (n) { n.remove(); });
+  var paths = '', labels = '', k = 0, minX = LEFT;
+  (D.arrows || []).forEach(function (a) {
+    var s = box[a.from], t = box[a.to]; if (!s || !t) return;
+    var d, lx, ly, side = false;
+    if (s.row === t.row) {
+      var ax = s.x + CARD.w / 2, cx = t.x + CARD.w / 2, y = s.y - 10, peak = s.y - 58;
+      d = 'M' + ax + ',' + y + ' C' + ax + ',' + peak + ' ' + cx + ',' + peak + ' ' + cx + ',' + (y - 2);
+      lx = (ax + cx) / 2; ly = peak + 6;
+    } else {
+      var lane = LEFT - 56 - 22 * (k % 4), off = 22 + 12 * (k % 4);
+      var sx = s.x + 60 + 24 * (k % 3), tx = t.x + 60 + 24 * (k % 3);
+      var sg = s.y - off, tg = t.y - off;
+      d = roundPath([[sx, s.y - 6], [sx, sg], [lane, sg], [lane, tg], [tx, tg], [tx, t.y - 8]], 18);
+      lx = lane - 12; ly = (sg + tg) / 2; side = true; k++;
+      minX = Math.min(minX, lane - 240);
+    }
+    paths += '<path class="ln" d="' + d + '"/>';
+    if (a.label) labels += '<div class="alabel' + (side ? ' side' : '') + '" style="left:' + lx + 'px;top:' + ly + 'px">' + esc(a.label) + '</div>';
+  });
+  svg.insertAdjacentHTML('beforeend', paths);
+  rowsEl.insertAdjacentHTML('beforeend', labels);
+  if (labels) $$('.alabel.side', rowsEl).forEach(function (n) { minX = Math.min(minX, n.offsetLeft - n.offsetWidth); });
+  contentLeft = Math.max(0, minX - 24);
+}
+
+/* ---------- 이동·확대 ---------- */
+var z = Z0, tx = 0, ty = 0;
+function apply() {
+  stage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
+  stage.dataset.zoom = z.toFixed(4);
+  $('#zoom').textContent = Math.round(z * 100) + '%';
+  scheduleVisible();
+}
+var fitMin = ZMIN;                                // 전체 보기가 0.25 보다 작아야 하면 그만큼은 허용
+function clampZ(v) { return Math.min(ZMAX, Math.max(fitMin, v)); }
+function zoomAt(px, py, nz) {
+  nz = clampZ(nz);
+  var bx = (px - tx) / z, by = (py - ty) / z;
+  z = nz; tx = px - bx * z; ty = py - by * z; apply();
+}
+function home() {
+  z = Z0;
+  tx = pane.clientWidth < 600 ? 12 - LEFT * z : 24 - contentLeft * z;   // 폰: 화면 줄이 바로 보이게 통로는 화면 밖으로
+  ty = 0; apply();
+}
+function fit() {
+  var w = stage.offsetWidth - contentLeft, h = stage.offsetHeight;
+  var pw = pane.clientWidth, ph = pane.clientHeight;
+  var fz = Math.min((pw - 32) / w, (ph - 32) / h);
+  fitMin = Math.min(ZMIN, fz);
+  z = clampZ(fz);
+  tx = (pw - w * z) / 2 - contentLeft * z;
+  ty = Math.max(16, (ph - h * z) / 2);
+  apply();
+}
+$('#fit').addEventListener('click', fit);
+$('#zoom').addEventListener('click', home);
+
+pane.addEventListener('wheel', function (e) {
+  e.preventDefault();
+  var r = pane.getBoundingClientRect(), k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pane.clientHeight : 1;
+  var dx = e.deltaX * k, dy = e.deltaY * k;
+  if (e.ctrlKey || e.metaKey) { zoomAt(e.clientX - r.left, e.clientY - r.top, z * Math.exp(-dy * 0.0022)); return; }
+  if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+  tx -= dx; ty -= dy; apply();
+}, {passive: false});
+
+var ptrs = new Map(), drag = null, pinch = null, justDragged = false;
+function mid() { var a = Array.from(ptrs.values()); return {x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) || 1}; }
+function startDrag(id, p, type) { drag = {id: id, x: p.x, y: p.y, tx: tx, ty: ty, moved: false, thr: type === 'touch' ? 8 : 4}; }
+pane.addEventListener('pointerdown', function (e) {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  justDragged = false;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  if (ptrs.size === 1) startDrag(e.pointerId, {x: e.clientX, y: e.clientY}, e.pointerType);
+  else if (ptrs.size === 2) {
+    var m = mid(); pinch = {m: m, z: z, tx: tx, ty: ty};
+    if (drag) drag.moved = true;
+    try { ptrs.forEach(function (_, id) { pane.setPointerCapture(id); }); } catch (err) {}
+  }
+});
+pane.addEventListener('pointermove', function (e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  var r = pane.getBoundingClientRect();
+  if (pinch && ptrs.size >= 2) {
+    var m = mid(), nz = clampZ(pinch.z * m.d / pinch.m.d);
+    var bx = (pinch.m.x - r.left - pinch.tx) / pinch.z, by = (pinch.m.y - r.top - pinch.ty) / pinch.z;
+    z = nz; tx = m.x - r.left - bx * z; ty = m.y - r.top - by * z; apply();
+    return;
+  }
+  if (!drag || drag.id !== e.pointerId) return;
+  var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.moved && Math.hypot(dx, dy) > drag.thr) {
+    drag.moved = true; pane.classList.add('dragging');
+    try { pane.setPointerCapture(e.pointerId); } catch (err) {}
+  }
+  if (drag.moved) { tx = drag.tx + dx; ty = drag.ty + dy; apply(); }
+});
+function endPtr(e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId);
+  if (drag && drag.moved) justDragged = true;
+  if (ptrs.size === 1) {                          // 핀치 끝 → 남은 손가락으로 이어서 이동
+    pinch = null;
+    var id = ptrs.keys().next().value, p = ptrs.get(id);
+    startDrag(id, p, 'touch'); drag.moved = true;
+  } else if (ptrs.size === 0) { drag = null; pinch = null; pane.classList.remove('dragging'); }
+}
+pane.addEventListener('pointerup', endPtr);
+pane.addEventListener('pointercancel', endPtr);
+pane.addEventListener('click', function (e) {
+  if (justDragged) { justDragged = false; e.preventDefault(); e.stopPropagation(); return; }
+  var c = e.target.closest && e.target.closest('.cover');
+  if (c) openModal(c.dataset.file, c.dataset.title);
+}, true);
+
+/* ---------- 보이는 카드만 로드(이동·확대 후 100ms 묶어서) ---------- */
+var visT = 0;
+function loadVisible() {
+  var pr = pane.getBoundingClientRect();
+  if (!pr.width || pane.hidden) return;
+  $$('.phone iframe[data-src]', rowsEl).forEach(function (f) {
+    var r = f.parentNode.getBoundingClientRect();
+    if (r.right > pr.left - 80 && r.left < pr.right + 80 && r.bottom > pr.top - 80 && r.top < pr.bottom + 80) {
+      f.addEventListener('load', function () { sendTo(f); });
+      f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+    }
+  });
+}
+function scheduleVisible() { clearTimeout(visT); visT = setTimeout(loadVisible, 100); }
+addEventListener('resize', scheduleVisible);
+
+/* ---------- 크게 보기 ---------- */
+var modal = $('#modal'), mframe = $('#mframe'), mbox = $('#mbox');
+function sizeModal() {
+  var s = Math.min(1, (innerHeight - 72) / MH, (innerWidth - 16) / MW);
+  mframe.style.transform = s < 1 ? 'scale(' + s.toFixed(4) + ')' : '';
+  mbox.style.width = Math.floor(MW * s) + 'px'; mbox.style.height = Math.floor(MH * s) + 'px';
+  mbox.style.marginTop = '48px';
+}
+function openModal(file, title) {
+  sizeModal(); $('#mtitle').textContent = title || '';
+  mframe.src = file; modal.hidden = false; $('#mclose').focus();
+}
+function closeModal() { modal.hidden = true; mframe.removeAttribute('src'); }
+mframe.addEventListener('load', function () { sendTo(mframe); });
+$('#mclose').addEventListener('click', closeModal);
+modal.addEventListener('click', function (e) { if (e.target === modal || e.target.id === 'mtitle') closeModal(); });
+addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+addEventListener('resize', function () { if (!modal.hidden) sizeModal(); });
+
+/* ---------- 탭 ---------- */
+function showTab(name) {
+  document.body.dataset.tab = name;
+  $$('.tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === name)); });
+  $$('.pane').forEach(function (p) { p.hidden = p.id !== name; });
+  var f = $('#' + name + ' iframe.doc');
+  if (f && f.hasAttribute('data-src')) {
+    f.addEventListener('load', function () { sendTo(f); });
+    f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+  }
+  if (name === 'screens') scheduleVisible();
+  try { history.replaceState(null, '', name === 'screens' ? location.pathname + location.search : '#' + name); } catch (e) {}
+}
+$$('.tab').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+
+/* ---------- 팔레트: #tokens 교체 + 모든 iframe 에 postMessage + localStorage ---------- */
+var KEY = 'hd-palette', cur = null;
+function sendTo(f) { if (!cur) return; try { f.contentWindow.postMessage({type: 'hd-palette', slug: cur}, '*'); } catch (e) {} }
+function setPalette(slug) {
+  cur = slug;
+  var l = $('#tokens'), base = l.getAttribute('data-base') || l.getAttribute('href');
+  l.setAttribute('data-base', base);
+  l.setAttribute('href', base.replace(/tokens(-[^/]*)?\.css$/, 'tokens-' + slug + '.css'));
+  $$('iframe').forEach(sendTo);
+  $$('.dot').forEach(function (d) { d.setAttribute('aria-pressed', String(d.dataset.slug === slug)); });
+}
+if (P && P.options && P.options.length) {
+  var pal = $('.pal');
+  pal.innerHTML = '<span class="pal-label">색</span>' + P.options.slice(0, 3).map(function (o) {
+    return '<button class="dot" data-slug="' + esc(o.slug) + '" style="--dot:' + esc(o.brand) + '" aria-pressed="false" title="' +
+      esc(o.name) + ' 색으로 보기' + (o.source ? ' — ' + esc(o.source) : '') + '" aria-label="' + esc(o.name) + ' 색으로 보기"><i></i><b>' + esc(o.name) + '</b></button>';
+  }).join('');
+  $$('.dot').forEach(function (d) {
+    d.addEventListener('click', function () { setPalette(d.dataset.slug); try { localStorage.setItem(KEY, cur); } catch (e) {} });
+  });
+  var start = new URLSearchParams(location.search).get('p');
+  try { start = start || localStorage.getItem(KEY); } catch (e) {}
+  if (!start || !P.options.some(function (o) { return o.slug === start; })) start = P.default || P.options[0].slug;
+  setPalette(start);
+}
+
+/* ---------- 시작 ---------- */
+(function () {                                    // 판 위 글은 첫 배율에서 화면 폭에 들어오게
+  var pw = pane.clientWidth, narrow = pw < 600;
+  if (narrow) stage.classList.add('narrow');
+  var left = narrow ? 12 : 24 + LEFT * Z0;
+  var mw = Math.round((pw - left - 24) / Z0) + 'px';
+  $('#intro').style.maxWidth = mw; $('#foot').style.maxWidth = mw;
+})();
+drawArrows();
+home();
+loadVisible();
+var hashTab = (location.hash || '').slice(1);
+if (hashTab === 'foundation' || hashTab === 'components') showTab(hashTab);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawArrows(); });
+window.__hdReady = performance.now();
+})();
+</script>
+</body>
+</html>

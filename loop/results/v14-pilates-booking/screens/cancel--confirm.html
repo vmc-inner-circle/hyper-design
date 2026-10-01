@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>예약 취소 · 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large ">
+<header class="appbar"><a class="appbar-btn" href="my-bookings.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">예약 취소</h1><span></span></header>
+<main class="page">
+  <header class="hero">
+    <p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>차감 취소</p>
+    <p class="title">무료 취소 기간(10월 13일 20:00)이 지나 1회 차감돼요</p>
+  </header>
+  <section class="block is-list">
+    <a class="row" href="class.html"><span class="thumb"><img src="../assets/photos/teacher-han.jpg" alt="한소율 강사"></span><div class="row-main"><span class="badge is-brand">예약 확정</span><p class="row-title">기구 필라테스 중급</p><p class="row-sub">10월 14일(수) 20:00–20:50 · 한소율</p><p class="row-sub">숨 필라테스 망원점</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">취소하면</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-title">잔여 7회 → <span class="num">6회</span></p><p class="row-sub">숨 필라테스 20회권 · 예약 2회 포함 → 1회 포함</p></div></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-title">사용 가능 5회 그대로</p><p class="row-sub">차감은 이번 예약에 잡혀 있던 1회예요</p></div></div>
+  </section>
+  <section class="block">
+    <h2 class="h2">취소 사유 <span class="row-sub">(선택)</span></h2>
+    <div class="chips" role="group" aria-label="취소 사유"><button class="chip is-selected" aria-pressed="true">야근</button><button class="chip" aria-pressed="false">몸이 안 좋아요</button><button class="chip" aria-pressed="false">다른 일정</button><button class="chip" aria-pressed="false">기타</button></div>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="dlg-t">
+  <p class="h2" id="dlg-t">1회 차감돼요. 그래도 취소할까요?</p>
+  <p class="lead">취소 후 잔여 6회 · 사용 가능 5회</p>
+  <a class="btn secondary full" href="my-bookings.html">차감 취소</a>
+  <a class="btn primary full" href="cancel.html">그대로 두기</a>
+</div>
+</body></html>
