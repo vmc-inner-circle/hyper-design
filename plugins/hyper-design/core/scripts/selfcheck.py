@@ -56,6 +56,7 @@ for s in S:
     if t.get("shares"): exp.add("done")
     if t.get("long_task"): exp.add("progress")
     exp |= RULE_ST.get(s["id"], set())
+    if m.get("stage") == "go": exp &= {"done"}          # 1차는 결과 화면만 — 나머지는 /hyper-design:max
     if "large_list" not in t and s.get("kind") == "list" and "--" not in s["id"]: errs.append(f'{s["id"]}: traits.large_list(30개 넘게 쌓이는 목록인가) 미선언')
     if "--" not in s["id"]:
         decl = set(s.get("states", []) or [])
@@ -100,11 +101,15 @@ for o in OBJ or []:
         v = o.get(step)
         if not v: errs.append(f"흐름 고리 '{o.get('name')}': {step} 비어 있음"); continue
         if isinstance(v, str) and v.startswith("n/a"):
-            if step in ("create", "view") and "운영" not in v and "시스템" not in v: errs.append(f"흐름 고리 '{o.get('name')}': {step}는 n/a 불가(사용자가 처음 만드는 화면이 있어야 한다)")
+            if step in ("create", "view", "after") and "운영" not in v and "시스템" not in v: errs.append(f"흐름 고리 '{o.get('name')}': {step}는 n/a 불가(사용자가 처음 만드는 화면이 있어야 한다)")
             if len(v) < 8: errs.append(f"흐름 고리 '{o.get('name')}': {step} n/a 이유 없음")
             continue
         for x in (v if isinstance(v, list) else [v]):
             if x not in ids: errs.append(f"흐름 고리 '{o.get('name')}': {step} → 없는 화면 {x}")
+        if step == "after":
+            byid = {x["id"]: x for x in S}
+            res = [x for x in (v if isinstance(v, list) else [v]) if x in byid and (x.endswith("--done") or byid[x].get("kind") == "result")]
+            if not res: errs.append(f"흐름 고리 '{o.get('name')}': after에 결과 화면이 없음({v}) — 목록·상세가 아니라 그 행동이 끝난 모습(kind: result 또는 --done)")
 # 탭·세그먼트: 칸마다 그 내용을 보여 주는 화면
 for s in S:
     for t in s.get("tabs") or []:

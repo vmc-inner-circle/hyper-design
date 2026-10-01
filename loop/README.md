@@ -7,7 +7,7 @@ python3 loop/run.py prd/family-trip.md /tmp/hd/runN          # 격리 폴더에�
 python3 loop/evaluate.py /tmp/hd/runN prd/family-trip.md /tmp/hd/baseline-family-trip
 ```
 
-- `run.py` — 하네스(`.claude/skills/oss-design-harness`)만 빈 폴더에 복사해 `claude -p` 헤드리스로 돌린다. 하네스가 `[[ASK 페이지]]`로 질문하면 페이지를 캡처해 **가상 사용자**(`sim_user.md`, 비개발자 페르소나, 선택형으로만 답함)가 답한다. `prompt-log.md`·`elapsed.txt`(가상 사용자 응답 시간 제외)를 남긴다.
+- `run.py` — 하네스(`plugins/hyper-design/core`)만 빈 폴더에 복사해 `claude -p` 헤드리스로 돌린다. 하네스가 `[[ASK 페이지]]`로 질문하면 페이지를 캡처해 **가상 사용자**(`sim_user.md`, 비개발자 페르소나, 선택형으로만 답함)가 답한다. `prompt-log.md`·`elapsed.txt`(가상 사용자 응답 시간 제외)를 남긴다.
 - `score.py` — [성공 기준](../docs/success-criteria.md) 기계 채점(Playwright, 렌더링된 computed style 측정). 하네스 안에도 `audit.py`로 같은 파일이 들어가 자가 수정에 쓰인다.
 - `evaluate.py` — 기계 채점 + 평가 에이전트(`judge.md`: P0~P3 비평, 루브릭 6항목) + 바닐라 대비 블라인드 비교 5회(`compare.md`).
 - 바닐라 비교군: 같은 PRD를 하네스 없이 Claude Code에 넣은 결과(`/tmp/hd/baseline-*`).

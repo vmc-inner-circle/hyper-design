@@ -4,7 +4,7 @@ python3 imgsearch.py placeholders out                       # image_slots.json �
 python3 imgsearch.py search out <slot> "<검색어>" ["<검색어2>" …] [--ratio 3:4] [--keep 12]
     → 여러 검색어 × 여러 소스 후보를 모아 out/.cands/<slot>/sheet-<n>.jpg(번호 시트) + cands.json 에 누적
 python3 imgsearch.py shortlist out <slot> 3 7 12 15         # 탐색 에이전트가 남긴 후보 번호 → shortlist.jpg(선택 에이전트가 볼 한 장)
-python3 imgsearch.py pick out <slot> <번호> [--ratio 3:4] [--blur-face]
+python3 imgsearch.py pick out <slot> <번호> [--ratio 3:4] [--blur-face] [--half left|right|top|bottom]
     → out/assets/photos/<slot>.jpg(비율대로 자름, 긴 변 1200) + out/credits.json
 워터마크 스톡 사이트(셔터스톡·아이스톡·게티 등)는 뺀다. 검색 결과는 ~/.cache/hd-img/ 에 캐시.
 """
@@ -84,7 +84,7 @@ def sheet(items, path, label=lambda i, c: str(i)):
 
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("cmd"); ap.add_argument("out"); ap.add_argument("rest", nargs="*")
-    ap.add_argument("--ratio", default="3:4"); ap.add_argument("--keep", type=int, default=12); ap.add_argument("--blur-face", action="store_true")
+    ap.add_argument("--ratio", default="3:4"); ap.add_argument("--keep", type=int, default=12); ap.add_argument("--blur-face", action="store_true"); ap.add_argument("--half", choices=["left", "right", "top", "bottom"])
     a = ap.parse_args(); out = pathlib.Path(a.out); photos = out / "assets/photos"; photos.mkdir(parents=True, exist_ok=True)
     if a.cmd == "placeholders":
         for s in json.loads((out / "image_slots.json").read_text(encoding="utf-8")):
@@ -114,6 +114,9 @@ def main():
         c = json.loads((out / ".cands" / slot / "cands.json").read_text())[i]
         try: im = Image.open(io.BytesIO(get(c["url"], 25))).convert("RGB")
         except Exception: im = Image.open(io.BytesIO(get(c["thumb"]))).convert("RGB")
+        if a.half:   # 전·후 콜라주에서 한쪽만(같은 사람의 전·후를 맞출 때)
+            w, h = im.size
+            im = im.crop({"left": (0, 0, w // 2, h), "right": (w // 2, 0, w, h), "top": (0, 0, w, h // 2), "bottom": (0, h // 2, w, h)}[a.half])
         im = crop(im, a.ratio)
         if a.blur_face: im = blur_face(im)
         im.save(photos / f"{slot}.jpg", quality=82)

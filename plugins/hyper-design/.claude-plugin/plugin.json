@@ -1,0 +1,7 @@
+{
+  "name": "hyper-design",
+  "version": "0.15.0",
+  "description": "PRD 한 장 → 모바일 앱 HTML 디자인 + 캔버스. /hyper-design:go 는 모든 흐름을 처음부터 끝까지(1차), /hyper-design:max 는 오류·확인·빈 화면 같은 상태까지(2차).",
+  "author": {"name": "VIBE MAFIA CLUB inner circle"},
+  "repository": "https://github.com/vmc-inner-circle/hyper-design"
+}

@@ -86,7 +86,7 @@ def build_index(out, m):
     credits = load(out / "credits.json", []) or []
 
     data = {"title": m.get("title") or "전체 화면 한눈에 보기", "scale": SCALE, "card": CARD, "modal": MODAL,
-            "story": m.get("story") or None, "decisions": decisions, "rows": data_rows, "arrows": arrows,
+            "story": m.get("story") or None, "decisions": decisions, "stage": m.get("stage") or "", "pending": m.get("pending_states") or 0, "rows": data_rows, "arrows": arrows,
             "palettes": pal, "credits": credits if isinstance(credits, list) else []}
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/").replace("<!--", "<\\!--")
     tpl = TEMPLATE.read_text(encoding="utf-8")

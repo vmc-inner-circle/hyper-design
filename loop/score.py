@@ -311,6 +311,7 @@ def main():
             if tr.get("readonly_role"): exp.add("disabled")
             if tr.get("long_task"): exp.add("progress")
             exp |= rule_st.get(f.stem, set())
+            if (manifest or {}).get("stage") == "go": exp &= {"done"}   # 1차(go)는 결과 화면만
             have = variants.get(f.stem, set())
             declared = set(s.get("states") or [])
             for st in exp - have:
@@ -517,7 +518,7 @@ def main():
         import subprocess
         here = Path(__file__).resolve().parent
         ct = next((c for c in (here / "canvas_test.py",
-                               here.parent / ".claude/skills/oss-design-harness/scripts/canvas_test.py") if c.exists()), None)
+                               here.parent / "plugins/hyper-design/core/scripts/canvas_test.py") if c.exists()), None)
         if ct:
             try:
                 r = subprocess.run([sys.executable, str(ct), str(OUT)], capture_output=True, text=True, timeout=180)

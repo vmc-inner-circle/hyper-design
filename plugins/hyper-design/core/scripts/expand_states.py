@@ -1,6 +1,7 @@
 """상태 화면 항목을 자동으로 펼친다 — 메인은 기본 화면만 쓰고, 상태는 traits·규칙에서 파생한다.
 
-python3 expand_states.py out
+python3 expand_states.py out [--stage go|max]
+- go(1차): 결과 화면(done)만 펼치고, max가 더할 상태 수를 pending_states로 남긴다 · max(2차): 전부
 입력: out/screens.json(기본 화면) + out/spec_inventory.json(있으면, kind=rule 의 target·state)
 파생: list_first_use→empty · form→error · shares→done · long_task→progress · rule(state=error|confirm|done)
 - 같은 화면·같은 상태의 규칙 여럿은 상태 화면 하나로 묶고, 규칙 이름은 그 화면 policies에 한 줄씩
@@ -9,6 +10,8 @@ python3 expand_states.py out
 """
 import sys, json, pathlib
 out = pathlib.Path(sys.argv[1])
+STAGE = sys.argv[sys.argv.index("--stage") + 1] if "--stage" in sys.argv else "max"
+GO_ONLY = {"done"}
 M = json.loads((out / "screens.json").read_text(encoding="utf-8"))
 inv = {}
 if (out / "spec_inventory.json").exists():
@@ -26,13 +29,16 @@ for it in inv.get("items", []):
     if st not in ("error", "confirm", "done"): errs.append(f"규칙 {it.get('id')}: state {st} 불가(error|confirm|done)"); continue
     if it["target"] not in ids: errs.append(f"규칙 {it.get('id')}: 없는 화면 {it['target']}"); continue
     rules.setdefault((it["target"], st), []).append(it)
-new = []
+new = []; pending = 0
 for s in base:
     t = s.get("traits") or {}
     states = [v for k, v in TRAIT.items() if t.get(k)]
     for (tid, st) in rules:
         if tid == s["id"] and st not in states: states.append(st)
-    if len(states) > 2: errs.append(f"{s["id"]}: 상태 {len(states)}개 > 2(기본 포함 3) — 규칙 일부를 정책 문구로 내릴 것")
+    full = list(states)
+    if STAGE == "go": states = [x for x in states if x in GO_ONLY]
+    pending += len(full) - len(states)
+    if len(full) > 2: errs.append(f"{s["id"]}: 상태 {len(full)}개 > 2(기본 포함 3) — 규칙 일부를 정책 문구로 내릴 것")
     s["states"] = states
     new.append(s)
     for st in states:
@@ -51,8 +57,8 @@ for s in base:
                 if line not in pol: pol.append(line)
             e["policies"] = pol
         new.append(e)
-M["screens"] = new
+M["screens"] = new; M["stage"] = STAGE; M["pending_states"] = pending
 (out / "screens.json").write_text(json.dumps(M, ensure_ascii=False, indent=1), encoding="utf-8")
 n = sum(1 for s in new if "--" in s["id"])
-print(f"기본 {len(base)} · 상태 {n} · 규칙 묶음 {len(rules)}")
+print(f"[{STAGE}] 기본 {len(base)} · 상태 {n} · 2차에서 더할 상태 {pending} · 규칙 묶음 {len(rules)}")
 if errs: print("\n".join(errs)); sys.exit(1)
