@@ -78,7 +78,8 @@ def main():
         subprocess.run([sys.executable, str(HERE / "derive.py"), "--palette", str(HERE / "palettes" / f"{slug}.json"), "-o", str(out / f"tokens-{slug}.css")], check=True, capture_output=True)
     (out / "tokens.css").write_text((out / f"tokens-{default}.css").read_text(encoding="utf-8"), encoding="utf-8")
     info = {"default": default, "options": [{"slug": s, "name": pals[s]["name"], "brand": pals[s]["scales"][pals[s]["brand"]][pals[s]["brand_step"]],
-            "source": pals[s]["source"], "why": next(w for _, x, w in scored if x == s)} for s in picks]}
+            "source": pals[s]["source"], "why": next(w for _, x, w in scored if x == s),
+            **({"accent": pals[s]["scales"][pals[s]["accent"]["scale"]][pals[s]["accent"]["step"]], "accent_seen": pals[s]["accent"].get("seen", "")} if pals[s].get("accent") else {})} for s in picks]}
     (out / "palettes.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")
     print(json.dumps(info, ensure_ascii=False))
 

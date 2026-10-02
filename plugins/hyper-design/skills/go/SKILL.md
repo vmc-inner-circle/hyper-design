@@ -44,6 +44,7 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
    "traits": {"list_first_use": false, "form": false, "shares": false, "large_list": false, "long_task": false}, "kind": "home|list|detail|form|result"}],
  "photo_centric": false,
  "badges": {"확정": "is-brand", "바뀜": "is-warning", "요청": "is-info", "완료": "is-success", "후보": ""},
+ "accent": "할인",
  "people": [{"name": "Observer — 자연곱슬 입문 전", "who": "상황 한 줄", "why": "처음 오는 이유", "feels": "그때 마음",
              "wants": [{"q": "나와 비슷한 사람은 어떻게 됐나", "at": ["답이 보일 화면 id"]}],
              "win": "이 앱에서 성공한 순간", "screens": ["주로 쓰는 화면 id"], "core": true}],
@@ -56,6 +57,7 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
   - **1차는 기본 화면 + 결과 화면만.** 행동의 끝(예약 완료·출석 완료·취소 완료·신청 뒤)은 별도 화면(`kind: "result"`)이나 `traits.shares`(→ `--done`)로 그린다.
   - **상태 화면 항목·`states`는 손으로 쓰지 않는다** — `expand_states.py`가 traits와 명세 규칙에서 펼친다: 목록 + 첫 사용 → `empty`, 폼 → `error`, 밖으로 내보내는 행동·한 번 누르는 요청 → `done`, 사용자가 지켜봐야 하는 긴 작업(사진 여러 장 업로드 등, `long_task`) → `progress`, 명세 규칙 → 그 규칙의 `error`(같은 요소 오류) 또는 `confirm`(되돌릴 수 없음·중복 경고 대화상자). `loading`·`success`는 상태가 아니다. 화면당 상태 2개 이하(기본 포함 3) — 넘으면 규칙을 정책 문구로 내린다.
   - 탭·세그먼트로 내용이 바뀌는 화면은 `"tabs": [{"label": "지난 수업", "screen": "my-bookings-past"}]` — 칸마다 그 내용을 보여 주는 화면(현재 칸은 자기 id).
+  - `accent`(선택, 기본은 빼둔다): 강조색(`.accent-text`·`.accent-dot`)이 맡을 **뜻 하나**(할인·마감 임박·새 소식·내 손이 필요한 것 중 이 앱에서 첫눈에 걸려야 하는 것). 선언하지 않으면 강조 부품을 쓸 수 없다. 팔레트가 강조색을 가졌으면 `out/palettes.json`의 `accent_seen`이 그 서비스의 쓰임새다. CTA·선택 상태를 강조색으로 칠하지 않는다 — 버튼은 계속 브랜드 색.
   - `photo_centric`: 사진·이미지가 사용자가 만들거나 보는 **핵심 콘텐츠**면 true.
   - `branches`는 **갈래에만**(조건에 따라 다른 곳으로 가는 경우). 순서대로 이어지는 흐름은 적지 않는다 — 캔버스가 배치로 보여준다.
   - brief는 10~16장(하한을 채우려고 늘리지 않는다). spec은 명세 목록대로 — 명세에 없어도 여정의 시기별 변형(예: 단계별 홈)은 그대로 끌어낸다.

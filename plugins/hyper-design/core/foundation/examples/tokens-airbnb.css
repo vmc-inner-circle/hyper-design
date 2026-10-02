@@ -19,6 +19,10 @@
   --c-danger-tint: #FFF5F3;
   --c-danger-tint-text: #D7251C;
 
+  /* 강조색 — 드물게 강조할 짧은 글자·점에만(.accent-text·.accent-dot). 버튼·면·선택 상태에 쓰지 않는다 */
+  --c-accent: #DA1249;
+  --c-accent-text: #DA1249;
+
   /* 의미색 — 확정(브랜드)·바뀜(주의)·안내(정보)·완료(성공)가 같은 색이 되지 않게 */
   --c-success: #038026; --c-success-tint: #F1FAF2; --c-success-tint-text: #038026;
   --c-warning: #BE4900; --c-warning-tint: #FEF6EC; --c-warning-tint-text: #BE4900;

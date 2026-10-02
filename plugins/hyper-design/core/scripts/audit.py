@@ -59,6 +59,16 @@ MEASURE_JS = r"""
     insetOk: (() => { const v = n => parseFloat(getComputedStyle(document.documentElement).getPropertyValue(n)) || 0;
       return [Math.round(v('--page-x')), Math.round(v('--stack-m') + v('--block-pad'))]; })() };
   const cardSet = new Set();
+  // 강조색 전용 값: --c-accent* 중 다른 역할 토큰(브랜드·오류 등)과 겹치지 않는 색 — 강조 부품 밖에서 보이면 도배
+  const rootCs = getComputedStyle(document.documentElement);
+  const hexRgb = (h) => { const m = (h || '').trim().match(/^#([0-9a-f]{6})$/i); return m ? [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16)) : null; };
+  const ROLE = ['bg', 'surface', 'line', 'line-strong', 'text-1', 'text-2', 'text-3', 'text-disabled', 'disabled-bg', 'focus', 'on-brand',   // file://에서는 cssRules를 못 읽을 수 있어 역할 이름을 함께 쓴다
+    ...['brand', 'danger', 'success', 'warning', 'info'].flatMap(k => [k, k + '-text', k + '-tint', k + '-tint-text', k + '-pressed'])].map(n => '--c-' + n);
+  const tokVars = [...new Set([...ROLE, ...[...document.styleSheets].flatMap(ss => { try { return [...ss.cssRules].filter(r => r.selectorText === ':root').flatMap(r => [...r.style].filter(n => n.startsWith('--c-'))); } catch (e) { return []; } })])];
+  const same = (a, b) => a && b && Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]) + Math.abs(a[2]-b[2]) <= 6;
+  const others = tokVars.filter(n => !n.startsWith('--c-accent')).map(n => hexRgb(rootCs.getPropertyValue(n))).filter(Boolean);
+  const accOnly = ['--c-accent', '--c-accent-text'].map(n => hexRgb(rootCs.getPropertyValue(n))).filter(c => c && !others.some(o => same(o, c)));
+  res.accentOutside = [];
   const els = Array.from(document.body ? document.body.querySelectorAll('*') : []);
   els.unshift(document.body);
   const emojiRe = /[\u{1F300}-\u{1FAFF}\u{1F000}-\u{1F2FF}\u{2600}-\u{27BF}\u{1F900}-\u{1F9FF}\u{FE0F}]/u;
@@ -71,6 +81,11 @@ MEASURE_JS = r"""
     if (!visible(el, cs)) continue;
     const tag = el.tagName;
     const txt = directText(el);
+    if (accOnly.length && !el.closest('.accent-text,.accent-dot')) {
+      const hit = [['배경', cs.backgroundColor], ['글자', txt ? cs.color : null], ['선', px(cs.borderTopWidth) + px(cs.borderBottomWidth) > 0 ? cs.borderTopColor : null]]
+        .filter(([, v]) => { const c = parseColor(v); return c && c[3] > 0 && accOnly.some(a => same(c, a)); });
+      if (hit.length) res.accentOutside.push(`${tag.toLowerCase()}.${(el.getAttribute('class') || '').split(' ')[0]} ${hit.map(h => h[0]).join('·')} "${(el.innerText || '').trim().slice(0, 12)}"`);
+    }
     // colors
     const bg = parseColor(cs.backgroundColor);
     if (bg && bg[3] > 0) res.colors.push(bg);
@@ -482,6 +497,8 @@ def main():
     pv = [f"{sid}: {m.group(0)}" for sid, r in per.items() for m in PASSIVE.finditer(r.get("text", ""))]
     add("위계", "passive_role_words", len(pv), "0", not pv, "; ".join(pv[:6]))
     # 채워진 유채색 버튼 위 짙은 글자 — 대비는 넘어도 버튼답지 않다(아주 밝은 색 버튼은 예외)
+    ao = [f"{sid}: {t}" for sid, r in per.items() for t in (r.get("accentOutside") or [])]
+    add("위계", "accent_outside", len(ao), "0 (강조색은 .accent-text·.accent-dot만)", not ao, "; ".join(ao[:6]))
     dk = [f"{sid}: {t}" for sid, r in per.items() for t in (r.get("darkOnFill") or [])]
     add("위계", "dark_text_on_filled_button", len(dk), "0", not dk, "; ".join(dk[:6]))
     # 캔버스(index.html) 단순성 — success-criteria §9 · v13-spec §7
