@@ -4,6 +4,8 @@ python3 derive.py --brand "#1B64DA" --tone neutral --shape normal --density comf
 
 - 색: 포인트 색 1개 + 표면 톤(warm/neutral/cool)에서 글자·배경·선·틴트를 계산하고,
   모든 글자/배경 조합이 WCAG AA(4.5:1)를 넘도록 명도만 조정한다(채도는 유지 → 탁해지지 않음).
+- 강조색(accent): 팔레트에 드물게 쓰는 강조색이 있으면(29CM 할인율 주황) --c-accent·--c-accent-text로만 낸다.
+  어떤 공용 부품도 이 토큰을 쓰지 않는다 — .accent-text·.accent-dot 두 부품만. 없으면 브랜드 글자색으로 대신한다.
 - 타이포: 폰트별 세트. 제목÷본문 ≥ 1.5, 굵기 차 ≥ 200. 큰 글자 화면(.text-large)은 본문 계열만 한 단계 크게 — 편집하지 않는 사람의 기본값. 역할 이름을 붙이지 않는다.
 - 여백: 4pt 스케일 위 "넉넉한 기본값". 밀도 comfy/normal.
 """
@@ -58,7 +60,7 @@ def extend_roles(c, notes, S=None, P=None, mono=False):
     def scale_near(target):
         best = None
         for k, sc in (S or {}).items():
-            if P and k in (P.get("gray"), P.get("brand")): continue
+            if P and k in (P.get("gray"), P.get("brand"), P.get("danger"), (P.get("accent") or {}).get("scale")): continue   # 오류·강조 스케일을 주의·정보색으로 재사용하지 않는다
             mid = sc[order(sc)[len(sc) // 2]]
             if sat_of(mid) < .3: continue
             d = min(abs(hue_deg(mid) - target), 360 - abs(hue_deg(mid) - target))
@@ -86,6 +88,8 @@ def extend_roles(c, notes, S=None, P=None, mono=False):
     out["danger_tint_text"] = darken_until(c["danger"], c["danger_tint"], 4.5)
     out["danger_icon"] = brand_chroma and hue_gap(c["danger"], brand) < 25
     if out["danger_icon"]: notes.append("브랜드와 오류 색상각이 가까움 → 오류 문구에 아이콘 필수(.field-msg 아이콘)")
+    if c.get("accent_own") and hue_gap(c["danger"], c["accent"]) < 25:
+        notes.append("강조색과 오류색이 같은 계열 → 강조는 짧은 굵은 글자·점(.accent-text·.accent-dot)만, 오류는 아이콘+틴트 칸으로 모양을 다르게")
     # 브랜드 눌림: 스케일의 한 단계 짙은 값, 없으면 명도 -8%
     if S and P and not mono:
         sc = S[P["brand"]]; st = order(sc); i = st.index(P["brand_step"]) if P["brand_step"] in st else -1
@@ -153,6 +157,13 @@ def from_palette(path):
         c["on_brand"] = white; big = True; notes.append(f"버튼: 흰 글자 대비 {contrast(white, brand):.2f} → 버튼 글자 19px/700(큰 글씨 기준 3:1)")
     else:
         c["on_brand"] = white; c["brand"] = first_pass(P["brand"], white, 3); big = True; notes.append("버튼 색을 팔레트 안에서 한 단계 짙게")
+    A = P.get("accent")
+    if A:                                                # 강조색: 점은 그 단계 그대로(3:1 미만이면 짙게), 글자는 같은 스케일에서 4.5:1
+        st = [x for x in order(S[A["scale"]]) if int(x) >= int(A["step"])]
+        dot = next((S[A["scale"]][x] for x in st if contrast(S[A["scale"]][x], white) >= 3), S[A["scale"]][st[-1]])
+        c["accent"], c["accent_text"], c["accent_own"] = dot, next((S[A["scale"]][x] for x in st if contrast(S[A["scale"]][x], white) >= 4.5), S[A["scale"]][st[-1]]), True
+    else:
+        c["accent"] = c["accent_text"] = c["brand_text"]
     extend_roles(c, notes, S, P, P.get("mono", False))
     return c, big, notes, P
 
@@ -186,7 +197,8 @@ def derive(brand_hex, tone, shape, density, font, palette=None):
     danger_tint = mix(surface, hex2rgb("#E5484D"), 0.08)
     c = {"bg": bg, "surface": surface, "line": line, "text1": text1, "text2": text2, "text3": text3,
          "brand": brand, "on_brand": on_brand, "brand_text": brand_text, "brand_tint": brand_tint,
-         "brand_tint_text": brand_tint_text, "danger": danger, "danger_tint": danger_tint}
+         "brand_tint_text": brand_tint_text, "danger": danger, "danger_tint": danger_tint,
+         "accent": brand_text, "accent_text": brand_text}
     extend_roles(c, notes)
     return render_css(c, big, notes, f"--brand {brand_hex} --tone {tone}", shape, density, font)
 
@@ -200,6 +212,7 @@ def render_css(c, big, notes, label, shape, density, font):
         "text-3/surface": contrast(text3, surface), ("on-brand/brand(큰 글씨 ≥3)" if big else "on-brand/brand"): contrast(on_brand, brand),
         "brand-text/surface": contrast(brand_text, surface), "tint-text/tint": contrast(brand_tint_text, brand_tint),
         "danger/surface": contrast(danger, surface),
+        "accent-text/surface": contrast(c["accent_text"], surface), "accent/surface(점 ≥3)": contrast(c["accent"], surface),
         "success/surface": contrast(c["success"], surface), "warning-tint-text/tint": contrast(c["warning_tint_text"], c["warning_tint"]),
         "info-tint-text/tint": contrast(c["info_tint_text"], c["info_tint"]), "success-tint-text/tint": contrast(c["success_tint_text"], c["success_tint"]),
         "danger-tint-text/tint": contrast(c["danger_tint_text"], c["danger_tint"])}
@@ -225,6 +238,10 @@ def render_css(c, big, notes, label, shape, density, font):
   --c-danger: {rgb2hex(danger)};
   --c-danger-tint: {rgb2hex(danger_tint)};
   --c-danger-tint-text: {rgb2hex(c["danger_tint_text"])};
+
+  /* 강조색 — 드물게 강조할 짧은 글자·점에만(.accent-text·.accent-dot). 버튼·면·선택 상태에 쓰지 않는다 */
+  --c-accent: {rgb2hex(c["accent"])};
+  --c-accent-text: {rgb2hex(c["accent_text"])};
 
   /* 의미색 — 확정(브랜드)·바뀜(주의)·안내(정보)·완료(성공)가 같은 색이 되지 않게 */
   --c-success: {rgb2hex(c["success"])}; --c-success-tint: {rgb2hex(c["success_tint"])}; --c-success-tint-text: {rgb2hex(c["success_tint_text"])};
@@ -282,7 +299,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     css, checks, notes = derive(a.brand, a.tone, a.shape, a.density, a.font, a.palette)
     pathlib.Path(a.out).parent.mkdir(parents=True, exist_ok=True); pathlib.Path(a.out).write_text(css, encoding="utf-8")
-    bad = {k: v for k, v in checks.items() if v < (3 if "큰 글씨" in k else 4.5)}
+    bad = {k: v for k, v in checks.items() if v < (3 if "큰 글씨" in k or "≥3" in k else 4.5)}
     print(f"wrote {a.out}", *notes, sep="\n")
     print("대비:", ", ".join(f"{k} {v:.1f}" for k, v in checks.items()))
     sys.exit(1 if bad else 0)

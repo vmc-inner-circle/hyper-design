@@ -173,5 +173,49 @@ for s in S:
         mean = next((k for k in BADGES if k in text), None)
         if mean is None: errs.append(f"{f.name}: 표에 없는 배지 '{text}'(시간·순서라면 배지 말고 글자로)")
         elif (BADGES[mean] or "") != cls.strip(): errs.append(f"{f.name}: '{text}' 배지 색 {cls or '회색'} ≠ 표 {BADGES[mean] or '회색'}")
+# 강조색(v17): screens.json accent에 선언한 뜻 하나 · 8자 이하 글자/점 · 화면당 2곳(목록 반복은 1곳) · 제목·버튼·배지 밖
+from html.parser import HTMLParser
+ACCENT = m.get("accent")
+VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
+NO_ACCENT_TAG = {"h1", "h2", "h3", "button"}; NO_ACCENT_CLS = {"btn", "cta", "badge", "tabbar", "tab", "appbar-title", "title"}
+ITEM_CLS = {"row", "card", "tile", "item"}
+class AccentScan(HTMLParser):
+    def __init__(self):
+        super().__init__(); self.stack, self.n, self.hits, self.cur = [], 0, [], None
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs); cls = set((a.get("class") or "").split()); self.n += 1
+        node = (tag, cls, self.n)
+        kind = "accent-text" if "accent-text" in cls else "accent-dot" if "accent-dot" in cls else None
+        if kind:
+            chain = self.stack + [node]
+            bad = next((t if t in NO_ACCENT_TAG else "/".join(c & NO_ACCENT_CLS) for t, c, _ in chain if t in NO_ACCENT_TAG or c & NO_ACCENT_CLS), None)
+            items = [i for i, (t, c, _) in enumerate(self.stack) if t == "li" or c & ITEM_CLS]
+            slot = ("list", self.stack[items[-1] - 1][2]) if items and items[-1] > 0 else ("one", self.n)   # 목록 반복은 그 목록 하나로 센다
+            self.hits.append({"kind": kind, "bad": bad, "slot": slot, "text": "", "label": a.get("aria-label")})
+            if kind == "accent-text": self.cur = (len(self.stack), self.hits[-1])
+        if tag not in VOID: self.stack.append(node)
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i][0] == tag:
+                del self.stack[i:]
+                if self.cur and len(self.stack) <= self.cur[0]: self.cur = None
+                return
+    def handle_data(self, d):
+        if self.cur: self.cur[1]["text"] += d
+for s in S:
+    f = out / s["file"]
+    if not f.exists(): continue
+    h = f.read_text(encoding="utf-8")
+    if any("--c-accent" in st for st in re.findall(r"<style[^>]*>(.*?)</style>", h, re.S)): errs.append(f"{f.name}: <style>에서 --c-accent 직접 사용 — 강조색은 .accent-text·.accent-dot으로만")
+    sc = AccentScan(); sc.feed(h); H = sc.hits
+    if not H: continue
+    if not ACCENT: errs.append(f"{f.name}: 강조 부품 {len(H)}개를 썼는데 screens.json accent(뜻 하나) 미선언"); continue
+    for x in H:
+        if x["bad"]: errs.append(f"{f.name}: {x['kind']}가 {x['bad']} 안에 있음 — 제목·버튼·배지에는 강조색을 쓰지 않는다")
+        t = re.sub(r"\s+", " ", x["text"]).strip()
+        if x["kind"] == "accent-text" and not 0 < len(t) <= 8: errs.append(f"{f.name}: 강조 글자 '{t[:20]}' {len(t)}자 — 8자 이하 한 덩어리만")
+        if x["kind"] == "accent-dot" and not x["label"]: errs.append(f"{f.name}: accent-dot에 aria-label 없음(점만으로 뜻을 전하지 않는다)")
+    n = len({x["slot"] for x in H})
+    if n > 2: errs.append(f"{f.name}: 강조색 {n}곳 > 2(목록 반복은 1곳으로 셈) — 강조가 많으면 아무것도 강조되지 않는다")
 print("\n".join(errs) if errs else "selfcheck OK")
 sys.exit(1 if errs else 0)

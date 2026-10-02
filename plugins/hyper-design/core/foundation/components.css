@@ -76,6 +76,10 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .badge.is-info { background: var(--c-info-tint); color: var(--c-info-tint-text); }            /* 안내·요청 */
 .badge.is-success { background: var(--c-success-tint); color: var(--c-success-tint-text); }   /* 완료 */
 
+/* 강조색 — screens.json "accent"에 선언한 뜻 하나에만. 짧은 글자(8자 이하)·점만, 화면당 2곳(목록 반복은 1곳). 버튼·면·제목·배지에 쓰지 않는다 */
+.accent-text { color: var(--c-accent-text); font-weight: 700; }
+.accent-dot { display: inline-block; flex: none; width: 8px; height: 8px; border-radius: var(--r-pill); background: var(--c-accent); vertical-align: middle; }
+
 /* 버튼 */
 .btn svg, .done svg, .block-note svg { width: 20px; height: 20px; }
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--stack-s); height: var(--h-btn); padding: 0 var(--block-pad); border-radius: var(--r-m); font-size: var(--fs-strong); font-weight: 600; }
