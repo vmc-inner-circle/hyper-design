@@ -74,7 +74,7 @@
   --fs-body: 18px; --fw-body: 400; --lh-body: 1.55;
   --fs-strong: 18px; --fw-strong: 600; --lh-strong: 1.5;
   --fs-sub: 16px; --fw-sub: 400; --lh-sub: 1.5;
-  --fs-caption: 14px; --fw-caption: 500; --lh-caption: 1.4;
+  --fs-caption: 16px; --fw-caption: 500; --lh-caption: 1.4;
 }
 
 /* 버튼: 흰 글자 대비가 4.5 미만 → 큰 굵은 글자(19px/700)로 WCAG 큰 글씨 기준(3:1) 충족 */
