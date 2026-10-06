@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>궁합 보기</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.new { display: flex; flex-direction: column; gap: var(--stack-m); }
+.new summary { min-height: 44px; display: flex; align-items: center; justify-content: space-between; font-weight: 600; color: var(--c-brand-text); cursor: pointer; list-style: none; }
+.new summary::-webkit-details-marker { display: none; }
+.new summary svg { width: 20px; height: 20px; }
+.new[open] summary svg { transform: rotate(180deg); }
+.new-body { display: flex; flex-direction: column; gap: var(--stack-m); padding-top: var(--stack-s); }
+</style>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">궁합 보기</h1><span></span></header>
+<main class="page">
+  <section class="field">
+    <span class="label" id="rel">서로 어떤 사이예요?</span>
+    <div class="chips" role="radiogroup" aria-labelledby="rel">
+      <button class="chip is-selected" role="radio" aria-checked="true">연인</button>
+      <button class="chip" role="radio" aria-checked="false">배우자</button>
+      <button class="chip" role="radio" aria-checked="false">가족</button>
+      <button class="chip" role="radio" aria-checked="false">친구</button>
+      <button class="chip" role="radio" aria-checked="false">동료</button>
+    </div>
+  </section>
+  <section class="field">
+    <span class="label">저장한 사람</span>
+    <div class="row"><span class="avatar is-text">도</span><div class="row-main"><p class="row-title">이도현</p><p class="row-sub">1997년 8월 9일</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="이도현 선택"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar is-text">미</span><div class="row-main"><p class="row-title">김미경</p><p class="row-sub">1970년 5월 30일</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="김미경 선택"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+  </section>
+  <details class="new">
+    <summary>새로 입력<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="new-body">
+      <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" placeholder="이름 또는 별명"></div>
+      <div class="field"><label class="label" for="b">생년월일</label><input class="input" id="b" inputmode="numeric" placeholder="1997.08.09"></div>
+      <div class="field"><label class="label" for="t">태어난 시간</label><input class="input" id="t" placeholder="모르면 비워 두세요"></div>
+      <div class="row"><div class="row-main"><p class="row-title">저장한 사람에 추가</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="저장한 사람에 추가"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    </div>
+  </details>
+  <p class="info"><span>상대에게 알리지 않아요</span></p>
+</main>
+<div class="cta"><a class="btn primary full" href="match.html">궁합 풀기</a></div>
+</body></html>
