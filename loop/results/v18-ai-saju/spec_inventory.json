@@ -1,0 +1,319 @@
+{
+ "mode": "brief",
+ "items": [
+  {
+   "id": "S1",
+   "kind": "screen",
+   "name": "시작하기",
+   "quote": "### S01. 시작하기",
+   "covered_by": [
+    "start"
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "screen",
+   "name": "생년월일시 입력",
+   "quote": "### S02. 생년월일시 입력 (2단계)",
+   "covered_by": [
+    "birth-1",
+    "birth-2"
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "screen",
+   "name": "홈 (오늘)",
+   "quote": "### S03. 홈 (오늘)",
+   "covered_by": [
+    "home",
+    "home-first"
+   ]
+  },
+  {
+   "id": "S4",
+   "kind": "screen",
+   "name": "내 사주 풀이",
+   "quote": "### S04. 내 사주 풀이",
+   "covered_by": [
+    "saju"
+   ]
+  },
+  {
+   "id": "S5",
+   "kind": "screen",
+   "name": "AI에게 묻기 (채팅)",
+   "quote": "### S05. AI에게 묻기 (채팅)",
+   "covered_by": [
+    "ask"
+   ]
+  },
+  {
+   "id": "S6",
+   "kind": "screen",
+   "name": "궁합 — 상대 입력",
+   "quote": "### S06. 궁합 — 상대 입력",
+   "covered_by": [
+    "match-new"
+   ]
+  },
+  {
+   "id": "S7",
+   "kind": "screen",
+   "name": "궁합 결과",
+   "quote": "### S07. 궁합 결과",
+   "covered_by": [
+    "match-result",
+    "shared-link"
+   ]
+  },
+  {
+   "id": "S8",
+   "kind": "screen",
+   "name": "신년운세 리포트 (2027)",
+   "quote": "### S08. 신년운세 리포트 (2027)",
+   "covered_by": [
+    "report"
+   ]
+  },
+  {
+   "id": "S9",
+   "kind": "screen",
+   "name": "별 충전 / 사용 내역",
+   "quote": "### S09. 별 충전 / 사용 내역",
+   "covered_by": [
+    "stars"
+   ]
+  },
+  {
+   "id": "S10",
+   "kind": "screen",
+   "name": "지난 기록",
+   "quote": "### S10. 지난 기록",
+   "covered_by": [
+    "history"
+   ]
+  },
+  {
+   "id": "S11",
+   "kind": "screen",
+   "name": "마이·설정",
+   "quote": "### S11. 마이·설정",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "P1",
+   "kind": "step",
+   "name": "생년월일시 입력 1/2 — 기본 정보",
+   "quote": "- **1단계**: 이름(닉네임), 성별, 생년월일, 양력/음력(음력이면 윤달 여부)",
+   "covered_by": [
+    "birth-1"
+   ]
+  },
+  {
+   "id": "P2",
+   "kind": "step",
+   "name": "생년월일시 입력 2/2 — 태어난 시간·곳",
+   "quote": "- **2단계**: 태어난 시간(12지시 선택 또는 시:분), \"시간을 몰라요\", 태어난 곳(선택 — 시간 보정용)",
+   "covered_by": [
+    "birth-2"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "만 14세 미만은 가입 불가",
+   "quote": "만 14세 미만은 가입 불가(R1).",
+   "screen_hint": "S1",
+   "state_hint": "error",
+   "target": "start",
+   "state": "error"
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "시간 모름 — 결과 화면에 정확도 안내 한 번 표시",
+   "quote": "결과 화면에 \"태어난 시간을 넣으면 더 정확해져요\"를 한 번 표시(R2).",
+   "screen_hint": "S4",
+   "state_hint": "policy",
+   "policy": "saju"
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "미래 날짜·존재하지 않는 음력 날짜 오류",
+   "quote": "미래 날짜·존재하지 않는 음력 날짜는 오류(R3).",
+   "screen_hint": "S2",
+   "state_hint": "error",
+   "target": "birth-1",
+   "state": "error"
+  },
+  {
+   "id": "R4",
+   "kind": "rule",
+   "name": "무료 질문 3회 소진 후 1회 별 5개",
+   "quote": "하루 무료 질문 3회, 이후 1회 별 5개(R4).",
+   "screen_hint": "S5",
+   "state_hint": "confirm",
+   "target": "ask",
+   "state": "confirm"
+  },
+  {
+   "id": "R5",
+   "kind": "rule",
+   "name": "별 부족 시 충전으로 이동",
+   "quote": "별 부족 시 충전으로(R5).",
+   "screen_hint": "S5",
+   "state_hint": "error",
+   "target": "ask",
+   "state": "confirm"
+  },
+  {
+   "id": "R6",
+   "kind": "rule",
+   "name": "건강·투자·법률 질문은 단정 없이 전문가 상의 문구",
+   "quote": "건강·투자·법률 질문엔 단정하지 않고 \"전문가와 상의\" 문구(R6).",
+   "screen_hint": "S5",
+   "state_hint": "policy",
+   "policy": "ask"
+  },
+  {
+   "id": "R7",
+   "kind": "rule",
+   "name": "궁합 공유 링크 유효 30일",
+   "quote": "링크 유효 30일.",
+   "screen_hint": "S7",
+   "state_hint": "error",
+   "policy": "match-result"
+  },
+  {
+   "id": "R8",
+   "kind": "rule",
+   "name": "열람 후 환불 불가 — 구매 전 명시",
+   "quote": "열람 후 환불 불가 — 구매 전 명시(R8).",
+   "screen_hint": "S8",
+   "state_hint": "confirm",
+   "target": "report",
+   "state": "confirm"
+  },
+  {
+   "id": "R9",
+   "kind": "rule",
+   "name": "같은 사람 리포트 중복 구매 막음",
+   "quote": "같은 사람 리포트 중복 구매 막음(R9).",
+   "screen_hint": "S8",
+   "state_hint": "confirm",
+   "policy": "report"
+  },
+  {
+   "id": "R10",
+   "kind": "rule",
+   "name": "별 결제 실패 시 다시 시도 안내",
+   "quote": "결제 실패 시 다시 시도 안내.",
+   "screen_hint": "S9",
+   "state_hint": "error",
+   "target": "stars",
+   "state": "error"
+  },
+  {
+   "id": "R11",
+   "kind": "rule",
+   "name": "충전 완료 후 원래 하던 일로 복귀",
+   "quote": "충전 완료 후 원래 하던 일(질문·리포트)로 돌아감.",
+   "screen_hint": "S9",
+   "state_hint": "done",
+   "target": "stars",
+   "state": "done"
+  },
+  {
+   "id": "R12",
+   "kind": "rule",
+   "name": "저장한 사람 삭제 시 기록도 지울지 확인",
+   "quote": "저장한 사람 삭제 시 그 사람 궁합·리포트 기록도 지울지 묻기(R10).",
+   "screen_hint": "S11",
+   "state_hint": "confirm",
+   "target": "person-edit",
+   "state": "confirm"
+  },
+  {
+   "id": "R13",
+   "kind": "rule",
+   "name": "정보 수정 시 지난 AI 답은 이전 정보 기준 표시",
+   "quote": "입력 후 수정 가능, 단 수정하면 지난 AI 답은 \"이전 정보 기준\"으로 표시.",
+   "screen_hint": "S2",
+   "state_hint": "policy",
+   "policy": "birth-1"
+  }
+ ],
+ "objects": [
+  {
+   "id": "O1",
+   "name": "내 생년월일시 정보(사주 프로필)",
+   "quote": "생년월일시만 넣으면 **내 사주를 AI가 쉬운 말로 풀어 주고",
+   "create": "birth-1",
+   "view": "saju",
+   "edit": "birth-1",
+   "after": [
+    "saju"
+   ]
+  },
+  {
+   "id": "O2",
+   "name": "AI 질문",
+   "quote": "| F5 | AI에게 묻기 | 채팅형 질문, 추천 질문, 답마다 \"근거 보기\"(어느 기운 때문인지) | P0 |",
+   "create": "ask",
+   "view": "history",
+   "edit": "n/a — 보낸 질문은 고치지 않고 새로 묻는다",
+   "after": [
+    "ask"
+   ]
+  },
+  {
+   "id": "O3",
+   "name": "궁합",
+   "quote": "| F6 | 궁합 | 상대 생년월일 입력 → 점수 + 잘 맞는 점·부딪히는 점, 링크 공유 | P0 |",
+   "create": "match-new",
+   "view": "match-result",
+   "edit": "person-edit",
+   "after": [
+    "match-result",
+    "match-result--done"
+   ]
+  },
+  {
+   "id": "O4",
+   "name": "저장한 사람",
+   "quote": "| F7 | 사람 저장 | 가족·연인·친구 프로필 저장, 궁합·운세에 재사용 | P1 |",
+   "create": "match-new",
+   "view": "my",
+   "edit": "person-edit",
+   "after": [
+    "match-result"
+   ]
+  },
+  {
+   "id": "O5",
+   "name": "신년운세 리포트",
+   "quote": "| F8 | 신년운세 리포트 | 2027년 월별 흐름 리포트(유료, 1인 9,900원) | P0 |",
+   "create": "report",
+   "view": "report-view",
+   "edit": "n/a — 열람 후 환불 불가(R8), 고칠 수 없는 구매",
+   "after": [
+    "report-view"
+   ]
+  },
+  {
+   "id": "O6",
+   "name": "별(코인)",
+   "quote": "| F9 | 별(코인) | 질문·리포트 결제 수단. 충전, 사용 내역 | P0 |",
+   "create": "stars",
+   "view": "stars",
+   "edit": "n/a — 결제 취소는 앱스토어가 처리",
+   "after": [
+    "stars--done"
+   ]
+  }
+ ]
+}

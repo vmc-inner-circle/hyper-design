@@ -1,0 +1,37 @@
+{
+ "default": "seed-zigbang",
+ "options": [
+  {
+   "slug": "seed-zigbang",
+   "name": "직방",
+   "brand": "#FF6111",
+   "source": "브랜드 시드(https://www.zigbang.com)",
+   "why": [
+    "라이브러리에 맞는 도메인이 없어 시드로 만듦",
+    "성격(따뜻함)",
+    "감정 온도"
+   ]
+  },
+  {
+   "slug": "daangn",
+   "name": "당근",
+   "brand": "#ff6600",
+   "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(따뜻함)",
+    "감정 온도(따뜻한 색)"
+   ]
+  },
+  {
+   "slug": "airbnb",
+   "name": "에어비앤비",
+   "brand": "#da1249",
+   "source": "https://www.airbnb.co.kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(감성,따뜻함)",
+    "감정 온도(따뜻한 색)",
+    "브랜드가 오류 빨강과 겹침"
+   ]
+  }
+ ]
+}

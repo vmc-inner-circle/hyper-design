@@ -1,0 +1,35 @@
+{
+ "default": "kurly",
+ "options": [
+  {
+   "slug": "kurly",
+   "name": "컬리",
+   "brand": "#5f0080",
+   "source": "https://www.kurly.com/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+   "why": [
+    "라이브러리에 사주 도메인이 없어 성격(차분)으로 고름",
+    "밤에 여는 앱 — 짙은 보라는 신비롭되 붉은 부적·한지 같은 무속 느낌을 피함(PRD 6-4)",
+    "굿닥 파랑은 병원 앱처럼 보여 대안으로 내림"
+   ]
+  },
+  {
+   "slug": "seed-goodoc",
+   "name": "굿닥",
+   "brand": "#0462D1",
+   "source": "브랜드 시드(https://www.goodoc.co.kr)",
+   "why": [
+    "라이브러리에 맞는 도메인이 없어 시드로 만듦",
+    "성격(신뢰,차분)"
+   ]
+  },
+  {
+   "slug": "myrealtrip",
+   "name": "마이리얼트립",
+   "brand": "#2b96ed",
+   "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(신뢰)"
+   ]
+  }
+ ]
+}

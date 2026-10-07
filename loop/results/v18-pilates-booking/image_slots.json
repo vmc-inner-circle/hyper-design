@@ -1,0 +1,189 @@
+[
+ {
+  "slot": "studio-sum-1",
+  "screens": [
+   "find",
+   "find-map",
+   "studio",
+   "home-new",
+   "tickets-buy",
+   "checkout",
+   "checkout-done"
+  ],
+  "what": "리포머 기구 6대가 줄지어 있는 밝은 소형 필라테스 스튜디오 내부, 사람 없음",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "필라테스 스튜디오 리포머 내부",
+   "bright pilates studio reformer machines interior"
+  ]
+ },
+ {
+  "slot": "studio-sum-2",
+  "screens": [
+   "studio"
+  ],
+  "what": "캐딜락·체어 기구가 있는 필라테스 스튜디오 한쪽, 나무 바닥",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "필라테스 캐딜락 기구",
+   "pilates cadillac chair studio wood floor"
+  ]
+ },
+ {
+  "slot": "studio-sum-3",
+  "screens": [
+   "studio"
+  ],
+  "what": "깔끔한 탈의실·락커 또는 스튜디오 입구 데스크",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "필라테스 스튜디오 락커 탈의실",
+   "small fitness studio locker room clean"
+  ]
+ },
+ {
+  "slot": "studio-ongyeol",
+  "screens": [
+   "find",
+   "home-new"
+  ],
+  "what": "나무 바닥에 요가 매트가 깔린 햇살 드는 요가 스튜디오",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "요가 스튜디오 매트 햇살",
+   "sunny yoga studio wooden floor mats"
+  ]
+ },
+ {
+  "slot": "studio-matbreathe",
+  "screens": [
+   "find"
+  ],
+  "what": "매트 필라테스 그룹 수업 공간, 매트와 소도구 링",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "매트 필라테스 스튜디오",
+   "mat pilates studio room props ring"
+  ]
+ },
+ {
+  "slot": "studio-barunmom",
+  "screens": [
+   "find",
+   "checkin",
+   "checkin-done",
+   "tickets",
+   "ticket-detail"
+  ],
+  "what": "소도구(폼롤러·볼·밴드)가 정리된 재활 필라테스 스튜디오",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "재활 필라테스 소도구",
+   "pilates studio foam roller ball props rehabilitation"
+  ]
+ },
+ {
+  "slot": "studio-ribbon",
+  "screens": [
+   "find"
+  ],
+  "what": "넓은 기구 필라테스 스튜디오, 리포머 여러 대, 큰 창",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "대형 필라테스 스튜디오",
+   "large pilates reformer studio windows"
+  ]
+ },
+ {
+  "slot": "inst-han",
+  "screens": [
+   "studio",
+   "instructor",
+   "schedule"
+  ],
+  "what": "40대 한국 여성 필라테스 강사 상반신 프로필, 운동복",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "한국 여성 필라테스 강사 프로필",
+   "korean female pilates instructor portrait"
+  ]
+ },
+ {
+  "slot": "inst-jung",
+  "screens": [
+   "studio"
+  ],
+  "what": "30대 한국 여성 필라테스 강사 상반신, 밝은 배경",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "여성 필라테스 강사 웃는 프로필",
+   "asian woman pilates instructor smiling portrait"
+  ]
+ },
+ {
+  "slot": "inst-oh",
+  "screens": [
+   "studio",
+   "class"
+  ],
+  "what": "30대 한국 남성 필라테스 강사 상반신 프로필",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "남자 필라테스 강사",
+   "asian male pilates instructor portrait"
+  ]
+ },
+ {
+  "slot": "class-bodyline",
+  "screens": [
+   "class",
+   "booking-confirm",
+   "booking-done",
+   "schedule"
+  ],
+  "what": "리포머 위에서 운동하는 한국 여성들 그룹 수업, 강사가 자세를 잡아 줌",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "리포머 필라테스 그룹 수업",
+   "pilates reformer group class asian women instructor"
+  ]
+ },
+ {
+  "slot": "class-matcore",
+  "screens": [
+   "promotion",
+   "home"
+  ],
+  "what": "매트 위 코어 운동하는 여성들 그룹 수업",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "매트 필라테스 코어 수업",
+   "mat pilates core class women"
+  ]
+ },
+ {
+  "slot": "onboarding-hero",
+  "screens": [
+   "onboarding"
+  ],
+  "what": "리포머에서 스트레칭하는 30대 한국 여성, 밝고 차분한 분위기",
+  "ratio": "3:4",
+  "kind": "photo",
+  "queries": [
+   "필라테스 리포머 여성 스트레칭",
+   "asian woman pilates reformer stretching bright"
+  ]
+ }
+]

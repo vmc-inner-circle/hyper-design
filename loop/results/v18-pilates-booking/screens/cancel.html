@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>예약 취소 · 10/13 리포머 중급</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.cta { display: flex; flex-direction: column; gap: var(--stack-s); }
+.cta .btn.secondary { color: var(--c-danger-tint-text); }
+</style>
+</head>
+<body class="plain has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="my-bookings.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">예약 취소</h1><span></span></header>
+<main class="page">
+  <section class="hero">
+    <p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19h18z"/><path d="M12 10v4M12 16.5v.01"/></svg><span>지금 취소하면 횟수를 돌려받지 못해요</span></p>
+    <p class="title">무료 취소 기간(10월 12일(월) 20:00)이 지나 1회 차감돼요</p>
+    <p class="lead">오늘 20:00 수업이에요. 시작 24시간 전까지만 무료로 취소돼요.</p>
+  </section>
+  <section class="block is-list">
+    <div class="row"><span class="row-date">10/13<br>화</span><div class="row-main"><span class="badge is-brand">예약됨</span><p class="row-title">리포머 중급</p><p class="row-sub">오늘 20:00~20:50 · 정다은 · 숨 필라테스 망원점</p></div></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">취소하면</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-sub">잔여</p><p class="row-title">11회 → <span class="num">10회</span></p></div></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-sub">예약 가능</p><p class="row-title">9회 그대로</p><p class="row-sub">이 수업 1회는 돌려받지 못해요</p></div></div>
+  </section>
+  <div class="field"><span class="label">취소 사유 (선택)</span>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">야근</button><button class="chip" aria-pressed="false">일정 변경</button><button class="chip" aria-pressed="false">몸이 안 좋아요</button><button class="chip" aria-pressed="false">기타</button></div>
+  </div>
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg><span>수업이 시작되는 20:00부터는 취소할 수 없고, 나오지 않으면 노쇼로 1회 차감돼요. 기간권은 늦게 취소해도 당분간 차감되지 않아요.</span></p>
+</main>
+<div class="cta"><a class="btn primary full" href="my-bookings.html">취소하지 않기</a><a class="btn secondary full" href="cancel-done.html">1회 차감하고 취소하기</a></div>
+</body></html>

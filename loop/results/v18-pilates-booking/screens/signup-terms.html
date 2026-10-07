@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>약관 동의 · 기본 정보</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="phone-verify.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><span></span><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-label="가입 3단계 중 2단계" aria-valuenow="2" aria-valuemax="3"><span class="is-on"></span><span class="is-on"></span><span></span></div>
+  <header class="hero">
+    <h1 class="title">출석부엔 이름, 리뷰엔 닉네임</h1>
+    <p class="lead">약관에 동의하고 기본 정보를 넣으면 가입이 끝나요.</p>
+  </header>
+  <section class="block is-list" aria-label="약관 동의">
+    <div class="row"><div class="row-main"><p class="row-title">전체 동의</p><p class="row-sub">선택 항목 포함</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="전체 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">[필수] 이용약관</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="이용약관 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">[필수] 개인정보 수집·이용</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="개인정보 수집·이용 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">[필수] 만 14세 이상이에요</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="만 14세 이상 확인"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">[선택] 마케팅 정보 받기</p><p class="row-sub">새 스튜디오·할인 소식</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="마케팅 정보 수신 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+  </section>
+  <div class="field"><label class="label" for="name">이름(실명)</label><input class="input" id="name" autocomplete="name" value="김지현"></div>
+  <div class="field"><label class="label" for="nick">닉네임</label><input class="input" id="nick" autocomplete="nickname" value="퇴근후필라">
+    <p class="block-note">다른 사람과 같아도 괜찮아요.</p>
+  </div>
+  <section class="block is-list" aria-label="이름이 보이는 곳">
+    <div class="row"><span class="row-art"><img src="../assets/fluent/idcard.svg" alt=""></span><div class="row-main"><p class="row-title">김지현</p><p class="row-sub">스튜디오 출석부 · 운영자에게만 보여요</p></div></div>
+    <div class="row"><span class="avatar is-text">퇴</span><div class="row-main"><p class="row-title">퇴근후필라</p><p class="row-sub">리뷰 · 다른 수강생에게 보여요</p></div></div>
+  </section>
+  <div class="field"><span class="label">성별 (선택)</span>
+    <div class="seg" role="radiogroup" aria-label="성별"><button class="seg-item is-selected" role="radio" aria-checked="true">여성</button><button class="seg-item" role="radio" aria-checked="false">남성</button><button class="seg-item" role="radio" aria-checked="false">밝히지 않음</button></div>
+  </div>
+  <div class="field"><label class="label" for="birth">태어난 해 (선택)</label><input class="input" id="birth" inputmode="numeric" maxlength="4" placeholder="숫자 4자리"></div>
+</main>
+<div class="cta"><a class="btn primary full" href="neighborhood.html">다음</a></div>
+</body></html>
