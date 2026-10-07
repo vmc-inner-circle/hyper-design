@@ -143,7 +143,7 @@ function scanButtons(html) {
     const text = m[3].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
     if (!text) continue;
     out.push({ text, trigger: (/data-trigger\s*=\s*["']([^"']+)["']/.exec(attrs) || [])[1] || null,
-      stay: /\sdata-stay\b/.test(attrs), back: /\sdata-back\b/.test(attrs) });
+      stay: /\sdata-stay\b/.test(attrs), back: /\sdata-back\b/.test(attrs), out: /\sdata-out\b/.test(attrs) });
   }
   return out;
 }
@@ -188,6 +188,7 @@ for (const s of S.screens || []) {
   if (!s.file) fail(`${desc}: file 없음`);
   if (s.role && roleKeys.size && !roleKeys.has(s.role)) fail(`${desc}: role '${s.role}'이 roles에 없음`);
   if (s.state && !STATES.includes(s.state)) fail(`${desc}: state는 ${STATES.join("|")} 중 하나`);
+  if ((s.state === "error" || s.state === "success") && !s.when) warn(`${desc}: ${s.state === "error" ? "오류" : "완료"} 화면이 언제 나오는지(when) 없음 — 예: "마이크를 허용하지 않았을 때" (보드에서 화면 위 말풍선으로 보인다)`);
   if ((s.state === "error" || s.state === "success") && !s.variantOf) fail(`${desc}: ${s.state === "error" ? "오류" : "완료"} 상태 화면은 원래 화면을 variantOf로 가리킨다 (구역 보드에서 원래 화면 옆에 놓인다)`);
   noteId(s.id, desc);
   if (Number.isInteger(s.id) && s.id > 100) warn(`${desc}: 화면 번호 ${s.id} — 화면은 1, 2, 3…으로 (node scripts/ids.js가 발급)`);
@@ -378,6 +379,52 @@ for (const s of slugs.values()) {
     }
   }
   for (const x of SEC) if (!used.has(x.key)) warn(`구역 '${x.name}': 화면이 하나도 없음`);
+  // 안내·예외 (사용자: "지우기 같은 행동에 안내·오류 문구가 없다", "엣지 케이스나 글자 수 제한도") — prd-to-screens §5-4
+  for (const s of S.screens || []) {
+    const desc = `화면 ${s.slug}`;
+    if (s.cases !== undefined) {
+      if (!Array.isArray(s.cases)) fail(`${desc}: cases는 [{ when, show, tone }] 배열`);
+      else for (const c of s.cases) {
+        if (!c || !c.when || !c.show) { fail(`${desc}: cases 항목은 { "when": "이럴 때", "show": "보여 줄 문구" }`); continue; }
+        if (c.tone && !["danger", "warning", "info", "success"].includes(c.tone)) fail(`${desc}: cases tone은 danger|warning|info|success`);
+        if (c.show.length > 50) warn(`${desc}: 안내 문구 50자 이내로 "${c.show.slice(0, 20)}…"`);
+      }
+    }
+    const html = s.file && exists(path.join(runDir, s.file)) ? fs.readFileSync(path.join(runDir, s.file), "utf8") : "";
+    for (const m of html.matchAll(/<(input|textarea)\b([^>]*)>/g)) {
+      if (/type="(checkbox|radio|hidden|range|date|time)"/.test(m[2])) continue;
+      if (!/maxlength="\d+"/.test(m[2])) warn(`${desc}: 글자 칸에 maxlength 없음 — 글자 수 제한을 정해 maxlength(필요하면 minlength)로 (완성본에서 '3/20'이 보인다)`);
+    }
+    for (const m of html.matchAll(/data-stay-tone="([^"]*)"/g)) if (!["danger", "warning", "info", "success"].includes(m[1])) fail(`${desc}: data-stay-tone은 danger|warning|info|success`);
+    if (!s.overlayOf) for (const m of html.matchAll(/<(button|a)\b([^>]*\bdata-stay="[^"]*"[^>]*)>([\s\S]*?)<\/\1>/g)) {
+      const t = m[3].replace(/<[^>]+>/g, "").trim();
+      if (/btn-danger/.test(m[2]) || /지우기|삭제|탈퇴|해지|초기화/.test(t)) warn(`${desc}: 되돌릴 수 없는 버튼 '${t}'이 바로 끝남 — 확인 창(뜨는 창 화면 + 갈래)을 거치게`);
+    }
+    if (s.pattern === "form" && !s.variantOf && !s.state && !(s.cases || []).length) warn(`${desc}: 입력 화면인데 cases(엣지 케이스: 빈칸·너무 김·겹침·실패) 없음 — 그때 보여 줄 문구를 정한다`);
+  }
+  // 움직임(motion): 완성본에서 실제로 재현된다(packages/core/motion). 정책에 글로만 적지 않는다
+  const MOTION = ["hold", "breathe", "dim", "countup", "stagger", "reorder", "carousel", "play"];
+  const NEEDS = { hold: "trigger", breathe: "any", reorder: "region", carousel: "region", play: "region" };
+  for (const s of S.screens || []) {
+    const desc = `화면 ${s.slug}`;
+    if ((s.policy || []).some((b) => /움직임/.test(b.title || ""))) warn(`${desc}: 정책에 [움직임]이 글로만 있음 — motion으로 옮기면 완성본에서 실제로 움직인다 (prd-to-screens §5-3)`);
+    if (s.motion === undefined) continue;
+    if (!Array.isArray(s.motion)) { fail(`${desc}: motion은 [{ type, target, ms, note }] 배열`); continue; }
+    const html = s.file && exists(path.join(runDir, s.file)) ? fs.readFileSync(path.join(runDir, s.file), "utf8") : "";
+    for (const m of s.motion) {
+      const md = `${desc} 움직임 ${m && m.type}`;
+      if (!m || !MOTION.includes(m.type)) { fail(`${desc}: motion type은 ${MOTION.join("|")}`); continue; }
+      if (!m.note) fail(`${md}: note 없음 — 완성본 '움직임' 안내에 보이는 한 문장 (예: "'측정 끝내기'를 2초 길게 누르면 끝나요")`);
+      else if (m.note.length > 44) warn(`${md}: note 44자 이내로`);
+      const need = NEEDS[m.type];
+      if (need && !m.target) { fail(`${md}: target 없음 (${need === "trigger" ? "버튼 key(data-trigger)" : "영역 key(data-region)"})`); continue; }
+      if (m.target && html) {
+        const hasReg = html.includes(`data-region="${m.target}"`), hasTrig = html.includes(`data-trigger="${m.target}"`);
+        if (need === "trigger" ? !hasTrig : need === "region" ? !hasReg : !(hasReg || hasTrig)) fail(`${md}: target '${m.target}'이 조각에 없음`);
+      }
+      if (m.ms !== undefined && !(Number.isFinite(m.ms) && m.ms >= 100 && m.ms <= 60000)) fail(`${md}: ms는 100~60000`);
+    }
+  }
   // 오류·완료 상태: 사용자가 밟게 될 상태는 반드시 그린다
   const all = [...slugs.values()];
   const inputs = all.filter((s) => !s.state && s.pattern === "form" && !s.variantOf);
@@ -425,7 +472,7 @@ for (const [slug, btns] of buttonsBySlug) {
   const from = [slug, (slugs.get(slug) || {}).variantOf].filter(Boolean);
   for (const b of btns) {
     if (b.trigger) { if (!from.some((f) => stepTo.has(f + "|" + b.trigger) || branchTo.has(f + "|" + b.trigger))) orphan.push(b.text); }
-    else if (!b.stay && !b.back && !trigTexts.has(b.text)) lost.push(b.text);
+    else if (!b.stay && !b.back && !b.out && !trigTexts.has(b.text)) lost.push(b.text);
   }
   if (lost.length) fail(`화면 ${slug}: 누르면 어떻게 되는지 없는 버튼 ${lost.map((t) => `'${t}'`).join(", ")} — 다른 화면이면 data-trigger + flow.json branches, 되돌아가면 data-back, 그 자리에서 바뀌면 data-stay="바뀐 뒤 안내 문구"`);
   if (orphan.length) warn(`화면 ${slug}: data-trigger가 있는데 흐름·갈래에 없는 버튼 ${orphan.map((t) => `'${t}'`).join(", ")}`);
@@ -504,7 +551,8 @@ if (S.concepts !== undefined) {
       for (const k of new Set(trigs.filter((k, i) => trigs.indexOf(k) !== i))) fail(`${cd}: data-trigger="${k}" 가 2번 이상 — 같은 버튼이 여럿이면 한 곳에만(00-rules 3-2)`);
       const want = SHELLS[c.shell];
       const appCls = ((/<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html) || [])[1] || "").split(/\s+/);
-      if (want && !appCls.includes(want)) warn(`${cd}: 시안 메뉴 구조가 ${c.shell}인데 .app에 ${want} 없음`);
+      const hasNav = /class=["'][^"']*\bnav-item\b/.test(html);   // 모바일에서 메뉴 밖 화면은 뒤로 버튼만 — 메뉴 구조를 보지 않는다
+      if (want && !appCls.includes(want) && (platform !== "mobile" || hasNav)) warn(`${cd}: 시안 메뉴 구조가 ${c.shell}인데 .app에 ${want} 없음`);
       if (knownClasses.size) {
         const unknown = new Set();
         for (const m of html.matchAll(/class\s*=\s*["']([^"']+)["']/g)) for (const k of m[1].split(/\s+/).filter(Boolean)) if (!knownClasses.has(k) && !k.startsWith("hx-")) unknown.add(k);

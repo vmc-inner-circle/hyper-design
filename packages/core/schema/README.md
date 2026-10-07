@@ -11,7 +11,7 @@
   "platform": "web",
   "round": 1,
   "theme": "a",
-  "toggles": { "type": "normal", "accent": "calm" },
+  "toggles": { "type": "normal", "accent": "calm", "toast": { "at": "top", "icon": "on", "tone": "light", "size": "normal" } },   // toast(안내 문구 모양)는 없으면 이 기본값
   "roles": [
     { "key": "owner", "label": "관리자" },
     { "key": "member", "label": "구성원" }

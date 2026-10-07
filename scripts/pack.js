@@ -38,6 +38,7 @@ const RULES = `
 8. \`state: first-run·empty\` 화면은 \`<x-empty>\`로 비워 둔다(숫자·목록 금지, primary 버튼 하나). \`state: input\`은 입력칸에 예시 값.
 9. 체크 목록·출석처럼 "보고 체크"하는 것은 체크박스 대신 아이콘: 한 것 \`<x-icon name="square-check" tone="success"/>\`, 안 한 것 \`<x-icon name="square" tone="muted"/>\`.
 10. 아이콘 이름은 아래 목록에 있는 것만.
+10-1. **안내·예외**: 글자 칸(input·textarea)에는 화면별 메모의 글자 수로 \`maxlength\`(필요하면 \`minlength\`) — 완성본에서 '3/20'이 보인다. 그 자리에서 바뀌는 버튼의 \`data-stay\`는 무엇이 됐는지 한 문장, 실패·오류 안내면 \`data-stay-tone="danger"\`. 지우기·삭제처럼 되돌릴 수 없는 버튼은 바로 끝내지 않고 확인 창(갈래)을 연다.
 11. **읽을 것은 이 파일 하나뿐. 화면마다 Write 한 번. 쓴 뒤 다시 열어 점검하지 않는다** — 메인이 expand·lint로 본다. 다른 파일(다른 runs/*, 패턴·조각 문서)은 열지 않는다.`;
 
 // ---------- 부품 표 (05-parts.md에서 그대로) ----------
@@ -85,6 +86,7 @@ const MOBILE_EXAMPLES = `
 <p class="big-num">잔여 3회 <small>/ 10</small></p>   <p class="text-sm text-2">회색 한 줄</p>
 <div class="segmented w-full"><button class="segmented-item active">예정 2</button><button class="segmented-item">대기 중 2</button></div>
 <div class="chip-group"><button class="chip active">기구 필라테스</button><button class="chip">매트</button></div>
+<label class="switch"><input type="checkbox" checked>알람을 끄면 측정도 끝내기</label>   ← 켜고 끄는 줄은 이 모양 하나 (input에 클래스를 붙이지 않는다)
 <div class="search"><x-icon name="search"/><input class="input" type="search" placeholder="스튜디오 이름으로 찾기"></div>
 <div class="field"><label class="field-label">이름</label><input class="input" value="예시 값"></div>
 <div class="day-strip"><button class="day active"><span class="day-name">수</span><span class="day-num">14</span></button>…</div>
@@ -138,7 +140,8 @@ const blocks = slugs.map((slug) => {
     const to = bySlug.get(x.to);
     return `  - \`data-trigger="${x.trigger}"\` · 버튼 글자 **'${quote(x.action) || x.action}'** · 영역 \`${x.region}\` 안 → ${to ? to.name : x.to} (${x.kind})`;
   });
-  const file = concept ? `concepts/${concept}/${slug}.html` : s.file || `screens/${slug}.html`;
+  // 1턴(시안 단계)만 concepts/<id>/에 쓴다. 2턴부터 --concept는 시안의 메뉴 구조·첫 화면·밀도를 담기 위한 것 — 화면은 screens/로
+  const file = concept && S.stage === "concept" ? `concepts/${concept}/${slug}.html` : s.file || `screens/${slug}.html`;
   return [
     `### ${s.name} — \`${slug}\` → RUN/${file}`,
     `- 누가: ${((S.roles || []).find((r) => r.key === s.role) || {}).label || s.role || "모두"} · 목적: ${s.purpose || ""}`,

@@ -9,11 +9,12 @@
 
   FINAL.start = function (app) {
     app.classList.add("hx-app"); app.classList.add("hx-final");
-    var views = { map: HX.buildSections(), all: FINAL.buildAll() };
+    var views = { map: HX.buildSections(), play: HX.buildPlayer(), all: FINAL.buildAll() };
+    views.play.el.classList.add("hx-pl-on");
     FINAL.views = views;
     var tabBtns = {}, current = null;
     var tablist = HX.el("div", { class: "hx-tabs", role: "tablist", "aria-label": "보기" });
-    [["map", "사용 흐름", HX.icon("#i-workflow")], ["all", "화면 전체", HX.icon("#i-layout-grid")]].forEach(function (t) {
+    [["map", "사용 흐름", HX.icon("#i-workflow")], ["play", "흐름 재생", HX.icon("#i-play")], ["all", "화면 전체", HX.icon("#i-layout-grid")]].forEach(function (t) {
       var b = HX.el("button", { type: "button", class: "hx-tab", role: "tab", id: "hx-tab-" + t[0], "aria-selected": "false", tabindex: "-1", onclick: function () { select(t[0]); } }, [t[2], t[1]]);
       tabBtns[t[0]] = b; tablist.appendChild(b);
     });
@@ -39,7 +40,7 @@
       try { history.replaceState(null, "", "#" + name); } catch (e) { /* file:// */ }
     }
     FINAL.select = select;
-    select(location.hash === "#all" ? "all" : "map");
+    select(location.hash === "#all" ? "all" : location.hash === "#play" ? "play" : "map");
     doc.addEventListener("keydown", function (e) {
       var t = e.target, typing = t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable);
       if (typing || doc.querySelector(".hx-modal")) return;

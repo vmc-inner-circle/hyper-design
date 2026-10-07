@@ -26,6 +26,18 @@
   var recType = isLocked("type") && toggles.type ? toggles.type : (rec.type || toggles.type || "normal");
   var recSwatch = isLocked("swatch") && toggles.swatch ? toggles.swatch : (rec.swatch || rec.accent || toggles.swatch);
   var REC = B.REC = { theme: recTheme, type: recType, accent: fixSwatch(recTheme, recSwatch) };
+  // 안내 문구(toast) 모양: 위치 · 아이콘 · 색 · 글자 — 기본 규칙(위쪽 · 아이콘 · 흰 바탕 · 보통)이 추천. 확정되면 확정값이 추천
+  var TOAST = B.TOAST = {
+    at: { label: "위치", opts: [["top", "화면 위"], ["bottom", "화면 아래"]] },
+    icon: { label: "아이콘", opts: [["on", "있음"], ["off", "없음"]] },
+    tone: { label: "색", opts: [["light", "흰 바탕"], ["dark", "어두운 바탕"], ["color", "상태 색 바탕"]] },
+    size: { label: "글자", opts: [["normal", "보통"], ["large", "크게"]] }
+  };
+  var TOAST_KEYS = B.TOAST_KEYS = ["at", "icon", "tone", "size"];
+  function toastOk(o) { var r = {}; TOAST_KEYS.forEach(function (k) { var v = o && o[k]; r[k] = TOAST[k].opts.some(function (x) { return x[0] === v; }) ? v : TOAST[k].opts[0][0]; }); return r; }
+  REC.toast = toastOk(isLocked("toast") ? toggles.toast : (rec.toast || toggles.toast));
+  B.toastLabel = function (k, v) { var o = TOAST[k].opts.filter(function (x) { return x[0] === v; })[0]; return o ? o[1] : v; };
+  B.toastDiff = function () { return TOAST_KEYS.filter(function (k) { return state.toast[k] !== REC.toast[k]; }); };
   // 단계: "concept"(1턴 — 시안만 보여주고 고르게) / "draft"(2턴부터 — 고른 시안으로 만든 전체 화면)
   var STAGE = B.stage = HX.meta.stage === "concept" ? "concept" : "draft";
   // 시안(concepts): 레퍼런스 조사로 만든 방향 5개. draft 단계의 화면들은 HX.meta.concept(고른 시안)으로 만든 것
@@ -42,7 +54,7 @@
 
   // ---------- 상태 ----------
   // pins: 화면 디자인 탭에서 사용자가 화면 아무 곳이나 골라 단 의견 { id: {id, sid, slug, path, desc, where, v, memo} }
-  var state = { concept: REC.concept, cmemo: {}, theme: REC.theme, type: REC.type, accent: REC.accent, ask: {}, regions: {}, screens: {}, pins: {}, pinSeq: 0, add: "", memo: "" };
+  var state = { concept: REC.concept, cmemo: {}, theme: REC.theme, type: REC.type, accent: REC.accent, ask: {}, regions: {}, screens: {}, pins: {}, pinSeq: 0, add: "", memo: "", toast: toastOk(REC.toast) };
   (function restore() {
     var saved = HX.storage.get(storeKey); if (!saved || typeof saved !== "object") return;
     ["concept", "theme", "type", "accent", "add", "memo"].forEach(function (k) { if (typeof saved[k] === "string") state[k] = saved[k]; });
@@ -55,14 +67,17 @@
     if (isLocked("swatch")) state.accent = REC.accent;
     state.accent = fixSwatch(state.theme, state.accent);
     if (isLocked("ask")) state.ask = {};
+    state.toast = toastOk(isLocked("toast") || !saved.toast ? REC.toast : saved.toast);
   })();
   B.state = state;
+  TOAST_KEYS.forEach(function (k) { root.setAttribute("data-toast-" + k, state.toast[k]); });   // 저장해 둔 안내 문구 모양을 처음부터
   B.resetAll = function () {
     state.ask = {}; state.regions = {}; state.screens = {}; state.pins = {}; state.add = ""; state.memo = "";
     if (!isLocked("concept")) { state.concept = REC.concept; state.cmemo = {}; }
     if (!isLocked("theme")) state.theme = REC.theme;
     if (!isLocked("type")) state.type = REC.type;
     if (!isLocked("swatch")) state.accent = fixSwatch(state.theme, REC.accent);
+    if (!isLocked("toast")) state.toast = toastOk(REC.toast);
     if (B.applyTheme) B.applyTheme();
     B.changed();
   };
@@ -89,6 +104,7 @@
   B.applyTheme = function () {
     state.accent = fixSwatch(state.theme, state.accent);
     root.setAttribute("data-theme", state.theme); root.setAttribute("data-type", state.type); root.setAttribute("data-swatch", state.accent); root.removeAttribute("data-accent");
+    TOAST_KEYS.forEach(function (k) { root.setAttribute("data-toast-" + k, state.toast[k]); });
     // 글자 크기가 바뀌면 화면 길이가 달라진다 → 늘린 프레임을 되돌리고 다시 늘린다
     if (B.view && B.view.resetHeights) B.view.resetHeights();
     HX.relayout(); B.changed();
@@ -112,6 +128,8 @@
     var locked = Array.isArray(board.locked) ? board.locked : [];
     var lines = [B.themeLine() + (isLocked("theme") && isLocked("type") && isLocked("swatch") ? " (확정)" : "")];
     var one = function (s) { return String(s || "").replace(/\s*\n+\s*/g, " / ").trim(); };
+    // 안내 문구 모양: 추천과 다를 때만 — "안내 문구: 위치 화면 아래 · 아이콘 없음 · 색 어두운 바탕 · 글자 크게" (answer-parsing §1)
+    if (!isLocked("toast") && B.toastDiff().length) lines.push("안내 문구: " + TOAST_KEYS.map(function (k) { return TOAST[k].label + " " + B.toastLabel(k, state.toast[k]); }).join(" · "));
     if (locked.indexOf("ask") < 0) (board.ask || []).forEach(function (q) {
       if (!q || !Array.isArray(q.options)) return;
       var ri = typeof q.recommended === "number" ? q.recommended : Math.max(0, q.options.indexOf(q.recommended));

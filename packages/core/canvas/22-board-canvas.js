@@ -91,12 +91,12 @@
   };
   B.overview = function () { if (B.view) B.view.fit(true); };
 
-  // ---------- 표시 상태 → 구역 보드 이름표 ('고친 화면' · '뺌' · 메모) ----------
+  // ---------- 표시 상태 → 구역 보드 이름표 ('의견 반영' · '뺌' · 메모) ----------
   B.paintMarks = function () {
     var st = B.state;
     HX.data.screens.forEach(function (s) {
       var ss = st.screens[s.id], tags = [], memo = ss ? B.one(ss.memo) : "";
-      if (B.focus.indexOf(s.slug) >= 0) tags.push({ kind: "fixed", text: "고친 화면" });
+      if (B.focus.indexOf(s.slug) >= 0) tags.push({ kind: "fixed", text: "의견 반영" });
       if (ss && ss.remove) tags.push({ kind: "removed", text: "뺌" });
       if (memo) tags.push({ kind: "memo", text: "메모", title: "메모: " + memo });
       B.view.mark(s.slug, tags);
@@ -119,7 +119,7 @@
     var main = HX.el("div", { class: "hx-bd-main" }, [canvas]);
     app.appendChild(bar); app.appendChild(main);
 
-    B.view = HX.buildSections({ pickTitle: "눌러서 이 화면에 의견 남기기", onPick: function (slug) { if (B.showDesign) B.showDesign(slug); } });
+    B.view = HX.buildSections({ pickTitle: "의견 남기기", pickIcon: "comment", onPick: function (slug) { if (B.showDesign) B.showDesign(slug); } });
     canvas.appendChild(B.view.el);
 
     // 코치 팁 (처음 한 번)
@@ -127,8 +127,8 @@
       var coach = HX.el("div", { class: "hx-bd-coach", role: "note" }, [
         HX.el("div", {}, [HX.el("b", { text: "이렇게 보세요" }),
           HX.el("ul", {}, [HX.el("li", { text: "구역(가입·홈 …)마다 화면이 사용하는 순서대로 왼쪽부터 놓여 있어요" }),
-            HX.el("li", { text: "초록 화살표는 조건에 따라 길이 갈리는 곳이에요 · 화면 아래 검은 상자는 그 화면의 규칙이에요" }),
-            HX.el("li", { text: "화면을 누르면 '화면 디자인'으로 가서 고치고 싶은 곳에 의견을 남길 수 있어요" })])]),
+            HX.el("li", { text: "초록 화살표는 조건에 따라 길이 갈리는 곳이에요 · 화면 이름 옆 ⓘ에 마우스를 올리면 그 화면의 규칙이 보여요" }),
+            HX.el("li", { text: "화면 위 이름 옆 '의견 남기기'를 누르면 '화면 디자인'에서 고치고 싶은 곳에 의견을 남길 수 있어요" })])]),
         HX.btn("", { cls: "hx-icon-btn", aria: "닫기", title: "닫기", icon: HX.icon("#i-x"), onclick: function () { B.closeCoach(); } })]);
       canvas.appendChild(coach);
       B.closeCoach = function () { if (coach.isConnected) coach.remove(); HX.storage.set("hx:board:coach2", 1); };

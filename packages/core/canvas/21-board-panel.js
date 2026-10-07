@@ -87,7 +87,7 @@
       var info = B.instInfo(B.sel.inst);
       title.textContent = info ? info.head : "화면";
       var tags = [HX.el("span", { class: "hx-tag hx-role", text: HX.roleLabel(s.role) })];
-      if (B.focus.indexOf(s.slug) >= 0) tags.push(HX.el("span", { class: "hx-tag hx-bd-tag-fixed", text: "고친 화면" }));
+      if (B.focus.indexOf(s.slug) >= 0) tags.push(HX.el("span", { class: "hx-tag hx-bd-tag-fixed", text: "의견 반영", title: HX.changesOf ? HX.changesOf(s.slug).map(HX.changeLine).join("\n") : null }));
       body.appendChild(HX.el("div", { class: "hx-bd-screen-head" }, [
         HX.el("div", { class: "hx-bd-screen-title" }, [HX.badge(s.id), HX.el("h3", { text: s.name })]),
         HX.el("div", { class: "hx-bd-screen-tags" }, tags),

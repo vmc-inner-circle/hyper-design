@@ -189,4 +189,4 @@ function resolveSwatch(L, v) {
   return L.swatches[0].id;
 }
 
-module.exports = { DEFAULT_LOOKS, FONTS, fontOf, fontLinks, inkOf, calmHex, getLooks, looksCss, lookTokens, swatchTokens, resolveSwatch, contrast, mix, hex2rgb };
+module.exports = { DEFAULT_LOOKS, FONTS, fontOf, fontLinks, fontTokens, inkOf, calmHex, getLooks, looksCss, lookTokens, swatchTokens, resolveSwatch, contrast, mix, hex2rgb };

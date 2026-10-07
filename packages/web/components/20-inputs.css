@@ -28,7 +28,7 @@
   display: none;
   align-items: center;
   gap: var(--sp-1);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);   /* 오류 문구는 작게 두지 않는다(기본 규칙 17-2) */
   line-height: var(--lh-normal);
   color: var(--c-danger);
 }

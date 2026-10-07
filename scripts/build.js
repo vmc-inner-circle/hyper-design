@@ -59,6 +59,10 @@ const type = opt("type", (S.toggles && S.toggles.type) || "normal");
 const look = looks.find((l) => l.id === theme) || looks[0];
 const swatch = LOOKS.resolveSwatch(look, opt("swatch", (S.toggles && (S.toggles.swatch || S.toggles.accent)) || ""));
 const accent = swatch;   // 예전 이름 호환
+// 안내 문구(toast) 모양 — 보드 '안내 문구 모음'에서 고른다. 기본: 위쪽 · 아이콘 있음 · 흰 바탕 · 보통 글자
+const TOAST_DEFAULT = { at: "top", icon: "on", tone: "light", size: "normal" };
+const toast = Object.assign({}, TOAST_DEFAULT, (S.toggles && S.toggles.toast) || {});
+const toastAttrs = ` data-toast-at="${esc(toast.at)}" data-toast-icon="${esc(toast.icon)}" data-toast-tone="${esc(toast.tone)}" data-toast-size="${esc(toast.size)}"`;
 const round = Number(opt("round", S.round || 1));
 const coreDir = path.join(ROOT, "packages/core");
 
@@ -68,6 +72,8 @@ const cssParts = [
   read(path.join(coreDir, "tokens/toggles.css")),
   LOOKS.looksCss(looks),   // 분위기·버튼 색 토큰 (screens.json looks → 계산, 없으면 기본 분위기)
 ];
+// 밤 화면(screen.dark)은 어두운 분위기의 색만 빌리고 글꼴은 고른 분위기를 따른다
+cssParts.push(`.app[data-night] {\n${Object.entries(LOOKS.fontTokens(look)).map(([k, v]) => `  ${k}: ${v};`).join("\n")}\n}`);
 const TOKEN_PARTS = cssParts.length;   // 최종 화면별 페이지에 넣을 토큰 CSS 개수
 // 디렉터리 안 파일을 이름순으로 모두 읽는다 (00-, 10- 접두로 순서 제어)
 const readDir = (dir, ext) =>
@@ -79,6 +85,8 @@ cssParts.push(...compParts);
 const canvasCssParts = readDir(path.join(coreDir, "canvas"), ".css");
 if (canvasCssParts.length === 0) console.warn(`[build] WARN packages/core/canvas/*.css 없음`);
 cssParts.push(...canvasCssParts);
+// 움직임(packages/core/motion): 보드·입구의 구역 보드에서 화면에 마우스를 올리면 재생한다(완성본 페이지는 아래에서 따로 싣는다)
+cssParts.push(read(path.join(coreDir, "motion/motion.css")));
 const css = cssParts.join("\n\n");
 
 // ---------- 화면 조각 ----------
@@ -86,13 +94,21 @@ const css = cssParts.join("\n\n");
 const fragOf = (s) => {
   const p = path.join(runDir, s.file);
   if (!exists(p)) { console.error(`[build] FAIL 조각 없음: ${s.file}`); process.exit(1); }
-  const own = EXPAND.expandFragment(S, s, read(p)).trim();
+  const own = nightTone(s, EXPAND.expandFragment(S, s, read(p)).trim());
   const base = s.overlayOf && (S.screens || []).find((x) => x.slug === s.overlayOf);
   if (!base) return own;
   const back = EXPAND.expandFragment(S, base, read(path.join(runDir, base.file))).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
   const cut = back.lastIndexOf("</div>");
   return cut < 0 ? back + "\n" + own : back.slice(0, cut) + own + "\n" + back.slice(cut);
 };
+// 밤에 쓰는 화면(screen.dark: true): 고른 분위기와 상관없이 어두운 분위기(looks 중 mode dark의 첫째)로 칠한다
+// — 측정 시작·측정 중처럼 어두운 방에서 보는 화면과 아침 결과 화면의 상황 차이를 보여 주기 위해
+function nightTone(s, html) {
+  if (!s.dark) return html;
+  const D = looks.find((l) => l.mode === "dark");
+  if (!D) return html;
+  return html.replace(/<div class="(app\b[^"]*)"/, `<div class="$1" data-theme="${esc(D.id)}" data-swatch="${esc(D.swatches[0].id)}" data-night`);
+}
 // 1턴 시안 보드(stage "concept")는 아직 전체 화면이 없다 — 시안 화면만 싣는다
 const stage = mode === "board" && S.stage === "concept" ? "concept" : "draft";
 if (S.stage === "concept" && mode === "final") { console.error("[build] FAIL 시안 단계(stage: concept)에서는 최종본을 만들 수 없음"); process.exit(1); }
@@ -124,6 +140,32 @@ if (mode === "board" && (stage === "concept" || !conceptLocked)) for (const c of
 // 분위기의 글꼴 세트가 쓰는 웹 글꼴 (scripts/looks.js FONTS)
 function fontLinkTags(ls) { return LOOKS.fontLinks(ls).map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join("\n"); }
 
+// 안내·예외: 조각에서 '누르면 뜨는 안내'(data-stay)와 입력칸 글자 수(minlength·maxlength)를 뽑아 보드 ⓘ 카드·마우스 올리기에 쓴다
+const PICK_CLS = /\b(chip|segmented-item|tab|day)\b/;
+function feedbackOf(html) {
+  const stays = [], limits = [], outs = [];
+  // 앱 밖으로 나가는 버튼(data-out="휴대폰 설정 › 드르렁 › 마이크"): 완성본에서 '앱 밖' 카드, 보드 ⓘ에 '앱 밖으로'
+  for (const m of html.matchAll(/<(button|a)\b([^>]*?)\bdata-out="([^"]*)"([^>]*)>([\s\S]*?)<\/\1>/g)) {
+    outs.push({ label: m[5].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim(), text: m[3] });
+  }
+  for (const m of html.matchAll(/<(button|a)\b([^>]*?)\bdata-stay="([^"]*)"([^>]*)>([\s\S]*?)<\/\1>/g)) {
+    const attrs = m[2] + m[4], cls = (/class="([^"]*)"/.exec(attrs) || [])[1] || "";
+    if (!m[3] || PICK_CLS.test(cls)) continue;   // 고르는 버튼(칩·나눔 버튼)은 모양이 바뀌는 것으로 충분
+    const label = m[5].replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    stays.push({ label, text: m[3], tone: (/data-stay-tone="([a-z]+)"/.exec(attrs) || [])[1] || "success" });
+  }
+  for (const m of html.matchAll(/<(input|textarea)\b([^>]*)>/g)) {
+    const a = m[2]; if (/type="(checkbox|radio|hidden|range)"/.test(a)) continue;
+    const max = (/maxlength="(\d+)"/.exec(a) || [])[1], min = (/minlength="(\d+)"/.exec(a) || [])[1];
+    const lab = [...html.slice(0, m.index).matchAll(/class="field-label"[^>]*>([\s\S]*?)<\/label>/g)].pop();
+    const name = lab ? lab[1].replace(/<[^>]+>/g, "").replace(/\*/g, "").trim() : (/placeholder="([^"]*)"/.exec(a) || [])[1] || "입력칸";
+    limits.push({ name, min: min ? +min : null, max: max ? +max : null });
+  }
+  return { stays, limits, outs };
+}
+const FEEDBACK = {};
+if (stage !== "concept") for (const s of S.screens || []) FEEDBACK[s.slug] = feedbackOf(fragOf(s));
+
 // ---------- 데이터 ----------
 const data = {
   meta: {
@@ -135,7 +177,7 @@ const data = {
     theme,
     concept: mainConcept,
     stage,
-    toggles: { type, swatch },
+    toggles: { type, swatch, toast },
     looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: LOOKS.inkOf(l), font: LOOKS.fontOf(l).name,
       swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: LOOKS.calmHex(s.hex, l.mode === "dark") })) })),
     roles: S.roles || [],
@@ -144,7 +186,10 @@ const data = {
   screens: (S.screens || []).map((s) => ({
     id: s.id, slug: s.slug, name: s.name, role: s.role || null, purpose: s.purpose || "",
     pattern: s.pattern || null, state: s.state || null, variantOf: s.variantOf || null, overlayOf: s.overlayOf || null,
-    section: s.section || null, step: s.step || "", policy: Array.isArray(s.policy) ? s.policy : [],
+    when: s.when || null, section: s.section || null, step: s.step || "", policy: Array.isArray(s.policy) ? s.policy : [],
+    cases: Array.isArray(s.cases) ? s.cases.filter((c) => c && c.when && c.show).map((c) => ({ when: c.when, show: c.show, tone: c.tone || "danger" })) : [],
+    stays: (FEEDBACK[s.slug] || {}).stays || [], limits: (FEEDBACK[s.slug] || {}).limits || [], outs: (FEEDBACK[s.slug] || {}).outs || [],
+    motion: Array.isArray(s.motion) ? s.motion.filter((m) => m && m.type).map((m) => ({ type: m.type, target: m.target || null, ms: m.ms || null, level: m.level || null, note: m.note || "" })) : [],
     regions: (s.regions || []).map((r) => ({ id: r.id, key: r.key, label: r.label, why: r.why || "" })),
   })),
   sections: Array.isArray(S.sections) ? S.sections : [],
@@ -162,12 +207,12 @@ const dataJSON = JSON.stringify(data).replace(/<\//g, "<\\/");
 // ---------- canvas/*.js ----------
 const canvasJsParts = readDir(path.join(coreDir, "canvas"), ".js");
 if (canvasJsParts.length === 0) console.warn(`[build] WARN packages/core/canvas/*.js 없음`);
-const canvasJs = canvasJsParts.length ? canvasJsParts.join("\n\n") : "console.warn('canvas.js 없음');";
+const canvasJs = [read(path.join(coreDir, "motion/motion.js"))].concat(canvasJsParts.length ? canvasJsParts : ["console.warn('canvas.js 없음');"]).join("\n\n");
 
 // ---------- 조립 (스프라이트 제외) ----------
 const title = mode === "board" ? `${data.meta.title} — ${stage === "concept" ? "시안" : round + "차 보드"}` : `${data.meta.title} — 화면 지도`;
 let html = `<!doctype html>
-<html lang="ko" data-mode="${mode}" data-platform="${platform}" data-theme="${esc(theme)}" data-type="${esc(type)}" data-swatch="${esc(swatch)}">
+<html lang="ko" data-mode="${mode}" data-platform="${platform}" data-theme="${esc(theme)}" data-type="${esc(type)}" data-swatch="${esc(swatch)}"${toastAttrs}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -225,6 +270,9 @@ console.log(`[build] ${mode} → ${path.relative(process.cwd(), out)} (${kb}KB, 
 // ---------- 최종: 화면마다 독립 HTML 완성본 (out/screens/NN-slug.html) ----------
 // Figma에서 넘겨받은 화면처럼 보드 장치 없이 실제 화면만. 흐름에 있는 버튼(data-trigger)은 다음 화면 페이지로 이동한다.
 if (mode === "final") {
+  // 움직임(packages/core/motion) — 화면별 완성본에만. 보드에는 싣지 않는다
+  const MOTION_CSS = read(path.join(coreDir, "motion/motion.css"));
+  const MOTION_JS = read(path.join(coreDir, "motion/motion.js")).replace(/<\/script/gi, "<\\/script");
   const pageDir = path.join(path.dirname(out), "screens");
   fs.rmSync(pageDir, { recursive: true, force: true });
   fs.mkdirSync(pageDir, { recursive: true });
@@ -243,18 +291,18 @@ if (mode === "final") {
     // 왼쪽 메뉴(roles[].nav)도 실제 화면 페이지로 — 메뉴 글자로 찾는다
     const navMap = {};
     for (const r of S.roles || []) for (const n of r.nav || []) if (files[n.slug] && !navMap[n.label]) navMap[n.label] = files[n.slug];
-    const icons = new Set([...frag.matchAll(/#i-([a-z0-9-]+)/g)].map((m) => m[1]).concat(["chevron-left", "chevron-right", "layout-grid"]));
+    const icons = new Set([...frag.matchAll(/#i-([a-z0-9-]+)/g)].map((m) => m[1]).concat(["chevron-left", "chevron-right", "layout-grid", "circle-check", "circle-alert", "info", "triangle-alert"]));
     const pdefs = [...icons].filter((n) => symbols.has(n)).sort().map((n) => `<symbol id="i-${n}"${symbols.get(n).attrs}>${symbols.get(n).body.trim()}</symbol>`).join("\n");
     const prev = order[i - 1] ? files[order[i - 1]] : null, next = order[i + 1] ? files[order[i + 1]] : null;
     const nav = `<nav class="hx-page-nav" aria-label="화면 이동">
   <a href="../index.html"><svg class="icon-sm" aria-hidden="true"><use href="#i-layout-grid"/></svg>전체 화면</a>
   <span class="hx-page-sep"></span>
-  ${prev ? `<a href="${prev}" aria-label="이전 화면"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></a>` : `<span class="hx-page-off"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></span>`}
+  ${prev ? `<a href="${prev}#back" aria-label="이전 화면"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></a>` : `<span class="hx-page-off"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></span>`}
   <b>${i + 1} / ${order.length}</b><span class="hx-page-name">${esc(s.name)}</span>
   ${next ? `<a href="${next}" aria-label="다음 화면"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-right"/></svg></a>` : `<span class="hx-page-off"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-right"/></svg></span>`}
 </nav>`;
     const page = `<!doctype html>
-<html lang="ko" data-platform="${platform}" data-theme="${esc(theme)}" data-type="${esc(type)}" data-swatch="${esc(swatch)}">
+<html lang="ko" data-platform="${platform}" data-theme="${esc(theme)}" data-type="${esc(type)}" data-swatch="${esc(swatch)}"${toastAttrs}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -265,7 +313,7 @@ ${pageCss}
 ${platform === "mobile" ? `/* 독립 페이지(모바일): 휴대폰 크기 화면 한 장을 가운데에 */
 html, body { height: 100%; }
 body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--c-surface-3); }
-.app { width: ${PLATFORM.FRAME.mobile.w}px; height: min(${PLATFORM.FRAME.mobile.h}px, 100vh); border-radius: 28px; overflow: hidden; box-shadow: 0 24px 64px rgba(0, 0, 0, .18); }` : `/* 독립 페이지: 화면이 브라우저 전체를 채운다 */
+body > .app.app-mobile { width: ${PLATFORM.FRAME.mobile.w}px; height: min(${PLATFORM.FRAME.mobile.h}px, 100vh); border-radius: 28px; overflow: hidden; box-shadow: 0 24px 64px rgba(0, 0, 0, .18); }   /* 창이 낮으면 휴대폰 높이를 줄여 위아래가 잘리지 않게 (.app.app-mobile의 고정 높이보다 우선) */` : `/* 독립 페이지: 화면이 브라우저 전체를 채운다 */
 html, body { height: 100%; }
 body { margin: 0; background: var(--c-bg); }
 .app { width: 100%; min-width: 1180px; height: 100vh; }`}
@@ -282,6 +330,7 @@ body { margin: 0; background: var(--c-bg); }
 .hx-page-off { opacity: .35; }
 .hx-page-sep { width: 1px; height: 16px; background: rgba(255, 255, 255, .3); }
 .hx-page-name { max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; opacity: .85; }
+${MOTION_CSS}
 </style>
 </head>
 <body>
@@ -318,16 +367,21 @@ ${nav}
     if (b.hasAttribute("data-hx-link")) return;
     b.addEventListener("click", function (e) {
       e.preventDefault(); var msg = b.getAttribute("data-stay"); if (!msg) return;
+      if (window.HXAppToast) { window.HXAppToast(msg, b.getAttribute("data-stay-tone")); return; }   // 앱 디자인의 안내 상자 (motion.js)
       toast.textContent = msg; toast.hidden = false; clearTimeout(tt); tt = setTimeout(function () { toast.hidden = true; }, 1800);
     });
   });
   document.querySelectorAll("[data-back]").forEach(function (b) {
     if (b.hasAttribute("data-hx-link")) return;
     b.setAttribute("data-hx-link", ""); b.setAttribute("title", "이전 화면으로");
-    b.addEventListener("click", function (e) { e.preventDefault(); if (backHref) location.href = backHref; else if (history.length > 1) history.back(); });
+    b.addEventListener("click", function (e) { e.preventDefault(); if (backHref) location.href = backHref + "#back"; else if (history.length > 1) history.back(); });
   });
   document.addEventListener("click", function (e) { var a = e.target.closest("a[href='#'], .app a:not([data-hx-link]), .app button:not([data-hx-link])"); if (a && !a.closest(".hx-page-nav")) e.preventDefault(); }, true);
 })();
+</script>
+<script>window.HX_MOTION = ${JSON.stringify({ overlay: !!s.overlayOf, cases: (s.cases || []).filter((c) => c && c.when && c.show), items: (s.motion || []).filter((m) => m && m.type) }).replace(/<\//g, "<\\/")};</script>
+<script>
+${MOTION_JS}
 </script>
 </body>
 </html>

@@ -13,6 +13,7 @@
 3-2. **버튼마다 누르면 어떻게 되는지**: 글자가 있는 `.btn`(아이콘만 있는 `.btn-icon`과 `.nav-item` 제외)은 셋 중 하나를 반드시 가진다 — lint FAIL.
    - `data-trigger="<key>"`: flow.json의 step이나 **branches(갈래)** 에 있는 버튼. 다른 화면·창이 열린다.
    - `data-back`: 이전 화면으로 돌아가는 버튼(취소·닫기·'모임으로' 같은 뒤로가기, 창의 완료 버튼).
+   - `data-out="휴대폰 설정 › 드르렁 › 마이크"`: 앱 밖으로 나가는 버튼(휴대폰 설정·전화·지도 앱 열기). 완성본에서 '앱 밖' 카드로 어디로 가는지 보여 준다.
    - `data-stay="바뀐 뒤 안내 문구"`: 그 자리에서 바뀌는 버튼(삭제·필터·다시 알리기·복사). 문구는 해요체 한 문장("알림을 다시 보냈어요"). 최종본에서 누르면 이 문구가 잠깐 뜬다.
    - **같은 일을 하는 버튼이 여러 개**(목록 행마다 '예약하기')면 `data-trigger`는 한 곳(첫 행)에만 붙이고 나머지는 **글자를 똑같이** 두면 된다 — 따로 표시하지 않는다. lint가 같은 글자의 트리거 버튼을 찾아 통과시키고, 최종본도 같은 글자 버튼을 같은 화면으로 잇는다. `data-stay`로 때우지 않는다.
 4. **아이콘**: `<svg class="icon" aria-hidden="true"><use href="#i-<lucide-name>"/></svg>`. 크기는 `.icon-sm`(16) `.icon`(20) `.icon-lg`(24). 이름은 `packages/core/icons/allowlist.json` 값 또는 프로젝트 `icons.json` 값만. 아이콘만 있는 버튼은 `aria-label` 필수.
@@ -33,6 +34,7 @@
 17-1. **오류·완료 상태 화면**(`state`가 `error`·`success`, `variantOf`가 원래 화면): 원래 화면과 **배치·문구·영역·버튼을 그대로** 두고 상태만 바꾼다(구역 보드에서 나란히 비교된다).
    - `error`: 잘못된 입력칸의 `.field`에 `is-error` + 그 칸 아래 `<p class="field-error"><svg class="icon-sm" aria-hidden="true"><use href="#i-circle-alert"/></svg>고치는 방법 한 문장</p>`("2자 이상 적어 주세요"처럼 무엇을 어떻게). 입력칸이 아닌 오류(겹침·마감)는 맨 위 `.banner.banner-danger` 한 줄. 입력값도 틀린 값으로 바꿔 둔다.
    - `success`: 맨 위(제목 아래) `.banner.banner-success` 한 줄 — 무엇이 끝났고 다음에 무엇을 하면 되는지. 방금 끝난 항목에 성공 배지.
+17-2. **안내·오류 문구(`.toast`)는 화면 위쪽, 본문 크기 글자** (화면 안 오류 띠 `.banner-title`도 본문 크기, 입력칸 아래 `.field-error`는 보조 크기 — 부품 CSS가 맞춘다) — 기본 규칙(사용자 결정 2026-10-07: "에러 문구는 상단에 · 글자 조금 크게"). 자리·크기는 부품 CSS가 정하므로 조각에서 위치를 바꾸지 않는다(인라인 style·다른 클래스 금지). 아래 버튼·탭에 가려지지 않고 먼저 읽힌다. 위치·아이콘·색·글자를 바꾸고 싶다는 의견은 `screens.json` `toggles.toast`로 모든 화면에 한 번에 반영한다(answer-parsing §1).
 18-1. 할 일·체크리스트처럼 **보고 체크하는 목록**은 체크박스(input) 대신 아이콘으로: 한 것 `<svg class="icon text-success"><use href="#i-square-check"/></svg>` + 흐린 글자, 안 한 것 `<svg class="icon text-muted"><use href="#i-square"/></svg>`. 여러 열을 나란히 두는 화면은 **열 머리 구조를 모두 같게**(아바타 · 이름 truncate · spacer · 배지), 머리에 버튼을 넣지 않는다(열 위 도구줄로).
 18. 화면 안 문구도 `.claude/skills/design-harness/references/ux-writing.md`를 따른다: 높여 부를 사람은 "님"(예: 부모님·고객님), 버튼 문구는 flow의 `action` 따옴표 안 말과 글자까지 같게.
 

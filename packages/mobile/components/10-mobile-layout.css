@@ -104,13 +104,13 @@
 /* ---- 아래 꽉 찬 버튼 (본문 마지막 자식 · 내용이 짧으면 맨 아래, 길면 아래에 붙어 따라온다) ---- */
 .bottom-cta {
   position: sticky;
-  bottom: 0;
+  bottom: calc(var(--sp-8) * -1);   /* 스크롤 영역의 아래 여백(sp-8)까지 덮는다 — 버튼 밑으로 내용이 비치지 않게 */
   z-index: var(--z-sticky);
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
   margin: auto calc(var(--gutter) * -1) calc(var(--sp-8) * -1);
-  padding: var(--sp-4) var(--gutter) var(--sp-5);
+  padding: var(--sp-4) var(--gutter) calc(var(--sp-5) + var(--sp-8));
   background: linear-gradient(to bottom, transparent, var(--m-page-bg) var(--sp-4));
 }
 .bottom-cta > .btn,
@@ -192,3 +192,11 @@
 
 /* ---- 메뉴 없는 한 장 (온보딩 · shell: none) — 위 여백을 넉넉히 ---- */
 .app-mobile.no-nav .content { padding-top: var(--sp-12); }
+
+/* ---- 안내·오류 문구(toast): 위 제목 줄 바로 아래, 양옆 꽉 차게 (기본 규칙 — 화면 위쪽 · 본문 크기 글자) ---- */
+.app-mobile .toast, .app-mobile .toast-stack { top: calc(var(--appbar-h) + var(--sp-2)); left: var(--gutter); right: var(--gutter); translate: none; min-width: 0; max-width: none; }
+.app-mobile .toast { padding: var(--sp-4); border: 0; }
+/* 아래에 둘 때: 아래 탭·꽉 찬 버튼(아래 안내 한 줄 포함) 위로 — 가리지 않게 */
+[data-toast-at="bottom"] .app-mobile .toast, [data-toast-at="bottom"] .app-mobile .toast-stack { top: auto; bottom: var(--sp-6); }
+[data-toast-at="bottom"] .app-mobile:has(.tabbar) .toast, [data-toast-at="bottom"] .app-mobile:has(.tabbar) .toast-stack { bottom: calc(var(--tabbar-h) + var(--sp-3)); }
+[data-toast-at="bottom"] .app-mobile:has(.bottom-cta) .toast, [data-toast-at="bottom"] .app-mobile:has(.bottom-cta) .toast-stack { bottom: calc(var(--ctl-lg) * 2 + var(--sp-10)); }
