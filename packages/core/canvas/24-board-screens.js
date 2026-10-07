@@ -302,11 +302,6 @@
       sec.addEventListener("mousedown", function (e) { e.preventDefault(); }, true);
       sec.addEventListener("click", function (e) { e.preventDefault(); e.stopPropagation(); var t = targetOf(e.target); if (t) pick(t); }, true);
     }
-    function flowsOf(slug) {
-      return HX.data.flows.map(function (f, fi) { return { f: f, fi: fi }; }).filter(function (x) {
-        return (x.f.steps || []).some(function (st) { return st.from === slug || st.to === slug; });
-      });
-    }
     function show(slug, key) {
       cur = slug; paintList();
       stage.innerHTML = ""; sideScreen.innerHTML = ""; frame = null; picked = null;
@@ -334,10 +329,11 @@
       if (s.state) tags.push(HX.el("span", { class: "hx-tag hx-state", text: HX.stateLabel(s.state) }));
       sideScreen.appendChild(HX.el("div", { class: "hx-sd-head" }, [HX.el("div", { class: "hx-sd-tags" }, tags),
         s.purpose ? HX.el("p", { class: "hx-sd-purpose", text: s.purpose }) : null]));
-      var fl = flowsOf(slug);
-      if (fl.length) sideScreen.appendChild(HX.el("div", { class: "hx-sd-flows" }, [HX.el("span", { class: "hx-sd-k", text: "이 화면이 나오는 흐름" })].concat(fl.map(function (x) {
-        return HX.el("button", { type: "button", class: "hx-sd-flow", title: "사용 흐름에서 보기", onclick: function () { B.showInFlow(slug, x.fi); } }, [HX.el("b", { text: String(x.fi + 1) }), x.f.name]);
-      }))));
+      // 이 화면의 정책(규칙) — 구역 보드의 검은 상자와 같은 내용. 틀렸으면 화면 메모로 고쳐 달라고 한다
+      if (s.policy && s.policy.length) sideScreen.appendChild(HX.el("div", { class: "hx-sd-policy" }, [HX.el("span", { class: "hx-sd-k", text: "이 화면의 규칙" })].concat(s.policy.map(function (p) {
+        return HX.el("div", { class: "hx-sd-pol" }, [HX.el("b", { text: p.title }), HX.el("ul", {}, (p.items || []).map(function (t) { return HX.el("li", { text: t }); }))]);
+      })).concat([HX.el("span", { class: "hx-muted", text: "규칙이 틀렸으면 아래 화면 메모에 적어 주세요" })])));
+      sideScreen.appendChild(HX.btn("사용 흐름에서 보기", { cls: "hx-sd-inflow", icon: HX.icon("#i-workflow"), onclick: function () { B.showInFlow(slug); } }));
       sideScreen.appendChild(editor); sideScreen.appendChild(pinList);
       var ss = B.screenState(s.id);
       var rm = HX.el("input", { type: "checkbox", onchange: function () { ss.remove = rm.checked; B.changed(); } }); rm.checked = !!ss.remove;
@@ -369,13 +365,13 @@
       app.classList.toggle("hx-tab-concept", tabNow === "concept");
       Object.keys(tabBtns).forEach(function (k) { tabBtns[k].setAttribute("aria-selected", k === tabNow ? "true" : "false"); tabBtns[k].classList.toggle("hx-on", k === tabNow); });
       if (tabNow === "design" && !cur && !(o && o.slug)) show(order[0] || ALL);
+      if (tabNow === "flow" && B.view) B.view.onShow();
       HX.relayout();
     };
     B.showDesign = function (slug, key) { B.setTab("design", { slug: slug }); show(slug || ALL, key); };
     B.showInFlow = function (slug, flowIndex) {
       B.setTab("flow");
-      var V = B.view, it = V.instancesOf(slug).filter(function (x) { return x.row === flowIndex; })[0] || V.instancesOf(slug)[0];
-      if (it) B.selectFlow(slug, null, { inst: it.id, focus: true });
+      B.view.focus(slug);
     };
     // 화면 디자인 탭에서 다른 곳(지금까지 남긴 의견 등)이 화면을 고르면 → 이 탭 안에서 보여준다
     B.selectFlow = B.select;

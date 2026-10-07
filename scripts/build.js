@@ -28,6 +28,7 @@
 const fs = require("fs");
 const path = require("path");
 const LOOKS = require("./looks.js");
+const PLATFORM = require("./platform.js");
 const EXPAND = require("./expand.js");   // 안전장치: 펼치지 않은 부품 태그·셸이 남아 있어도 화면이 깨지지 않게
 
 const ROOT = path.resolve(__dirname, "..");
@@ -59,7 +60,6 @@ const look = looks.find((l) => l.id === theme) || looks[0];
 const swatch = LOOKS.resolveSwatch(look, opt("swatch", (S.toggles && (S.toggles.swatch || S.toggles.accent)) || ""));
 const accent = swatch;   // 예전 이름 호환
 const round = Number(opt("round", S.round || 1));
-const pkgDir = path.join(ROOT, "packages", platform);
 const coreDir = path.join(ROOT, "packages/core");
 
 // ---------- CSS ----------
@@ -72,7 +72,8 @@ const TOKEN_PARTS = cssParts.length;   // 최종 화면별 페이지에 넣을 �
 // 디렉터리 안 파일을 이름순으로 모두 읽는다 (00-, 10- 접두로 순서 제어)
 const readDir = (dir, ext) =>
   exists(dir) ? fs.readdirSync(dir).filter((f) => f.endsWith(ext)).sort().map((f) => `/* ${f} */\n` + read(path.join(dir, f))) : [];
-const compParts = readDir(path.join(pkgDir, "components"), ".css");
+// 컴포넌트: web 위에 플랫폼 레이어를 겹친다 (mobile = web + packages/mobile — scripts/platform.js)
+const compParts = PLATFORM.files(platform, "components", ".css").map((f) => `/* ${f.layer}/${f.file} */\n` + read(f.path));
 if (compParts.length === 0) console.warn(`[build] WARN packages/${platform}/components/*.css 없음 — 컴포넌트 스타일 없이 조립`);
 cssParts.push(...compParts);
 const canvasCssParts = readDir(path.join(coreDir, "canvas"), ".css");
@@ -120,6 +121,9 @@ if (mode === "board" && (stage === "concept" || !conceptLocked)) for (const c of
   }
 }
 
+// 분위기의 글꼴 세트가 쓰는 웹 글꼴 (scripts/looks.js FONTS)
+function fontLinkTags(ls) { return LOOKS.fontLinks(ls).map((u) => `<link rel="stylesheet" href="${esc(u)}">`).join("\n"); }
+
 // ---------- 데이터 ----------
 const data = {
   meta: {
@@ -132,16 +136,18 @@ const data = {
     concept: mainConcept,
     stage,
     toggles: { type, swatch },
-    looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: l.ink,
-      swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: s.hex })) })),
+    looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: LOOKS.inkOf(l), font: LOOKS.fontOf(l).name,
+      swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: LOOKS.calmHex(s.hex, l.mode === "dark") })) })),
     roles: S.roles || [],
     generatedAt: new Date().toISOString(),
   },
   screens: (S.screens || []).map((s) => ({
     id: s.id, slug: s.slug, name: s.name, role: s.role || null, purpose: s.purpose || "",
     pattern: s.pattern || null, state: s.state || null, variantOf: s.variantOf || null, overlayOf: s.overlayOf || null,
+    section: s.section || null, step: s.step || "", policy: Array.isArray(s.policy) ? s.policy : [],
     regions: (s.regions || []).map((r) => ({ id: r.id, key: r.key, label: r.label, why: r.why || "" })),
   })),
+  sections: Array.isArray(S.sections) ? S.sections : [],
   flows: F.flows || [],
   branches: F.branches || [],
   concepts: mode === "board" ? concepts.map((c) => ({ id: c.id, name: c.name || c.id, why: c.why || "", shell: c.shell || "sidebar", look: c.look || theme,
@@ -166,7 +172,7 @@ let html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+${fontLinkTags(mode === "board" ? looks : [look])}
 <style>
 ${css}
 </style>
@@ -228,10 +234,10 @@ if (mode === "final") {
   order.forEach((slug, i) => {
     const s = (S.screens || []).find((x) => x.slug === slug);
     const frag = fragOf(s);
-    const links = {};
-    for (const f of F.flows || []) for (const st of f.steps || []) if (st.from === slug && st.trigger && files[st.to]) links[st.trigger] = { href: files[st.to], action: st.action || "" };
+    const links = {}, from = [slug, s.variantOf].filter(Boolean);   // 상태만 다른 화면은 원래 화면의 버튼 연결을 그대로
+    for (const f of F.flows || []) for (const st of f.steps || []) if (from.includes(st.from) && st.trigger && files[st.to] && !links[st.trigger]) links[st.trigger] = { href: files[st.to], action: st.action || "" };
     // 갈래(흐름 밖의 버튼이 여는 화면·창)도 같은 방식으로
-    for (const b of F.branches || []) if (b.from === slug && b.trigger && files[b.to] && !links[b.trigger]) links[b.trigger] = { href: files[b.to], action: b.action || "" };
+    for (const b of F.branches || []) if (from.includes(b.from) && b.trigger && files[b.to] && !links[b.trigger]) links[b.trigger] = { href: files[b.to], action: b.action || "" };
     // 되돌아가기(data-back): 뜨는 창이면 뒷 화면으로, 아니면 브라우저 뒤로
     const backHref = s.overlayOf && files[s.overlayOf] ? files[s.overlayOf] : "";
     // 왼쪽 메뉴(roles[].nav)도 실제 화면 페이지로 — 메뉴 글자로 찾는다
@@ -253,21 +259,24 @@ if (mode === "final") {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(s.name)} — ${esc(data.meta.title)}</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+${fontLinkTags([look])}
 <style>
 ${pageCss}
-/* 독립 페이지: 화면이 브라우저 전체를 채운다 */
+${platform === "mobile" ? `/* 독립 페이지(모바일): 휴대폰 크기 화면 한 장을 가운데에 */
+html, body { height: 100%; }
+body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--c-surface-3); }
+.app { width: ${PLATFORM.FRAME.mobile.w}px; height: min(${PLATFORM.FRAME.mobile.h}px, 100vh); border-radius: 28px; overflow: hidden; box-shadow: 0 24px 64px rgba(0, 0, 0, .18); }` : `/* 독립 페이지: 화면이 브라우저 전체를 채운다 */
 html, body { height: 100%; }
 body { margin: 0; background: var(--c-bg); }
-.app { width: 100%; min-width: 1180px; height: 100vh; }
+.app { width: 100%; min-width: 1180px; height: 100vh; }`}
 [data-hx-link] { cursor: pointer; }
 [data-hx-link]:hover, [data-stay]:hover, [data-back]:hover { outline: 2px solid var(--c-focus); outline-offset: 2px; }
 [data-stay], [data-back] { cursor: pointer; }
 .hx-toast { position: fixed; left: 50%; bottom: 72px; transform: translateX(-50%); z-index: 9999; padding: 10px 16px; border-radius: 999px;
-  background: rgba(17, 24, 39, .92); color: #fff; font: 600 14px/1.3 Pretendard, system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+  background: rgba(17, 24, 39, .92); color: #fff; font: 600 14px/1.3 var(--font-sans); box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
 .hx-toast[hidden] { display: none; }
 .hx-page-nav { position: fixed; right: 16px; bottom: 16px; z-index: 9999; display: flex; align-items: center; gap: 8px; padding: 6px 10px;
-  border-radius: 999px; background: rgba(17, 24, 39, .88); color: #fff; font: 600 12px/1 Pretendard, system-ui, sans-serif; box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
+  border-radius: 999px; background: rgba(17, 24, 39, .88); color: #fff; font: 600 12px/1 var(--font-sans); box-shadow: 0 6px 20px rgba(0, 0, 0, .25); }
 .hx-page-nav a, .hx-page-off { display: inline-flex; align-items: center; gap: 4px; color: #fff; text-decoration: none; padding: 4px 6px; border-radius: 999px; }
 .hx-page-nav a:hover { background: rgba(255, 255, 255, .15); }
 .hx-page-off { opacity: .35; }

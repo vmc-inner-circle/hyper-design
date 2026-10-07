@@ -1,0 +1,17 @@
+<!-- pattern: form (모바일) — 아래 화면. 묶음 판마다 입력칸 → 확인할 규정 판 → 아래 꽉 찬 버튼(.form-actions 대신).
+     data-region key는 예시. 입력칸에는 예시 값을 채운다. -->
+<main class="content">
+  <x-section title="예약할 수업" data-region="example-summary">
+    <x-list plain><x-item title="10/20(화) 리포머 중급" sub="20:00~20:50 · 오지훈 강사 · 숨결필라테스 망원"/></x-list>
+  </x-section>
+  <x-section title="사용할 수강권" action="변경" action-stay="다른 수강권을 골랐어요" data-region="example-fields">
+    <p class="eyebrow">숨결 20회권</p>
+    <p class="big-num">예약 가능 5회 <small>→ 4회</small></p>
+    <p class="text-sm text-2">예약 시 차감, 무료 취소 시 복원</p>
+  </x-section>
+  <x-section title="요청 사항" data-region="example-note">
+    <div class="field"><label class="field-label">강사님께 남길 말</label><textarea class="textarea">허리가 조금 불편해요</textarea></div>
+    <label class="checkbox"><input type="checkbox" checked>취소 규정을 확인했어요</label>
+  </x-section>
+  <div class="bottom-cta" data-region="example-submit"><x-btn variant="primary" data-trigger="example-confirm">예약 확정</x-btn></div>
+</main>

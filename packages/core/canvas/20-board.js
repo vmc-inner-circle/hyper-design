@@ -90,7 +90,7 @@
     state.accent = fixSwatch(state.theme, state.accent);
     root.setAttribute("data-theme", state.theme); root.setAttribute("data-type", state.type); root.setAttribute("data-swatch", state.accent); root.removeAttribute("data-accent");
     // 글자 크기가 바뀌면 화면 길이가 달라진다 → 늘린 프레임을 되돌리고 다시 늘린다
-    if (B.view) Object.keys(B.view.frames).forEach(function (k) { B.view.frames[k].resetHeight(); });
+    if (B.view && B.view.resetHeights) B.view.resetHeights();
     HX.relayout(); B.changed();
   };
 

@@ -5,7 +5,7 @@
 .list { display: flex; flex-direction: column; min-width: 0; }
 .list-item {
   display: flex; align-items: center; gap: var(--sp-3);
-  min-height: var(--ctl-lg); padding: var(--sp-3) var(--sp-4);
+  min-height: var(--ctl-lg); padding: var(--pad-row) var(--sp-4);
   border-radius: var(--r-control); color: inherit; text-align: left; width: 100%;
 }
 a.list-item, button.list-item { cursor: pointer; }
@@ -23,7 +23,7 @@ a.list-item:hover, button.list-item:hover { background: var(--c-surface-2); }
 .list-icon.is-success { background: var(--c-success-soft); color: var(--c-success-soft-fg); }
 .list-icon.is-warning { background: var(--c-warning-soft); color: var(--c-warning-soft-fg); }
 .list-icon.is-danger  { background: var(--c-danger-soft);  color: var(--c-danger-soft-fg); }
-.list-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: calc(var(--sp-1) / 2); }
+.list-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-1); }
 .list-title { font-weight: var(--fw-medium); color: var(--c-text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .list-title .badge { margin-left: var(--sp-1); }
 .list-sub { font-size: var(--fs-sm); color: var(--c-text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -50,7 +50,7 @@ a.list-item:hover, button.list-item:hover { background: var(--c-surface-2); }
   background: var(--c-surface); border: var(--border-card); border-radius: var(--r-card);
 }
 .table { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); }
-.table th, .table td { padding: var(--sp-3) var(--sp-4); text-align: left; vertical-align: middle; border-bottom: 1px solid var(--c-border); }
+.table th, .table td { padding: var(--pad-row) var(--sp-4); text-align: left; vertical-align: middle; border-bottom: 1px solid var(--c-border); }
 .table thead th {
   font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--c-text-2);
   background: var(--c-surface-2); white-space: nowrap;

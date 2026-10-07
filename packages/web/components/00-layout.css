@@ -154,17 +154,19 @@
   display: flex;
   align-items: flex-start;
   gap: var(--sp-4);
-  margin-bottom: var(--sp-6);
+  margin-bottom: var(--space-header);
 }
 .page-header > :first-child { flex: 1 1 auto; min-width: 0; }
 .page-title {
+  font-family: var(--font-head);
   font-size: var(--fs-2xl);
-  font-weight: var(--fw-bold);
+  font-weight: var(--fw-head);
   line-height: var(--lh-tight);
+  letter-spacing: var(--ls-head);
   color: var(--c-text);
 }
 .page-desc {
-  margin-top: var(--sp-1);
+  margin-top: var(--sp-2);
   font-size: var(--fs-md);
   color: var(--c-text-2);
 }
@@ -183,21 +185,23 @@
   min-height: var(--ctl-md);
   margin-bottom: var(--sp-4);
 }
-.section { margin-bottom: var(--sp-8); }
+.section { margin-bottom: var(--space-section); }
 .section:last-child { margin-bottom: 0; }
 .section-title {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  font-family: var(--font-head);
   font-size: var(--fs-lg);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-head);
   line-height: var(--lh-tight);
+  letter-spacing: var(--ls-head);
   color: var(--c-text);
 }
 .section-title .btn, .section-title .link { margin-left: auto; }
 .section-desc {
-  margin: calc(var(--sp-2) * -1) 0 var(--sp-3);
+  margin: calc(var(--sp-3) * -1) 0 var(--sp-4);
   font-size: var(--fs-sm);
   color: var(--c-text-2);
 }
@@ -205,7 +209,7 @@
 /* ---- 그리드 ---- */
 .grid-2, .grid-3, .grid-4 {
   display: grid;
-  gap: var(--sp-4);
+  gap: var(--space-block);
   align-items: stretch;
 }
 .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -250,7 +254,7 @@
 .split-detail > .page-header { margin-bottom: var(--sp-4); }
 
 /* ---- 스택 · 로우 ---- */
-.stack { display: flex; flex-direction: column; gap: var(--sp-4); min-width: 0; }
+.stack { display: flex; flex-direction: column; gap: var(--space-block); min-width: 0; }
 .row { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; }
 .row-between { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); min-width: 0; }
 .row.wrap, .row-between.wrap { flex-wrap: wrap; }

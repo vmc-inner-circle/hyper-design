@@ -1,0 +1,26 @@
+<!-- pattern: dashboard (모바일 = 홈 피드) — 탭 화면. 머리줄+큰 제목 → 지금 할 일 판 → 묶음 판 2~3개.
+     <!-- slot: … --> 자리를 채우고 주석은 지운다. data-region key는 예시(example-*) — screens.json의 key로. 셸(아래 탭)은 쓰지 않는다. -->
+<main class="content">
+  <x-page-header eyebrow="다음 수업 · 10월 13일(화)" title="오늘 20:00 리포머 중급"></x-page-header>
+  <!-- slot: 지금 가장 중요한 것 한 장 (배지 · 굵은 이름 · 회색 정보 · 안내 한 줄 · 버튼 하나) -->
+  <x-card data-region="example-next">
+    <div class="row-between align-start">
+      <div class="stack gap-1"><x-badge tone="success">예약함</x-badge><p class="fw-semibold">숨결필라테스 망원</p><p class="text-sm text-2">오지훈 강사 · 20:00~20:50 · 380m</p></div>
+      <x-icon name="chevron-right" size="sm" tone="muted"/>
+    </div>
+    <p class="text-sm text-2">19:30부터 여기서 출석할 수 있어요</p>
+    <x-btn variant="soft" data-stay="출석했어요">출석하기</x-btn>
+  </x-card>
+  <!-- slot: 묶음 판 (제목 + 오른쪽 글자 링크 + 목록 2~4줄) -->
+  <x-section title="대기 중인 수업" action="내 예약" action-stay="내 예약으로 이동해요" data-region="example-list">
+    <x-list>
+      <x-item title="10/15(목) 20:00 리포머 중급" sub="18:58까지 확정 · 1시간 42분 남음" badge="확정 필요" badge-tone="warning"><x-icon name="chevron-right" size="sm"/></x-item>
+      <x-item title="10/16(금) 20:00 리포머 기초" sub="무료 취소까지 2일 2시간 44분" badge="예약함" badge-tone="success"><x-icon name="chevron-right" size="sm"/></x-item>
+    </x-list>
+  </x-section>
+  <!-- slot: 숫자 둘을 나란히 (필요할 때만) -->
+  <div class="grid-2" data-region="example-stats">
+    <x-card><x-stat label="이번 달 출석" value="8" unit="회"/></x-card>
+    <x-card><x-stat label="남은 횟수" value="3" unit="회"/></x-card>
+  </div>
+</main>

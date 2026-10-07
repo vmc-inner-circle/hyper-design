@@ -10,10 +10,10 @@
   --fs-xs: 13px;
   --fs-sm: 15px;
   --fs-md: 17px;
-  --fs-lg: 19px;
-  --fs-xl: 22px;
-  --fs-2xl: 27px;
-  --fs-3xl: 36px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --fs-3xl: 40px;
 
   --ctl-sm: 36px;
   --ctl-md: 48px;
@@ -22,7 +22,7 @@
   --icon-md: 22px;
   --icon-lg: 28px;
 
-  --topnav-h: 64px;
+  --topnav-h: 68px;
   --sidebar-w: 264px;
 }
 

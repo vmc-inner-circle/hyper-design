@@ -10,7 +10,8 @@
   function roleName(role) { var l = HX.roleLabel(role).replace(/\(.*\)/, ""); return l === "부모" ? "부모님" : l; }
   FINAL.pageOf = function (slug) { return (HX.data.pages || {})[slug] || null; };
 
-  var COLS = 4, GX = 200, GY = 260, SEC = 360, PAD = 200;
+  var MOBILE = HX.platform === "mobile";
+  var COLS = MOBILE ? 8 : 4, GX = MOBILE ? 80 : 200, GY = MOBILE ? 140 : 260, SEC = MOBILE ? 200 : 360, PAD = MOBILE ? 120 : 200;
 
   FINAL.buildAll = function () {
     var pages = HX.data.pages || {};
@@ -44,7 +45,7 @@
         var s = HX.bySlug[slug], n = ord.indexOf(slug) + 1, href = pages[slug];
         var label = HX.el("div", { class: "hx-cv-label" }, [HX.el("span", { class: "hx-cv-n", text: String(n).padStart(2, "0") }), HX.el("b", { text: s.name }),
           s.state && HX.stateLabel ? HX.el("span", { class: "hx-tag hx-state", text: HX.stateLabel(s.state) }) : null]);
-        var box = HX.el("div", { class: "hx-cv-board", dataset: { screen: slug } });
+        var box = HX.el("div", { class: "hx-cv-board", dataset: { screen: slug }, style: "width:" + W + "px" });
         world.appendChild(label); world.appendChild(box);
         var b = { slug: slug, label: label, box: box, frame: null };
         box.addEventListener("click", function () { if (!dragged) focusBoard(b); });

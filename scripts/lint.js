@@ -37,7 +37,7 @@ const S = readJSON(screensPath);
 const F = readJSON(flowPath);
 const projectIcons = exists(iconsPath) ? readJSON(iconsPath) : {};
 const platform = S.platform || "web";
-const pkgDir = path.join(ROOT, "packages", platform);
+const PLATFORM = require("./platform.js");
 
 const sprite = fs.readFileSync(path.join(ROOT, "packages/core/icons/lucide-sprite.svg"), "utf8");
 const spriteIds = new Set([...sprite.matchAll(/<symbol id="([^"]+)"/g)].map((m) => m[1]));
@@ -53,9 +53,8 @@ const collectClasses = (css) => {
   for (const m of css.matchAll(/\.([a-zA-Z_][\w-]*)/g)) knownClasses.add(m[1]);
 };
 collectClasses(fs.readFileSync(path.join(ROOT, "packages/core/tokens/base.css"), "utf8"));
-const compDir = path.join(pkgDir, "components");
-const compFiles = exists(compDir) ? fs.readdirSync(compDir).filter((f) => f.endsWith(".css")) : [];
-if (compFiles.length) for (const f of compFiles) collectClasses(fs.readFileSync(path.join(compDir, f), "utf8"));
+const compFiles = PLATFORM.files(platform, "components", ".css");   // mobile = web + packages/mobile
+if (compFiles.length) for (const f of compFiles) collectClasses(fs.readFileSync(f.path, "utf8"));
 else warn(`packages/${platform}/components/*.css 없음 — 클래스 검사 생략`);
 
 // ---------- 메타 ----------
@@ -154,6 +153,32 @@ const noteId = (id, desc) => {
   ids.set(id, desc);
 };
 
+const STATES = ["first-run", "empty", "input", "error", "success"];
+// 모바일(390×844) — 한 줄짜리 화면에 맞지 않는 부품 금지, 맨 아래 주 버튼·아래에서 올라오는 창 규칙 (packages/mobile/snippets/00-rules.md)
+const MOBILE_BAN = /^(split|split-list|split-detail|table|table-wrap|week-grid|wg-[a-z-]+|sidebar|topnav|grid-3|grid-4|drawer|form-actions)$/;
+function mobileChecks(desc, s, html) {
+  const cls = [...html.matchAll(/class\s*=\s*["']([^"']+)["']/g)].flatMap((m) => m[1].split(/\s+/));
+  const banned = [...new Set(cls.filter((c) => MOBILE_BAN.test(c)))];
+  if (banned.length) fail(`${desc}: 모바일 화면에 쓰지 않는 부품 ${banned.map((c) => `'${c}'`).join(", ")} — 한 줄 카드·목록으로 (packages/mobile/snippets/00-rules.md)`);
+  const ctas = (html.match(/class=["'][^"']*\bbottom-cta\b/g) || []).length;
+  if (ctas > 1) warn(`${desc}: 맨 아래 주 버튼 묶음(.bottom-cta)이 ${ctas}개 — 하나만`);
+  else if (ctas === 1 && !/<div class=["'][^"']*\bbottom-cta\b[^]*?<\/div>\s*<\/main>/.test(html)) warn(`${desc}: .bottom-cta는 main.content의 마지막에`);
+  if (!s.overlayOf) {
+    const app = /<div\s+class=["']([^"']*\bapp\b[^"']*)["']/.exec(html);
+    if (app && !/\bapp-mobile\b/.test(app[1])) warn(`${desc}: .app에 app-mobile 없음 — node scripts/expand.js --reshell`);
+    const outside = html.replace(/<div class=["'][^"']*\b(bottom-cta|modal)\b[^]*?<\/div>/g, "");
+    if (/class=["'][^"']*\bbtn-primary\b/.test(outside)) warn(`${desc}: 주 버튼(btn-primary)은 맨 아래 .bottom-cta 안에`);
+  } else if (!/^<div\s+class=["'][^"']*\bsheet-backdrop\b/.test(html.trim())) warn(`${desc}: 모바일 뜨는 창은 아래에서 올라오는 창(sheet-backdrop) — <x-modal>로 쓰면 expand가 바꿔 준다`);
+  if (/<section class=["'][^"']*\bsection\b[^>]*>(?:(?!<\/section>)[^])*class=["'][^"']*\bcard\b/.test(html)) warn(`${desc}: 모바일 묶음(.section)은 그 자체가 흰 카드 — 안에 .card를 겹치지 않는다`);
+}
+// 조건 이름표(when): 구역 보드는 화면을 순서대로 나란히 놓고, 조건이 갈리는 곳에만 화살표 + 이 이름표를 단다
+function checkWhen(x, d) {
+  if (x.when === undefined) return;
+  if (typeof x.when !== "string" || !x.when.trim()) fail(`${d}: when은 조건 한 마디 (예: "처음 가입이면")`);
+  else if (x.when.length > 16) warn(`${d}: 조건 이름표 "${x.when}" — 16자 이내로`);
+}
+// 사용자는 컴포넌트를 모른다 — 보이는 이름·정책 메모에 컴포넌트 용어 금지
+const JARGON = /카드|띠|배너|스트립|패널|서랍|드로어|모달|바텀시트|탭|칩|배지|세그먼트|토글|스위치|리스트|타임라인|섹션|영역|위젯|컴포넌트|CTA|랜딩/;
 for (const s of S.screens || []) {
   const desc = `화면 ${s.slug || "(slug 없음)"}`;
   if (!s.slug || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(s.slug)) fail(`${desc}: slug는 케밥케이스 영문이어야 함`);
@@ -162,7 +187,8 @@ for (const s of S.screens || []) {
   if (!s.name) fail(`${desc}: name 없음`);
   if (!s.file) fail(`${desc}: file 없음`);
   if (s.role && roleKeys.size && !roleKeys.has(s.role)) fail(`${desc}: role '${s.role}'이 roles에 없음`);
-  if (s.state && !["first-run", "empty", "input"].includes(s.state)) fail(`${desc}: state는 first-run|empty|input 중 하나`);
+  if (s.state && !STATES.includes(s.state)) fail(`${desc}: state는 ${STATES.join("|")} 중 하나`);
+  if ((s.state === "error" || s.state === "success") && !s.variantOf) fail(`${desc}: ${s.state === "error" ? "오류" : "완료"} 상태 화면은 원래 화면을 variantOf로 가리킨다 (구역 보드에서 원래 화면 옆에 놓인다)`);
   noteId(s.id, desc);
   if (Number.isInteger(s.id) && s.id > 100) warn(`${desc}: 화면 번호 ${s.id} — 화면은 1, 2, 3…으로 (node scripts/ids.js가 발급)`);
 
@@ -177,7 +203,7 @@ for (const s of S.screens || []) {
     keys.add(r.key);
     if (!r.label) fail(`${rd}: label 없음 (보드에 보이는 한글 이름)`);
     // 사용자는 컴포넌트를 모른다 — 번호를 누르면 보이는 이름에 컴포넌트 용어 금지
-    const jargon = (r.label || "").match(/카드|띠|배너|스트립|패널|서랍|드로어|모달|탭|칩|배지|세그먼트|토글|스위치|리스트|타임라인|섹션|영역|위젯|컴포넌트/);
+    const jargon = (r.label || "").match(JARGON);
     if (jargon) warn(`${rd}: label에 컴포넌트 용어 '${jargon[0]}' — '무엇이 보이는/하는 곳'으로 (예: "날짜 고르기")`);
     if (!r.why) warn(`${rd}: why 없음 — 번호를 누르면 보이는 "이게 뭐냐면" 한 문장`);
     noteId(r.id, `영역 ${rd}`);
@@ -232,6 +258,7 @@ for (const s of S.screens || []) {
   }
 
   // 알려지지 않은 클래스 (경고)
+  if (platform === "mobile") mobileChecks(desc, s, html);
   if (knownClasses.size) {
     const unknown = new Set();
     for (const m of html.matchAll(/class\s*=\s*["']([^"']+)["']/g)) {
@@ -282,6 +309,7 @@ for (const f of F.flows || []) {
       else if (!keys.has(st.region)) fail(`${sd}: region '${st.region}'이 '${st.from}' 화면 영역에 없음`);
     }
     if (!st.action) fail(`${sd}: action 문장 없음 ("'…'을 누르면")`);
+    checkWhen(st, sd);
     // trigger: 화살표가 출발하는 실제 버튼/항목. 조각에 data-trigger="<key>"가 있어야 한다
     if (!st.trigger) warn(`${sd}: trigger 없음 — 화살표가 영역 덩어리에서 출발한다. 누르는 요소에 data-trigger를 붙이고 step.trigger로 지정`);
     else if (triggersBySlug.has(st.from)) {   // 조각을 아직 안 썼으면(1.2 단계) 건너뛴다
@@ -310,6 +338,54 @@ for (const s of slugs.values()) {
   if (n > 6) warn(`뜨는 창 화면 ${n}개 — 6개 이하로 (핵심 작업에 닿는 창만 화면으로, 나머지는 data-stay)`);
 }
 
+// ---------- 구역 보드: 구역(sections) · 단계 이름표(step) · 정책 메모(policy) — references/prd-to-screens.md §8 ----------
+{
+  const SEC = Array.isArray(S.sections) ? S.sections : [];
+  if (!SEC.length) fail(`sections 없음 — 사용 흐름(구역 보드)을 그릴 큰 구역 2~6개 (예: [{ "key": "start", "name": "가입·처음 시작" }, { "key": "home", "name": "홈" }])`);
+  else if (SEC.length > 7) warn(`구역 ${SEC.length}개 — 2~6개로 크게 묶는다(온보딩·홈·예약처럼)`);
+  const secKeys = new Set();
+  for (const x of SEC) {
+    if (!x.key || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.key)) fail(`구역 '${x.name || "?"}': key는 케밥케이스 영문`);
+    if (secKeys.has(x.key)) fail(`구역 key 중복: ${x.key}`); secKeys.add(x.key);
+    if (!x.name) fail(`구역 '${x.key}': name 없음`); else if (x.name.length > 12) warn(`구역 '${x.name}': 12자 이내로`);
+  }
+  const used = new Set(), lastStep = new Map();   // 같은 단계 이름표는 한 구역 안에서 붙어 있어야 한다
+  for (const s of S.screens || []) {
+    const desc = `화면 ${s.slug}`;
+    if (!s.section) fail(`${desc}: section 없음 — 어느 구역에 놓일지`);
+    else if (SEC.length && !secKeys.has(s.section)) fail(`${desc}: section '${s.section}'이 sections에 없음`);
+    used.add(s.section);
+    if (!s.step) fail(`${desc}: step 없음 — 화면 위 단계 이름표 (예: "약관 동의", "닉네임 입력"). 상태만 다른 화면은 원래 화면과 같은 이름표`);
+    else {
+      if (s.step.length > 14) warn(`${desc}: 단계 이름표 "${s.step}" — 14자 이내로`);
+      const k = s.section + "|" + s.step, prev = lastStep.get(s.section);
+      if (prev && prev !== k && [...lastStep.values()].includes(k)) warn(`${desc}: 단계 '${s.step}' 화면들이 떨어져 있음 — screens.json에서 같은 단계 화면을 붙여 둔다`);
+      lastStep.set(s.section, k);
+    }
+    // 정책 메모: 화면 아래 검은 상자. 상태만 다른 화면(variantOf)은 선택
+    const P = s.policy;
+    if (P === undefined || (Array.isArray(P) && !P.length)) { if (!s.variantOf) fail(`${desc}: policy 없음 — 이 화면의 규칙(처음 상태·제한·예외·표기)을 [{ "title": "기본 정의", "items": ["…"] }]로`); continue; }
+    if (!Array.isArray(P)) { fail(`${desc}: policy는 [{ title, items[] }] 배열`); continue; }
+    if (P.length > 4) warn(`${desc}: 정책 묶음 ${P.length}개 — 4개 이하로`);
+    for (const b of P) {
+      if (!b || !b.title || !Array.isArray(b.items) || !b.items.length) { fail(`${desc}: policy 묶음 형식 { "title": "…", "items": ["…"] }`); continue; }
+      if (b.items.length > 6) warn(`${desc}: 정책 '${b.title}' 줄 ${b.items.length}개 — 6줄 이하로`);
+      for (const it of b.items) {
+        if (typeof it !== "string" || !it.trim()) { fail(`${desc}: 정책 '${b.title}'에 빈 줄`); continue; }
+        if (it.length > 70) warn(`${desc}: 정책 줄이 김(${it.length}자) — 한 줄에 규칙 하나, 70자 이내 "${it.slice(0, 24)}…"`);
+        const j = it.match(JARGON); if (j) warn(`${desc}: 정책 줄에 컴포넌트 용어 '${j[0]}' — 일상어로 ("바텀시트" → "아래에서 올라오는 창")`);
+      }
+    }
+  }
+  for (const x of SEC) if (!used.has(x.key)) warn(`구역 '${x.name}': 화면이 하나도 없음`);
+  // 오류·완료 상태: 사용자가 밟게 될 상태는 반드시 그린다
+  const all = [...slugs.values()];
+  const inputs = all.filter((s) => !s.state && s.pattern === "form" && !s.variantOf);
+  if (inputs.length && !all.some((s) => s.state === "error")) fail(`오류 상태 화면이 없음 — 입력하는 화면(${inputs.slice(0, 3).map((s) => s.slug).join(", ")}…) 중 핵심 하나 이상에 state "error" 변형(variantOf)`);
+  if (!all.some((s) => s.state === "success")) fail(`완료 상태 화면이 없음 — 핵심 작업이 끝났을 때(저장·예약·보내기 완료) state "success" 변형(variantOf) 하나 이상`);
+  for (const s of inputs.filter((x) => !x.overlayOf)) if (!all.some((v) => v.variantOf === s.slug && v.state === "error")) warn(`화면 ${s.slug}: 입력하는 화면인데 오류 상태가 없음 — 틀리기 쉬운 입력이면 state "error" 변형을 더한다`);
+}
+
 // ---------- branches (갈래: 흐름 밖의 버튼이 여는 화면) ----------
 const branchTo = new Map(); // "from|trigger" → to
 const stepTo = new Map();   // "from|trigger" → to
@@ -321,6 +397,7 @@ if (F.branches !== undefined && !Array.isArray(F.branches)) fail(`flow.json bran
   if (!slugs.has(b.to)) fail(`${bd}: to '${b.to}' 화면 없음`);
   if (b.from === b.to) fail(`${bd}: 같은 화면으로 가는 갈래 — 그 자리에서 바뀌는 버튼은 조각에 data-stay`);
   if (!b.action) fail(`${bd}: action 문장 없음 ("'…'을 누르면")`);
+  checkWhen(b, bd);
   const keys = regionKeysBySlug.get(b.from) || new Set();
   if (!b.region) fail(`${bd}: region 없음`); else if (!keys.has(b.region)) fail(`${bd}: region '${b.region}'이 '${b.from}' 화면 영역에 없음`);
   if (!b.trigger) { fail(`${bd}: trigger 없음 — 누르는 버튼에 data-trigger`); return; }
@@ -344,15 +421,17 @@ for (const [slug, btns] of buttonsBySlug) {
   const lost = [], orphan = [];
   // 같은 일을 하는 버튼이 여러 개(목록 행마다 '예약하기')면 트리거는 한 곳에만 — 글자가 같은 트리거 버튼이 있으면 통과(00-rules 3-2)
   const trigTexts = new Set(btns.filter((b) => b.trigger).map((b) => b.text));
+  // 상태만 다른 화면(variantOf)은 원래 화면의 버튼 연결을 그대로 쓴다
+  const from = [slug, (slugs.get(slug) || {}).variantOf].filter(Boolean);
   for (const b of btns) {
-    if (b.trigger) { if (!stepTo.has(slug + "|" + b.trigger) && !branchTo.has(slug + "|" + b.trigger)) orphan.push(b.text); }
+    if (b.trigger) { if (!from.some((f) => stepTo.has(f + "|" + b.trigger) || branchTo.has(f + "|" + b.trigger))) orphan.push(b.text); }
     else if (!b.stay && !b.back && !trigTexts.has(b.text)) lost.push(b.text);
   }
   if (lost.length) fail(`화면 ${slug}: 누르면 어떻게 되는지 없는 버튼 ${lost.map((t) => `'${t}'`).join(", ")} — 다른 화면이면 data-trigger + flow.json branches, 되돌아가면 data-back, 그 자리에서 바뀌면 data-stay="바뀐 뒤 안내 문구"`);
   if (orphan.length) warn(`화면 ${slug}: data-trigger가 있는데 흐름·갈래에 없는 버튼 ${orphan.map((t) => `'${t}'`).join(", ")}`);
 }
 for (const slug of slugs.keys()) {
-  if (!reached.has(slug)) warn(`화면 '${slug}' 은 어떤 플로우에도 등장하지 않음 — 지도에서 고립 노드`);
+  if (!reached.has(slug) && !slugs.get(slug).variantOf) warn(`화면 '${slug}' 은 어떤 플로우에도 등장하지 않음 — 구역 보드에는 놓이지만 어떤 버튼으로 오는지 알 수 없음`);
 }
 
 // ---------- icons.json ----------
@@ -378,7 +457,8 @@ if (S.board) {
 // ---------- 시안(concepts) · 레퍼런스 — references/prd-to-screens.md §7 ----------
 if (S.concepts !== undefined) {
   const C = Array.isArray(S.concepts) ? S.concepts : [];
-  const SHELLS = { sidebar: null, top: "nav-top", rail: "nav-rail" };
+  // 메뉴 구조: web = 왼쪽 메뉴·위쪽 탭·아이콘 메뉴 / mobile = 아래 탭·위쪽 탭·메뉴 없음 (scripts/expand.js)
+  const SHELLS = platform === "mobile" ? { tabbar: null, top: "nav-top", none: "no-nav" } : { sidebar: null, top: "nav-top", rail: "nav-rail" };
   if (C.length !== 5) warn(`시안은 5개 (지금 ${C.length}개)`);
   const lookIds = new Set(require("./looks.js").getLooks(S).map((l) => l.id));
   const cids = new Set();
@@ -389,7 +469,7 @@ if (S.concepts !== undefined) {
     if (!c.name) fail(`${cd}: name 없음 (예: "달력 한 장으로 보기")`);
     else if (/[a-z]{3,}|시안|레이아웃|대시보드형|타입/i.test(c.name)) warn(`${cd}: 이름 "${c.name}" — 무엇이 먼저 보이는지 일상어로 (예: "오늘 할 일부터 보기")`);
     if (!c.why) warn(`${cd}: why 없음 — 이 안이 누구에게 왜 좋은지 한 문장`);
-    if (!(c.shell in SHELLS)) fail(`${cd}: shell은 sidebar|top|rail`);
+    if (!(c.shell in SHELLS)) fail(`${cd}: shell은 ${Object.keys(SHELLS).join("|")}`);
     if (!lookIds.has(c.look)) fail(`${cd}: look '${c.look}'이 looks에 없음`);
     if (!Array.isArray(c.refs) || !c.refs.length) warn(`${cd}: 참고한 곳(refs) 없음 — 레퍼런스에서 무엇을 가져왔는지`);
     for (const r of c.refs || []) if (!r.name || !r.borrow) warn(`${cd}: refs 항목에 name·borrow 필요`);
@@ -401,7 +481,7 @@ if (S.concepts !== undefined) {
   const main = C.find((c) => c.id === S.concept) || C[0];
   if (S.concept && !cids.has(S.concept)) fail(`screens.json concept '${S.concept}'이 concepts에 없음`);
   if (C.length > 1 && new Set(C.map((c) => c.shell)).size < Math.min(3, C.length))
-    warn(`시안끼리 메뉴 구조(shell)가 ${new Set(C.map((c) => c.shell)).size}가지뿐 — sidebar·top·rail을 모두 쓴다`);
+    warn(`시안끼리 메뉴 구조(shell)가 ${new Set(C.map((c) => c.shell)).size}가지뿐 — ${Object.keys(SHELLS).join("·")}을 모두 쓴다`);
   const combo = new Set(C.map((c) => c.shell + "|" + c.look));
   if (combo.size < C.length) warn(`메뉴 구조와 분위기가 똑같은 시안이 있음 — 첫 화면 구성·밀도까지 다르게`);
   const names = C.map((c) => c.home || "").filter(Boolean);
@@ -450,5 +530,5 @@ for (const w of warns) console.log(`[WARN] ${w}`);
 for (const f of fails) console.log(`[FAIL] ${f}`);
 const nScreens = (S.screens || []).length;
 const nRegions = (S.screens || []).reduce((n, s) => n + (s.regions || []).length, 0);
-console.log(`[lint] 화면 ${nScreens} · 영역 ${nRegions} · 플로우 ${(F.flows || []).length} · 갈래 ${(F.branches || []).length} · FAIL ${fails.length} · WARN ${warns.length}`);
+console.log(`[lint] 화면 ${nScreens} · 영역 ${nRegions} · 구역 ${(S.sections || []).length} · 플로우 ${(F.flows || []).length} · 갈래 ${(F.branches || []).length} · FAIL ${fails.length} · WARN ${warns.length}`);
 process.exit(fails.length || (strict && warns.length) ? 1 : 0);

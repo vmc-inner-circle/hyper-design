@@ -3,26 +3,34 @@
    컴포넌트 CSS는 여기 변수만 참조한다. 색·간격·반경·그림자 하드코딩 금지. */
 
 :root {
-  /* ---- 타이포 ---- */
+  /* ---- 타이포 ----
+     글꼴·굵기·자간·줄간격은 분위기(look)의 글꼴 세트가 덮어쓴다(scripts/looks.js FONTS).
+     강약: 제목은 크고 굵게(--fw-head), 본문은 보통(--fw-body), 보조 글자는 작고 흐리게(--c-text-2·muted). */
   --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-head: var(--font-sans);
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 
   --fs-xs: 12px;
   --fs-sm: 13px;
   --fs-md: 15px;   /* 본문 */
-  --fs-lg: 17px;
-  --fs-xl: 20px;
-  --fs-2xl: 24px;
-  --fs-3xl: 32px;
+  --fs-lg: 18px;   /* 묶음 제목 */
+  --fs-xl: 21px;
+  --fs-2xl: 28px;  /* 화면 제목 */
+  --fs-3xl: 36px;
 
-  --lh-tight: 1.25;
-  --lh-normal: 1.5;
-  --lh-loose: 1.7;
+  --lh-tight: 1.35;   /* 제목 */
+  --lh-normal: 1.55;  /* 본문 */
+  --lh-loose: 1.75;
 
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
   --fw-bold: 700;
+  --fw-body: var(--fw-regular);
+  --fw-head: var(--fw-bold);
+
+  --ls-head: -0.02em;   /* 한글 제목은 살짝 좁혀야 단단해 보인다 */
+  --ls-body: -0.01em;
 
   /* ---- 간격 (4px 그리드) ---- */
   --sp-1: 4px;
@@ -55,13 +63,20 @@
   /* ---- 레이아웃 (web) ---- */
   --frame-w: 1280px;
   --frame-h: 800px;
-  --topnav-h: 56px;
+  --topnav-h: 60px;
   --sidebar-w: 240px;
   --content-max: 960px;
-  --gutter: var(--sp-6);
   --split-list-w: 360px;
   --search-w: 320px;
   --ring-w: 3px;
+
+  /* ---- 여백 리듬 — 묶음 사이는 넉넉하게, 묶음 안은 촘촘하게 (다닥다닥 붙지 않게) ---- */
+  --gutter: var(--sp-8);          /* 화면 가장자리 */
+  --space-section: var(--sp-12);  /* 묶음(.section) 사이 */
+  --space-header: var(--sp-8);    /* 화면 제목 아래 */
+  --space-block: var(--sp-5);     /* 묶음 안 덩어리 사이(.stack · 그리드) */
+  --pad-card: var(--sp-6);        /* 카드 안쪽 */
+  --pad-row: var(--sp-4);         /* 목록 한 줄 위아래 */
 
   /* ---- 그림자 ---- */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
@@ -97,7 +112,9 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   font-size: var(--fs-md);
+  font-weight: var(--fw-body);
   line-height: var(--lh-normal);
+  letter-spacing: var(--ls-body);
   color: var(--c-text);
   background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
@@ -105,6 +122,7 @@ body {
   overflow-wrap: anywhere;     /* 아주 긴 영문·숫자만 필요할 때 끊는다 */
 }
 h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: var(--ls-head); }
 ul, ol { padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { background: none; border: 0; padding: 0; cursor: pointer; }

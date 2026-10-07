@@ -1,0 +1,77 @@
+/* mobile/00-mobile-tokens — 모바일(390×844) 토큰. web 컴포넌트 뒤에 읽혀 같은 이름의 토큰을 덮어쓴다(scripts/platform.js).
+   여기서만 px 값을 정한다. 아래 mobile 컴포넌트는 이 변수만 참조한다(색·간격·반경 하드코딩 금지 · 1px 테두리 · 0 · % 허용).
+   기준: 디자이너가 만든 모바일 예약 앱 — 연회색 바탕 위 흰 카드(테두리·그림자 없음), 가장자리 20px,
+   작은 회색 머리줄 + 크고 굵은 제목, 본문 15 · 보조 13 · 탭 글자 11. */
+
+:root {
+  /* ---- 프레임 ---- */
+  --frame-w: 390px;
+  --frame-h: 844px;
+
+  /* ---- 글자 크기 (390 폭에 맞춘 단계) ---- */
+  --fs-xs: 11px;   /* 탭 글자 · 작은 배지 */
+  --fs-sm: 13px;   /* 보조 글자 · 머리줄(eyebrow) */
+  --fs-md: 15px;   /* 본문 */
+  --fs-lg: 17px;   /* 묶음 제목 */
+  --fs-xl: 20px;
+  --fs-2xl: 24px;  /* 화면 제목 */
+  --fs-3xl: 28px;  /* 큰 숫자 */
+
+  /* ---- 컨트롤 (손가락으로 누르는 크기) ---- */
+  --ctl-sm: 36px;
+  --ctl-md: 44px;
+  --ctl-lg: 52px;  /* 아래 꽉 찬 버튼 */
+
+  /* ---- 반경 ---- */
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;    /* 아래에서 올라오는 창 위쪽 모서리 */
+
+  /* ---- 여백 리듬 — 카드 사이 12, 카드 안 20, 가장자리 20 ---- */
+  --gutter: var(--sp-5);
+  --space-section: var(--sp-3);   /* 카드(묶음) 사이 */
+  --space-header: var(--sp-6);    /* 화면 제목 아래 */
+  --space-block: var(--sp-3);     /* 묶음 안 덩어리 사이 */
+  --pad-card: var(--sp-5);        /* 카드 안쪽 */
+  --pad-row: var(--sp-3);         /* 목록 한 줄 위아래 */
+
+  /* ---- 모바일 골격 ---- */
+  --appbar-h: 52px;    /* 위 제목 줄(뒤로 · 가운데 제목) */
+  --tabbar-h: 64px;    /* 아래 탭(아이콘 + 글자) */
+  --sheet-max-h: 86%;  /* 아래에서 올라오는 창 최대 높이 */
+  --handle-w: 36px;    /* 창 손잡이 막대 */
+  --handle-h: 4px;
+
+}
+
+/* 글자 크게(data-type="large") — 모바일 단계에서 한 칸씩 키운다 (toggles.css보다 뒤에 읽혀 덮어쓴다) */
+[data-type="large"] {
+  --fs-xs: 12px;
+  --fs-sm: 15px;
+  --fs-md: 17px;
+  --fs-lg: 19px;
+  --fs-xl: 22px;
+  --fs-2xl: 27px;
+  --fs-3xl: 32px;
+
+  --ctl-sm: 40px;
+  --ctl-md: 48px;
+  --ctl-lg: 56px;
+  --icon-sm: 18px;
+  --icon-md: 22px;
+  --icon-lg: 26px;
+
+  --appbar-h: 56px;
+  --tabbar-h: 70px;
+}
+
+/* 모바일 화면 안에서는 카드에 테두리·그림자를 두지 않는다 — 회색 바탕과 흰 카드의 차이만으로 나눈다.
+   (분위기의 --border-card · --shadow-card는 html에 걸리므로 .app-mobile에서 다시 정하면 그 안에서만 바뀐다) */
+.app-mobile {
+  --border-card: 1px solid transparent;
+  --shadow-card: none;
+  /* 바탕 · 카드 색 (분위기 색에서 계산 — 밝은 분위기든 어두운 분위기든 카드가 바탕보다 한 단계 떠 보이게).
+     .app-mobile에서 계산해야 분위기를 바꿔 끼운 곳(data-theme)의 색을 따른다 */
+  --m-page-bg: color-mix(in srgb, var(--c-bg) 95%, var(--c-text));
+  --m-card-bg: var(--c-surface);
+}

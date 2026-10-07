@@ -30,6 +30,9 @@
 15. 달력 격자는 손으로 쓰지 않는다. 메인이 `node scripts/calendar.js`로 만들어 준 `runs/<p>/snippets/calendar-*.html`을 그대로 붙인다. 없으면 `.day-strip`이나 `.timeline`으로 대신한다.
 16. `.day-strip`은 행사 기간 앞뒤로 며칠을 채워 7일 이상으로 만들고, 기간 밖은 `.is-muted`.
 17. **처음 켰을 때·데이터 없을 때 화면**(`screens.json`의 `state`가 `first-run`·`empty`): 숫자 카드·목록을 채우지 않는다. 가운데에 `.empty` 조각(아이콘 · "아직 ○○이 없어요" · 무엇부터 하면 되는지 한 줄 · primary 버튼 하나). 보기만 하는 역할의 빈 화면은 버튼 없이 "정해지면 알려 드릴게요"처럼 안심시키는 문장. `state: input`(등록 화면)은 입력칸에 예시 값을 채운다.
+17-1. **오류·완료 상태 화면**(`state`가 `error`·`success`, `variantOf`가 원래 화면): 원래 화면과 **배치·문구·영역·버튼을 그대로** 두고 상태만 바꾼다(구역 보드에서 나란히 비교된다).
+   - `error`: 잘못된 입력칸의 `.field`에 `is-error` + 그 칸 아래 `<p class="field-error"><svg class="icon-sm" aria-hidden="true"><use href="#i-circle-alert"/></svg>고치는 방법 한 문장</p>`("2자 이상 적어 주세요"처럼 무엇을 어떻게). 입력칸이 아닌 오류(겹침·마감)는 맨 위 `.banner.banner-danger` 한 줄. 입력값도 틀린 값으로 바꿔 둔다.
+   - `success`: 맨 위(제목 아래) `.banner.banner-success` 한 줄 — 무엇이 끝났고 다음에 무엇을 하면 되는지. 방금 끝난 항목에 성공 배지.
 18-1. 할 일·체크리스트처럼 **보고 체크하는 목록**은 체크박스(input) 대신 아이콘으로: 한 것 `<svg class="icon text-success"><use href="#i-square-check"/></svg>` + 흐린 글자, 안 한 것 `<svg class="icon text-muted"><use href="#i-square"/></svg>`. 여러 열을 나란히 두는 화면은 **열 머리 구조를 모두 같게**(아바타 · 이름 truncate · spacer · 배지), 머리에 버튼을 넣지 않는다(열 위 도구줄로).
 18. 화면 안 문구도 `.claude/skills/design-harness/references/ux-writing.md`를 따른다: 높여 부를 사람은 "님"(예: 부모님·고객님), 버튼 문구는 flow의 `action` 따옴표 안 말과 글자까지 같게.
 

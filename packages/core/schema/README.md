@@ -29,14 +29,18 @@
     "focus": []
   },
   "nextScreenId": 1, "nextRegionId": 101,
+  "sections": [ { "key": "start", "name": "처음 시작" }, { "key": "home", "name": "홈" } ],
   "screens": [
     {
       "slug": "home",
       "name": "홈",
       "role": "owner",
+      "section": "home",
+      "step": "오늘 보기",
       "purpose": "오늘 할 일과 최근 변경을 한눈에 본다",
       "pattern": "dashboard",
       "file": "screens/home.html",
+      "policy": [ { "title": "기본 정의", "items": ["오늘 할 일을 마감이 가까운 순으로", "변경은 최근 7일 것만"] } ],
       "regions": [
         { "key": "summary", "label": "오늘 요약", "why": "§2-1 큰 흐름 파악" },
         { "key": "recent",  "label": "최근 변경 목록" },
@@ -49,6 +53,8 @@
 
 - `id`는 적지 않아도 된다 → `node scripts/ids.js runs/<p>`가 채운다. 화면은 1부터(screens.json 순서), 항목은 101부터 따로. 한 번 발급된 번호는 바뀌지 않는다.
 - `roles[].user`(선택): `{ "name": "김지영", "initials": "김지" }` — 셸 오른쪽 위·사이드바 아래 사용자 표시. `brand`·`brandIcon`(선택): 상단바 서비스 이름·아이콘(없으면 `title`·layout-dashboard). 셸은 `scripts/expand.js`가 붙인다. 화면마다 `shell: "none"`(메뉴 없는 한 장)·`navActive: "<nav slug>"`(메뉴에 없는 화면에서 켤 항목)로 바꿀 수 있다.
+- `sections`·`section`·`step`·`policy`(필수): 사용 흐름 = 구역 보드. 큰 구역 → 단계 이름표 → 화면 나란히, 화면 아래 정책 메모(상태 변형은 policy 선택). 규칙은 `references/prd-to-screens.md` §5-2.
+- `state`(선택): `first-run` · `empty` · `input` · `error` · `success`. 오류·완료는 `variantOf`(원래 화면) 필수 — 원래 화면 옆에 놓인다. 입력 화면이 있으면 오류 1개 이상, 완료 1개 이상(lint).
 - `overlayOf`(선택): 뜨는 창 화면 — 조각에는 `.modal-backdrop`만, 뒷 화면은 build가 합친다. 이름은 '~ 창'.
 - `board.locked`: 2라운드부터 `["theme","toggles","ask"]`. `board.focus`: 지난 라운드에 고친 화면 slug — 보드 맨 위에 먼저 나온다.
 
@@ -73,6 +79,7 @@
 }
 ```
 
+- `when`(선택, step·branch): 조건 이름표("처음 가입이면"). 구역 보드는 `when`이 있는 연결에만 화살표를 그린다 — 조건이 갈리는 곳에만.
 - `branches`(갈래): 흐름 밖의 버튼이 여는 화면·창. 형식은 step과 같다. 글자가 있는 `.btn`은 `data-trigger`(흐름·갈래) · `data-back` · `data-stay="안내 문구"` 중 하나를 반드시 가진다.
 
 조각에서는 누르는 요소에 `data-trigger`: `<button class="btn btn-primary" data-trigger="create">새로 만들기</button>` (그 step의 region 안).
