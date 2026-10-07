@@ -1,0 +1,1784 @@
+{
+  "project": "snoring",
+  "title": "드르렁",
+  "brand": "드르렁",
+  "brandIcon": "moon-star",
+  "platform": "mobile",
+  "round": 2,
+  "theme": "dawn",
+  "toggles": {
+    "type": "normal",
+    "swatch": "navy"
+  },
+  "looks": [
+    {
+      "id": "dawn",
+      "name": "새벽 안개",
+      "why": "아침에 슬쩍 봐도 눈이 편한 차분한 초록빛 회색이에요",
+      "mode": "light",
+      "bg": "#F3F5F4",
+      "ink": "#1E2422",
+      "shape": "round",
+      "font": "pretendard",
+      "swatches": [
+        {
+          "id": "navy",
+          "name": "남색",
+          "hex": "#2F4A8A"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#137C83"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#2B2F2E"
+        },
+        {
+          "id": "forest",
+          "name": "숲 초록",
+          "hex": "#1F7A5C"
+        },
+        {
+          "id": "olive",
+          "name": "올리브",
+          "hex": "#6B7F1F"
+        }
+      ]
+    },
+    {
+      "id": "night",
+      "name": "깊은 밤",
+      "why": "밤에 켜도 눈부시지 않은 어두운 남색이에요",
+      "mode": "dark",
+      "bg": "#0E1220",
+      "ink": "#E8EAF2",
+      "shape": "soft",
+      "font": "suit",
+      "swatches": [
+        {
+          "id": "moon",
+          "name": "달빛 노랑",
+          "hex": "#F2C94C"
+        },
+        {
+          "id": "lavender",
+          "name": "라벤더",
+          "hex": "#A89CF7"
+        },
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#6FB7F2"
+        },
+        {
+          "id": "mint",
+          "name": "민트",
+          "hex": "#5ED3B0"
+        },
+        {
+          "id": "white",
+          "name": "흰색",
+          "hex": "#E6E8EF"
+        }
+      ]
+    },
+    {
+      "id": "paper",
+      "name": "따뜻한 종이",
+      "why": "가족과 함께 보는 포근한 느낌이에요",
+      "mode": "light",
+      "bg": "#F8F5EF",
+      "ink": "#2A241C",
+      "shape": "soft",
+      "font": "nanum-square-round",
+      "swatches": [
+        {
+          "id": "terracotta",
+          "name": "테라코타",
+          "hex": "#C4532F"
+        },
+        {
+          "id": "cocoa",
+          "name": "코코아",
+          "hex": "#6B4A36"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#1E7F78"
+        },
+        {
+          "id": "olive",
+          "name": "올리브",
+          "hex": "#5D7A28"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#2F2A24"
+        }
+      ]
+    },
+    {
+      "id": "lilac",
+      "name": "라벤더 새벽",
+      "why": "잠과 꿈을 떠올리게 하는 부드러운 보랏빛이에요",
+      "mode": "light",
+      "bg": "#F5F3FA",
+      "ink": "#221F2E",
+      "shape": "round",
+      "font": "serif-title",
+      "swatches": [
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#6A55C8"
+        },
+        {
+          "id": "indigo",
+          "name": "남색",
+          "hex": "#34408F"
+        },
+        {
+          "id": "rose",
+          "name": "장미",
+          "hex": "#B34A6B"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#1E7A80"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#2A2733"
+        }
+      ]
+    },
+    {
+      "id": "clinic",
+      "name": "진료실 흰색",
+      "why": "병원 기록처럼 믿음이 가는 깨끗한 흰색이에요",
+      "mode": "light",
+      "bg": "#F6F8FA",
+      "ink": "#172230",
+      "shape": "sharp",
+      "font": "ibm-plex",
+      "swatches": [
+        {
+          "id": "blue",
+          "name": "병원 파랑",
+          "hex": "#2C64C8"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#157A8A"
+        },
+        {
+          "id": "indigo",
+          "name": "남색",
+          "hex": "#253E7A"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#2E7D4F"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#20262E"
+        }
+      ]
+    }
+  ],
+  "roles": [
+    {
+      "key": "sleeper",
+      "label": "나(코 고는 사람)",
+      "user": {
+        "name": "김도윤",
+        "initials": "도윤"
+      },
+      "nav": [
+        {
+          "slug": "home",
+          "label": "오늘",
+          "icon": "sun"
+        },
+        {
+          "slug": "trend",
+          "label": "기록",
+          "icon": "chart-line"
+        },
+        {
+          "slug": "my",
+          "label": "나",
+          "icon": "user"
+        }
+      ]
+    },
+    {
+      "key": "family",
+      "label": "함께 자는 가족",
+      "user": {
+        "name": "박서연",
+        "initials": "서연"
+      },
+      "nav": [
+        {
+          "slug": "family-view",
+          "label": "함께 보기",
+          "icon": "heart"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "key": "start",
+      "name": "처음 시작하기",
+      "desc": "앱을 켜고 첫 측정을 준비해요"
+    },
+    {
+      "key": "night",
+      "name": "밤에 재기",
+      "desc": "자기 전에 측정을 켜고 아침 알람으로 끝내요"
+    },
+    {
+      "key": "morning",
+      "name": "아침에 결과 보기",
+      "desc": "일어나서 지난밤 코골이 결과와 소리를 확인해요"
+    },
+    {
+      "key": "trend",
+      "name": "기록 살펴보기",
+      "desc": "며칠·몇 주 기록을 보고 병원에 가 볼지 정해요"
+    },
+    {
+      "key": "my",
+      "name": "내 설정",
+      "desc": "녹음 보관과 가족 나누기를 정해요"
+    },
+    {
+      "key": "family",
+      "name": "가족과 함께 보기",
+      "desc": "초대받은 가족이 결과를 같이 봐요"
+    }
+  ],
+  "board": {
+    "recommend": {
+      "theme": "dawn",
+      "themeWhy": "아침 1분 확인에 눈이 편한 차분한 톤이라서",
+      "type": "normal",
+      "typeWhy": "숫자와 판정을 한 화면에 담기 좋은 보통 크기",
+      "swatch": "navy",
+      "swatchWhy": "정상·주의·위험 색(초록·노랑·빨강)과 겹치지 않는 남색"
+    },
+    "ask": [
+      {
+        "id": "stop-measure",
+        "text": "측정은 어떻게 끝낼까요?",
+        "options": [
+          "알람을 끄면 함께 끝내기 (추천)",
+          "직접 끝낼 때만 끝내기"
+        ],
+        "recommended": 0
+      },
+      {
+        "id": "family-sound",
+        "text": "가족에게 소리도 들려줄 수 있게 할까요?",
+        "options": [
+          "요약만 보여주고 소리는 빼기 (추천)",
+          "당사자가 고른 구간은 들려주기"
+        ],
+        "recommended": 0
+      }
+    ],
+    "locked": [
+      "concept",
+      "theme",
+      "type",
+      "swatch",
+      "ask"
+    ],
+    "focus": [
+      "home",
+      "hospital-guide"
+    ],
+    "changes": [
+      {
+        "slug": "home",
+        "said": "판정 아래에 지난주보다 나아졌는지 한 줄",
+        "did": "판정 아래에 \"지난주 평균보다 숨 멈춤 의심이 1번 줄었어요\" 한 줄을 더했어요"
+      },
+      {
+        "slug": "hospital-guide",
+        "said": "위험이 3일 연속일 때도 안내",
+        "did": "규칙: 최근 14일 중 위험 3번 이상 또는 3일 연속이면 안내가 떠요(화면은 그대로)"
+      }
+    ]
+  },
+  "screens": [
+    {
+      "slug": "welcome",
+      "name": "처음 인사",
+      "role": "sleeper",
+      "state": "first-run",
+      "section": "start",
+      "step": "처음 인사",
+      "pattern": "onboarding",
+      "purpose": "앱이 무엇을 해 주는지와 녹음이 휴대폰 안에만 남는다는 약속을 먼저 보여준다",
+      "regions": [
+        {
+          "key": "hero",
+          "label": "앱이 해 주는 일",
+          "why": "자는 동안 코골이를 재서 아침에 괜찮은지 알려줘요",
+          "prd": "§1",
+          "id": 101
+        },
+        {
+          "key": "privacy",
+          "label": "녹음이 어디에 남는지",
+          "why": "녹음은 휴대폰 안에만 남고 언제든 지울 수 있어요",
+          "prd": "§5",
+          "id": 102
+        },
+        {
+          "key": "start",
+          "label": "시작하기",
+          "why": "여기서 측정 준비로 넘어가요",
+          "id": 103
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "처음 한 번만 보여요. 다시 보려면 나 > 앱 안내",
+            "녹음은 이 휴대폰 안에만 저장된다는 문장을 맨 위 판에 고정"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "의료 진단이 아니라는 문장을 화면 맨 아래 회색 한 줄로"
+          ]
+        }
+      ],
+      "file": "screens/welcome.html",
+      "id": 1,
+      "motion": [
+        {
+          "type": "stagger",
+          "note": "앱이 해 주는 일이 하나씩 차례로 나타나요"
+        }
+      ]
+    },
+    {
+      "slug": "mic-setup",
+      "name": "측정 준비",
+      "role": "sleeper",
+      "state": "input",
+      "section": "start",
+      "step": "측정 준비",
+      "pattern": "form",
+      "purpose": "마이크 허용·휴대폰 두는 곳·함께 자는 사람·알람 연결을 한 번에 정한다",
+      "regions": [
+        {
+          "key": "phone-place",
+          "label": "휴대폰 두는 곳",
+          "why": "머리맡 30cm 안, 화면을 아래로 두면 잘 들려요",
+          "id": 104
+        },
+        {
+          "key": "bed-partner",
+          "label": "함께 자는 사람",
+          "why": "같이 자면 다른 사람 소리를 따로 표시해요",
+          "prd": "§3",
+          "id": 105
+        },
+        {
+          "key": "alarm",
+          "label": "알람과 함께 끝내기",
+          "why": "알람을 끄면 측정도 끝나 깜빡해도 기록이 남아요",
+          "prd": "§4-1",
+          "id": 106
+        },
+        {
+          "key": "done",
+          "label": "준비 끝",
+          "why": "마이크 허용을 묻고 첫 화면으로 가요",
+          "id": 107
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "마이크 허용은 '준비 끝'을 누를 때 휴대폰이 한 번 물어요",
+            "함께 자는 사람: '혼자 자요'가 처음 선택",
+            "알람과 함께 끝내기는 처음부터 켜짐"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "마이크를 허용하지 않으면 같은 화면에 빨간 안내가 떠요"
+          ]
+        }
+      ],
+      "file": "screens/mic-setup.html",
+      "id": 2,
+      "cases": [
+        {
+          "when": "마이크를 허용하지 않으면",
+          "show": "마이크가 꺼져 있어 잴 수 없어요 · 설정에서 켜 주세요",
+          "tone": "danger"
+        },
+        {
+          "when": "휴대폰이 무음이면",
+          "show": "알람이 울리지 않을 수 있어요 · 소리를 켜 주세요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "mic-setup-error",
+      "name": "측정 준비 (마이크 꺼짐)",
+      "role": "sleeper",
+      "state": "error",
+      "variantOf": "mic-setup",
+      "section": "start",
+      "step": "측정 준비",
+      "pattern": "form",
+      "purpose": "마이크를 허용하지 않았을 때 어떻게 켜는지 알려준다",
+      "regions": [
+        {
+          "key": "phone-place",
+          "label": "휴대폰 두는 곳",
+          "why": "머리맡 30cm 안",
+          "id": 108
+        },
+        {
+          "key": "bed-partner",
+          "label": "함께 자는 사람",
+          "why": "같이 자면 다른 사람 소리를 따로 표시해요",
+          "id": 109
+        },
+        {
+          "key": "alarm",
+          "label": "알람과 함께 끝내기",
+          "why": "알람을 끄면 측정도 끝나요",
+          "id": 110
+        },
+        {
+          "key": "done",
+          "label": "준비 끝",
+          "why": "마이크를 켠 뒤 다시 눌러요",
+          "id": 111
+        }
+      ],
+      "policy": [
+        {
+          "title": "오류",
+          "items": [
+            "맨 위 빨간 안내 한 줄: 마이크를 켜야 잴 수 있다는 것과 켜는 곳",
+            "'설정 열기'를 누르면 휴대폰 설정의 이 앱 화면으로 이동"
+          ]
+        }
+      ],
+      "file": "screens/mic-setup-error.html",
+      "id": 3,
+      "when": "'준비 끝'을 눌렀는데 마이크를 허용하지 않았을 때"
+    },
+    {
+      "slug": "home-empty",
+      "name": "오늘 (처음)",
+      "role": "sleeper",
+      "state": "first-run",
+      "variantOf": "home",
+      "section": "start",
+      "step": "첫 화면",
+      "pattern": "dashboard",
+      "purpose": "아직 기록이 없을 때 오늘 밤 첫 측정을 시작하게 한다",
+      "regions": [
+        {
+          "key": "empty-start",
+          "label": "오늘 밤 첫 측정",
+          "why": "아직 기록이 없어요. 오늘 밤부터 재 봐요",
+          "id": 112
+        },
+        {
+          "key": "how-it-works",
+          "label": "아침에 보게 될 것",
+          "why": "판정·숫자 세 가지·다시 듣기를 미리 보여줘요",
+          "id": 113
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "기록이 0개일 때만 보여요",
+            "판정 단계(정상·주의·위험)를 예시로 미리 보여주되 숫자는 비워 둠"
+          ]
+        }
+      ],
+      "file": "screens/home-empty.html",
+      "id": 4
+    },
+    {
+      "slug": "night-start",
+      "name": "자기 전",
+      "role": "sleeper",
+      "dark": true,
+      "section": "night",
+      "step": "자기 전",
+      "pattern": "dashboard",
+      "purpose": "졸린 상태에서 버튼 한 번으로 측정을 시작한다",
+      "regions": [
+        {
+          "key": "alarm-time",
+          "label": "내일 알람",
+          "why": "알람을 끄면 측정도 함께 끝나요",
+          "prd": "§4-1",
+          "id": 114
+        },
+        {
+          "key": "tonight",
+          "label": "오늘 밤 상황",
+          "why": "술·피로 같은 상황을 미리 눌러 둘 수 있어요",
+          "prd": "§4-5",
+          "id": 115
+        },
+        {
+          "key": "privacy-note",
+          "label": "녹음 보관",
+          "why": "녹음은 휴대폰 안에만 남아요",
+          "prd": "§5",
+          "id": 116
+        },
+        {
+          "key": "start-measure",
+          "label": "측정 시작",
+          "why": "누르면 화면이 어두워지고 측정이 시작돼요",
+          "id": 117
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "밤에는 어두운 화면으로 자동 전환",
+            "측정 시작은 버튼 하나, 다른 입력은 모두 선택"
+          ]
+        },
+        {
+          "title": "제한",
+          "items": [
+            "배터리 20% 미만이면 충전기를 연결하라는 한 줄을 버튼 위에"
+          ]
+        }
+      ],
+      "file": "screens/night-start.html",
+      "id": 5,
+      "cases": [
+        {
+          "when": "배터리가 20%보다 적으면",
+          "show": "충전기를 연결하면 밤새 끊기지 않아요",
+          "tone": "warning"
+        },
+        {
+          "when": "저장 공간이 500MB보다 적으면",
+          "show": "공간이 부족해요 · 지난 녹음을 지우면 잴 수 있어요",
+          "tone": "danger"
+        }
+      ]
+    },
+    {
+      "slug": "measuring",
+      "name": "측정 중",
+      "role": "sleeper",
+      "dark": true,
+      "section": "night",
+      "step": "측정 중",
+      "pattern": "dashboard",
+      "purpose": "화면을 거의 보지 않는 밤 동안 측정 중임만 조용히 알려준다",
+      "regions": [
+        {
+          "key": "clock",
+          "label": "지금 시각과 측정 시간",
+          "why": "잠깐 깼을 때 몇 시인지만 크게 보여줘요",
+          "id": 118
+        },
+        {
+          "key": "status",
+          "label": "녹음 중 표시",
+          "why": "녹음이 휴대폰 안에서만 되고 있다는 표시예요",
+          "id": 119
+        },
+        {
+          "key": "stop",
+          "label": "측정 끝내기",
+          "why": "실수로 누르지 않게 길게 눌러야 끝나요",
+          "id": 120
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "시계·측정 시간·녹음 중 표시만, 나머지는 숨김",
+            "측정 끝내기는 2초 길게 눌러야 동작"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "알람을 끄면 자동으로 끝나고 측정을 마쳤다는 화면으로",
+            "8시간이 지나면 저절로 끝나요"
+          ]
+        }
+      ],
+      "file": "screens/measuring.html",
+      "id": 6,
+      "motion": [
+        {
+          "type": "dim",
+          "ms": 3000,
+          "note": "3초 뒤 화면이 가장 어두워져요 · 누르면 잠깐 밝아져요"
+        },
+        {
+          "type": "breathe",
+          "target": "status",
+          "note": "녹음 중 표시가 숨 쉬듯 천천히 깜빡여요"
+        },
+        {
+          "type": "hold",
+          "target": "stop",
+          "ms": 2000,
+          "note": "'측정 끝내기'를 2초 길게 누르면 끝나요"
+        }
+      ],
+      "cases": [
+        {
+          "when": "전화가 오거나 다른 앱이 마이크를 쓰면",
+          "show": "잠깐 멈췄다가 끝나면 이어서 재요",
+          "tone": "info"
+        },
+        {
+          "when": "잠든 지 30분도 안 돼 끝내면",
+          "show": "기록이 짧아 판정하지 않았어요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "measure-done",
+      "name": "측정 중 (알람으로 끝남)",
+      "role": "sleeper",
+      "state": "success",
+      "variantOf": "measuring",
+      "dark": true,
+      "section": "night",
+      "step": "측정 중",
+      "pattern": "dashboard",
+      "purpose": "알람을 꺼서 측정이 끝났음을 알리고 결과로 보낸다",
+      "regions": [
+        {
+          "key": "clock",
+          "label": "지금 시각과 측정 시간",
+          "why": "잠든 시간 7시간 10분",
+          "id": 121
+        },
+        {
+          "key": "status",
+          "label": "녹음 중 표시",
+          "why": "측정을 마쳤어요",
+          "id": 122
+        },
+        {
+          "key": "stop",
+          "label": "결과 보기",
+          "why": "아침 결과로 가요",
+          "id": 123
+        }
+      ],
+      "policy": [
+        {
+          "title": "완료 표시",
+          "items": [
+            "알람을 끄면 맨 위에 측정을 마쳤다는 초록 안내",
+            "버튼 글자가 '결과 보기'로 바뀜"
+          ]
+        }
+      ],
+      "file": "screens/measure-done.html",
+      "id": 7,
+      "when": "아침에 알람을 껐을 때"
+    },
+    {
+      "slug": "home",
+      "name": "오늘",
+      "role": "sleeper",
+      "section": "morning",
+      "step": "결과 한눈에",
+      "pattern": "dashboard",
+      "purpose": "아침 1분 안에 어젯밤 코골이가 괜찮은지부터 답한다",
+      "regions": [
+        {
+          "key": "verdict",
+          "label": "어젯밤 판정",
+          "why": "정상·주의·위험 중 어디인지와 그 이유를 쉬운 말로",
+          "prd": "§4-3",
+          "id": 124
+        },
+        {
+          "key": "numbers",
+          "label": "숫자 세 가지",
+          "why": "코 곤 시간 · 가장 큰 소리 · 숨 멈춤 의심 횟수",
+          "prd": "§4-2",
+          "id": 125
+        },
+        {
+          "key": "factors-prompt",
+          "label": "어젯밤 상황",
+          "why": "술·피로처럼 그날 상황을 남기면 나중에 비교돼요",
+          "prd": "§4-5",
+          "id": 126
+        },
+        {
+          "key": "hospital-card",
+          "label": "병원 안내",
+          "why": "위험이 반복될 때만 보여요",
+          "prd": "§4-7",
+          "id": 127
+        }
+      ],
+      "policy": [
+        {
+          "title": "판정 기준",
+          "items": [
+            "정상: 숨 멈춤 의심 시간당 5번 미만",
+            "주의: 시간당 5~14번 또는 큰 소리 코골이가 잠의 30% 넘음",
+            "위험: 시간당 15번 이상",
+            "판정 아래에 지난주 평균과 비교한 한 줄(나아졌는지·나빠졌는지)"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "'의심'·'권해요'처럼 말하고 '진단'·'질환' 같은 확정 표현은 쓰지 않음",
+            "판정 아래 쉬운 이유 한 문장을 꼭 붙임"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "병원 안내 판은 최근 14일 중 위험 3번 이상이거나 3일 연속일 때만 보여요"
+          ]
+        }
+      ],
+      "file": "screens/home.html",
+      "id": 8,
+      "motion": [
+        {
+          "type": "stagger",
+          "note": "아침에 열면 판정부터 차례로 나타나요"
+        },
+        {
+          "type": "countup",
+          "target": "numbers",
+          "note": "숫자 세 가지가 0부터 올라가요"
+        }
+      ],
+      "cases": [
+        {
+          "when": "어젯밤 측정을 안 했으면",
+          "show": "어젯밤 기록이 없어요 · 오늘 밤 다시 재 볼까요?",
+          "tone": "info"
+        },
+        {
+          "when": "다른 사람 소리가 많았으면",
+          "show": "함께 자는 사람 소리가 섞였어요 · 뺀 구간을 확인해 주세요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "factors",
+      "name": "어젯밤 상황 창",
+      "role": "sleeper",
+      "overlayOf": "home",
+      "section": "morning",
+      "step": "그날 상황",
+      "pattern": "form",
+      "purpose": "그날 상황을 눌러서 고르기만 하면 기록되게 한다",
+      "regions": [
+        {
+          "key": "factor-chips",
+          "label": "그날 상황 고르기",
+          "why": "술·피로·운동·자세·코막힘 중 해당하는 것을 눌러요",
+          "prd": "§4-5",
+          "id": 128
+        },
+        {
+          "key": "save",
+          "label": "남기기",
+          "why": "고른 상황이 어젯밤 기록에 붙어요",
+          "id": 129
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "상황은 여러 개 고를 수 있고 처음엔 모두 해제",
+            "자기 전에 고른 것이 있으면 미리 선택돼 있음"
+          ]
+        },
+        {
+          "title": "제한",
+          "items": [
+            "직접 적기는 20자까지"
+          ]
+        }
+      ],
+      "file": "screens/factors.html",
+      "id": 9,
+      "cases": [
+        {
+          "when": "직접 적기가 20자를 넘으면",
+          "show": "20자까지 적을 수 있어요",
+          "tone": "danger"
+        },
+        {
+          "when": "아무것도 고르지 않고 남기면",
+          "show": "상황 없이 남겼어요",
+          "tone": "info"
+        }
+      ]
+    },
+    {
+      "slug": "night-detail",
+      "name": "밤사이 기록",
+      "role": "sleeper",
+      "section": "morning",
+      "step": "밤사이 기록",
+      "pattern": "timeline",
+      "purpose": "코를 언제 얼마나 골았고 숨이 멈춘 의심 구간이 어디인지 시간 흐름으로 보여준다",
+      "regions": [
+        {
+          "key": "graph",
+          "label": "밤사이 그래프",
+          "why": "시간마다 소리 크기와 숨 멈춤 의심 표시",
+          "prd": "§4-2",
+          "id": 130
+        },
+        {
+          "key": "clips",
+          "label": "다시 들을 구간",
+          "why": "크게 골았거나 숨이 멈춘 듯한 구간만 골라 뒀어요",
+          "prd": "§4-4",
+          "id": 131
+        },
+        {
+          "key": "excluded",
+          "label": "뺀 구간",
+          "why": "잡음이나 다른 사람 소리로 뺀 구간",
+          "prd": "§4-4",
+          "id": 132
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "구간은 숨 멈춤 의심 → 큰 소리 순으로 최대 8개",
+            "구간 하나는 30초"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "시각은 '02:14'처럼 24시간제, 소리 크기는 '조용 · 보통 · 큼' 세 단계 글자로"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "뺀 구간은 판정 계산에서 빠지고 되돌릴 수 있어요"
+          ]
+        }
+      ],
+      "file": "screens/night-detail.html",
+      "id": 10
+    },
+    {
+      "slug": "clip-play",
+      "name": "소리 듣기 창",
+      "role": "sleeper",
+      "overlayOf": "night-detail",
+      "section": "morning",
+      "step": "소리 다시 듣기",
+      "pattern": "form",
+      "purpose": "구간 소리를 짧게 듣고 내 소리가 아니면 뺀다",
+      "regions": [
+        {
+          "key": "player",
+          "label": "소리 듣기",
+          "why": "30초 구간을 들어요. 작게 시작해요",
+          "id": 133
+        },
+        {
+          "key": "exclude",
+          "label": "내 소리가 아니에요",
+          "why": "잡음이나 다른 사람 소리면 기록에서 빼요",
+          "prd": "§3",
+          "id": 134
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "소리는 휴대폰 스피커로 작게(볼륨 30%) 시작",
+            "듣는 중에도 다른 구간으로 넘길 수 있어요"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "'내 소리가 아니에요'를 누르면 그 구간은 판정에서 빠지고 뺀 구간으로 옮겨짐"
+          ]
+        }
+      ],
+      "file": "screens/clip-play.html",
+      "id": 11,
+      "motion": [
+        {
+          "type": "play",
+          "target": "player",
+          "ms": 18000,
+          "note": "재생 버튼을 누르면 18초 막대가 차올라요"
+        }
+      ],
+      "cases": [
+        {
+          "when": "녹음을 지운 구간이면",
+          "show": "소리를 지워서 들을 수 없어요 · 판정 기록은 남아 있어요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "trend",
+      "name": "기록",
+      "role": "sleeper",
+      "section": "trend",
+      "step": "기간별 추이",
+      "pattern": "dashboard",
+      "purpose": "일주일·한 달 동안 판정과 코 곤 시간이 어떻게 변하는지 본다",
+      "regions": [
+        {
+          "key": "period",
+          "label": "기간 고르기",
+          "why": "일주일·한 달",
+          "prd": "§4-6",
+          "id": 135
+        },
+        {
+          "key": "risk-days",
+          "label": "날마다 판정",
+          "why": "하루를 한 칸으로 정상·주의·위험 색",
+          "id": 136
+        },
+        {
+          "key": "snore-time",
+          "label": "코 곤 시간",
+          "why": "날마다 몇 분 골았는지",
+          "id": 137
+        },
+        {
+          "key": "factor-summary",
+          "label": "상황별 차이",
+          "why": "술 마신 날·옆으로 잔 날을 비교해요",
+          "prd": "§4-5",
+          "id": 138
+        },
+        {
+          "key": "hospital-hint",
+          "label": "병원 안내",
+          "why": "위험이 잦으면 상담 안내로",
+          "id": 139
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "처음엔 일주일, 기록이 7일 미만이면 '7일 쌓이면 패턴이 보여요'"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "판정 칸은 색과 함께 '정·주·위' 글자도 넣어 색만으로 구분하지 않음"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "측정하지 않은 날은 빈 칸"
+          ]
+        }
+      ],
+      "file": "screens/trend.html",
+      "id": 12,
+      "cases": [
+        {
+          "when": "기록이 7일보다 적으면",
+          "show": "7일 쌓이면 패턴이 보여요 · 지금 3일째예요",
+          "tone": "info"
+        }
+      ]
+    },
+    {
+      "slug": "factor-insight",
+      "name": "상황별로 보기",
+      "role": "sleeper",
+      "section": "trend",
+      "step": "상황과 코골이",
+      "pattern": "list-detail",
+      "purpose": "쌓인 기록으로 어떤 상황이 코골이를 늘리는지 보여준다",
+      "regions": [
+        {
+          "key": "factor-list",
+          "label": "상황별 코골이",
+          "why": "상황이 있던 날과 없던 날의 코 곤 시간 차이",
+          "id": 140
+        },
+        {
+          "key": "tip",
+          "label": "해볼 만한 것",
+          "why": "가장 차이가 큰 상황부터 바꿔 볼 만한 것",
+          "id": 141
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "상황마다 그날이 3번 이상 쌓여야 비교해 보여요",
+            "차이가 큰 순으로"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "'술 마신 날 코 곤 시간 2.1배'처럼 배수로, 의학적 원인처럼 말하지 않음"
+          ]
+        }
+      ],
+      "file": "screens/factor-insight.html",
+      "id": 13,
+      "motion": [
+        {
+          "type": "reorder",
+          "target": "factor-list",
+          "note": "상황을 길게 눌러 끌면 순서를 바꿀 수 있어요"
+        }
+      ]
+    },
+    {
+      "slug": "hospital-guide",
+      "name": "병원 안내",
+      "role": "sleeper",
+      "section": "trend",
+      "step": "병원 안내",
+      "pattern": "dashboard",
+      "purpose": "병원에 가봐야 하는지에 답하고 무엇을 가져가면 되는지 알려준다",
+      "regions": [
+        {
+          "key": "why-now",
+          "label": "상담을 권하는 이유",
+          "why": "최근 14일 판정을 근거로 왜 지금인지",
+          "prd": "§2-3",
+          "id": 142
+        },
+        {
+          "key": "where",
+          "label": "어디로 가면 되는지",
+          "why": "이비인후과나 수면 클리닉",
+          "id": 143
+        },
+        {
+          "key": "what-to-ask",
+          "label": "병원에서 물어볼 것",
+          "why": "정밀 수면 검사가 필요한지 물어봐요",
+          "id": 144
+        },
+        {
+          "key": "export",
+          "label": "의사에게 보여줄 기록",
+          "why": "기간 기록을 한 장으로 만들어요",
+          "prd": "§4-7",
+          "id": 145
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "최근 14일 중 위험 3번 이상 또는 위험이 3일 연속이면 홈과 기록에 안내가 떠요",
+            "안내는 '권해요'까지, 예약을 대신하지 않음"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "맨 위에 이 앱은 의료 진단 도구가 아니라는 한 줄",
+            "'수면무호흡'은 '의심'과 함께만"
+          ]
+        }
+      ],
+      "file": "screens/hospital-guide.html",
+      "id": 14,
+      "motion": [
+        {
+          "type": "countup",
+          "target": "why-now",
+          "note": "위험·주의 횟수가 0부터 올라가요"
+        }
+      ]
+    },
+    {
+      "slug": "report-export",
+      "name": "기록 내보내기",
+      "role": "sleeper",
+      "section": "trend",
+      "step": "기록 내보내기",
+      "pattern": "form",
+      "purpose": "의사에게 보여줄 기간 기록을 한 장으로 만들어 저장·공유한다",
+      "regions": [
+        {
+          "key": "period-pick",
+          "label": "기간",
+          "why": "최근 2주가 기본, 한 달까지",
+          "prd": "§4-7",
+          "id": 146
+        },
+        {
+          "key": "preview",
+          "label": "기록 한 장 미리보기",
+          "why": "판정 추이·숫자·상황이 한 장에",
+          "id": 147
+        },
+        {
+          "key": "include",
+          "label": "넣을 것",
+          "why": "소리 구간을 넣을지 고를 수 있어요",
+          "prd": "§5",
+          "id": 148
+        },
+        {
+          "key": "save",
+          "label": "저장하기",
+          "why": "PDF로 저장하고 공유할 수 있어요",
+          "id": 149
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "기간은 최근 14일이 처음 선택",
+            "소리 구간은 처음엔 빼고 만들어요(넣으면 QR로 30초씩)"
+          ]
+        },
+        {
+          "title": "제한",
+          "items": [
+            "한 장(A4 1쪽)에 들어가게 30일까지"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "맨 아래 '의료 진단 결과가 아닙니다'를 꼭 넣음"
+          ]
+        }
+      ],
+      "file": "screens/report-export.html",
+      "id": 15,
+      "cases": [
+        {
+          "when": "기록이 3일보다 적으면",
+          "show": "3일 넘게 쌓여야 의사에게 보여줄 수 있어요",
+          "tone": "danger"
+        },
+        {
+          "when": "저장에 실패하면",
+          "show": "저장하지 못했어요 · 공간을 확인하고 다시 눌러 주세요",
+          "tone": "danger"
+        }
+      ]
+    },
+    {
+      "slug": "report-done",
+      "name": "기록 내보내기 (저장 완료)",
+      "role": "sleeper",
+      "state": "success",
+      "variantOf": "report-export",
+      "section": "trend",
+      "step": "기록 내보내기",
+      "pattern": "form",
+      "purpose": "기록 한 장을 저장했음을 알리고 공유하게 한다",
+      "regions": [
+        {
+          "key": "period-pick",
+          "label": "기간",
+          "why": "10월 1일~14일",
+          "id": 150
+        },
+        {
+          "key": "preview",
+          "label": "기록 한 장 미리보기",
+          "why": "저장된 한 장",
+          "id": 151
+        },
+        {
+          "key": "include",
+          "label": "넣을 것",
+          "why": "소리 구간 빼고",
+          "id": 152
+        },
+        {
+          "key": "save",
+          "label": "공유하기",
+          "why": "카카오톡·메일로 보내요",
+          "id": 153
+        }
+      ],
+      "policy": [
+        {
+          "title": "완료 표시",
+          "items": [
+            "맨 위 초록 안내: 어디에 저장했는지(파일 앱 > 드르렁)",
+            "버튼이 '공유하기'로 바뀜"
+          ]
+        }
+      ],
+      "file": "screens/report-done.html",
+      "id": 16,
+      "when": "'기록 한 장 저장하기'를 눌러 저장이 끝났을 때"
+    },
+    {
+      "slug": "my",
+      "name": "나",
+      "role": "sleeper",
+      "section": "my",
+      "step": "내 설정",
+      "pattern": "settings",
+      "purpose": "녹음 보관·가족과 나누기·알람 연결을 관리한다",
+      "regions": [
+        {
+          "key": "privacy",
+          "label": "녹음 보관",
+          "why": "휴대폰 안에만, 며칠 남길지",
+          "prd": "§5",
+          "id": 154
+        },
+        {
+          "key": "family",
+          "label": "가족과 나누기",
+          "why": "누구에게 무엇을 보여주는지",
+          "prd": "§4-8",
+          "id": 155
+        },
+        {
+          "key": "alarm-setting",
+          "label": "알람 연결",
+          "why": "알람을 끄면 측정도 끝나요",
+          "id": 156
+        },
+        {
+          "key": "delete",
+          "label": "녹음 지우기",
+          "why": "언제든 모두 지울 수 있어요",
+          "prd": "§5",
+          "id": 157
+        }
+      ],
+      "policy": [
+        {
+          "title": "녹음 보관",
+          "items": [
+            "녹음은 이 휴대폰 안에만 저장, 서버로 보내지 않음",
+            "보관 기간 30일이 처음 선택(7일·30일·90일)",
+            "판정 숫자는 녹음을 지워도 남음"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "녹음 모두 지우기는 확인 창을 한 번 거침"
+          ]
+        }
+      ],
+      "file": "screens/my.html",
+      "id": 17,
+      "cases": [
+        {
+          "when": "보관 기간을 7일로 줄이면",
+          "show": "7일이 지난 녹음은 바로 지워져요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "delete-confirm",
+      "name": "녹음 지우기 창",
+      "role": "sleeper",
+      "overlayOf": "my",
+      "section": "my",
+      "step": "녹음 지우기",
+      "pattern": "form",
+      "purpose": "녹음을 모두 지우기 전에 무엇이 사라지는지 확인한다",
+      "regions": [
+        {
+          "key": "confirm",
+          "label": "지우기 확인",
+          "why": "소리는 지워지고 판정 기록은 남아요",
+          "id": 158
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "소리 파일만 지우고 판정·숫자·상황 기록은 남음",
+            "지운 뒤에는 되돌릴 수 없음"
+          ]
+        }
+      ],
+      "file": "screens/delete-confirm.html",
+      "id": 18,
+      "cases": [
+        {
+          "when": "지우다가 실패하면",
+          "show": "지우지 못했어요 · 잠시 뒤 다시 눌러 주세요",
+          "tone": "danger"
+        }
+      ]
+    },
+    {
+      "slug": "share-family",
+      "name": "가족과 나누기",
+      "role": "sleeper",
+      "section": "my",
+      "step": "가족과 나누기",
+      "pattern": "settings",
+      "purpose": "함께 자는 가족에게 무엇을 보여주고 숨길지 당사자가 정한다",
+      "regions": [
+        {
+          "key": "what-to-show",
+          "label": "보여줄 것",
+          "why": "판정과 코 곤 시간처럼 요약만",
+          "prd": "§4-8",
+          "id": 159
+        },
+        {
+          "key": "hidden",
+          "label": "보여주지 않는 것",
+          "why": "소리와 상황 기록은 처음부터 꺼져 있어요",
+          "id": 160
+        },
+        {
+          "key": "invite",
+          "label": "초대 링크 보내기",
+          "why": "가족이 링크를 열면 함께 보기가 시작돼요",
+          "id": 161
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "판정·코 곤 시간만 처음부터 켜짐, 소리·상황은 꺼짐",
+            "언제든 끊을 수 있고 끊으면 가족 화면이 바로 비어요"
+          ]
+        },
+        {
+          "title": "제한",
+          "items": [
+            "함께 보는 사람은 1명까지",
+            "초대 링크는 48시간 동안만 열려요"
+          ]
+        }
+      ],
+      "file": "screens/share-family.html",
+      "id": 19,
+      "cases": [
+        {
+          "when": "이미 함께 보는 사람이 있으면",
+          "show": "함께 보는 사람은 1명까지예요 · 지금 사람을 끊고 다시 초대해 주세요",
+          "tone": "danger"
+        },
+        {
+          "when": "링크를 보내지 못하면",
+          "show": "링크를 복사했어요 · 메신저에 붙여넣어 보내 주세요",
+          "tone": "info"
+        }
+      ]
+    },
+    {
+      "slug": "family-invited",
+      "name": "초대 받았을 때",
+      "role": "family",
+      "state": "first-run",
+      "section": "family",
+      "step": "초대 받았을 때",
+      "pattern": "onboarding",
+      "purpose": "가족이 링크를 열었을 때 무엇을 볼 수 있는지 알려준다",
+      "regions": [
+        {
+          "key": "invite-from",
+          "label": "누가 초대했는지",
+          "why": "김도윤 님이 결과를 함께 보자고 했어요",
+          "id": 162
+        },
+        {
+          "key": "what-you-see",
+          "label": "볼 수 있는 것",
+          "why": "판정과 코 곤 시간만, 소리는 들을 수 없어요",
+          "id": 163
+        },
+        {
+          "key": "accept",
+          "label": "함께 보기 시작",
+          "why": "가입 없이 이름만 확인해요",
+          "id": 164
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "가입 없이 휴대폰 번호 확인만",
+            "볼 수 있는 것은 당사자가 켠 것만"
+          ]
+        },
+        {
+          "title": "예외",
+          "items": [
+            "링크가 48시간이 지나면 '다시 초대해 달라고 해 주세요'"
+          ]
+        }
+      ],
+      "file": "screens/family-invited.html",
+      "id": 20,
+      "cases": [
+        {
+          "when": "링크가 48시간이 지났으면",
+          "show": "초대가 끝났어요 · 다시 초대해 달라고 해 주세요",
+          "tone": "danger"
+        }
+      ]
+    },
+    {
+      "slug": "family-view",
+      "name": "함께 보기",
+      "role": "family",
+      "section": "family",
+      "step": "함께 보기",
+      "pattern": "dashboard",
+      "purpose": "가족이 당사자의 요약 결과를 보고 말하지 않아도 심각성을 알게 한다",
+      "regions": [
+        {
+          "key": "partner-verdict",
+          "label": "지난밤 판정",
+          "why": "당사자의 판정과 쉬운 이유",
+          "prd": "§2-2",
+          "id": 165
+        },
+        {
+          "key": "week",
+          "label": "이번 주",
+          "why": "일주일 판정 칸",
+          "id": 166
+        },
+        {
+          "key": "note",
+          "label": "함께 볼 수 있는 것",
+          "why": "당사자가 보여주기로 한 것만 보여요",
+          "id": 167
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "당사자가 켠 항목만, 소리는 들을 수 없음",
+            "당사자가 나누기를 끄면 '지금은 볼 수 없어요'"
+          ]
+        },
+        {
+          "title": "표기",
+          "items": [
+            "가족 화면에도 '의심' 표현만, 탓하는 말투 금지"
+          ]
+        }
+      ],
+      "file": "screens/family-view.html",
+      "id": 21,
+      "motion": [
+        {
+          "type": "countup",
+          "target": "partner-verdict",
+          "note": "코 곤 시간이 0부터 올라가요"
+        }
+      ],
+      "cases": [
+        {
+          "when": "당사자가 나누기를 끄면",
+          "show": "지금은 볼 수 없어요",
+          "tone": "info"
+        }
+      ]
+    }
+  ],
+  "nextScreenId": 22,
+  "nextRegionId": 168,
+  "references": [
+    {
+      "name": "파사",
+      "url": "https://apps.apple.com/kr/app/id1661990261",
+      "kind": "국내",
+      "borrow": "밤새 녹음이 아니라 코 고는 순간만 짧게 골라 10초 안에 확인",
+      "layout": {
+        "nav": "bottom",
+        "home": "측정 시작·알람 → 밤 리포트",
+        "density": "보통",
+        "signature": "하이라이트 클립"
+      }
+    },
+    {
+      "name": "SnoreLab",
+      "url": "https://snorelab.com/",
+      "kind": "해외",
+      "borrow": "자기 전엔 시작 버튼 하나, 아침엔 밤 전체를 한 줄 그래프로 — 누르면 그 순간 소리",
+      "layout": {
+        "nav": "bottom",
+        "home": "큰 시작 버튼 + 지난밤 점수",
+        "density": "보통",
+        "signature": "시간축 차트에서 바로 소리 듣기"
+      }
+    },
+    {
+      "name": "Health Diary (혈압)",
+      "url": "https://apps.apple.com/us/app/id1513811567",
+      "kind": "다른 분야",
+      "borrow": "단계 이름과 색으로 먼저 판정, 기간을 골라 의사에게 보낼 리포트를 같은 흐름에",
+      "layout": {
+        "nav": "bottom",
+        "home": "기록이 단계 색과 함께 쌓이는 목록",
+        "density": "보통",
+        "signature": "단계 색 차트 + PDF 리포트"
+      }
+    },
+    {
+      "name": "Apple 날씨",
+      "url": "https://kartick.substack.com/p/the-ios-weather-app-is-a-marvel-of-14-10-04",
+      "kind": "일상 앱",
+      "borrow": "결론 한 줄과 큰 값 → 시간 흐름 → 며칠 추이 → 원인 카드 순서로 내려 보기",
+      "layout": {
+        "nav": "bottom",
+        "home": "큰 값 하나 + 한 줄 상태",
+        "density": "보통",
+        "signature": "결론부터 쌓는 한 장"
+      }
+    },
+    {
+      "name": "Pillow (screensdesign)",
+      "url": "https://screensdesign.com/showcase/pillow-sleep-tracker",
+      "kind": "갤러리",
+      "borrow": "첫 화면은 어젯밤 결과 한 장과 측정 시작만, 나머지는 쓸수록 카드로 열기",
+      "layout": {
+        "nav": "bottom",
+        "home": "어젯밤 리포트 + 측정 시작",
+        "density": "보통",
+        "signature": "주·월 추이 카드"
+      }
+    }
+  ],
+  "concept": "a",
+  "concepts": [
+    {
+      "id": "a",
+      "name": "판정 한 장부터 보기",
+      "why": "출근 준비 중 1분 안에 '괜찮은가'부터 답해요",
+      "shell": "tabbar",
+      "home": "맨 위 큰 판정(정상·주의·위험) + 쉬운 이유 한 줄 → 숫자 세 가지 → 시간 흐름",
+      "density": "넓게",
+      "look": "dawn",
+      "traits": [
+        "아래 탭 메뉴",
+        "판정이 맨 위",
+        "넓은 여백"
+      ],
+      "refs": [
+        {
+          "name": "Apple 날씨",
+          "url": "https://kartick.substack.com/p/the-ios-weather-app-is-a-marvel-of-14-10-04",
+          "borrow": "결론 한 줄과 큰 값 → 시간 흐름 → 며칠 추이 → 원인 카드 순서로 내려 보기"
+        },
+        {
+          "name": "Health Diary (혈압)",
+          "url": "https://apps.apple.com/us/app/id1513811567",
+          "borrow": "단계 이름과 색으로 먼저 판정, 기간을 골라 의사에게 보낼 리포트를 같은 흐름에"
+        }
+      ],
+      "screens": [
+        "home",
+        "night-detail",
+        "trend",
+        "hospital-guide"
+      ]
+    },
+    {
+      "id": "b",
+      "name": "밤 그래프부터 보기",
+      "why": "밤에 무슨 일이 있었는지 그래프로 먼저 보고 바로 들어봐요",
+      "shell": "top",
+      "home": "밤 전체 시간 흐름 그래프가 맨 위, 구간을 누르면 바로 소리",
+      "density": "보통",
+      "look": "night",
+      "traits": [
+        "위쪽 탭 메뉴",
+        "그래프가 먼저",
+        "어두운 화면"
+      ],
+      "refs": [
+        {
+          "name": "SnoreLab",
+          "url": "https://snorelab.com/",
+          "borrow": "자기 전엔 시작 버튼 하나, 아침엔 밤 전체를 한 줄 그래프로 — 누르면 그 순간 소리"
+        },
+        {
+          "name": "파사",
+          "url": "https://apps.apple.com/kr/app/id1661990261",
+          "borrow": "밤새 녹음이 아니라 코 고는 순간만 짧게 골라 10초 안에 확인"
+        }
+      ],
+      "screens": [
+        "home",
+        "night-detail",
+        "trend",
+        "hospital-guide"
+      ]
+    },
+    {
+      "id": "c",
+      "name": "날마다 신호등으로 보기",
+      "why": "하룻밤보다 2주 패턴이 먼저 보여요",
+      "shell": "tabbar",
+      "home": "2주 판정 칸(신호등)과 오늘 판정을 함께",
+      "density": "빽빽하게",
+      "look": "paper",
+      "traits": [
+        "아래 탭 메뉴",
+        "2주 신호등 먼저",
+        "촘촘하게"
+      ],
+      "refs": [
+        {
+          "name": "Health Diary (혈압)",
+          "url": "https://apps.apple.com/us/app/id1513811567",
+          "borrow": "단계 이름과 색으로 먼저 판정, 기간을 골라 의사에게 보낼 리포트를 같은 흐름에"
+        },
+        {
+          "name": "Pillow (screensdesign)",
+          "url": "https://screensdesign.com/showcase/pillow-sleep-tracker",
+          "borrow": "첫 화면은 어젯밤 결과 한 장과 측정 시작만, 나머지는 쓸수록 카드로 열기"
+        }
+      ],
+      "screens": [
+        "home",
+        "night-detail",
+        "trend",
+        "hospital-guide"
+      ]
+    },
+    {
+      "id": "d",
+      "name": "한 문장 요약과 다음 할 일",
+      "why": "숫자 대신 어젯밤을 한 문장으로 말해 주고 할 일만 남겨요",
+      "shell": "none",
+      "home": "어젯밤 한 문장 요약 + 오늘 할 일 카드 1~2개",
+      "density": "넓게",
+      "look": "lilac",
+      "traits": [
+        "메뉴 없이 홈에서 들어가기",
+        "한 문장 요약",
+        "할 일 카드"
+      ],
+      "refs": [
+        {
+          "name": "Pillow (screensdesign)",
+          "url": "https://screensdesign.com/showcase/pillow-sleep-tracker",
+          "borrow": "첫 화면은 어젯밤 결과 한 장과 측정 시작만, 나머지는 쓸수록 카드로 열기"
+        },
+        {
+          "name": "파사",
+          "url": "https://apps.apple.com/kr/app/id1661990261",
+          "borrow": "밤새 녹음이 아니라 코 고는 순간만 짧게 골라 10초 안에 확인"
+        }
+      ],
+      "screens": [
+        "home",
+        "night-detail",
+        "trend",
+        "hospital-guide"
+      ]
+    },
+    {
+      "id": "e",
+      "name": "병원 갈지부터 답하기",
+      "why": "'병원에 가봐야 하나?'에 2주 근거로 바로 답해요",
+      "shell": "top",
+      "home": "'병원에 가봐야 하나요?' 판 → 어젯밤 판정 → 기록 내보내기",
+      "density": "보통",
+      "look": "clinic",
+      "traits": [
+        "위쪽 탭 메뉴",
+        "병원 질문이 먼저",
+        "기록 한 장"
+      ],
+      "refs": [
+        {
+          "name": "Health Diary (혈압)",
+          "url": "https://apps.apple.com/us/app/id1513811567",
+          "borrow": "단계 이름과 색으로 먼저 판정, 기간을 골라 의사에게 보낼 리포트를 같은 흐름에"
+        },
+        {
+          "name": "SnoreLab",
+          "url": "https://snorelab.com/",
+          "borrow": "자기 전엔 시작 버튼 하나, 아침엔 밤 전체를 한 줄 그래프로 — 누르면 그 순간 소리"
+        }
+      ],
+      "screens": [
+        "home",
+        "night-detail",
+        "trend",
+        "hospital-guide"
+      ]
+    }
+  ]
+}

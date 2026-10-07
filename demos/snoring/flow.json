@@ -1,0 +1,184 @@
+{
+  "flows": [
+    {
+      "key": "first-setup",
+      "name": "첫 측정 준비하기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "welcome",
+          "region": "start",
+          "trigger": "start",
+          "action": "'시작하기'를 누르면",
+          "to": "mic-setup"
+        },
+        {
+          "from": "mic-setup",
+          "region": "done",
+          "trigger": "mic-done",
+          "action": "'준비 끝'을 누르면",
+          "to": "home-empty",
+          "when": "마이크를 허용하면"
+        },
+        {
+          "from": "home-empty",
+          "region": "empty-start",
+          "trigger": "first-measure",
+          "action": "'오늘 밤 측정하기'를 누르면",
+          "to": "night-start"
+        }
+      ]
+    },
+    {
+      "key": "measure-night",
+      "name": "밤에 측정하기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "night-start",
+          "region": "start-measure",
+          "trigger": "start-measure",
+          "action": "'측정 시작'을 누르면",
+          "to": "measuring"
+        },
+        {
+          "from": "measuring",
+          "region": "stop",
+          "trigger": "stop",
+          "action": "'측정 끝내기'를 길게 누르면",
+          "to": "home"
+        }
+      ]
+    },
+    {
+      "key": "morning-check",
+      "name": "아침에 결과 보기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "home",
+          "region": "verdict",
+          "trigger": "see-detail",
+          "action": "'밤사이 기록 보기'를 누르면",
+          "to": "night-detail"
+        },
+        {
+          "from": "night-detail",
+          "region": "clips",
+          "trigger": "play-clip",
+          "action": "'들어보기'를 누르면",
+          "to": "clip-play"
+        }
+      ]
+    },
+    {
+      "key": "log-factors",
+      "name": "어젯밤 상황 남기기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "home",
+          "region": "factors-prompt",
+          "trigger": "add-factors",
+          "action": "'어젯밤 상황 남기기'를 누르면",
+          "to": "factors"
+        }
+      ]
+    },
+    {
+      "key": "see-trend",
+      "name": "기간별로 살펴보기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "trend",
+          "region": "factor-summary",
+          "trigger": "see-factors",
+          "action": "'상황별로 보기'를 누르면",
+          "to": "factor-insight"
+        }
+      ]
+    },
+    {
+      "key": "go-hospital",
+      "name": "병원 갈지 정하기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "home",
+          "region": "hospital-card",
+          "trigger": "hospital",
+          "action": "'병원에 가봐야 할까요?'를 누르면",
+          "to": "hospital-guide",
+          "when": "위험이 반복되면"
+        },
+        {
+          "from": "hospital-guide",
+          "region": "export",
+          "trigger": "export",
+          "action": "'의사에게 보여줄 기록 만들기'를 누르면",
+          "to": "report-export"
+        },
+        {
+          "from": "report-export",
+          "region": "save",
+          "trigger": "save-report",
+          "action": "'기록 한 장 저장하기'를 누르면",
+          "to": "report-done"
+        }
+      ]
+    },
+    {
+      "key": "share-family",
+      "name": "가족과 결과 나누기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "my",
+          "region": "family",
+          "trigger": "share",
+          "action": "'가족과 나누기'를 누르면",
+          "to": "share-family"
+        },
+        {
+          "from": "share-family",
+          "region": "invite",
+          "trigger": "send-invite",
+          "action": "'초대 링크 보내기'를 누르면",
+          "to": "family-invited",
+          "when": "가족이 링크를 열면"
+        },
+        {
+          "from": "family-invited",
+          "region": "accept",
+          "trigger": "accept",
+          "action": "'함께 보기 시작'을 누르면",
+          "to": "family-view"
+        }
+      ]
+    },
+    {
+      "key": "delete-recordings",
+      "name": "녹음 지우기",
+      "role": "sleeper",
+      "steps": [
+        {
+          "from": "my",
+          "region": "delete",
+          "trigger": "delete-all",
+          "action": "'녹음 모두 지우기'를 누르면",
+          "to": "delete-confirm"
+        }
+      ]
+    }
+  ],
+  "branches": [
+    {
+      "from": "trend",
+      "region": "hospital-hint",
+      "trigger": "trend-hospital",
+      "action": "'병원 상담 안내 보기'를 누르면",
+      "to": "hospital-guide"
+    }
+  ]
+}
