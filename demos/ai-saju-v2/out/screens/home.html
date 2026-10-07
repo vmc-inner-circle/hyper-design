@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>홈 · 10월 14일 수요일</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.days { display: flex; gap: var(--stack-s); overflow-x: auto; margin: 0 calc(var(--block-pad) * -1); padding: 0 var(--block-pad); scrollbar-width: none; }
+.day { flex: none; width: 64px; padding: var(--stack-s) 0; border-radius: var(--r-m); background: var(--c-bg); display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+.day b { font-size: var(--fs-strong); font-weight: 700; color: var(--c-text); font-variant-numeric: tabular-nums; }
+.day .g { font-weight: 600; color: var(--c-text); }
+.day.is-today { background: var(--c-brand); color: var(--c-on-brand); }
+.day.is-today b, .day.is-today .g { color: var(--c-on-brand); }
+.day-goal { min-height: 20px; }
+.score-row { display: flex; align-items: baseline; gap: var(--stack-m); padding: var(--stack-s) 0; border-top: 1px solid var(--c-line); }
+.score-row .name { flex: none; width: 72px; font-size: var(--fs-sub); color: var(--c-text-2); }
+.score-row .val { flex: none; width: 36px; font-size: var(--fs-strong); font-weight: 700; font-variant-numeric: tabular-nums; }
+.score-row .do { flex: 1; min-width: 0; font-size: var(--fs-sub); line-height: var(--lh-sub); }
+.chips.is-wrap { flex-wrap: wrap; overflow: visible; padding: 0; margin: 0; }
+</style>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">10월 14일 수요일 · 음력 9월 5일 · 辛酉(신유)일</p>
+    <h1 class="title">총운 82점</h1>
+    <p class="lead">도와주는 기운이 들어오는 날 — 서류와 면접에 좋아요</p>
+    <a class="hero-more" href="stars.html">별 12개 ›</a>
+  </header>
+  <section class="block">
+    <div>
+      <div class="score-row"><span class="name">일</span><span class="val">88</span><span class="do">면접 준비를 오늘 해 두세요</span></div>
+      <div class="score-row"><span class="name">돈</span><span class="val">64</span><span class="do">쓰기 전에 한 번 더 따져 봐요</span></div>
+      <div class="score-row"><span class="name">관계</span><span class="val">75</span><span class="do">먼저 안부를 건네 보세요</span></div>
+    </div>
+    <p class="block-note">행운의 색 흰색 · 숫자 4, 9</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">면접까지</h2></div>
+    <div class="days">
+      <div class="day is-today"><span>수</span><b>10/14</b><span class="g">辛酉</span><span>좋음</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>목</span><b>10/15</b><span class="g">壬戌</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>금</span><b>10/16</b><span class="g">癸亥</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>토</span><b>10/17</b><span class="g">甲子</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>일</span><b>10/18</b><span class="g">乙丑</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>월</span><b>10/19</b><span class="g">丙寅</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>화</span><b>10/20</b><span class="g">丁卯</span><span>보통</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>수</span><b>10/21</b><span class="g">戊辰</span><span>조심</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>목</span><b>10/22</b><span class="g">己巳</span><span>조심</span><span class="day-goal">&nbsp;</span></div>
+      <div class="day"><span>금</span><b>10/23</b><span class="g">庚午</span><span>좋음</span><span class="day-goal">면접</span></div>
+    </div>
+    <p class="block-note">내일 10/15 목 壬戌(임술)일 · 말을 아끼면 좋은 날</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">AI에게 묻기</h2><a class="block-link" href="ask.html">전체 보기</a></div>
+    <div class="chips is-wrap">
+      <a class="chip" href="ask.html">10월 23일 면접, 괜찮을까요?</a>
+      <a class="chip" href="ask.html">면접 전날 뭘 하면 좋아요?</a>
+      <a class="chip" href="ask.html">이번 달 돈 흐름은요?</a>
+    </div>
+    <p class="block-note">오늘 무료 질문 1번 남았어요</p>
+  </section>
+  <section class="block is-list">
+    <a class="row" href="match-new.html"><span class="row-art"><img src="../assets/fluent/invite.svg" alt=""></span><div class="row-main"><p class="row-title">궁합 보기</p><p class="row-sub">저장한 사람 2명 · 새로 입력도 돼요</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="mysaju.html"><span class="row-art"><img src="../assets/fluent/clipboard.svg" alt=""></span><div class="row-main"><p class="row-title">내 사주 풀이</p><p class="row-sub">넓게 흐르는 큰 물 같은 사람</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+  <section class="block">
+    <div class="photo is-16x9"><img src="../assets/photos/report-cover.jpg" alt="새해 일출"></div>
+    <div class="block-head"><h2 class="h2">2027 신년운세</h2><a class="block-link" href="report.html">미리 보기</a></div>
+    <p class="block-note">올해의 한 단어 미리 보기</p>
+  </section>
+</main>
+<nav class="tabbar">
+<a class="tab" href="home.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>오늘</a>
+<a class="tab" href="mysaju.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>내 사주</a>
+<a class="tab" href="ask.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>묻기</a>
+<a class="tab" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>기록</a>
+<a class="tab" href="me.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>마이</a>
+</nav>
+</body></html>

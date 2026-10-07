@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>태어난 시간 2/2</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.hour-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--stack-s); }
+.hour-grid .chip { flex-direction: column; justify-content: center; gap: 2px; padding: var(--stack-s) 0; min-height: 56px; }
+.hour-time { font-size: var(--fs-caption); font-weight: 400; }
+.time-line { display: flex; align-items: center; justify-content: space-between; }
+.time-line .hero-more { margin: 0; }
+</style>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="birth-1.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">내 정보 2/2</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-valuenow="2" aria-valuemax="2" aria-label="2단계 중 2단계"><span class="is-on"></span><span class="is-on"></span></div>
+  <div class="field"><span class="label">태어난 시간</span>
+    <div class="hour-grid">
+    <button class="chip" aria-pressed="false"><span>자시</span><span class="hour-time">23:30~01:30</span></button>
+    <button class="chip" aria-pressed="false"><span>축시</span><span class="hour-time">01:30~03:30</span></button>
+    <button class="chip" aria-pressed="false"><span>인시</span><span class="hour-time">03:30~05:30</span></button>
+    <button class="chip" aria-pressed="false"><span>묘시</span><span class="hour-time">05:30~07:30</span></button>
+    <button class="chip is-selected" aria-pressed="true"><span>진시</span><span class="hour-time">07:30~09:30</span></button>
+    <button class="chip" aria-pressed="false"><span>사시</span><span class="hour-time">09:30~11:30</span></button>
+    <button class="chip" aria-pressed="false"><span>오시</span><span class="hour-time">11:30~13:30</span></button>
+    <button class="chip" aria-pressed="false"><span>미시</span><span class="hour-time">13:30~15:30</span></button>
+    <button class="chip" aria-pressed="false"><span>신시</span><span class="hour-time">15:30~17:30</span></button>
+    <button class="chip" aria-pressed="false"><span>유시</span><span class="hour-time">17:30~19:30</span></button>
+    <button class="chip" aria-pressed="false"><span>술시</span><span class="hour-time">19:30~21:30</span></button>
+    <button class="chip" aria-pressed="false"><span>해시</span><span class="hour-time">21:30~23:30</span></button>
+    </div>
+  </div>
+  <div class="time-line">
+    <p class="info"><span>오전 7시 40분에 태어났어요</span></p>
+    <button class="hero-more">시:분으로 넣기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+  <div class="row">
+    <div class="row-main"><p class="row-title">시간을 몰라요</p><p class="row-sub">시간 없이 풀이해요</p></div>
+    <span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="시간을 몰라요"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button></span>
+  </div>
+  <div class="field"><label class="label" for="place">태어난 곳 (선택)</label><input class="input" id="place" value="서울"></div>
+</main>
+<div class="cta"><a class="btn primary full" href="home-first.html">내 사주 풀기</a></div>
+</body></html>

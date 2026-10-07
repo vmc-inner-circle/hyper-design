@@ -1,0 +1,29 @@
+{
+ "default": "kurly",
+ "options": [
+  {
+   "slug": "kurly",
+   "name": "컬리",
+   "brand": "#5f0080",
+   "source": "https://www.kurly.com/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+   "why": [
+    "성격(고급,차분)",
+    "측정 합성"
+   ]
+  },
+  {
+   "slug": "daangn",
+   "name": "당근",
+   "brand": "#ff6600",
+   "source": "https://www.daangn.com/kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": []
+  },
+  {
+   "slug": "myrealtrip",
+   "name": "마이리얼트립",
+   "brand": "#2b96ed",
+   "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": []
+  }
+ ]
+}
