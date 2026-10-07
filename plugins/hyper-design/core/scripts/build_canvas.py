@@ -73,9 +73,14 @@ def build_index(out, m):
         label = {"lighten": "가볍게", "cut": "뺌", "later": "나중에"}
         items = [{"verdict": i["verdict"], "label": label[i["verdict"]], "name": i.get("name") or "",
                   "how": i.get("how") if i.get("verdict") == "lighten" else "", "why": i.get("why") or ""}
-                 for i in D.get("items", []) if i.get("verdict") in label][:6]
-        if items or D.get("core"):
-            decisions = {"core": D.get("core") or "", "items": items}
+                 for i in D.get("items", []) if i.get("verdict") in label and i.get("source") != "시장"][:6]
+        # 시장 관례: 벗어난 것 먼저(이유가 중요), 그다음 따른 것 — 최대 6
+        mk = [i for i in D.get("items", []) if i.get("source") == "시장" and str(i.get("id", "")).startswith("M")]
+        mk = sorted(mk, key=lambda i: i.get("verdict") == "keep")[:6]
+        market = [{"verdict": "follow" if i.get("verdict") == "keep" else "cut", "label": "따름" if i.get("verdict") == "keep" else "벗어남",
+                   "name": i.get("name") or "", "how": i.get("how") or "", "why": i.get("why") or ""} for i in mk]
+        if items or D.get("core") or market:
+            decisions = {"core": D.get("core") or "", "items": items, "market": market}
 
     pal = load(out / "palettes.json")
     if pal and pal.get("options"):

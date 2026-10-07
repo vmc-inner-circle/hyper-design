@@ -85,6 +85,8 @@ body:not([data-tab="screens"]) .view{visibility:hidden}
 .v{display:inline-block;font-size:15px;font-weight:700;border-radius:8px;padding:2px 9px;margin-right:8px;background:#eee;color:#444;vertical-align:2px}
 .v-cut{background:#fde8e8;color:#9b1c1c}
 .v-lighten{background:#e7f0ff;color:#1d4ed8}
+.v-follow{background:#e6f6ec;color:#166534}
+.decisions h3.mk{margin-top:18px}
 
 .rows{position:relative;padding-bottom:40px}
 .flow{padding-top:90px}
@@ -183,7 +185,10 @@ if (dc && ((dc.items || []).length || dc.core)) {
   intro += '<section class="decisions"><h3>정한 것 · 뺀 것</h3>' + (dc.core ? '<p class="core">' + esc(dc.core) + '</p>' : '') +
     '<ul>' + (dc.items || []).map(function (i) {
       return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
-        (i.how ? ' → ' + esc(i.how) : '') + '<span class="why">' + esc(i.why) + '</span></li>'; }).join('') + '</ul></section>';
+        (i.how ? ' → ' + esc(i.how) : '') + '<span class="why">' + esc(i.why) + '</span></li>'; }).join('') + '</ul>' +
+    ((dc.market || []).length ? '<h3 class="mk">시장 관례 — 따른 것 · 벗어난 것</h3><ul>' + dc.market.map(function (i) {
+      return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
+        '<span class="why">' + esc(i.verdict === 'cut' ? i.why : (i.how || i.why)) + '</span></li>'; }).join('') + '</ul>' : '') + '</section>';
 }
 $('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 화살표는 갈래' + (D.stage === 'go' && D.pending ? ' · 오류·확인·빈 화면 같은 상태 ' + D.pending + '개는 <b>/hyper-design:max</b>로 더할 수 있어요' : '') + '</p><div class="intro-grid">' + intro + '</div>';
 $('#intro').style.marginLeft = LEFT + 'px';
