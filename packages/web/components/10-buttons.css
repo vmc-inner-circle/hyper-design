@@ -1,0 +1,155 @@
+/* 10-buttons — 버튼 · 아이콘 버튼 · 버튼 그룹 · 링크.
+   높이 --ctl-*, 반경 --r-control, 색은 --c-* 토큰만. */
+
+/* ---- 기본 (= secondary: 테두리 버튼) ---- */
+.btn {
+  --btn-h: var(--ctl-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: var(--btn-h);
+  min-width: var(--btn-h);
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-control);
+  background: var(--c-surface);
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  flex: 0 0 auto;
+  transition:
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+.btn .icon, .btn .icon-sm, .btn .icon-lg { flex: 0 0 auto; }
+.btn:not(:disabled):hover { background: var(--c-surface-2); }
+.btn:not(:disabled):active { background: var(--c-surface-3); }
+.btn:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
+.btn:disabled, .btn.is-disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-secondary { background: var(--c-surface); border-color: var(--c-border-strong); color: var(--c-text); }
+
+/* ---- 변형 ---- */
+.btn-primary {
+  background: var(--c-primary);
+  border-color: var(--c-primary);
+  color: var(--c-primary-fg);
+}
+.btn-primary:not(:disabled):hover { background: var(--c-primary-hover); border-color: var(--c-primary-hover); }
+.btn-primary:not(:disabled):active { background: var(--c-primary-active); border-color: var(--c-primary-active); }
+
+.btn-soft {
+  background: var(--c-primary-soft);
+  border-color: transparent;
+  color: var(--c-primary-soft-fg);
+}
+.btn-soft:not(:disabled):hover { background: var(--c-primary-soft); border-color: var(--c-primary); }
+.btn-soft:not(:disabled):active { background: var(--c-primary-soft); border-color: var(--c-primary-active); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+  color: var(--c-text-2);
+}
+.btn-ghost:not(:disabled):hover { background: var(--c-surface-2); color: var(--c-text); }
+.btn-ghost:not(:disabled):active { background: var(--c-surface-3); color: var(--c-text); }
+
+.btn-danger {
+  background: var(--c-danger);
+  border-color: var(--c-danger);
+  color: var(--c-text-inverse);
+}
+/* --c-danger-hover 토큰이 없어 밝기 필터로 대신한다 */
+.btn-danger:not(:disabled):hover { filter: brightness(.92); }
+.btn-danger:not(:disabled):active { filter: brightness(.84); }
+
+.btn-danger-soft {
+  background: var(--c-danger-soft);
+  border-color: transparent;
+  color: var(--c-danger-soft-fg);
+}
+.btn-danger-soft:not(:disabled):hover { border-color: var(--c-danger); }
+.btn-danger-soft:not(:disabled):active { border-color: var(--c-danger); filter: brightness(.96); }
+
+/* ---- 크기 ---- */
+.btn-sm {
+  --btn-h: var(--ctl-sm);
+  padding: 0 var(--sp-3);
+  gap: var(--sp-1);
+  font-size: var(--fs-sm);
+}
+.btn-sm .icon { width: var(--icon-sm); height: var(--icon-sm); }
+.btn-lg {
+  --btn-h: var(--ctl-lg);
+  padding: 0 var(--sp-5);
+  gap: var(--sp-2);
+  font-size: var(--fs-lg);
+}
+.btn-lg .icon { width: var(--icon-lg); height: var(--icon-lg); }
+
+/* ---- 아이콘 전용 (정사각, aria-label 필수) ---- */
+.btn-icon {
+  width: var(--btn-h);
+  min-width: var(--btn-h);
+  padding: 0;
+}
+.btn-round { border-radius: var(--r-pill); }
+
+/* ---- 블록 ---- */
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+/* ---- 그룹 (붙은 버튼 묶음) ---- */
+.btn-group {
+  display: inline-flex;
+  align-items: stretch;
+  vertical-align: middle;
+}
+.btn-group > .btn { border-radius: 0; margin-left: -1px; position: relative; }
+.btn-group > .btn:first-child { margin-left: 0; border-top-left-radius: var(--r-control); border-bottom-left-radius: var(--r-control); }
+.btn-group > .btn:last-child { border-top-right-radius: var(--r-control); border-bottom-right-radius: var(--r-control); }
+.btn-group > .btn:hover, .btn-group > .btn:focus-visible, .btn-group > .btn.active { z-index: 1; }
+.btn-group > .btn.active {
+  background: var(--c-primary-soft);
+  border-color: var(--c-primary);
+  color: var(--c-primary-soft-fg);
+}
+
+/* ---- 로딩 (loader 아이콘 회전) ---- */
+.btn.is-loading { pointer-events: none; opacity: .7; }
+.icon-spin { animation: icon-spin 900ms linear infinite; }
+@keyframes icon-spin { to { transform: rotate(360deg); } }
+
+/* ---- 텍스트 링크 ---- */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--c-primary);
+  font-size: inherit;
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.link:hover { color: var(--c-primary-hover); }
+.link:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; border-radius: var(--r-sm); }
+.link-muted { color: var(--c-text-2); }
+.link-muted:hover { color: var(--c-text); }

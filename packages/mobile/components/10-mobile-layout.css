@@ -1,0 +1,202 @@
+/* mobile/10-mobile-layout — 모바일 골격: 프레임 · 위 제목 줄(appbar) · 아래 탭(tabbar) · 위 탭 메뉴(toptabs) ·
+   본문(content) · 화면 제목 · 머리줄(eyebrow) · 큰 숫자(big-num) · 아래 꽉 찬 버튼(bottom-cta).
+   셸 마크업은 scripts/expand.js가 붙인다(작성자는 <main class="content">만 쓴다). 토큰 변수만 참조한다. */
+
+/* ---- 프레임 (390×844, 세로 한 줄: [appbar] · content · [tabbar]) ---- */
+.app.app-mobile {
+  display: flex;
+  flex-direction: column;
+  width: var(--frame-w);
+  height: var(--frame-h);
+  background: var(--m-page-bg);
+}
+.app.app-mobile > .appbar,
+.app.app-mobile > .toptabs,
+.app.app-mobile > .tabbar { flex: 0 0 auto; }
+
+/* ---- 위 제목 줄: 뒤로(왼쪽) · 가운데 제목 · 오른쪽 자리 ---- */
+.appbar {
+  display: grid;
+  grid-template-columns: var(--ctl-md) minmax(0, 1fr) var(--ctl-md);
+  align-items: center;
+  gap: var(--sp-2);
+  height: var(--appbar-h);
+  padding: 0 var(--sp-2);
+  background: var(--m-page-bg);
+  color: var(--c-text);
+  position: relative;
+  z-index: var(--z-sticky);
+}
+.appbar > .btn-icon { justify-self: start; }
+.appbar-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-body);
+}
+.appbar-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-1); min-width: 0; }
+/* 변형 — 왼쪽 정렬(위 탭 메뉴 화면의 서비스 이름 줄) */
+.appbar.appbar-start {
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 0 var(--sp-2) 0 var(--gutter);
+}
+.appbar.appbar-start .appbar-title {
+  text-align: left;
+  font-family: var(--font-head);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-head);
+  letter-spacing: var(--ls-head);
+}
+
+/* ---- 본문 (유일한 스크롤 영역 · 회색 바탕에 흰 카드를 12px 간격으로 쌓는다) ---- */
+.app-mobile .content {
+  flex: 1 1 auto;
+  min-height: 0;
+  gap: var(--space-section);
+  padding: var(--sp-6) var(--gutter) var(--sp-8);
+  background: var(--m-page-bg);
+}
+.app-mobile .appbar + .content { padding-top: var(--sp-3); }
+/* 영역을 나누려고 감싼 클래스 없는 div도 카드 사이 간격을 그대로 갖게 */
+.app-mobile .content > div:not([class]) { display: flex; flex-direction: column; gap: var(--space-section); min-width: 0; }
+.app-mobile .content-inner { max-width: none; }
+
+/* ---- 화면 제목: 탭 화면은 크게 왼쪽 위, 아래 화면도 같은 모양 (eyebrow → 제목 → 회색 설명) ---- */
+.app-mobile .page-header {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.app-mobile .page-title { font-size: var(--fs-2xl); }
+.app-mobile .page-desc { margin-top: var(--sp-1); font-size: var(--fs-sm); }
+.app-mobile .page-actions { margin-left: 0; flex-wrap: wrap; }
+.app-mobile .page-actions > .btn { flex: 1 1 0; }
+
+/* 머리줄: 제목 위 작은 회색 한 줄 ("다음 수업 · 10월 13일(화)") */
+.eyebrow {
+  display: block;
+  margin-bottom: var(--sp-1);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-body);
+  color: var(--c-text-2);
+}
+/* 크게 보여 줄 숫자 ("잔여 3회 / 10") — 강조 부분은 주 색, <small>은 본문 색 */
+.big-num {
+  display: block;
+  font-family: var(--font-head);
+  font-size: var(--fs-3xl);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-head);
+  color: var(--c-primary);
+  font-variant-numeric: tabular-nums;
+}
+.big-num small { font-size: inherit; font-weight: inherit; color: var(--c-text); }
+.big-num + .text-sm, .big-num + p { margin-top: var(--sp-1); }
+
+/* ---- 아래 꽉 찬 버튼 (본문 마지막 자식 · 내용이 짧으면 맨 아래, 길면 아래에 붙어 따라온다) ---- */
+.bottom-cta {
+  position: sticky;
+  bottom: calc(var(--sp-8) * -1);   /* 스크롤 영역의 아래 여백(sp-8)까지 덮는다 — 버튼 밑으로 내용이 비치지 않게 */
+  z-index: var(--z-sticky);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  margin: auto calc(var(--gutter) * -1) calc(var(--sp-8) * -1);
+  padding: var(--sp-4) var(--gutter) calc(var(--sp-5) + var(--sp-8));
+  background: linear-gradient(to bottom, transparent, var(--m-page-bg) var(--sp-4));
+}
+.bottom-cta > .btn,
+.bottom-cta > .row > .btn {
+  width: 100%;
+  height: var(--ctl-lg);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+.bottom-cta > .row { gap: var(--sp-2); }
+.bottom-cta > .row > .btn { flex: 1 1 0; width: auto; }
+.bottom-cta > .text-sm, .bottom-cta > .text-xs { text-align: center; color: var(--c-text-2); }
+
+/* ---- 아래 탭 (탭 화면에만 · 아이콘 + 11px 글자 · 지금 탭 = 본문 색, 나머지 = 흐린 회색) ---- */
+.tabbar {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  height: var(--tabbar-h);
+  padding: var(--sp-1) var(--sp-2) var(--sp-2);
+  background: var(--m-card-bg);
+  border-top: 1px solid var(--c-border);
+  position: relative;
+  z-index: var(--z-sticky);
+}
+.tabbar .nav-item {
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--sp-1);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-text-muted);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-medium);
+  line-height: 1;
+  text-align: center;
+}
+.tabbar .nav-item > span { flex: 0 0 auto; max-width: 100%; }
+.tabbar .nav-item .icon { color: inherit; }
+.tabbar .nav-item:hover { background: transparent; color: var(--c-text-2); }
+.tabbar .nav-item:hover .icon { color: inherit; }
+.tabbar .nav-item.active { background: transparent; color: var(--c-text); font-weight: var(--fw-semibold); }
+.tabbar .nav-item.active .icon { color: var(--c-text); }
+.tabbar .nav-item .badge { display: none; }
+
+/* ---- 위 탭 메뉴 (시안 shell: top) — 서비스 이름 줄 아래 알약 탭. 지금 탭 = 주 색 테두리 + 연한 주 색 ---- */
+.toptabs {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0 var(--gutter) var(--sp-3);
+  background: var(--m-page-bg);
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.toptabs .nav-item {
+  width: auto;
+  flex: 0 0 auto;
+  gap: var(--sp-1);
+  min-height: var(--ctl-sm);
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  background: var(--m-card-bg);
+  color: var(--c-text-2);
+  font-size: var(--fs-sm);
+}
+.toptabs .nav-item > span { flex: 0 0 auto; }
+.toptabs .nav-item .icon { display: none; }
+.toptabs .nav-item.active {
+  border-color: var(--c-primary);
+  background: var(--c-primary-soft);
+  color: var(--c-primary-soft-fg);
+}
+
+/* ---- 메뉴 없는 한 장 (온보딩 · shell: none) — 위 여백을 넉넉히 ---- */
+.app-mobile.no-nav .content { padding-top: var(--sp-12); }
+
+/* ---- 안내·오류 문구(toast): 위 제목 줄 바로 아래, 양옆 꽉 차게 (기본 규칙 — 화면 위쪽 · 본문 크기 글자) ---- */
+.app-mobile .toast, .app-mobile .toast-stack { top: calc(var(--appbar-h) + var(--sp-2)); left: var(--gutter); right: var(--gutter); translate: none; min-width: 0; max-width: none; }
+.app-mobile .toast { padding: var(--sp-4); border: 0; }
+/* 아래에 둘 때: 아래 탭·꽉 찬 버튼(아래 안내 한 줄 포함) 위로 — 가리지 않게 */
+[data-toast-at="bottom"] .app-mobile .toast, [data-toast-at="bottom"] .app-mobile .toast-stack { top: auto; bottom: var(--sp-6); }
+[data-toast-at="bottom"] .app-mobile:has(.tabbar) .toast, [data-toast-at="bottom"] .app-mobile:has(.tabbar) .toast-stack { bottom: calc(var(--tabbar-h) + var(--sp-3)); }
+[data-toast-at="bottom"] .app-mobile:has(.bottom-cta) .toast, [data-toast-at="bottom"] .app-mobile:has(.bottom-cta) .toast-stack { bottom: calc(var(--ctl-lg) * 2 + var(--sp-10)); }
