@@ -349,6 +349,11 @@ for (const s of slugs.values()) {
     if (!x.key || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(x.key)) fail(`구역 '${x.name || "?"}': key는 케밥케이스 영문`);
     if (secKeys.has(x.key)) fail(`구역 key 중복: ${x.key}`); secKeys.add(x.key);
     if (!x.name) fail(`구역 '${x.key}': name 없음`); else if (x.name.length > 12) warn(`구역 '${x.name}': 12자 이내로`);
+    // 구역 이름은 하는 일을 일상어로("아침에 결과 보기") — 줄임말·기호로 잇지 않는다 (사용자: "아침 결과, 추이 병원 이런 거 잘 모르겠어 뭔지")
+    if (x.name && /[—–\-]|·/.test(x.name)) warn(`구역 '${x.name}': 줄표·가운뎃점으로 잇지 말고 하는 일을 한 말로 ("밤 — 측정" → "밤에 재기", "추이·병원" → "기록 살펴보기")`);
+    if (x.name && /추이|현황|관리|통계|대시보드|온보딩|피드/.test(x.name)) warn(`구역 '${x.name}': 어려운 말 — 사용자가 하는 일로 ("추이" → "기록 살펴보기", "온보딩" → "처음 시작하기")`);
+    if (!x.desc) fail(`구역 '${x.name || x.key}': desc 없음 — 구역 띠에 '여기서 무엇을 하는지' 한 줄 (예: "아침에 일어나 지난밤 결과를 확인해요")`);
+    else if (x.desc.length > 40) warn(`구역 '${x.name}': desc는 40자 이내 한 줄로`);
   }
   const used = new Set(), lastStep = new Map();   // 같은 단계 이름표는 한 구역 안에서 붙어 있어야 한다
   for (const s of S.screens || []) {

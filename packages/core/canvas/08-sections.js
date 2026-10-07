@@ -49,7 +49,7 @@
       all.forEach(function (s) { s._sec = s.role || "_etc"; });
       if (all.some(function (s) { return s._sec === "_etc"; })) secs.push({ key: "_etc", name: "함께 쓰는 화면" });
     } else all.forEach(function (s) { s._sec = s.section; });
-    secs.forEach(function (x) { byKey[x.key] = { key: x.key, name: x.name, groups: [] }; });
+    secs.forEach(function (x) { byKey[x.key] = { key: x.key, name: x.name, desc: x.desc || "", groups: [] }; });
     all.forEach(function (s) {
       var sec = byKey[s._sec] || byKey[secs[0].key], step = s.step || (s.variantOf && HX.bySlug[s.variantOf] ? HX.bySlug[s.variantOf].step || HX.bySlug[s.variantOf].name : s.name);
       var g = sec.groups[sec.groups.length - 1];
@@ -121,7 +121,9 @@
 
     var secs = model(), boards = [], bySlug = {}, secEls = [];
     secs.forEach(function (sec) {
+      // 구역 띠: 이름 + 여기서 무엇을 하는지 한 줄(desc) + 화면 수 (사용자: "아침 결과, 추이 병원 이런 거 잘 모르겠어 뭔지")
       var band = HX.el("div", { class: "hx-sx-band" }, [HX.el("b", { text: sec.name }),
+        sec.desc ? HX.el("em", { class: "hx-sx-band-desc", text: sec.desc }) : null,
         HX.el("span", { text: "화면 " + sec.groups.reduce(function (n, g) { return n + g.items.filter(function (x) { return !x._derived; }).length; }, 0) + "개 · 상태 " + sec.groups.reduce(function (n, g) { return n + g.items.filter(function (x) { return x._derived; }).length; }, 0) + "개" })]);
       world.appendChild(band);
       var S = { key: sec.key, band: band, groups: [] };
@@ -147,7 +149,7 @@
           var note = blocks.length ? HX.el("div", { class: "hx-sx-note", style: "width:" + W + "px" }, blocks.map(function (p) {
             return HX.el("div", { class: "hx-sx-pol hx-k-" + (p.kind || (p.motion ? "motion" : "policy")) }, [HX.el("b", { text: p.motion ? "움직임" : p.title }), HX.el("ul", {}, (p.items || []).map(function (t) { return HX.el("li", { text: t }); }))]);
           })) : null;
-          label.style.maxWidth = W + "px";   // 이름표가 옆 화면 이름표와 겹치지 않게 — 넘치는 이름은 …로
+          label.style.width = W + "px";   // 이름표는 화면 폭 안에서 — 긴 이름은 줄을 바꿔 다 보인다(사용자: "08-1 이런 것들 텍스트가 잘림, 다 보이는 게 좋을 듯")
           world.appendChild(label); world.appendChild(box); if (note) world.appendChild(note);
           var b = { slug: s.slug, label: label, box: box, note: note, frame: null, sec: S, screen: s, blocks: blocks };
           if (info) wireInfo(info, b);
@@ -177,13 +179,16 @@
           lines[lines.length - 1].push({ G: G, x: x }); x += gw + GROUP;
         });
         lines.forEach(function (ln) {
-          var rowH = 0, top = y + TAG + LAB;
+          // 이름표가 두 줄이 되면 그만큼 화면을 내린다 (한 줄에 놓인 이름표 중 가장 높은 것 기준)
+          var labH = LAB;
+          ln.forEach(function (it) { it.G.boards.forEach(function (b) { if (statesOn || !b.derived) labH = Math.max(labH, b.label.offsetHeight + 10 * K); }); });
+          var rowH = 0, top = y + TAG + labH;
           ln.forEach(function (it) {
             it.G.tag.style.left = it.x + "px"; it.G.tag.style.top = y + "px";
             it.G.boards.filter(function (b) { return statesOn || !b.derived; }).forEach(function (b, i) {
               var bx = it.x + i * (W + GAP);
               b.x = bx; b.y = top; b.lineY = y; b.h = b.box.offsetHeight || HX.frame.h;
-              b.label.style.left = bx + "px"; b.label.style.top = (top - LAB) + "px";
+              b.label.style.left = bx + "px"; b.label.style.top = (top - 10 * K - b.label.offsetHeight) + "px";
               b.box.style.left = bx + "px"; b.box.style.top = top + "px";
               var h = b.h;
               if (b.note && notesOn) { b.note.style.left = bx + "px"; b.note.style.top = (top + b.h + 28 * K) + "px"; h += 28 * K + b.note.offsetHeight; }
@@ -281,7 +286,7 @@
       label.appendChild(dinfo); label.appendChild(pick);
       pick.addEventListener("pointerdown", function (e) { e.stopPropagation(); });
       var box = HX.el("div", { class: "hx-cv-board hx-sx-board hx-sx-dbox", dataset: { screen: d.slug }, style: "width:" + W + "px" });
-      label.style.maxWidth = W + "px";
+      label.style.width = W + "px";
       world.appendChild(label); world.appendChild(box);
       var b = { slug: d.slug, mountSlug: d.base.slug, derived: true, label: label, box: box, note: null, frame: null, sec: S, screen: d.base,
         apply: function () {

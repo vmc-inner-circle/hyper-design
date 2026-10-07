@@ -29,7 +29,7 @@
     "focus": []
   },
   "nextScreenId": 1, "nextRegionId": 101,
-  "sections": [ { "key": "start", "name": "처음 시작" }, { "key": "home", "name": "홈" } ],
+  "sections": [ { "key": "start", "name": "처음 시작하기", "desc": "가입하고 첫 모임을 만들어요" }, { "key": "home", "name": "홈", "desc": "다가오는 모임을 한눈에 봐요" } ],   // name = 하는 일 · desc = 띠에 보이는 한 줄(필수)
   "screens": [
     {
       "slug": "home",
