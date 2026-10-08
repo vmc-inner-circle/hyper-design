@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>새 모임 · 날짜 후보와 회신 마감 · 보낸 뒤</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.cal { margin-inline: -8px; display: grid; grid-template-columns: repeat(7, 1fr); row-gap: 4px; text-align: center; }
+.cal-wd { font-size: var(--fs-caption); color: var(--c-text-3); font-weight: 600; padding-bottom: 4px; }
+.cal-day { position: relative; height: 44px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; border-radius: var(--r-pill); font-size: var(--fs-sub); color: var(--c-text-1); }
+.cal-day.is-past { color: var(--c-text-3); }
+.cal-day.is-today { font-weight: 700; color: var(--c-brand-text); }
+.cal-day.is-picked { background: var(--c-brand-tint); color: var(--c-brand-tint-text); font-weight: 700; box-shadow: inset 0 0 0 1.5px var(--c-brand); }
+.cal-dots { display: flex; gap: 2px; height: 5px; }
+.cal-dot { width: 5px; height: 5px; border-radius: var(--r-pill); }
+.cal-dot.is-fixed { background: var(--c-brand); }
+.cal-dot.is-cand { background: var(--c-line-strong); }
+.cal-legend { display: flex; flex-wrap: wrap; gap: var(--stack-s) var(--stack-m); font-size: var(--fs-caption); color: var(--c-text-2); }
+.cal-legend span { display: inline-flex; align-items: center; gap: 4px; }
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar"><a class="appbar-btn" href="meetups.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><span class="appbar-title">이화여대 동기 두 번째</span><span></span></header>
+<main class="page">
+  <p class="done">후보 3개와 회신 마감을 저장했어요</p>
+  <header class="hero"><p class="eyebrow">이화여대 동기 두 번째 · 서연 · 2명</p><h1 class="title">주예린·하소정 님께 보낼 준비가 됐어요</h1><p class="lead">두 사람은 앱 설치 없이 카톡 링크에서 바로 답해요</p></header>
+  <section class="block is-list">
+    <a class="row" href="meetups.html"><span class="row-art"><img src="../assets/fluent/invite.svg" alt=""></span><div class="row-main"><span class="badge is-info">회신 중</span><p class="row-title">이화여대 동기 두 번째</p><p class="row-sub">모임 목록에 올라갔어요 · 0/2명 답함</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">2026년 10월</h2><a class="block-link" href="calendar.html">전체 일정</a></div>
+      <div class="cal" role="grid" aria-label="2026년 10월">
+      <span class="cal-wd">일</span>
+      <span class="cal-wd">월</span>
+      <span class="cal-wd">화</span>
+      <span class="cal-wd">수</span>
+      <span class="cal-wd">목</span>
+      <span class="cal-wd">금</span>
+      <span class="cal-wd">토</span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 1일" disabled><span>1</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 2일" disabled><span>2</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 3일" disabled><span>3</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 4일" disabled><span>4</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 5일" disabled><span>5</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-past" aria-pressed="false" aria-label="10월 6일" disabled><span>6</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-today" aria-pressed="false" aria-label="10월 7일 · 오늘"><span>7</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 8일"><span>8</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 9일"><span>9</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 10일 · 확정 모임 2개(서연 망원동 친구 오후 6:00, 준호 현대카드 재무팀 낮 12:00)"><span>10</span><span class="cal-dots"><span class="cal-dot is-fixed"></span></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 11일"><span>11</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 12일"><span>12</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 13일"><span>13</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 14일"><span>14</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 15일"><span>15</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 16일"><span>16</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 17일 · 확정 모임 토스 디자인팀 오후 6:30 · 고려대 경영 동기 후보 오후 7:00"><span>17</span><span class="cal-dots"><span class="cal-dot is-fixed"></span><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day is-picked" aria-pressed="true" aria-label="10월 18일 · 고른 후보"><span>18</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 19일"><span>19</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 20일"><span>20</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 21일"><span>21</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 22일"><span>22</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 23일"><span>23</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-picked" aria-pressed="true" aria-label="10월 24일 · 고른 후보 · 고려대 경영 동기 후보 오후 6:00"><span>24</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day is-picked" aria-pressed="true" aria-label="10월 25일 · 고른 후보 · 고려대 경영 동기 후보 낮 12:00"><span>25</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 26일"><span>26</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 27일"><span>27</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 28일"><span>28</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 29일"><span>29</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 30일"><span>30</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-pressed="false" aria-label="10월 31일 · 밴드 소나기 후보 오후 6:00"><span>31</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      </div>
+    <div class="cal-legend"><span><span class="cal-dot is-fixed"></span>우리 확정 모임</span><span><span class="cal-dot is-cand"></span>다른 모임 후보</span></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">날짜 후보 <span class="num">3개</span></h2><a class="block-link" href="meetup-dates.html">후보 고치기</a></div>
+    <div class="row"><span class="row-date">18일 일</span><div class="row-main"><p class="row-title">10월 18일(일) 낮 12:00</p><p class="row-sub">이날 우리 일정 없음</p></div></div>
+    <div class="row"><span class="row-date">24일 토</span><div class="row-main"><p class="row-title">10월 24일(토) 낮 12:00</p><p class="row-sub">같은 날 오후 6:00 고려대 경영 동기 후보 · 둘 다</p></div></div>
+    <div class="row"><span class="row-date">25일 일</span><div class="row-main"><p class="row-title">10월 25일(일) 오후 3:00</p><p class="row-sub">같은 날 낮 12:00 후보 있음 · 고려대 경영 동기 · 둘 다</p></div></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">회신 마감</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-title">10월 12일(월)까지</p><p class="row-sub">마감 전날, 답 안 한 사람에게 한 번 자동으로 알려요</p></div></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">받는 사람 <span class="num">2명</span></h2></div>
+    <div class="row"><span class="avatar is-text">예</span><div class="row-main"><p class="row-title">주예린</p><p class="row-sub">이화여대 동기 · 링크에서 답해요</p></div></div>
+    <div class="row"><span class="avatar is-text">소</span><div class="row-main"><p class="row-title">하소정</p><p class="row-sub">이화여대 동기 · 링크에서 답해요</p></div></div>
+  </section>
+  <button class="btn secondary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>보낸 링크 다시 복사</button>
+</main>
+<div class="cta"><button class="btn primary full"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 8.5L12 4l4.5 4.5M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"/></svg>카톡으로 링크 보내기</button></div>
+</body></html>

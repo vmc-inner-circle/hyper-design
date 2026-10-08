@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>일정 · 10월 둘 합친 달력</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+  .cal-nav { display: flex; align-items: center; justify-content: space-between; }
+  .cal-nav button { width: 44px; height: 44px; display: grid; place-items: center; color: var(--c-text-2); }
+  .cal-nav svg { width: 22px; height: 22px; }
+  .cal-week, .cal { margin-inline: -8px; display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; }
+  .cal-week span { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-3); font-weight: 600; padding-bottom: var(--stack-s); }
+  .cal { row-gap: 2px; }
+  .cal-day { min-height: 60px; display: flex; flex-direction: column; align-items: center; gap: 3px; padding-top: 2px; border-radius: var(--r-s); color: var(--c-text-1); }
+  .cal-num { width: 32px; height: 32px; display: grid; place-items: center; border-radius: var(--r-pill); font-size: var(--fs-sub); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .cal-day.is-today .cal-num { box-shadow: inset 0 0 0 1.5px var(--c-line-strong); }
+  .cal-day[aria-pressed="true"] .cal-num { background: var(--c-brand-text); color: var(--c-on-brand); box-shadow: none; }
+  .cal-day.is-overlap { background: var(--c-warning-tint); }
+  .cal-dots { display: flex; gap: 3px; height: 7px; }
+  .cal-dot { width: 7px; height: 7px; border-radius: var(--r-pill); }
+  .cal-dot.is-fixed { background: var(--c-brand); }
+  .cal-dot.is-cand { box-shadow: inset 0 0 0 1.5px var(--c-brand); opacity: .55; }
+  .cal-flag { font-size: var(--fs-caption); line-height: 1; font-weight: 700; color: var(--c-warning-tint-text); }
+  .cal-legend { display: flex; flex-wrap: wrap; gap: var(--stack-m); font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+  .cal-legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .cal-key { width: 12px; height: 12px; border-radius: var(--r-s); background: var(--c-warning-tint); }
+</style>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">서연·준호 둘의 일정 · 결혼식 D-66</p>
+    <h1 class="title">10월 17일 저녁, 두 모임이 겹쳐요</h1>
+    <p class="lead">이번 달 겹치는 날은 이날 하나예요</p>
+  </header>
+
+  <section class="block">
+    <div class="cal-nav">
+      <button aria-label="9월"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <h2 class="h2">2026년 10월</h2>
+      <button aria-label="11월"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="cal-week" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+    <div class="cal" role="grid" aria-label="2026년 10월">
+      <span></span><span></span><span></span><span></span>
+      <button class="cal-day"><span class="cal-num">1</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">2</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">3</span><span class="cal-dots"></span></button>
+
+      <button class="cal-day"><span class="cal-num">4</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">5</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">6</span><span class="cal-dots"></span></button>
+      <button class="cal-day is-today" aria-label="10월 7일 오늘"><span class="cal-num">7</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">8</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">9</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-label="10월 10일 확정 모임 2개"><span class="cal-num">10</span><span class="cal-dots"><span class="cal-dot is-fixed"></span><span class="cal-dot is-fixed"></span></span></button>
+
+      <button class="cal-day"><span class="cal-num">11</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">12</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">13</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-label="10월 14일 후보 1개"><span class="cal-num">14</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day"><span class="cal-num">15</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-label="10월 16일 후보 1개"><span class="cal-num">16</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day is-overlap" aria-pressed="true" aria-label="10월 17일 확정 1개 후보 1개 겹침"><span class="cal-num">17</span><span class="cal-dots"><span class="cal-dot is-fixed"></span><span class="cal-dot is-cand"></span></span><span class="cal-flag">겹침</span></button>
+
+      <button class="cal-day"><span class="cal-num">18</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">19</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">20</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">21</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">22</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">23</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-label="10월 24일 후보 1개"><span class="cal-num">24</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+
+      <button class="cal-day" aria-label="10월 25일 후보 1개"><span class="cal-num">25</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+      <button class="cal-day"><span class="cal-num">26</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">27</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">28</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">29</span><span class="cal-dots"></span></button>
+      <button class="cal-day"><span class="cal-num">30</span><span class="cal-dots"></span></button>
+      <button class="cal-day" aria-label="10월 31일 후보 1개"><span class="cal-num">31</span><span class="cal-dots"><span class="cal-dot is-cand"></span></span></button>
+    </div>
+    <div class="cal-legend">
+      <span><span class="cal-dot is-fixed"></span>확정</span>
+      <span><span class="cal-dot is-cand"></span>후보</span>
+      <span><span class="cal-key"></span>같은 사람 겹침</span>
+    </div>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">10월 17일 토요일</h2><span class="badge is-warning">겹침</span></div>
+    <a class="row" href="meetup-confirmed.html"><span class="row-date">오후<br>6:30</span><div class="row-main"><span class="badge is-brand">확정</span><p class="row-title">토스 디자인팀</p><p class="row-sub"><strong>서연 쪽</strong> · 서연·준호 둘 다 · 성수동 비스트로 온</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="meetup-detail.html"><span class="row-date">오후<br>7:00</span><div class="row-main"><span class="badge is-info">회신 중</span><p class="row-title">고려대 경영 동기 · 후보</p><p class="row-sub"><strong>준호 쪽</strong> · 서연·준호 둘 다 · 후보 3개 중 하나</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2.5 20h19z"/><path d="M12 10v4M12 17h.01"/></svg><span>같은 사람이 나가는 시간이 겹쳐요</span></p>
+    <a class="btn small tint" href="meetup-edit.html">후보 고치기</a>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">10월 다른 날</h2></div>
+    <a class="row" href="meetup-confirmed.html"><span class="row-date">10/10<br>토</span><div class="row-main"><span class="badge is-brand">확정</span><p class="row-title">현대카드 재무팀 · 망원동 친구</p><p class="row-sub"><strong>준호</strong> 낮 12:00 · <strong>서연</strong> 오후 6:00 — 나가는 사람이 달라요</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="meetup-detail.html"><span class="row-date">10/14<br>10/16</span><div class="row-main"><span class="badge is-info">회신 중</span><p class="row-title">김민정 팀장님 (1:1) · 후보</p><p class="row-sub"><strong>서연 쪽</strong> · 서연 · 낮 12:00</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="meetup-detail.html"><span class="row-date">10/24<br>10/25</span><div class="row-main"><span class="badge is-info">회신 중</span><p class="row-title">고려대 경영 동기 · 후보</p><p class="row-sub"><strong>준호 쪽</strong> · 서연·준호 둘 다</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="meetup-confirm.html"><span class="row-date">10/31<br>토</span><div class="row-main"><span class="badge">확정 전</span><p class="row-title">밴드 소나기 · 후보 오후 6:00</p><p class="row-sub"><strong>준호 쪽</strong> · 서연·준호 둘 다</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+</main>
+<nav class="tabbar">
+  <a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-6h-6v6H4z"/></svg>홈</a>
+  <a class="tab" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>일정</a>
+  <a class="tab" href="meetups.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>모임</a>
+  <a class="tab" href="people.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21 20c0-2.6-1.6-4.8-4-5.6"/></svg>지인</a>
+</nav>
+</body></html>

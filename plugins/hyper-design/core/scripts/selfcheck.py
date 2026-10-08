@@ -159,6 +159,23 @@ try:
         if not it.get("why"): errs.append(f"decisions.json: '{it.get('name')}' 판단 이유 없음")
 except Exception as e:
     errs.append(f"decisions.json 없음/깨짐: {e}")
+# 시장 관례(v18): 잘 되는 앱들이 하는 흐름은 기본값 — 2개 이상 앱에서 본 것만 관례, 모든 관례는 장부에서 따랐는지/벗어났는지 판정
+CONV = out / "conventions.json"
+if CONV.exists():
+    try:
+        C = json.loads(CONV.read_text(encoding="utf-8"))
+        try: DI = {i.get("id"): i for i in json.loads((out / "decisions.json").read_text(encoding="utf-8")).get("items", [])}
+        except Exception: DI = {}
+        for kind in ("follow", "consider"):
+            for c in C.get(kind) or []:
+                if len(set(c.get("seen_in") or [])) < 2: errs.append(f"conventions {c.get('id')}: {kind}인데 본 앱 {len(set(c.get('seen_in') or []))}개 — 2개 이상 앱에서 본 것만(아니면 cases)")
+                d = DI.get(c.get("id"))
+                if not d: errs.append(f"decisions.json: 시장 관례 {c.get('id')} '{(c.get('what') or '')[:30]}' 판정 없음 — 따랐는지/벗어났는지(source: 시장)")
+                elif d.get("source") != "시장": errs.append(f"decisions.json: {c.get('id')}의 source가 '시장'이 아님")
+    except Exception as e:
+        errs.append(f"conventions.json 깨짐: {e}")
+elif not (out / "market/SKIPPED").exists():
+    errs.append("시장 관례 없음 — market.py + 해석 에이전트로 conventions.json(못 하면 out/market/SKIPPED에 이유)")
 # 배지 뜻→색 표: 선언한 표만 쓰고, 한 색에 뜻 하나
 BADGES = m.get("badges") or {}
 if not BADGES: errs.append("badges(뜻→색 표) 없음")

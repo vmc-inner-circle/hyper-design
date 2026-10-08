@@ -1,0 +1,74 @@
+[
+ {
+  "slot": "fukuoka",
+  "file": "assets/photos/fukuoka.jpg",
+  "title": "Nakasu, Fukuoka (福岡市中洲)",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://kuraunaito.com/photos/nakasu-fukuoka/"
+ },
+ {
+  "slot": "yufuin",
+  "file": "assets/photos/yufuin.jpg",
+  "title": "오감이 즐거운 도시, 유후인의 명소 모음",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://triple.guide/articles/b55c9cea-4a35-4bb9-8ce2-5599158c0ae6"
+ },
+ {
+  "slot": "ryokan",
+  "file": "assets/photos/ryokan.jpg",
+  "title": "7 Ryokan With Private Onsen in Japan - Fravel",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://fravel.co/ryokan-private-onsen-japan/"
+ },
+ {
+  "slot": "dazaifu",
+  "file": "assets/photos/dazaifu.jpg",
+  "title": "다자이후 텐만구 신사와 규슈 국립 박물관 전철 반나절 투어 - 클룩 Klook 한국",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://www.klook.com/ko/activity/78038-dazaifu-kyushu-national-museum-tour/?aid=15027&aff_adid=654416&aff_ext=activity-ac0078038"
+ },
+ {
+  "slot": "beppu",
+  "file": "assets/photos/beppu.jpg",
+  "title": "[오이타] 벳푸 지옥 온천 티켓 - LIVE JAPAN (일본여행정보사이트)",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://livejapan.com/ko/in-tokyo/in-pref-other/in-pref-oita/activity-attraction_passes_and_more/ac0029063/"
+ },
+ {
+  "slot": "yufuin-train",
+  "file": "assets/photos/yufuin-train.jpg",
+  "title": "후쿠오카 유후인노모리 기차 예약방법",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://pluconnect.com/유후인노모리-예약/"
+ },
+ {
+  "slot": "kaiseki",
+  "file": "assets/photos/kaiseki.jpg",
+  "title": "10 Best Ryokan in Tokyo Japan - Asiatravelbug",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://asiatravelbug.com/best-ryokan-tokyo-japan/"
+ },
+ {
+  "slot": "family-trip",
+  "file": "assets/photos/family-trip.jpg",
+  "title": "Family Walking Together Family Walking Pictures | Download Free Images",
+  "author": "",
+  "license": "unknown(내부 검토용)",
+  "source": "bing",
+  "url": "https://fity.club/lists/suggestions/family-walking-together/"
+ }
+]

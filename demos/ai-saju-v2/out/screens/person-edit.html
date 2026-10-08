@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>저장한 사람 · 이도현</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.btn.is-danger-text { color: var(--c-danger); }
+.chips.is-wrap { flex-wrap: wrap; overflow: visible; padding: 0; margin: 0; }
+</style>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="me.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">저장한 사람</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label">나와의 관계</span>
+    <div class="chips is-wrap"><button class="chip is-selected">연인</button><button class="chip">배우자</button><button class="chip">가족</button><button class="chip">친구</button><button class="chip">동료</button></div>
+  </div>
+  <div class="field"><label class="label" for="name">이름</label><input class="input" id="name" value="이도현"></div>
+  <div class="field"><span class="label">성별</span>
+    <div class="seg" role="radiogroup"><button class="seg-item" role="radio" aria-checked="false">여</button><button class="seg-item is-selected" role="radio" aria-checked="true">남</button></div>
+  </div>
+  <div class="field"><label class="label" for="birth">생년월일</label><input class="input" id="birth" value="1997년 8월 9일"></div>
+  <div class="field"><span class="label">달력</span>
+    <div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">양력</button><button class="seg-item" role="radio" aria-checked="false">음력</button></div>
+  </div>
+  <div class="field"><label class="label" for="time">태어난 시간</label><input class="input" id="time" value="모름">
+    <p class="info"><span>시간을 넣으면 궁합이 더 정확해져요</span></p>
+  </div>
+  <div class="field">
+    <button class="btn secondary is-danger-text">이 사람 지우기</button>
+    <p class="info"><span>지우면 이 사람의 궁합·리포트 기록도 지울지 물어봐요</span></p>
+  </div>
+</main>
+<div class="cta"><a class="btn primary full" href="me.html">저장</a></div>
+</body></html>

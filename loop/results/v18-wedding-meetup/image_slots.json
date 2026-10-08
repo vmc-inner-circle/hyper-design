@@ -1,0 +1,8 @@
+[{"slot": "couple", "screens": ["start", "start--done"], "what": "한국인 30대 예비부부가 야외에서 웃는 웨딩 스냅(정장·원피스, 자연광)", "ratio": "16:9", "kind": "photo", "queries": ["한국 예비부부 웨딩 스냅 야외", "korean couple prewedding photo outdoor"]},
+ {"slot": "place-seongsu", "screens": ["meetup-confirmed", "home", "calendar"], "what": "성수동 분위기의 따뜻한 조명 비스트로 실내, 테이블 위 와인잔", "ratio": "16:9", "kind": "photo", "queries": ["성수동 비스트로 실내", "cozy bistro interior warm lighting tables"]},
+ {"slot": "place-yeouido", "screens": ["home", "calendar"], "what": "깔끔한 한식당 점심 상차림(한정식 반찬)", "ratio": "1:1", "kind": "photo", "queries": ["한정식 점심 상차림", "korean set lunch table banchan"]},
+ {"slot": "place-mangwon", "screens": ["home", "calendar"], "what": "동네 고깃집 숯불 테이블 저녁", "ratio": "1:1", "kind": "photo", "queries": ["숯불 고깃집 테이블", "korean bbq charcoal grill table"]},
+ {"slot": "place-hapjeong", "screens": ["meetups"], "what": "아늑한 한식 다이닝 저녁 테이블", "ratio": "1:1", "kind": "photo", "queries": ["합정 한식 다이닝", "modern korean dining table dinner"]},
+ {"slot": "place-yeonnam", "screens": ["meetups"], "what": "이탈리안 레스토랑 파스타 테이블, 친구들 모임 분위기(얼굴 없음)", "ratio": "1:1", "kind": "photo", "queries": ["연남동 파스타 테이블", "pasta dinner table friends hands"]},
+ {"slot": "invitation", "screens": ["meetup-confirm--done", "invitee-reply--done"], "what": "테이블 위 청첩장 봉투와 카드(글자가 크게 보이지 않게)", "ratio": "4:3", "kind": "photo", "queries": ["청첩장 봉투 테이블", "wedding invitation envelope on table"]},
+ {"slot": "place-gangnam", "screens": ["invitee-inbox"], "what": "강남 이자카야 저녁 테이블", "ratio": "1:1", "kind": "photo", "queries": ["이자카야 테이블 저녁", "izakaya dinner table"]}]
