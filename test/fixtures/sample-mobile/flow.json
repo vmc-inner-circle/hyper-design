@@ -1,0 +1,19 @@
+{
+  "flows": [
+    {
+      "key": "browse",
+      "name": "목록 보기",
+      "role": "owner",
+      "steps": [
+        {
+          "from": "home",
+          "region": "actions",
+          "trigger": "open-list",
+          "action": "'전체 목록 보기'를 누르면",
+          "to": "list"
+        }
+      ]
+    }
+  ],
+  "branches": []
+}

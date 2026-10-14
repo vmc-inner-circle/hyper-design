@@ -1,0 +1,16 @@
+<main class="content">
+  <x-page-header title="홈" desc="오늘 할 일과 최근 변경이에요"/>
+  <div data-region="summary">
+    <x-stat label="오늘 할 일" value="5건"/>
+  </div>
+  <x-section title="최근 변경" data-region="recent">
+    <x-list>
+      <x-item icon="clock" title="독서 모임 장소 변경" meta="어제"/>
+      <x-item icon="clock" title="다음 모임 날짜 확정" meta="3일 전"/>
+      <x-item icon="clock" title="새 구성원 초대" meta="5일 전"/>
+    </x-list>
+  </x-section>
+  <div data-region="new">
+    <button class="btn btn-primary" data-trigger="create">새로 만들기</button>
+  </div>
+</main>

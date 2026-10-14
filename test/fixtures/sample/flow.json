@@ -1,0 +1,26 @@
+{
+  "flows": [
+    {
+      "key": "make-item",
+      "name": "새 항목 만들기",
+      "role": "owner",
+      "steps": [
+        {
+          "from": "home",
+          "region": "new",
+          "trigger": "create",
+          "action": "'새로 만들기'를 누르면",
+          "to": "create"
+        },
+        {
+          "from": "create",
+          "region": "item-form",
+          "trigger": "save",
+          "action": "'만들기'를 누르면",
+          "to": "done"
+        }
+      ]
+    }
+  ],
+  "branches": []
+}

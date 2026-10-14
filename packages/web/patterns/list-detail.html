@@ -1,0 +1,117 @@
+<!-- pattern: list-detail — 좌 목록 / 우 상세 (.split 2단).
+     목록에서 하나를 골라 오른쪽에서 보는 화면. <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다.
+     data-region key는 예시(example-*). screens.json의 key로 바꾼다. -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 한 줄 -->요청 관리</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김민</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 (현재 화면에 .active) -->
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-inbox"/></svg><span>요청</span><span class="badge badge-neutral">8</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>구성원</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>설정</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="split">
+      <div class="split-list" data-region="example-list">
+        <div class="toolbar">
+          <div class="search w-full">
+            <svg class="icon" aria-hidden="true"><use href="#i-search"/></svg>
+            <input class="input" type="search" placeholder="<!-- slot: 검색 힌트 -->요청명·담당자 검색">
+          </div>
+          <button class="btn btn-ghost btn-icon" aria-label="필터"><svg class="icon" aria-hidden="true"><use href="#i-funnel"/></svg></button>
+        </div>
+        <nav class="list list-divided">
+          <!-- slot: 목록 행 5~8개, 선택된 행에 .active -->
+          <a class="list-item active" href="#">
+            <span class="list-icon is-primary"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">사무용품 구매</span><span class="list-sub">김민수 · 128,000원</span></div>
+            <span class="list-meta"><span class="badge badge-warning">검토 중</span></span>
+          </a>
+          <a class="list-item" href="#">
+            <span class="list-icon"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">외부 교육 참가비</span><span class="list-sub">이서연 · 450,000원</span></div>
+            <span class="list-meta"><span class="badge badge-success">승인</span></span>
+          </a>
+          <a class="list-item" href="#">
+            <span class="list-icon"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">서버 임대료 9월</span><span class="list-sub">박준호 · 1,320,000원</span></div>
+            <span class="list-meta"><span class="badge badge-danger">반려</span></span>
+          </a>
+          <a class="list-item" href="#">
+            <span class="list-icon"><svg class="icon" aria-hidden="true"><use href="#i-file-text"/></svg></span>
+            <div class="list-main"><span class="list-title">출장 경비 정산</span><span class="list-sub">정우진 · 342,000원</span></div>
+            <span class="list-meta"><span class="badge badge-neutral">초안</span></span>
+          </a>
+          <a class="list-item is-muted" href="#">
+            <span class="list-icon"><svg class="icon" aria-hidden="true"><use href="#i-archive"/></svg></span>
+            <div class="list-main"><span class="list-title">회식비 8월</span><span class="list-sub">보관 처리됨</span></div>
+            <span class="list-meta">8/29</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="split-detail" data-region="example-detail">
+        <div class="page-header">
+          <div>
+            <div class="row gap-2 mb-2"><span class="badge badge-warning">검토 중</span><span class="badge badge-neutral">구매</span></div>
+            <h1 class="page-title"><!-- slot: 선택 항목 제목 -->사무용품 구매</h1>
+            <p class="page-desc"><!-- slot: 한 줄 요약 -->#2041 · 9월 25일 접수 · 마감 10월 2일</p>
+          </div>
+          <div class="page-actions">
+            <!-- slot: 보조 액션 + primary 1개 -->
+            <button class="btn btn-secondary"><svg class="icon" aria-hidden="true"><use href="#i-pencil"/></svg>수정</button>
+            <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>승인</button>
+          </div>
+        </div>
+
+        <nav class="tabs mb-6">
+          <a class="tab active" href="#">개요</a>
+          <a class="tab" href="#">활동 <span class="badge badge-neutral">3</span></a>
+          <a class="tab" href="#">파일</a>
+        </nav>
+
+        <div class="grid-2 mb-6">
+          <!-- slot: 상세 필드 카드 -->
+          <div class="card"><div class="card-body">
+            <div class="row-between"><span class="text-sm text-muted">담당자</span><div class="row gap-2"><span class="avatar avatar-sm">김민</span><span>김민수</span></div></div>
+            <div class="row-between"><span class="text-sm text-muted">부서</span><span>영업1팀</span></div>
+            <div class="row-between"><span class="text-sm text-muted">금액</span><span class="fw-semibold">128,000원</span></div>
+            <div class="row-between"><span class="text-sm text-muted">결제 방식</span><span>법인카드</span></div>
+          </div></div>
+          <div class="card"><div class="card-body">
+            <span class="card-title">메모</span>
+            <p class="text-2">모니터 받침대 2개, A4 용지 5박스. 재고 소진으로 이번 주 안에 필요합니다.</p>
+            <div class="row gap-2"><span class="chip"><svg class="icon-sm" aria-hidden="true"><use href="#i-paperclip"/></svg> 견적서.pdf</span></div>
+          </div></div>
+        </div>
+
+        <section class="section" data-region="example-history">
+          <h2 class="section-title">진행 이력</h2>
+          <div class="card"><div class="card-body">
+            <!-- slot: 이력 타임라인 -->
+            <div class="timeline timeline-compact">
+              <div class="timeline-item"><span class="timeline-dot"></span><div class="timeline-content"><div class="timeline-title">검토 요청</div><p class="timeline-desc">김민수 · 9/26 10:15</p></div></div>
+              <div class="timeline-item"><span class="timeline-dot dot-info"></span><div class="timeline-content"><div class="timeline-title">이서연 님이 댓글을 남겼습니다</div><p class="timeline-desc">"견적 2안 추가 부탁드립니다" · 9/25 17:02</p></div></div>
+              <div class="timeline-item"><span class="timeline-dot dot-neutral"></span><div class="timeline-content"><div class="timeline-title">작성됨</div><p class="timeline-desc">김민수 · 9/25 16:40</p></div></div>
+            </div>
+          </div></div>
+        </section>
+      </div>
+    </div>
+  </main>
+</div>

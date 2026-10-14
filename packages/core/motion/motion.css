@@ -1,0 +1,64 @@
+/* motion.css — 최종본 화면별 페이지(out/screens/NN-slug.html)에만 실린다. 보드에는 싣지 않는다(요소 고르기를 방해하지 않게).
+   기본 움직임(화면 들어오기·뜨는 창·누름 반응)과 screens.json motion이 쓰는 클래스. 움직임 줄이기 설정이면 모두 끈다. */
+@media (prefers-reduced-motion: no-preference) {
+  .app.mo-enter { animation: mo-enter .32s cubic-bezier(.2, .8, .2, 1) both; }
+  .app.mo-enter-back { animation: mo-enter-back .32s cubic-bezier(.2, .8, .2, 1) both; }
+  .modal-backdrop.mo-in { animation: mo-fade .24s ease both; }
+  .modal-backdrop.mo-in > .modal { animation: mo-pop .28s cubic-bezier(.2, .8, .2, 1) both; }
+  .modal-backdrop.mo-in > .modal.sheet { animation: mo-up .36s cubic-bezier(.2, .8, .2, 1) both; }
+  .app button, .app a.btn, .app .nav-item, .app label { transition: transform .1s ease, filter .1s ease, background-color .15s ease, color .15s ease; }
+  .app button:active, .app a.btn:active, .app .nav-item:active { transform: scale(.95); filter: brightness(.9); }
+  .mo-breathe { animation: mo-breathe 2.8s ease-in-out infinite; }
+  .mo-pulse { animation: mo-pulse 1.2s ease 3; }
+}
+@keyframes mo-enter { from { opacity: 0; transform: translateX(28px); } to { opacity: 1; transform: none; } }
+@keyframes mo-enter-back { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
+@keyframes mo-fade { from { opacity: 0; } }
+@keyframes mo-pop { from { opacity: 0; transform: scale(.96); } }
+@keyframes mo-up { from { transform: translateY(100%); } }
+@keyframes mo-breathe { 50% { opacity: .4; } }
+@keyframes mo-pulse { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--c-primary) 30%, transparent); } }
+
+/* 길게 누르기: 누르는 동안 버튼이 왼쪽부터 차오른다 */
+.mo-hold { position: relative; overflow: hidden; touch-action: none; user-select: none; -webkit-user-select: none; }
+.mo-hold-fill { position: absolute; inset: 0; background: rgba(255, 255, 255, .3); transform: scaleX(0); transform-origin: left center; pointer-events: none; }
+/* 몇 초 뒤 어두워지기: 화면을 누르면 잠깐 밝아진다 */
+.mo-dim { position: absolute; inset: 0; z-index: 9000; background: #000; opacity: 0; pointer-events: none; transition: opacity 1.4s ease; }
+.mo-dim.on { pointer-events: auto; }
+/* 길게 눌러 끌어서 순서 바꾸기 */
+.mo-lift { position: relative; z-index: 5; background: var(--c-surface); box-shadow: 0 12px 28px rgba(0, 0, 0, .18); border-radius: var(--r-control); }
+
+.hx-mo-toast { position: fixed; left: 50%; top: 72px; transform: translateX(-50%); z-index: 9999; padding: 10px 16px; border-radius: 999px;
+  background: rgba(17, 24, 39, .92); color: #fff; font: 600 14px/1.3 var(--font-sans); pointer-events: none; }
+/* 앱 안내 상자: 자리는 부품(toast)이 정한다 — 화면 위쪽. 들어올 때 위에서 살짝 내려온다 */
+@media (prefers-reduced-motion: no-preference) { .toast.mo-toast { animation: mo-toast .28s cubic-bezier(.2, .8, .2, 1) both; } }
+@keyframes mo-toast { from { opacity: 0; transform: translateY(-10px); } }
+/* 입력칸 글자 수 */
+.field-count { align-self: flex-end; margin-top: var(--sp-1); font-size: var(--fs-xs); color: var(--c-text-muted); font-variant-numeric: tabular-nums; }
+.field-count.is-full { color: var(--c-warning); font-weight: var(--fw-semibold); }
+/* 앱 밖으로 나가는 버튼을 누르면: 휴대폰 시스템 화면 자리 (디자이너 보드의 'OS 모달 등장' 자리처럼) */
+.mo-out { position: absolute; inset: 0; z-index: 9500; display: flex; align-items: flex-end; justify-content: center; padding: var(--sp-5); background: rgba(17, 24, 39, .55); }
+.mo-out-card { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-5); border-radius: var(--r-xl);
+  background: #F2F2F7; color: #111827; border: 2px dashed #9CA3AF; font-family: -apple-system, "Apple SD Gothic Neo", system-ui, sans-serif; }
+.mo-out-k { font-size: 12px; font-weight: 700; color: #6B7280; }
+.mo-out-card b { font-size: 17px; }
+.mo-out-card p { margin: 0 0 var(--sp-2); font-size: 13px; color: #4B5563; }
+@media (prefers-reduced-motion: no-preference) { .mo-out { animation: mo-fade .2s ease both; } .mo-out-card { animation: mo-up .3s cubic-bezier(.2, .8, .2, 1) both; } }
+/* 튜토리얼(보드에서 마우스를 올렸을 때): 손가락(데스크톱은 커서 점) · 위쪽 말풍선 */
+.mo-finger { position: absolute; z-index: 9700; width: 46px; height: 46px; margin: -23px 0 0 -23px; border-radius: 50%; pointer-events: none;
+  background: rgba(17, 24, 39, .22); border: 3px solid rgba(255, 255, 255, .95); box-shadow: 0 4px 14px rgba(0, 0, 0, .28); }
+.mo-finger.down { transform: scale(.78); background: rgba(17, 24, 39, .38); }
+.mo-finger.down::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(17, 24, 39, .35); animation: mo-ripple .5s ease-out both; }
+.mo-finger.hold::after { animation: mo-ripple 1.2s ease-out infinite; }
+.mo-finger-desk { width: 26px; height: 26px; margin: -13px 0 0 -13px; border-width: 2px; }
+@keyframes mo-ripple { from { transform: scale(.7); opacity: 1; } to { transform: scale(1.8); opacity: 0; } }
+.mo-cap { position: absolute; z-index: 9800; left: 50%; top: 14px; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 8px 14px; border-radius: 999px;
+  background: rgba(17, 24, 39, .88); color: #fff; font: 600 13px/1.35 var(--font-sans); text-align: center; pointer-events: none; box-shadow: 0 6px 18px rgba(0, 0, 0, .2); }
+/* 옆으로 넘치는 줄: 끝을 흐리게 — 밀면 더 있다는 표시 */
+.mo-fade { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); cursor: grab; }
+.mo-static, .mo-static .mo-out-card { animation: none !important; }
+.mo-focus { border-color: var(--c-primary) !important; box-shadow: 0 0 0 3px var(--c-primary-soft) !important; }
+.mo-cap-when { top: 10px; background: rgba(185, 28, 28, .92); }
+.mo-cap-when.is-ok { background: rgba(21, 128, 61, .92); }
+.mo-cap-when.is-info { background: rgba(37, 99, 235, .92); }
+.mo-cap-when.is-warn { background: rgba(180, 83, 9, .92); }

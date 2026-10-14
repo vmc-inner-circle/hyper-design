@@ -1,0 +1,5 @@
+{
+ "$comment": "단계마다 켜는 검사. 통합 자리에서만 바꾼다 — parts-krds는 [3/5 값 층], guides는 [5/5 스킬]에서 true.",
+ "parts-krds": true,
+ "guides": true
+}

@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "flow.schema.json",
+  "title": "flow.json — 사용자 여정(흐름)과 흐름 밖 버튼(갈래)",
+  "description": "정본. 객체: 흐름(flow) · 흐름 단계(step, 갈래도 같은 모양). x-ref로 screens.schema.json의 객체를 가리킨다(screens#…). 규칙은 rules.json(x-rules), 조각 HTML과의 이어짐(data-trigger)은 lint.js.",
+  "type": "object",
+  "required": [
+    "flows"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/flow"
+      },
+      "minItems": 1,
+      "description": "여정을 화면 사이 이동으로 — 역할별 처음 시작 흐름이 맨 앞",
+      "x-status": "adopted",
+      "x-why": "화면 사이를 끊김 없이 이어 가는 작업 단위",
+      "x-source": "KRDS 서비스 패턴 — 여정 단계 기반(https://www.krds.go.kr/html/site/service/service_summary.html)",
+      "x-rules": [
+        "flow-steps",
+        "reachable"
+      ],
+      "x-layer": "화면",
+      "x-stage": "S2 여정 · 화면 목록"
+    },
+    "branches": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      },
+      "description": "흐름 밖에서 다른 화면 · 창을 여는 버튼",
+      "x-status": "adopted",
+      "x-why": "흐름 밖 버튼이 여는 화면을 적어 두면 '누르면 무슨 화면이 나오는지' 빠지지 않는다",
+      "x-layer": "화면",
+      "x-stage": "S2 여정 · 화면 목록",
+      "x-feeds": [
+        "build",
+        "lint",
+        "보드"
+      ],
+      "x-rules": [
+        "reachable"
+      ]
+    }
+  },
+  "$defs": {
+    "kebab": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "step": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "$ref": "#/$defs/kebab",
+          "description": "출발 화면 slug",
+          "x-status": "adopted",
+          "x-ref": "screens#screen.slug",
+          "x-feeds": [
+            "build",
+            "보드"
+          ]
+        },
+        "region": {
+          "$ref": "#/$defs/kebab",
+          "description": "누르는 곳이 속한 영역 key",
+          "x-status": "adopted",
+          "x-ref": {
+            "to": "screens#region.key",
+            "within": "from"
+          }
+        },
+        "trigger": {
+          "$ref": "#/$defs/kebab",
+          "description": "누르는 버튼 key — 조각의 data-trigger",
+          "x-status": "adopted",
+          "x-feeds": [
+            "lint",
+            "build"
+          ]
+        },
+        "action": {
+          "type": "string",
+          "description": "'버튼 문구'를 누르면 — 문구를 따옴표 안에 그대로",
+          "x-status": "adopted",
+          "x-feeds": [
+            "build",
+            "보드"
+          ]
+        },
+        "to": {
+          "$ref": "#/$defs/kebab",
+          "description": "도착 화면 slug",
+          "x-status": "adopted",
+          "x-ref": "screens#screen.slug"
+        },
+        "when": {
+          "type": "string",
+          "description": "갈래 이름표 16자 이내 \"~면\" — 같은 화면 · 같은 버튼에서 갈릴 때만. 구역 보드는 when이 있는 연결에만 화살표를 그린다",
+          "x-status": "adopted",
+          "x-rules": [
+            "split-when"
+          ],
+          "x-feeds": [
+            "build",
+            "lint",
+            "보드"
+          ]
+        }
+      },
+      "required": [
+        "from",
+        "region",
+        "trigger",
+        "action",
+        "to"
+      ],
+      "additionalProperties": false,
+      "x-object": "흐름 단계 · 갈래",
+      "x-layer": "화면",
+      "description": "흐름의 한 단계 — 어느 화면의 어느 영역 버튼을 누르면 어느 화면으로. 흐름 밖 버튼(갈래)도 같은 모양"
+    },
+    "flow": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/kebab",
+          "x-status": "adopted",
+          "description": "흐름 id",
+          "x-feeds": [
+            "보드"
+          ],
+          "x-unique": "doc"
+        },
+        "name": {
+          "type": "string",
+          "description": "작업 이름 '~하기'",
+          "x-status": "adopted",
+          "x-feeds": [
+            "보드"
+          ]
+        },
+        "role": {
+          "type": "string",
+          "description": "이 흐름의 주인 = roles[].key",
+          "x-status": "adopted",
+          "x-why": "흐름마다 주인이 있어야 그 역할의 목표를 이루는지 볼 수 있다",
+          "x-source": "KRDS 서비스 패턴 — 여정 단계 기반(https://www.krds.go.kr/html/site/service/service_summary.html)",
+          "x-rules": [
+            "flow-role"
+          ],
+          "x-ref": "screens#role.key",
+          "x-feeds": [
+            "보드"
+          ]
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "minItems": 1,
+          "x-rules": [
+            "flow-steps"
+          ],
+          "x-status": "adopted",
+          "description": "끊김 없는 단계들"
+        }
+      },
+      "required": [
+        "key",
+        "name",
+        "role",
+        "steps"
+      ],
+      "additionalProperties": false,
+      "x-object": "흐름",
+      "x-layer": "화면",
+      "description": "흐름 하나 — 한 역할이 끊김 없이 이어 가는 작업('~하기')"
+    }
+  },
+  "x-version": "1"
+}

@@ -1,0 +1,1066 @@
+{
+  "$description": "규칙 목록 — 권장 · 규칙의 유일한 자리. 스키마 칸은 x-rules로 이 id를 가리키고, 규칙은 fields로 칸을 가리킨다(두 방향이 서로 맞아야 한다 — node scripts/schema.js). 칸이 아닌 곳(base.css · 부품 CSS)을 보는 규칙은 where. 강도: krds-must(KRDS 필수) · krds-should(KRDS 권장) · krds-best(KRDS 우수) · ours(우리 과정 규칙) · case(사례 참고). 검사: check.by = schema(scripts/schema.js) · lint(scripts/lint.js) · looks(scripts/looks.js) · parts-css(부품 CSS 시험) · values(값 층 대비 시험 — test/checks/30) · render(그린 화면 측정) · none(안내문이 지시). check.status가 있으면 아직 검사 코드가 없다.",
+  "rules": [
+    {
+      "id": "roles-count",
+      "says": "역할은 2~3개, 하나뿐이면 빈 배열",
+      "strength": "ours",
+      "fields": [
+        "roles"
+      ],
+      "value": {
+        "min": 0,
+        "max": 3
+      },
+      "check": {
+        "by": "none",
+        "status": "검사 코드 없음 — 하네스 글이 지시, 위반이 보드에서 바로 보인다"
+      },
+      "source": "prd-to-screens §2",
+      "status": "adopted"
+    },
+    {
+      "id": "nav-count",
+      "says": "역할 메뉴는 3~6개, 보기만 하는 역할은 2~3개",
+      "strength": "ours",
+      "fields": [
+        "roles[].nav"
+      ],
+      "value": {
+        "min": 2,
+        "max": 6
+      },
+      "check": {
+        "by": "none",
+        "status": "검사 코드 없음 — 하네스 글이 지시, 위반이 보드에서 바로 보인다"
+      },
+      "source": "prd-to-screens §2",
+      "status": "adopted"
+    },
+    {
+      "id": "regions-count",
+      "says": "화면 영역은 3~6개",
+      "strength": "ours",
+      "fields": [
+        "screens[].regions"
+      ],
+      "value": {
+        "min": 3,
+        "max": 6
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL",
+        "when": "6 초과"
+      },
+      "source": "prd-to-screens §4 — 화면당 영역 3~6개",
+      "status": "adopted"
+    },
+    {
+      "id": "rank1-one",
+      "says": "모든 화면(뜨는 창 · 입력 포함)마다 1순위(level 1) 영역은 정확히 하나, 그 key가 focus — 품질 예측이 아니라 바닥(일관성) 검사",
+      "strength": "krds-must",
+      "fields": [
+        "screens[].regions[].level",
+        "screens[].focus"
+      ],
+      "value": "1",
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "KRDS 방문 '시급하거나 중요한 정보를 빨리 인지'(필수) — https://www.krds.go.kr/html/site/service/service_01_01.html",
+      "status": "proposed"
+    },
+    {
+      "id": "rank3-max",
+      "says": "3순위(level 3) 영역은 화면당 하나 이하, 넘치면 defer로 — 경고만",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].regions[].level",
+        "screens[].defer"
+      ],
+      "value": {
+        "max": 1
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "KRDS 목록 탐색 '강조 표현을 과도하게 쓰지 않는다' — https://www.krds.go.kr/html/site/global/global_04.html",
+      "status": "proposed"
+    },
+    {
+      "id": "rank1-hero",
+      "says": "1순위 영역의 모양은 hero(한 칸 큰 글) — 칸 나누기·카드·숫자 칸 금지",
+      "strength": "ours",
+      "fields": [
+        "screens[].regions[].form",
+        "screens[].regions[].signature"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙 — 1순위 영역은 한 칸 큰 글(hero)로 두어야 첫눈에 읽힌다",
+      "status": "adopted"
+    },
+    {
+      "id": "actions-mobile",
+      "says": "모바일 화면에 주 버튼이 있으면 actions 영역 하나, 본문 마지막 · level 2",
+      "strength": "ours",
+      "fields": [
+        "platform",
+        "screens[].regions[].form",
+        "screens[].regions[].level"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL",
+        "status": "lint 검사 코드는 아직"
+      },
+      "source": "우리 규칙 — 모바일 주 버튼은 엄지가 닿는 아래 꽉 찬 버튼(.bottom-cta) 한 줄로 모은다. 흐름 단계의 region은 그 actions 영역 key",
+      "status": "adopted"
+    },
+    {
+      "id": "emphasize-length",
+      "says": "1순위 문장은 30자 안팎 한 줄, 넘치면 뒷부분을 emphasize2로",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].emphasize",
+        "screens[].emphasize2"
+      ],
+      "value": {
+        "emphasize": 30,
+        "emphasize2": 40
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "KRDS 상세 정보 확인 '핵심 주제는 첫 문단·첫 문장에'(권장) — https://www.krds.go.kr/html/site/global/global_06.html · 30자는 우리 값",
+      "status": "adopted"
+    },
+    {
+      "id": "emphasize-fact",
+      "says": "1순위 문장은 겪는 문제(problem)를 푸는 사실 — 날짜·시각·장소·개수·변경 전후 없이 안내문만이면 경고",
+      "strength": "ours",
+      "fields": [
+        "screens[].emphasize",
+        "screens[].problem"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "우리 규칙 — 1순위 문장은 이 화면에서 겪는 문제(problem)에 답하는 실제 사실로",
+      "status": "proposed"
+    },
+    {
+      "id": "display-only-emphasize",
+      "says": ".t-display(큰 글자)는 emphasize 문장에만",
+      "strength": "ours",
+      "fields": [
+        "screens[].emphasize"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙",
+      "status": "adopted"
+    },
+    {
+      "id": "data-key-exists",
+      "says": "data의 이름표는 facts에 있어야 한다 — 없는 사실 지어내기 금지",
+      "strength": "ours",
+      "fields": [
+        "screens[].data",
+        "facts"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙 — 사실은 facts 한 곳에만 두고 화면은 이름표로 가리킨다",
+      "status": "proposed"
+    },
+    {
+      "id": "label-plain",
+      "says": "영역 이름은 일상어 — 컴포넌트 이름(카드·배너·탭 …) 금지",
+      "strength": "ours",
+      "fields": [
+        "screens[].regions[].label"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "ux-writing §2",
+      "status": "adopted"
+    },
+    {
+      "id": "pattern-krds",
+      "says": "화면 패턴은 KRDS 패턴 이름, 그 패턴의 KRDS 필수·권장 규칙을 따른다",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].pattern"
+      ],
+      "check": {
+        "by": "none"
+      },
+      "source": "KRDS 기본 패턴 12 — https://www.krds.go.kr/html/site/global/global_summary.html · 서비스 패턴 5 — https://www.krds.go.kr/html/site/service/service_summary.html",
+      "status": "proposed"
+    },
+    {
+      "id": "mood-keywords-3",
+      "says": "기준어는 정확히 3개, 넘친 쪽(not)과 근거(prd) 필수",
+      "strength": "case",
+      "fields": [
+        "mood.keywords"
+      ],
+      "value": {
+        "count": 3
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "사례: 당근 SEED 기준어 · This But Not That",
+      "status": "adopted"
+    },
+    {
+      "id": "tone-spread",
+      "says": "다섯 시안의 바탕 톤은 3가지 이상 — 색 · 어두운 바탕(사례)은 1개까지, 나머지는 KRDS 60% 중립 바탕. 차이는 support 면 · 형태 · 서체로",
+      "strength": "ours",
+      "fields": [
+        "looks[].tone"
+      ],
+      "value": {
+        "min_tones": 3,
+        "max_case": 1
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "ours · KRDS 색상 비율 https://www.krds.go.kr/html/site/style/style_02.html",
+      "status": "adopted"
+    },
+    {
+      "id": "shell-spread",
+      "says": "다섯 시안이 메뉴 틀 셋(sidebar·top·rail)을 모두 쓴다",
+      "strength": "ours",
+      "fields": [
+        "concepts[].shell"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "우리 규칙 — 시안끼리 메뉴 틀이 갈려야 비교가 된다",
+      "status": "adopted"
+    },
+    {
+      "id": "flow-role",
+      "says": "흐름마다 주인 역할, 역할마다 처음 시작 흐름 1 · goal을 이루는 흐름 1 이상",
+      "strength": "krds-should",
+      "fields": [
+        "flows[].role"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "KRDS 원칙 1 주요 방안 2 사용자 여정 — https://www.krds.go.kr/html/site/utility/utility_02.html",
+      "status": "proposed"
+    },
+    {
+      "id": "flow-steps",
+      "says": "흐름은 6~9개, 한 흐름은 끊김 없는 1~5단계",
+      "strength": "ours",
+      "fields": [
+        "flows",
+        "flows[].steps"
+      ],
+      "value": {
+        "flows": [
+          6,
+          9
+        ],
+        "steps": [
+          1,
+          5
+        ]
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "prd-to-screens §5",
+      "status": "adopted"
+    },
+    {
+      "id": "reachable",
+      "says": "처음 시작 화면에서 흐름 · 메뉴로 모든 화면에 닿는다(변형 · 뜨는 창은 바탕 화면으로) — 메뉴 없는 셸이면 홈에 갈래",
+      "strength": "ours",
+      "fields": [
+        "flows",
+        "branches",
+        "roles[].nav"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL",
+        "status": "lint 검사 코드는 아직"
+      },
+      "source": "우리 규칙 — 닿지 않는 화면은 완성본에서 열 수 없다",
+      "status": "adopted"
+    },
+    {
+      "id": "type-scale",
+      "says": "1순위·본문 글자 크기 — 결정 대기(?2: KRDS 표 값에서 고르기 추천)",
+      "strength": "krds-should",
+      "fields": [],
+      "check": {
+        "by": "parts-css",
+        "status": "검사 코드는 아직 — 값은 base.css 글자 단계"
+      },
+      "source": "KRDS 글자 스케일 — https://www.krds.go.kr/html/site/style/style_03.html",
+      "status": "proposed",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "palette-roles",
+      "says": "분위기마다 역할 팔레트(brand · support · accent?) — 대표색 3계열 이상 · 파랑 2개 이하 (대비는 text-contrast)",
+      "strength": "ours",
+      "fields": [
+        "looks[].palette"
+      ],
+      "value": {
+        "hues": 3,
+        "blue_max": 2,
+        "contrast": 4.5
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "KRDS 색 비율(참고)",
+      "status": "adopted"
+    },
+    {
+      "id": "concept-screens",
+      "says": "시안마다 비교할 메인 화면 3~6장, 모든 시안이 같은 화면",
+      "strength": "ours",
+      "fields": [
+        "concepts[].screens"
+      ],
+      "value": {
+        "min": 3,
+        "max": 6
+      },
+      "check": {
+        "by": "none",
+        "status": "검사 코드 없음 — 하네스 글이 지시, 위반이 보드에서 바로 보인다"
+      },
+      "source": "prd-to-screens §6-1",
+      "status": "adopted"
+    },
+    {
+      "id": "repeat-unit",
+      "says": "list · timeline 한 줄은 정해진 자리 순서로 — 상태 → 제목 → 설명 → 기간 → 행동 → 태그, 모든 줄이 같은 순서, 중요한 항목은 위로. 뼈대 칸에 배치 클래스 금지. 스키마 칸 없이 규칙 + 조립 지침(pack.js FORMS 마크업 한 벌)으로",
+      "strength": "krds-must",
+      "fields": [
+        "screens[].regions[].form"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "KRDS 구조화 목록 '일관된 분류 체계와 순서'(필수) — https://www.krds.go.kr/html/site/component/component_04_01.html · 항목 순서 예시 https://www.krds.go.kr/html/site/global/global_04.html · '중요한 항목은 목록 상단'(권장) KRDS global_04사례: SEED List · 토스 ListRow",
+      "status": "proposed",
+      "value": {
+        "order": [
+          "상태",
+          "제목",
+          "설명",
+          "기간",
+          "행동",
+          "태그"
+        ],
+        "guide": "scripts/pack.js FORMS.list · FORMS.timeline"
+      }
+    },
+    {
+      "id": "rank1-fold",
+      "says": "1순위 문장은 첫 화면 높이 안에 보인다 (길이는 emphasize-length)",
+      "strength": "ours",
+      "fields": [
+        "screens[].emphasize"
+      ],
+      "value": {
+        "web_fold": 800,
+        "mobile_fold": 844,
+        "lines": 2
+      },
+      "check": {
+        "by": "render",
+        "status": "렌더 검사 도구 필요"
+      },
+      "source": "우리 규칙 — 1순위는 첫 화면(접히는 선 위)에",
+      "status": "proposed"
+    },
+    {
+      "id": "tone-distance",
+      "says": "다섯 시안 바탕색 거리(ΔE) 최소 6",
+      "strength": "ours",
+      "fields": [
+        "looks[].tone"
+      ],
+      "value": {
+        "deltaE_min": 6
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙 — 시안끼리 바탕색 차이(ΔE)가 작으면 색 이름만 다른 시안이 된다",
+      "status": "proposed"
+    },
+    {
+      "id": "space-scale",
+      "says": "KRDS 간격 토큰(gap-*) 값만 쓰고, 묶음 안 < 묶음 사이 < 구역 사이 순서",
+      "strength": "krds-must",
+      "fields": [],
+      "value": {
+        "allowed_px": [
+          2,
+          4,
+          8,
+          12,
+          16,
+          20,
+          24,
+          32,
+          40,
+          48,
+          64,
+          80
+        ],
+        "order": [
+          "--space-item",
+          "--space-group",
+          "--space-page"
+        ]
+      },
+      "check": {
+        "by": "parts-css",
+        "status": "검사 코드는 아직 — 값은 base.css 간격"
+      },
+      "source": "KRDS 레이아웃 · 간격(gap-1~12 = 2 · 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 80px — 이 페이지가 쓰는 토큰 krds_tokens.css, 1rem = 10px) — https://www.krds.go.kr/html/site/style/style_05.html",
+      "status": "proposed",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "body-size-min",
+      "says": "본문 글자는 16px 이상, KRDS 표준형 기본 17px — 크게 보여야 하는 사람(roles[].inclusion)이 있으면 S1에서 board.recommend.type을 large로 추천한다",
+      "strength": "krds-must",
+      "fields": [],
+      "value": {
+        "min": 16,
+        "krds_default": 17
+      },
+      "check": {
+        "by": "parts-css",
+        "level": "FAIL"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_03.html",
+      "status": "adopted",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "leading-min",
+      "says": "줄 간격 150% 이상 — 본문은 바닥선(base.css · 글꼴 세트 본문 줄 간격). 글꼴 세트의 제목 줄 간격(1.35~1.4)은 세트가 정한다",
+      "strength": "krds-must",
+      "fields": [
+        "looks[].font"
+      ],
+      "value": {
+        "min": 1.5
+      },
+      "check": {
+        "by": "parts-css",
+        "level": "FAIL"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_03.html",
+      "status": "adopted",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "text-contrast",
+      "says": "글자와 바탕 대비 4.5 이상(큰 글자 · 아이콘 3) — 본문 · 흐린 글자 · 버튼 글자 · 옅은 면 위 글자 모두",
+      "strength": "krds-must",
+      "fields": [
+        "looks[].ink",
+        "looks[].palette"
+      ],
+      "value": {
+        "min": 4.5,
+        "large": 3
+      },
+      "check": {
+        "by": "values",
+        "level": "FAIL"
+      },
+      "source": "KRDS 대비 · 접근성 — https://www.krds.go.kr/html/site/style/style_02.html · W3C WCAG 2.2 1.4.3(사례: 형식 표준)",
+      "status": "adopted"
+    },
+    {
+      "id": "accent-share",
+      "says": "강조색(accent)은 화면 면적 5% 이하",
+      "strength": "krds-must",
+      "fields": [
+        "looks[].palette"
+      ],
+      "value": {
+        "max_share": 0.05
+      },
+      "check": {
+        "by": "render",
+        "status": "면적 측정 도구 필요"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html",
+      "status": "proposed"
+    },
+    {
+      "id": "primary-action-one",
+      "says": "채운(최상위 강조) 버튼은 한 화면에 한 번",
+      "strength": "krds-should",
+      "fields": [
+        "screens"
+      ],
+      "value": {
+        "max": 1
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "KRDS 버튼 — https://www.krds.go.kr/html/site/component/component_05_02.html",
+      "status": "proposed"
+    },
+    {
+      "id": "concepts-count",
+      "says": "시안은 5개(첫 번째가 추천)",
+      "strength": "ours",
+      "fields": [
+        "concepts"
+      ],
+      "value": {
+        "count": 5
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "prd-to-screens §6-1",
+      "status": "adopted"
+    },
+    {
+      "id": "board-ask",
+      "says": "보드의 구조 질문은 3개까지",
+      "strength": "ours",
+      "fields": [
+        "board"
+      ],
+      "value": {
+        "max": 3
+      },
+      "check": {
+        "by": "schema",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §7",
+      "status": "adopted"
+    },
+    {
+      "id": "ids-range",
+      "says": "화면 번호 1~100, 영역 번호 101부터 — ids.js가 준다",
+      "strength": "ours",
+      "fields": [
+        "screens[].id",
+        "screens[].regions[].id"
+      ],
+      "value": {
+        "screen": [
+          1,
+          100
+        ],
+        "region_min": 101
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "ids.js · lint",
+      "status": "adopted"
+    },
+    {
+      "id": "table-empty-dash",
+      "says": "표의 빈 셀은 비우지 않고 대시(-)",
+      "strength": "krds-must",
+      "fields": [
+        "screens[].regions[].form"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "https://www.krds.go.kr/html/site/component/component_04_11.html",
+      "status": "proposed"
+    },
+    {
+      "id": "table-plain",
+      "says": "표는 열 구분선을 쓰지 않고, 양적 숫자는 오른쪽 정렬, 셀 글자는 3줄 이내",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].regions[].form"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "https://www.krds.go.kr/html/site/component/component_04_11.html",
+      "status": "proposed"
+    },
+    {
+      "id": "calendar-state",
+      "says": "달력의 날짜 상태(오늘 · 선택 · 일정 있음)는 색만이 아니라 굵기 · 밑줄 · 표식으로도 구분 — color-not-alone을 달력 날짜에 적용한 것",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].regions[].form"
+      ],
+      "check": {
+        "by": "none",
+        "status": "조립 지침 — 달력 부품 CSS(40-data.css)가 이미 굵기 · 표식을 쓴다, 검사 코드는 아직"
+      },
+      "source": "https://www.krds.go.kr/html/site/component/component_04_03.html",
+      "status": "proposed"
+    },
+    {
+      "id": "info-volume",
+      "says": "화면의 정보량(영역 안 줄 수 · 글자 수 · 숫자 칸 수) 기준 — 다음 실험에서 재서 정함",
+      "strength": "ours",
+      "fields": [
+        "screens[].regions"
+      ],
+      "check": {
+        "by": "render",
+        "status": "정보량 측정 도구 필요"
+      },
+      "source": "우리 규칙 — 볼 정보의 양은 영역 개수가 아니라 영역 안 내용의 양으로 본다",
+      "status": "proposed"
+    },
+    {
+      "status": "proposed",
+      "id": "color-ratio",
+      "says": "색 비율 60-30-10 — 바탕 · 중립 60 · 보조(support) 30 · 주요 상호작용(brand) 10",
+      "strength": "krds-should",
+      "fields": [
+        "looks[].bg",
+        "looks[].palette"
+      ],
+      "value": {
+        "neutral": 0.6,
+        "support": 0.3,
+        "brand": 0.1
+      },
+      "check": {
+        "by": "render",
+        "status": "면적 측정 도구 필요(accent-share와 같은 도구)"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html"
+    },
+    {
+      "status": "proposed",
+      "id": "palette-steps",
+      "says": "고른 색(brand · support · accent)은 KRDS 단계(5~95, 11단계)로 펴고, 글자 · 아이콘 단계는 매직넘버로(40 = 3:1, 50 = 4.5:1, 70 = 7:1) — 확장형도 단계 · 규칙은 필수로 참고",
+      "strength": "krds-must",
+      "fields": [
+        "looks[].palette"
+      ],
+      "value": {
+        "steps": 11,
+        "magic": {
+          "40": 3,
+          "50": 4.5,
+          "70": 7
+        }
+      },
+      "check": {
+        "by": "looks",
+        "status": "지금은 looks.js가 옅은 면 · 눌림색만 섞어 만든다 — 단계 검사는 아직"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html"
+    },
+    {
+      "status": "proposed",
+      "id": "color-not-alone",
+      "says": "상태(위험 · 주의 · 성공 · 안내)는 색만으로 알리지 않는다 — 아이콘이나 글자와 함께",
+      "strength": "krds-should",
+      "fields": [],
+      "check": {
+        "by": "none",
+        "status": "조립 지침"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html",
+      "where": [
+        "packages/web/components"
+      ]
+    },
+    {
+      "status": "proposed",
+      "id": "radius-scale",
+      "says": "모서리는 크기 비율로(컨테이너 높이 × 1/8, 짝수) · 함께 쓰는 비슷한 크기는 같게 · 작은 요소에 알약(50%) 쓰지 않음 · 표준형 최대 12px",
+      "strength": "krds-should",
+      "fields": [
+        "looks[].shape"
+      ],
+      "value": {
+        "ratio": 0.125,
+        "standard_max": 12
+      },
+      "check": {
+        "by": "lint",
+        "status": "looks.js round는 버튼 · 입력 12px — 크기 비율 검사는 아직"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_04.html",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "status": "proposed",
+      "id": "font-gothic",
+      "says": "본문 서체는 가독성 높은 고딕 계열 — 고딕이 아닌 서체는 큰 제목 · 배너에만",
+      "strength": "krds-should",
+      "fields": [
+        "looks[].type",
+        "looks[].font"
+      ],
+      "check": {
+        "by": "lint"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_03.html"
+    },
+    {
+      "id": "color-role-use",
+      "says": "색은 역할 자리에서만 — Primary = 주 버튼 · 링크 · 선택 · 포커스, Secondary = 정보 면 · 보조 표시, Accent = 오늘 · 새 알림 · 중요 배지, Gray = 배경 · 구분선 · 글자, System = 상태(시안마다 바꾸지 않음)",
+      "strength": "krds-should",
+      "fields": [
+        "looks[].palette"
+      ],
+      "value": {
+        "roles": {
+          "primary": {
+            "krds": "Primary",
+            "says": "주요 상호작용 — 버튼 · 링크 · 선택 · 켜짐 · 포커스 · 지금 단계",
+            "where": "btn|link|active|selected|is-selected|checked|indeterminate|focus|hover|current|tab|chip|nav|brand|progress|is-mine|text-primary|check"
+          },
+          "support": {
+            "krds": "Secondary",
+            "says": "보조 — 정보 면 · 아이콘 바탕 · 일정 점 · 끝난 단계 · 보조 배지",
+            "where": "avatar|stat|icon|timeline|step|event|dot|badge"
+          },
+          "accent": {
+            "krds": "Accent",
+            "says": "강조 — 오늘 · 새로 · 중요 배지 한두 곳",
+            "where": "today|badge-accent|is-new|notice"
+          },
+          "success": {
+            "krds": "System",
+            "says": "상태 — 성공",
+            "where": "success|stat-delta|is-open"
+          },
+          "warning": {
+            "krds": "System",
+            "says": "상태 — 주의",
+            "where": "warning|is-almost"
+          },
+          "danger": {
+            "krds": "System",
+            "says": "상태 — 위험 · 오류 · 지우기",
+            "where": "danger|error|req|stat-delta|is-full"
+          },
+          "info": {
+            "krds": "System",
+            "says": "상태 — 안내",
+            "where": "info"
+          }
+        },
+        "owns_elsewhere": {
+          "badge_background": "badge-not-primary",
+          "accent_area": "accent-share"
+        }
+      },
+      "check": {
+        "by": "parts-css",
+        "level": "FAIL"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html",
+      "status": "proposed",
+      "where": [
+        "packages/web/components"
+      ]
+    },
+    {
+      "id": "badge-not-primary",
+      "says": "배지 배경에 주조색(Primary)을 쓰지 않는다 — 버튼으로 오인",
+      "strength": "krds-should",
+      "fields": [],
+      "check": {
+        "by": "parts-css",
+        "level": "FAIL"
+      },
+      "source": "https://www.krds.go.kr/html/site/component/component_04_06.html",
+      "status": "proposed",
+      "where": [
+        "packages/web/components"
+      ]
+    },
+    {
+      "id": "disabled-no-alpha",
+      "says": "비활성 상태에 투명도(alpha · opacity)를 쓰지 않는다 — 회색 면 · 흐린 글자로",
+      "strength": "krds-should",
+      "fields": [],
+      "check": {
+        "by": "parts-css",
+        "level": "FAIL"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_02.html",
+      "status": "proposed",
+      "where": [
+        "packages/web/components"
+      ]
+    },
+    {
+      "id": "font-weight-krds",
+      "says": "굵기는 400(보통)과 700(굵게) 두 가지 — 지나치게 두꺼운 굵기(800 이상) · 얇은 굵기 쓰지 않음",
+      "strength": "krds-must",
+      "fields": [
+        "looks[].font"
+      ],
+      "value": {
+        "regular": 400,
+        "strong": 700
+      },
+      "check": {
+        "by": "parts-css",
+        "status": "본문 굵기 400 · 굵게 700 — 글꼴 세트의 제목 굵기(600~800)는 세트가 정한다, 값 검사는 아직"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_03.html",
+      "status": "proposed",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "tracking-krds",
+      "says": "자간은 KRDS 글자 표대로 — 본문 · 작은 제목 0, Display · 큰 제목(32px 이상) 1px. 음수 자간으로 좁히지 않는다",
+      "strength": "krds-should",
+      "fields": [],
+      "value": {
+        "body": 0,
+        "large_heading_px": 1
+      },
+      "check": {
+        "by": "parts-css",
+        "status": "검사 코드는 아직"
+      },
+      "source": "https://www.krds.go.kr/html/site/style/style_03.html",
+      "status": "proposed",
+      "where": [
+        "packages/core/tokens/base.css"
+      ]
+    },
+    {
+      "id": "sections-count",
+      "says": "구역은 2~6개 — 없으면 실패, 7개 넘으면 경고. 이름은 하는 일을 일상어로 12자 이내, 설명은 한 줄 40자 이내. 화면마다 구역 하나",
+      "strength": "ours",
+      "fields": [
+        "sections",
+        "sections[].name",
+        "screens[].section"
+      ],
+      "value": {
+        "min": 2,
+        "max": 6,
+        "warnOver": 7,
+        "name": 12,
+        "desc": 40
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §5-2 · KRDS 서비스 패턴 — 여정 단계 기반(https://www.krds.go.kr/html/site/service/service_summary.html)",
+      "status": "adopted"
+    },
+    {
+      "id": "step-label",
+      "says": "화면 위 단계 이름표는 14자 이내, 같은 단계 화면은 붙여 둔다 — 상태 변형이 다른 구역 · 단계에 있어도 된다(경고만)",
+      "strength": "ours",
+      "fields": [
+        "screens[].step"
+      ],
+      "value": {
+        "max": 14
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "prd-to-screens §5-2",
+      "status": "adopted"
+    },
+    {
+      "id": "policy-required",
+      "says": "상태 변형이 아닌 화면마다 정책 메모 1~4묶음 — 한 줄에 규칙 하나 70자 이내, 묶음마다 6줄 이하. 움직임은 motion, 오류 · 안내 문구는 cases에",
+      "strength": "ours",
+      "fields": [
+        "screens[].policy"
+      ],
+      "value": {
+        "blocks": 4,
+        "lines": 6,
+        "chars": 70
+      },
+      "check": {
+        "by": "lint",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §5-2",
+      "status": "adopted"
+    },
+    {
+      "id": "cases-edge",
+      "says": "입력 화면은 빈칸 · 너무 김 · 겹침 · 실패 때 보여 줄 문구(cases)를 정한다 — 문구 50자 이내, tone은 공통 목록($defs/tone)",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].cases"
+      ],
+      "value": {
+        "chars": 50
+      },
+      "check": {
+        "by": "lint",
+        "level": "WARN"
+      },
+      "source": "prd-to-screens §5-4 · KRDS 기본 패턴 '오류'(https://www.krds.go.kr/html/site/global/global_summary.html)",
+      "status": "adopted"
+    },
+    {
+      "id": "state-pair",
+      "says": "입력하는 화면이 있으면 오류(error) 상태 1개 이상, 핵심 작업이 끝나는 완료(success) 상태 1개 이상 — 둘 다 원래 화면(variantOf)이 있어야 하고, 나오는 조건(when)을 적는다",
+      "strength": "krds-should",
+      "fields": [
+        "screens[].state",
+        "screens[].when"
+      ],
+      "check": {
+        "by": "lint · schema",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §3 · KRDS 기본 패턴 '오류' · '확인'(https://www.krds.go.kr/html/site/global/global_summary.html)",
+      "status": "adopted"
+    },
+    {
+      "id": "variant-target",
+      "says": "상태 변형 · 뜨는 창의 원래 화면은 같은 역할의 다른 화면 — 자기 자신 · 변형의 변형은 안 된다",
+      "strength": "ours",
+      "fields": [
+        "screens[].variantOf",
+        "screens[].overlayOf"
+      ],
+      "check": {
+        "by": "schema",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙 — 구역 보드는 변형을 원래 화면 옆에 놓는다",
+      "status": "adopted"
+    },
+    {
+      "id": "overlay-reached",
+      "says": "뜨는 창 화면은 어떤 흐름 단계 · 갈래의 도착(to)이어야 한다 — 그 창을 여는 버튼이 있다",
+      "strength": "ours",
+      "fields": [
+        "screens[].overlayOf"
+      ],
+      "check": {
+        "by": "schema",
+        "level": "FAIL"
+      },
+      "source": "우리 규칙 — '누르면 무슨 화면이 나오는지'가 빠지지 않게",
+      "status": "adopted"
+    },
+    {
+      "id": "split-when",
+      "says": "같은 화면 · 같은 버튼(from · trigger)이 두 번 나오면 그 둘에 갈래 이름표(when, 16자 이내 '~면')",
+      "strength": "ours",
+      "fields": [
+        "flows[].steps[].when",
+        "branches[].when"
+      ],
+      "value": {
+        "max": 16
+      },
+      "check": {
+        "by": "schema · lint",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §5-2",
+      "status": "adopted"
+    },
+    {
+      "id": "motion-target",
+      "says": "움직임은 종류별로 대상이 있다 — hold는 trigger, reorder · carousel · play는 region, breathe는 둘 중 하나. region은 같은 화면의 영역, trigger는 조각의 data-trigger",
+      "strength": "ours",
+      "fields": [
+        "screens[].motion",
+        "screens[].motion[].type",
+        "screens[].motion[].trigger"
+      ],
+      "check": {
+        "by": "schema · lint",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §5-3",
+      "status": "adopted"
+    },
+    {
+      "id": "shell-platform",
+      "says": "메뉴 틀은 플랫폼별 — web: sidebar · top · rail, mobile: tabbar · top · none. 화면 하나만 메뉴 없이(none) 두는 것은 두 플랫폼 모두 된다",
+      "strength": "ours",
+      "fields": [
+        "platform",
+        "concepts[].shell",
+        "screens[].shell"
+      ],
+      "check": {
+        "by": "schema · lint",
+        "level": "FAIL"
+      },
+      "source": "prd-to-screens §6-1",
+      "status": "adopted"
+    }
+  ]
+}

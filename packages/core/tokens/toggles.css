@@ -1,0 +1,33 @@
+/* 토글 — 테마와 독립. 1라운드 보드에서 사용자가 고른다.
+   data-type:   normal | large   (글자 크기 · 컨트롤 높이 · 터치 타깃)
+   버튼 색(data-swatch)은 분위기마다 scripts/looks.js가 계산한다 — 예전 data-accent="vivid"는 두 번째 버튼 색으로 읽는다(resolveSwatch).
+   테마 셀렉터보다 뒤에 로드되어야 한다. */
+
+/* ---- 글자 크기 ---- */
+[data-type="normal"] {}
+
+/* 크게 — KRDS 표에서 한 단계 위(본문 19px) */
+[data-type="large"] {
+  --fs-xs: 15px;
+  --fs-sm: 17px;
+  --fs-md: 19px;
+  --fs-lg: 24px;
+  --fs-xl: 32px;
+  --fs-2xl: 40px;
+  --fs-3xl: 44px;
+  /* 역할 크기도 여기서 다시 잇는다 — data-type이 html이 아닌 요소에 붙어도 이 단계를 따르게 */
+  --fs-caption: var(--fs-sm);
+  --fs-body: var(--fs-md);
+  --fs-title: var(--fs-xl);
+  --fs-display: var(--fs-3xl);
+
+  --ctl-sm: 36px;
+  --ctl-md: 48px;
+  --ctl-lg: 56px;
+  --icon-sm: 18px;
+  --icon-md: 22px;
+  --icon-lg: 28px;
+
+  --topnav-h: 68px;
+  --sidebar-w: 264px;
+}

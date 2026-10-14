@@ -1,0 +1,110 @@
+[data-theme="warm"] {
+  --c-bg: #FBF8F3;
+  --c-surface: #FEFDFC;
+  --c-surface-2: #F4F1EC;
+  --c-surface-3: #ECE9E4;
+  --c-border: #E4E1DC;
+  --c-border-strong: #D1CEC9;
+  --c-text: #2B2722;
+  --c-text-2: #696661;
+  --c-text-muted: #76726D;
+  --c-text-inverse: #FFFFFF;
+  --c-overlay: rgba(17, 24, 39, .45);
+  --c-skeleton: #ECE9E4;
+  --c-success: #2F7D4F;
+  --c-success-fg: #FFFFFF;
+  --c-success-soft: #E3E9DF;
+  --c-success-soft-fg: #26643F;
+  --c-warning: #B7791F;
+  --c-warning-fg: #111827;
+  --c-warning-soft: #F3E9DA;
+  --c-warning-soft-fg: #895B17;
+  --c-danger: #C2412B;
+  --c-danger-fg: #FFFFFF;
+  --c-danger-soft: #F4E2DB;
+  --c-danger-soft-fg: #9B3422;
+  --c-info: #3A6EA5;
+  --c-info-fg: #FFFFFF;
+  --c-info-soft: #E4E7EA;
+  --c-info-soft-fg: #2E5884;
+  --c-danger-hover: #AB3926;
+  --c-danger-active: #933121;
+  --r-card: var(--r-xl);
+  --r-control: 12px;
+  --shadow-card: var(--shadow-md);
+  --border-card: 1px solid transparent;
+  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --font-heading: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --fw-head: 700;
+  --lh-head: 1.35;
+  --c-primary: #BC502C;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #F3E4DB;
+  --c-primary-soft-fg: #964023;
+  --c-primary-hover: #A54627;
+  --c-primary-active: #8F3D21;
+  --c-focus: #BC502C;
+  --c-support: #C9B79C;
+  --c-support-fg: #111827;
+  --c-support-soft: #F3EEE5;
+  --c-support-soft-fg: #6F6556;
+  --c-accent: #2F6B4F;
+  --c-accent-fg: #FFFFFF;
+  --c-accent-soft: #DAE1D9;
+  --c-accent-soft-fg: #26563F;
+}
+
+[data-platform="web"][data-theme="warm"], [data-platform="web"] [data-theme="warm"]:not([data-night]) {
+  --gutter: var(--sp-8);
+  --lh-normal: 1.5;
+}
+
+[data-theme="warm"][data-swatch="brand"] {
+  --c-primary: #BC502C;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #F3E4DB;
+  --c-primary-soft-fg: #964023;
+  --c-primary-hover: #A54627;
+  --c-primary-active: #8F3D21;
+  --c-focus: #BC502C;
+}
+
+[data-theme="warm"][data-swatch="forest"] {
+  --c-primary: #2F6B4F;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #E3E7DF;
+  --c-primary-soft-fg: #26563F;
+  --c-primary-hover: #295E46;
+  --c-primary-active: #24513C;
+  --c-focus: #2F6B4F;
+}
+
+[data-theme="warm"][data-swatch="navy"] {
+  --c-primary: #2B4C8C;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #E2E3E7;
+  --c-primary-soft-fg: #223D70;
+  --c-primary-hover: #26437B;
+  --c-primary-active: #213A6A;
+  --c-focus: #2B4C8C;
+}
+
+[data-theme="warm"][data-swatch="plum"] {
+  --c-primary: #7A3E6B;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #ECE2E3;
+  --c-primary-soft-fg: #623256;
+  --c-primary-hover: #6B375E;
+  --c-primary-active: #5D2F51;
+  --c-focus: #7A3E6B;
+}
+
+[data-theme="warm"][data-swatch="mustard"] {
+  --c-primary: #996F08;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #EFE8D7;
+  --c-primary-soft-fg: #7A5906;
+  --c-primary-hover: #876207;
+  --c-primary-active: #745406;
+  --c-focus: #996F08;
+}
