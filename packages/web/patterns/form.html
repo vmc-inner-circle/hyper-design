@@ -1,0 +1,122 @@
+<!-- pattern: form — 생성/수정 폼 (폭 제한 본문 + 섹션별 카드 + 하단 액션).
+     <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다.
+     data-region key는 예시(example-*). screens.json의 key로 바꾼다. -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 -->일정 › 새 세션</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 (shell.html과 동일하게 유지) -->
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-list-checks"/></svg><span>할 일</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>참석자</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>설정</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="page-header">
+        <div>
+          <div class="row gap-2 mb-2">
+            <button class="btn btn-ghost btn-sm btn-icon" aria-label="일정 목록으로"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg></button>
+            <span class="text-sm text-2">일정 › 9월 워크숍</span>
+          </div>
+          <h1 class="page-title"><!-- slot: 폼 제목 -->새 세션 추가</h1>
+          <p class="page-desc"><!-- slot: 한 줄 안내 -->저장하면 참석자 초대장에 바로 반영됩니다.</p>
+        </div>
+      </div>
+
+      <section class="section" data-region="example-basic">
+        <h2 class="section-title">기본 정보</h2>
+        <div class="card">
+          <div class="card-body">
+            <form class="form-grid">
+              <!-- slot: 필드 (긴 필드는 .span-2) -->
+              <div class="field span-2">
+                <label class="field-label" for="s-title">세션 제목 <span class="req">*</span></label>
+                <input class="input" id="s-title" type="text" placeholder="예: 워크숍 A · 고객 여정 그리기">
+              </div>
+              <div class="field">
+                <label class="field-label" for="s-date">날짜 <span class="req">*</span></label>
+                <input class="input" id="s-date" type="date" value="2026-09-12">
+              </div>
+              <div class="field">
+                <label class="field-label" for="s-time">시작 시각 <span class="req">*</span></label>
+                <input class="input" id="s-time" type="time" value="10:30">
+              </div>
+              <div class="field">
+                <label class="field-label" for="s-room">장소</label>
+                <div class="select-wrap">
+                  <select class="select" id="s-room">
+                    <option>대회의실 A</option>
+                    <option selected>세미나실 3</option>
+                    <option>온라인(화상)</option>
+                  </select>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </div>
+              </div>
+              <div class="field">
+                <label class="field-label" for="s-cap">정원</label>
+                <div class="input-group">
+                  <input class="input" id="s-cap" type="number" value="30" min="1">
+                  <span class="input-addon">명</span>
+                </div>
+                <p class="field-help">현재 응답 24명</p>
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="s-desc">설명 <span class="opt">(선택)</span></label>
+                <textarea class="textarea" id="s-desc" rows="3" placeholder="세션 목적, 진행 방식, 준비물"></textarea>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-region="example-options">
+        <h2 class="section-title">참석 · 알림</h2>
+        <div class="card">
+          <div class="card-body">
+            <div class="stack gap-6">
+              <!-- slot: 선택형 필드 (radio · checkbox · switch) -->
+              <div class="field">
+                <div class="field-label">참석 방식</div>
+                <div class="row gap-4">
+                  <label class="radio"><input type="radio" name="attend" checked>현장</label>
+                  <label class="radio"><input type="radio" name="attend">온라인</label>
+                  <label class="radio"><input type="radio" name="attend">혼합</label>
+                </div>
+              </div>
+              <div class="field">
+                <div class="field-label">알림</div>
+                <div class="stack gap-2">
+                  <label class="checkbox"><input type="checkbox" checked>하루 전 메일</label>
+                  <label class="checkbox"><input type="checkbox" checked>1시간 전 푸시</label>
+                  <label class="checkbox"><input type="checkbox">변경 시 즉시 알림</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="form-actions" data-region="example-actions">
+        <!-- slot: 취소 → primary 순. 위험 행동은 좌측 -->
+        <button class="btn btn-ghost">취소</button>
+        <button class="btn">임시 저장</button>
+        <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-check"/></svg>세션 저장</button>
+      </div>
+    </div>
+  </main>
+</div>

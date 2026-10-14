@@ -1,0 +1,60 @@
+/* 토글 — 테마와 독립. 1라운드 보드에서 사용자가 고른다.
+   data-type:   normal | large   (글자 크기 · 컨트롤 높이 · 터치 타깃)
+   data-accent: calm   | vivid   (강조색 성격 — 차분한 단일색 vs 선명한 대비색)
+   테마 셀렉터보다 뒤에 로드되어야 한다. */
+
+/* ---- 글자 크기 ---- */
+[data-type="normal"] {}
+
+[data-type="large"] {
+  --fs-xs: 13px;
+  --fs-sm: 15px;
+  --fs-md: 17px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --fs-3xl: 40px;
+
+  --ctl-sm: 36px;
+  --ctl-md: 48px;
+  --ctl-lg: 56px;
+  --icon-sm: 18px;
+  --icon-md: 22px;
+  --icon-lg: 28px;
+
+  --topnav-h: 68px;
+  --sidebar-w: 264px;
+}
+
+/* ---- 강조색 성격 ---- */
+[data-accent="calm"] {}
+
+/* vivid: 테마별로 한 단계 더 선명한 대비색으로 primary를 교체한다.
+   테마의 바탕·글자색은 그대로 두어 "강조만" 바뀐 것이 보이게 한다. */
+[data-theme="a"][data-accent="vivid"] {
+  --c-primary: #EA580C;
+  --c-primary-hover: #C2410C;
+  --c-primary-active: #9A3412;
+  --c-primary-soft: #FFEDD5;
+  --c-primary-soft-fg: #9A3412;
+  --c-focus: #EA580C;
+}
+
+[data-theme="b"][data-accent="vivid"] {
+  --c-primary: #0F9D8A;
+  --c-primary-hover: #0B7F70;
+  --c-primary-active: #086457;
+  --c-primary-soft: #DDF3EF;
+  --c-primary-soft-fg: #0B5E52;
+  --c-focus: #0F9D8A;
+}
+
+[data-theme="c"][data-accent="vivid"] {
+  --c-primary: #F472B6;
+  --c-primary-hover: #F9A8D4;
+  --c-primary-active: #EC4899;
+  --c-primary-fg: #0F1115;
+  --c-primary-soft: rgba(244, 114, 182, .16);
+  --c-primary-soft-fg: #FBCFE8;
+  --c-focus: #F472B6;
+}

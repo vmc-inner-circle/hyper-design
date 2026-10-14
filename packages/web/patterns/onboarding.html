@@ -1,0 +1,90 @@
+<!-- pattern: onboarding — 사이드바 없는 프레임(.app.no-sidebar) + 가운데 정렬 steps + 폼 카드.
+     다단계 가입·초기 설정. 현재 단계에 .step.current, 지난 단계 .step.done.
+     <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다. data-region key는 예시(example-*). -->
+<div class="app no-sidebar">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 -->시작하기 · 3단계 중 2단계</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-sm"><svg class="icon-sm" aria-hidden="true"><use href="#i-circle-question-mark"/></svg>도움말</button>
+      <button class="btn btn-ghost btn-sm">나중에 하기</button>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="stack gap-6">
+        <ol class="steps" data-region="example-steps">
+          <!-- slot: 단계 3~5개 -->
+          <li class="step done"><span class="step-num"><svg class="icon-sm" aria-hidden="true"><use href="#i-check"/></svg></span><span class="step-label">계정 만들기</span></li>
+          <li class="step current"><span class="step-num"></span><span class="step-label">조직 설정</span><span class="step-desc">약 2분</span></li>
+          <li class="step"><span class="step-num"></span><span class="step-label">팀원 초대</span><span class="step-desc">선택 사항</span></li>
+        </ol>
+
+        <div class="text-center">
+          <h1 class="page-title"><!-- slot: 단계 제목 -->조직 정보를 알려주세요</h1>
+          <p class="page-desc mt-2"><!-- slot: 단계 설명 -->결재 흐름과 기본 알림을 조직 규모에 맞게 준비합니다. 나중에 설정에서 바꿀 수 있습니다.</p>
+        </div>
+
+        <div class="card" data-region="example-form">
+          <div class="card-body">
+            <!-- slot: 이 단계의 폼 필드 (3~6개) -->
+            <div class="form-grid">
+              <div class="field">
+                <label class="field-label" for="ob-org">조직 이름</label>
+                <input class="input" id="ob-org" value="한빛 커머스">
+              </div>
+              <div class="field">
+                <label class="field-label" for="ob-size">구성원 규모</label>
+                <select class="select" id="ob-size">
+                  <option>1–10명</option>
+                  <option selected>11–50명</option>
+                  <option>51–200명</option>
+                  <option>200명 이상</option>
+                </select>
+              </div>
+              <div class="field">
+                <label class="field-label" for="ob-dept">첫 번째 팀 이름</label>
+                <input class="input" id="ob-dept" value="운영팀">
+              </div>
+              <div class="field">
+                <label class="field-label" for="ob-tz">업무 시간대</label>
+                <select class="select" id="ob-tz"><option selected>서울 (UTC+9)</option><option>도쿄 (UTC+9)</option></select>
+              </div>
+            </div>
+
+            <hr class="divider">
+
+            <div class="field">
+              <span class="field-label">주로 처리할 요청 유형</span>
+              <div class="chip-group">
+                <button class="chip active">구매</button>
+                <button class="chip active">출장</button>
+                <button class="chip">휴가</button>
+                <button class="chip">교육</button>
+                <button class="chip">기타</button>
+              </div>
+            </div>
+
+            <div class="banner banner-info">
+              <svg class="icon" aria-hidden="true"><use href="#i-info"/></svg>
+              <div class="banner-body">11–50명 조직에는 <span class="fw-semibold">2단계 승인</span>을 기본으로 켭니다. 팀장 → 운영 담당자 순서입니다.</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn btn-ghost"><svg class="icon" aria-hidden="true"><use href="#i-arrow-left"/></svg>이전</button>
+            <div class="spacer"></div>
+            <button class="btn btn-primary">다음: 팀원 초대 <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+          </div>
+        </div>
+
+        <p class="text-center text-sm text-muted" data-region="example-footnote">
+          <!-- slot: 하단 보조 안내 -->입력한 정보는 조직 관리자만 볼 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </main>
+</div>

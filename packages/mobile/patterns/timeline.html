@@ -1,0 +1,16 @@
+<!-- pattern: timeline (모바일) — 탭 화면이면 큰 제목, 아래 화면이면 바로 판. 날짜별 판 하나에 시간순 줄.
+     data-region key는 예시. -->
+<main class="content">
+  <x-page-header title="알림"></x-page-header>
+  <x-section title="오늘" data-region="example-today">
+    <div class="timeline">
+      <div class="timeline-item"><span class="timeline-time">18:58</span><span class="timeline-dot dot-warning"></span><div class="timeline-content"><p class="timeline-title">자리가 났어요 — 확정이 필요해요</p><p class="timeline-desc">10/15(목) 20:00 리포머 중급 · 1시간 42분 남음</p></div></div>
+      <div class="timeline-item"><span class="timeline-time">09:10</span><span class="timeline-dot dot-success"></span><div class="timeline-content"><p class="timeline-title">예약이 확정됐어요</p><p class="timeline-desc">10/16(금) 20:00 리포머 기초</p></div></div>
+    </div>
+  </x-section>
+  <x-section title="어제" data-region="example-yesterday">
+    <div class="timeline">
+      <div class="timeline-item"><span class="timeline-time">21:02</span><span class="timeline-dot dot-neutral"></span><div class="timeline-content"><p class="timeline-title">출석했어요 · 1회 차감</p><p class="timeline-desc">숨결 20회권 잔여 7회</p></div></div>
+    </div>
+  </x-section>
+</main>
