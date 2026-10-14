@@ -1,0 +1,148 @@
+{
+  "project": "sample",
+  "title": "샘플 서비스",
+  "platform": "web",
+  "round": 1,
+  "theme": "warm",
+  "looks": [
+    {
+      "id": "warm",
+      "name": "따뜻한 종이",
+      "why": "포근한 느낌이에요",
+      "mode": "light",
+      "bg": "#FBF8F3",
+      "ink": "#1F1B16",
+      "shape": "round",
+      "font": "pretendard",
+      "swatches": [
+        {
+          "id": "terracotta",
+          "name": "테라코타",
+          "hex": "#D9562B"
+        },
+        {
+          "id": "forest",
+          "name": "숲",
+          "hex": "#2F6B4F"
+        },
+        {
+          "id": "navy",
+          "name": "남색",
+          "hex": "#2B4C8C"
+        },
+        {
+          "id": "plum",
+          "name": "자두",
+          "hex": "#7A3E6B"
+        },
+        {
+          "id": "mustard",
+          "name": "겨자",
+          "hex": "#B8860B"
+        }
+      ]
+    }
+  ],
+  "toggles": {
+    "type": "normal",
+    "swatch": "terracotta"
+  },
+  "roles": [
+    {
+      "key": "owner",
+      "label": "관리자",
+      "nav": [
+        {
+          "slug": "home",
+          "label": "홈",
+          "icon": "house"
+        }
+      ]
+    }
+  ],
+  "board": {
+    "recommend": {
+      "theme": "warm",
+      "themeWhy": "포근한 톤을 추천해요",
+      "type": "normal",
+      "typeWhy": "보통 크기가 알맞아요",
+      "accent": "calm",
+      "accentWhy": "차분하게"
+    },
+    "ask": [],
+    "locked": [],
+    "focus": []
+  },
+  "sections": [
+    {
+      "key": "home",
+      "name": "홈",
+      "desc": "오늘 할 일을 한눈에 봐요"
+    }
+  ],
+  "screens": [
+    {
+      "slug": "home",
+      "name": "홈",
+      "role": "owner",
+      "section": "home",
+      "step": "오늘 보기",
+      "purpose": "오늘 할 일과 최근 변경을 한눈에 본다",
+      "pattern": "dashboard",
+      "file": "screens/home.html",
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "오늘 할 일을 마감이 가까운 순으로",
+            "변경은 최근 7일 것만"
+          ]
+        }
+      ],
+      "regions": [
+        {
+          "key": "summary",
+          "label": "오늘 요약",
+          "why": "오늘 할 일이 몇 건인지 바로 봐요"
+        },
+        {
+          "key": "recent",
+          "label": "최근 변경 목록",
+          "why": "무엇이 바뀌었는지 훑어봐요"
+        },
+        {
+          "key": "new",
+          "label": "새로 만들기 버튼",
+          "why": "새 항목을 시작하는 곳이에요"
+        }
+      ]
+    },
+    {
+      "slug": "done",
+      "name": "만들기 완료",
+      "role": "owner",
+      "section": "home",
+      "step": "오늘 보기",
+      "purpose": "새 항목이 만들어졌음을 알린다",
+      "pattern": "dashboard",
+      "file": "screens/done.html",
+      "state": "success",
+      "variantOf": "home",
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "완료 문구를 한 줄로 보여준다"
+          ]
+        }
+      ],
+      "regions": [
+        {
+          "key": "result",
+          "label": "완료 안내",
+          "why": "만들기가 끝났는지 확인해요"
+        }
+      ]
+    }
+  ]
+}

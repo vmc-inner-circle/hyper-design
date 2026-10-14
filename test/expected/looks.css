@@ -1,0 +1,145 @@
+[data-theme="a"][data-accent="vivid"] {
+  --c-primary: #EA580C;
+  --c-primary-hover: #C2410C;
+  --c-primary-active: #9A3412;
+  --c-primary-soft: #FFEDD5;
+  --c-primary-soft-fg: #9A3412;
+  --c-focus: #EA580C;
+}
+
+[data-theme="b"][data-accent="vivid"] {
+  --c-primary: #0F9D8A;
+  --c-primary-hover: #0B7F70;
+  --c-primary-active: #086457;
+  --c-primary-soft: #DDF3EF;
+  --c-primary-soft-fg: #0B5E52;
+  --c-focus: #0F9D8A;
+}
+
+[data-theme="c"][data-accent="vivid"] {
+  --c-primary: #F472B6;
+  --c-primary-hover: #F9A8D4;
+  --c-primary-active: #EC4899;
+  --c-primary-fg: #0F1115;
+  --c-primary-soft: rgba(244, 114, 182, .16);
+  --c-primary-soft-fg: #FBCFE8;
+  --c-focus: #F472B6;
+}
+
+[data-theme="warm"] {
+  --c-bg: #FBF8F3;
+  --c-surface: #FEFDFC;
+  --c-surface-2: #F4F1EC;
+  --c-surface-3: #ECE9E4;
+  --c-border: #E4E1DC;
+  --c-border-strong: #D1CEC9;
+  --c-text: #2B2722;
+  --c-text-2: #76726D;
+  --c-text-muted: #9B9893;
+  --c-text-inverse: #FFFFFF;
+  --c-overlay: rgba(17, 24, 39, .45);
+  --c-skeleton: #ECE9E4;
+  --c-success: #2F7D4F;
+  --c-success-soft: #E3E9DF;
+  --c-success-soft-fg: #205536;
+  --c-warning: #B7791F;
+  --c-warning-soft: #F3E9DA;
+  --c-warning-soft-fg: #7C5215;
+  --c-danger: #C2412B;
+  --c-danger-soft: #F4E2DB;
+  --c-danger-soft-fg: #842C1D;
+  --c-info: #3A6EA5;
+  --c-info-soft: #E4E7EA;
+  --c-info-soft-fg: #274B70;
+  --c-danger-hover: #AB3926;
+  --c-danger-active: #933121;
+  --r-card: var(--r-xl);
+  --r-control: var(--r-pill);
+  --shadow-card: var(--shadow-md);
+  --border-card: 1px solid transparent;
+  --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, sans-serif;
+  --font-head: var(--font-sans);
+  --fw-body: 400;
+  --fw-semibold: 600;
+  --fw-head: 700;
+  --fw-bold: 700;
+  --ls-head: -0.02em;
+  --ls-body: -0.01em;
+  --lh-tight: 1.35;
+  --lh-normal: 1.55;
+  --c-primary: #D55A32;
+  --c-primary-hover: #BB4F2C;
+  --c-primary-active: #A24426;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #F6E5DC;
+  --c-primary-soft-fg: #8A3B21;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #D55A32;
+}
+
+[data-theme="warm"][data-swatch="terracotta"] {
+  --c-primary: #D55A32;
+  --c-primary-hover: #BB4F2C;
+  --c-primary-active: #A24426;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #F6E5DC;
+  --c-primary-soft-fg: #8A3B21;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #D55A32;
+}
+
+[data-theme="warm"][data-swatch="forest"] {
+  --c-primary: #2F6B4F;
+  --c-primary-hover: #295E46;
+  --c-primary-active: #24513C;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #E3E7DF;
+  --c-primary-soft-fg: #1F4633;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #2F6B4F;
+}
+
+[data-theme="warm"][data-swatch="navy"] {
+  --c-primary: #2B4C8C;
+  --c-primary-hover: #26437B;
+  --c-primary-active: #213A6A;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #E2E3E7;
+  --c-primary-soft-fg: #1C315B;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #2B4C8C;
+}
+
+[data-theme="warm"][data-swatch="plum"] {
+  --c-primary: #7A3E6B;
+  --c-primary-hover: #6B375E;
+  --c-primary-active: #5D2F51;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #ECE2E3;
+  --c-primary-soft-fg: #4F2846;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #7A3E6B;
+}
+
+[data-theme="warm"][data-swatch="mustard"] {
+  --c-primary: #B8860B;
+  --c-primary-hover: #A2760A;
+  --c-primary-active: #8C6608;
+  --c-primary-fg: #FFFFFF;
+  --c-primary-soft: #F3EAD7;
+  --c-primary-soft-fg: #785707;
+  --c-accent: var(--c-primary);
+  --c-accent-soft: var(--c-primary-soft);
+  --c-accent-soft-fg: var(--c-primary-soft-fg);
+  --c-focus: #B8860B;
+}

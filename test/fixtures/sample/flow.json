@@ -1,0 +1,19 @@
+{
+  "flows": [
+    {
+      "key": "refresh",
+      "name": "새로 고치기",
+      "role": "owner",
+      "steps": [
+        {
+          "from": "home",
+          "region": "new",
+          "trigger": "create",
+          "action": "'새로 만들기'를 누르면",
+          "to": "done"
+        }
+      ]
+    }
+  ],
+  "branches": []
+}
