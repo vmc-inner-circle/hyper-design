@@ -31,6 +31,9 @@
   B.buildConcepts = function () {
     var C = B.concepts, main = B.mainConcept = (B.concept(HX.meta.concept) || C[0]).id;
     var refs = (HX.data.references || []).filter(function (r) { return r && r.name; });
+    // 시안의 refs는 이름만 — 주소는 references[]에서 이름으로 찾는다 (옛 refs[].url은 references에 없을 때만)
+    var urlOf = function (r) { var hit = refs.filter(function (x) { return x.name === r.name; })[0]; return (hit && hit.url) || r.url || ""; };
+    var link = function (name, url) { return url ? HX.el("a", { href: url, target: "_blank", rel: "noopener", text: name }) : HX.el("b", { text: name }); };
     var el = HX.el("div", { class: "hx-cc", role: "tabpanel", "aria-label": "시안 고르기" });
     el.appendChild(HX.el("div", { class: "hx-cc-intro" }, [
       HX.el("b", { text: "이런 방향으로 만들어 봤어요" }),
@@ -41,10 +44,32 @@
         HX.el("div", { class: "hx-cc-h", text: "살펴본 서비스" }),
         HX.el("div", { class: "hx-cc-refgrid" }, refs.map(function (r) {
           return HX.el("div", { class: "hx-cc-ref" }, [
-            HX.el("div", { class: "hx-cc-ref-top" }, [
-              r.url ? HX.el("a", { href: r.url, target: "_blank", rel: "noopener", text: r.name }) : HX.el("b", { text: r.name }),
-              r.kind ? HX.el("span", { class: "hx-tag", text: r.kind }) : null]),
+            HX.el("div", { class: "hx-cc-ref-top" }, [link(r.name, r.url)]),
             r.borrow ? HX.el("div", { class: "hx-cc-ref-borrow", text: r.borrow }) : null]);
+        }))]));
+    }
+
+    // 기준어 · 표현용 무드보드 (prd-to-screens §6-0) — 시안을 고를 때 "이 느낌"을 항목으로 짚을 수 있게
+    var mood = HX.data.mood || null, TAKE = { color: "색", type: "서체", shape: "모양", space: "여백", graphic: "그래픽", photo: "사진" };
+    var moodById = {};
+    if (mood && (mood.board || []).length) {
+      var lookName = function (id) { var L = B.look(id); return L && L.name ? L.name : id; };
+      var conceptOf = function (lookId) { var c = C.filter(function (x) { return x.look === lookId; })[0]; return c ? "시안 " + c.id.toUpperCase() : lookName(lookId); };
+      mood.board.forEach(function (m) { moodById[m.id] = m; });
+      el.appendChild(HX.el("section", { class: "hx-cc-refs hx-cc-mood", "aria-label": "느낌 기준과 무드보드" }, [
+        HX.el("div", { class: "hx-cc-h", text: "느낌 기준 — 모든 시안이 이 세 말 안에서 달라요" }),
+        HX.el("div", { class: "hx-cc-kw" }, (mood.keywords || []).map(function (k) {
+          return HX.el("div", { class: "hx-cc-kw-item" }, [HX.el("b", { text: k.word }), k.not ? HX.el("span", { text: k.not }) : null, k.prd ? HX.el("span", { text: "근거 · " + k.prd }) : null]);
+        })),
+        HX.el("div", { class: "hx-cc-h", text: "무드보드 " + mood.board.length + "개 — 레퍼런스마다 한 가지만 가져왔어요" }),
+        HX.el("div", { class: "hx-cc-refgrid hx-cc-moodgrid" }, mood.board.map(function (m) {
+          return HX.el("div", { class: "hx-cc-ref hx-cc-mood-item", dataset: { mood: m.id || "" } }, [
+            (m.colors || []).length ? HX.el("div", { class: "hx-cc-mood-colors" }, m.colors.map(function (c) { return HX.el("i", { style: "background:" + c, title: c }); })) : null,
+            HX.el("div", { class: "hx-cc-ref-top" }, [
+              m.url ? HX.el("a", { href: m.url, target: "_blank", rel: "noopener", text: m.name }) : HX.el("b", { text: m.name }),
+              HX.el("span", { class: "hx-tag", text: TAKE[m.take] || m.take })]),
+            HX.el("div", { class: "hx-cc-ref-borrow", text: m.what || "" }),
+            HX.el("div", { class: "hx-cc-mood-meta", text: [m.keyword, m.look ? conceptOf(m.look) : ""].filter(Boolean).join(" · ") })]);
         }))]));
     }
 
@@ -63,9 +88,15 @@
             B.stage !== "concept" && c.id === main ? HX.el("span", { class: "hx-tag", text: "지금 화면들" }) : null]),
           HX.el("h3", { class: "hx-cc-name", text: c.name }),
           c.why ? HX.el("p", { class: "hx-cc-why", text: c.why }) : null,
-          HX.el("ul", { class: "hx-cc-traits" }, [SHELL[c.shell] || null, L && L.name ? "분위기 " + L.name : null].concat(c.traits || []).filter(Boolean).map(function (t) { return HX.el("li", { text: t }); })),
+          HX.el("ul", { class: "hx-cc-traits" }, [SHELL[c.shell] || null, L && L.name ? "분위기 " + L.name : null, L && L.lean ? "기울인 느낌 " + L.lean : null].concat(c.traits || []).filter(Boolean).map(function (t) { return HX.el("li", { text: t }); })),
+          (function () {
+            var ms = mood ? (mood.board || []).filter(function (m) { return m.look && m.look === c.look; }) : [];
+            return ms.length ? HX.el("div", { class: "hx-cc-from" }, [HX.el("span", { class: "hx-cc-from-h", text: "표현으로 가져온 것" })].concat(ms.map(function (m) {
+              return HX.el("div", { class: "hx-cc-from-row" }, [HX.el("b", { text: (TAKE[m.take] || m.take) + " " }), m.what || "", " — " + m.name]);
+            }))) : null;
+          })(),
           (c.refs || []).length ? HX.el("div", { class: "hx-cc-from" }, [HX.el("span", { class: "hx-cc-from-h", text: "참고한 곳" })].concat((c.refs || []).map(function (r) {
-            return HX.el("div", { class: "hx-cc-from-row" }, [r.url ? HX.el("a", { href: r.url, target: "_blank", rel: "noopener", text: r.name }) : HX.el("b", { text: r.name }), r.borrow ? " — " + r.borrow : ""]);
+            return HX.el("div", { class: "hx-cc-from-row" }, [link(r.name, urlOf(r)), r.borrow ? " — " + r.borrow : ""]);
           }))) : null,
           pick,
           memo]),

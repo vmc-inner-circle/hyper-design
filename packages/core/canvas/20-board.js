@@ -1,6 +1,7 @@
 /* 20-board.js — board 모드 상태·테마·"답변 복사" 텍스트. 화면 배치는 22-board-canvas.js, 오른쪽 패널은 21-board-panel.js.
-   data.board = { hero, recommend:{theme,themeWhy,type,typeWhy,accent,accentWhy}, ask:[{id,text,options[],recommended}],
-                  locked:["theme","toggles","ask"], focus:["slug"] }  — 전부 없을 수 있음(방어). */
+   data.board = { hero, recommend:{concept,theme,themeWhy,type,typeWhy,swatch,swatchWhy,toast}, ask:[{id,text,options[],recommended}],
+                  locked:["concept","theme","type","swatch","toast","ask"], focus:["slug"], changes:[…] }  — 전부 없을 수 있음(방어).
+   잠근 것은 결정(최상위 concept · theme · toggles), 아니면 추천(board.recommend). 글자 크기 추천은 roles[].inclusion(나이 · 기기 · 읽는 상황)에서 나온다. */
 (function () {
   "use strict";
   var HX = window.HX, doc = document, root = doc.documentElement;
@@ -8,11 +9,10 @@
   var board = HX.data.board || {};
   var rec = board.recommend || {};
   var locked = Array.isArray(board.locked) ? board.locked : [];
-  // "toggles"는 글자 크기(type)와 버튼 색(swatch)을 함께 잠근다 (예전 형식)
+  // 옛 값 "toggles"는 글자 크기(type)와 버튼 색(swatch)을 함께 잠근다 — 다음 판에서 지움
   var isLocked = B.isLocked = function (k) {
     if (locked.indexOf(k) >= 0) return true;
-    if ((k === "type" || k === "swatch") && locked.indexOf("toggles") >= 0) return true;
-    return k === "toggles" && locked.indexOf("type") >= 0 && locked.indexOf("swatch") >= 0;
+    return (k === "type" || k === "swatch") && locked.indexOf("toggles") >= 0;
   };
   var toggles = HX.meta.toggles || {};
   // 분위기(look)와 버튼 색(swatch): build.js가 screens.json looks에서 넘긴다
@@ -23,8 +23,9 @@
   // 확정(잠금)된 값은 1턴 추천(board.recommend)이 아니라 확정값(theme · toggles)을 쓴다
   var validLook = function (id) { return LOOKS.some(function (l) { return l.id === id; }); };
   var recTheme = isLocked("theme") && validLook(HX.meta.theme) ? HX.meta.theme : (validLook(rec.theme) ? rec.theme : HX.meta.theme);
+  // 글자 크기 기본값: 잠갔으면 결정(toggles.type), 아니면 inclusion을 보고 정한 추천(board.recommend.type)
   var recType = isLocked("type") && toggles.type ? toggles.type : (rec.type || toggles.type || "normal");
-  var recSwatch = isLocked("swatch") && toggles.swatch ? toggles.swatch : (rec.swatch || rec.accent || toggles.swatch);
+  var recSwatch = isLocked("swatch") && toggles.swatch ? toggles.swatch : (rec.swatch || rec.accent || toggles.swatch);   // rec.accent는 옛 이름
   var REC = B.REC = { theme: recTheme, type: recType, accent: fixSwatch(recTheme, recSwatch) };
   // 안내 문구(toast) 모양: 위치 · 아이콘 · 색 · 글자 — 기본 규칙(위쪽 · 아이콘 · 흰 바탕 · 보통)이 추천. 확정되면 확정값이 추천
   var TOAST = B.TOAST = {
@@ -43,7 +44,10 @@
   // 시안(concepts): 레퍼런스 조사로 만든 방향 5개. draft 단계의 화면들은 HX.meta.concept(고른 시안)으로 만든 것
   var CONCEPTS = B.concepts = (HX.data.concepts || []).filter(function (c) { return c && c.id; });
   B.concept = function (id) { return CONCEPTS.filter(function (c) { return c.id === id; })[0] || CONCEPTS[0] || null; };
-  REC.concept = CONCEPTS.length ? (B.concept(HX.meta.concept || rec.concept) || CONCEPTS[0]).id : null;
+  // 추천 시안: 잠갔으면 결정(meta.concept), 아니면 추천(board.recommend.concept) — 추천이 없거나 틀리면 지금 화면들의 시안, 그다음 첫 시안
+  var hasConcept = function (id) { return CONCEPTS.some(function (c) { return c.id === id; }); };
+  var recConcept = isLocked("concept") ? HX.meta.concept : (hasConcept(rec.concept) ? rec.concept : HX.meta.concept);
+  REC.concept = CONCEPTS.length ? B.concept(recConcept).id : null;
   B.recWhy = { theme: rec.themeWhy || "", type: rec.typeWhy || "", accent: rec.swatchWhy || rec.accentWhy || "" };
   B.fixSwatch = fixSwatch;
   var TYPE_LABEL = B.TYPE_LABEL = { normal: "보통", large: "크게" }, ACCENT_LABEL = B.ACCENT_LABEL = { calm: "차분", vivid: "선명" };
@@ -125,14 +129,12 @@
       cl.push("(나머지는 추천대로)");
       return cl.join("\n");
     }
-    var locked = Array.isArray(board.locked) ? board.locked : [];
     var lines = [B.themeLine() + (isLocked("theme") && isLocked("type") && isLocked("swatch") ? " (확정)" : "")];
     var one = function (s) { return String(s || "").replace(/\s*\n+\s*/g, " / ").trim(); };
     // 안내 문구 모양: 추천과 다를 때만 — "안내 문구: 위치 화면 아래 · 아이콘 없음 · 색 어두운 바탕 · 글자 크게" (answer-parsing §1)
     if (!isLocked("toast") && B.toastDiff().length) lines.push("안내 문구: " + TOAST_KEYS.map(function (k) { return TOAST[k].label + " " + B.toastLabel(k, state.toast[k]); }).join(" · "));
-    if (locked.indexOf("ask") < 0) (board.ask || []).forEach(function (q) {
-      if (!q || !Array.isArray(q.options)) return;
-      var ri = typeof q.recommended === "number" ? q.recommended : Math.max(0, q.options.indexOf(q.recommended));
+    if (!isLocked("ask")) B.asks.forEach(function (q) {
+      var ri = B.recIndex(q);
       var v = state.ask[q.id]; if (typeof v === "number" && v !== ri && q.options[v] != null) lines.push("확인: " + q.id + "=" + q.options[v]);
     });
     var byId = function (a, b) { return a.id - b.id; };
@@ -168,20 +170,8 @@
     if (!isLocked("swatch") && state.accent !== fixSwatch(state.theme, REC.accent)) n++;
     return n;
   };
-  B.copy = function () {
-    var text = B.answer();
-    HX.copyText(text).then(function (ok) {
-      if (ok) { HX.toast("답변을 복사했어요. 채팅에 붙여넣어 주세요."); return; }
-      var ta = HX.el("textarea", { class: "hx-ta hx-copy-box", readonly: true }); ta.value = text;
-      var close = HX.btn("닫기", { onclick: function () { m.remove(); doc.removeEventListener("keydown", esc); } });
-      var esc = function (e) { if (e.key === "Escape") close.click(); };
-      var m = HX.el("div", { class: "hx-modal hx-app" }, [HX.el("div", { class: "hx-modal-backdrop", onclick: function () { close.click(); } }),
-        HX.el("div", { class: "hx-modal-panel", role: "dialog", "aria-modal": "true", style: "width:min(640px,100%);height:auto" }, [
-          HX.el("div", { class: "hx-modal-head" }, [HX.el("h2", { text: "복사가 안 됐어요 — 아래 글을 직접 복사해 주세요" }), HX.el("span", { class: "hx-bar-spacer" }), close]),
-          HX.el("div", { style: "padding:16px" }, ta)])]);
-      doc.body.appendChild(m); doc.addEventListener("keydown", esc); ta.focus(); ta.select();
-    });
-  };
+  // 복사는 '의견 보내기' 창 한 곳에서 (23-board-send.js — file://에서 안 되면 고를 수 있는 글 상자)
+  B.copy = function () { if (B.openSend) B.openSend(); };
 
   /* 지금까지 표시한 것 (패널 요약): 화면 id → 영역 id 순 */
   B.marks = function () {

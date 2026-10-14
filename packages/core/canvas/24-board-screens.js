@@ -437,7 +437,7 @@
         moBtn = HX.btn("움직임 보기", { cls: "hx-sd-mo", icon: HX.icon("#i-play"), title: "이 화면의 움직임과 안내 문구를 바로 재생해요", onclick: function () {
           if (moRun) { moRun.stop(); moRun = null; paintMo(); paintPins(); return; }
           if (!frame) return;
-          moRun = window.HXMotion(frame.section.querySelector(".app") || frame.section, { overlay: !!s.overlayOf, items: s.motion || [], stays: s.stays || [], cases: s.cases || [], outs: s.outs || [], goes: HX.goesOf(s.slug) }, true);
+          moRun = window.HXMotion(frame.section.querySelector(".app") || frame.section, { overlay: !!s.overlayOf, items: HX.motionOf(s), stays: s.stays || [], cases: s.cases || [], outs: s.outs || [], goes: HX.goesOf(s.slug) }, true);
           paintMo();
         } });
       }
@@ -450,11 +450,10 @@
       hov.style.display = hovLab.style.display = selBox.style.display = "none";
       picked = null; wirePicking(); applyIconPins();
       // 오른쪽: 이 화면 정보 + 고른 곳 + 남긴 의견
-      var tags = [HX.el("span", { class: "hx-tag hx-role", text: roleName(s.role) })];
+      var tags = [HX.el("span", { class: "hx-tag hx-role", text: roleName(s.role), title: HX.roleLine(s.role) || null })];
       if (s.state) tags.push(HX.el("span", { class: "hx-tag hx-state", text: HX.stateLabel(s.state) }));
-      sideScreen.appendChild(HX.el("div", { class: "hx-sd-head" }, [HX.el("div", { class: "hx-sd-tags" }, tags),
-        s.purpose ? HX.el("p", { class: "hx-sd-purpose", text: s.purpose }) : null]));
-      // 이 화면의 정책(규칙) — 구역 보드의 검은 상자와 같은 내용. 틀렸으면 화면 메모로 고쳐 달라고 한다
+      sideScreen.appendChild(HX.el("div", { class: "hx-sd-head" }, [HX.el("div", { class: "hx-sd-tags" }, tags)]));
+      // 이 화면의 규칙 — 구역 보드의 정책 상자와 같은 내용(맨 위가 이루려는 것 · 겪는 문제). 틀렸으면 화면 메모로 고쳐 달라고 한다
       var chg = HX.changesOf(slug);
       if (chg.length) sideScreen.appendChild(HX.el("div", { class: "hx-sd-changes" }, [HX.el("span", { class: "hx-sd-k", text: "지난 의견을 반영했어요" }),
         HX.el("ul", {}, chg.map(function (c) { return HX.el("li", { text: HX.changeLine(c) }); }))]));

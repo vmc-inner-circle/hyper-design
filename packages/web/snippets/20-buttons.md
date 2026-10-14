@@ -34,7 +34,7 @@
 주의: `.btn-secondary`는 `.btn`과 같다(가독성용). `.btn-soft`는 primary의 약한 버전이라 primary와 나란히 두지 않는다.
 
 ## 크기 (btn-sm / btn-lg)
-언제: 표 행·카드 안은 `.btn-sm`, 온보딩·빈 화면의 단일 CTA는 `.btn-lg`. 기본은 클래스 없음.
+언제: 표 행·카드 안은 `.btn-sm`, 처음 시작·빈 화면의 단일 CTA는 `.btn-lg`. 기본은 클래스 없음.
 
 ```html
 <button class="btn btn-sm">상세</button>
@@ -93,7 +93,7 @@
 주의: 배타 선택이 3개 이상 텍스트면 `.segmented`(30-inputs.md)를 쓴다. 그룹 안은 모두 같은 크기.
 
 ## btn-block (전체 폭)
-언제: 카드·드로어·모달 하단, 로그인/온보딩의 단일 행동.
+언제: 카드·드로어·모달 하단, 로그인/처음 시작의 단일 행동.
 
 ```html
 <button class="btn btn-primary btn-block">초대 보내기</button>

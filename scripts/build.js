@@ -4,7 +4,7 @@
  *
  *   node scripts/build.js runs/<project> --mode board   → runs/<project>/out/board.html
  *   node scripts/build.js runs/<project> --mode final   → runs/<project>/out/index.html
- *   옵션: --out <path>  --theme a|b|c  --type normal|large  --accent calm|vivid  --round <n>
+ *   옵션: --out <path>  --theme <look id>  --type normal|large  --swatch <swatch id>  --round <n>
  *         --open   빌드 후 사용자 기본 브라우저로 연다 (사용자에게 넘기는 마지막 빌드에만)
  *
  * 산출물 구조 (canvas.js가 기대하는 계약):
@@ -53,15 +53,21 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const S = readJSON(path.join(runDir, "screens.json"));
 const F = readJSON(path.join(runDir, "flow.json"));
 const platform = S.platform || "web";
+// 분위기 목록 — 대표색(palette.brand) · 밀도(concepts[].density) · 글꼴 세트(look.font)는 looks.js getLooks가 붙인다
 const looks = LOOKS.getLooks(S);
-const theme = opt("theme", looks.some((l) => l.id === S.theme) ? S.theme : looks[0].id);
-const type = opt("type", (S.toggles && S.toggles.type) || "normal");
+// 결정(최상위 theme · toggles)이 먼저, 없으면 보드 추천(board.recommend). 글자 크기 추천은 S1에서 roles[].inclusion을 보고 정한 값
+const BOARD = S.board || {}, REC = BOARD.recommend || {}, TOGGLES = S.toggles || {};
+const validLook = (id) => looks.some((l) => l.id === id);
+const theme = opt("theme", validLook(S.theme) ? S.theme : validLook(REC.theme) ? REC.theme : looks[0].id);
+const type = opt("type", TOGGLES.type || REC.type || "normal");
 const look = looks.find((l) => l.id === theme) || looks[0];
-const swatch = LOOKS.resolveSwatch(look, opt("swatch", (S.toggles && (S.toggles.swatch || S.toggles.accent)) || ""));
-const accent = swatch;   // 예전 이름 호환
+const swatch = LOOKS.resolveSwatch(look, opt("swatch", TOGGLES.swatch || REC.swatch || ""));
 // 안내 문구(toast) 모양 — 보드 '안내 문구 모음'에서 고른다. 기본: 위쪽 · 아이콘 있음 · 흰 바탕 · 보통 글자
 const TOAST_DEFAULT = { at: "top", icon: "on", tone: "light", size: "normal" };
-const toast = Object.assign({}, TOAST_DEFAULT, (S.toggles && S.toggles.toast) || {});
+const toast = Object.assign({}, TOAST_DEFAULT, TOGGLES.toast || REC.toast || {});
+// 확정한 선택: concept · theme · type · swatch · toast · ask. 옛 값 toggles(= type + swatch)는 [5/5]까지 풀어서 읽는다
+const LOCKS = ["concept", "theme", "type", "swatch", "toast", "ask"];
+const locked = [...new Set((Array.isArray(BOARD.locked) ? BOARD.locked : []).flatMap((k) => (k === "toggles" ? ["type", "swatch"] : [k])))].filter((k) => LOCKS.includes(k));
 const toastAttrs = ` data-toast-at="${esc(toast.at)}" data-toast-icon="${esc(toast.icon)}" data-toast-tone="${esc(toast.tone)}" data-toast-size="${esc(toast.size)}"`;
 const round = Number(opt("round", S.round || 1));
 const coreDir = path.join(ROOT, "packages/core");
@@ -91,13 +97,15 @@ const css = cssParts.join("\n\n");
 
 // ---------- 화면 조각 ----------
 // 뜨는 창 화면(overlayOf): 조각에는 창(.modal-backdrop)만 있다 → 뒷 화면 조각의 .app 마지막 자식으로 넣어 합친다
+// 조각 파일 경로: file이 비어 있으면 screens/<slug>.html (expand · ids와 같은 기본값)
+const fileOf = (s) => s.file || `screens/${s.slug}.html`;
 const fragOf = (s) => {
-  const p = path.join(runDir, s.file);
-  if (!exists(p)) { console.error(`[build] FAIL 조각 없음: ${s.file}`); process.exit(1); }
+  const p = path.join(runDir, fileOf(s));
+  if (!exists(p)) { console.error(`[build] FAIL 조각 없음: ${fileOf(s)}`); process.exit(1); }
   const own = nightTone(s, EXPAND.expandFragment(S, s, read(p)).trim());
   const base = s.overlayOf && (S.screens || []).find((x) => x.slug === s.overlayOf);
   if (!base) return own;
-  const back = EXPAND.expandFragment(S, base, read(path.join(runDir, base.file))).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
+  const back = EXPAND.expandFragment(S, base, read(path.join(runDir, fileOf(base)))).trim().replace(/\sdata-(trigger|region|stay|back)(="[^"]*")?/g, "");   // 뒷 화면은 배경일 뿐 — 누를 곳·영역 표시는 창에만
   const cut = back.lastIndexOf("</div>");
   return cut < 0 ? back + "\n" + own : back.slice(0, cut) + own + "\n" + back.slice(cut);
 };
@@ -122,11 +130,11 @@ for (const s of S.screens || []) {
 }
 
 // ---------- 시안(concepts): 1턴 보드의 '시안 고르기' ----------
-// 지금 화면들 = S.concept(기본 첫 시안). 시안의 메인 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
+// 지금 화면들 = S.concept(없으면 추천 board.recommend.concept, 그것도 없으면 첫 시안). 시안의 메인 화면은 concepts/<id>/<slug>.html → "<id>~<slug>" 섹션
 const concepts = Array.isArray(S.concepts) ? S.concepts.filter((c) => c && c.id) : [];
-const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts[0]).id : null;
+const mainConcept = concepts.length ? (concepts.find((c) => c.id === S.concept) || concepts.find((c) => c.id === REC.concept) || concepts[0]).id : null;
 // 시안을 확정(board.locked에 concept)한 초안에는 시안 화면을 싣지 않는다 — 보이지 않는 화면으로 파일만 무거워진다
-const conceptLocked = ((S.board && S.board.locked) || []).includes("concept");
+const conceptLocked = locked.includes("concept");
 if (mode === "board" && (stage === "concept" || !conceptLocked)) for (const c of concepts) {
   if (c.id === mainConcept && stage !== "concept") continue;
   for (const slug of c.screens || []) {
@@ -167,6 +175,18 @@ const FEEDBACK = {};
 if (stage !== "concept") for (const s of S.screens || []) FEEDBACK[s.slug] = feedbackOf(fragOf(s));
 
 // ---------- 데이터 ----------
+// 움직임: region(영역 key) · trigger(버튼 key). 옛 칸 target은 [5/5]까지 읽고, 지금 보드 코드가 읽는 target 자리에도 새 칸 값을 넣는다
+const motionOf = (s) => (Array.isArray(s.motion) ? s.motion : []).filter((m) => m && m.type).map((m) => ({
+  type: m.type, region: m.region || null, trigger: m.trigger || null, target: m.trigger || m.region || m.target || null,
+  ms: m.ms || null, level: m.level || null, note: m.note || "" }));
+// 레퍼런스 주소는 references[]에만 — 시안의 refs는 이름으로 가리킨다(옛 refs[].url은 [5/5]까지 대신 읽는다)
+const REFS = (S.references || []).filter((r) => r && r.name);
+const refUrl = (name) => (REFS.find((r) => r.name === name) || {}).url || "";
+// 보드 추천: 새 값(concept · theme · type · swatch · toast)만 넘긴다. 옛 accent · accentWhy는 [5/5]까지 swatch로 옮겨 읽는다
+const recommend = Object.fromEntries(Object.entries({
+  concept: REC.concept, theme: REC.theme, themeWhy: REC.themeWhy, type: REC.type, typeWhy: REC.typeWhy,
+  swatch: REC.swatch || REC.accent, swatchWhy: REC.swatchWhy || REC.accentWhy, toast: REC.toast,
+}).filter(([, v]) => v !== undefined && v !== ""));
 const data = {
   meta: {
     project: S.project,
@@ -178,27 +198,32 @@ const data = {
     concept: mainConcept,
     stage,
     toggles: { type, swatch, toast },
-    looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: LOOKS.inkOf(l), font: LOOKS.fontOf(l).name,
+    looks: looks.map((l) => ({ id: l.id, name: l.name, why: l.why || "", mode: l.mode, bg: l.bg, ink: LOOKS.inkOf(l), font: LOOKS.fontOf(l).name, lean: l.lean || "",
       swatches: l.swatches.map((s) => ({ id: s.id, name: s.name, hex: LOOKS.calmHex(s.hex, l.mode === "dark") })) })),
-    roles: S.roles || [],
+    // 역할: 구역 보드 역할 표시에 누구 · 무엇을 이루려는지(goal) · 포용 조건(inclusion)
+    roles: (S.roles || []).map((r) => ({ key: r.key, label: r.label, nav: r.nav || [], user: r.user || null, goal: r.goal || "", inclusion: r.inclusion || "" })),
     generatedAt: new Date().toISOString(),
   },
   screens: (S.screens || []).map((s) => ({
-    id: s.id, slug: s.slug, name: s.name, role: s.role || null, purpose: s.purpose || "",
+    // 보드 '이 화면의 규칙': 이루는 것(goal) · 겪는 문제(problem). 옛 칸 purpose는 [5/5]까지 goal 대신 읽고,
+    // 아직 purpose를 읽는 보드 코드에도 같은 값을 넣는다
+    id: s.id, slug: s.slug, name: s.name, role: s.role || null, goal: s.goal || s.purpose || "", problem: s.problem || "", purpose: s.goal || s.purpose || "",
     pattern: s.pattern || null, state: s.state || null, variantOf: s.variantOf || null, overlayOf: s.overlayOf || null,
     when: s.when || null, section: s.section || null, step: s.step || "", policy: Array.isArray(s.policy) ? s.policy : [],
     cases: Array.isArray(s.cases) ? s.cases.filter((c) => c && c.when && c.show).map((c) => ({ when: c.when, show: c.show, tone: c.tone || "danger" })) : [],
     stays: (FEEDBACK[s.slug] || {}).stays || [], limits: (FEEDBACK[s.slug] || {}).limits || [], outs: (FEEDBACK[s.slug] || {}).outs || [],
-    motion: Array.isArray(s.motion) ? s.motion.filter((m) => m && m.type).map((m) => ({ type: m.type, target: m.target || null, ms: m.ms || null, level: m.level || null, note: m.note || "" })) : [],
+    motion: motionOf(s),
     regions: (s.regions || []).map((r) => ({ id: r.id, key: r.key, label: r.label, why: r.why || "" })),
   })),
   sections: Array.isArray(S.sections) ? S.sections : [],
   flows: F.flows || [],
   branches: F.branches || [],
-  concepts: mode === "board" ? concepts.map((c) => ({ id: c.id, name: c.name || c.id, why: c.why || "", shell: c.shell || "sidebar", look: c.look || theme,
-    traits: c.traits || [], refs: c.refs || [], screens: c.screens || [] })) : [],
-  references: mode === "board" ? (S.references || []) : [],
-  board: mode === "board" ? (S.board || {}) : null,
+  concepts: mode === "board" ? concepts.map((c) => ({ id: c.id, name: c.name || c.id, why: c.why || "", shell: c.shell || (platform === "mobile" ? "tabbar" : "sidebar"), look: c.look || theme,
+    traits: c.traits || [], screens: c.screens || [],
+    refs: (c.refs || []).filter((r) => r && r.name).map((r) => ({ name: r.name, borrow: r.borrow || "", url: refUrl(r.name) || r.url || "" })) })) : [],
+  references: mode === "board" ? REFS.map((r) => ({ name: r.name, url: r.url || "", borrow: r.borrow || "" })) : [],
+  mood: mode === "board" && S.mood ? { keywords: S.mood.keywords || [], board: S.mood.board || [] } : null,   // 기준어 · 표현용 무드보드
+  board: mode === "board" ? Object.assign({}, BOARD, { recommend, locked }) : null,
   pages: mode === "final" ? Object.fromEntries(Object.entries(pageFiles(S, F)).map(([k, v]) => [k, "screens/" + v])) : null,
 };
 // </script> 로 JSON이 끊기지 않게
@@ -379,7 +404,7 @@ ${nav}
   document.addEventListener("click", function (e) { var a = e.target.closest("a[href='#'], .app a:not([data-hx-link]), .app button:not([data-hx-link])"); if (a && !a.closest(".hx-page-nav")) e.preventDefault(); }, true);
 })();
 </script>
-<script>window.HX_MOTION = ${JSON.stringify({ overlay: !!s.overlayOf, cases: (s.cases || []).filter((c) => c && c.when && c.show), items: (s.motion || []).filter((m) => m && m.type) }).replace(/<\//g, "<\\/")};</script>
+<script>window.HX_MOTION = ${JSON.stringify({ overlay: !!s.overlayOf, cases: (s.cases || []).filter((c) => c && c.when && c.show), items: motionOf(s) }).replace(/<\//g, "<\\/")};</script>
 <script>
 ${MOTION_JS}
 </script>

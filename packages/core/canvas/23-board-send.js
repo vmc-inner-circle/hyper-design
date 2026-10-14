@@ -14,8 +14,7 @@
 
   /* 사람이 읽는 요약: [{title, items:[문장]}] */
   B.summary = function () {
-    var st = B.state, board = HX.data.board || {}, groups = [];
-    var locked = Array.isArray(board.locked) ? board.locked : [];
+    var st = B.state, groups = [];
     if (B.stage === "concept") {
       var C = B.concept(st.concept);
       groups.push({ title: "고른 시안", items: [(C ? "시안 " + C.id.toUpperCase() + " · " + C.name : "") + (st.concept === B.REC.concept ? " — 추천 그대로" : " — 직접 고름")] });
@@ -30,11 +29,11 @@
     // 1) 화면 느낌
     var look = B.lookLine();
     var same = st.theme === B.REC.theme && st.type === B.REC.type && st.accent === B.fixSwatch(st.theme, B.REC.accent);
-    groups.push({ title: "화면 느낌", items: [look + (locked.indexOf("theme") >= 0 ? " (이미 정해짐)" : same ? " — 추천 그대로" : " — 직접 고름")] });
+    groups.push({ title: "화면 느낌", items: [look + (B.isLocked("theme") ? " (이미 정해짐)" : same ? " — 추천 그대로" : " — 직접 고름")] });
     // 2) 확인 질문 중 추천과 다르게 고른 것
     var asks = [];
-    if (locked.indexOf("ask") < 0) (board.ask || []).forEach(function (q) {
-      var ri = typeof q.recommended === "number" ? q.recommended : 0, v = st.ask[q.id];
+    if (!B.isLocked("ask")) B.asks.forEach(function (q) {
+      var ri = B.recIndex(q), v = st.ask[q.id];
       if (typeof v === "number" && v !== ri && q.options[v] != null) asks.push(q.text + " → " + String(q.options[v]).replace(/\s*\(추천\)/, ""));
     });
     if (asks.length) groups.push({ title: "다르게 고른 질문", items: asks });
@@ -71,15 +70,18 @@
   B.openSend = function () {
     var text = B.answer(), groups = B.summary(), n = B.diffCount();
     var close = HX.btn("닫기", { onclick: function () { done(); } });
+    // 복사: 클립보드가 확실히 받았을 때만 창을 닫는다. 아니면(file://로 연 보드 등) 글 상자를 펼쳐 전부 골라 두고 ⌘C를 안내한다
     var copy = HX.btn("복사하기", { cls: "hx-primary", icon: HX.icon("#i-copy"), onclick: function () {
-      HX.copyText(text).then(function (ok) {
-        if (ok) { done(); HX.toast("복사했어요. 채팅창에 붙여넣어 주세요."); return; }
-        raw.open = true; ta.focus(); ta.select();
-        HX.toast("자동 복사가 안 됐어요. 아래 글을 직접 복사해 주세요.");
+      HX.copyText(text).then(function (how) {
+        if (how === "clipboard") { done(); HX.toast("복사했어요. 채팅창에 붙여넣어 주세요."); return; }
+        raw.open = true; manual.hidden = false;
+        manual.textContent = (how ? "복사했지만 이 브라우저에서는 안 들어갔을 수 있어요. " : "자동 복사가 안 됐어요. ") + "아래 글이 전부 골라져 있어요 — " + HX.copyKey + "를 눌러 복사한 뒤 채팅창에 붙여넣어 주세요.";
+        ta.selectAll(); ta.scrollIntoView({ block: "nearest" });
       });
     } });
-    var ta = HX.el("textarea", { class: "hx-ta hx-copy-box", readonly: true, rows: "6" }); ta.value = text;
-    var raw = HX.el("details", { class: "hx-send-raw" }, [HX.el("summary", { text: "실제로 복사되는 글 보기" }), ta]);
+    var ta = HX.copyBox(text, "6");
+    var manual = HX.el("p", { class: "hx-send-manual", role: "status" }); manual.hidden = true;
+    var raw = HX.el("details", { class: "hx-send-raw" }, [HX.el("summary", { text: "실제로 복사되는 글 보기" }), manual, ta]);
     var body = HX.el("div", { class: "hx-send-body" }, [
       HX.el("p", { class: "hx-send-lead", text: n ? "아래 " + n + "가지를 전달해요. 나머지는 모두 추천대로 진행해요." : "아직 고친 곳이 없어요. 이대로 보내면 모두 추천대로 진행해요." })]);
     groups.forEach(function (g) {

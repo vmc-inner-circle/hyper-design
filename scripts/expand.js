@@ -6,22 +6,25 @@
  *   node scripts/expand.js runs/<project> --reshell  이미 셸이 있는 화면도 셸을 새로 붙인다(시안을 바꿨을 때)
  *
  * 1) 셸 자동 조립 — 조각에 `<div class="app">`이 없으면(뜨는 창 제외) 상단바·메뉴를 붙인다.
- *    메뉴 = screens.json roles[역할].nav, 메뉴 구조 = 시안의 shell(sidebar·top·rail), 현재 화면 항목에 .active.
- *    조각은 `<main class="content">…</main>` 하나만 쓰면 된다. (pattern이 onboarding이거나 shell:"none"이면 메뉴 없는 한 장)
+ *    메뉴 = screens.json roles[역할].nav, 메뉴 구조 = 화면 shell → 시안(concepts[].shell) 순서(web: sidebar·top·rail), 현재 화면 항목에 .active.
+ *    조각은 `<main class="content">…</main>` 하나만 쓰면 된다. (pattern이 '처음 시작'(옛 값 onboarding)이거나 화면 shell:"none"이면 메뉴 없는 한 장)
  * 2) 짧은 부품 태그 — <x-btn> <x-badge> <x-icon> <x-avatar> <x-item> <x-list> <x-stat> <x-empty> <x-card>
  *    <x-section> <x-page-header> <x-modal> 을 packages/web 조각과 같은 HTML로 펼친다. 형식은 packages/web/snippets/05-parts.md.
  *    data-*·aria-*·id·title·href·class는 펼친 요소의 바깥 태그로 그대로 옮긴다.
  *
  * 3) 모바일(screens.json platform: "mobile") — 셸은 .app.app-mobile: 탭 화면(roles[].nav에 있는 화면)은 아래 탭(.tabbar),
- *    그 밖의 화면은 위 제목 줄(.appbar: 뒤로 data-back · 가운데 화면 이름), 온보딩·shell "none"은 메뉴 없는 한 장.
+ *    그 밖의 화면은 위 제목 줄(.appbar: 뒤로 data-back · 가운데 화면 이름), '처음 시작'·shell "none"은 메뉴 없는 한 장.
  *    시안 shell: tabbar(기본 — web의 sidebar·rail도 이것으로) · top(서비스 이름 줄 + 위 알약 탭) · none.
  *    <x-modal>은 아래에서 올라오는 창(.modal-backdrop.sheet-backdrop > .modal.sheet)으로 펼친다. 형식은 packages/mobile/snippets.
+ *
+ * 4) 영역 등급 — screens.json regions[].level을 조각의 data-region 요소에 data-level로 붙인다(CSS가 3순위를 조용하게).
  *
  * 펼친 결과를 파일에 다시 쓰므로 이후 lint·보드(요소 고르기 경로)·수정 에이전트는 모두 일반 HTML만 본다.
  * 한 번 펼친 파일에 다시 돌려도 바뀌지 않는다.
  */
 const fs = require("fs");
 const path = require("path");
+const looks = require("./looks.js");
 
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 const ico = (name, cls = "icon", extra = "") => `<svg class="${cls}${extra ? " " + extra : ""}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
@@ -151,15 +154,44 @@ function expandParts(html) {
 
 // ---------- 셸 ----------
 const SHELL_CLASS = { sidebar: "", top: "nav-top", rail: "nav-rail", none: "no-sidebar" };
+// 메뉴 없는 한 장으로 여는 화면 — KRDS 서비스 패턴 '처음 시작'(옛 값 onboarding도 같이 본다)
+const NO_MENU = ["처음 시작", "onboarding"];
+// 시안 shell(다른 플랫폼 값 포함) → web 셸: sidebar · top · rail · none(화면 단위). 모바일 값 tabbar는 왼쪽 메뉴로
+const WEB_SHELL = { sidebar: "sidebar", top: "top", rail: "rail", none: "none", tabbar: "sidebar" };
+const conceptOf = (S, id) => (S.concepts || []).find((c) => c.id === (id || S.concept)) || (S.concepts || [])[0];
 function shellFor(S, s, conceptId) {
-  if (S.platform === "mobile") return MOBILE_SHELL[shellRaw(S, s, conceptId)] || "tabbar";
-  return shellRaw(S, s, conceptId);
+  const raw = shellRaw(S, s, conceptId);
+  return S.platform === "mobile" ? MOBILE_SHELL[raw] || "tabbar" : WEB_SHELL[raw] || "sidebar";
 }
+// 화면 shell이 이기고, 없으면 '처음 시작'은 none, 그다음 시안의 shell (최상위 shell은 옛 칸이라 읽지 않는다)
 function shellRaw(S, s, conceptId) {
   if (s.shell) return s.shell;
-  if (s.pattern === "onboarding") return "none";
-  const C = (S.concepts || []).find((c) => c.id === (conceptId || S.concept)) || (S.concepts || [])[0];
-  return (C && C.shell) || S.shell || "sidebar";
+  if (NO_MENU.includes(s.pattern)) return "none";
+  const C = conceptOf(S, conceptId);
+  return (C && C.shell) || "";
+}
+
+// ---------- 분위기 (대표색 · 밀도) ----------
+// 시안이 쓰는 분위기의 대표색(palette.brand — 버튼 색 토글의 첫 번째)과 밀도(concepts[].density)를 읽는 자리.
+// 계산은 looks.js가 맡는다: getLooks가 대표색을 swatches 첫째로 붙인다(밀도는 시안 칸을 먼저, 없을 때만 _density).
+// 지금 looks.js에 없는 함수는 건너뛰고 칸을 바로 읽는다.
+function lookFor(S, conceptId) {
+  const C = conceptOf(S, conceptId);
+  const all = typeof looks.getLooks === "function" ? looks.getLooks(S) : S.looks || [];
+  const L = all.find((l) => l.id === ((C && C.look) || S.theme)) || all[0] || null;
+  if (!L) return { look: null, brand: null, density: "normal" };
+  const sw = typeof looks.swatchesOf === "function" ? looks.swatchesOf(L) : L.swatches || [];
+  const brand = (L.palette && L.palette.brand && L.palette.brand.hex ? L.palette.brand : sw[0]) || null;
+  // 밀도의 주인은 시안 칸 — _density는 같은 분위기를 쓰는 첫 시안 값이라 다른 시안에서 틀릴 수 있다
+  const d = (C && C.density) || L._density || "normal", alias = looks.DENSITY_ALIAS || { 넓게: "airy", 보통: "normal", 빽빽하게: "compact" };
+  return { look: L, brand, density: alias[d] || d };
+}
+
+// 영역 등급(screens.json regions[].level)을 data-level로 붙인다 — CSS가 3순위를 조용하게 만든다
+function markLevels(s, html) {
+  const lv = new Map((s.regions || []).filter((r) => r.level).map((r) => [r.key, r.level]));
+  if (!lv.size) return html;
+  return html.replace(/(\sdata-region\s*=\s*["']([^"']+)["'])(\s+data-level\s*=\s*["'][^"']*["'])?/g, (m, a, k) => (lv.has(k) ? `${a} data-level="${lv.get(k)}"` : a));
 }
 function wrapShell(S, s, body, shell) {
   const role = (S.roles || []).find((r) => r.key === s.role) || (S.roles || [])[0] || { nav: [] };
@@ -209,7 +241,7 @@ function stripShell(html) {
 function expandFragment(S, s, html, o = {}) {
   const mobile = S.platform === "mobile";
   platformNow = mobile ? "mobile" : "web";
-  let out = expandParts(html);
+  let out = markLevels(s, expandParts(html));
   const trimmed = out.trim();
   if (s.overlayOf || /^<div\s+class=["'][^"']*\bmodal-backdrop\b/.test(trimmed)) return (mobile ? toSheet(trimmed) : trimmed) + "\n";
   const wrap = mobile ? wrapMobile : wrapShell;
@@ -218,7 +250,7 @@ function expandFragment(S, s, html, o = {}) {
   if (o.reshell) return wrap(S, s, stripShell(trimmed), shellFor(S, s, o.concept));
   return trimmed + "\n";
 }
-module.exports = { expandFragment, expandParts, warnings };
+module.exports = { expandFragment, expandParts, shellFor, lookFor, warnings };
 
 // ---------- CLI ----------
 if (require.main === module) {

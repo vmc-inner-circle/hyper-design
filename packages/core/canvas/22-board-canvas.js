@@ -18,7 +18,9 @@
     function sync() { btns.forEach(function (b, i) { b.setAttribute("aria-pressed", values[i] === B.state[key] ? "true" : "false"); }); }
     sync();
     var tip = { theme: "화면 전체의 배경색과 분위기예요", type: "화면 글자와 버튼의 크기예요", accent: "가장 중요한 버튼과 지금 고른 메뉴에 쓰는 색이에요" }[key];
-    return HX.el("div", { class: "hx-bd-ctl", title: tip || null }, [HX.el("span", { class: "hx-bd-ctl-l", text: label }), seg]);
+    // 추천 이유를 글로 — 글자 크기는 쓰는 사람의 나이 · 기기 · 읽는 상황(roles[].inclusion)에서 나온다
+    return HX.el("div", { class: "hx-bd-ctl", title: tip || null }, [HX.el("span", { class: "hx-bd-ctl-l", text: label }), seg,
+      B.recWhy[key] ? HX.el("small", { class: "hx-bd-ctl-why", text: "추천 이유 · " + B.recWhy[key] }) : null]);
   }
   // 분위기: PRD에 맞춰 만든 3개 (이름 + 배경·버튼 색 미리보기)
   function lookCtl() {

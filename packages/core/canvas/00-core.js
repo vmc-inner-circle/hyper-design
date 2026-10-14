@@ -19,10 +19,23 @@
   HX.frame = HX.platform === "mobile" ? { w: 390, h: 844 } : { w: 1280, h: 800 };
   HX.bySlug = {};
   data.screens.forEach(function (s) { s.regions = s.regions || []; HX.bySlug[s.slug] = s; });
+  HX.role = function (key) { return key ? data.meta.roles.filter(function (r) { return r.key === key; })[0] || null : null; };
   HX.roleLabel = function (key) {
     if (!key) return "공통";
-    var hit = data.meta.roles.filter(function (r) { return r.key === key; })[0];
+    var hit = HX.role(key);
     return hit ? hit.label : key;
+  };
+  // 역할 한 줄: "누구 · 무엇을 이루려는지"(roles[].goal) — 없으면 빈 칸
+  HX.roleLine = function (key) { var r = HX.role(key); return r && r.goal ? HX.roleLabel(key) + " · " + r.goal : ""; };
+  // 화면이 이루려는 것 — 옛 purpose는 goal이 없을 때만 읽는다(다음 판에서 지움)
+  HX.goalOf = function (s) { return (s && (s.goal || s.purpose)) || ""; };
+  // 움직임 → 재생기(motion.js)가 읽는 모양 { type, target, … }. region · trigger를 읽고, 옛 target은 둘 다 없을 때만
+  HX.motionOf = function (s) {
+    return ((s && s.motion) || []).map(function (m) {
+      var t = m.type === "hold" ? m.trigger || m.region : m.region || m.trigger;
+      var o = {}; Object.keys(m).forEach(function (k) { o[k] = m[k]; });
+      o.target = t || m.target || null; return o;
+    });
   };
 
   // ---------- 유틸 ----------
@@ -80,19 +93,37 @@
     doc.body.appendChild(t); clearTimeout(toastT);
     toastT = setTimeout(function () { t.remove(); }, 2200);
   };
+  /* 복사 → "clipboard"(확실히 됨) | "select"(옛 방식 — 브라우저가 됐다고 해도 file://에서는 안 들어갈 때가 있다) | false.
+     "clipboard"가 아니면 부르는 쪽이 고를 수 있는 글 상자를 보여 준다(HX.copyBox). */
   HX.copyText = function (text) {
     return new Promise(function (resolve) {
-      if (navigator.clipboard && window.isSecureContext !== false) {
-        navigator.clipboard.writeText(text).then(function () { resolve(true); }, function () { resolve(fallback()); });
+      if (navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext !== false) {
+        try { navigator.clipboard.writeText(text).then(function () { resolve("clipboard"); }, function () { resolve(fallback()); }); }
+        catch (e) { resolve(fallback()); }
       } else resolve(fallback());
     });
     function fallback() {
+      var was = doc.activeElement;
       try {
-        var ta = HX.el("textarea", { class: "hx-sr", text: text }); doc.body.appendChild(ta); ta.select();
-        var ok = doc.execCommand && doc.execCommand("copy"); ta.remove(); return !!ok;
+        // 잘린(clip) 상자는 고르기가 안 되는 브라우저가 있다 → 화면 밖이 아닌 제자리에 투명하게
+        var ta = HX.el("textarea", { readonly: true, "aria-hidden": "true", style: "position:fixed;top:0;left:0;width:2em;height:2em;opacity:0;pointer-events:none" });
+        ta.value = text; doc.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0, text.length);
+        var ok = doc.execCommand && doc.execCommand("copy"); ta.remove();
+        if (was && was.focus) was.focus();
+        return ok ? "select" : false;
       } catch (e) { return false; }
     }
   };
+  /* 고를 수 있는 글 상자: 눌러도 · 들어가도 전부 골라진다 → ⌘C(Ctrl+C) */
+  HX.copyBox = function (text, rows) {
+    var ta = HX.el("textarea", { class: "hx-ta hx-copy-box", readonly: true, rows: rows || "6", "aria-label": "복사할 글 — 전부 골라진 상태에서 ⌘C(Ctrl+C)" });
+    ta.value = text;
+    function all() { ta.select(); ta.setSelectionRange(0, ta.value.length); }
+    ta.addEventListener("focus", all); ta.addEventListener("mouseup", function (e) { if (ta.selectionStart === ta.selectionEnd) { e.preventDefault(); all(); } });
+    ta.selectAll = function () { ta.focus(); all(); };
+    return ta;
+  };
+  HX.copyKey = /Mac|iP(hone|ad|od)/.test(navigator.platform || navigator.userAgent || "") ? "⌘C" : "Ctrl+C";
 
   // ---------- 이벤트 버스 ----------
   var handlers = {};
@@ -328,7 +359,7 @@
     var closeBtn = HX.btn("", { cls: "hx-icon-btn", aria: "닫기", title: "닫기 (Esc)", icon: HX.icon("#i-x"), onclick: HX.closeModal });
     var panel = HX.el("div", { class: "hx-modal-panel", role: "dialog", "aria-modal": "true", "aria-label": s.name }, [
       HX.el("div", { class: "hx-modal-head" }, [HX.badge(s.id), HX.el("h2", { text: s.name }), HX.el("span", { class: "hx-tag hx-role", text: HX.roleLabel(s.role) }),
-        HX.el("span", { class: "hx-purpose", text: s.purpose }), HX.el("span", { class: "hx-bar-spacer" }), closeBtn]),
+        HX.el("span", { class: "hx-purpose", text: HX.goalOf(s) }), HX.el("span", { class: "hx-bar-spacer" }), closeBtn]),
       HX.el("div", { class: "hx-modal-body" }, [frameBox, HX.el("aside", { class: "hx-modal-side" }, [
         HX.el("section", {}, [HX.el("div", { class: "hx-side-h", text: "이 화면의 번호 " + s.regions.length + "개" }), regionUl]),
         HX.el("section", {}, [HX.el("div", { class: "hx-side-h", text: "여기서 가는 곳" }), stepUl])])])

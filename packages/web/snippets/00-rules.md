@@ -21,7 +21,24 @@
 6. **프레임은 1280×800 고정.** `.app`이 프레임을 채우고 `.content`만 내부 스크롤한다. 첫 화면(above the fold)에 핵심이 보이게 배치한다.
 7. **상태 표시는 `.badge`로 통일**한다 (예: 확정 = `badge-success`, 후보 = `badge-neutral`, 변경됨 = `badge-warning`). 같은 의미에 같은 색.
 8. **화면당 primary 버튼은 1개**(`.btn-primary`). 나머지는 secondary/ghost.
-9. 패턴 파일(`packages/web/patterns/<pattern>.html`)은 **`<main>` 안쪽 배치만** 참고한다(셸 부분은 옮기지 않는다). `<!-- slot: … -->` 자리를 조각으로 채우고 주석은 지운다.
+9. **배치는 `screens.json`의 `regions[].form`이 정한다 — 영역마다 아래 표의 부품을 쓴다.** 영역이 여럿이면 `regions` 순서대로 위에서 아래로 쌓는다(`packages/web/patterns/*.html`은 모양 조합 예시일 뿐, 읽지 않아도 된다). 조각 이름은 이 폴더 파일의 `## 제목`이다.
+
+   | 영역 form | 쓸 부품(조각) |
+   |---|---|
+   | **hero** | 맨 위 한 덩어리. **1순위(focus · level 1) 영역은 항상 이 모양으로 맨 위**에 두고, 순서는 ① 1순위 문장(`page-header` 제목) → ② 넘친 한 줄(`page-header` desc) → ③ 사실 한두 줄(굵은 숫자는 글 안에 — 칸 나누기 · 카드 · `stat` 숫자 칸 금지) → ④ 버튼(`btn` primary 하나) |
+   | **list** | `list`(`<x-list>` · `<x-item>`) · 거르기는 `search` · `chip` · `toolbar` |
+   | **table** | `table` · 거르기는 `toolbar` · `search` |
+   | **calendar** | `calendar`(월) · `week-grid`(주) · `day-strip`(날짜 띠) |
+   | **form** | `field` · `input` · `select` · `textarea` · `form-grid` · `form-actions` |
+   | **timeline** | `timeline` · 단계 표시는 `steps` |
+   | **cards** | `card` · `grid-2` / `grid-3` · `badge` |
+   | **stat-row** | (2순위 이하에만) `stat`(`<x-stat>`)을 `grid-3` / `grid-4`에 한 줄로 |
+   | **split** | `split`(좌 목록 / 우 상세) |
+   | **actions** | 주 행동 줄. 주 버튼(`btn` primary 하나)은 1순위 hero 안, 또는 폼 끝 버튼 줄(`form-actions`)에 둔다 |
+
+   버튼 글자 굵기는 부품(`btn`)이 정한다 — 조각에서 버튼에 굵기를 덮어쓰지 않는다.
+
+   표에 없는 form이면 가장 가까운 조각을 쓰고 새 클래스는 만들지 않는다.
 10. 완성 후 스스로 점검: data-region 개수 = screens.json 영역 개수 / 이 화면이 from인 step의 trigger가 모두 `data-trigger`로 있음 / 아이콘 이름 allowlist 확인 / `style=` 없음 / Lorem 없음.
 11. **사이드바·상단바는 쓰지 않는다 — expand.js가 `screens.json`의 `roles[].nav`로 붙인다.** (예전 방식: 직접 쓸 때는 roles[].nav를 그대로 옮긴다.) 항목 순서·라벨·아이콘을 바꾸지 않고, 현재 화면 항목에만 `.active`. 상단바 제목은 `screens.json`의 `title`. 화면마다 내비가 달라지면 안 된다.
 11-1. **메뉴 구조(시안의 shell)** — 셸을 쓰지 않으면 expand.js가 시안의 shell로 붙이므로 신경 쓰지 않는다. 직접 쓸 때만: 기본은 왼쪽 메뉴(`.sidebar`). 프롬프트에 `SHELL=nav-top`이면 `<div class="app nav-top">` + 상단바 안 `<nav class="topnav-nav">`에 같은 `.nav-item`들(사이드바 없음), `SHELL=nav-rail`이면 `<div class="app nav-rail">` + 사이드바는 그대로(좁은 아이콘 메뉴로 보인다). 골격은 `patterns/shell-top.html`·`shell-rail.html`, 설명은 10-layout "app 변형". `.nav-item` 클래스 이름은 바꾸지 않는다.

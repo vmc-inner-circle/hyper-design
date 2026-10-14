@@ -12,11 +12,16 @@
 
   var STATE_LABEL = { "first-run": "처음 켰을 때", empty: "데이터 없을 때", input: "입력할 때", error: "오류일 때", success: "완료됐을 때" };
   HX.stateLabel = function (st) { return STATE_LABEL[st] || ""; };
-  /* 정책 묶음 + 움직임(screen.motion의 note) — 움직임은 완성본에서 직접 해 볼 수 있다는 표시와 함께 마지막 묶음으로 */
+  /* '이 화면의 규칙' 묶음: 맨 위에 이 화면에서 이루려는 것(goal) · 겪는 문제(problem) → 정책 → 안내·예외 → 움직임(screen.motion의 note)
+     움직임은 완성본에서 직접 해 볼 수 있다는 표시와 함께 마지막 묶음으로 */
   HX.policyBlocks = function (s) {
     var out = (s.policy || []).slice(), mv = (s.motion || []).filter(function (m) { return m.note; });
     // 안내·예외: 누르면 뜨는 안내(조각의 data-stay) · 글자 수(입력칸) · 이럴 땐 이렇게(screens.json cases)
     if (s.when && (s.state === "error" || s.state === "success")) out.unshift({ kind: "case", title: "언제 나오나요", items: [s.when] });
+    var aim = [], goal = HX.goalOf(s);
+    if (goal) aim.push("이루려는 것 · " + goal);
+    if (s.problem) aim.push("겪는 문제 · " + s.problem);
+    if (aim.length) out.unshift({ kind: "goal", title: "이 화면에서", items: aim });
     if ((s.outs || []).length) out.push({ kind: "out", title: "앱 밖으로 나가는 버튼", items: s.outs.map(function (x) { return "'" + x.label + "' → " + x.text; }) });
     if ((s.stays || []).length) out.push({ kind: "stay", title: "누르면 뜨는 안내", items: s.stays.map(function (x) { return "'" + x.label + "' → " + x.text + (x.tone === "danger" ? " (오류)" : ""); }) });
     if ((s.limits || []).length) out.push({ kind: "limit", title: "글자 수", items: s.limits.map(function (l) { return "'" + l.name + "' " + (l.min && l.max ? l.min + "~" + l.max + "자" : l.max ? l.max + "자까지" : l.min ? l.min + "자 이상" : "제한 없음"); }) });
@@ -45,7 +50,7 @@
   function model() {
     var all = order(), secs = (HX.data.sections || []).slice(), byKey = {};
     if (!secs.length) {
-      secs = HX.meta.roles.map(function (r) { return { key: r.key, name: roleName(r.key) }; });
+      secs = HX.meta.roles.map(function (r) { return { key: r.key, name: roleName(r.key), desc: r.goal || "" }; });
       all.forEach(function (s) { s._sec = s.role || "_etc"; });
       if (all.some(function (s) { return s._sec === "_etc"; })) secs.push({ key: "_etc", name: "함께 쓰는 화면" });
     } else all.forEach(function (s) { s._sec = s.section; });
@@ -119,6 +124,16 @@
     var svg = document.createElementNS(SVG, "svg"); svg.setAttribute("class", "hx-sx-links");
     world.appendChild(svg); vp.appendChild(world);
 
+    // 누가 쓰나요: 역할마다 "누구 · 무엇을 이루려는지"(roles[].goal) + 읽는 상황(roles[].inclusion — 글자 크기 추천의 근거)
+    var who = null, people = (HX.meta.roles || []).filter(function (r) { return r && (r.goal || r.inclusion); });
+    if (people.length) {
+      who = HX.el("div", { class: "hx-sx-roles", "aria-label": "누가 쓰나요", style: "max-width:" + MAXW + "px" }, [HX.el("span", { class: "hx-sx-roles-h", text: "누가 쓰나요" })].concat(people.map(function (r) {
+        return HX.el("div", { class: "hx-sx-role" }, [HX.el("b", { text: roleName(r.key) }), r.goal ? HX.el("span", { text: r.goal }) : null,
+          r.inclusion ? HX.el("small", { text: "읽는 상황 · " + r.inclusion }) : null]);
+      })));
+      world.appendChild(who);
+    }
+
     var secs = model(), boards = [], bySlug = {}, secEls = [];
     secs.forEach(function (sec) {
       // 구역 띠: 이름 + 여기서 무엇을 하는지 한 줄(desc) + 화면 수 (사용자: "아침 결과, 추이 병원 이런 거 잘 모르겠어 뭔지")
@@ -168,6 +183,7 @@
     function layout() {
       var y = 0;
       worldW = 0;
+      if (who) { who.style.left = "0px"; who.style.top = "0px"; y = who.offsetHeight + 48 * K; worldW = who.offsetWidth; }
       secEls.forEach(function (S) {
         S.y = y; S.band.style.top = y + "px"; S.band.style.left = "0px";
         y += 64 * K + 72 * K;
@@ -326,6 +342,9 @@
         pop.hidden = false; placePop(anchor); return;
       }
       pop.appendChild(HX.el("div", { class: "hx-sx-pop-h" }, [HX.el("span", { class: "hx-sx-n", text: String(b.screen.id).padStart(2, "0") }), HX.el("b", { text: b.screen.name }), HX.el("span", { text: "이 화면의 규칙" })]));
+      var rl = HX.roleLine(b.screen.role), ro = HX.role(b.screen.role);
+      if (rl) pop.appendChild(HX.el("div", { class: "hx-sx-pop-b hx-sx-pop-in" }, [HX.el("div", { class: "hx-sx-pop-t" }, [HX.icon("#i-users", "icon icon-sm"), "누구를 위한 화면"]),
+        HX.el("ul", {}, [HX.el("li", { text: rl }), ro.inclusion ? HX.el("li", { text: "읽는 상황 · " + ro.inclusion }) : null])]));
       var chg = HX.changesOf(b.screen.slug);
       if (chg.length) pop.appendChild(HX.el("div", { class: "hx-sx-pop-b hx-sx-pop-chg" }, [HX.el("div", { class: "hx-sx-pop-t" }, [HX.icon("#i-pencil", "icon icon-sm"), "지난 의견을 반영했어요"]),
         HX.el("ul", {}, chg.map(function (c) { return HX.el("li", { text: HX.changeLine(c) }); }))]));
@@ -334,7 +353,7 @@
         HX.el("ul", {}, inc.map(function (t) { return HX.el("li", { text: t }); }))]));
       b.blocks.forEach(function (p) {
         pop.appendChild(HX.el("div", { class: "hx-sx-pop-b" + (p.motion ? " hx-sx-pop-motion" : "") }, [
-          HX.el("div", { class: "hx-sx-pop-t hx-k-" + (p.kind || (p.motion ? "motion" : "policy")) }, [p.motion ? HX.icon("#i-sparkles", "icon icon-sm") : p.kind === "stay" ? HX.icon("#i-message-circle", "icon icon-sm") : p.kind === "limit" ? HX.icon("#i-a-large-small", "icon icon-sm") : p.kind === "case" ? HX.icon("#i-triangle-alert", "icon icon-sm") : HX.icon("#i-circle-check", "icon icon-sm"), p.motion ? "움직임 · '흐름 재생'과 '움직임 보기'에서 볼 수 있어요" : p.title]),
+          HX.el("div", { class: "hx-sx-pop-t hx-k-" + (p.kind || (p.motion ? "motion" : "policy")) }, [p.motion ? HX.icon("#i-sparkles", "icon icon-sm") : p.kind === "goal" ? HX.icon("#i-target", "icon icon-sm") : p.kind === "stay" ? HX.icon("#i-message-circle", "icon icon-sm") : p.kind === "limit" ? HX.icon("#i-a-large-small", "icon icon-sm") : p.kind === "case" ? HX.icon("#i-triangle-alert", "icon icon-sm") : HX.icon("#i-circle-check", "icon icon-sm"), p.motion ? "움직임 · '흐름 재생'과 '움직임 보기'에서 볼 수 있어요" : p.title]),
           HX.el("ul", {}, (p.items || []).map(function (t) { return HX.el("li", { text: t }); }))]));
       });
       pop.hidden = false; placePop(anchor);

@@ -86,12 +86,13 @@
     function screen(s) {
       var info = B.instInfo(B.sel.inst);
       title.textContent = info ? info.head : "화면";
-      var tags = [HX.el("span", { class: "hx-tag hx-role", text: HX.roleLabel(s.role) })];
+      var tags = [HX.el("span", { class: "hx-tag hx-role", text: HX.roleLabel(s.role), title: HX.roleLine(s.role) || null })];
       if (B.focus.indexOf(s.slug) >= 0) tags.push(HX.el("span", { class: "hx-tag hx-bd-tag-fixed", text: "의견 반영", title: HX.changesOf ? HX.changesOf(s.slug).map(HX.changeLine).join("\n") : null }));
       body.appendChild(HX.el("div", { class: "hx-bd-screen-head" }, [
         HX.el("div", { class: "hx-bd-screen-title" }, [HX.badge(s.id), HX.el("h3", { text: s.name })]),
         HX.el("div", { class: "hx-bd-screen-tags" }, tags),
-        s.purpose ? HX.el("p", { class: "hx-bd-purpose", text: s.purpose }) : null,
+        HX.goalOf(s) ? HX.el("p", { class: "hx-bd-purpose", text: HX.goalOf(s) }) : null,
+        s.problem ? HX.el("p", { class: "hx-bd-purpose", text: "겪는 문제 · " + s.problem }) : null,
         HX.btn("크게 보기", { cls: "hx-bd-open", icon: HX.icon("#i-maximize-2"), title: "실제 크기로 열기 (더블클릭)", onclick: function () { HX.openScreen(s.slug); } })]));
       // 지금 보는 복사본의 맥락: 어느 시나리오의 몇 번째 단계인지
       if (info) {

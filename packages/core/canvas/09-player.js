@@ -62,7 +62,8 @@
       ok.forEach(function (st, i) { if (i === 0 || ok[i - 1].to !== st.from) out.push({ slug: st.from, step: st }); else out[out.length - 1].step = st; out.push({ slug: st.to, step: null }); });
       return out;
     }
-    function holdOf(slug, trigger) { var s = HX.bySlug[slug]; return ((s && s.motion) || []).filter(function (m) { return m.type === "hold" && m.target === trigger; })[0] || null; }
+    // 길게 누르기: 움직임의 trigger(옛 target)가 이 단계의 버튼인 것
+    function holdOf(slug, trigger) { return HX.motionOf(HX.bySlug[slug]).filter(function (m) { return m.type === "hold" && m.target === trigger; })[0] || null; }
 
     function mount(slug, how) {
       var old = screenBox.querySelector(".hx-pl-frame");
@@ -159,7 +160,7 @@
       // (사용자: "흐름 재생에 이전에 있던 스크롤이나 이런 것들이 다 안 보이는데" · "하나도 빼먹지 말고 다 넣어라")
       later(function () {
         if (!window.HXMotion || !moveOn) { next(); return; }
-        mo = window.HXMotion(app, { overlay: false, items: s.motion || [], stays: s.stays || [], cases: showErr ? s.cases || [] : [], outs: s.outs || [], goes: HX.goesOf(item.slug) },
+        mo = window.HXMotion(app, { overlay: false, items: HX.motionOf(s), stays: s.stays || [], cases: showErr ? s.cases || [] : [], outs: s.outs || [], goes: HX.goesOf(item.slug) },
           { once: true, finger: fg, skip: st && st.trigger, speed: function () { return speed; }, say: function (t) { say(no, t); }, note: note, done: function () { mo = null; next(); } });
         function next() { if (st) tapStep(); else later(finish, 300); }
       }, t0);

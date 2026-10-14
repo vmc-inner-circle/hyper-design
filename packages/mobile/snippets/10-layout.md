@@ -38,7 +38,7 @@
 </div>
 ```
 
-메뉴 없는 한 장(온보딩 · shell: none)은 `<div class="app app-mobile no-nav">` + `<main class="content">`.
+메뉴 없는 한 장(처음 시작 · shell: none)은 `<div class="app app-mobile no-nav">` + `<main class="content">`.
 
 ## 화면 첫머리 — 머리줄 + 큰 제목 + 회색 한 줄
 

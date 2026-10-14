@@ -58,7 +58,7 @@
 <input class="input" type="time" value="09:30">
 <input class="input" type="text" value="대회의실 A" readonly>
 <input class="input input-sm" type="text" placeholder="작은 입력(표 안)">
-<input class="input input-lg" type="text" placeholder="큰 입력(온보딩)">
+<input class="input input-lg" type="text" placeholder="큰 입력(처음 시작)">
 ```
 
 주의: 폭은 부모(`.field`·`.form-grid`)가 정한다. 짧은 값(시간·인원)은 `.grid-2`/`.row`로 나란히.

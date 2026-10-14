@@ -481,6 +481,7 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-send-raw { margin-top: 6px; border-top: 1px dashed var(--hxc-border); padding-top: 10px; }
 .hx-send-raw summary { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--hxc-muted); }
 .hx-send-raw .hx-copy-box { width: 100%; margin-top: 8px; font-family: var(--font-mono, monospace); font-size: 12px; }
+.hx-send-manual { margin: 8px 0 0; padding: 8px 10px; border-left: 3px solid var(--hxc-primary); background: var(--hxc-surface); font-size: 13px; font-weight: 600; word-break: keep-all; }
 .hx-send-foot { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--hxc-border); }
 .hx-send-hint { font-size: 12px; color: var(--hxc-muted); }
 
@@ -614,6 +615,7 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-look-t small { font-size: 11px; font-weight: 500; color: var(--hxc-muted); white-space: normal; }
 .hx-feel .hx-bd-look .hx-rec-tag { position: static; margin-left: auto; box-shadow: none; }
 .hx-feel .hx-bd-seg { align-self: flex-start; }
+.hx-bd-ctl-why { font-size: 12px; color: var(--hxc-text-2); line-height: 1.5; word-break: keep-all; }
 .hx-feel .hx-bd-swatches { gap: 10px; height: auto; padding: 4px 2px; }
 .hx-feel .hx-sw { width: 30px; height: 30px; }
 .hx-feel .hx-bd-locked { align-self: flex-start; }
@@ -687,6 +689,13 @@ html[data-mode="final"] .hx-app.hx-final { height: 100vh; overflow: hidden; }
 .hx-cc-ref-top a, .hx-cc-from-row a { color: var(--hxc-primary); font-weight: 700; text-decoration: none; }
 .hx-cc-ref-top a:hover, .hx-cc-from-row a:hover { text-decoration: underline; }
 .hx-cc-ref-borrow { margin-top: 4px; font-size: 12px; color: var(--hxc-text-2); word-break: keep-all; }
+.hx-cc-kw { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.hx-cc-kw-item { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border: 1px solid var(--hxc-border); border-radius: var(--hxc-r); background: var(--hxc-surface); min-width: 200px; }
+.hx-cc-kw-item b { font-size: 15px; }
+.hx-cc-kw-item span { font-size: 12px; color: var(--hxc-text-2); word-break: keep-all; }
+.hx-cc-mood-colors { display: flex; gap: 0; height: 28px; margin: -10px -12px 8px; border-radius: var(--hxc-r) var(--hxc-r) 0 0; overflow: hidden; }
+.hx-cc-mood-colors i { flex: 1; }
+.hx-cc-mood-meta { margin-top: 6px; font-size: 11px; color: var(--hxc-text-2); }
 .hx-cc-cols { display: flex; flex-direction: column; gap: 16px; max-width: 1760px; margin: 0 auto; }
 .hx-cc-memo { width: 100%; min-height: 52px; font-size: 13px; }
 /* 시안 하나 = 한 줄: 왼쪽 설명·고르기·메모 / 오른쪽 메인 화면들을 가로로 (넘치면 가로 스크롤) */
@@ -725,6 +734,15 @@ html[data-platform="mobile"] .hx-cc-shot-frame { border-radius: 20px; }
 .hx-sx-band b { font-size: calc(26px * var(--k)); font-weight: 800; letter-spacing: -0.02em; }
 .hx-sx-band span { font-size: calc(15px * var(--k)); font-weight: 600; color: var(--hxc-muted); }
 .hx-sx-band .hx-sx-band-desc { font-style: normal; font-size: calc(17px * var(--k)); font-weight: 500; color: var(--hxc-text-2); white-space: nowrap; }
+/* 누가 쓰나요: 역할마다 누구 · 이루려는 것 · 읽는 상황 (보드 맨 위) */
+.hx-sx-roles { position: absolute; display: flex; flex-wrap: wrap; align-items: stretch; gap: calc(16px * var(--k)); }
+.hx-sx-roles-h { flex-basis: 100%; font-size: calc(15px * var(--k)); font-weight: 700; color: var(--hxc-muted); }
+.hx-sx-role { display: flex; flex-direction: column; gap: calc(4px * var(--k)); width: calc(420px * var(--k)); padding: calc(14px * var(--k)) calc(18px * var(--k));
+  border: calc(1px * var(--k)) solid var(--hxc-border); border-radius: calc(10px * var(--k)); background: var(--hxc-surface); word-break: keep-all; line-height: 1.5; }
+.hx-sx-role b { font-size: calc(19px * var(--k)); font-weight: 800; color: var(--hxc-text); }
+.hx-sx-role span { font-size: calc(15px * var(--k)); color: var(--hxc-text); }
+.hx-sx-role small { font-size: calc(13px * var(--k)); color: var(--hxc-text-2); }
+.hx-sx-pol.hx-k-goal b, .hx-sx-pop-t.hx-k-goal { color: var(--hxc-text); }
 .hx-sx-step { position: absolute; height: calc(36px * var(--k)); display: flex; align-items: center; padding: 0 calc(14px * var(--k));
   background: var(--hxc-text); color: #FFFFFF; border-radius: calc(6px * var(--k)); font-size: calc(15px * var(--k)); font-weight: 700; white-space: nowrap; letter-spacing: -0.01em; }
 .hx-sx-label { position: absolute; display: flex; align-items: center; gap: calc(8px * var(--k)); min-height: calc(34px * var(--k)); white-space: nowrap; line-height: 1.35;

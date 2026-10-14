@@ -7,8 +7,11 @@
  *   node scripts/pack.js runs/<p> --screens a,b,c [--concept <id>] [--name <팩 이름>]
  *   → runs/<p>/packs/<팩 이름>.md 를 쓰고 경로를 출력한다. 프롬프트에 PACK=<경로>.
  *
- * 담는 것: 할 일 · 규칙 요약 · 부품 표(05-parts.md) · 쓸 수 있는 클래스 · 자주 쓰는 HTML 몇 개 · 아이콘 목록 ·
- *          화면마다(이름·목적·배치 힌트·상태·영역·눌러야 하는 버튼과 그 문구·나머지 버튼 규칙).
+ * 담는 것: 할 일 · 규칙 요약 · 위계 · 영역 모양 → 부품 표(00-rules.md 9번과 같은 표) · 부품 표(05-parts.md) ·
+ *          쓸 수 있는 클래스 · 자주 쓰는 HTML 몇 개 · 아이콘 목록 ·
+ *          화면마다(이름 · 목적(goal) · 겪는 문제(problem) · 쓸 사실(data → facts 문장) · 덜어낼 것(defer) · 1순위 ·
+ *          상태 · 영역(순위 · 모양 · 들어갈 것) · 눌러야 하는 버튼과 그 문구).
+ * 배치는 화면 패턴(pattern — KRDS 이름)이 아니라 영역 모양(regions[].form)이 정한다.
  * DOMAIN(더미 데이터)과 화면별 메모는 메인이 프롬프트에 직접 쓴다.
  */
 const fs = require("fs");
@@ -57,12 +60,14 @@ const mobilePartsTable = [section(mobileParts, "## 부품\n"), section(mobilePar
 const PLATFORM = require("./platform.js");
 const classLines = PLATFORM.files(S.platform || "web", "components", ".css").map((f) => {
   const names = [...new Set([...read(f.path).matchAll(/^\.([a-z][a-z0-9-]*)/gm)].map((m) => m[1]))]
-    .filter((n) => !/^(app|topnav|sidebar|nav|toast|tooltip|skeleton|dropdown|popover|kbd|tabbar|toptabs|sheet)/.test(n));
+    .filter((n) => !/^(app|topnav|sidebar|nav|toast|tooltip|skeleton|dropdown|popover|kbd|tabbar|toptabs|sheet)/.test(n))
+    .filter((n) => !MOBILE || !/^(split|table|week-grid|wg-|grid-3|grid-4|form-actions|form-grid)/.test(n));
   return names.length ? `- ${f.layer === "web" ? "" : f.layer + "/"}${f.file.replace(/^\d+-|\.css$/g, "")}: ${names.join(" ")}` : "";
 }).filter(Boolean);
 const EXAMPLES = `
 \`\`\`html
-<div class="grid-3">…카드 3개…</div>            <div class="row gap-2">…</div>  <div class="row-between">…</div>  <div class="stack gap-3">…</div>
+<div class="grid-3">…카드 3개…</div>            <div class="row gap-2">…</div>  <div class="row-between">…</div>  <div class="stack">…묶음 안…</div>
+<div class="stack-group">…날짜 묶음·카드 묶음끼리…</div>  <div class="stack-page">…큰 덩어리끼리…</div>
 <div class="split"><div class="split-list">목록</div><div class="split-detail">자세히</div></div>
 <div class="field"><label class="field-label">이름</label><input class="input" value="예시 값"></div>
 <div class="field"><label class="field-label">담당</label><div class="select-wrap"><select class="select"><option>예시</option></select></div></div>
@@ -100,26 +105,72 @@ const allow = JSON.parse(read(path.join(ROOT, "packages/core/icons/allowlist.jso
 const proj = fs.existsSync(path.join(runDir, "icons.json")) ? JSON.parse(read(path.join(runDir, "icons.json"))) : {};
 const icons = [...new Set([...Object.entries(allow), ...Object.entries(proj)].filter(([k]) => !k.startsWith("_")).map(([, v]) => v))].sort();
 
+// ---------- 영역 모양 → 부품 (regions[].form — 00-rules.md 9번 표와 같은 표) ----------
+// 배치는 영역 모양이 정한다. 00-rules.md(모바일은 모바일 00-rules.md)에 `| hero | … |` 줄이 있으면 그 말을 쓴다 — 표는 한 곳에서 고친다
+const FORM_KEYS = ["hero", "list", "table", "calendar", "form", "timeline", "cards", "stat-row", "split", "actions"];
+const hasCalendarSnippet = fs.existsSync(path.join(runDir, "snippets"));
+const FORMS_WEB = {
+  hero: "한 칸 큰 글 — 영역 가로 전체. `.t-display` 1순위 문장 → `.t-subtitle` 넘친 한 줄 → 사실 한두 줄(`.t-body`) → 버튼(주 버튼은 여기 또는 actions 줄). `.split`·`.grid-*`·`.card`·옆 숫자 칸(`.stat`) 금지",
+  list: "목록 — `<x-list>` 안 `<x-item>` 한 줄씩(아래 '한 줄 모양'). 줄 안에 `.t-title`·`.card-title` 금지",
+  table: "표 — `.table-wrap` 안 `<table class=\"table\">` 하나. 머리줄은 짧은 말, 칸 글자는 본문 크기(`.t-title` 금지)",
+  calendar: `달력 — 칸을 손으로 쓰지 않는다. ${hasCalendarSnippet ? "RUN/snippets/의 calendar-*.html을 그대로 붙인다" : "며칠만 보이면 `.day-strip`(날짜 띠)"}. 오늘 · 고른 날 · 일정 있는 날은 색과 함께 굵기 · 표식으로`,
+  form: "입력 — `.field`(라벨 + 입력칸) 한 열 묶음. 주 버튼은 폼 끝 버튼 줄(actions 영역이 있으면 그 영역, 없으면 이 영역 맨 아래 `.form-actions`)",
+  timeline: "타임라인 — `.timeline` 안 `.timeline-item`(시간 `.timeline-time` · 점 `.timeline-dot` · 내용 `.timeline-content`), 날짜 머리는 `.timeline-date`(아래 '한 줄 모양'). 시간이 없으면 시간 칸을 뺀다. `.timeline-compact`(점 · 내용 두 칸)에는 `.timeline-time`을 넣지 않는다 — 넣으면 좁은 칸에 글자가 한 자씩 세로로 쌓인다. 시간은 `.timeline-title` 안 글자로",
+  cards: "카드 — `.grid-2`·`.grid-3` 안 `<x-card>` 2~6장. 카드 한 장에 제목 하나만(`.card-title` **또는** 굵은 본문 — 둘 다 쓰지 않는다). 날짜 같은 머리글은 `.t-caption`",
+  "stat-row": "숫자 줄 — `.stat-row` 안 `<x-stat>` 2~4개. 1순위 영역에는 쓰지 않는다",
+  actions: "주 행동 줄 — 폼 끝 버튼 줄 `.form-actions`(취소 data-back · 주 버튼 하나). 웹의 주 버튼은 1순위 hero 안 또는 이 줄 — 둘 중 한 곳",
+  split: "목록-상세 — `.split`(왼쪽 `.split-list` 목록, 오른쪽 `.split-detail` 고른 것의 상세). 고르는 화면에만, 1순위 영역에는 쓰지 않는다",
+};
+// 모바일은 한 열 · 흰 판 쌓기 · 주 행동은 맨 끝 꽉 찬 버튼 — web과 다른 것만
+const FORMS_MOBILE = {
+  hero: "한 칸 큰 글 — 본문 맨 위 판 하나(`<x-section>`, 카드 · 숫자 칸 없이): `.t-display` 1순위 문장 → `.t-subtitle` 넘친 한 줄 → 사실 한두 줄. **판 안에 주 버튼을 두지 않는다**(주 버튼은 actions 영역)",
+  list: "목록 — `<x-card flush><x-list>` 안 `<x-item>` 한 줄씩(아래 '한 줄 모양'), 눌러서 들어가는 줄은 chevron-right",
+  table: "표 — 모바일은 `.table`을 쓰지 않는다. 항목 하나 = `<x-item>` 한 줄(값 두세 개는 sub에)",
+  calendar: `달력 — \`<x-card>\` 안 날짜 띠 \`.day-strip\` + 그날 목록${hasCalendarSnippet ? "(한 달을 다 보여야 하면 RUN/snippets/의 calendar-*.html)" : ""}`,
+  form: "입력 — `<x-section>` 판마다 `.field`. 주 버튼은 이 영역이 아니라 actions 영역(`.bottom-cta`). `.form-actions` 쓰지 않는다",
+  timeline: "타임라인 — `<x-section>` 판 안 `.timeline` 한 열(시간 `.timeline-time` · 점 `.timeline-dot` · 내용 `.timeline-content`). `.timeline-compact`(점 · 내용 두 칸)에는 `.timeline-time`을 넣지 않는다 — 넣으면 좁은 칸에 글자가 한 자씩 세로로 쌓인다. 시간은 `.timeline-title` 안 글자로",
+  cards: "카드 — `<x-card>`를 한 열로 쌓는다(`.grid-3` 금지). 카드 한 장에 제목 하나만",
+  "stat-row": "숫자 — `.grid-2` 안 숫자 둘까지(`.big-num`). 1순위 영역에는 쓰지 않는다",
+  actions: "주 행동 줄 — 본문 마지막 영역(2순위). `<div class=\"bottom-cta\" data-region=\"<이 영역 key>\">` 안 `<x-btn variant=\"primary\">`(`.btn-primary`) 꽉 찬 버튼 하나. 보조 버튼이 꼭 필요하면 그 아래 secondary 하나. 흐름에서 주 버튼을 누르는 영역(region)이 이 key",
+  split: "목록-상세 — 모바일은 `.split` 금지. 목록 화면과 자세히 화면 두 장으로 나눈다(이 영역은 목록만)",
+};
+function formRows(md) {
+  const rows = {};
+  for (const line of (md || "").split("\n")) {
+    const m = /^\|\s*`?([a-z-]+)`?\s*\|(.+)\|\s*$/.exec(line);
+    if (m && FORM_KEYS.includes(m[1])) rows[m[1]] = m[2].split("|").map((c) => c.trim()).filter(Boolean).join(" — ");
+  }
+  return rows;
+}
+// 모양마다 지킬 규칙 — 문장은 rules.json의 says를 그대로
+const rulesFile = path.join(ROOT, "packages/core/schema/rules.json");
+const SAYS = new Map(fs.existsSync(rulesFile) ? (JSON.parse(read(rulesFile)).rules || []).map((r) => [r.id, r.says]) : []);
+const FORM_RULES = { hero: ["rank1-hero"], list: ["repeat-unit"], timeline: ["repeat-unit"], table: ["table-plain", "table-empty-dash"], calendar: ["calendar-state"] };
+const FORMS = { ...FORMS_WEB, ...formRows(read(path.join(ROOT, "packages/web/snippets/00-rules.md"))), ...(MOBILE ? { ...FORMS_MOBILE, ...formRows(mobileDoc("00-rules.md")) } : {}) };
+const formTable = FORM_KEYS.map((k) => {
+  const rules = (FORM_RULES[k] || []).filter((id) => SAYS.has(id)).map((id) => `${id}: ${SAYS.get(id)}`);
+  return `| \`${k}\` | ${(FORMS[k] + (rules.length ? ` (규칙 ${rules.join(" / ")})` : "")).replace(/\|/g, "\\|")} |`;
+});
+// 한 줄 모양(repeat-unit) — 목록 · 타임라인 한 줄의 자리 순서: 상태 → 제목 → 설명 → 기간 → 행동 → 태그
+const REPEAT = `
+\`\`\`html
+<x-list><x-item badge="확정" badge-tone="success" title="10월 15일(수) 워크숍 장소 확정" sub="3층 회의실 A · 오전 10:00~12:00"><x-btn size="sm" data-stay="…">…</x-btn></x-item>…</x-list>
+<div class="timeline">
+  <div class="timeline-date">10월 15일 (수) · 오늘</div>
+  <div class="timeline-item">
+    <span class="timeline-time">09:30</span>
+    <span class="timeline-dot dot-success"></span>
+    <div class="timeline-content"><div class="timeline-title">주간 계획 회의 <span class="badge badge-success">완료</span></div><p class="timeline-desc">3층 회의실 B · 참석 6명</p></div>
+  </div>
+</div>
+\`\`\`
+- 모든 줄이 같은 순서, 중요한 항목이 위. 뼈대 칸(\`.timeline-time\`·\`.timeline-dot\`·\`.timeline-content\`)에 배치 클래스를 붙이지 않는다. 시간 칸 없는 \`.timeline-compact\`에는 \`.timeline-time\`을 쓰지 않는다.`;
+
 // ---------- 화면별 ----------
-const LAYOUT = {
-  dashboard: "page-header + 위에 요약 숫자(x-stat 3~4개 grid) + 아래 x-section 2~3개(grid-2 가능)",
-  "list-detail": "page-header + toolbar(검색·필터·주요 버튼) + .split(왼쪽 목록 / 오른쪽 고른 항목 자세히)",
-  form: "page-header + 입력 x-section 2~3개(.field들) + 아래 .form-actions(취소 data-back · primary)",
-  board: "page-header + toolbar + 열 3~4개(.grid-3/.grid-4, 열마다 제목과 카드들) 또는 주간 시간표(.week-grid)",
-  timeline: "page-header + .timeline(날짜 머리 + 항목) 한 열",
-  settings: "page-header + x-section 여러 개(각각 .field·.switch)",
-  onboarding: "가운데 좁은 카드 한 장(.content-inner 안 .card): 인사 · 핵심 정보 · primary 버튼 하나",
-};
-// 모바일 배치 힌트 — 한 열, 흰 판 쌓기, 주 행동은 아래 꽉 찬 버튼 (packages/mobile/patterns)
-const LAYOUT_MOBILE = {
-  dashboard: "홈 피드: x-page-header(eyebrow + 큰 제목) → 지금 할 일 x-card 한 장 → x-section 판 2~3개(목록 2~4줄). 숫자는 .grid-2 두 개까지",
-  "list-detail": "목록 화면이면: 큰 제목 → x-card 안 검색·칩·나눔 → x-card flush 안 x-list(줄마다 chevron-right). 자세히 화면이면: eyebrow+제목+desc → 정보 판들 → 규정 판 → .bottom-cta. .split 금지",
-  form: "x-section 판마다 입력칸(.field) → 확인할 규정 판 → 맨 끝 .bottom-cta(primary 하나). .form-actions 대신",
-  board: "나눔 버튼(.segmented.w-full) → x-card 안 날짜 띠(.day-strip) + 안내 한 줄 → 칩 → 그날 목록 x-section. .week-grid·여러 열 금지",
-  timeline: "날짜별 x-section 판 하나에 .timeline(시간 · 점 · 내용) 한 열",
-  settings: "큰 제목 → 내 정보 x-card → 설정 x-section 판들(.switch · 줄 + chevron-right)",
-  onboarding: "메뉴 없는 한 장: x-page-header(eyebrow + 인사 제목 + desc) → 핵심 정보 x-card 하나 → .bottom-cta(primary 하나)",
-};
+// 메뉴 없는 화면 — KRDS 이름 '처음 시작'과 옛 값 onboarding을 같이 본다
+const NO_MENU_PATTERNS = ["처음 시작", "onboarding"];
+const facts = S.facts && !Array.isArray(S.facts) && typeof S.facts === "object" ? S.facts : {};
+const asList = (v) => (Array.isArray(v) ? v : v ? [v] : []);
 const STATE = { "first-run": "처음 켰을 때 — <x-empty>로 비워 둔다", empty: "데이터 없을 때 — <x-empty>로 비워 둔다", input: "입력할 때 — 입력칸에 예시 값을 채운다",
   error: "오류일 때 — 원래 화면(variantOf)과 같은 배치에서, 잘못된 입력칸에 .field.is-error + 고치는 방법 한 문장(.field-error), 또는 위쪽 .banner.banner-danger 한 줄. 주 버튼은 그대로 두거나 disabled",
   success: "완료됐을 때 — 원래 화면(variantOf)과 같은 배치에서, 위쪽 .banner.banner-success 한 줄(무엇이 끝났고 다음에 무엇을 하면 되는지) 또는 끝난 항목에 성공 배지. 다음 행동 버튼 하나" };
@@ -127,7 +178,7 @@ const STATE = { "first-run": "처음 켰을 때 — <x-empty>로 비워 둔다",
 function mobileShell(s) {
   const role = (S.roles || []).find((r) => r.key === s.role) || (S.roles || [])[0] || { nav: [] };
   const isTab = (role.nav || []).some((n) => n.slug === s.slug || (s.variantOf && n.slug === s.variantOf));
-  if (s.shell === "none" || s.pattern === "onboarding" || (C && C.shell === "none")) return "메뉴 없는 한 장";
+  if (s.shell === "none" || NO_MENU_PATTERNS.includes(s.pattern) || (C && C.shell === "none")) return "메뉴 없는 한 장";
   return isTab && s.shell !== "back" ? "탭 화면(아래 탭이 붙는다 — 큰 제목으로 시작)" : "아래 화면(위에 뒤로 · 화면 이름 줄이 붙는다 — 화면 이름을 본문에 다시 쓰지 않고 eyebrow + 대상 이름으로 시작)";
 }
 const quote = (a) => ((a || "").match(/'([^']+)'/) || [])[1] || "";
@@ -142,27 +193,61 @@ const blocks = slugs.map((slug) => {
   });
   // 1턴(시안 단계)만 concepts/<id>/에 쓴다. 2턴부터 --concept는 시안의 메뉴 구조·첫 화면·밀도를 담기 위한 것 — 화면은 screens/로
   const file = concept && S.stage === "concept" ? `concepts/${concept}/${slug}.html` : s.file || `screens/${slug}.html`;
+  const role = (S.roles || []).find((r) => r.key === s.role) || {};
+  // data = facts 이름표 목록 → 사실 문장으로 푼다(옛 모양 문장은 그대로)
+  const data = Array.isArray(s.data) ? s.data.map((k) => `  - ${facts[k] || `${k} (facts에 없는 이름표 — 쓰지 않는다)`}`) : s.data ? [`  - ${s.data}`] : [];
+  const defer = asList(s.defer);
+  const actionsKey = ((s.regions || []).find((r) => r.form === "actions") || {}).key;
+  // 영역 content에 facts 이름표가 있으면 문장으로
+  const content = (c) => c.split(/\s*·\s*/).map((x) => facts[x] || x).join(" · ");
   return [
     `### ${s.name} — \`${slug}\` → RUN/${file}`,
-    `- 누가: ${((S.roles || []).find((r) => r.key === s.role) || {}).label || s.role || "모두"} · 목적: ${s.purpose || ""}`,
-    s.overlayOf ? `- **뜨는 창**: 파일 전체가 \`<x-modal title="…">본문 <div class="modal-footer">버튼</div></x-modal>\` 하나. 완료 버튼도 창을 닫으면 data-back(흐름에 있으면 data-trigger).${MOBILE ? " 모바일은 아래에서 올라오는 창으로 펼쳐진다 — 제목은 질문·결과 한 문장, desc 회색 1~2줄, 바닥줄 = primary 하나 + 돌아가기(data-back)." : ""}`
-      : MOBILE ? `- 배치 힌트(${s.pattern || "-"}): ${mobileShell(s)} · ${LAYOUT_MOBILE[s.pattern] || "x-page-header + x-section 판들"}`
-      : `- 배치 힌트(${s.pattern || "-"}): ${LAYOUT[s.pattern] || "page-header + x-section들"}`,
+    `- 누가: ${role.label || s.role || "모두"}${role.goal ? ` — ${role.goal}` : ""}`,
+    `- 목적: ${s.goal || s.purpose || ""}`,
+    s.problem ? `- 겪는 문제: ${s.problem} — 1순위 문장은 이 걱정에 답하는 사실로` : "",
+    s.pattern ? `- 화면 패턴: ${s.pattern}${MOBILE && !s.overlayOf ? ` · ${mobileShell(s)}` : ""} — 배치는 아래 영역 모양이 정한다` : MOBILE && !s.overlayOf ? `- 화면 틀: ${mobileShell(s)}` : "",
+    s.overlayOf ? `- **뜨는 창**: 파일 전체가 \`<x-modal title="…">본문 <div class="modal-footer">버튼</div></x-modal>\` 하나. 완료 버튼도 창을 닫으면 data-back(흐름에 있으면 data-trigger).${MOBILE ? " 모바일은 아래에서 올라오는 창으로 펼쳐진다 — 제목은 질문·결과 한 문장, desc 회색 1~2줄, 바닥줄 = primary 하나 + 돌아가기(data-back)." : ""}` : "",
     s.state ? `- 상태: ${STATE[s.state] || s.state}${s.variantOf ? ` (원래 화면: ${(bySlug.get(s.variantOf) || {}).name || s.variantOf})` : ""}` : "",
+    s.emphasize ? `- **크게 할 내용**(\`<p class="t-display">\` — 제목 태그 h1~h3이 아니라 문장으로, .t-display는 이 문장에만): ${s.emphasize}` : "",
+    s.emphasize2 ? `- **바로 아래 한 줄**(\`.t-subtitle\` — 큰 글자 아님, 굵기로): ${s.emphasize2}` : "",
+    data.length ? `- 쓸 사실: 이것만 쓴다 — 없는 이름·시간·할 일을 지어내지 않는다\n${data.join("\n")}` : "",
+    defer.length ? `- 덜어낼 것: 이 화면에 넣지 않는다(자세히 · 다른 화면으로 미룬다)\n${defer.map((x) => `  - ${x}`).join("\n")}` : "",
+    s.focus ? `- **1순위 한 가지**: \`${s.focus}\` — 화면 맨 위. 1순위 문장(크게 할 내용) → 넘친 한 줄 → 사실${MOBILE ? "" : " → 버튼"} 차례로 시작하고, 이 영역 모양이 hero가 아니면(입력 등) 그 아래에 그 모양을 놓는다` : "",
+    MOBILE && !s.overlayOf ? `- 주 버튼은 actions 영역에: ${actionsKey ? `\`${actionsKey}\` — 본문 마지막 \`.bottom-cta\` 꽉 찬 버튼 하나` : "이 화면엔 actions 영역이 없다 — 주 버튼이 필요하면 본문 맨 끝 `.bottom-cta`(hero 판 밖)"}. 1순위 hero 판 안에는 두지 않는다` : "",
     `- 영역(${(s.regions || []).length}개, 모두 한 번씩):`,
-    ...(s.regions || []).map((r) => `  - \`${r.key}\` — ${r.label}: ${r.why || ""}`),
+    ...(s.regions || []).map((r) => `  - \`${r.key}\`${r.level ? ` **[${r.level}순위]**` : ""}${r.form ? ` **모양 ${r.form}**` : " (모양 없음 — 영역 모양 표에서 가장 가까운 것)"} — ${r.label}: ${r.why || ""}${r.content ? `\n    - 들어갈 것(이것만): ${content(r.content)}` : ""}${(r.stays || []).length ? `\n    - 그 자리에서 바뀌는 버튼(이것만 data-stay): ${r.stays.map((x) => `'${x.label}' → data-stay="${x.msg}"`).join(", ")}` : ""}`),
     trig.length ? `- 눌러야 하는 버튼:\n${trig.join("\n")}` : `- 눌러야 하는 버튼: 없음(글자 버튼은 data-back·data-stay)`,
   ].filter(Boolean).join("\n");
 });
 
-const shellNote = C ? `시안 ${C.id.toUpperCase()} "${C.name}" — 메뉴 구조 ${C.shell}${MOBILE ? (C.shell === "top" ? "(위 알약 탭 메뉴)" : C.shell === "none" ? "(메뉴 없음)" : "(아래 탭 메뉴)") : C.shell === "top" ? "(위쪽 탭 메뉴 — 본문이 가운데 좁게 놓인다)" : C.shell === "rail" ? "(아이콘 메뉴 — 본문 폭이 넓다)" : ""} · 첫 화면 ${C.home || "-"} · 밀도 ${C.density || "-"}` : "";
+const shellNote = C ? `시안 ${C.id.toUpperCase()} "${C.name}" — 메뉴 구조 ${C.shell}${MOBILE ? (C.shell === "top" ? "(위 알약 탭 메뉴)" : C.shell === "none" ? "(메뉴 없음)" : "(아래 탭 메뉴)") : C.shell === "top" ? "(위쪽 탭 메뉴 — 본문이 가운데 좁게 놓인다)" : C.shell === "rail" ? "(아이콘 메뉴 — 본문 폭이 넓다)" : ""} · 첫 화면 ${C.home || "-"} · 밀도 ${C.density || "-"}${MOBILE ? " — 메뉴 모양과 상관없이 모바일 화면이다(모바일 규칙만 따른다, 주 버튼은 본문 맨 끝 .bottom-cta)" : ""}` : "";
 const out = `# 작업 묶음 — ${slugs.join(", ")}${C ? ` (시안 ${C.id})` : ""}
 
 **이 파일만 읽고, 아래 화면을 하나씩 Write 한 번으로 쓴 뒤 끝낸다.** 점검은 메인이 한다. RUN = ${runDir}
 ${shellNote ? "\n" + shellNote + "\n" : ""}
-## 규칙
+${MOBILE ? `## 모바일 규칙 (이 묶음은 모바일 390×844 화면 — 메뉴가 아래 탭 · 위 탭 · 없음 어느 것이든 이 규칙을 따른다. 웹 배치는 쓰지 않는다)\n${mobileRules}\n\n## 조각 쓰는 법 (web · mobile 같음 — 배치는 위 모바일 규칙)` : "## 규칙"}
 ${RULES.trim()}
-${MOBILE && mobileRules ? `\n## 모바일 규칙 (390×844 — 위 규칙과 다르면 이쪽을 따른다)\n${mobileRules}\n` : ""}
+
+## 위계 (화면마다 정해진 1순위 · 영역 순위를 따른다 — 어기면 lint가 잡는다)
+- 글자는 역할 클래스로 고른다: \`.t-display\`(1순위 문장) · \`.t-title\`(제목) · \`.t-subtitle\`(목록 한 줄 이름) · \`.t-body\`(본문) · \`.t-caption\`(날짜·상태·보조). \`.text-lg\`·\`.text-xl\`로 크기를 따로 키우지 않는다.
+- **1순위 영역에만** \`.t-display\` 하나. 2순위는 \`.t-title\`·\`.t-body\`. 3순위는 \`.t-caption\`·글자 링크 모양 버튼(\`btn-ghost\`)만, 목록이 길면 3줄 + '더 보기'.
+- 영역 안에는 '들어갈 것'에 적힌 것만 둔다. 요약 숫자·필터·일정·안내 문장을 스스로 덧붙이지 않는다.
+- 글자 버튼은 '눌러야 하는 버튼' + 영역의 '그 자리에서 바뀌는 버튼' + 되돌아가기(data-back)만. 그 밖의 버튼을 만들지 않는다.
+- 화면 하나에 강조 버튼 1개, 영역 하나에 보조 버튼 최대 2개. 나란히 놓는 버튼은 2개까지.${MOBILE ? " 모바일의 강조 버튼은 본문 맨 끝 actions 영역의 `.bottom-cta` 하나다." : ""}
+- **세로 간격은 숫자로 고르지 않는다**: 묶음 안 = \`.stack\`, 묶음 사이(날짜 묶음·카드 묶음끼리) = \`.stack-group\`, 큰 덩어리 사이 = \`.stack-page\`. \`.stack\`에 \`gap-4\`·\`gap-6\`을 붙이지 않는다(\`gap-1~3\`은 한 줄 안의 작은 간격에만).
+- 구분은 단계로: 같은 묶음 안 = 얇은 선, 묶음 사이 = 여백, 의미가 바뀌는 경계선은 화면에 한두 번.
+- 상태(확정·바뀜·위험)는 색만으로 말하지 않는다 — 아이콘·글자를 함께.
+
+## 영역 모양 → 부품 (배치는 화면 패턴이 아니라 영역 모양이 정한다)
+1순위(focus · level 1) 영역은 화면 맨 위 \`hero\` — 1순위 문장 → 넘친 한 줄 → 사실${MOBILE ? ". **모바일은 hero 판 안에 주 버튼을 두지 않는다** — 주 버튼은 본문 마지막 \`actions\` 영역(.bottom-cta)" : " → 버튼(주 버튼은 hero 안 또는 폼 끝 \`actions\` 줄 — 한 곳)"}. 나머지 영역은 영역 목록 차례대로 그 아래에 놓는다.
+
+| 모양 | 쓸 부품 |
+|---|---|
+${formTable.join("\n")}
+
+한 줄 모양(목록 · 타임라인 — 상태 → 제목 → 설명 → 기간 → 행동 → 태그):
+${REPEAT.trim()}
+
 ## 부품
 ${partsTable}
 ${MOBILE && mobilePartsTable ? `\n### 모바일에서 달라지는 부품\n${mobilePartsTable}\n` : ""}

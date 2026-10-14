@@ -10,6 +10,7 @@
  * - 영역 번호는 101부터 따로 센다 (화면 번호와 섞이지 않게 — 예전처럼 화면 번호가 1, 5, 10으로 띄엄띄엄 되지 않는다).
  * - 이미 있는 id는 절대 바꾸지 않는다. 라운드가 바뀌어도 번호가 유지되어야 한다.
  * - 삭제된 번호는 재사용하지 않는다 (nextScreenId·nextRegionId가 지금까지 발급된 최대값+1을 기억한다).
+ * - 화면의 조각 파일 경로(file)가 비어 있으면 screens/<slug>.html로 채운다 (lint가 모든 화면에 요구한다).
  */
 const fs = require("fs");
 const path = require("path");
@@ -40,6 +41,11 @@ const issued = [];
 for (const s of data.screens || []) {
   if (!Number.isInteger(s.id)) { s.id = nextScreen(); issued.push(`화면 ${s.id} ← ${s.slug}`); }
 }
+// 조각 파일 경로: 비어 있으면 screens/<slug>.html (expand · build가 기본으로 보는 자리) — 이미 있는 값은 바꾸지 않는다
+const filled = [];
+for (const s of data.screens || []) {
+  if (!s.file && s.slug) { s.file = `screens/${s.slug}.html`; filled.push(s.file); }
+}
 for (const s of data.screens || []) {
   for (const r of s.regions || []) {
     if (!Number.isInteger(r.id)) { r.id = nextRegion(); issued.push(`영역 ${r.id} ← ${s.slug} / ${r.key}`); }
@@ -53,6 +59,7 @@ delete data.nextId;
 const next = `화면 ${data.nextScreenId} · 영역 ${data.nextRegionId}`;
 
 fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
+if (filled.length) console.log(`[ids] 조각 파일 경로 ${filled.length}개 채움 (screens/<slug>.html)`);
 if (issued.length) {
   console.log(`[ids] ${issued.length}개 발급, 다음 번호 ${next}`);
   for (const line of issued) console.log("  " + line);

@@ -1,11 +1,11 @@
 /* motion.js — 움직임 재현(피그마로는 못 그리는 것 — HTML이라 가능한 것). 완성본 페이지와 보드가 함께 쓴다.
-   window.HXMotion(app, { overlay, items: [{ type, target, ms, level, note }] }, demo) → { stop() }
+   window.HXMotion(app, { overlay, items: [{ type, region, trigger, ms, level, note }] }, demo) → { stop() }
    - 완성본 화면별 페이지: window.HX_MOTION이 있으면 그 화면에서 바로 재현(누르는 동작은 실제로 눌러서).
      기본: 화면 들어오기(#back이면 반대 방향) · 뜨는 창 올라오기 · 누름 반응 · 고르는 버튼(칩·나눔 버튼·탭·날짜 칸)이 실제로 골라짐.
    - 보드(demo): 화면에 마우스를 올리면 그 자리에서 재생, 떼면 원래대로. 누르는 동작(길게 누르기·끌어서 순서 바꾸기)은 보여 주기만.
    type: hold(길게 누르기) · breathe(숨 쉬듯 깜빡임) · dim(몇 초 뒤 어두워짐) · countup(숫자 올라가기) · stagger(차례로 나타나기)
          reorder(길게 눌러 끌어 순서 바꾸기) · carousel(자동으로 넘어가는 띠) · play(재생 막대)
-   target = 영역 key(data-region) 또는 버튼 key(data-trigger). 화면에 안내 UI는 두지 않는다 — 설명은 보드의 ⓘ 규칙 카드('움직임' 묶음). */
+   region = 영역 key(data-region) · trigger = 버튼 key(data-trigger) — hold는 trigger, reorder · carousel · play는 region. 화면에 안내 UI는 두지 않는다 — 설명은 보드의 ⓘ 규칙 카드('움직임' 묶음). */
 (function () {
   "use strict";
   var doc = document;
@@ -90,6 +90,9 @@
     function later(fn, ms) { var t = setTimeout(function () { if (alive) fn(); }, ms / spd()); timers.push(t); return t; }
     function every(fn, ms) { var t = setInterval(function () { if (alive) fn(); }, ms); timers.push(t); return t; }
     function q(t) { return t ? app.querySelector('[data-region="' + t + '"]') || app.querySelector('[data-trigger="' + t + '"]') : null; }
+    // 움직이는 곳: region(영역) · trigger(버튼). 옛 칸 target(둘 중 무엇인지 모름)은 [5/5]까지 둘 다 찾아 본다
+    function at(it) { return it.region ? app.querySelector('[data-region="' + it.region + '"]') : it.trigger ? app.querySelector('[data-trigger="' + it.trigger + '"]') : q(it.target); }
+    function trig(it) { return it.trigger || it.target; }
     function styleOf(el) { var keep = el.getAttribute("style"); undo.push(function () { if (keep === null) el.removeAttribute("style"); else el.setAttribute("style", keep); }); }
 
     // ---- 보여 주기(보드): 실제 휴대폰을 쓰듯 손가락(데스크톱은 커서)이 동작을 하나씩 — 튜토리얼처럼 ----
@@ -210,7 +213,7 @@
           later(function () { layer.remove(); say(""); done(); }, 3900);
         });
         // 길게 누르기: 흐름 재생에서 이 화면의 다음 버튼이면 재생 쪽이 길게 눌러 넘어간다(두 번 하지 않게)
-        if (it.type === "hold" && it.target !== O.skip) { var btn = app.querySelector('[data-trigger="' + it.target + '"]'); if (btn) add(btn, function (done) {
+        if (it.type === "hold" && trig(it) !== O.skip) { var btn = app.querySelector('[data-trigger="' + trig(it) + '"]'); if (btn) add(btn, function (done) {
           var ms = it.ms || 2000, fill = doc.createElement("span"); fill.className = "mo-hold-fill"; btn.classList.add("mo-hold"); btn.appendChild(fill);
           undo.push(function () { fill.remove(); btn.classList.remove("mo-hold"); });
           say(it.note || "길게 눌러요"); moveTo(center(btn), 600);
@@ -218,7 +221,7 @@
           later(function () { down(false); fg.classList.remove("hold"); }, 700 + ms);
           later(function () { fill.remove(); btn.classList.remove("mo-hold"); say(""); done(); }, 1300 + ms);
         }); }
-        if (it.type === "reorder") { var root = q(it.target), list = root && (root.matches("ul, ol") ? root : root.querySelector("ul, ol")); if (list && list.children[1]) add(list.children[1], function (done) {
+        if (it.type === "reorder") { var root = at(it), list = root && (root.matches("ul, ol") ? root : root.querySelector("ul, ol")); if (list && list.children[1]) add(list.children[1], function (done) {
           var a = list.children[0], b = list.children[1]; styleOf(a); styleOf(b);
           say(it.note || "길게 눌러 끌면 순서가 바뀌어요"); moveTo(center(b, 0.3), 600);
           later(function () { down(true); fg.classList.add("hold"); }, 700);
@@ -227,7 +230,7 @@
           later(function () { down(false); fg.classList.remove("hold"); b.classList.remove("mo-lift"); }, 2200);
           later(function () { a.style.transition = b.style.transition = "transform .3s ease"; a.style.transform = b.style.transform = ""; say(""); done(); }, 3200);
         }); }
-        if (it.type === "play") { var r2 = q(it.target), pb = r2 && r2.querySelector("button"), bar = r2 && r2.querySelector(".progress-bar"); if (pb && bar) add(pb, function (done) {
+        if (it.type === "play") { var r2 = at(it), pb = r2 && r2.querySelector("button"), bar = r2 && r2.querySelector(".progress-bar"); if (pb && bar) add(pb, function (done) {
           styleOf(bar); say(it.note || "재생을 누르면 들려요"); moveTo(center(pb), 600);
           later(function () { down(true); later(function () { down(false); bar.style.transition = "none"; bar.style.width = "0%"; requestAnimationFrame(function () { requestAnimationFrame(function () { bar.style.transition = "width " + 2600 / spd() + "ms linear"; bar.style.width = "100%"; }); }); }, 180); }, 680);
           later(function () { say(""); done(); }, 3700);
@@ -270,12 +273,12 @@
     }
     var RUN = {
       breathe: function (it) {
-        var el = q(it.target); if (!el) return;
+        var el = at(it); if (!el) return;
         el.classList.add("mo-breathe"); undo.push(function () { el.classList.remove("mo-breathe"); });
       },
       countup: function (it) {
         if (reduce) return;
-        var root = q(it.target) || app, ms = it.ms || 900, nodes = [];
+        var root = at(it) || app, ms = it.ms || 900, nodes = [];
         root.querySelectorAll(".big-num, .stat-value").forEach(function (el) {
           var w = doc.createTreeWalker(el, NodeFilter.SHOW_TEXT), n;
           while ((n = w.nextNode())) if (/\d/.test(n.nodeValue)) { nodes.push({ n: n, text: n.nodeValue }); break; }
@@ -291,7 +294,7 @@
       },
       stagger: function (it) {
         if (reduce) return;
-        var root = q(it.target) || app.querySelector(".content"); if (!root) return;
+        var root = at(it) || app.querySelector(".content"); if (!root) return;
         [].slice.call(root.children).filter(function (k) { return !k.classList.contains("bottom-cta"); }).forEach(function (k, i) {
           styleOf(k);
           k.style.transition = "none"; k.style.opacity = "0"; k.style.transform = "translateY(14px)";
@@ -314,7 +317,7 @@
         arm(it.ms || 3000);
       },
       hold: function (it) {
-        var btn = app.querySelector('[data-trigger="' + it.target + '"]'); if (!btn) return;
+        var btn = app.querySelector('[data-trigger="' + trig(it) + '"]'); if (!btn) return;
         var ms = it.ms || 2000, fill = doc.createElement("span");
         fill.className = "mo-hold-fill"; btn.classList.add("mo-hold"); btn.appendChild(fill);
         undo.push(function () { fill.remove(); btn.classList.remove("mo-hold", "mo-pulse"); });
@@ -331,12 +334,12 @@
         });
         ["pointerup", "pointerleave", "pointercancel"].forEach(function (ev) { btn.addEventListener(ev, function () { if (!held) reset(); }); });
         doc.addEventListener("click", function (e) {   // 짧게 누르면 이동하지 않는다 (흐름 버튼의 이동보다 먼저 가로챈다)
-          if (!e.target.closest || e.target.closest('[data-trigger="' + it.target + '"]') !== btn || held) return;
+          if (!e.target.closest || e.target.closest('[data-trigger="' + trig(it) + '"]') !== btn || held) return;
           e.preventDefault(); e.stopImmediatePropagation(); reset(); toast(it.note || "길게 눌러 주세요");
         }, true);
       },
       reorder: function (it) {
-        var root = q(it.target); if (!root) return;
+        var root = at(it); if (!root) return;
         var list = root.matches("ul, ol") ? root : root.querySelector("ul, ol"); if (!list) return;
         if (demo) {   // 보여 주기: 둘째 줄을 들어서 첫째 줄 위로 옮기는 모습
           var a = list.children[0], b = list.children[1]; if (!a || !b) return;
@@ -365,7 +368,7 @@
         ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) { list.addEventListener(ev, end); });
       },
       carousel: function (it) {
-        var root = q(it.target); if (!root || reduce) return;
+        var root = at(it); if (!root || reduce) return;
         var sc = [root].concat([].slice.call(root.querySelectorAll("*"))).filter(function (x) { return x.scrollWidth > x.clientWidth + 4; })[0]; if (!sc) return;
         var paused = 0, left0 = sc.scrollLeft;
         undo.push(function () { sc.scrollLeft = left0; });
@@ -377,7 +380,7 @@
         }, demo ? 1200 : it.ms || 2500);
       },
       play: function (it) {
-        var root = q(it.target); if (!root) return;
+        var root = at(it); if (!root) return;
         var bar = root.querySelector(".progress-bar"), btn = root.querySelector("button"); if (!bar) return;
         var ms = demo ? Math.min(it.ms || 18000, 4000) : it.ms || 18000, on = false;
         styleOf(bar);
