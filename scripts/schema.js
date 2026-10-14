@@ -11,7 +11,7 @@
  *   node scripts/schema.js --feeds          읽는 곳 — 칸마다 코드 · 보드 · 생성 중 읽는 곳이 있나
  *   node scripts/schema.js --docs           docs/fields.md · relations.md · rules.md 다시 쓰기
  *
- * 실행물 검사: FAIL = 형식 · 값 · 관계 오류(exit 1). 경고 = 옛 칸 · 옛 값(x-status legacy) · 권장 칸 없음(x-recommended).
+ * 실행물 검사: FAIL = 형식 · 값 · 관계 오류(exit 1). 경고 = 화면 사이 규칙 중 경고 수준인 것(state-pair).
  * exit 0 = 통과, 1 = 실패, 2 = 쓰는 법 오류.
  */
 const fs = require("fs");
@@ -22,7 +22,8 @@ const load = (f) => JSON.parse(fs.readFileSync(path.join(DIR, f), "utf8"));
 const DOCS = { screens: load("screens.schema.json"), flow: load("flow.schema.json") };
 const { rules: RULES } = load("rules.json");
 const STAGES = ["S1 의도", "S2 여정 · 화면 목록", "S3 화면 하나씩", "S4 성격", "S5 시안", "하네스"];
-const STATUS = { adopted: "✔", proposed: "○", draft: "△", legacy: "✕" };
+const STATUS = { adopted: "✔", proposed: "○", draft: "△" };
+const OLD_MARKS = ["x-recommended", "warnWith"];                    // 조인 뒤에는 정본에 없어야 하는 표시(+ x-status legacy)
 const STRENGTH = { "krds-must": "KRDS 필수", "krds-should": "KRDS 권장", "krds-best": "KRDS 우수", ours: "우리 규칙", case: "사례 참고" };
 const CODE = ["pack", "expand", "build", "lint", "looks", "ids"];   // ① 코드가 읽는다
 const BOARD = "보드";                                                // ② 사람이 보드에서 본다
@@ -36,16 +37,14 @@ const parseRef = (x, doc) => {
   const o = typeof x === "string" ? { to: x } : x;
   const [d, p] = o.to.includes("#") ? o.to.split("#") : [doc, o.to];
   const [def, ...rest] = p.split(".");
-  return { doc: d, def, path: rest, to: o.to, within: o.within || "doc", also: o.also || [], legacy: o["x-status"] === "legacy", warnWith: o.warnWith || [] };
+  return { doc: d, def, path: rest, to: o.to, within: o.within || "doc", also: o.also || [] };
 };
 const refsOf = (node, doc) => [].concat(node["x-ref"] || []).map((x) => parseRef(x, doc));
-/** 옛 칸 · 옛 값 경고 — 설명이 이미 '옛 …'으로 시작하면 머리말을 겹쳐 쓰지 않는다 */
-const oldMsg = (at, head, desc) => `${at}: ${desc && /^(옛|뺌)/.test(desc) ? desc : `${head} — ${desc || "다음 판에서 지움"}`}`;
-const refLabel = (r) => `${r.to}${r.within !== "doc" ? ` (${r.within} 안)` : ""}${r.also.length ? ` ∪ ${r.also.join(" · ")}` : ""}${r.legacy ? "(옛 대상)" : ""}`;
+const refLabel = (r) => `${r.to}${r.within !== "doc" ? ` (${r.within} 안)` : ""}${r.also.length ? ` ∪ ${r.also.join(" · ")}` : ""}`;
 
 // ---------------------------------------------------------------------------
 // 형식 검사 — JSON Schema 일부(type · enum · const · pattern · min/max · items · properties · additionalProperties ·
-// required · anyOf · allOf if/then/else · not · $ref)에 정본 표시(x-status legacy · x-recommended)를 더한다
+// required · anyOf · allOf if/then/else · not · $ref)
 // ---------------------------------------------------------------------------
 const typeOk = (t, v) =>
   t === "array" ? Array.isArray(v)
@@ -67,14 +66,8 @@ function check(schema, v, at, root, out) {
   if (typeof v === "number" && schema.minimum !== undefined && v < schema.minimum) out.errs.push(`${at}: ${schema.minimum} 이상이어야 함`);
   if (typeof v === "number" && schema.maximum !== undefined && v > schema.maximum) out.errs.push(`${at}: ${schema.maximum} 이하여야 함`);
   if (schema.anyOf) {
-    const tries = schema.anyOf.map((s) => { const o = { errs: [], warns: [] }; check(s, v, at, root, o); return { s: resolve(s, root), o }; });
-    const pass = tries.filter((t) => !t.o.errs.length);
-    if (!pass.length) out.errs.push(`${at}: 허용 형식 중 어느 것과도 맞지 않음 — ${tries.map((t) => t.o.errs[0]).join(" / ")}`);
-    else {
-      const now = pass.find((t) => t.s["x-status"] !== "legacy");
-      if (now) out.warns.push(...now.o.warns);
-      else { out.warns.push(oldMsg(at, "옛 값", pass[0].s.description)); out.warns.push(...pass[0].o.warns); }
-    }
+    const tries = schema.anyOf.map((s) => { const o = { errs: [], warns: [] }; check(s, v, at, root, o); return o; });
+    if (!tries.some((o) => !o.errs.length)) out.errs.push(`${at}: 허용 형식 중 어느 것과도 맞지 않음 — ${tries.map((o) => o.errs[0]).join(" / ")}`);
   }
   if (schema.not) { const o = { errs: [], warns: [] }; check(schema.not, v, at, root, o); if (!o.errs.length) out.errs.push(`${at}: 허용하지 않는 형식`); }
   if (Array.isArray(v)) {
@@ -84,14 +77,10 @@ function check(schema, v, at, root, out) {
   }
   if (isObj(v)) {
     for (const k of schema.required || []) if (!(k in v)) out.errs.push(`${at}.${k}: 필수 항목 없음`);
-    for (const k of schema["x-recommended"] || []) if (!(k in v)) out.warns.push(`${at}.${k}: 권장 칸 없음 — 다음 판에서 필수`);
     const props = schema.properties || {};
     for (const [k, x] of Object.entries(v)) {
-      if (props[k]) {
-        const p = resolve(props[k], root);
-        if (props[k]["x-status"] === "legacy" || (p && p["x-status"] === "legacy")) out.warns.push(oldMsg(`${at}.${k}`, "옛 칸", props[k].description || p.description));
-        check(props[k], x, `${at}.${k}`, root, out);
-      } else if (schema.additionalProperties === false) out.errs.push(`${at}.${k}: 스키마에 없는 항목`);
+      if (props[k]) check(props[k], x, `${at}.${k}`, root, out);
+      else if (schema.additionalProperties === false) out.errs.push(`${at}.${k}: 스키마에 없는 항목`);
       else if (isObj(schema.additionalProperties)) check(schema.additionalProperties, x, `${at}.${k}`, root, out);
     }
   }
@@ -104,17 +93,17 @@ function check(schema, v, at, root, out) {
 }
 
 // ---------------------------------------------------------------------------
-// 스키마 펴기 — 칸마다 { doc, def, local, path, stage, required, recommended, node } — 사전 · 관계 · 단계 · 읽는 곳이 함께 쓴다
+// 스키마 펴기 — 칸마다 { doc, def, local, path, stage, required, node } — 사전 · 관계 · 단계 · 읽는 곳이 함께 쓴다
 // ---------------------------------------------------------------------------
 function walkSchema(doc) {
   const root = DOCS[doc], rows = [], defStage = {}, defPaths = {};
   const visitObj = (obj, ctx, seen) => {
-    const req = new Set(obj.required || []), rec = new Set(obj["x-recommended"] || []);
+    const req = new Set(obj.required || []);
     for (const [k, v] of Object.entries(obj.properties || {})) {
       if (k === "$schema") continue;
       const stage = v["x-stage"] || ctx.stage;
       const row = { doc, def: ctx.def, chain: ctx.chain, local: ctx.local ? `${ctx.local}.${k}` : k, path: ctx.path ? `${ctx.path}.${k}` : k,
-        stage, ownStage: v["x-stage"] || "", required: req.has(k), recommended: rec.has(k), node: v, res: resolve(v, root) };
+        stage, ownStage: v["x-stage"] || "", required: req.has(k), node: v, res: resolve(v, root) };
       rows.push(row);
       descend(v, row, seen);
     }
@@ -210,7 +199,7 @@ function collect(doc, data, index, refs, uniques) {
     if (isObj(v) && s.properties) for (const [k, x] of Object.entries(v)) {
       const p = s.properties[k];
       if (!p) continue;
-      if (p["x-ref"]) refs.push({ doc, at: `${at}.${k}`, value: x, refs: refsOf(p, doc), ctx, owner: v, ownerSchema: s });
+      if (p["x-ref"]) refs.push({ doc, at: `${at}.${k}`, value: x, refs: refsOf(p, doc), ctx, owner: v });
       if (p["x-unique"]) uniques.push({ key: `${ctx.$def || "$root"}.${k}`, scope: p["x-unique"], at: `${at}.${k}`, value: x, ctx });
       walk(p, x, `${at}.${k}`, ctx);
     }
@@ -268,17 +257,12 @@ function validateRun(runDir) {
   };
   for (const at of refs) {
     const items = Array.isArray(at.value) ? at.value : [at.value];
-    // x-ref의 warnWith에 적힌 옛 칸이 같은 객체에 있을 때만 경고 — 옛 모양과만 생기는 어긋남(url을 복사한 시안 refs · target을 쓴 움직임)
-    const old = at.refs.flatMap((r) => r.warnWith).find((k) => k in at.owner);
     for (const v of items) {
       if (typeof v !== "string") continue;
       const tries = at.refs.map((r) => ({ r, ...valuesFor(r, at) }));
       if (tries.some((t) => t.none)) continue;   // 분위기가 하나도 없으면 고를 대상이 없다(looks.js 기본 분위기)
-      if (tries.some((t) => !t.r.legacy && t.vals.has(v))) continue;
-      const viaOld = tries.find((t) => t.r.legacy && t.vals.has(v));
-      if (viaOld) { warns.push(`${at.at}: '${v}' — 옛 대상 ${viaOld.r.to}를 가리킴(다음 판에서 지움)`); continue; }
-      const msg = `${at.at}: '${v}'이(가) ${tries.map((t) => refLabel(t.r)).join(" 또는 ")}에 없음`;
-      (old ? warns : errs).push(old ? `${msg} — 옛 칸 ${old}이 함께 있어 경고` : msg);
+      if (tries.some((t) => t.vals.has(v))) continue;
+      errs.push(`${at.at}: '${v}'이(가) ${tries.map((t) => refLabel(t.r)).join(" 또는 ")}에 없음`);
     }
   }
   const seen = new Map();
@@ -319,9 +303,9 @@ function validateRun(runDir) {
 const cell = (s) => String(s == null ? "" : s).replace(/\|/g, "/").replace(/\n/g, " ");
 const valuesOf = (row) => {
   const n = row.res || {};
-  if (n.anyOf && n.anyOf.every((x) => "const" in x)) return n.anyOf.map((x) => `${x.const}${x["x-status"] === "legacy" ? "(옛 값)" : ""}${x["x-krds"] ? `(KRDS ${x["x-krds"]})` : ""}`);
+  if (n.anyOf && n.anyOf.every((x) => "const" in x)) return n.anyOf.map((x) => `${x.const}${x["x-krds"] ? `(KRDS ${x["x-krds"]})` : ""}`);
   if (n.enum) return n.enum.map(String);
-  if (n.anyOf) { const e = n.anyOf.flatMap((x) => (x.enum ? x.enum.map((y) => `${y}${x["x-status"] === "legacy" ? "(옛 값)" : ""}`) : "const" in x ? [`${x.const}${x["x-status"] === "legacy" ? "(옛 값)" : ""}`] : [])); return e; }
+  if (n.anyOf) return n.anyOf.flatMap((x) => (x.enum ? x.enum.map(String) : "const" in x ? [String(x.const)] : []));
   if (n.items && resolve(n.items, DOCS[row.doc]) && resolve(n.items, DOCS[row.doc]).anyOf) return valuesOf({ ...row, res: resolve(n.items, DOCS[row.doc]) });
   return [];
 };
@@ -332,7 +316,7 @@ function fieldsDoc() {
     "# 칸 사전 — screens.json · flow.json",
     "",
     "> `node scripts/schema.js --docs`가 정본 스키마(packages/core/schema/)에서 만든다. 손으로 고치지 않는다.",
-    "> 상태: ✔ 쓰는 칸 · ○ 제안 · ✕ 옛 칸(받되 경고, 다음 판에서 지움). 필수: 필수 · 권장(없으면 경고, 다음 판에서 필수).",
+    "> 상태: ✔ 쓰는 칸 · ○ 제안. 필수 칸이 빠지거나 정해진 칸 밖이 있으면 실패한다.",
     "> 단계는 그 칸을 쓰는 생성 단계 — 칸에 따로 적힌 단계(굵게)가 객체 단계보다 앞선다.",
     "",
   ];
@@ -340,18 +324,15 @@ function fieldsDoc() {
     const schema = DOCS[doc];
     out.push(`## ${doc}.json (v${schema["x-version"] || "?"})`, "", schema.description, "",
       "| 칸 | 상태 | 필수 | 단계 | 뜻 | 관계 · 규칙 · 읽는 곳 | 칸이 왜 있나 |", "|---|---|---|---|---|---|---|");
-    const old = [];   // 옛 칸 아래 칸은 모두 옛 칸
     for (const row of WALK[doc].rows) {
       const n = row.node, vals = valuesOf(row);
-      const inOld = old.some((p) => row.path.startsWith(`${p}.`) || row.path.startsWith(`${p}[]`));
-      if (statusOf(row) === "legacy" || (row.def !== "$root" && DOCS[doc].$defs[row.def]["x-status"] === "legacy" && !row.local.includes("."))) old.push(row.path);
       const rel = [
-        ...refsOf(n, doc).map((r) => `→ \`${refLabel(r)}\`${r.warnWith.length ? `(옛 칸 ${r.warnWith.join(" · ")}과 함께면 경고)` : ""}`),
+        ...refsOf(n, doc).map((r) => `→ \`${refLabel(r)}\``),
         ...(n["x-unique"] ? [`하나뿐(${n["x-unique"]})`] : []),
         ...(n["x-rules"] || []).map((r) => `\`${r}\``),
         ...(n["x-feeds"] || []).map((f) => (CODE.includes(f) || f === BOARD ? f : `생성 → ${f}`)),
       ];
-      out.push(`| \`${row.path}\` | ${inOld ? STATUS.legacy : STATUS[statusOf(row)] || ""} | ${row.required ? "필수" : row.recommended ? "권장" : ""} | ${row.ownStage ? `**${row.ownStage}**` : row.stage} | ${cell(n.description || (row.res || {}).description || "")}${vals.length ? ` — 값: ${cell(vals.join(" · "))}` : ""} | ${cell(rel.join(" · "))} | ${cell([n["x-why"], n["x-source"]].filter(Boolean).join(" · "))} |`);
+      out.push(`| \`${row.path}\` | ${STATUS[statusOf(row)] || ""} | ${row.required ? "필수" : ""} | ${row.ownStage ? `**${row.ownStage}**` : row.stage} | ${cell(n.description || (row.res || {}).description || "")}${vals.length ? ` — 값: ${cell(vals.join(" · "))}` : ""} | ${cell(rel.join(" · "))} | ${cell([n["x-why"], n["x-source"]].filter(Boolean).join(" · "))} |`);
     }
     out.push("");
   }
@@ -372,7 +353,7 @@ function relationsDoc(rels) {
     "",
     "| 객체 | 정의 | 층 | 생성 단계 | 파일 | 뜻 |",
     "|---|---|---|---|---|---|",
-    ...objs.map((o) => `| ${o.d["x-object"]} | \`${o.key}\`${o.d["x-status"] === "legacy" ? " ✕" : ""} | ${o.d["x-layer"] || ""} | ${WALK[o.doc].defStage[o.key] || ""} | ${o.doc}.json | ${cell(o.d.description || "")} |`),
+    ...objs.map((o) => `| ${o.d["x-object"]} | \`${o.key}\` | ${o.d["x-layer"] || ""} | ${WALK[o.doc].defStage[o.key] || ""} | ${o.doc}.json | ${cell(o.d.description || "")} |`),
     "",
     "## 관계",
     "",
@@ -383,7 +364,7 @@ function relationsDoc(rels) {
     "",
     "| 가리키는 객체 | 칸 | 가리키는 곳 | 범위 | 단계 | 대상이 스키마에 있나 |",
     "|---|---|---|---|---|---|",
-    ...rels.map((r) => `| ${r.from} | \`${r.field}\` | \`${r.ref.to}\`${r.ref.also.length ? ` ∪ ${r.ref.also.join(" · ")}` : ""}${r.ref.legacy ? " ✕ 옛 대상" : ""} | ${W[r.ref.within] || r.ref.within} | ${r.stage} → ${r.tstage || "?"}${r.later ? " ✕" : ""} | ${r.ok ? "○" : `✕ ${r.probs.join(" · ")}`} |`),
+    ...rels.map((r) => `| ${r.from} | \`${r.field}\` | \`${r.ref.to}\`${r.ref.also.length ? ` ∪ ${r.ref.also.join(" · ")}` : ""} | ${W[r.ref.within] || r.ref.within} | ${r.stage} → ${r.tstage || "?"}${r.later ? " ✕" : ""} | ${r.ok ? "○" : `✕ ${r.probs.join(" · ")}`} |`),
     "",
   ].join("\n");
 }
@@ -431,7 +412,7 @@ function stagesReport() {
   let over = 0;
   const units = new Map();
   for (const [doc, schema] of Object.entries(DOCS)) for (const [k, v] of Object.entries(schema.properties)) {
-    if (!v["x-stage"] || v["x-status"] === "legacy" || v["x-stage"] === "하네스") continue;
+    if (!v["x-stage"] || v["x-stage"] === "하네스") continue;
     const one = v.items && v.items.$ref && v["x-stage"].startsWith("S3");   // S3는 화면 하나가 한 요청
     if (!units.has(v["x-stage"])) units.set(v["x-stage"], []);
     units.get(v["x-stage"]).push({ label: `${doc}.json:${k}${one ? "[] 하나" : ""}`, node: one ? v.items : v, root: schema });
@@ -446,9 +427,9 @@ function stagesReport() {
       if (n.items) walk(n.items, root, at + "[]");
       if (n.properties) {
         if (n.additionalProperties !== false) open.push(at || "(최상위)");
-        const req = new Set([...(n.required || []), ...(n["x-recommended"] || [])]);   // 권장은 생성 요청에서는 필수로 묻는다
+        const req = new Set(n.required || []);
         for (const [k, v] of Object.entries(n.properties)) {
-          if (k === "$schema" || v["x-status"] === "legacy") continue;
+          if (k === "$schema") continue;
           if (v["x-stage"] && v["x-stage"] !== stage) continue;   // 칸 단위 단계는 그 단계 요청으로
           if (!req.has(k)) optional++;
           const key = (v.$ref || "") + at + "." + k;
@@ -462,7 +443,7 @@ function stagesReport() {
     lines.push(`| ${stage} | ${list.map((u) => u.label).join(" · ")} | ${optional}${optional > 24 ? " ✕" : ""} | ${unions}${unions > 16 ? " ✕" : ""} | ${open.join(" · ") || "—"} | ${ok ? "○" : open.length && optional <= 24 && unions <= 16 ? "△ 묶음은 비strict로 쓰고 검사" : "✕"} |`);
   }
   const later = rels.filter((r) => r.later);
-  const missing = ROWS.filter((r) => !r.stage && r.def === "$root" && r.node["x-status"] !== "legacy" && r.local !== "$schema");
+  const missing = ROWS.filter((r) => !r.stage && r.def === "$root" && r.local !== "$schema");
   return { lines, over, later, missing };
 }
 
@@ -474,7 +455,7 @@ function feedsReport() {
   let miss = 0, bad = 0, genOnly = 0;
   for (const row of ROWS) {
     const def = row.def === "$root" ? null : DOCS[row.doc].$defs[row.def];
-    if (row.local.includes(".") || (def && !def["x-object"]) || statusOf(row) === "legacy" || (def && def["x-status"] === "legacy")) continue;
+    if (row.local.includes(".") || (def && !def["x-object"])) continue;
     const feeds = row.node["x-feeds"] || [];
     for (const f of feeds) if (!CODE.includes(f) && f !== BOARD && !paths.has(f)) { bad++; console.error(`FAIL ${objName(row.doc, row.def)}.${row.local}: x-feeds '${f}' — 코드 이름 · 보드 · 칸 경로가 아님`); }
     const into = rels.filter((r) => r.ref.doc === row.doc && r.ref.def === row.def && r.ref.path.join(".") === row.local);
@@ -514,7 +495,7 @@ if (has("--stages")) {
   console.log(lines.join("\n"));
   for (const r of later) console.log(`FAIL ${r.from}.${r.field}(${r.stage}) → ${r.ref.to}(${r.tstage}) — 뒤 단계 칸을 가리킴`);
   for (const r of missing) console.log(`FAIL ${r.path}: x-stage 없음`);
-  console.log(`\n뒤 단계를 가리키는 관계 ${later.length} · 단계 없는 칸 ${missing.length} · 한도 넘는 단계 ${over} (선택 칸 24 · 유니온 16 — 옛 칸은 세지 않고, 권장 칸은 필수로 센다)`);
+  console.log(`\n뒤 단계를 가리키는 관계 ${later.length} · 단계 없는 칸 ${missing.length} · 한도 넘는 단계 ${over} (선택 칸 24 · 유니온 16)`);
   process.exit(later.length || missing.length || over ? 1 : 0);
 }
 if (has("--feeds")) {
@@ -538,6 +519,17 @@ if (args[0]) {
 // 인자 없음 — 정본 자체 검사
 let bad = 0;
 const say = (ok, label, detail = []) => { if (!ok) bad++; console.log(`${ok ? "ok  " : "FAIL"} ${label}`); for (const d of detail) console.log(`  - ${d}`); };
+const oldMarks = [];
+const findOld = (n, at) => {
+  if (!n || typeof n !== "object") return;
+  if (!Array.isArray(n)) {
+    if (n["x-status"] === "legacy") oldMarks.push(`${at}: x-status legacy`);
+    for (const k of OLD_MARKS) if (k in n) oldMarks.push(`${at}: ${k}`);
+  }
+  for (const [k, v] of Object.entries(n)) findOld(v, `${at}/${k}`);
+};
+for (const [doc, schema] of Object.entries(DOCS)) findOld(schema, `${doc}.schema.json#`);
+say(!oldMarks.length, `옛 표시 0 — 옛 칸은 받지 않고 지운다, 새 칸은 필수(required)로`, oldMarks);
 const linkErrs = ruleLinks();
 say(!linkErrs.length, `규칙 연결 — 규칙 ${RULES.length} · 규칙을 가리키는 칸 ${ROWS.filter((r) => (r.node["x-rules"] || []).length).length}`, linkErrs);
 const rels = relations();

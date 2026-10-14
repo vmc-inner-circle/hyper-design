@@ -7,7 +7,7 @@
 
 | 파일 | 무엇 | |
 |---|---|---|
-| `screens.schema.json` | 객체 16개(옛 객체 purpose · domainItem 포함)의 칸 · 모양 · 뜻 · 층(`x-layer`) · 생성 단계(`x-stage`) · 관계(`x-ref`) · 하나뿐(`x-unique`) · 규칙(`x-rules`) · 읽는 곳(`x-feeds`) | 정본 |
+| `screens.schema.json` | 객체 14개의 칸 · 모양 · 뜻 · 층(`x-layer`) · 생성 단계(`x-stage`) · 관계(`x-ref`) · 하나뿐(`x-unique`) · 규칙(`x-rules`) · 읽는 곳(`x-feeds`) | 정본 |
 | `flow.schema.json` | 객체 2개(흐름 · 흐름 단계) | 정본 |
 | `rules.json` | 권장 · 규칙의 유일한 자리 — 강도(KRDS 필수 · 권장 · 우수 / 우리 / 사례) · 값 · 검사 · 근거 | 정본 |
 | `docs/fields.md` · `relations.md` · `rules.md` | 칸 사전 · 객체와 관계 · 규칙 사전 | 자동 생성 — 손으로 고치지 않는다 |
@@ -29,13 +29,13 @@
   - `board.recommend.type` · `typeWhy` — inclusion을 보고 글자 크기 추천
 - **S2 여정 · 화면 목록**
   - `sections[]` — 구역 보드의 큰 띠
-  - `screens[].slug` · `name` · `role` · `roles[].nav` — 화면 목록과 메뉴
+  - `screens[].slug` · `name` · `role` · `file`(`screens/<slug>.html`) · `roles[].nav` — 화면 목록과 메뉴
   - flow.json `flows[]` · `branches[]` — 흐름 · 갈래(from · region · trigger · action · to), 누르는 곳의 영역 key
   - 흐름 `steps[].when` — 같은 화면 · 버튼에서 갈릴 때의 이름표
 - **S3 화면 하나씩**(screens[] 하나)
   - `section` · `step` — 놓일 구역 · 단계 이름표
   - `goal` · `problem` · `pattern`(KRDS 이름) · `emphasize` · `emphasize2` · `data` · `defer` · `focus` — 이 화면의 1순위와 근거
-  - `regions[]`(level · form · content) — 화면 안 덩어리와 위계
+  - `regions[]`(level · form · content) — 화면 안 덩어리와 위계. 주 버튼 줄은 `form: actions`(모바일 본문 끝 · 2순위)
   - `state`(first-run · empty · input · error · success) · `when` · `variantOf` · `overlayOf` — 상태 화면 · 뜨는 창과 나오는 조건
   - `policy[]` · `cases[]` · `motion[]` — 정책 메모 · 오류/안내 문구 · 움직임
   - `dark` · `shell` · `navActive` — 그 화면만 다른 색 · 메뉴
@@ -53,7 +53,7 @@
 칸 하나가 객체와 다른 단계에 쓰이면 **칸에 x-stage**를 적는다 — 칸의 단계가 객체 단계보다 앞선다(예: 무드보드 항목(S4)의 `look`은 S5).
 
 **칸의 기준**:
-- 칸마다 읽는 곳이 있어야 한다 — ① 코드(pack · expand · build · lint · looks · ids) ② 보드(사람이 본다) ③ 생성(다음 단계에서 Claude가 읽는다 — `x-feeds`에 그 칸 경로). ③만 있는 칸은 안내문이 그 칸을 가리키는지 시험이 확인할 때만 둔다. 없으면 옛 칸(✕)으로 돌리고 다음 판에서 지운다.
+- 칸마다 읽는 곳이 있어야 한다 — ① 코드(pack · expand · build · lint · looks · ids) ② 보드(사람이 본다) ③ 생성(다음 단계에서 Claude가 읽는다 — `x-feeds`에 그 칸 경로). ③만 있는 칸은 안내문이 그 칸을 가리키는지 시험이 확인할 때만 둔다. 읽는 곳이 없는 칸은 두지 않는다(§6 순서로 지운다).
 - 같은 값을 두 칸에 적지 않는다 — 다른 칸이 필요하면 `x-ref`로 가리킨다. 공통 목록은 `$defs`에 하나: 문구 색 성격 `$defs/tone`(cases · data-stay-tone), 메뉴 틀 `$defs/shell`(시안 · 화면), 안내 문구 모양 `$defs/toast`(toggles · board.recommend).
 - 같은 말이 다른 뜻인 칸은 설명 첫 말로 가른다 — `screens[].when`(상태 화면이 나오는 조건) · `cases[].when`(문구가 뜨는 때) · 흐름 `steps[].when`(갈래 이름표). 최상위 `brand`(서비스 이름) · `palette.brand`(대표색, KRDS Primary).
 - 추천 · 결정은 짝이다 — `board.recommend.*`(추천)와 최상위 `concept` · `theme` · `toggles`(결정). 보드는 잠갔으면(`board.locked`) 결정, 아니면 추천을 쓴다. 글자 크기는 근거(`roles[].inclusion`) → 추천(`board.recommend.type`) → 결정(`toggles.type`).
@@ -65,12 +65,9 @@
 | `x-ref: "screen.slug"` | 다른 객체의 칸을 가리킨다 — 문서 전체에서 찾는다 | 정본: 대상 칸이 있나 · 실행물: 값이 있나 |
 | `x-ref: {to, within}` | 범위 안에서만 찾는다 — `doc` 문서 전체(기본, 문자열 x-ref와 같다) · `screen` 같은 화면의 영역 · `from` 흐름 단계 출발 화면의 영역 · `role` 같은 역할의 화면 · `theme` 고른 분위기의 버튼 색(`also`: 대표색 `brand`도 된다) | 같음 + 범위가 그 자리에서 뜻이 있나 |
 | `x-unique: doc · screen · look` | 그 범위 안에서 하나뿐 — 화면 slug는 문서 전체, 영역 key는 같은 화면 안(다른 화면에 같은 key는 된다) | 실행물 |
-| `x-recommended` | 권장 칸 — 지금은 없으면 경고, 다음 판에서 필수 | 실행물(경고) |
-| `x-status: legacy` | 옛 칸 · 옛 값 · 옛 대상 — 받되 경고, 다음 판에서 지운다 | 실행물(경고) |
-| `x-ref: {…, warnWith}` | 그 옛 칸이 같은 객체에 함께 있을 때만 가리킴 어긋남을 경고로 — 시안 `refs[].name`(url 동반) · 움직임 `region`(target 동반) 두 곳만. 나머지 가리킴은 옛 칸이 있어도 늘 오류 | 실행물 |
 | `allOf` `if/then` | 조건 필수 — 오류 · 완료 화면은 `variantOf`, 움직임 종류별 `region` · `trigger`, 플랫폼별 메뉴 틀(시안 · 화면 — 화면 하나만 `none`은 두 플랫폼 모두) | 실행물 |
 
-**조이는 일정**: 지금은 옛 칸 · 옛 값 · 옛 대상을 받되 경고하고 새 칸(`x-recommended`)은 권장이다 — 안내문이 새 칸을 쓰게 바뀌는 다음 판에서 새 칸을 필수로 올리고 옛것을 한 번에 지운다.
+**닫힌 형식**: 정본에 없는 칸 · 값은 받지 않는다(옛 칸 · 옛 값도 실패). 새 칸은 `required` — 빠지면 실패다. `node scripts/schema.js`가 정본에 옛 표시(legacy · 권장 · 낮춘 경고)가 다시 생기면 실패로 알린다.
 
 HTML 조각 안에만 있는 것(`data-trigger` · `data-stay`)은 x-ref가 아니라 lint가 본다. 칸이 아니라 화면 사이를 보는 규칙 — 변형의 대상(`variant-target`) · 뜨는 창은 흐름의 도착(`overlay-reached`) · 같은 버튼이 두 번이면 갈래 이름표(`split-when`) — 은 `rules.json`에 있고 `schema.js`가 실행물에서 본다.
 
@@ -104,7 +101,7 @@ HTML 조각 안에만 있는 것(`data-trigger` · `data-stay`)은 x-ref가 아�
 
 ```bash
 node scripts/schema.js                 # 정본 자체 검사 — 규칙 연결 · 관계(범위) · 생성 단계 · 읽는 곳 · docs/ 최신
-node scripts/schema.js runs/<p>        # 실행물 형식 · 값 · 관계(범위) · 하나뿐 — 옛 칸 · 옛 값 · 권장 칸 없음은 경고
+node scripts/schema.js runs/<p>        # 실행물 형식 · 값 · 관계(범위) · 하나뿐 — 오류는 실패(경고는 칸이 생성 단계에서만 읽히는 것 등)
 node scripts/schema.js --stages        # 생성 단계 — 앞 단계만 가리키나 · Claude 구조화 출력 한도
 node scripts/schema.js --feeds         # 읽는 곳 — 칸마다 코드 · 보드 · 생성
 node scripts/schema.js --relations     # 객체와 관계 표(범위 · 단계 포함)
@@ -116,7 +113,7 @@ node scripts/test.js                   # 저장소 시험(20 = 스키마 — 이
 
 ## 6. 칸 · 규칙을 바꾸는 순서
 
-리뷰에서 정함 → 정본 JSON(칸 · `x-ref` · `x-unique` · `x-stage` · `x-rules` · `x-feeds`) → 규칙이면 `rules.json`(fields ↔ x-rules 두 방향) → `node scripts/schema.js --docs` → 5절 검사 통과 → 커밋. 칸을 지울 때는 먼저 `x-status: legacy`로 한 판 받은 뒤(경고) 다음 판에서 지운다 — 그 사이 옛 실행물이 막히지 않게.
+리뷰에서 정함 → 정본 JSON(칸 · `x-ref` · `x-unique` · `x-stage` · `x-rules` · `x-feeds`) → 규칙이면 `rules.json`(fields ↔ x-rules 두 방향) → `node scripts/schema.js --docs` → 5절 검사 통과 → 커밋. 칸을 지울 때는 정본 · 읽는 코드 · 안내문에서 한 번에 지우고 `x-version`을 올린다 — 옛 형식 실행물은 그 판으로 검사하지 않는다.
 
 ## 7. 예시 — 지금 칸 기준 (하네스가 읽는다)
 
@@ -199,7 +196,7 @@ node scripts/test.js                   # 저장소 시험(20 = 스키마 — 이
 - `roles[].user`(셸 오른쪽 위 사람 `{ "name", "initials" }`) · `brand` · `brandIcon`(상단바 서비스 이름 · 아이콘, 없으면 `title` · layout-dashboard)은 선택이다. 셸은 `scripts/expand.js`가 붙인다. 화면마다 `shell: "none"`(메뉴 없는 한 장) · `navActive`(메뉴에 없는 화면에서 켤 항목) · `overlayOf`(뜨는 창 — 이름은 '~ 창', 흐름이나 갈래가 열어야 한다) · `dark`(밤에 쓰는 화면)는 선택이다.
 - 구역 보드: 큰 구역(`sections` 2~6개) → 단계 이름표(`step`) → 화면 나란히, 화면 아래 정책 메모(`policy`, 상태 변형은 선택). 오류 · 안내 문구는 `cases`, 움직임은 `motion`(종류별로 `region` · `trigger`)에 — 정책에 다시 쓰지 않는다.
 - `state`: `first-run` · `empty` · `input` · `error` · `success`. 오류 · 완료는 `variantOf`(원래 화면) 필수 · 나오는 조건 `when`. 입력 화면이 있으면 오류 1개 이상, 완료 1개 이상(lint).
-- `board.locked`: 2라운드부터 확정한 것 — 예 `["concept", "theme", "type", "swatch", "ask"]`(옛 값 `"toggles"` = type + swatch). `board.focus`: 지난 라운드에 고친 화면 slug — 보드 맨 위에 먼저 나온다. `board.changes`: `[{ "slug", "said", "did" }]` 지난 의견을 반영해 바뀐 점.
+- `board.locked`: 2라운드부터 확정한 것 — 예 `["concept", "theme", "type", "swatch", "toast", "ask"]`. `board.focus`: 지난 라운드에 고친 화면 slug — 보드 맨 위에 먼저 나온다. `board.changes`: `[{ "slug", "said", "did" }]` 지난 의견을 반영해 바뀐 점.
 - `toggles.toast` · `board.recommend.toast`: 안내 문구 모양 `{ "at": "top|bottom", "icon": "on|off", "tone": "light|dark|color", "size": "normal|large" }` — 없으면 top · on · light · normal.
 
 ### flow.json

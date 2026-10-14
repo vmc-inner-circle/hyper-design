@@ -23,7 +23,8 @@
       "x-why": "화면 사이를 끊김 없이 이어 가는 작업 단위",
       "x-source": "KRDS 서비스 패턴 — 여정 단계 기반(https://www.krds.go.kr/html/site/service/service_summary.html)",
       "x-rules": [
-        "flow-steps"
+        "flow-steps",
+        "reachable"
       ],
       "x-layer": "화면",
       "x-stage": "S2 여정 · 화면 목록"
@@ -42,6 +43,9 @@
         "build",
         "lint",
         "보드"
+      ],
+      "x-rules": [
+        "reachable"
       ]
     }
   },

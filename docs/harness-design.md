@@ -1,6 +1,6 @@
 # oss-design-harness 설계 계약
 
-> 하네스톤 개인전(2026-09-30) 제출용 디자인 하네스. 이 문서는 스킬·스크립트·라이브러리·서브 에이전트가 모두 따르는 **단일 계약**이다. 여기 없는 규칙을 각자 만들지 않는다.
+> 이 문서는 스킬·스크립트·라이브러리·서브 에이전트가 모두 따르는 **설계 계약**이다 — 턴 · 보드 · 산출물 · 저장소 · 게이트. **데이터 형식과 품질 규칙의 정본은 `packages/core/schema/`**(README · `rules.json`)이고, 이 문서는 칸을 다시 정의하지 않고 그곳을 가리킨다. 여기와 정본에 없는 규칙을 각자 만들지 않는다.
 > 실행 절차는 `.claude/skills/oss-design-harness/SKILL.md`, 사용자에게 보이는 말은 `references/ux-writing.md`.
 > 이 문서의 대부분은 첫 리허설(2026-09-27~28) 중 사용자가 직접 지적한 것을 반영한 결과다(§13). 예시는 중립 예시 '동네 독서 모임'(모임장이 모임을 만들고 회원이 확인)으로 적는다.
 
@@ -11,6 +11,7 @@
 - 결과물은 HTML 한 파일(`index.html`). 비개발자가 서비스를 이해할 만큼 충분한 화면 수.
 - 평가는 UX가 아니라 **워크플로우·프롬프트 방식**. 소요 시간도 기록된다 → 속도가 곧 품질이다.
 - 보는 사람은 **비디자이너**다. 구조·용어·화면 모두 "처음 보는 사람이 바로 이해하는가"가 기준이다.
+- 화면 품질의 바탕은 **KRDS**(대한민국 정부 디자인 시스템) — 원칙(여정 중 겪는 문제 · 모든 사용자 포용 · 시급한 정보 먼저) · 패턴 이름 · 색 역할 · 글자 · 대비. 각 규칙은 `rules.json`에 강도(KRDS 필수 · 권장 / 우리 / 사례)와 함께 있다.
 
 ## 2. 턴 구조
 
@@ -41,16 +42,17 @@
 - 2턴에 고른 시안으로 전체 화면을 만들면 보드는 사용 흐름 / 화면 디자인 두 탭이 된다(시안 탭 없음).
 
 **사용 흐름** (처음 열면 보이는 탭) = **구역 보드** — 디자이너가 Figma에 그리는 유저플로우 보드처럼 한 캔버스(`08-sections.js`). 서비스가 어떻게 흘러가는지 + 화면마다 정책을 한눈에. 사용자 결정(2026-10-07): "디자이너식 구역 보드로 교체".
+0. 맨 위 **누가 쓰나요** 줄: 역할마다 이루려는 것(`roles[].goal`) · 읽는 상황(`roles[].inclusion`).
 1. **구역 띠**(`sections`: 가입·처음 시작 / 홈 / 모임 운영 …) 아래에 **단계 이름표**(`screen.step`: 약관 동의 · 닉네임 입력 …) → 그 단계의 화면들을 **사용하는 순서대로 왼쪽부터 나란히**. 오류·완료 상태 화면(`state: error|success`)은 원래 화면 바로 옆. 줄이 길면 다음 줄로.
 2. **화살표는 조건이 갈리는 곳에만**(`flow.json` step·branch의 `when`): 누르는 버튼에 초록 테두리 → 초록 화살표 → 조건 이름표("처음 가입이면" / "이미 가입했으면"). 순서대로 이어지는 단계는 화살표 없이 화면 순서가 곧 흐름.
-3. 화면 아래 **정책 메모**(`screen.policy`) 검은 상자: [기본 정의] · [제한] · [표기] · [예외] · [움직임] 묶음별 짧은 규칙 줄. 디자인 보드가 제품의 정본이 된다.
+3. 화면 아래 **정책 메모** 검은 상자: 맨 위에 **이루려는 것**(`screen.goal`) · **겪는 문제**(`screen.problem`), 그 아래 `screen.policy` 묶음 [기본 정의] · [제한] · [표기] · [예외] · [움직임] 묶음별 짧은 규칙 줄. 디자인 보드가 제품의 정본이 된다.
 4. 위쪽 도구: 구역 바로가기 · 확대·축소 · 전체 보기. ⌘/Ctrl+휠 확대, 휠·드래그 이동. 화면을 누르면 **화면 디자인** 탭의 그 화면으로.
 - 흐름(`flows`)은 보드에 카드로 보이지 않지만 버튼 연결의 정본이다(완성본 페이지 이동 · lint 버튼 검사).
 
 **화면 디자인** — 화면마다 한 번씩, 크게 보고 의견을 남기는 곳.
 - 왼쪽 **화면 목록**: 역할별로 묶고(모임장 / 회원 / 함께 쓰는 화면), 흐름에 나오는 순서. 상태 태그, 의견을 남긴 화면에는 주황 점. 맨 위 **"전체"**: 질문(`board.ask`) · 더 있었으면 하는 것 · 지금까지 남긴 의견.
 - 가운데: 고른 화면 한 장(폭에 맞춤, 길면 세로 스크롤).
-- 오른쪽: 화면 정보 · **이 화면의 규칙**(정책 메모 — 틀렸으면 화면 메모로) · **사용 흐름에서 보기** · 고른 곳 · 이 화면에 남긴 의견 · 화면 빼기와 메모 · 이전/다음 화면. ↑/↓·←/→로 화면 넘기기.
+- 오른쪽: 화면 정보(역할 꼬리표에 마우스를 올리면 그 역할의 목표) · **이 화면의 규칙**(이루려는 것 · 겪는 문제 + 정책 메모 — 틀렸으면 화면 메모로) · **사용 흐름에서 보기** · 고른 곳 · 이 화면에 남긴 의견 · 화면 빼기와 메모 · 이전/다음 화면. ↑/↓·←/→로 화면 넘기기.
 
 ### 3.2 의견 남기기 — 화면 아무 곳이나 골라서
 
@@ -65,18 +67,18 @@
 ### 3.3 상단바
 
 - 한 줄, 높이 56px, 모든 컨트롤 32px. 왼쪽부터: 제목 + "초안 n" / **[사용 흐름][화면 디자인] 탭** / **화면 느낌** 버튼(지금 값 요약: "따뜻한 크림 · 크게 · 테라코타") / (사용 흐름에서 따라가 볼 때만) 화살표 · 확대 도구 / **의견 보내기 · n개**.
-- **화면 느낌** 창: 분위기 카드 3개(배경·버튼 색 미리보기 + 이름 + 이유 + 추천) · 글자 크기 · 버튼 색 조각 5개(고른 분위기에 어울리는 색, 첫 번째 추천). 잠긴 항목은 "확정: …" 글자로.
+- **화면 느낌** 창: 분위기 카드 3개(배경·버튼 색 미리보기 + 이름 + 이유 + 추천) · 글자 크기(아래에 추천 이유 `board.recommend.typeWhy` — 역할의 읽는 상황에서) · 버튼 색(첫째 = 대표색 `palette.brand`, 나머지 = 대안 `swatches`). 잠긴 항목은 "확정: …" 글자로.
 - 추천값에는 작은 **"추천"** 글자(점·색 기호만으로 표시하지 않는다). 마우스를 올리면 설명.
 - 분위기·글자·버튼 색을 바꾸면 **모든 화면이 즉시 다시 칠해진다** — 화면 하나가 아니라 서비스 전체를 비교하게 한다.
 
 ### 3.4 의견 보내기
 
 - 누르면 바로 복사하지 않고 **"이렇게 전달돼요"** 창을 먼저 연다: "아래 n가지를 전달해요. 나머지는 모두 추천대로 진행해요." + 사람이 읽는 요약(화면 느낌 / 다르게 고른 질문 / 고쳐 달라고 한 곳 / 화면 전체에 대한 의견 / 더 있었으면 하는 것) + 접힌 "실제로 복사되는 글 보기".
-- [복사하기] → 클립보드 → "복사했어요. 채팅창에 붙여넣어 주세요." 사용자가 채팅에 붙여넣는 것이 개입 1회다.
+- [복사하기] → 클립보드 → "복사했어요. 채팅창에 붙여넣어 주세요." 사용자가 채팅에 붙여넣는 것이 개입 1회다. 클립보드가 막히면(`file://` 등) 창을 닫지 않고 **실제로 복사되는 글**을 펼쳐 전부 골라 둔 채 "⌘C를 눌러 복사해 주세요"로 안내한다.
 - **복사되는 글의 형식은 고정**이다(`references/answer-parsing.md`가 읽는다). 화면 문구를 바꿔도 이 형식은 바꾸지 않는다. 고른 곳 의견은 `화면 <id> · <이름표> 바꿔|빼기 [<위치 경로>]` — 위치 경로는 가장 가까운 `data-region`(`@key`)부터 `태그:순번`:
 
 ```
-테마 B · 글자 크게 · 강조 차분
+테마 cream(따뜻한 크림) · 글자 크게 · 버튼색 terracotta(테라코타)
 확인: member-start=전체 모임 일정
 화면 1 · 버튼 '새 모임 만들기' 바꿔: 버튼을 더 크게 [@start-club > div > button]
 화면 1 · 부분 '3 출석 확인하기' 빼기 [@how-it-works > div:3]
@@ -133,27 +135,30 @@ packages/
       20~25-board*.js      보드 상태·답변 형식 / '전체' 창 / 상단바·사용 흐름 / 의견 보내기 창 / 두 탭·화면 디자인·고르기 / 시안 고르기
       canvas.css
     motion/                motion.css · motion.js — 최종본 화면별 페이지의 움직임 재현(build.js가 페이지마다 인라인)
-    schema/                screens.json · flow.json 형식과 예시
+    schema/                데이터 정본 — screens · flow 스키마(JSON) · rules.json(규칙의 유일한 자리) · README(기준 문서) · docs/(자동 생성 사전)
   web/                     ← 1차 (데스크톱 1280×800 프레임)
     components/*.css       컴포넌트 스타일. 토큰만 참조
     snippets/*.md          조각 HTML (screen-writer의 유일한 재료). 00-rules.md가 조립 규칙
-    patterns/              화면 뼈대: shell · list-detail · form · settings · dashboard · onboarding · timeline · board
+    patterns/              셸(shell · shell-top · shell-rail — expand가 씀) + 모양 조합 예시(list-detail · form · settings · dashboard · onboarding · timeline · board). 화면 배치는 regions[].form이 정한다
   mobile/                  web 위에 겹치는 레이어(390×844): components(위 제목 줄·아래 탭·꽉 찬 주 버튼·아래에서 올라오는 창·한 줄 카드)
                            · snippets(00-rules = web과 다른 점만 · 05-parts · 10-layout) · patterns. 읽는 순서는 scripts/platform.js
 scripts/                   Node, 의존성 0
   build.js                 run 폴더 → out/board.html | out/index.html (단일 파일). --open: 사용자 브라우저로 띄움
-  looks.js                 분위기·버튼 색·글꼴 세트 → 전체 토큰 계산 + 디자이너 기준 자동 보정 (build·lint 공용)
+  looks.js                 분위기 · KRDS 역할 색(brand · support · accent) · 글꼴 세트 → 전체 토큰 계산 + 대비 보정 (build·lint 공용)
+  schema.js                데이터 정본 검사 — 형식 · 관계(범위) · 생성 단계 · 읽는 곳 · 규칙 연결, 자동 사전 생성
+  test.js                  저장소 시험(test/checks/*) — 처음부터 끝까지 · 회귀 · 스키마 · 부품 CSS · 안내문 · 내부 기록
   platform.js              web·mobile 패키지 레이어(mobile = web + packages/mobile)와 프레임 크기 (build·lint·pack 공용)
   expand.js · pack.js      셸 자동 조립·짧은 부품 태그 펼치기 / 에이전트 작업 묶음 (둘 다 web·mobile)
-  lint.js                  데이터·조각·말 검사. exit 0 전에는 끝난 게 아니다
+  lint.js                  품질 규칙(rules.json id로 알림) · 조각 · 말 검사. exit 0 전에는 끝난 게 아니다
   ids.js                   screens.json의 빠진 id를 이어서 채운다
   calendar.js              월 달력 격자 조각 생성 (손으로 35칸 쓰지 않기)
 .claude/
-  skills/oss-design-harness/   SKILL.md + references/(prd-to-screens · answer-parsing · ux-writing) + templates/
+  skills/oss-design-harness/   SKILL.md(실행 뼈대) + references/(prd-to-screens · answer-parsing · ux-writing · research-and-ask · assembly · review-and-messages) + templates/
   agents/screen-writer.md  화면 조각 조립 전용
 runs/<project>/            실행 산출물. 도메인 값은 여기에만
   brief.md · screens.json · flow.json · icons.json · screens/*.html · snippets/ · out/ · prompt-log.md · elapsed.txt · harness-notes.md
-submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
+test/                      시험 입력(fixtures) · 회귀 기준(expected) · 검사(checks)
+submissions/<github_id>/   제출 (index.html · prompt-log.md · elapsed.txt)
 ```
 
 **일반성 규칙**: 도메인 이름·더미 데이터·화면 수를 `packages/`·`scripts/`·스킬에 박지 않는다. 프로젝트 값은 `runs/<project>/`에만.
@@ -162,55 +167,18 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 
 ### 6.1 `screens.json`
 
-```json
-{
-  "project": "book-club",
-  "title": "동네 독서 모임",
-  "platform": "web",
-  "round": 1,
-  "theme": "warm",
-  "toggles": { "type": "normal", "swatch": "terracotta" },
-  "looks": [ { "id": "warm", "name": "따뜻한 종이", "why": "책 모임다운 포근한 느낌이에요", "mode": "light", "bg": "#FBF8F3", "ink": "#1F1B16", "shape": "round",
-               "swatches": [ { "id": "terracotta", "name": "테라코타", "hex": "#D9562B" }, "… 5개" ] }, "… 3개" ],
-  "roles": [
-    { "key": "host", "label": "모임장", "nav": [ { "slug": "host-home", "label": "모임", "icon": "house" } ] },
-    { "key": "member", "label": "회원", "nav": [ { "slug": "member-home", "label": "다음 모임", "icon": "calendar-days" } ] }
-  ],
-  "board": {
-    "recommend": { "theme": "warm", "themeWhy": "…", "type": "normal", "typeWhy": "…", "swatch": "terracotta", "swatchWhy": "…" },
-    "ask": [ { "id": "member-start", "text": "회원 화면은 어디서 시작할까요?", "options": ["다음 모임 한 장 (추천)", "전체 모임 일정"], "recommended": 0 } ],
-    "locked": [], "focus": []
-  },
-  "screens": [
-    {
-      "id": 1, "slug": "host-home-empty", "name": "모임 홈 (처음)", "role": "host",
-      "state": "first-run", "variantOf": "host-home",
-      "purpose": "아직 모임이 없을 때 새 모임을 만들게 한다",
-      "pattern": "dashboard", "file": "screens/host-home-empty.html",
-      "regions": [
-        { "id": 101, "key": "start-club", "label": "새 모임 만들기", "why": "여기서 첫 모임을 만들어요", "prd": "§4-1" }
-      ]
-    },
-    {
-      "id": 4, "slug": "member-add", "name": "회원 추가 창", "role": "host", "overlayOf": "club-members",
-      "purpose": "초대할 회원의 이름과 연락처를 적는다", "pattern": "form", "file": "screens/member-add.html",
-      "regions": [ { "id": 112, "key": "member-form", "label": "회원 정보 적기", "why": "이름과 연락처만 적으면 초대 문자가 가요" } ]
-    }
-  ],
-  "nextScreenId": 5, "nextRegionId": 113
-}
-```
+**칸의 뜻 · 모양 · 관계 · 생성 단계는 [`packages/core/schema/README.md`](../packages/core/schema/README.md)가 정본이다**(복사해서 시작할 예시도 거기). 여기는 하네스가 그 칸을 **어떻게 쓰는지**만 적는다.
 
 - `id`: 화면은 1부터, 항목은 101부터 **따로** 센다(§3.5). 비어 있으면 `ids.js`가 채운다. screens.json의 화면 순서 = 사용자가 만나는 순서(역할별 처음 시작 → 핵심 작업 순), 뜨는 창은 그 뒷 화면 바로 다음.
-- `slug`: 파일명·flow 참조용. 케밥케이스 영문.
-- `state`(선택): `first-run`(처음 켰을 때) · `empty`(데이터 없을 때) · `input`(입력할 때) · `error`(오류일 때) · `success`(완료됐을 때). 캔버스가 태그로 보여준다. `variantOf`는 상태 변형의 원래 화면(오류·완료는 필수 — 구역 보드에서 원래 화면 옆). 입력 화면이 있으면 오류 1개 이상, 완료 1개 이상(lint FAIL) — 사용자가 밟게 될 상태는 반드시 그린다.
-- `sections`(최상위) · `section` · `step` · `policy`: 구역 보드(§3.1). 구역 2~6개 `{key, name}`, 화면마다 구역과 단계 이름표, 상태 변형을 뺀 모든 화면에 정책 `[{ title, items[] }]`(lint FAIL). 규칙은 `references/prd-to-screens.md` §5-2, 말은 `ux-writing.md` §8·§9.
-- `concept` · `concepts` · `references`: 시안과 레퍼런스 — 형식·규칙은 `references/prd-to-screens.md` §6-1. 시안의 메인 화면 조각은 `concepts/<id>/<slug>.html`.
-- `overlayOf`(선택): **뜨는 창 화면**(대화상자·오른쪽 패널). 조각에는 창(`.modal-backdrop`)만 쓰고, 뒷 화면은 `build.js`가 `overlayOf` 화면을 깔아 합친다(뒷 화면의 누를 곳·항목 표시는 지운다). 이름은 '~ 창'. 이 창을 여는 버튼이 `flow.json` 흐름이나 갈래에 반드시 있다. 한 실행에 6개 이하.
-- `roles[].nav`: 모든 화면의 사이드바가 그대로 복사하는 메뉴. 화면 간 일관성이 여기서 정해진다.
-- `regions[].key`: 조각의 `data-region`과 1:1. `label`·`why`는 **번호를 누르면 그대로 보이는 글**(ux-writing §2), `prd`는 내부 근거.
-- `theme`/`toggles`: 1턴에는 추천값, 2턴 의견으로 확정 후 `board.locked`.
-- `board.focus`: 지난 라운드에 고친 화면 slug — "의견 반영" 태그. `board.changes`: `[{ slug, said, did }]` — 남긴 의견(짧게)과 바뀐 점. 태그·ⓘ 카드·화면 디자인 오른쪽에 "의견 '…' → …"로 보인다(사용자: "고친 화면은 뭐야" → 무엇을 고쳤는지 같이).
+- 화면마다 먼저 정하는 것: **목적**(`goal`) → **겪는 문제**(`problem`) → 쓸 사실(`data` — `facts` 이름표) → **1순위 문장**(`emphasize`, 문제에 답하는 사실) → 1순위 영역(`focus`) → 덜어낼 것(`defer`). 영역은 `level`(1순위 하나 · 3순위까지) · `form`(배치 모양 — 모바일 주 버튼은 본문 끝 `actions` 영역, 웹은 1순위 hero 안 또는 폼 끝 `actions`) · `content`. 규칙 `rank1-one` · 규칙 `rank3-max` · 규칙 `emphasize-fact`.
+- 상태 화면: 입력 화면이 있으면 오류 · 완료 화면을 반드시 그린다(`variantOf` 필수 — 구역 보드에서 원래 화면 옆). 규칙 `state-pair`.
+- 구역 보드(§3.1): `sections` · 화면의 `section` · `step` · 정책 `policy`(상태 변형 뺀 모든 화면). 규칙은 `references/prd-to-screens.md` §5-2, 말은 `ux-writing.md` §8·§9.
+- `concepts` · `references`: 시안과 레퍼런스 — `references/prd-to-screens.md` §6-1. 시안의 메인 화면 조각은 `concepts/<id>/<slug>.html`.
+- `overlayOf`: **뜨는 창 화면**(대화상자·오른쪽 패널). 조각에는 창(`.modal-backdrop`)만 쓰고, 뒷 화면은 `build.js`가 `overlayOf` 화면을 깔아 합친다(뒷 화면의 누를 곳·항목 표시는 지운다). 이름은 '~ 창'. 여는 버튼이 흐름이나 갈래에 반드시 있다(규칙 `overlay-reached`). 한 실행에 6개 이하.
+- `roles[].nav`: 모든 화면의 메뉴가 그대로 복사한다 — 화면 간 일관성이 여기서 정해진다.
+- `regions[].key`: 조각의 `data-region`과 1:1. `label`·`why`는 **번호를 누르면 그대로 보이는 글**(ux-writing §2).
+- 추천 · 결정: 1턴에는 `board.recommend`(추천)를 쓰고, 2턴 의견으로 정한 값이 최상위 `concept` · `theme` · `toggles`(결정)가 되며 `board.locked`로 잠근다. 글자 크기 추천의 근거는 역할의 포함 조건(`roles[].inclusion`).
+- `board.focus`: 지난 라운드에 고친 화면 — "의견 반영" 태그. `board.changes`: 남긴 의견(짧게)과 바뀐 점 — 태그·ⓘ 카드·화면 디자인 오른쪽에 "의견 '…' → …"로 보인다.
 
 ### 6.2 `flow.json`
 
@@ -271,11 +239,12 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 
 ## 7. 분위기·글자 크기·버튼 색
 
-- **PRD마다 만든다**(`screens.json`의 `looks`, 규칙은 prd-to-screens §6). 분위기 = `{id, name, why, mode, bg, ink, shape, font, swatches[5]}`.
-- **글꼴 세트**(`font`, 분위기마다 하나 — 사용자 결정 2026-10-07): 글꼴마다 굵기·자간·줄간격·글자 진하기가 묶여 있다(`looks.js` FONTS: pretendard · suit · nanum-square-round · ibm-plex · serif-title). 분위기를 고르면 글꼴도 따라간다 — 선택지는 늘리지 않는다.
-- **디자이너 기준 자동 보정**(looks.js): 본문 글자는 순수 검정·흰색이 아니게(대비 상한, #000 → #2C2C2C), 버튼 색은 형광처럼 쨍하지 않게(OKLCH 채도 상한), 상태색은 차분하게(흙빛 빨강 등). 기본 토큰은 강약(제목 크게·굵게 / 본문 보통 / 보조 작게·흐리게)과 넉넉한 여백 리듬(`--space-section`·`--space-block`·`--pad-card`·`--pad-row`)을 갖는다. 메인은 배경·글자·모양·버튼 색만 정하고, `scripts/looks.js`가 표면·테두리·흐린 글자·눌림색·연한 강조·상태색까지 계산해 `[data-theme="<id>"]`·`[data-theme][data-swatch="<id>"]` CSS를 만든다. looks가 없으면 기본 3개(깔끔한 흰색 · 따뜻한 크림 · 차분한 밤).
-- 글자 크기 `[data-type="normal|large"]`. 버튼 색은 `data-swatch`(예전 `data-accent calm|vivid`는 첫째·둘째 색으로 호환).
-- 잠금: `board.locked`에 `theme`·`type`·`swatch`(또는 둘을 묶은 `toggles`) — 확정된 것만 잠그고, 새로 생긴 선택지는 연다.
+- **PRD마다 만든다**(`screens.json`의 `looks`, 규칙은 prd-to-screens §6). 칸은 스키마 README.
+- **색은 KRDS 역할로**: `palette.brand`(Primary — 누르는 것, 면적 10%) · `support`(Secondary — 정보 면 · 구분 배경, 30%) · `accent`(새 알림 · 중요 표시, 5% 이하), 바탕은 중립(60%). 버튼 색 대안 `swatches`(대표색 뺀 ≤4)는 보드 토글. 배지는 대표색이 아니라 support 면(규칙 `badge-not-primary`), 비활성은 투명도가 아니라 회색 면(규칙 `disabled-no-alpha`).
+- **글꼴 세트**(`font`, 분위기마다 하나 — 사용자 결정 2026-10-07): 글꼴마다 굵기·자간·줄간격·글자 진하기가 묶여 있다(`looks.js` FONTS: pretendard · suit · nanum-square-round · ibm-plex · serif-title). 분위기를 고르면 글꼴도 따라간다 — 선택지는 늘리지 않는다. 제목 굵기 · 줄 간격은 세트가 정하고, **본문은 KRDS 바닥선**(굵기 400 · 줄 간격 1.5 이상 · 본문 크기 바닥)을 지킨다(규칙 `body-size-min` · 규칙 `leading-min` · 규칙 `text-contrast`).
+- **디자이너 기준 자동 보정**(looks.js): 본문 글자는 순수 검정·흰색이 아니게(대비 상한, #000 → #2C2C2C), 버튼 색은 형광처럼 쨍하지 않게(OKLCH 채도 상한), 상태색은 차분하게(흙빛 빨강 등). 기본 토큰은 강약(제목 크게·굵게 / 본문 보통 / 보조 작게·흐리게)과 넉넉한 여백 리듬(`--space-page`·`--space-item`·`--pad-card`·`--pad-row`)을 갖는다. 메인은 배경·글자·모양·버튼 색만 정하고, `scripts/looks.js`가 표면·테두리·흐린 글자·눌림색·연한 강조·상태색까지 계산해 `[data-theme="<id>"]`·`[data-theme][data-swatch="<id>"]` CSS를 만든다. looks가 없으면 기본 3개(깔끔한 흰색 · 따뜻한 크림 · 차분한 밤).
+- 글자 크기 `[data-type="normal|large"]` — 크게는 KRDS 글자 단계 한 칸 위(본문 17 → 19px). 버튼 색은 `data-swatch`(첫째 = 대표색 `palette.brand`).
+- 잠금: `board.locked`에 `concept` · `theme` · `type` · `swatch` · `toast` · `ask` — 확정된 것만 잠그고, 새로 생긴 선택지는 연다.
 - 컴포넌트 CSS는 토큰 변수만 참조한다. 색·간격·반경·그림자 하드코딩 금지.
 
 ## 8. 아이콘
@@ -302,13 +271,16 @@ submissions/srlee0408/     제출 (index.html · prompt-log.md · elapsed.txt)
 
 | 시점 | 명령 | 실패 시 |
 |---|---|---|
+| 데이터를 쓴 뒤 | `node scripts/schema.js runs/<p>` | 형식 · 관계 오류를 고친 뒤 조각으로 |
 | 조각 생성 후 | `node scripts/lint.js runs/<p>` | FAIL 화면만 재호출 |
 | 사용자에게 보여주기 전 | `build.js --mode board` → 메인이 헤드리스 Chrome으로 검수 → 헤드리스 종료 → `build.js --mode board --open` | 깨졌으면 보여주지 않는다 |
 | 최종 전 | `lint.js && build.js --mode final` → 검수 → `--open` | 동일 |
 
+데이터 형식 · 관계(id · slug · key 형식, 가리키는 대상, 범위 안 하나뿐, 상태 · 변형)는 `schema.js`가 본다. lint는 품질 규칙을 보고, 알림마다 `rules.json`의 규칙 id와 문장을 같이 낸다.
+
 lint가 보는 것:
 - 부품 태그: 펼치지 않은 `<x-…>`가 남아 있으면 FAIL(`expand.js` 먼저).
-- 데이터: id 중복·누락, slug·key 형식, role·nav 존재, state 값, variantOf 대상.
+- 위계: 1순위 하나 · 3순위까지 · 1순위 문장 길이와 사실(규칙 `rank1-one` · 규칙 `rank3-max` · 규칙 `emphasize-length`).
 - 조각: `data-region` ↔ screens.json 양방향, `data-trigger` 존재·유일·항목 소속, 아이콘(스프라이트·allowlist), `<style>`/`<script>`/인라인 style, Lorem·자리표시 문구, components에 없는 클래스.
 - 흐름: from/to/region/trigger 존재, **끊김 없는 한 줄**, 흐름에 안 나오는 화면.
 - 갈래: from/to/region/trigger 존재, 흐름 단계와 중복 금지, 뜨는 창(`overlayOf`)마다 여는 버튼 존재, 창 조각은 `.modal-backdrop` 하나.
@@ -320,8 +292,8 @@ lint가 보는 것:
 
 ## 11. 검수 방법 (메인)
 
-- 검수용 헤드리스 Chrome: `Google Chrome --headless=new --remote-debugging-port=9222 --user-data-dir=<scratchpad>/chrome-profile`. chrome-devtools MCP로 연결.
-- 보는 것: (사용 흐름) 구역 띠 수 = sections 수 · 화면 아래 정책 상자 · 오류·완료 화면이 원래 화면 옆 · `when` 수만큼 조건 이름표와 시작 버튼의 초록 테두리 / 구역 바로가기 / 화면 클릭 → 화면 디자인(오른쪽 '이 화면의 규칙'). (화면 디자인) 화면 속 버튼이 제 모양인가 / 요소에 마우스 → 이름표 / 누르기 → 바꿔주세요 → 핀이 붙고 '의견 보내기 (n)'가 오르는가 / 콘솔 에러 0.
+- 검수용 헤드리스 Chrome: `Google Chrome --headless=new --remote-debugging-port=9222 --user-data-dir=<scratchpad>/chrome-profile`. chrome-devtools MCP가 있으면 그것으로, 없으면 CDP(`--remote-debugging-port`)에 짧은 스크립트로 붙어 검수한다. 같은 컴퓨터에서 실행 여러 개가 동시에 돌면 포트를 나눠 쓰거나 한 실행만 브라우저 검수를 한다.
+- 보는 것: (사용 흐름) 맨 위 '누가 쓰나요' · 구역 띠 수 = sections 수 · 화면 아래 정책 상자(맨 위 이루려는 것 · 겪는 문제) · 오류·완료 화면이 원래 화면 옆 · `when` 수만큼 조건 이름표와 시작 버튼의 초록 테두리 / 구역 바로가기 / 화면 클릭 → 화면 디자인(오른쪽 '이 화면의 규칙'). (화면 디자인) 화면 속 버튼이 제 모양인가 / 요소에 마우스 → 이름표 / 누르기 → 바꿔주세요 → 핀이 붙고 '의견 보내기 (n)'가 오르는가 / 콘솔 에러 0.
 - **`--open` 전에 헤드리스 Chrome을 종료한다.** macOS에서 `open`이 파일을 헤드리스 인스턴스로 넘겨 사용자 화면에 아무것도 안 뜬다(build.js가 감지하면 새 창으로 우회).
 
 ## 12. v1 하네스에서 가져온 교훈

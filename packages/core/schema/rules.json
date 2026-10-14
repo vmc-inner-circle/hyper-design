@@ -1,5 +1,5 @@
 {
-  "$description": "규칙 목록 — 권장 · 규칙의 유일한 자리. 스키마 칸은 x-rules로 이 id를 가리키고, 규칙은 fields로 칸을 가리킨다(두 방향이 서로 맞아야 한다 — node scripts/schema.js). 칸이 아닌 곳(base.css · 부품 CSS)을 보는 규칙은 where. 강도: krds-must(KRDS 필수) · krds-should(KRDS 권장) · krds-best(KRDS 우수) · ours(우리 과정 규칙) · case(사례 참고). 검사: check.by = schema(scripts/schema.js) · lint(scripts/lint.js) · looks(scripts/looks.js) · parts-css(부품 CSS 시험) · look-contrast(분위기 색 대비) · render(그린 화면 측정) · none(안내문이 지시). check.status가 있으면 아직 검사 코드가 없다.",
+  "$description": "규칙 목록 — 권장 · 규칙의 유일한 자리. 스키마 칸은 x-rules로 이 id를 가리키고, 규칙은 fields로 칸을 가리킨다(두 방향이 서로 맞아야 한다 — node scripts/schema.js). 칸이 아닌 곳(base.css · 부품 CSS)을 보는 규칙은 where. 강도: krds-must(KRDS 필수) · krds-should(KRDS 권장) · krds-best(KRDS 우수) · ours(우리 과정 규칙) · case(사례 참고). 검사: check.by = schema(scripts/schema.js) · lint(scripts/lint.js) · looks(scripts/looks.js) · parts-css(부품 CSS 시험) · values(값 층 대비 시험 — test/checks/30) · render(그린 화면 측정) · none(안내문이 지시). check.status가 있으면 아직 검사 코드가 없다.",
   "rules": [
     {
       "id": "roles-count",
@@ -103,6 +103,23 @@
         "level": "FAIL"
       },
       "source": "우리 규칙 — 1순위 영역은 한 칸 큰 글(hero)로 두어야 첫눈에 읽힌다",
+      "status": "adopted"
+    },
+    {
+      "id": "actions-mobile",
+      "says": "모바일 화면에 주 버튼이 있으면 actions 영역 하나, 본문 마지막 · level 2",
+      "strength": "ours",
+      "fields": [
+        "platform",
+        "screens[].regions[].form",
+        "screens[].regions[].level"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL",
+        "status": "lint 검사 코드는 아직"
+      },
+      "source": "우리 규칙 — 모바일 주 버튼은 엄지가 닿는 아래 꽉 찬 버튼(.bottom-cta) 한 줄로 모은다. 흐름 단계의 region은 그 actions 영역 key",
       "status": "adopted"
     },
     {
@@ -284,6 +301,23 @@
       "status": "adopted"
     },
     {
+      "id": "reachable",
+      "says": "처음 시작 화면에서 흐름 · 메뉴로 모든 화면에 닿는다(변형 · 뜨는 창은 바탕 화면으로) — 메뉴 없는 셸이면 홈에 갈래",
+      "strength": "ours",
+      "fields": [
+        "flows",
+        "branches",
+        "roles[].nav"
+      ],
+      "check": {
+        "by": "lint",
+        "level": "FAIL",
+        "status": "lint 검사 코드는 아직"
+      },
+      "source": "우리 규칙 — 닿지 않는 화면은 완성본에서 열 수 없다",
+      "status": "adopted"
+    },
+    {
       "id": "type-scale",
       "says": "1순위·본문 글자 크기 — 결정 대기(?2: KRDS 표 값에서 고르기 추천)",
       "strength": "krds-should",
@@ -398,14 +432,35 @@
     },
     {
       "id": "space-scale",
-      "says": "간격 item · group · page를 PRD 신호 표로 — KRDS 레이아웃 간격 24 / 40 / 64에서",
+      "says": "KRDS 간격 토큰(gap-*) 값만 쓰고, 묶음 안 < 묶음 사이 < 구역 사이 순서",
       "strength": "krds-must",
       "fields": [],
+      "value": {
+        "allowed_px": [
+          2,
+          4,
+          8,
+          12,
+          16,
+          20,
+          24,
+          32,
+          40,
+          48,
+          64,
+          80
+        ],
+        "order": [
+          "--space-item",
+          "--space-group",
+          "--space-page"
+        ]
+      },
       "check": {
         "by": "parts-css",
         "status": "검사 코드는 아직 — 값은 base.css 간격"
       },
-      "source": "KRDS 8-point · 레이아웃 간격 24/40/64(필수) — https://www.krds.go.kr/html/site/style/style_05.html",
+      "source": "KRDS 레이아웃 · 간격(gap-1~12 = 2 · 4 · 8 · 12 · 16 · 20 · 24 · 32 · 40 · 48 · 64 · 80px — 이 페이지가 쓰는 토큰 krds_tokens.css, 1rem = 10px) — https://www.krds.go.kr/html/site/style/style_05.html",
       "status": "proposed",
       "where": [
         "packages/core/tokens/base.css"
@@ -463,7 +518,7 @@
         "large": 3
       },
       "check": {
-        "by": "look-contrast",
+        "by": "values",
         "level": "FAIL"
       },
       "source": "KRDS 대비 · 접근성 — https://www.krds.go.kr/html/site/style/style_02.html · W3C WCAG 2.2 1.4.3(사례: 형식 표준)",

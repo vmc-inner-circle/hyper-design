@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "screens.schema.json",
   "title": "screens.json — 의도 · 화면 · 내용 설계와 시안(성격 · 분위기)의 판단 기록",
-  "description": "정본. 객체(x-object)마다 하나의 정의($defs)와 층(x-layer: 의도 · 성격 · 화면 · 공통 · 실행 상태). 다른 객체를 가리키는 칸은 x-ref — 문자열이면 문서 전체에서, {to, within}이면 범위(screen 같은 화면 · from 흐름 단계의 출발 화면 · role 같은 역할 · theme 고른 분위기) 안에서 찾는다. 하나뿐이어야 하는 칸은 x-unique — 범위 doc(문서 전체) · screen(같은 화면) · look(같은 분위기). 옛 모양과만 생기는 어긋남은 x-ref의 warnWith(그 옛 칸이 함께 있을 때만 경고)로 적는다. 권장 · 규칙은 같은 폴더 rules.json — 칸의 x-rules가 규칙 id를 가리킨다. 생성은 단계별(x-stage: S1 의도 · S2 여정 · 화면 목록 · S3 화면 하나씩 · S4 성격 · S5 시안 · 하네스) — 칸의 x-stage가 객체 단계보다 앞선다. x-recommended는 지금은 권장(없으면 경고), 다음 판에서 필수. x-status legacy는 옛 칸 · 옛 값 — 받되 경고하고 다음 판에서 지운다.",
+  "description": "정본. 객체(x-object)마다 하나의 정의($defs)와 층(x-layer: 의도 · 성격 · 화면 · 공통 · 실행 상태). 다른 객체를 가리키는 칸은 x-ref — 문자열이면 문서 전체에서, {to, within}이면 범위(screen 같은 화면 · from 흐름 단계의 출발 화면 · role 같은 역할 · theme 고른 분위기) 안에서 찾는다. 하나뿐이어야 하는 칸은 x-unique — 범위 doc(문서 전체) · screen(같은 화면) · look(같은 분위기). 권장 · 규칙은 같은 폴더 rules.json — 칸의 x-rules가 규칙 id를 가리킨다. 생성은 단계별(x-stage: S1 의도 · S2 여정 · 화면 목록 · S3 화면 하나씩 · S4 성격 · S5 시안 · 하네스) — 칸의 x-stage가 객체 단계보다 앞선다. 정해진 칸 밖은 받지 않는다(additionalProperties false).",
   "type": "object",
   "required": [
     "project",
@@ -10,7 +10,8 @@
     "platform",
     "round",
     "roles",
-    "screens"
+    "screens",
+    "sections"
   ],
   "additionalProperties": false,
   "properties": {
@@ -76,7 +77,8 @@
         "build"
       ],
       "x-rules": [
-        "shell-platform"
+        "shell-platform",
+        "actions-mobile"
       ]
     },
     "round": {
@@ -125,12 +127,6 @@
         "looks"
       ]
     },
-    "shell": {
-      "type": "string",
-      "x-layer": "옛 칸",
-      "x-status": "legacy",
-      "description": "뺌 — 메뉴 틀은 concepts[].shell"
-    },
     "toggles": {
       "$ref": "#/$defs/toggles",
       "description": "보드에서 고른 글자 크기 · 버튼 색",
@@ -143,16 +139,6 @@
       ]
     },
     "facts": {
-      "anyOf": [
-        {
-          "$ref": "#/$defs/facts"
-        },
-        {
-          "type": "array",
-          "description": "옛 모양(배열) — 다음 판에서 지움",
-          "x-status": "legacy"
-        }
-      ],
       "description": "모든 화면 공통 사실 — 이름표(키) → 사실 한 줄. 사실이 사는 유일한 곳. screens[].data가 이름표로 가리킨다",
       "x-status": "adopted",
       "x-why": "사실이 사는 유일한 곳 — 화면들은 이름표로 가리켜 같은 사실을 같은 문장으로 쓴다",
@@ -160,14 +146,8 @@
         "data-key-exists"
       ],
       "x-layer": "공통",
-      "x-stage": "S1 의도"
-    },
-    "purpose": {
-      "$ref": "#/$defs/purpose",
-      "description": "뺌 — 분야 사실은 facts로",
-      "x-status": "legacy",
-      "x-layer": "의도",
-      "x-stage": "S1 의도"
+      "x-stage": "S1 의도",
+      "$ref": "#/$defs/facts"
     },
     "roles": {
       "type": "array",
@@ -184,6 +164,7 @@
     },
     "sections": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "$ref": "#/$defs/section"
       },
@@ -317,16 +298,6 @@
             "toast": {
               "$ref": "#/$defs/toast",
               "description": "추천 안내 문구 모양(toggles.toast와 같은 모양)"
-            },
-            "accent": {
-              "type": "string",
-              "x-status": "legacy",
-              "description": "뺌 — swatch로"
-            },
-            "accentWhy": {
-              "type": "string",
-              "x-status": "legacy",
-              "description": "뺌 — swatchWhy로"
             }
           },
           "additionalProperties": false
@@ -342,22 +313,13 @@
         "locked": {
           "type": "array",
           "items": {
-            "anyOf": [
-              {
-                "enum": [
-                  "concept",
-                  "theme",
-                  "type",
-                  "swatch",
-                  "toast",
-                  "ask"
-                ]
-              },
-              {
-                "const": "toggles",
-                "x-status": "legacy",
-                "description": "옛 값 = type + swatch 한꺼번에 — 다음 판에서 지움"
-              }
+            "enum": [
+              "concept",
+              "theme",
+              "type",
+              "swatch",
+              "toast",
+              "ask"
             ]
           },
           "description": "확정한 선택 — 보드가 더 묻지 않는다"
@@ -412,21 +374,6 @@
       "x-feeds": [
         "ids"
       ]
-    },
-    "record": {
-      "description": "옛 칸",
-      "x-status": "legacy",
-      "x-layer": "옛 칸"
-    },
-    "system": {
-      "description": "옛 enum 시스템 — 쓰지 않음 — system.schema.json과 함께 다음 판에서 지움",
-      "x-status": "legacy",
-      "x-layer": "옛 칸"
-    },
-    "direction": {
-      "description": "옛 방향 슬라이더 — 쓰지 않음",
-      "x-status": "legacy",
-      "x-layer": "옛 칸"
     }
   },
   "$defs": {
@@ -526,7 +473,8 @@
           "x-status": "adopted",
           "x-why": "모든 화면의 메뉴가 같아야 화면 사이에서 길을 잃지 않는다",
           "x-rules": [
-            "nav-count"
+            "nav-count",
+            "reachable"
           ],
           "x-stage": "S2 여정 · 화면 목록",
           "x-feeds": [
@@ -563,18 +511,6 @@
             "screens[].goal"
           ]
         },
-        "frequency": {
-          "type": "string",
-          "description": "뺌 — 읽는 곳 없음(규칙 · 조립 · 다음 칸 모두 0). KRDS 원칙 1의 '빈도'는 칸이 아니라 생각 순서(지침)로 — 결과는 screens[].problem · 영역 수에 남는다",
-          "x-status": "legacy",
-          "x-source": "KRDS 원칙 1 — https://www.krds.go.kr/html/site/utility/utility_02.html"
-        },
-        "difficulty": {
-          "type": "string",
-          "description": "뺌 — 읽는 곳 없음 · screens[].problem과 겹침 — 화면에 닿는 것은 화면별 겪는 문제",
-          "x-status": "legacy",
-          "x-source": "KRDS 원칙 1 — https://www.krds.go.kr/html/site/utility/utility_02.html"
-        },
         "inclusion": {
           "type": "string",
           "description": "포용 조건 — 나이 · 기기 · 읽는 상황. 글자 크기 추천(board.recommend.type)의 근거",
@@ -585,79 +521,18 @@
             "보드",
             "board.recommend.type"
           ]
-        },
-        "prd": {
-          "type": "string",
-          "description": "뺌 — PRD 근거는 brief.md 가정 로그 한 곳에 — 칸마다 PRD를 다시 옮기지 않는다",
-          "x-status": "legacy"
         }
       },
       "required": [
         "key",
-        "label"
+        "label",
+        "goal",
+        "inclusion"
       ],
       "additionalProperties": false,
       "description": "역할 = 사용자 유형. S1 의도 단계에서 쓴다",
       "x-status": "adopted",
       "x-object": "역할",
-      "x-layer": "의도",
-      "x-recommended": [
-        "goal",
-        "inclusion"
-      ]
-    },
-    "purpose": {
-      "type": "object",
-      "properties": {
-        "domain": {
-          "type": "array",
-          "items": {
-            "$ref": "#/$defs/domainItem"
-          },
-          "description": "이 분야에서 꼭 챙길 것 (예: 확정과 후보를 한눈에 가른다) — 기준어 from이 가리킨다",
-          "x-status": "proposed"
-        },
-        "conflict": {
-          "type": "object",
-          "properties": {
-            "text": {
-              "type": "string",
-              "description": "갈등 한 줄(옛 칸)"
-            },
-            "prd": {
-              "type": "string",
-              "description": "근거(옛 칸)"
-            }
-          },
-          "required": [
-            "text"
-          ],
-          "additionalProperties": false,
-          "description": "뺌 — 장면(scene) · DESIGN.md Overview가 담는다. 새로 쓰지 않는다",
-          "x-status": "legacy"
-        },
-        "users": {
-          "type": "array",
-          "description": "옛 칸 — roles[]로 합쳤다. 새로 쓰지 않는다",
-          "x-status": "legacy"
-        },
-        "problem": {
-          "description": "옛 칸 — 아무도 가리키지 않음",
-          "x-status": "legacy"
-        },
-        "scope": {
-          "description": "옛 칸 — 아무도 가리키지 않음",
-          "x-status": "legacy"
-        },
-        "constraints": {
-          "description": "옛 칸 — 아무도 가리키지 않음",
-          "x-status": "legacy"
-        }
-      },
-      "additionalProperties": false,
-      "description": "옛 객체 — 의도 중 사람이 아닌 것(분야). 분야 사실은 facts로 — 다음 판에서 지움",
-      "x-status": "legacy",
-      "x-object": "목적(분야)",
       "x-layer": "의도"
     },
     "section": {
@@ -741,11 +616,6 @@
             "pack"
           ]
         },
-        "prd": {
-          "type": "string",
-          "description": "뺌 — 읽는 곳 없음 — PRD 근거는 brief.md 한 곳",
-          "x-status": "legacy"
-        },
         "content": {
           "type": "string",
           "description": "이 영역에 들어갈 실제 내용",
@@ -762,7 +632,8 @@
           "x-source": "KRDS 서비스 메인 — 시급 · 중요 정보를 먼저(필수)",
           "x-rules": [
             "rank1-one",
-            "rank3-max"
+            "rank3-max",
+            "actions-mobile"
           ],
           "enum": [
             1,
@@ -830,6 +701,12 @@
               "description": "왼쪽 목록에서 고르면 오른쪽에 상세 — 고르는 화면만",
               "x-strength": "ours",
               "x-source": "KRDS 컴포넌트 없음 — 우리 규칙(1순위 금지)"
+            },
+            {
+              "const": "actions",
+              "description": "주 행동 줄 — 모바일 아래 꽉 찬 버튼 · 웹 폼 끝 버튼 줄",
+              "x-strength": "ours",
+              "x-source": "우리 규칙 — 모바일은 주 버튼을 본문 마지막 actions 영역(level 2, .bottom-cta 꽉 찬 버튼)에, 흐름 단계 region은 그 영역 key. 웹은 주 버튼을 1순위 hero 안 또는 폼 끝 버튼 줄(actions)에"
             }
           ],
           "x-status": "adopted",
@@ -840,7 +717,8 @@
             "repeat-unit",
             "table-empty-dash",
             "table-plain",
-            "calendar-state"
+            "calendar-state",
+            "actions-mobile"
           ]
         },
         "signature": {
@@ -866,19 +744,17 @@
       },
       "required": [
         "key",
-        "label"
+        "label",
+        "why",
+        "level",
+        "form",
+        "content"
       ],
       "additionalProperties": false,
       "description": "화면 안 의미 덩어리 하나",
       "x-status": "adopted",
       "x-object": "영역",
-      "x-layer": "화면",
-      "x-recommended": [
-        "why",
-        "level",
-        "form",
-        "content"
-      ]
+      "x-layer": "화면"
     },
     "screen": {
       "type": "object",
@@ -985,42 +861,6 @@
           ]
         },
         "pattern": {
-          "anyOf": [
-            {
-              "enum": [
-                "입력폼",
-                "목록 탐색",
-                "상세 정보 확인",
-                "확인",
-                "오류",
-                "도움",
-                "동의",
-                "필터링·정렬",
-                "사용자 피드백",
-                "첨부파일",
-                "개인 식별 정보 입력",
-                "방문",
-                "검색",
-                "로그인",
-                "신청",
-                "정책 정보 확인",
-                "처음 시작"
-              ]
-            },
-            {
-              "enum": [
-                "form",
-                "list-detail",
-                "dashboard",
-                "timeline",
-                "onboarding",
-                "board",
-                "settings"
-              ],
-              "description": "옛 값(배치 레시피) — 다음 판에서 지움",
-              "x-status": "legacy"
-            }
-          ],
           "description": "이 화면이 무슨 일을 하는 화면인가 — KRDS 패턴 이름(기본 · 서비스) 또는 사례 '처음 시작'. 배치는 정하지 않는다",
           "x-status": "adopted",
           "x-why": "KRDS 패턴 이름으로 부르면 그 패턴의 규칙(한 열 입력 · 창 안 입력 5개 이내 …)을 그대로 설명할 수 있다. 배치는 정하지 않는다",
@@ -1031,12 +871,26 @@
           "x-feeds": [
             "pack",
             "lint"
+          ],
+          "enum": [
+            "입력폼",
+            "목록 탐색",
+            "상세 정보 확인",
+            "확인",
+            "오류",
+            "도움",
+            "동의",
+            "필터링·정렬",
+            "사용자 피드백",
+            "첨부파일",
+            "개인 식별 정보 입력",
+            "방문",
+            "검색",
+            "로그인",
+            "신청",
+            "정책 정보 확인",
+            "처음 시작"
           ]
-        },
-        "purpose": {
-          "type": "string",
-          "description": "goal로 이름을 바꿈 — 새로 쓰지 않는다(다음 판에서 지움)",
-          "x-status": "legacy"
         },
         "state": {
           "enum": [
@@ -1132,11 +986,6 @@
             "build"
           ]
         },
-        "scene": {
-          "type": "string",
-          "description": "뺌 — 누구로서는 role, 무엇을은 goal, 그래서는 problem이 맡는다",
-          "x-status": "legacy"
-        },
         "emphasize": {
           "type": "string",
           "description": "크게 할 내용 문장 하나",
@@ -1167,19 +1016,6 @@
           ]
         },
         "defer": {
-          "anyOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "string",
-              "description": "옛 모양(문장) — 다음 판에서 지움",
-              "x-status": "legacy"
-            }
-          ],
           "description": "이 화면에서 덜어내거나 미룰 것 목록 — data의 사실 중 이 화면에서 빼거나 다르게 보일 것 포함",
           "x-status": "adopted",
           "x-why": "덜어낼 것을 미리 정해 두면 화면에 볼 것이 넘치지 않는다",
@@ -1189,22 +1025,13 @@
           ],
           "x-feeds": [
             "pack"
-          ]
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "data": {
-          "anyOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "string",
-              "description": "옛 모양(문장) — 다음 판에서 지움",
-              "x-status": "legacy"
-            }
-          ],
           "description": "이 화면에 쓸 사실 = facts의 이름표(키) 목록. 조립 담당은 이 사실만 쓴다",
           "x-status": "adopted",
           "x-why": "사실은 facts 한 곳에만 두고 화면은 이름표로 가리킨다 — 없는 이름표는 검사에서 걸려 지어낸 사실을 막는다",
@@ -1215,7 +1042,11 @@
           "x-ref": "facts.key",
           "x-feeds": [
             "pack"
-          ]
+          ],
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         "focus": {
           "$ref": "#/$defs/kebab",
@@ -1304,14 +1135,7 @@
         "slug",
         "name",
         "role",
-        "regions"
-      ],
-      "additionalProperties": false,
-      "description": "화면 하나. id · 이름 · 역할은 S2 화면 목록에서, 내용 설계는 S3에서 화면 하나씩",
-      "x-status": "adopted",
-      "x-object": "화면",
-      "x-layer": "화면",
-      "x-recommended": [
+        "regions",
         "goal",
         "problem",
         "pattern",
@@ -1322,6 +1146,11 @@
         "section",
         "step"
       ],
+      "additionalProperties": false,
+      "description": "화면 하나. id · 이름 · 역할은 S2 화면 목록에서, 내용 설계는 S3에서 화면 하나씩",
+      "x-status": "adopted",
+      "x-object": "화면",
+      "x-layer": "화면",
       "allOf": [
         {
           "if": {
@@ -1339,9 +1168,7 @@
           },
           "then": {
             "required": [
-              "variantOf"
-            ],
-            "x-recommended": [
+              "variantOf",
               "when"
             ]
           },
@@ -1356,7 +1183,7 @@
             }
           },
           "then": {
-            "x-recommended": [
+            "required": [
               "policy"
             ]
           },
@@ -1464,10 +1291,7 @@
           "description": "움직이는 영역 key(조각의 data-region)",
           "x-ref": {
             "to": "region.key",
-            "within": "screen",
-            "warnWith": [
-              "target"
-            ]
+            "within": "screen"
           },
           "x-status": "adopted",
           "x-feeds": [
@@ -1481,11 +1305,6 @@
           "x-rules": [
             "motion-target"
           ]
-        },
-        "target": {
-          "type": "string",
-          "description": "뺌 — region · trigger 두 칸으로 나눔",
-          "x-status": "legacy"
         },
         "ms": {
           "type": "integer",
@@ -1529,19 +1348,8 @@
             }
           },
           "then": {
-            "anyOf": [
-              {
-                "required": [
-                  "trigger"
-                ]
-              },
-              {
-                "required": [
-                  "target"
-                ],
-                "x-status": "legacy",
-                "description": "옛 칸 target — 다음 판에서 지움"
-              }
+            "required": [
+              "trigger"
             ]
           }
         },
@@ -1558,19 +1366,8 @@
             }
           },
           "then": {
-            "anyOf": [
-              {
-                "required": [
-                  "region"
-                ]
-              },
-              {
-                "required": [
-                  "target"
-                ],
-                "x-status": "legacy",
-                "description": "옛 칸 target — 다음 판에서 지움"
-              }
+            "required": [
+              "region"
             ]
           }
         },
@@ -1593,13 +1390,6 @@
                 "required": [
                   "trigger"
                 ]
-              },
-              {
-                "required": [
-                  "target"
-                ],
-                "x-status": "legacy",
-                "description": "옛 칸 target — 다음 판에서 지움"
               }
             ]
           }
@@ -1645,16 +1435,12 @@
           "items": {
             "type": "string"
           },
-          "description": "이 기준어가 나온 사실 — roles[].key 또는 facts 이름표 (옛 실행물의 purpose.domain id는 경고)",
+          "description": "이 기준어가 나온 사실 — roles[].key 또는 facts 이름표",
           "x-status": "proposed",
           "x-why": "기준어가 어느 사실에서 나왔는지 적으면 실행마다 덜 흔들린다",
           "x-ref": [
             "role.key",
-            "facts.key",
-            {
-              "to": "domainItem.id",
-              "x-status": "legacy"
-            }
+            "facts.key"
           ],
           "x-feeds": [
             "보드"
@@ -1699,11 +1485,6 @@
           "x-feeds": [
             "보드"
           ]
-        },
-        "fetched": {
-          "type": "boolean",
-          "x-status": "legacy",
-          "description": "뺌 — 레퍼런스 조사 상태"
         },
         "take": {
           "description": "이 레퍼런스에서 가져올 한 가지",
@@ -1943,7 +1724,7 @@
           "x-why": "기준어(말)를 모서리(형태)로 옮기는 근거 — KRDS 형태가 주는 이미지"
         },
         "font": {
-          "description": "글꼴 세트 — 본문 · 제목 글꼴과 제목 굵기 · 줄 간격을 함께 가진다(looks.js FONTS). 본문은 KRDS 바닥선(굵기 400 · 줄 간격 1.5 이상)을 지킨다",
+          "description": "글꼴 세트 — 본문 · 제목 글꼴과 제목 굵기 · 줄 간격을 함께 가진다(looks.js FONT_ALIAS(글꼴 세트)). 본문은 KRDS 바닥선(굵기 400 · 줄 간격 1.5 이상)을 지킨다",
           "anyOf": [
             {
               "const": "pretendard",
@@ -2056,7 +1837,7 @@
             "additionalProperties": false
           },
           "x-status": "adopted",
-          "description": "대안 버튼 색 — 대표색(palette.brand)을 뺀 나머지, 4개 이하. 옛 실행물은 첫째가 대표색(looks.js가 palette.brand로 옮겨 읽는다)",
+          "description": "대안 버튼 색 — 대표색(palette.brand)을 뺀 나머지, 4개 이하",
           "x-feeds": [
             "보드",
             "looks"
@@ -2073,16 +1854,6 @@
             "headingWhy": {
               "type": "string",
               "description": "제목 서체를 고른 이유"
-            },
-            "font": {
-              "type": "string",
-              "description": "뺌 — 글꼴은 looks[].font(세트 id)가 주인",
-              "x-status": "legacy"
-            },
-            "density": {
-              "type": "string",
-              "description": "뺌 — 밀도는 concepts[].density가 주인. 옛 실행물만",
-              "x-status": "legacy"
             },
             "ratio": {
               "type": "string",
@@ -2104,11 +1875,6 @@
             "font-gothic"
           ]
         },
-        "refs": {
-          "type": "array",
-          "x-status": "legacy",
-          "description": "뺌 — 무드보드 항목의 look이 이 관계를 가리킨다"
-        },
         "why": {
           "type": "string",
           "x-status": "adopted",
@@ -2125,20 +1891,18 @@
         "bg",
         "ink",
         "shape",
-        "why"
-      ],
-      "additionalProperties": false,
-      "description": "시안 하나의 분위기",
-      "x-status": "adopted",
-      "x-object": "분위기",
-      "x-layer": "성격",
-      "x-recommended": [
+        "why",
         "tone",
         "lean",
         "palette",
         "type",
         "font"
-      ]
+      ],
+      "additionalProperties": false,
+      "description": "시안 하나의 분위기",
+      "x-status": "adopted",
+      "x-object": "분위기",
+      "x-layer": "성격"
     },
     "concept": {
       "type": "object",
@@ -2208,21 +1972,6 @@
             {
               "const": "compact",
               "description": "빽빽하게 — 표 · 목록이 많은 화면(여백만 줄인다, 줄 간격은 KRDS 150%)"
-            },
-            {
-              "const": "넓게",
-              "description": "옛 값 = airy",
-              "x-status": "legacy"
-            },
-            {
-              "const": "보통",
-              "description": "옛 값 = normal",
-              "x-status": "legacy"
-            },
-            {
-              "const": "빽빽하게",
-              "description": "옛 값 = compact",
-              "x-status": "legacy"
             }
           ],
           "x-why": "밀도는 메뉴 틀 · 첫 화면과 함께 시안을 가르는 축이다 — 분위기의 여백도 이 값으로 계산한다"
@@ -2232,11 +1981,6 @@
           "description": "= looks[].id",
           "x-status": "adopted",
           "x-ref": "look.id"
-        },
-        "lean": {
-          "type": "string",
-          "x-status": "legacy",
-          "description": "뺌 — 시안의 분위기(look)의 lean을 쓴다"
         },
         "traits": {
           "type": "array",
@@ -2257,21 +2001,11 @@
               "name": {
                 "type": "string",
                 "description": "참고한 곳 = references[].name",
-                "x-ref": {
-                  "to": "reference.name",
-                  "warnWith": [
-                    "url"
-                  ]
-                }
+                "x-ref": "reference.name"
               },
               "borrow": {
                 "type": "string",
                 "description": "이 시안에서 그곳에서 가져온 점 한 줄"
-              },
-              "url": {
-                "type": "string",
-                "description": "뺌 — 주소는 references[].url 한 곳에(이름으로 가리킨다)",
-                "x-status": "legacy"
               }
             },
             "required": [
@@ -2342,11 +2076,6 @@
             "보드"
           ]
         },
-        "kind": {
-          "type": "string",
-          "x-status": "legacy",
-          "description": "뺌 — 읽는 곳 없음(보드 꼬리표도 지움)"
-        },
         "borrow": {
           "type": "string",
           "x-status": "adopted",
@@ -2354,11 +2083,6 @@
           "x-feeds": [
             "보드"
           ]
-        },
-        "avoid": {
-          "type": "string",
-          "x-status": "legacy",
-          "description": "뺌 — 레퍼런스 조사 출력 잔재"
         },
         "layout": {
           "type": "object",
@@ -2529,11 +2253,6 @@
             "build",
             "보드"
           ]
-        },
-        "accent": {
-          "type": "string",
-          "x-status": "legacy",
-          "description": "뺌 — 버튼 색은 swatch"
         }
       },
       "additionalProperties": false,
@@ -2561,19 +2280,9 @@
           "description": "고를 것 — 추천에는 '(추천)'"
         },
         "recommended": {
-          "anyOf": [
-            {
-              "type": "integer",
-              "minimum": 0,
-              "description": "추천 선택지 번호(0부터)"
-            },
-            {
-              "type": "string",
-              "x-status": "legacy",
-              "description": "옛 값(선택지 글) — 다음 판에서 지움"
-            }
-          ],
-          "description": "추천 선택지 번호"
+          "description": "추천 선택지 번호(0부터)",
+          "type": "integer",
+          "minimum": 0
         }
       },
       "required": [
@@ -2610,35 +2319,6 @@
       "additionalProperties": false,
       "description": "지난 의견을 반영해 바뀐 점 하나"
     },
-    "domainItem": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/kebab",
-          "x-status": "adopted",
-          "description": "항목 id(기준어 from이 가리킴)"
-        },
-        "what": {
-          "type": "string",
-          "x-status": "adopted",
-          "description": "챙길 것 한 줄"
-        },
-        "prd": {
-          "type": "string",
-          "x-status": "adopted",
-          "description": "PRD 근거"
-        }
-      },
-      "required": [
-        "what",
-        "prd"
-      ],
-      "additionalProperties": false,
-      "x-object": "분야에서 챙길 것",
-      "x-layer": "의도",
-      "description": "이 분야에서 꼭 챙길 것 하나 — 기준어 from이 id로 가리킨다",
-      "x-status": "legacy"
-    },
     "paletteColor": {
       "type": "object",
       "description": "역할 팔레트의 색 하나",
@@ -2661,10 +2341,7 @@
       "additionalProperties": false
     }
   },
-  "x-version": "1",
-  "x-recommended": [
-    "sections"
-  ],
+  "x-version": "2",
   "allOf": [
     {
       "if": {

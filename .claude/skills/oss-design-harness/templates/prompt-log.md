@@ -1,6 +1,6 @@
-# prompt-log — srlee0408
+# prompt-log — {github_id}
 
-- 하네스: https://github.com/vmc-inner-circle/hyper-design/tree/solo/srlee0408
+- 하네스: {하네스 저장소 · 브랜치 주소}
 - 모델·에이전트: Claude Code / {메인 모델} (메인) + claude-sonnet-5 (ref-scout · screen-writer) + claude-haiku-4-5 (작은 수정)
 - 총 개입 횟수: {n} / 5
 

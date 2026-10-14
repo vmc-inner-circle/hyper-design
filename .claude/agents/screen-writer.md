@@ -26,18 +26,18 @@ model: sonnet
 
 ## 절차 (화면 하나당)
 
-1. `RUN/screens.json`에서 그 slug 항목을 읽는다: `name`, `purpose`, `role`, `pattern`, `regions[]`(key·label·why).
+1. `RUN/screens.json`에서 그 slug 항목을 읽는다: `name` · `goal`(이 화면에서 이루는 것) · `problem`(겪는 걱정) · `role` · `emphasize`(1순위 문장) · `data`(쓸 사실의 이름표 — `facts`에서 문장을 찾는다) · `focus`(1순위 영역) · `defer`(넣지 않을 것) · `regions[]`(key · label · why · level · form · content). 칸의 뜻은 `packages/core/schema/README.md`.
 2. `packages/web/snippets/00-rules.md`와 **`05-parts.md`(짧은 부품 태그)**를 읽는다 (처음 한 번만). **셸(상단바·메뉴)은 쓰지 않고 `<main class="content">…</main>`만, 가능한 곳은 부품 태그로** — 쓰는 분량이 절반 이하로 줄어 빨리 끝난다.
-3. `packages/web/patterns/<pattern>.html`을 읽어 **`<main>` 안쪽 배치**를 뼈대로 삼는다(셸 부분은 옮기지 않는다). 없으면 `shell.html`.
+3. **배치는 영역의 `form`대로** 위에서 아래로 놓는다 — 1순위 영역(`focus`, `level: 1`)이 맨 위 한 칸 큰 글(`hero`: 1순위 문장 → 넘친 한 줄 → 사실 한두 줄 → 버튼), 그다음 2순위 · 3순위. 모바일은 주 버튼을 hero에 넣지 않고 본문 맨 끝 `actions` 영역(`.bottom-cta`)에 둔다 — 흐름의 trigger도 거기에. form마다 쓸 부품은 00-rules의 모양 표를 따른다(list → 구조화 목록, table → 표, calendar → 달력, form → 입력폼 …). `packages/web/patterns/`는 모양 조합 예시라 필요할 때만 참고하고, 셸 부분은 옮기지 않는다.
 4. 필요한 조각만 `packages/web/snippets/*.md`에서 찾아 **그대로 복사**한다. 클래스를 새로 만들지 않는다.
 5. `regions[]`의 key마다 그 영역을 감싸는 요소 **하나**에 `data-region="<key>"`를 붙인다. 개수가 정확히 맞아야 한다.
 5-1. `RUN/flow.json`에서 `from`이 이 slug인 step을 모두 찾아, 각 step의 `trigger` key를 **실제로 누르는 요소 하나**에 `data-trigger="<key>"`로 붙인다(그 step의 `region` 안). 요소가 없으면 그 영역에 버튼을 만든다 — 문구는 `action`의 따옴표 안 말.
 5-1-1. `RUN/flow.json`의 `branches`에서 `from`이 이 slug인 갈래도 똑같이 `data-trigger`를 붙인다.
 5-1-2. 그 밖에 글자가 있는 `.btn`은 00-rules 3-2대로 `data-back`(이전 화면으로) 또는 `data-stay="바뀐 뒤 안내 문구"`(그 자리에서 바뀜)를 **빠짐없이** 붙인다. 하나라도 빠지면 lint FAIL.
 5-1-3. `overlayOf`가 있는 화면(뜨는 창)은 **창만** 쓴다: 파일 전체가 `<x-modal title="…">본문 … <div class="modal-footer">버튼</div></x-modal>` 하나(오른쪽 패널이면 60-overlay의 drawer HTML). 뒷 화면은 쓰지 않는다(build가 깐다). 영역은 `.modal`/`.drawer` 안에. 닫기·취소 버튼은 `data-back`, 완료 버튼(추가·저장)도 뒷 화면으로 돌아가므로 `data-back`.
-5-1. **모바일**(작업 묶음에 "모바일"이 있거나 screens.json `platform: "mobile"`): 묶음에 담긴 모바일 규칙(packages/mobile/snippets/00-rules.md 요약)이 web 규칙보다 앞선다 — 한 줄, 맨 아래 `.bottom-cta`에 주 버튼 하나, `<x-modal>`은 아래에서 올라오는 창으로 펼쳐진다. 직접 쓸 때 배치는 `packages/mobile/patterns/<pattern>.html`.
+5-1. **모바일**(작업 묶음에 "모바일"이 있거나 screens.json `platform: "mobile"`): 묶음에 담긴 모바일 규칙(packages/mobile/snippets/00-rules.md 요약)이 web 규칙보다 앞선다 — 한 줄, 맨 아래 `.bottom-cta`에 주 버튼 하나, `<x-modal>`은 아래에서 올라오는 창으로 펼쳐진다. 배치는 web과 같이 영역 `form`대로, 한 줄로 쌓는다.
 5-2. 이 화면의 `state`가 `first-run`·`empty`면 00-rules 17번대로 **비워 둔다**(숫자·목록 금지, `.empty` 조각). `input`이면 입력칸에 예시 값. `error`·`success`면 00-rules 17-1 — 원래 화면과 같은 배치에 오류 표시·완료 안내만 더한다.
-6. 문구를 전부 DOMAIN의 실제 값으로 채운다. 프롬프트의 "화면별 메모"가 있으면 그대로 따른다. 목록은 3~5행. "버튼"·"텍스트"·Lorem 금지.
+6. 문구를 전부 실제 값으로 채운다 — 사실은 `data`가 가리키는 `facts` 문장을 그대로, 1순위 문장은 `emphasize` 그대로, 그 밖은 DOMAIN 값. `defer`에 있는 것은 이 화면에 넣지 않는다. 프롬프트의 "화면별 메모"가 있으면 그대로 따른다. 목록은 3~5행(화면별 메모에 '전부'가 있으면 그만큼). "버튼"·"텍스트"·Lorem 금지.
 7. 아이콘 이름은 `packages/core/icons/allowlist.json`의 값 또는 `RUN/icons.json`의 값만.
 8. `RUN/screens/<slug>.html`로 저장한다. 루트는 `<main class="content">` 하나(뜨는 창은 `<x-modal>` 하나), `<style>`·`<script>`·인라인 `style=` 없음.
 9. 저장 후 자체 점검: `data-region` 개수 = regions 개수 / from step·갈래의 trigger 전부 `data-trigger`로 존재 / 글자 있는 `.btn`마다 data-trigger·data-back·data-stay 중 하나 / `style=` 0건 / 아이콘 이름 확인.
@@ -60,4 +60,4 @@ model: sonnet
 
 ## 보고 (짧게)
 
-만든 파일 경로 목록 + 화면당 한 줄(사용한 패턴, 영역 개수, 스니펫에 없어서 우회한 것).
+만든 파일 경로 목록 + 화면당 한 줄(영역별 form, 영역 개수, 스니펫에 없어서 우회한 것).

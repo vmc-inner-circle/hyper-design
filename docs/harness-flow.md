@@ -28,7 +28,7 @@
 
 - 작은 수정은 가벼운 모델(haiku), 배치를 바꾸는 수정은 sonnet이 고칩니다.
 - **최종본**: `index.html`(사용 흐름 구역 보드 · 화면 전체 캔버스) + 화면별 완성본 페이지(버튼을 누르면 다음 화면으로, 모바일은 휴대폰 크기)
-- `submissions/srlee0408/`에 결과물, `prompt-log.md`, `elapsed.txt`를 복사합니다.
+- `submissions/<github_id>/`에 결과물, `prompt-log.md`, `elapsed.txt`를 복사합니다.
 
 - 제출 확인은 묻지 않습니다. 최종본을 띄우면서 바로 제출하고 끝냅니다.
 
