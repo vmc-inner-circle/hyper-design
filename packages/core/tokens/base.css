@@ -1,36 +1,49 @@
 /* oss-design-harness core tokens — 플랫폼·테마 무관 기본값.
-   테마 파일(theme-*.css)이 색을, toggles.css가 글자 크기·강조 성격을 덮어쓴다.
+   분위기(scripts/looks.js)가 색·모양·글꼴을, toggles.css가 글자 크기를 덮어쓴다.
    컴포넌트 CSS는 여기 변수만 참조한다. 색·간격·반경·그림자 하드코딩 금지. */
 
 :root {
   /* ---- 타이포 ----
-     글꼴·굵기·자간·줄간격은 분위기(look)의 글꼴 세트가 덮어쓴다(scripts/looks.js FONTS).
+     여기 값이 KRDS 본문 바닥선이다 — 본문 17px(16 이상) · 굵기 400/700 · 줄 간격 150% 이상 · 자간 0
+     (KRDS 타이포그래피 https://www.krds.go.kr/html/site/style/style_03.html).
+     분위기(look)의 글꼴 세트가 글꼴과 제목 굵기(--fw-head) · 제목 줄 간격(--lh-head)만 덮어쓴다(scripts/looks.js FONT_ALIAS).
      강약: 제목은 크고 굵게(--fw-head), 본문은 보통(--fw-body), 보조 글자는 작고 흐리게(--c-text-2·muted). */
   --font-sans: Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-head: var(--font-sans);
+  --font-heading: var(--font-sans);
   --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
 
-  --fs-xs: 12px;
-  --fs-sm: 13px;
-  --fs-md: 15px;   /* 본문 */
-  --fs-lg: 18px;   /* 묶음 제목 */
-  --fs-xl: 21px;
-  --fs-2xl: 28px;  /* 화면 제목 */
-  --fs-3xl: 36px;
+  /* 글자 단계 7개 — KRDS 표 값. 크게(data-type="large")는 toggles.css, 모바일은 packages/mobile 단계 */
+  --fs-xs: 13px;
+  --fs-sm: 15px;
+  --fs-md: 17px;   /* 본문 — KRDS 기본 */
+  --fs-lg: 19px;
+  --fs-xl: 24px;   /* 묶음 제목 */
+  --fs-2xl: 32px;  /* 화면 제목 */
+  --fs-3xl: 40px;
 
-  --lh-tight: 1.35;   /* 제목 */
-  --lh-normal: 1.55;  /* 본문 */
+  /* 글자 역할 크기 4개 — 부품은 단계(--fs-xs…3xl) 대신 이 넷만 쓴다 */
+  --fs-caption: var(--fs-sm);
+  --fs-body: var(--fs-md);
+  --fs-title: var(--fs-xl);
+  --fs-display: var(--fs-3xl);
+
+  --lh-tight: 1.5;    /* KRDS: 모든 글자 줄 간격 150% 이상 */
+  --lh-normal: 1.5;   /* 본문 — 밀도(looks.js DENSITY)가 넓게면 1.6 */
   --lh-loose: 1.75;
+  --lh-head: var(--lh-tight);   /* 제목 — 글꼴 세트가 정한다(1.35~1.4) */
 
   --fw-regular: 400;
-  --fw-medium: 500;
-  --fw-semibold: 600;
+  --fw-medium: 400;     /* KRDS: 굵기는 400 · 700 두 가지 — medium은 보통으로 */
+  --fw-semibold: 700;   /* semibold는 굵게로 */
   --fw-bold: 700;
   --fw-body: var(--fw-regular);
-  --fw-head: var(--fw-bold);
+  --fw-head: var(--fw-bold);    /* 제목 — 글꼴 세트가 정한다(600~800) */
 
-  --ls-head: -0.02em;   /* 한글 제목은 살짝 좁혀야 단단해 보인다 */
-  --ls-body: -0.01em;
+  /* 자간 — KRDS 글자 표(규칙 tracking-krds): 본문 · 작은 제목 0, 큰 제목(32px 이상) 1px. 음수로 좁히지 않는다.
+     식은 쓰는 자리의 글자 크기(1em)로 풀린다 — 32px 이상이면 1px, 그보다 작으면 0. 그래서 제목 부품이 모두 같은 변수를 써도 큰 제목에만 닿는다.
+     --tracking-krds가 바닥선, --tracking-heading이 부품이 쓰는 값 — 글꼴 세트가 자간을 정하면 looks.js가 max(바닥선, 세트 값)으로 덮는다 */
+  --tracking-krds: clamp(0px, (1em - 31.99px) * 1000, 1px);
+  --tracking-heading: var(--tracking-krds);
 
   /* ---- 간격 (4px 그리드) ---- */
   --sp-1: 4px;
@@ -70,13 +83,17 @@
   --search-w: 320px;
   --ring-w: 3px;
 
-  /* ---- 여백 리듬 — 묶음 사이는 넉넉하게, 묶음 안은 촘촘하게 (다닥다닥 붙지 않게) ---- */
-  --gutter: var(--sp-8);          /* 화면 가장자리 */
-  --space-section: var(--sp-12);  /* 묶음(.section) 사이 */
+  /* ---- 여백 리듬 — 묶음 사이는 넉넉하게, 묶음 안은 촘촘하게 (다닥다닥 붙지 않게) ----
+     KRDS 간격 토큰(gap) 값에서 고른다 — 8-point 기준에 4px 반 단계(gap-4 12px · gap-6 20px)까지가 KRDS 공식 값이다
+     (https://www.krds.go.kr/html/site/style/style_05.html · https://www.krds.go.kr/resources/css/token/krds_tokens.css).
+     모바일은 packages/mobile 토큰이 뒤에 읽혀 덮어쓴다 */
+  --gutter: var(--sp-8);          /* 화면 가장자리 — 밀도(looks.js DENSITY)가 덮어쓴다 */
+  --space-page: var(--sp-10);     /* 덩어리(.section · 영역) 사이 — KRDS gap-9 40px */
+  --space-group: var(--sp-6);     /* 묶음 사이(날짜 묶음 · 카드 묶음끼리) — KRDS gap-7 24px(카드 목록 간격) */
+  --space-item: var(--sp-3);      /* 묶음 안 덩어리 사이(.stack · 그리드) — KRDS gap-4 12px */
   --space-header: var(--sp-8);    /* 화면 제목 아래 */
-  --space-block: var(--sp-5);     /* 묶음 안 덩어리 사이(.stack · 그리드) */
-  --pad-card: var(--sp-6);        /* 카드 안쪽 */
-  --pad-row: var(--sp-4);         /* 목록 한 줄 위아래 */
+  --pad-card: var(--sp-8);        /* 카드 안쪽 — KRDS PC 32~40px */
+  --pad-row: var(--sp-4);         /* 목록 · 표 한 줄 위아래 */
 
   /* ---- 그림자 ---- */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .06);
@@ -114,7 +131,6 @@ body {
   font-size: var(--fs-md);
   font-weight: var(--fw-body);
   line-height: var(--lh-normal);
-  letter-spacing: var(--ls-body);
   color: var(--c-text);
   background: var(--c-bg);
   -webkit-font-smoothing: antialiased;
@@ -122,7 +138,10 @@ body {
   overflow-wrap: anywhere;     /* 아주 긴 영문·숫자만 필요할 때 끊는다 */
 }
 h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
-h1, h2, h3, h4 { font-family: var(--font-head); letter-spacing: var(--ls-head); }
+h1, h2, h3, h4 { line-height: var(--lh-head); letter-spacing: var(--tracking-heading); }
+/* 제목 서체 범위: 성격 있는 제목 서체는 화면 제목(h1)에만, 나머지 제목은 본문 서체 + 굵기 */
+h1 { font-family: var(--font-heading); }
+h2, h3, h4 { font-family: var(--font-sans); }
 ul, ol { padding: 0; list-style: none; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { background: none; border: 0; padding: 0; cursor: pointer; }

@@ -245,11 +245,6 @@
       },
       "swatches": [
         {
-          "id": "terracotta",
-          "name": "테라코타",
-          "hex": "#D9562B"
-        },
-        {
           "id": "forest",
           "name": "숲",
           "hex": "#2F6B4F"
@@ -274,7 +269,7 @@
   ],
   "toggles": {
     "type": "normal",
-    "swatch": "terracotta",
+    "swatch": "brand",
     "toast": { "at": "top", "icon": "on", "tone": "light", "size": "normal" }
   },
   "board": {
@@ -283,7 +278,7 @@
       "themeWhy": "포근한 톤을 추천해요",
       "type": "normal",
       "typeWhy": "모임지기 한 명이 컴퓨터로 봐서 보통 크기가 알맞아요",
-      "swatch": "terracotta",
+      "swatch": "brand",
       "swatchWhy": "차분한 바탕에서 누르는 곳만 따뜻하게",
       "toast": { "at": "top", "icon": "on", "tone": "light", "size": "normal" }
     },

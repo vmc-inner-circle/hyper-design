@@ -16,8 +16,8 @@
   background: var(--c-surface);
   color: var(--c-text);
   font-family: inherit;
-  font-size: var(--fs-md);
-  font-weight: var(--fw-medium);
+  font-size: var(--fs-body, var(--fs-md));
+  font-weight: var(--fw-regular);   /* KRDS 버튼: 모든 크기 · 종류가 regular(400) — 강조는 굵기가 아니라 채움 색으로 */
   line-height: 1;
   white-space: nowrap;
   text-decoration: none;
@@ -34,8 +34,8 @@
 .btn:not(:disabled):hover { background: var(--c-surface-2); }
 .btn:not(:disabled):active { background: var(--c-surface-3); }
 .btn:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
-.btn:disabled, .btn.is-disabled {
-  opacity: .5;
+.btn:disabled, .btn.is-disabled {   /* 비활성에 투명도를 쓰지 않는다 — 회색 면 · 흐린 글자 */
+  background: var(--c-surface-3); border-color: var(--c-border); color: var(--c-text-muted);
   cursor: not-allowed;
   box-shadow: none;
 }
@@ -46,6 +46,7 @@
   background: var(--c-primary);
   border-color: var(--c-primary);
   color: var(--c-primary-fg);
+  font-weight: var(--fw-regular);
 }
 .btn-primary:not(:disabled):hover { background: var(--c-primary-hover); border-color: var(--c-primary-hover); }
 .btn-primary:not(:disabled):active { background: var(--c-primary-active); border-color: var(--c-primary-active); }
@@ -88,14 +89,16 @@
   --btn-h: var(--ctl-sm);
   padding: 0 var(--sp-3);
   gap: var(--sp-1);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-caption, var(--fs-sm));
+  font-weight: var(--fw-regular);
 }
 .btn-sm .icon { width: var(--icon-sm); height: var(--icon-sm); }
 .btn-lg {
   --btn-h: var(--ctl-lg);
   padding: 0 var(--sp-5);
   gap: var(--sp-2);
-  font-size: var(--fs-lg);
+  font-size: var(--fs-title, var(--fs-xl));
+  font-weight: var(--fw-regular);
 }
 .btn-lg .icon { width: var(--icon-lg); height: var(--icon-lg); }
 
@@ -144,7 +147,7 @@
   background: none;
   color: var(--c-primary);
   font-size: inherit;
-  font-weight: var(--fw-medium);
+  font-weight: var(--fw-regular);
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 0.2em;

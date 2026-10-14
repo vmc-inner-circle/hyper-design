@@ -28,8 +28,8 @@
   display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3);
   padding: var(--sp-5) var(--sp-6) var(--sp-3);
 }
-.modal-title { font-size: var(--fs-xl); font-weight: var(--fw-semibold); line-height: var(--lh-tight); min-width: 0; }
-.modal-desc { font-size: var(--fs-sm); color: var(--c-text-2); margin-top: var(--sp-1); }
+.modal-title { font-size: var(--fs-title, var(--fs-xl)); font-weight: var(--fw-semibold); line-height: var(--lh-tight); min-width: 0; }
+.modal-desc { font-size: var(--fs-caption, var(--fs-sm)); color: var(--c-text-2); margin-top: var(--sp-1); }
 .modal-body {
   flex: 1 1 auto; min-height: 0; overflow: auto;
   display: flex; flex-direction: column; gap: var(--sp-4);
@@ -45,7 +45,7 @@
 .modal-icon {
   width: var(--ctl-lg); height: var(--ctl-lg); margin: var(--sp-6) auto 0;
   display: flex; align-items: center; justify-content: center; border-radius: 50%;
-  background: var(--c-primary-soft); color: var(--c-primary-soft-fg);
+  background: var(--c-support-soft, var(--c-surface-3)); color: var(--c-support-soft-fg, var(--c-text-2));
 }
 .modal-icon.is-danger  { background: var(--c-danger-soft);  color: var(--c-danger); }
 .modal-icon.is-warning { background: var(--c-warning-soft); color: var(--c-warning); }
@@ -68,7 +68,7 @@
   padding: var(--sp-4) var(--sp-6);
   border-bottom: 1px solid var(--c-border);
 }
-.drawer-title { font-size: var(--fs-lg); font-weight: var(--fw-semibold); line-height: var(--lh-tight); min-width: 0; }
+.drawer-title { font-size: var(--fs-title, var(--fs-xl)); font-weight: var(--fw-semibold); line-height: var(--lh-tight); min-width: 0; }
 .drawer-body {
   flex: 1 1 auto; min-height: 0; overflow: auto;
   display: flex; flex-direction: column; gap: var(--sp-4);
@@ -91,7 +91,7 @@
 .dropdown-item {
   display: flex; align-items: center; gap: var(--sp-2);
   min-height: var(--ctl-sm); padding: var(--sp-2) var(--sp-3);
-  border-radius: var(--r-sm); font-size: var(--fs-sm); color: var(--c-text);
+  border-radius: var(--r-sm); font-size: var(--fs-caption, var(--fs-sm)); color: var(--c-text);
   white-space: nowrap; text-align: left; width: 100%; cursor: pointer;
 }
 .dropdown-item:hover { background: var(--c-surface-2); }
@@ -102,10 +102,10 @@
 .dropdown-item > .icon-sm, .dropdown-item > .icon { color: var(--c-text-2); }
 .dropdown-item.is-danger > .icon-sm, .dropdown-item.is-danger > .icon { color: var(--c-danger); }
 .dropdown-item.active > .icon-sm { color: var(--c-primary-soft-fg); }
-.dropdown-item .kbd, .dropdown-shortcut { margin-left: auto; padding-left: var(--sp-3); font-size: var(--fs-xs); color: var(--c-text-muted); }
+.dropdown-item .kbd, .dropdown-shortcut { margin-left: auto; padding-left: var(--sp-3); font-size: var(--fs-caption, var(--fs-sm)); color: var(--c-text-muted); }
 .dropdown-item .check { margin-left: auto; color: var(--c-primary); }
 .dropdown-divider { height: 1px; margin: var(--sp-1) 0; background: var(--c-border); }
-.dropdown-label { padding: var(--sp-2) var(--sp-3) var(--sp-1); font-size: var(--fs-xs); font-weight: var(--fw-medium); color: var(--c-text-muted); }
+.dropdown-label { padding: var(--sp-2) var(--sp-3) var(--sp-1); font-size: var(--fs-caption, var(--fs-sm)); font-weight: var(--fw-medium); color: var(--c-text-muted); }
 /* 트리거 옆에 붙여 열린 것처럼 보이기: 트리거를 .dropdown-anchor로 감싼다 */
 .dropdown-anchor, .popover-anchor { position: relative; display: inline-flex; }
 .dropdown-anchor > .dropdown, .popover-anchor > .popover { position: absolute; top: calc(100% + var(--sp-1)); left: 0; }
@@ -118,9 +118,9 @@
   display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-4);
   background: var(--c-surface); color: var(--c-text);
   border: 1px solid var(--c-border); border-radius: var(--r-md); box-shadow: var(--shadow-md);
-  font-size: var(--fs-sm); z-index: var(--z-dropdown);
+  font-size: var(--fs-caption, var(--fs-sm)); z-index: var(--z-dropdown);
 }
-.popover-title { font-size: var(--fs-md); font-weight: var(--fw-semibold); }
+.popover-title { font-size: var(--fs-body, var(--fs-md)); font-weight: var(--fw-semibold); }
 .popover-desc { color: var(--c-text-2); }
 .popover-actions { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2); margin-top: var(--sp-1); }
 .popover .list-item { padding-left: 0; padding-right: 0; min-height: var(--ctl-md); }

@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   gap: var(--sp-1);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-caption, var(--fs-sm));
   font-weight: var(--fw-medium);
   line-height: var(--lh-tight);
   color: var(--c-text);
@@ -20,7 +20,7 @@
 .field-label .req { color: var(--c-danger); }
 .field-label .opt { color: var(--c-text-muted); font-weight: var(--fw-regular); }
 .field-help {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-caption, var(--fs-sm));
   line-height: var(--lh-normal);
   color: var(--c-text-muted);
 }
@@ -28,7 +28,7 @@
   display: none;
   align-items: center;
   gap: var(--sp-1);
-  font-size: var(--fs-sm);   /* 오류 문구는 작게 두지 않는다(기본 규칙 17-2) */
+  font-size: var(--fs-body, var(--fs-md));   /* 오류 문구는 본문 크기 — 작게 두지 않는다(기본 규칙 17-2) */
   line-height: var(--lh-normal);
   color: var(--c-danger);
 }
@@ -63,7 +63,7 @@
   background: var(--c-surface);
   color: var(--c-text);
   font-family: inherit;
-  font-size: var(--fs-md);
+  font-size: var(--fs-body, var(--fs-md));
   line-height: var(--lh-normal);
   outline: none;
   transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
@@ -80,8 +80,8 @@
   color: var(--c-text-muted);
   cursor: not-allowed;
 }
-.input-sm, .select-sm { height: var(--ctl-sm); font-size: var(--fs-sm); padding: 0 var(--sp-2); }
-.input-lg, .select-lg { height: var(--ctl-lg); font-size: var(--fs-lg); padding: 0 var(--sp-4); }
+.input-sm, .select-sm { height: var(--ctl-sm); font-size: var(--fs-caption, var(--fs-sm)); padding: 0 var(--sp-2); }
+.input-lg, .select-lg { height: var(--ctl-lg); font-size: var(--fs-title, var(--fs-xl)); padding: 0 var(--sp-4); }
 .input[type="number"] { font-variant-numeric: tabular-nums; }
 .input[type="date"], .input[type="time"] { min-width: 0; }
 
@@ -126,7 +126,7 @@
   border: 1px solid var(--c-border-strong);
   background: var(--c-surface-2);
   color: var(--c-text-2);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-caption, var(--fs-sm));
   white-space: nowrap;
   flex: 0 0 auto;
 }
@@ -176,7 +176,7 @@
   align-items: center;
   gap: var(--sp-2);
   min-height: var(--ctl-sm);
-  font-size: var(--fs-md);
+  font-size: var(--fs-body, var(--fs-md));
   color: var(--c-text);
   cursor: pointer;
   user-select: none;
@@ -217,11 +217,15 @@
   background: var(--c-primary-fg);
 }
 .checkbox input:focus-visible, .radio input:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
-.checkbox input:disabled, .radio input:disabled { opacity: .5; cursor: not-allowed; }
+.checkbox input:disabled, .radio input:disabled { background: var(--c-surface-3); border-color: var(--c-border); cursor: not-allowed; }   /* 비활성은 투명도 대신 회색 면 */
+/* 비활성 + 체크 · 일부 선택: 바탕은 진한 회색, 표시는 흰색 — 표시와 바탕 대비 3 이상(--c-text-2는 바탕에서 4.5를 지킨다) */
+.checkbox input:disabled:checked, .radio input:disabled:checked, .checkbox input:disabled:indeterminate { background: var(--c-text-2); border-color: var(--c-text-2); }
+.checkbox input:disabled:checked::after { border-color: var(--c-surface); }
+.radio input:disabled:checked::after, .checkbox input:disabled:indeterminate::after { background: var(--c-surface); }
 .checkbox:has(input:disabled), .radio:has(input:disabled) { color: var(--c-text-muted); cursor: not-allowed; }
-.checkbox .desc, .radio .desc { display: block; font-size: var(--fs-xs); color: var(--c-text-muted); }
+.checkbox .desc, .radio .desc { display: block; font-size: var(--fs-caption, var(--fs-sm)); color: var(--c-text-muted); }
 .checkbox.align-start, .radio.align-start { align-items: flex-start; }
-.checkbox.align-start input, .radio.align-start input { margin-top: calc((var(--fs-md) * var(--lh-normal) - var(--icon-md)) / 2); }
+.checkbox.align-start input, .radio.align-start input { margin-top: calc((var(--fs-body, var(--fs-md)) * var(--lh-normal) - var(--icon-md)) / 2); }
 
 /* ---- 스위치 ---- */
 .switch {
@@ -229,7 +233,7 @@
   align-items: center;
   gap: var(--sp-3);
   min-height: var(--ctl-sm);
-  font-size: var(--fs-md);
+  font-size: var(--fs-body, var(--fs-md));
   color: var(--c-text);
   cursor: pointer;
   user-select: none;
@@ -263,9 +267,11 @@
 .switch input:checked { background: var(--c-primary); border-color: var(--c-primary); }
 .switch input:checked::after { translate: calc(var(--icon-lg) * .75) 0; background: var(--c-primary-fg); border-color: transparent; }
 .switch input:focus-visible { outline: 2px solid var(--c-focus); outline-offset: 2px; }
-.switch input:disabled { opacity: .5; cursor: not-allowed; }
+.switch input:disabled { background: var(--c-surface-3); border-color: var(--c-border); cursor: not-allowed; }   /* 비활성은 투명도 대신 회색 면 */
+.switch input:disabled:checked { background: var(--c-text-2); border-color: var(--c-text-2); }   /* 비활성 + 켜짐: 진한 회색 바탕 · 흰 손잡이 */
+.switch input:disabled:checked::after { background: var(--c-surface); }
 .switch:has(input:disabled) { color: var(--c-text-muted); cursor: not-allowed; }
-.switch .desc { display: block; font-size: var(--fs-xs); color: var(--c-text-muted); }
+.switch .desc { display: block; font-size: var(--fs-caption, var(--fs-sm)); color: var(--c-text-muted); }
 
 /* ---- 세그먼트 (배타 선택 탭형 컨트롤) ---- */
 .segmented {
@@ -288,7 +294,7 @@
   border: 1px solid transparent;
   border-radius: calc(var(--r-control) - var(--sp-1) / 2);
   color: var(--c-text-2);
-  font-size: var(--fs-sm);
+  font-size: var(--fs-caption, var(--fs-sm));
   font-weight: var(--fw-medium);
   white-space: nowrap;
   cursor: pointer;
@@ -302,7 +308,7 @@
   box-shadow: var(--shadow-sm);
 }
 .segmented-item:focus-visible { outline: 2px solid var(--c-focus); outline-offset: -1px; }
-.segmented-sm .segmented-item { height: calc(var(--ctl-sm) - var(--sp-1) - 2px); padding: 0 var(--sp-2); font-size: var(--fs-xs); }
+.segmented-sm .segmented-item { height: calc(var(--ctl-sm) - var(--sp-1) - 2px); padding: 0 var(--sp-2); font-size: var(--fs-caption, var(--fs-sm)); }
 .segmented.w-full { display: flex; }
 .segmented.w-full .segmented-item { flex: 1 1 0; }
 

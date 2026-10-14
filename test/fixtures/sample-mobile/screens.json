@@ -1,0 +1,250 @@
+{
+  "project": "sample-mobile",
+  "title": "샘플 서비스 (모바일)",
+  "platform": "mobile",
+  "round": 1,
+  "theme": "warm",
+  "facts": {
+    "todo-today": "오늘 할 일 5건 — 마감이 가까운 순",
+    "recent-changes": "최근 7일 변경 3건 — 장소 변경 · 날짜 확정 · 새 구성원",
+    "item-rule": "새 항목은 이름(2~20자)과 모임 날짜만 적으면 바로 만들어진다"
+  },
+  "roles": [
+    {
+      "key": "owner",
+      "label": "관리자",
+      "goal": "모임 준비할 일을 빠짐없이 챙기고 새 일을 바로 만든다",
+      "inclusion": "30~40대 모임지기 한 명, 휴대폰(390px) 한 손, 이동 중 하루 몇 번 확인",
+      "nav": [
+        {
+          "slug": "home",
+          "label": "홈",
+          "icon": "house"
+        },
+        {
+          "slug": "list",
+          "label": "목록",
+          "icon": "list"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "key": "home",
+      "name": "오늘 보기",
+      "desc": "오늘 할 일을 한눈에 봐요"
+    },
+    {
+      "key": "browse",
+      "name": "모아 보기",
+      "desc": "모든 항목을 훑어봐요"
+    }
+  ],
+  "screens": [
+    {
+      "slug": "home",
+      "name": "홈",
+      "role": "owner",
+      "section": "home",
+      "step": "오늘 보기",
+      "file": "screens/home.html",
+      "goal": "오늘 할 일과 최근 변경을 한눈에 확인한다",
+      "problem": "무엇이 바뀌었는지 놓치면 모임 준비가 어긋난다",
+      "pattern": "목록 탐색",
+      "emphasize": "오늘 할 일 5건",
+      "data": [
+        "todo-today"
+      ],
+      "defer": [],
+      "focus": "summary",
+      "regions": [
+        {
+          "key": "summary",
+          "label": "오늘 요약",
+          "why": "오늘 할 일이 몇 건인지 바로 봐요",
+          "level": 1,
+          "form": "hero",
+          "content": "todo-today"
+        },
+        {
+          "key": "recent",
+          "label": "최근 변경 목록",
+          "why": "무엇이 바뀌었는지 훑어봐요",
+          "level": 2,
+          "form": "list",
+          "content": "변경 이름 · 언제"
+        },
+        {
+          "key": "actions",
+          "label": "목록 보기 버튼",
+          "why": "전체 목록으로 가는 주 행동이에요",
+          "level": 2,
+          "form": "actions",
+          "content": "주 버튼 '전체 목록 보기' 하나"
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "오늘 할 일을 마감이 가까운 순으로",
+            "변경은 최근 7일 것만"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "list",
+      "name": "목록",
+      "role": "owner",
+      "section": "browse",
+      "step": "모아 보기",
+      "file": "screens/list.html",
+      "goal": "모든 항목을 훑어 보고 하나를 고른다",
+      "problem": "한 줄에 정보가 많으면 손가락으로 고르기 어렵다",
+      "pattern": "목록 탐색",
+      "emphasize": "항목 이름과 날짜",
+      "data": [
+        "recent-changes"
+      ],
+      "defer": [],
+      "focus": "all",
+      "regions": [
+        {
+          "key": "all",
+          "label": "항목 목록",
+          "why": "이름과 날짜만 한 줄로 보여요",
+          "level": 1,
+          "form": "list",
+          "content": "항목 이름 · 날짜"
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "가까운 날짜 순으로"
+          ]
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "keywords": [
+      {
+        "word": "포근한",
+        "not": "하지만 흐릿하지는 않게",
+        "prd": "예시 — 동네 모임",
+        "from": [
+          "owner"
+        ]
+      },
+      {
+        "word": "또렷한",
+        "not": "하지만 딱딱하지는 않게",
+        "prd": "예시 — 오늘 할 일",
+        "from": [
+          "todo-today"
+        ]
+      },
+      {
+        "word": "가벼운",
+        "not": "하지만 비어 보이지는 않게",
+        "prd": "예시 — 새로 만들기",
+        "from": [
+          "item-rule"
+        ]
+      }
+    ]
+  },
+  "looks": [
+    {
+      "id": "warm",
+      "name": "따뜻한 종이",
+      "why": "포근한 느낌이에요",
+      "mode": "light",
+      "tone": "paper",
+      "bg": "#FBF8F3",
+      "ink": "#1F1B16",
+      "shape": "round",
+      "font": "pretendard",
+      "lean": "포근한",
+      "palette": {
+        "brand": {
+          "name": "테라코타",
+          "hex": "#D9562B",
+          "why": "포근한 — 누르는 곳만 따뜻하게"
+        },
+        "support": {
+          "name": "모래",
+          "hex": "#C9B79C",
+          "why": "정보 면을 차분하게"
+        },
+        "accent": {
+          "name": "숲",
+          "hex": "#2F6B4F",
+          "why": "오늘 · 새로 표시 한두 곳"
+        },
+        "why": "따뜻한 종이 바탕에 테라코타 하나로 누르는 곳을 가른다"
+      },
+      "type": {
+        "heading": "sans",
+        "headingWhy": "또렷한 — 반듯한 고딕 제목",
+        "ratio": "normal",
+        "why": "목록이 주인공이라 KRDS 기본 단계 그대로"
+      },
+      "swatches": [
+        {
+          "id": "forest",
+          "name": "숲",
+          "hex": "#2F6B4F"
+        },
+        {
+          "id": "navy",
+          "name": "남색",
+          "hex": "#2B4C8C"
+        },
+        {
+          "id": "plum",
+          "name": "자두",
+          "hex": "#7A3E6B"
+        },
+        {
+          "id": "mustard",
+          "name": "겨자",
+          "hex": "#B8860B"
+        }
+      ]
+    }
+  ],
+  "toggles": {
+    "type": "normal",
+    "swatch": "brand",
+    "toast": {
+      "at": "top",
+      "icon": "on",
+      "tone": "light",
+      "size": "normal"
+    }
+  },
+  "board": {
+    "recommend": {
+      "theme": "warm",
+      "themeWhy": "포근한 톤을 추천해요",
+      "type": "normal",
+      "typeWhy": "모임지기 한 명이 컴퓨터로 봐서 보통 크기가 알맞아요",
+      "swatch": "brand",
+      "swatchWhy": "차분한 바탕에서 누르는 곳만 따뜻하게",
+      "toast": {
+        "at": "top",
+        "icon": "on",
+        "tone": "light",
+        "size": "normal"
+      }
+    },
+    "ask": [],
+    "locked": [],
+    "focus": []
+  }
+}

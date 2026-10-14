@@ -1,0 +1,13 @@
+<main class="content">
+  <x-page-header title="홈" desc="오늘 할 일이에요"/>
+  <div data-region="summary">
+    <x-stat label="오늘 할 일" value="5건"/>
+  </div>
+  <x-section title="최근 변경" data-region="recent">
+    <x-list>
+      <x-item icon="clock" title="독서 모임 장소 변경" meta="어제"/>
+      <x-item icon="clock" title="다음 모임 날짜 확정" meta="3일 전"/>
+    </x-list>
+  </x-section>
+  <div class="bottom-cta" data-region="actions"><x-btn variant="primary" data-trigger="open-list">전체 목록 보기</x-btn></div>
+</main>
