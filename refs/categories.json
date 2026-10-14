@@ -1,0 +1,337 @@
+{
+ "note": "디자인 분위기 12가지 (2026-10-12, 사용자: '찾은 웹사이트들을 카테고리화하고 카테고리별로 알려주면' · '표로 정리된 내용을 화면에 띄워 사용자가 선택'). 해외 = awesome-design-md(VoltAgent, MIT) DESIGN.md 있음, 국내 = 측정해 만든 DESIGN.md(refs-kr). 대표 = 질문 페이지 그림에 쓰는 사이트 3곳.",
+ "categories": [
+  {
+   "id": "dark-tech",
+   "name": "다크 테크 미니멀",
+   "desc": "검은 바탕, 밝은 회색 글자, 강조색 딱 하나. 정밀하고 차분한 도구 느낌",
+   "show": [
+    "linear.app",
+    "raycast",
+    "voltagent"
+   ],
+   "sites": [
+    "linear.app",
+    "raycast",
+    "resend",
+    "composio",
+    "voltagent",
+    "clickhouse",
+    "framer",
+    "hashicorp",
+    "kakao"
+   ],
+   "siteNames": {
+    "linear.app": "Linear",
+    "raycast": "Raycast",
+    "resend": "Resend",
+    "composio": "Composio",
+    "voltagent": "VoltAgent",
+    "clickhouse": "ClickHouse",
+    "framer": "Framer",
+    "hashicorp": "HashiCorp",
+    "kakao": "카카오"
+   }
+  },
+  {
+   "id": "warm-dark",
+   "name": "따뜻한 다크",
+   "desc": "숯색·밤색 바탕에 따뜻한 글자. 어둡지만 차갑지 않은 작업실 느낌",
+   "show": [
+    "warp",
+    "sentry",
+    "runwayml"
+   ],
+   "sites": [
+    "warp",
+    "sentry",
+    "runwayml",
+    "sanity"
+   ],
+   "siteNames": {
+    "warp": "Warp",
+    "sentry": "Sentry",
+    "runwayml": "Runway",
+    "sanity": "Sanity"
+   }
+  },
+  {
+   "id": "mono",
+   "name": "흑백 모노 미니멀",
+   "desc": "흰 바탕, 검정 글자와 버튼, 색은 거의 없음. 군더더기 없이 단정함",
+   "show": [
+    "vercel",
+    "uber",
+    "cal"
+   ],
+   "sites": [
+    "vercel",
+    "uber",
+    "cal",
+    "expo",
+    "ollama",
+    "opencode.ai",
+    "webflow",
+    "nike"
+   ],
+   "siteNames": {
+    "vercel": "Vercel",
+    "uber": "Uber",
+    "cal": "Cal.com",
+    "expo": "Expo",
+    "ollama": "Ollama",
+    "opencode.ai": "OpenCode",
+    "webflow": "Webflow",
+    "nike": "Nike"
+   }
+  },
+  {
+   "id": "one-color",
+   "name": "브랜드색 하나로 또렷한 밝은 서비스",
+   "desc": "흰 바탕에 시그니처 색 하나가 모든 버튼을 맡음. 친숙하고 분명함",
+   "show": [
+    "airbnb",
+    "daangn",
+    "supabase"
+   ],
+   "sites": [
+    "supabase",
+    "mongodb",
+    "airbnb",
+    "pinterest",
+    "daangn",
+    "socar",
+    "zigbang"
+   ],
+   "siteNames": {
+    "supabase": "Supabase",
+    "mongodb": "MongoDB",
+    "airbnb": "Airbnb",
+    "pinterest": "Pinterest",
+    "daangn": "당근",
+    "socar": "쏘카",
+    "zigbang": "직방"
+   }
+  },
+  {
+   "id": "warm-editorial",
+   "name": "따뜻한 에디토리얼",
+   "desc": "크림 바탕, 짙은 잉크 글자, 잡지 같은 여백, 강조색 하나. 차분하고 지적임",
+   "show": [
+    "cursor",
+    "intercom",
+    "zapier"
+   ],
+   "sites": [
+    "claude",
+    "cursor",
+    "intercom",
+    "zapier",
+    "replicate",
+    "elevenlabs",
+    "posthog"
+   ],
+   "siteNames": {
+    "claude": "Claude",
+    "cursor": "Cursor",
+    "intercom": "Intercom",
+    "zapier": "Zapier",
+    "replicate": "Replicate",
+    "elevenlabs": "ElevenLabs",
+    "posthog": "PostHog"
+   }
+  },
+  {
+   "id": "gradient",
+   "name": "분위기 그라디언트",
+   "desc": "깨끗한 바탕 위 한 구역에만 큰 그라디언트(노을·메쉬). 세련되고 기술적",
+   "show": [
+    "stripe",
+    "mistral.ai",
+    "mintlify"
+   ],
+   "sites": [
+    "stripe",
+    "mistral.ai",
+    "together.ai",
+    "mintlify",
+    "superhuman",
+    "lovable",
+    "slack"
+   ],
+   "siteNames": {
+    "stripe": "Stripe",
+    "mistral.ai": "Mistral",
+    "together.ai": "Together AI",
+    "mintlify": "Mintlify",
+    "superhuman": "Superhuman",
+    "lovable": "Lovable",
+    "slack": "Slack"
+   }
+  },
+  {
+   "id": "photo",
+   "name": "사진이 주인공인 갤러리",
+   "desc": "제품·사진을 화면 가득, 글자는 절제. 전시장 같은 고급스러움",
+   "show": [
+    "apple",
+    "toss",
+    "meta"
+   ],
+   "sites": [
+    "apple",
+    "meta",
+    "shopify",
+    "toss",
+    "kakaobank"
+   ],
+   "siteNames": {
+    "apple": "Apple",
+    "meta": "Meta",
+    "shopify": "Shopify",
+    "toss": "토스",
+    "kakaobank": "카카오뱅크"
+   }
+  },
+  {
+   "id": "cinematic",
+   "name": "시네마틱 럭셔리 다크",
+   "desc": "검정 바탕, 화면 가득한 사진, 넓게 띄운 대문자 제목. 영화 같은 무게감",
+   "show": [
+    "ferrari",
+    "bmw-m",
+    "spacex"
+   ],
+   "sites": [
+    "ferrari",
+    "bugatti",
+    "lamborghini",
+    "bmw-m",
+    "spacex",
+    "nvidia"
+   ],
+   "siteNames": {
+    "ferrari": "Ferrari",
+    "bugatti": "Bugatti",
+    "lamborghini": "Lamborghini",
+    "bmw-m": "BMW M",
+    "spacex": "SpaceX",
+    "nvidia": "NVIDIA"
+   }
+  },
+  {
+   "id": "corporate-blue",
+   "name": "기업 신뢰형 블루",
+   "desc": "흰 바탕, 파랑 하나, 각진 모서리, 정돈된 격자. 믿음직하고 반듯함",
+   "show": [
+    "ibm",
+    "bmw",
+    "playstation"
+   ],
+   "sites": [
+    "ibm",
+    "hp",
+    "bmw",
+    "playstation",
+    "renault"
+   ],
+   "siteNames": {
+    "ibm": "IBM",
+    "hp": "HP",
+    "bmw": "BMW",
+    "playstation": "PlayStation",
+    "renault": "Renault"
+   }
+  },
+  {
+   "id": "color-block",
+   "name": "컬러 블록·일러스트",
+   "desc": "흑백 틀에 큰 원색·파스텔 면과 일러스트. 활기차고 창의적",
+   "show": [
+    "figma",
+    "notion",
+    "wise"
+   ],
+   "sites": [
+    "figma",
+    "miro",
+    "notion",
+    "airtable",
+    "clay",
+    "wise",
+    "cohere"
+   ],
+   "siteNames": {
+    "figma": "Figma",
+    "miro": "Miro",
+    "notion": "Notion",
+    "airtable": "Airtable",
+    "clay": "Clay",
+    "wise": "Wise",
+    "cohere": "Cohere"
+   }
+  },
+  {
+   "id": "kr-friendly",
+   "name": "친근한 한국형 핀테크·생활",
+   "desc": "흰 바탕, 크고 굵은 한글, 3D 캐릭터·일러스트. 쉽고 다정함",
+   "show": [
+    "tossbank",
+    "banksalad",
+    "baemin"
+   ],
+   "sites": [
+    "tossbank",
+    "banksalad",
+    "baemin",
+    "toss"
+   ],
+   "siteNames": {
+    "tossbank": "토스뱅크",
+    "banksalad": "뱅크샐러드",
+    "baemin": "배달의민족",
+    "toss": "토스"
+   }
+  },
+  {
+   "id": "dense",
+   "name": "정보 밀도 커머스·매거진",
+   "desc": "사진 격자, 빽빽한 목록, 배너. 많이 보여 주고 빨리 고르게",
+   "show": [
+    "29cm",
+    "musinsa",
+    "kurly"
+   ],
+   "sites": [
+    "29cm",
+    "musinsa",
+    "kurly",
+    "naver",
+    "myrealtrip",
+    "class101",
+    "theverge",
+    "wired",
+    "spotify",
+    "starbucks",
+    "kraken",
+    "binance",
+    "minimax"
+   ],
+   "siteNames": {
+    "29cm": "29CM",
+    "musinsa": "무신사",
+    "kurly": "컬리",
+    "naver": "네이버",
+    "myrealtrip": "마이리얼트립",
+    "class101": "클래스101",
+    "theverge": "The Verge",
+    "wired": "WIRED",
+    "spotify": "Spotify",
+    "starbucks": "Starbucks",
+    "kraken": "Kraken",
+    "binance": "Binance",
+    "minimax": "MiniMax"
+   }
+  }
+ ]
+}
