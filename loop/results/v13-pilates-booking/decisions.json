@@ -1,0 +1,230 @@
+{
+ "core": "수강생이 예약·취소·대기의 순간에 '차감되나·몇 번 남았나·자리 났나'를 스튜디오에 묻지 않고 그 화면에서 안다",
+ "items": [
+  {
+   "id": "F1",
+   "name": "회원가입/로그인",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "예약·수강권이 사람에 묶여야 함. 카카오 하나로 1분 안에",
+   "ask": false
+  },
+  {
+   "id": "F2",
+   "name": "동네 설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "검색이 기본, 위치는 버튼 누를 때만",
+   "why": "찾기의 기준점. 권한 거부해도 막히지 않게",
+   "ask": false
+  },
+  {
+   "id": "F3",
+   "name": "스튜디오 찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "목록 기본, 지도는 전환",
+   "why": "박서연의 비교 행동 그대로 / 지도는 PRD P0 — 외부 지도 앱 대체안은 기각",
+   "ask": false
+  },
+  {
+   "id": "F4",
+   "name": "스튜디오 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "처음 다닐 곳을 정하는 근거",
+   "ask": false
+  },
+  {
+   "id": "F5",
+   "name": "수업 시간표",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "'내일 7시 자리 있나요?' 핑퐁을 없애는 화면",
+   "ask": false
+  },
+  {
+   "id": "F6",
+   "name": "수업 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "취소 규정을 실제 날짜로 보여주는 곳 — core",
+   "ask": false
+  },
+  {
+   "id": "F7",
+   "name": "수강권 구매",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "수강권이 없으면 예약 불가",
+   "ask": false
+  },
+  {
+   "id": "F8",
+   "name": "수업 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "core",
+   "ask": false
+  },
+  {
+   "id": "F9",
+   "name": "대기 신청·자동 승급",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "문제 4 — 운영자가 기억하던 일을 앱이",
+   "ask": false
+  },
+  {
+   "id": "F10",
+   "name": "예약 취소",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "취소 사유는 고르는 칩(선택)",
+   "why": "문제 3 — 차감 여부를 누르기 전에",
+   "ask": false
+  },
+  {
+   "id": "F11",
+   "name": "내 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "가장 잦은 사용",
+   "ask": false
+  },
+  {
+   "id": "F12",
+   "name": "출석 체크",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "스튜디오 방식 중 QR을 크게, 도착 확인은 보조 하나(이정호: 뭘 누를지 모름)",
+   "why": "노쇼 판정·차감의 근거",
+   "ask": false
+  },
+  {
+   "id": "F13",
+   "name": "수강권 관리·일시정지",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "정지 미리보기에 만료일 변화와 자동 취소될 예약을 신청 전에(이정호: 딸에게 묻지 않고 판단)",
+   "why": "문제 2 — 잔여가 헷갈린다",
+   "ask": false
+  },
+  {
+   "id": "F14",
+   "name": "리뷰",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "별점 + 고르는 키워드만으로도 등록 가능(텍스트 10자는 PRD대로 필수)",
+   "why": "박서연의 고르기 근거 / PM 반박(P1·P2라 미루자) 검토: 이번 산출물은 디자인이고 PRD가 'F17 디자인만 먼저'를 요청 — 화면은 그리고 개발 우선순위는 PRD 그대로",
+   "ask": false
+  },
+  {
+   "id": "F15",
+   "name": "알림·알림함",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "승급·리마인드는 알림 없이는 성립 안 함",
+   "ask": false
+  },
+  {
+   "id": "F16",
+   "name": "마이페이지·설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "결제 내역·노쇼 현황은 분쟁 예방",
+   "ask": false
+  },
+  {
+   "id": "F17",
+   "name": "즐겨찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "스튜디오 상세의 하트 + 마이의 목록 한 줄",
+   "why": "디자인만 먼저 — 비용 작음 / PM 반박(P1·P2라 미루자) 검토: 이번 산출물은 디자인이고 PRD가 'F17 디자인만 먼저'를 요청 — 화면은 그리고 개발 우선순위는 PRD 그대로",
+   "ask": false
+  },
+  {
+   "id": "F18",
+   "name": "체험 수업",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "수강권 상품 중 하나로(별도 흐름 없음)",
+   "why": "신규 유입의 첫 구매. 새 화면 없이 상품 목록 맨 위 / PM 반박(P1·P2라 미루자) 검토: 이번 산출물은 디자인이고 PRD가 'F17 디자인만 먼저'를 요청 — 화면은 그리고 개발 우선순위는 PRD 그대로",
+   "ask": false
+  },
+  {
+   "id": "H1",
+   "name": "스튜디오와 1:1 채팅",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "전화하기·카카오톡 채널 연결로",
+   "why": "카톡이 이미 한다 — 운영자 응대 부담을 되살린다",
+   "ask": false
+  },
+  {
+   "id": "H2",
+   "name": "출석 통계·연속 출석 배지",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "마이에 '이번 달 출석 n회' 한 줄",
+   "why": "데이터가 빈약한 장식",
+   "ask": false
+  },
+  {
+   "id": "H3",
+   "name": "리뷰 사진",
+   "source": "하네스",
+   "verdict": "later",
+   "how": "1차 업데이트에서 검수와 함께",
+   "why": "논의점 3 — 탈의실·타 회원 노출, 운영자 3곳 반대",
+   "ask": false
+  },
+  {
+   "id": "H4",
+   "name": "집·회사 동네 2개",
+   "source": "하네스",
+   "verdict": "later",
+   "how": "",
+   "why": "PRD도 이후 검토. 지도 이동으로 대신",
+   "ask": false
+  },
+  {
+   "id": "H5",
+   "name": "친구 초대·함께 예약",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "핵심 갈등과 무관, 동시 예약 정원 처리 복잡",
+   "ask": false
+  },
+  {
+   "id": "H6",
+   "name": "승급 확정 마감 30분 전 재알림",
+   "source": "하네스",
+   "verdict": "later",
+   "how": "",
+   "why": "김지현 의견 — 야근 중 놓칠 수 있음. PRD 알림 목록에 없어 개발팀 확인 후",
+   "ask": false
+  },
+  {
+   "id": "H7",
+   "name": "일시정지 신청 전 확인 대화상자",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "미리보기 화면 자체가 확인 — 조기 해제로 되돌릴 수 있음",
+   "why": "이정호 의견 검토: 되돌릴 수 있는 행동에 대화상자는 단계만 늘림",
+   "ask": false
+  }
+ ]
+}

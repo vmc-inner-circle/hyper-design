@@ -1,0 +1,118 @@
+[
+ {
+  "slot": "fukuoka",
+  "screens": [
+   "home",
+   "home-edit",
+   "trip-ready",
+   "join"
+  ],
+  "what": "후쿠오카 하카타 나카스 강변 풍경(낮이나 해질녘, 사람 작게)",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "후쿠오카 나카스 강변 풍경",
+   "fukuoka nakasu river view"
+  ]
+ },
+ {
+  "slot": "yufuin",
+  "screens": [
+   "home",
+   "home-d3",
+   "news"
+  ],
+  "what": "유후인 긴린코 호수와 유후다케 산 풍경",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "유후인 긴린코 호수",
+   "yufuin kinrinko lake"
+  ]
+ },
+ {
+  "slot": "ryokan",
+  "screens": [
+   "news",
+   "news-send",
+   "home"
+  ],
+  "what": "일본 료칸 다다미 객실 또는 노천 가족탕",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "일본 료칸 가족탕 노천탕",
+   "japanese ryokan private onsen"
+  ]
+ },
+ {
+  "slot": "dazaifu",
+  "screens": [
+   "day-edit",
+   "item-edit",
+   "item-saved",
+   "news-send"
+  ],
+  "what": "다자이후 텐만구 본전과 매화",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "다자이후 텐만구",
+   "dazaifu tenmangu shrine"
+  ]
+ },
+ {
+  "slot": "beppu",
+  "screens": [
+   "day"
+  ],
+  "what": "벳푸 지옥온천 (붉거나 푸른 김 나는 온천 연못)",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "벳푸 지옥온천",
+   "beppu jigoku umi hell"
+  ]
+ },
+ {
+  "slot": "yufuin-train",
+  "screens": [
+   "home-d3",
+   "day"
+  ],
+  "what": "유후인노모리 초록 관광열차 외관",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "유후인노모리 열차",
+   "yufuin no mori train"
+  ]
+ },
+ {
+  "slot": "kaiseki",
+  "screens": [
+   "day"
+  ],
+  "what": "료칸 가이세키 저녁상 위에서 본 모습",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "료칸 가이세키 저녁",
+   "ryokan kaiseki dinner top view"
+  ]
+ },
+ {
+  "slot": "family-trip",
+  "screens": [
+   "trip-ready",
+   "join"
+  ],
+  "what": "한국인 3대 가족(60대 부모·30대 자녀·어린 손녀)이 여행지에서 함께 걷는 뒷모습",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "한국 3대 가족 여행 뒷모습",
+   "korean multigenerational family travel walking back view"
+  ]
+ }
+]

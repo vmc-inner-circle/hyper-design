@@ -24,6 +24,8 @@ harnessthon-2-team-3 판본을 이식해 다듬던 기존 하네스(`apps/harnes
 
 ---
 
+> **이 브랜치(sprint/v8-aesthetics)**: 하네스가 Claude Code 플러그인 `hyper-design`으로 바뀌었습니다 — `/hyper-design:go`(1차), `/hyper-design:max`(2차). 설치·사용법은 [plugins/hyper-design/README.md](./plugins/hyper-design/README.md), 자동 개선 루프 기록은 [loop/RESULTS.md](./loop/RESULTS.md).
+
 ## 하네스 템플릿 — oss-design-harness
 
 **현업 디자이너의 판단 기준(안목)을 추출해, 에이전트에 최적화된 형태로 재구성하는 디자인 하네스.**

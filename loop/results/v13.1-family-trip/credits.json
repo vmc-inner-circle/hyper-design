@@ -1,0 +1,29 @@
+[
+ {
+  "slot": "yufuin-view",
+  "file": "assets/photos/yufuin-view.jpg",
+  "title": "Yufuin from a distance",
+  "author": "kawanet",
+  "license": "by",
+  "license_version": "2.0",
+  "url": "https://www.flickr.com/photos/50902562@N00/3366748099"
+ },
+ {
+  "slot": "airport",
+  "file": "assets/photos/airport.jpg",
+  "title": "Airport check-in counter",
+  "author": null,
+  "license": "cc0",
+  "license_version": "1.0",
+  "url": "https://www.rawpixel.com/image/6029330/photo-image-public-domain-check-free"
+ },
+ {
+  "slot": "ryokan",
+  "file": "assets/photos/ryokan.jpg",
+  "title": "Traditional Room",
+  "author": "nishimuraya.kinosakionsen",
+  "license": "by",
+  "license_version": "2.0",
+  "url": "https://www.flickr.com/photos/136749227@N06/22239451949"
+ }
+]

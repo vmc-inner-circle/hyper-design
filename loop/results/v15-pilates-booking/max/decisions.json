@@ -1,0 +1,176 @@
+{
+ "core": "수강생이 예약·취소·대기 확정을 누르기 전에 '몇 회가 남고, 언제까지 무료인지'를 숫자로 알게 해서, 스튜디오에 묻지 않고 혼자 결정하게 한다.",
+ "items": [
+  {
+   "id": "F8",
+   "name": "예약 화면에 차감·무료 취소 시각",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "core — 분쟁은 '그런 말 못 들었다'에서 시작, 누르기 전에 숫자로",
+   "ask": false
+  },
+  {
+   "id": "F10",
+   "name": "무료/차감 취소 구분",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "core — 오후 5시 지현의 질문 그 자체",
+   "ask": false
+  },
+  {
+   "id": "F9",
+   "name": "대기·자동 승급",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "카톡 '자리 나면 연락'을 대신하는 유일한 수단",
+   "ask": false
+  },
+  {
+   "id": "F13",
+   "name": "수강권 잔여·만료·정지",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "'몇 회 남았어요?' 문의를 없앤다",
+   "ask": false
+  },
+  {
+   "id": "F12",
+   "name": "출석(QR·도착)",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "노쇼 판정과 잔여 정확도의 근거",
+   "ask": false
+  },
+  {
+   "id": "F3",
+   "name": "찾기 지도/목록",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "신규(서연)의 첫 할 일 — 목록 기본, 지도 전환(가정 3)",
+   "ask": false
+  },
+  {
+   "id": "F14",
+   "name": "리뷰",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연이 고를 때 가장 많이 보는 근거. 사진만 MVP 제외(논의점 3)",
+   "ask": false
+  },
+  {
+   "id": "F16",
+   "name": "마이·노쇼 현황",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "노쇼 숫자를 미리 보여야 제한에 놀라지 않음",
+   "ask": false
+  },
+  {
+   "id": "F17",
+   "name": "즐겨찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "디자인만 먼저 — 상세의 하트 하나와 마이 목록 한 줄로 부담 없음",
+   "ask": false
+  },
+  {
+   "id": "F18",
+   "name": "체험 수업",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연 패턴(체험→횟수권)의 입구 — 상품 목록 맨 위 한 줄",
+   "ask": false
+  },
+  {
+   "id": "F15",
+   "name": "알림함",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "승급 확정 마감이 있는 유일한 시간 민감 정보",
+   "ask": false
+  },
+  {
+   "id": "S01",
+   "name": "첫 실행 소개 3장",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "한 화면에 점 3개 — 건너뛰기 항상",
+   "ask": false
+  },
+  {
+   "id": "논의6",
+   "name": "탭 4개(수강권은 마이 안)",
+   "source": "논의점",
+   "verdict": "keep",
+   "how": "",
+   "why": "이정호에게 단순하게. 잔여는 홈 요약이 이미 보여 줌",
+   "ask": false
+  },
+  {
+   "id": "논의3",
+   "name": "리뷰 사진",
+   "source": "논의점",
+   "verdict": "later",
+   "how": "",
+   "why": "탈의실·타 회원 얼굴 노출, 운영자 3/8 반대 — 1차 업데이트 후보",
+   "ask": false
+  },
+  {
+   "id": "H1",
+   "name": "캘린더 자동 동기화",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "휴대폰 캘린더 앱이 한다 — '캘린더 추가' 버튼 하나로 충분",
+   "ask": false
+  },
+  {
+   "id": "H2",
+   "name": "강사·스튜디오와 1:1 채팅",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "카톡·전화가 한다. 앱은 '전화하기'만",
+   "ask": false
+  },
+  {
+   "id": "H3",
+   "name": "집/회사 동네 2개",
+   "source": "하네스",
+   "verdict": "later",
+   "how": "",
+   "why": "PRD도 이후 검토 — 지도 이동 '이 지역에서 다시 찾기'로 대신",
+   "ask": false
+  },
+  {
+   "id": "H4",
+   "name": "출석 스트릭·배지 보상",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "",
+   "why": "장식 — 이번 달 출석 횟수 한 줄로 충분",
+   "ask": false
+  },
+  {
+   "id": "H5",
+   "name": "무료 취소 마감 3시간 전 알림",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "지현의 '야근각' 순간을 앞당겨 준다 — 알림함 종류에 포함",
+   "ask": false
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>저장한 사람 · 엄마</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="my.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">저장한 사람</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label">관계</span>
+    <div class="chips" role="radiogroup" aria-label="관계">
+      <button class="chip" role="radio" aria-checked="false">연인</button>
+      <button class="chip" role="radio" aria-checked="false">배우자</button>
+      <button class="chip is-selected" role="radio" aria-checked="true">가족</button>
+      <button class="chip" role="radio" aria-checked="false">친구</button>
+      <button class="chip" role="radio" aria-checked="false">동료</button>
+    </div>
+  </div>
+  <div class="field"><label class="label" for="n">이름</label><input class="input" id="n" value="김미경"></div>
+  <div class="field"><span class="label">성별</span>
+    <div class="seg" role="radiogroup" aria-label="성별"><button class="seg-item is-selected" role="radio" aria-checked="true">여</button><button class="seg-item" role="radio" aria-checked="false">남</button></div>
+  </div>
+  <div class="field"><label class="label" for="b">생년월일</label><input class="input" id="b" value="1970년 5월 9일">
+    <div class="seg" role="radiogroup" aria-label="양력 음력"><button class="seg-item is-selected" role="radio" aria-checked="true">양력</button><button class="seg-item" role="radio" aria-checked="false">음력</button></div>
+  </div>
+  <div class="field"><label class="label" for="t">태어난 시간</label><input class="input" id="t" value="오전 5:20 · 인시"></div>
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>이 정보는 내 계정에만 저장되고 상대에게 알리지 않아요</span></p>
+  <div class="field">
+    <button class="btn secondary full" type="button">지우기</button>
+    <p class="block-note">지울 때 엄마의 궁합·리포트 기록도 지울지 한 번 더 물어봐요</p>
+  </div>
+</main>
+<div class="cta"><a class="btn primary full" href="my.html">저장</a></div>
+</body></html>

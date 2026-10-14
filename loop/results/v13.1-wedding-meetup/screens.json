@@ -1,0 +1,507 @@
+{
+ "groups": [
+  "처음 시작 — 둘이 함께",
+  "홈 · 달력 · 모임 — 둘이 같이 보는 곳",
+  "사람 — 지인 풀",
+  "모임 만들기와 정하기",
+  "초대받은 지인이 링크로 여는 곳"
+ ],
+ "story": {
+  "headline": "단톡방 수십 개 대신, <em>둘이 같이 보는 달력 한 장</em>에서 묶고·묻고·정한다",
+  "summary": "지은과 민수는 각자 자기 쪽 지인을 관리하지만 모임은 한 달력에 모인다. 후보를 고르는 순간부터 확정하는 순간까지 '겹침'이 따라다녀 둘이 같은 날 같은 시간에 불려 가지 않는다. 지인은 앱 없이 링크로 답하고, 확정하면 같은 링크가 확정 모습으로 바뀌어 따로 공지할 필요가 없다.",
+  "ideas": [
+   {
+    "title": "공유는 확정의 부산물",
+    "desc": "확정 버튼을 누르면 이미 보낸 링크가 '확정' 모습으로 바뀐다. 새 공지 할 일이 없다."
+   },
+   {
+    "title": "겹침은 고를 때 보인다",
+    "desc": "후보를 고르는 달력·확정 화면에서 둘 중 누가 이미 나가는 시간대면 '겹침'이 붙는다."
+   },
+   {
+    "title": "두 무리에 걸친 사람",
+    "desc": "모임에 사람을 고를 때 '회사 무리에도 있어요·다른 모임에 들어 있어요'가 이름 아래 보여 어디에 넣을지 바로 판단한다."
+   },
+   {
+    "title": "기다림에 끝을 둔다",
+    "desc": "마감이 지나면 자동으로 '확정 앞둠'으로 넘어가고, 답 없는 사람을 빼고 정할 수 있다."
+   }
+  ]
+ },
+ "screens": [
+  {
+   "id": "start",
+   "file": "screens/start.html",
+   "title": "시작 · 결혼식 날짜와 함께 쓸 사람",
+   "group": "처음 시작 — 둘이 함께",
+   "purpose": "결혼식 날짜를 넣고 배우자를 초대해 둘이 같은 앱을 쓴다",
+   "role": "editor",
+   "policies": [
+    "초대 링크를 받은 사람은 같은 권한으로 들어온다(지인·모임 모두 고칠 수 있다)",
+    "결혼식 날짜는 나중에 바꿀 수 있다 — 'D-'가 다시 계산된다"
+   ],
+   "branches": [],
+   "traits": {
+    "form": true,
+    "shares": true
+   },
+   "kind": "form",
+   "states": [
+    "error",
+    "done"
+   ]
+  },
+  {
+   "id": "start--error",
+   "file": "screens/start--error.html",
+   "group": "처음 시작 — 둘이 함께",
+   "title": "시작 · 결혼식 날짜와 함께 쓸 사람 · 오류",
+   "purpose": "오류 모습",
+   "role": "editor",
+   "kind": "form",
+   "state_of": "start",
+   "state": "error"
+  },
+  {
+   "id": "start--done",
+   "file": "screens/start--done.html",
+   "group": "처음 시작 — 둘이 함께",
+   "title": "시작 · 결혼식 날짜와 함께 쓸 사람 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "editor",
+   "kind": "form",
+   "state_of": "start",
+   "state": "done"
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "홈 · 식까지 79일",
+   "group": "홈 · 달력 · 모임 — 둘이 같이 보는 곳",
+   "purpose": "지금 내가 정할 것(확정 앞둠)과 다가오는 모임",
+   "role": "editor",
+   "policies": [
+    "맨 위는 '확정 앞둠' 모임 — 있을 때만",
+    "다가오는 모임은 확정만, 2주 안",
+    "진행 상태 4칸을 누르면 그 상태의 모임 목록"
+   ],
+   "branches": [
+    {
+     "to": "meeting-decide",
+     "label": "확정 앞둠 누르기"
+    }
+   ],
+   "traits": {},
+   "kind": "home",
+   "states": []
+  },
+  {
+   "id": "calendar",
+   "file": "screens/calendar.html",
+   "title": "둘의 달력 · 10월",
+   "group": "홈 · 달력 · 모임 — 둘이 같이 보는 곳",
+   "purpose": "지은 쪽·민수 쪽 모임을 한 달력에 — 겹치는 날이 바로 보인다",
+   "role": "editor",
+   "policies": [
+    "확정 모임과 아직 정하지 않은 후보를 함께 보여 준다(후보는 옅게)",
+    "같은 날 같은 시간대에 같은 사람이 나가면 '겹침'",
+    "[R1] 특정 날짜에 모임 겹침 알림"
+   ],
+   "branches": [],
+   "traits": {
+    "large_list": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "meetings",
+   "file": "screens/meetings.html",
+   "title": "모임 · 답 기다림 2",
+   "group": "홈 · 달력 · 모임 — 둘이 같이 보는 곳",
+   "purpose": "진행 상태 4가지로 나눠 모임을 본다",
+   "role": "editor",
+   "policies": [
+    "상태는 자동으로 넘어간다: 답 기다림 → (모두 답하거나 마감 지나면) 확정 앞둠 → 확정 → (날짜 지나면) 다녀옴",
+    "지은 쪽·민수 쪽·양가 모임이 섞여 있다 — 쪽 표시는 글자로"
+   ],
+   "branches": [
+    {
+     "to": "meeting-detail",
+     "label": "답 기다림 모임"
+    },
+    {
+     "to": "meeting-new",
+     "label": "새 모임"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "large_list": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "people",
+   "file": "screens/people.html",
+   "title": "사람 · 아직 모임 없음 42명",
+   "group": "사람 — 지인 풀",
+   "purpose": "97명 중 아직 청첩장 못 준 사람을 찾는다",
+   "role": "editor",
+   "policies": [
+    "연락처에서 추가는 고른 사람만 들어간다 — 권한을 거부하면 한 명씩 추가로 계속, 다시 묻지 않는다",
+    "한 사람이 여러 무리에 속할 수 있다",
+    "지은 쪽·민수 쪽 모두 둘이 같이 고친다"
+   ],
+   "branches": [
+    {
+     "to": "person-edit",
+     "label": "사람 추가·고치기"
+    },
+    {
+     "to": "groups",
+     "label": "무리 관리"
+    }
+   ],
+   "traits": {
+    "large_list": true,
+    "list_first_use": true
+   },
+   "kind": "list",
+   "states": [
+    "empty"
+   ]
+  },
+  {
+   "id": "people--empty",
+   "file": "screens/people--empty.html",
+   "group": "사람 — 지인 풀",
+   "title": "사람 · 아직 모임 없음 42명 · 처음(비어 있음)",
+   "purpose": "처음(비어 있음) 모습",
+   "role": "editor",
+   "kind": "list",
+   "state_of": "people",
+   "state": "empty",
+   "traits": {
+    "large_list": false
+   }
+  },
+  {
+   "id": "person-edit",
+   "file": "screens/person-edit.html",
+   "title": "사람 고치기 · 최유나",
+   "group": "사람 — 지인 풀",
+   "purpose": "이름·쪽·무리(여러 개)·연락처, 1:1로 만날지",
+   "role": "editor",
+   "policies": [
+    "무리는 여러 개 고를 수 있다",
+    "'1:1로 만나요'를 켜면 모임 묶을 때 따로 표시",
+    "연락처는 링크 보낼 때만 쓴다"
+   ],
+   "branches": [
+    {
+     "to": "groups",
+     "label": "+ 새 무리"
+    }
+   ],
+   "traits": {
+    "form": true
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "person-edit--error",
+   "file": "screens/person-edit--error.html",
+   "group": "사람 — 지인 풀",
+   "title": "사람 고치기 · 최유나 · 오류",
+   "purpose": "오류 모습",
+   "role": "editor",
+   "kind": "form",
+   "state_of": "person-edit",
+   "state": "error"
+  },
+  {
+   "id": "groups",
+   "file": "screens/groups.html",
+   "title": "무리 · 지은 쪽",
+   "group": "사람 — 지인 풀",
+   "purpose": "사용자가 만드는 무리를 만들고 이름 바꾸고 지운다",
+   "role": "editor",
+   "policies": [
+    "무리를 지워도 사람은 남는다",
+    "한 사람이 여러 무리에 있어 무리 합은 사람 수보다 크다"
+   ],
+   "branches": [
+    {
+     "to": "group-edit",
+     "label": "무리 누르기·새 무리"
+    }
+   ],
+   "traits": {
+    "large_list": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "group-edit",
+   "file": "screens/group-edit.html",
+   "title": "무리 이름 바꾸기 · 회사 마케팅팀",
+   "group": "사람 — 지인 풀",
+   "purpose": "무리 이름을 바꾸거나 지운다(바텀시트)",
+   "role": "editor",
+   "policies": [
+    "무리를 지워도 사람은 남는다",
+    "새 무리도 같은 시트에서 이름만 적어 만든다"
+   ],
+   "branches": [],
+   "traits": {},
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "meeting-new",
+   "file": "screens/meeting-new.html",
+   "title": "새 모임 · 사람 고르기",
+   "group": "모임 만들기와 정하기",
+   "purpose": "누가 나가는지·1:1인지 먼저, 그다음 무리에서 사람을 고른다",
+   "role": "editor",
+   "policies": [
+    "다른 무리·다른 모임에도 있는 사람은 이름 아래 표시 — 어디에 넣을지 판단용",
+    "1:1이면 1명만 고를 수 있다",
+    "이미 확정 모임에 든 사람도 고를 수 있다(경고 없음)"
+   ],
+   "branches": [],
+   "traits": {
+    "large_list": true
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "meeting-dates",
+   "file": "screens/meeting-dates.html",
+   "title": "새 모임 · 날짜 후보와 마감",
+   "group": "모임 만들기와 정하기",
+   "purpose": "후보 날짜를 고르고 마감을 정해 단톡방에 붙일 링크를 만든다",
+   "role": "editor",
+   "policies": [
+    "[R2] 회신 마감은 내일 밤·3일·5일·직접 중 — 식 2주 전 급한 모임은 '내일 밤까지'",
+    "이미 나가는 시간대를 후보로 고르면 '겹침'이 붙는다(고를 수는 있다)",
+    "메시지는 보내지 않는다 — 링크를 단톡방에 붙인다"
+   ],
+   "branches": [],
+   "traits": {
+    "shares": true
+   },
+   "kind": "form",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "meeting-dates--done",
+   "file": "screens/meeting-dates--done.html",
+   "group": "모임 만들기와 정하기",
+   "title": "새 모임 · 날짜 후보와 마감 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "editor",
+   "kind": "form",
+   "state_of": "meeting-dates",
+   "state": "done"
+  },
+  {
+   "id": "meeting-detail",
+   "file": "screens/meeting-detail.html",
+   "title": "회사 마케팅팀 · 답 기다림",
+   "group": "모임 만들기와 정하기",
+   "purpose": "후보별 가능 인원과 답 없는 사람 — 언제까지 기다릴지",
+   "role": "editor",
+   "policies": [
+    "[R3] 마감 전에도 '기다리지 않고 정하기'로 확정 앞둠으로 넘길 수 있다",
+    "마감이 지나면 자동으로 확정 앞둠",
+    "답 없는 사람에게 다시 알릴 링크 복사(메시지는 카톡으로)"
+   ],
+   "branches": [
+    {
+     "to": "meeting-decide",
+     "label": "기다리지 않고 정하기"
+    }
+   ],
+   "traits": {},
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "meeting-decide",
+   "file": "screens/meeting-decide.html",
+   "title": "민수 대학 동기 · 확정 앞둠",
+   "group": "모임 만들기와 정하기",
+   "purpose": "가장 많이 되는 날을 겹침 확인과 함께 확정한다",
+   "role": "editor",
+   "policies": [
+    "확정하면 보낸 링크가 확정 모습으로 바뀐다 — 따로 공지하지 않는다",
+    "다 안 되면 '새 후보 내기'",
+    "확정 후에도 날짜를 바꿀 수 있다"
+   ],
+   "branches": [
+    {
+     "to": "meeting-dates",
+     "label": "다 안 되면 새 후보"
+    }
+   ],
+   "traits": {
+    "shares": true
+   },
+   "kind": "result",
+   "states": [
+    "done",
+    "error"
+   ]
+  },
+  {
+   "id": "meeting-decide--done",
+   "file": "screens/meeting-decide--done.html",
+   "group": "모임 만들기와 정하기",
+   "title": "민수 대학 동기 · 확정 앞둠 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "editor",
+   "kind": "result",
+   "state_of": "meeting-decide",
+   "state": "done"
+  },
+  {
+   "id": "meeting-decide--error",
+   "file": "screens/meeting-decide--error.html",
+   "group": "모임 만들기와 정하기",
+   "title": "민수 대학 동기 · 확정 앞둠 · 오류",
+   "purpose": "특정 날짜에 모임 겹침 알림",
+   "role": "editor",
+   "kind": "result",
+   "state_of": "meeting-decide",
+   "state": "error",
+   "rules": [
+    "R1"
+   ],
+   "policies": [
+    "[R1] 특정 날짜에 모임 겹침 알림"
+   ]
+  },
+  {
+   "id": "meeting-confirmed",
+   "file": "screens/meeting-confirmed.html",
+   "title": "지은 대학 동기 · 확정",
+   "group": "모임 만들기와 정하기",
+   "purpose": "확정된 날짜·장소·나오는 사람 — 구성원이 보는 것과 같은 내용",
+   "role": "editor",
+   "policies": [
+    "구성원은 같은 링크에서 이 내용을 본다",
+    "날짜가 지나면 다녀옴으로 바뀐다"
+   ],
+   "branches": [],
+   "traits": {},
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "reply",
+   "file": "screens/reply.html",
+   "title": "링크로 답하기 · 오세훈",
+   "group": "초대받은 지인이 링크로 여는 곳",
+   "purpose": "앱 없이 후보마다 된다/안 된다 — 다른 커플에게 한 답도 함께 보인다",
+   "role": "everyone",
+   "policies": [
+    "같은 전화번호로 받은 다른 커플 요청도 위에 함께 보인다",
+    "'다 안 돼요'도 답이다",
+    "마감 전까지 답을 고칠 수 있다 · 한마디(선택)를 남길 수 있다"
+   ],
+   "branches": [],
+   "traits": {
+    "shares": true
+   },
+   "kind": "form",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "reply--done",
+   "file": "screens/reply--done.html",
+   "group": "초대받은 지인이 링크로 여는 곳",
+   "title": "링크로 답하기 · 오세훈 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "reply",
+   "state": "done"
+  },
+  {
+   "id": "reply-confirmed",
+   "file": "screens/reply-confirmed.html",
+   "title": "링크 · 확정된 뒤 (정하윤)",
+   "group": "초대받은 지인이 링크로 여는 곳",
+   "purpose": "같은 링크가 확정 모습으로 바뀐다",
+   "role": "everyone",
+   "policies": [
+    "확정되면 후보·답 대신 날짜·장소만",
+    "내 캘린더에 넣기는 휴대폰 캘린더로 넘긴다"
+   ],
+   "branches": [],
+   "traits": {},
+   "kind": "result",
+   "states": []
+  }
+ ],
+ "photo_centric": false,
+ "badges": {
+  "확정 앞둠": "is-info",
+  "확정": "is-brand",
+  "답 기다림": "",
+  "다녀옴": "is-success",
+  "겹침": "is-warning",
+  "안 돼요": "is-danger"
+ },
+ "prd_coverage": {
+  "F1": [
+   "people",
+   "person-edit",
+   "groups"
+  ],
+  "F2": [
+   "meeting-new"
+  ],
+  "F3": [
+   "meeting-dates",
+   "reply",
+   "meeting-detail"
+  ],
+  "F4": [
+   "meeting-decide",
+   "meeting-confirmed",
+   "reply-confirmed"
+  ],
+  "F5": [
+   "calendar",
+   "home"
+  ],
+  "F6": [
+   "meetings",
+   "home"
+  ],
+  "US1": [
+   "meeting-new",
+   "person-edit"
+  ],
+  "US2": [
+   "reply"
+  ],
+  "US3": [
+   "calendar",
+   "meeting-decide"
+  ]
+ }
+}

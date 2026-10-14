@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>결제 · 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large plain ">
+<header class="appbar"><a class="appbar-btn" href="pass-select.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">결제</h1><span></span></header>
+<main class="page">
+  <div class="row"><span class="thumb is-l"><img src="../assets/photos/studio-onyu.jpg" alt="온유 요가 스튜디오 내부"></span>
+    <div class="row-main"><p class="row-sub">온유 요가</p><p class="row-title">3개월 기간권(주 2회)</p><p class="row-sub">일시정지 가능</p></div>
+    <span class="row-trail"><span class="code">390,000원</span></span></div>
+  <div class="field"><span class="label">시작일</span>
+    <div class="chips" role="radiogroup"><button class="chip" role="radio" aria-checked="false">오늘</button><button class="chip" role="radio" aria-checked="false">첫 수업일</button><button class="chip is-selected" role="radio" aria-checked="true">직접 선택</button></div>
+    <input class="input" id="start" value="10월 21일(수)" aria-label="시작일 직접 선택">
+    <p class="info"><img src="../assets/fluent/calendar.svg" alt=""><span><span class="code">2026.10.21 ~ 2027.01.20</span> · 지금 기간권이 끝난 다음 날부터예요. 시작일은 오늘부터 30일 안에서 고를 수 있어요.</span></p>
+  </div>
+  <div class="field"><label class="label" for="coupon">쿠폰</label><input class="input" id="coupon" placeholder="쿠폰 번호 입력"></div>
+  <div class="field" role="radiogroup" aria-labelledby="method"><span class="label" id="method">결제 수단</span>
+      <div class="row"><div class="row-main"><p class="row-title">카드</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="카드"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">카카오페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="true" aria-label="카카오페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">네이버페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="네이버페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">토스페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="토스페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+  </div>
+  <div class="field"><span class="label">최종 금액</span>
+    <div class="row"><div class="row-main"><p class="row-sub">상품 금액</p></div><span class="row-trail">390,000원</span></div>
+    <div class="row"><div class="row-main"><p class="row-sub">쿠폰 할인</p></div><span class="row-trail">0원</span></div>
+    <div class="row"><div class="row-main"><p class="row-title">결제할 금액</p></div><span class="row-trail"><span class="num">390,000원</span></span></div>
+  </div>
+  <div class="row"><span class="row-art"><img src="../assets/fluent/clipboard.svg" alt=""></span>
+    <div class="row-main"><p class="row-title">환불 규정에 동의해요 (필수)</p><p class="row-sub">환불은 앱에서 신청하지 않고 스튜디오에 전화로 문의해요</p></div>
+    <span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="환불 규정 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="dup">
+  <h2 class="h2" id="dup">1분 전에 같은 수강권을 결제했어요. 한 번 더 결제할까요?</h2>
+  <p class="block-note">온유 요가 3개월 기간권(주 2회) · 390,000원</p>
+  <a class="btn tint full" href="pay-done.html">결제 내역 보기</a>
+  <a class="btn secondary full" href="pay-done.html">한 번 더 결제</a>
+</div>
+</body></html>

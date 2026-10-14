@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>결제 · 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large">
+<header class="appbar"><a class="appbar-btn" href="pass-shop.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">결제</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="row"><span class="thumb"><img src="../assets/photos/matcore.jpg" alt="매트앤코어 망원 스튜디오"></span><div class="row-main"><p class="row-title">매트앤코어 망원 10회권</p><p class="row-sub">2026.10.13 ~ 2026.12.12 사용 · 일시정지 가능</p></div></div>
+  </section>
+  <section class="block">
+    <div class="field"><label class="label" for="coupon">쿠폰</label><input class="input" id="coupon" placeholder="쿠폰 번호 입력"></div>
+  </section>
+  <section class="block is-list">
+    <div class="field" role="radiogroup" aria-label="결제 수단"><span class="label">결제 수단</span>
+      <div class="row"><div class="row-main"><p class="row-title">카드</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="카드"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">카카오페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="true" aria-label="카카오페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">네이버페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="네이버페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">토스페이</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="토스페이"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    </div>
+  </section>
+  <section class="block is-list">
+    <div class="row"><div class="row-main"><p class="row-sub">상품 금액</p></div><span class="row-trail">220,000원</span></div>
+    <div class="row"><div class="row-main"><p class="row-sub">쿠폰 할인</p></div><span class="row-trail">0원</span></div>
+    <div class="row"><div class="row-main"><p class="row-title">최종 금액</p></div><span class="row-trail"><span class="num">220,000원</span></span></div>
+  </section>
+  <section class="block is-list">
+    <div class="row"><div class="row-main"><p class="row-title">[필수] 환불 규정에 동의해요</p><p class="row-sub">환불은 스튜디오에 전화로 신청</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="환불 규정 동의"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-label="중복 결제 확인">
+  <h2 class="h2">1분 전에 같은 수강권을 결제했어요. 한 번 더 결제할까요?</h2>
+  <p class="row-sub">매트앤코어 망원 10회권 · 220,000원 · 카카오페이</p>
+  <a class="btn tint full" href="mypage.html">결제 내역 확인</a>
+  <a class="btn secondary full is-danger" href="checkout-done.html">한 번 더 결제</a>
+  <a class="btn secondary full" href="pass-shop.html">돌아가기</a>
+</div>
+</body></html>

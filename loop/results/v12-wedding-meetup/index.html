@@ -1,0 +1,141 @@
+<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>전체 화면 한눈에 보기</title>
+<style>
+*{box-sizing:border-box} body{margin:0;background:#EDEDEA;font-family:-apple-system,'Pretendard',sans-serif;color:#1c1c1c;word-break:keep-all}
+header{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#EDEDEAee;backdrop-filter:blur(6px);padding:14px 190px 14px 64px}
+header h1{font-size:20px;margin:0} header .hint{font-size:14px;color:#666}
+.palette{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#555}
+.dot{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 12px 0 8px;border-radius:999px;border:1px solid #d3d3cf;background:#fff;font:inherit;font-size:13px;color:#333;cursor:pointer}
+.dot span{width:18px;height:18px;border-radius:999px;background:var(--dot)} .dot[aria-pressed="true"]{border-color:#1c1c1c;box-shadow:inset 0 0 0 1px #1c1c1c}
+.story{padding:24px 64px 8px;max-width:1240px} .story h1{font-size:34px;line-height:1.3;margin:8px 0 12px} .story h1 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:17px;line-height:1.6;color:#444;max-width:760px;margin:0 0 20px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px} .idea{background:#fff;border-radius:14px;padding:18px} .idea b{font-size:16px} .idea p{font-size:14px;line-height:1.55;color:#555;margin:6px 0 0}
+.decisions{padding:8px 64px 0;max-width:1240px} .decisions h2{font-size:18px;margin:16px 0 6px} .decisions .core{font-size:15px;color:#333;margin:0 0 10px}
+.decisions ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.decisions li{background:#fff;border-radius:12px;padding:10px 14px;font-size:14px;line-height:1.5} .decisions b{margin-right:4px} .decisions .why{display:block;color:#666;font-size:13px}
+.v{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-right:6px;background:#eee;color:#444} .v-cut{background:#fde8e8;color:#9b1c1c} .v-lighten{background:#e7f0ff;color:#1d4ed8}
+.board{position:relative;width:2336px;height:5370px;margin-top:32px}
+svg.ar{position:absolute;inset:0;width:2336px;height:5370px;pointer-events:none;overflow:visible}
+svg.ar path{fill:none;stroke:#2563eb;stroke-width:2;marker-end:url(#h)}
+.alabel{position:absolute;transform:translate(-50%,-100%);max-width:150px;white-space:normal;text-align:center;background:#fff;border:1px solid #c7d6fb;color:#1d4ed8;font-size:12px;font-weight:600;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.alabel.side{transform:translate(-100%,-50%);text-align:right}
+.glabel{position:absolute;font-size:20px;font-weight:700}
+.frame{position:absolute;width:270px}
+.phone{position:relative;width:270px;height:585px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+.phone iframe{width:375px;height:812px;border:0;transform:scale(0.72);transform-origin:0 0;pointer-events:none}
+.hit{position:absolute;inset:0;border-radius:20px} .hit:hover{outline:3px solid #2563eb}
+.ftitle{font-size:15px;font-weight:700;margin-top:10px} .state{font-size:11px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:6px;padding:2px 6px;margin-right:6px}
+.fdesc{font-size:13px;color:#555;margin-top:2px}
+.pol{margin:6px 0 0;padding-left:16px;font-size:12px;line-height:1.5;color:#444} details{font-size:12px;color:#666} summary{cursor:pointer}
+.credit{font-size:12px;color:#777;padding:0 64px 40px}
+#viewer{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;justify-content:center;z-index:10}
+#viewer.on{display:flex} #viewer iframe{width:375px;height:812px;max-height:92vh;border:0;border-radius:28px;background:#fff}
+#viewer .close{position:absolute;top:20px;right:28px;font-size:16px;padding:10px 16px;border:0;border-radius:10px;background:#fff;cursor:pointer}
+</style>
+<header><h1>전체 화면 한눈에 보기</h1><span class="hint">화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래</span><div class="palette">색 <button class="dot" data-slug="airbnb" aria-label="에어비앤비 색으로 보기" style="--dot:#da1249"><span></span>에어비앤비</button><button class="dot" data-slug="daangn" aria-label="당근 색으로 보기" style="--dot:#ff6600"><span></span>당근</button><button class="dot" data-slug="29cm" aria-label="29CM 색으로 보기" style="--dot:#19191a"><span></span>29CM</button></div></header>
+<section class="story"><h1>단톡방 수십 개 대신, <em>겹침이 보이는 링크 하나</em>로 청첩장 날을 잡는다</h1><p class="sum">지은과 민수는 같은 지인 풀과 같은 모임 목록을 본다. 후보를 고르는 순간, 확정하는 순간, 주말을 훑는 순간마다 &#x27;같은 사람이 같은 때 두 곳&#x27;인 겹침이 같은 자리에 뜬다. 초대받은 사람은 설치 없이 링크로 답하고, 다른 커플 모임과의 겹침도 그 자리에서 본다.</p><div class="ideas"><div class="idea"><b>상태가 할 일을 알려 준다</b><p>마감이 지나면 &#x27;정할 차례&#x27;로 홈 맨 위에 올라온다. 알림을 하나 더 만들지 않는다.</p></div><div class="idea"><b>확정 = 공유</b><p>단톡방에 붙였던 같은 링크에 확정 날짜가 뜬다. 다시 알릴 일이 없다.</p></div><div class="idea"><b>어디 넣지? 를 고르는 자리에서</b><p>두 무리에 걸친 사람은 &#x27;대학 동기 모임에 있어요&#x27;가 붙어, 묶는 순간에 판단한다.</p></div></div></section>
+<section class="decisions"><h2>정한 것 · 뺀 것</h2><p class="core">두 사람이 따로 모은 지인 수십 명을 모임으로 묶어, 서로 겹치지 않는 날짜로 확정한다</p><ul><li><span class="v v-cut">뺌</span><b>앱 안 알림·채팅·자동 재촉</b><span class="why">이미 단톡방이 있다 — 방이 하나 더 생기면 PRD의 문제를 키운다</span></li><li><span class="v v-cut">뺌</span><b>무리 자동 추천</b><span class="why">누구를 함께 볼지는 사람만 안다</span></li><li><span class="v v-cut">뺌</span><b>장소 정하기·예약</b><span class="why">지도·예약 앱이 한다</span></li><li><span class="v v-lighten">가볍게</span><b>시간 단위 응답</b> → 점심·저녁 두 가지 &#x27;때&#x27;로<span class="why">답하는 사람의 일을 줄여 회신을 빠르게</span></li><li><span class="v v-cut">뺌</span><b>마감 지나면 자동 확정</b><span class="why">답 없는 사람이 상사일 수도 있다</span></li><li><span class="v v-cut">뺌</span><b>청첩장 전달 체크리스트</b><span class="why">새 체크 일을 만들지 않는다</span></li></ul></section>
+<div class="board">
+<svg class="ar"><defs><marker id="h" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb" stroke="none"/></marker></defs><path d="M325.0,985 C325.0,957 977.0,957 977.0,985"/><path d="M325.0,985 C325.0,957 651.0,957 651.0,985"/><path d="M651.0,985 C651.0,957 977.0,957 977.0,985"/><path d="M651.0,1880 C651.0,1852 1629.0,1852 1629.0,1880"/><path d="M325.0,3670 C325.0,3642 651.0,3642 651.0,3670"/><path d="M1629.0,3670 C1629.0,3642 1955.0,3642 1955.0,3670"/><path d="M325.0,4565 C325.0,4537 1303.0,4537 1303.0,4565"/></svg>
+<div class="glabel" style="top:0px;left:190px">처음 들어올 때</div><div class="glabel" style="top:895px;left:190px">모임 — 할 일이 있는 상태가 맨 위</div><div class="glabel" style="top:1790px;left:190px">새 모임 만들기</div><div class="glabel" style="top:2685px;left:190px">두 사람의 주말</div><div class="glabel" style="top:3580px;left:190px">지인 풀</div><div class="glabel" style="top:4475px;left:190px">초대받은 사람이 링크로 여는 곳</div><div class="frame" style="left:190px;top:96px">
+<div class="phone"><iframe src="screens/pair.html" loading="eager" scrolling="no" tabindex="-1" title="함께 쓰기 시작"></iframe>
+<a class="hit" href="screens/pair.html" target="view" aria-label="함께 쓰기 시작 크게 보기"></a></div>
+<div class="ftitle">함께 쓰기 시작</div>
+<div class="fdesc">결혼식 날짜를 넣고 민수를 부른다</div><ul class="pol"><li>결혼식 날짜는 마감 기본값(3주 안이면 &#x27;내일&#x27;)의 기준</li><li>부른 사람도 모든 지인·모임을 똑같이 고칠 수 있다 — 쪽은 권한이 아니다</li><li>링크는 카톡으로 직접 보낸다(앱은 복사만)</li></ul></div><div class="frame" style="left:516px;top:96px">
+<div class="phone"><iframe src="screens/pair--done.html" loading="eager" scrolling="no" tabindex="-1" title="함께 쓰기 · 링크 복사함"></iframe>
+<a class="hit" href="screens/pair--done.html" target="view" aria-label="함께 쓰기 · 링크 복사함 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>함께 쓰기 · 링크 복사함</div>
+<div class="fdesc">링크를 복사한 뒤</div><ul class="pol"></ul></div><div class="frame" style="left:190px;top:991px">
+<div class="phone"><iframe src="screens/home.html" loading="eager" scrolling="no" tabindex="-1" title="모임 · D-72"></iframe>
+<a class="hit" href="screens/home.html" target="view" aria-label="모임 · D-72 크게 보기"></a></div>
+<div class="ftitle">모임 · D-72</div>
+<div class="fdesc">모임 8개를 상태 4가지로 — 정할 차례가 맨 위</div><ul class="pol"><li>순서: 정할 차례 → 답 기다림 → 확정 → 다녀옴</li><li>마감이 지나면 자동 확정하지 않고 &#x27;정할 차례&#x27;로 올라온다</li><li>날짜가 지나면 확정 → 다녀옴으로 저절로 바뀐다</li></ul></div><div class="frame" style="left:516px;top:991px">
+<div class="phone"><iframe src="screens/meetup.html" loading="eager" scrolling="no" tabindex="-1" title="지은 대학 동기 · 답 기다림"></iframe>
+<a class="hit" href="screens/meetup.html" target="view" aria-label="지은 대학 동기 · 답 기다림 크게 보기"></a></div>
+<div class="ftitle">지은 대학 동기 · 답 기다림</div>
+<div class="fdesc">누가 어느 날 되는지, 누가 아직인지</div><ul class="pol"><li>답 없는 사람에게는 &#x27;링크 다시 복사&#x27; — 재촉은 단톡방에서</li><li>마감 뒤 늦게 온 답도 받아서 보여 준다</li><li>겹치는 후보는 회신 수와 상관없이 &#x27;겹침&#x27; 표시</li></ul></div><div class="frame" style="left:842px;top:991px">
+<div class="phone"><iframe src="screens/meetup-decide.html" loading="eager" scrolling="no" tabindex="-1" title="민수 개발팀 · 날짜 정하기"></iframe>
+<a class="hit" href="screens/meetup-decide.html" target="view" aria-label="민수 개발팀 · 날짜 정하기 크게 보기"></a></div>
+<div class="ftitle">민수 개발팀 · 날짜 정하기</div>
+<div class="fdesc">겹침을 보고 날짜 하나를 확정</div><ul class="pol"><li>후보마다 되는 사람 수 + 우리 다른 모임과 겹치는지</li><li>확정하면 같은 링크에 확정 날짜가 뜬다 — 따로 알리지 않아도 된다</li><li>시간·장소는 확정할 때 한 줄로(예약은 지도 앱에서)</li></ul></div><div class="frame" style="left:1168px;top:991px">
+<div class="phone"><iframe src="screens/meetup-decide--done.html" loading="eager" scrolling="no" tabindex="-1" title="민수 개발팀 · 확정함"></iframe>
+<a class="hit" href="screens/meetup-decide--done.html" target="view" aria-label="민수 개발팀 · 확정함 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>민수 개발팀 · 확정함</div>
+<div class="fdesc">확정 뒤 — 단톡방용 링크 복사</div><ul class="pol"></ul></div><div class="frame" style="left:190px;top:1886px">
+<div class="phone"><iframe src="screens/meetup-new.html" loading="eager" scrolling="no" tabindex="-1" title="새 모임 · 사람 고르기"></iframe>
+<a class="hit" href="screens/meetup-new.html" target="view" aria-label="새 모임 · 사람 고르기 크게 보기"></a></div>
+<div class="ftitle">새 모임 · 사람 고르기</div>
+<div class="fdesc">여럿이/1:1을 먼저, 그다음 사람 고르기</div><ul class="pol"><li>이미 다른 모임에 있는 사람은 &#x27;~모임에 있어요&#x27; — 고를 수는 있다</li><li>1:1이면 한 명만 고를 수 있다</li><li>무리 칩으로 거르고, 검색은 이름으로</li></ul></div><div class="frame" style="left:516px;top:1886px">
+<div class="phone"><iframe src="screens/meetup-dates.html" loading="eager" scrolling="no" tabindex="-1" title="새 모임 · 후보와 마감"></iframe>
+<a class="hit" href="screens/meetup-dates.html" target="view" aria-label="새 모임 · 후보와 마감 크게 보기"></a></div>
+<div class="ftitle">새 모임 · 후보와 마감</div>
+<div class="fdesc">후보 날짜를 고르면 그 자리에서 겹침이 보인다</div><ul class="pol"><li>&#x27;때&#x27;는 점심·저녁 둘만</li><li>겹치는 후보도 넣을 수는 있지만 &#x27;겹침&#x27;이 붙는다</li><li>결혼식 3주 안이면 마감 기본 &#x27;내일&#x27;</li></ul></div><div class="frame" style="left:1494px;top:1886px">
+<div class="phone"><iframe src="screens/date-pick.html" loading="eager" scrolling="no" tabindex="-1" title="새 모임 · 후보 날짜 고르기"></iframe>
+<a class="hit" href="screens/date-pick.html" target="view" aria-label="새 모임 · 후보 날짜 고르기 크게 보기"></a></div>
+<div class="ftitle">새 모임 · 후보 날짜 고르기</div>
+<div class="fdesc">주말의 점심·저녁 칸에서 고르면 그 자리에서 겹침이 보인다</div><ul class="pol"><li>겹침 기준은 이 모임에 나가는 사람(지은)</li><li>겹치는 칸도 고를 수는 있다 — 고르면 후보에 &#x27;겹침&#x27;이 따라간다</li><li>확정된 모임만 겹침으로 친다(다른 모임 후보는 아님)</li></ul></div><div class="frame" style="left:842px;top:1886px">
+<div class="phone"><iframe src="screens/meetup-dates--error.html" loading="eager" scrolling="no" tabindex="-1" title="새 모임 · 후보 없음"></iframe>
+<a class="hit" href="screens/meetup-dates--error.html" target="view" aria-label="새 모임 · 후보 없음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>새 모임 · 후보 없음</div>
+<div class="fdesc">후보가 0개일 때</div><ul class="pol"></ul></div><div class="frame" style="left:1168px;top:1886px">
+<div class="phone"><iframe src="screens/meetup-dates--done.html" loading="eager" scrolling="no" tabindex="-1" title="새 모임 · 링크 복사함"></iframe>
+<a class="hit" href="screens/meetup-dates--done.html" target="view" aria-label="새 모임 · 링크 복사함 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>새 모임 · 링크 복사함</div>
+<div class="fdesc">링크를 복사한 뒤</div><ul class="pol"></ul></div><div class="frame" style="left:190px;top:2781px">
+<div class="phone"><iframe src="screens/calendar.html" loading="eager" scrolling="no" tabindex="-1" title="주말 · 10월"></iframe>
+<a class="hit" href="screens/calendar.html" target="view" aria-label="주말 · 10월 크게 보기"></a></div>
+<div class="ftitle">주말 · 10월</div>
+<div class="fdesc">지은·민수의 확정 모임과 후보를 주말 단위로 — 겹침 표시</div><ul class="pol"><li>겹침 = 같은 날 같은 때 같은 사람(지은 또는 민수)이 두 곳</li><li>후보는 회색 &#x27;후보&#x27;, 확정만 진하게</li><li>나가는 사람(지은·민수·둘 다)을 행마다 아바타로</li></ul></div><div class="frame" style="left:190px;top:3676px">
+<div class="phone"><iframe src="screens/people.html" loading="eager" scrolling="no" tabindex="-1" title="지인 · 52명"></iframe>
+<a class="hit" href="screens/people.html" target="view" aria-label="지인 · 52명 크게 보기"></a></div>
+<div class="ftitle">지인 · 52명</div>
+<div class="fdesc">두 사람의 지인을 찾고, 아직 모임 없는 사람을 고른다</div><ul class="pol"><li>한 사람이 여러 무리에 — 무리 칩은 겹쳐 셀 수 있다</li><li>연락처 불러오기는 권한을 거부하면 직접 입력으로</li><li>&#x27;아직 모임 없음&#x27; 칩 = 청첩장 줄 날이 아직 없는 사람</li></ul></div><div class="frame" style="left:516px;top:3676px">
+<div class="phone"><iframe src="screens/people--empty.html" loading="eager" scrolling="no" tabindex="-1" title="지인 · 처음"></iframe>
+<a class="hit" href="screens/people--empty.html" target="view" aria-label="지인 · 처음 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>지인 · 처음</div>
+<div class="fdesc">아직 아무도 없을 때</div><ul class="pol"></ul></div><div class="frame" style="left:842px;top:3676px">
+<div class="phone"><iframe src="screens/person-edit.html" loading="eager" scrolling="no" tabindex="-1" title="지인 고치기 · 이수진"></iframe>
+<a class="hit" href="screens/person-edit.html" target="view" aria-label="지인 고치기 · 이수진 크게 보기"></a></div>
+<div class="ftitle">지인 고치기 · 이수진</div>
+<div class="fdesc">이름·쪽·무리(여럿)·1:1 여부</div><ul class="pol"><li>무리는 여러 개 고를 수 있다</li><li>&#x27;따로 만나기&#x27;를 켜면 모임 만들 때 1:1로 추천</li><li>지우면 들어 있던 모임에서도 빠진다</li></ul></div><div class="frame" style="left:1168px;top:3676px">
+<div class="phone"><iframe src="screens/person-edit--error.html" loading="eager" scrolling="no" tabindex="-1" title="지인 고치기 · 이름 빈칸"></iframe>
+<a class="hit" href="screens/person-edit--error.html" target="view" aria-label="지인 고치기 · 이름 빈칸 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>지인 고치기 · 이름 빈칸</div>
+<div class="fdesc">이름이 빈칸일 때</div><ul class="pol"></ul></div><div class="frame" style="left:1494px;top:3676px">
+<div class="phone"><iframe src="screens/circles.html" loading="eager" scrolling="no" tabindex="-1" title="무리 · 8개"></iframe>
+<a class="hit" href="screens/circles.html" target="view" aria-label="무리 · 8개 크게 보기"></a></div>
+<div class="ftitle">무리 · 8개</div>
+<div class="fdesc">무리를 만들고 이름을 바꾸고 순서를 바꾼다</div><ul class="pol"><li>무리는 사용자가 만든다(대학·직장·동네…)</li><li>지워도 사람은 남는다</li><li>끌어서 순서 바꾸기 — 칩 순서도 따라 바뀐다</li></ul></div><div class="frame" style="left:1820px;top:3676px">
+<div class="phone"><iframe src="screens/circle-edit.html" loading="eager" scrolling="no" tabindex="-1" title="무리 고치기 · 대학 동기"></iframe>
+<a class="hit" href="screens/circle-edit.html" target="view" aria-label="무리 고치기 · 대학 동기 크게 보기"></a></div>
+<div class="ftitle">무리 고치기 · 대학 동기</div>
+<div class="fdesc">무리 이름·쪽 바꾸기, 지우기</div><ul class="pol"><li>이름을 바꾸면 모든 칩에 바로 반영</li><li>지워도 사람은 남는다</li><li>새 무리 만들기도 이 화면(빈 칸으로)</li></ul></div><div class="frame" style="left:190px;top:4571px">
+<div class="phone"><iframe src="screens/invite.html" loading="eager" scrolling="no" tabindex="-1" title="수진 · 지은·민수의 요청에 답하기"></iframe>
+<a class="hit" href="screens/invite.html" target="view" aria-label="수진 · 지은·민수의 요청에 답하기 크게 보기"></a></div>
+<div class="ftitle">수진 · 지은·민수의 요청에 답하기</div>
+<div class="fdesc">설치 없이 되는 날을 고른다 — 내 다른 모임과 겹침도 보인다</div><ul class="pol"><li>설치·가입 없이 이름만 확인하고 답한다</li><li>내 다른 확정 모임과 겹치는 후보에는 &#x27;겹침&#x27; — 고를 수는 있다</li><li>&#x27;다 안 돼요&#x27;에는 한 줄 메모(선택)</li></ul></div><div class="frame" style="left:516px;top:4571px">
+<div class="phone"><iframe src="screens/invite--error.html" loading="eager" scrolling="no" tabindex="-1" title="수진 · 아무것도 안 고름"></iframe>
+<a class="hit" href="screens/invite--error.html" target="view" aria-label="수진 · 아무것도 안 고름 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>수진 · 아무것도 안 고름</div>
+<div class="fdesc">아무 후보도 &#x27;다 안 돼요&#x27;도 안 고르고 보낼 때</div><ul class="pol"></ul></div><div class="frame" style="left:842px;top:4571px">
+<div class="phone"><iframe src="screens/invite--done.html" loading="eager" scrolling="no" tabindex="-1" title="수진 · 답 보냄"></iframe>
+<a class="hit" href="screens/invite--done.html" target="view" aria-label="수진 · 답 보냄 크게 보기"></a></div>
+<div class="ftitle"><span class="state">상태</span>수진 · 답 보냄</div>
+<div class="fdesc">답을 보낸 뒤 — 같은 링크에서 고칠 수 있다</div><ul class="pol"></ul></div><div class="frame" style="left:1168px;top:4571px">
+<div class="phone"><iframe src="screens/my-weekends.html" loading="eager" scrolling="no" tabindex="-1" title="수진 · 이번 시즌 받은 요청"></iframe>
+<a class="hit" href="screens/my-weekends.html" target="view" aria-label="수진 · 이번 시즌 받은 요청 크게 보기"></a></div>
+<div class="ftitle">수진 · 이번 시즌 받은 요청</div>
+<div class="fdesc">여러 커플 요청과 내 확정 모임을 한 장에</div><ul class="pol"><li>전화번호 확인 한 번으로 같은 번호에 온 요청이 모인다</li><li>답할 차례가 위, 확정이 아래</li><li>확정되면 이 목록에 날짜가 저절로 뜬다</li></ul></div><div class="alabel" style="left:651.0px;top:953px">정할 차례 모임</div><div class="alabel" style="left:488.0px;top:953px">답 기다림 모임</div><div class="alabel" style="left:814.0px;top:953px">마감이 지나거나 모두 답하면</div><div class="alabel" style="left:1140.0px;top:1848px">후보 더하기</div><div class="alabel" style="left:488.0px;top:3638px">처음 쓸 때</div><div class="alabel" style="left:1792.0px;top:3638px">무리를 누르면 이름 바꾸기·지우기</div><div class="alabel" style="left:814.0px;top:4533px">전화번호를 확인하면(선택)</div>
+</div>
+<p class="credit">색 출처: 에어비앤비 웹 팔레트 · 당근 웹 팔레트 · 29CM 웹 팔레트 — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>
+<div id="viewer"><button class="close" onclick="document.getElementById('viewer').classList.remove('on')">닫기</button><iframe name="view" title="크게 보기"></iframe></div>
+<script>
+const v=document.getElementById('viewer');document.querySelectorAll('a[target=view]').forEach(a=>a.addEventListener('click',()=>v.classList.add('on')));
+(function(){const K='hd-palette';const dots=[...document.querySelectorAll('.dot')];if(!dots.length)return;
+ let cur;try{cur=localStorage.getItem(K)}catch(e){} cur=cur||"airbnb";
+ const send=s=>{document.querySelectorAll('iframe').forEach(f=>{try{f.contentWindow.postMessage({type:'hd-palette',slug:s},'*')}catch(e){}});dots.forEach(d=>d.setAttribute('aria-pressed',String(d.dataset.slug===s)))};
+ dots.forEach(d=>d.addEventListener('click',()=>{cur=d.dataset.slug;try{localStorage.setItem(K,cur)}catch(e){};send(cur)}));
+ document.querySelector('iframe[name=view]').addEventListener('load',()=>send(cur));
+ window.addEventListener('load',()=>send(cur));})();
+</script>
+</html>

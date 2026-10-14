@@ -1,0 +1,18 @@
+{
+ "toss": {
+  "floor": 0.34210526315789475,
+  "ceiling": 0.8289473684210527,
+  "pass": 0.5855263157894737,
+  "stretch": 0.7072368421052632,
+  "discriminates": true
+ },
+ "daangn": {
+  "floor": 0.56,
+  "ceiling": 0.89,
+  "pass": 0.7250000000000001,
+  "stretch": 0.8075,
+  "discriminates": true
+ },
+ "sigma": 0.04078807027242229,
+ "noisy": false
+}

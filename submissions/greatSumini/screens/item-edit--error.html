@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 일정 고치기 (시간 비움)</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+body { word-break: keep-all; }
+.form { padding: var(--space-24) var(--space-20); }
+</style>
+</head>
+<body class="is-plain has-cta">
+<header class="appbar">
+  <a class="appbar-btn left" href="planner-day.html" aria-label="뒤로">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+  </a>
+  <h1>일정 고치기</h1>
+</header>
+<main class="form">
+  <div class="field">
+    <label class="label" for="name">이름</label>
+    <input class="input" id="name" type="text" value="우도 배편 (성산항)">
+  </div>
+  <div class="field is-error">
+    <label class="label" for="time">시간</label>
+    <input class="input" id="time" type="text" value="" aria-invalid="true" aria-describedby="time-error">
+    <p class="field-error" id="time-error">시간을 적어주세요</p>
+  </div>
+  <div class="field">
+    <p class="label" id="seg-label">부모님께 보일까요?</p>
+    <div class="segment" role="radiogroup" aria-labelledby="seg-label">
+      <button class="is-selected" type="button" role="radio" aria-checked="true">아직 후보</button>
+      <button type="button" role="radio" aria-checked="false">확정</button>
+    </div>
+  </div>
+</main>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="planner-day.html">저장</a>
+</div>
+
+</body>
+</html>

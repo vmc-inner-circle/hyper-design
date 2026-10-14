@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>찾기 · 목록 · 결과 없음</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">망원동 · <a href="neighborhood.html">동네 바꾸기</a></p>
+    <h1 class="title">동네 스튜디오 찾기</h1>
+    <div class="seg" role="radiogroup" aria-label="보기 방식"><a class="seg-item is-selected" role="radio" aria-checked="true" href="search-list.html">목록</a><a class="seg-item" role="radio" aria-checked="false" href="search-map.html">지도</a></div>
+  </header>
+  <section class="block is-list">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="스튜디오 이름으로 찾기" aria-label="스튜디오 이름으로 찾기"></label>
+    <div class="chips"><button class="chip" aria-pressed="false">기구 필라테스</button><button class="chip" aria-pressed="false">매트</button><button class="chip" aria-pressed="false">요가</button></div>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">500m</button><button class="chip" aria-pressed="false">1km</button><button class="chip" aria-pressed="false">3km</button></div>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">오전</button><button class="chip" aria-pressed="false">오후</button><button class="chip" aria-pressed="false">저녁</button><button class="chip" aria-pressed="false">주말</button><button class="chip is-selected" aria-pressed="true">체험 가능</button></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">입점 스튜디오 0곳</h2></div>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">거리순</button><button class="chip" aria-pressed="false">리뷰 많은 순</button><button class="chip" aria-pressed="false">별점순</button></div>
+    <div class="empty"><img src="../assets/fluent/pin.svg" alt=""><p class="row-title">500m 안에는 오전 체험 수업이 없어요</p><p class="row-sub">체험 가능 · 오전 · 500m</p><a class="btn primary" href="search-list.html">3km로 넓혀볼까요?</a></div>
+  </section>
+</main>
+<nav class="tabbar"><a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9h-5v-6h-6v6H4z"/></svg>홈</a><a class="tab" href="search-list.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>찾기</a><a class="tab" href="my-bookings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>내 예약</a><a class="tab" href="passes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16v3a2 2 0 0 0 0 4v3H4v-3a2 2 0 0 0 0-4z"/></svg>수강권</a><a class="tab" href="my.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>마이</a></nav>
+</body></html>

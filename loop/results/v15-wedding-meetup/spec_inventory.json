@@ -1,0 +1,66 @@
+{
+ "mode": "brief",
+ "items": [
+  {
+   "id": "S1",
+   "kind": "screen",
+   "name": "양가 합친 전체 일정 한 화면",
+   "quote": "우리 둘의 일정이 한 화면에서 겹치지 않는지 확인하고 싶다.",
+   "covered_by": ["calendar"]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "회신 마감 기한 지남 — 답 없는 사람",
+   "quote": "회신 마감 기한을 둘 수 있어야 합니다.",
+   "screen_hint": "",
+   "state_hint": "error",
+   "policy": "meetup-confirm"
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "특정 날짜에 모임 겹침",
+   "quote": "특정 날짜에 모임이 겹치는지 알 수 있어야 합니다.",
+   "screen_hint": "S1",
+   "state_hint": "confirm",
+   "target": "meetup-confirm",
+   "state": "confirm"
+  }
+ ],
+ "objects": [
+  {
+   "id": "O1",
+   "name": "지인",
+   "quote": "이름, 관계(대학·직장·가족 등), 연락처를 등록하고",
+   "create": "person-new",
+   "view": "people",
+   "edit": "person-edit",
+   "after": "people-added"
+  },
+  {
+   "id": "O2",
+   "name": "모임",
+   "quote": "등록된 지인 중 일부를 골라 하나의 모임으로 묶습니다.",
+   "create": "meetup-new",
+   "view": "meetup-detail",
+   "edit": "meetup-edit",
+   "after": [
+    "meetup-confirm--done",
+    "guest-confirmed"
+   ]
+  },
+  {
+   "id": "O3",
+   "name": "일정 후보·회신",
+   "quote": "모임 구성원에게 여러 날짜 후보를 제안하고, 각자의 회신(가능/불가능)을 모아볼 수 있어야 합니다.",
+   "create": "meetup-dates",
+   "view": "meetup-detail",
+   "edit": "meetup-edit",
+   "after": [
+    "meetup-dates--done",
+    "guest-respond--done"
+   ]
+  }
+ ]
+}

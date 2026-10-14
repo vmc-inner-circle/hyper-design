@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>후보 날짜 · 마감 오류</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="has-cta">
+<header class="appbar"><a class="appbar-btn" href="meeting-new.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">후보 날짜</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">후보 날짜</h2></div>
+    <div class="row"><div class="row-main"><span class="badge">후보</span><p class="row-title">10월 17일(토) 저녁 7시</p><p class="row-sub">겹치는 모임 없음</p></div><span class="row-trail"><button class="appbar-btn" aria-label="10월 17일(토) 저녁 7시 후보 지우기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></span></div>
+    <div class="row"><div class="row-main"><span class="badge">후보</span><p class="row-title">10월 18일(일) 낮 12시</p><p class="row-sub">겹치는 모임 없음</p></div><span class="row-trail"><button class="appbar-btn" aria-label="10월 18일(일) 낮 12시 후보 지우기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></span></div>
+    <div class="row"><div class="row-main"><span class="badge">후보</span><p class="row-title">10월 31일(토) 저녁 6시</p><p class="row-sub">겹치는 모임 없음</p></div><span class="row-trail"><button class="appbar-btn" aria-label="10월 31일(토) 저녁 6시 후보 지우기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg></button></span></div>
+    <a class="row is-add" href="calendar.html"><span class="row-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><div class="row-main"><p class="row-title">후보 추가</p></div></a>
+  </section>
+  <section class="block">
+    <div class="field"><label class="label" for="place">장소</label><input class="input" id="place" value="신촌"></div>
+    <div class="field is-error"><label class="label" for="due">답 마감</label><input class="input" id="due" value="10월 20일(화)"><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 2.5 20h19L12 4z"/><path d="M12 10v4.5M12 17.5v.5"/></svg>첫 후보(10월 17일)보다 앞선 날로 정해 주세요</p></div>
+    <div class="row"><div class="row-main"><p class="row-title">마감 하루 전 알림</p><p class="row-sub">답 없는 사람에게 자동으로 한 번</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="마감 하루 전 알림"></button></span></div>
+  </section>
+</main>
+<div class="cta"><button class="btn primary full">링크 만들기</button></div>
+</body></html>

@@ -1,0 +1,41 @@
+{
+ "mode": "brief",
+ "items": [
+  {
+   "id": "S1",
+   "kind": "screen",
+   "name": "양가 통합 일정 화면",
+   "quote": "우리 둘의 일정이 한 화면에서 겹치지 않는지 확인하고 싶다.",
+   "covered_by": [
+    "calendar",
+    "meeting-decide"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "특정 날짜에 모임 겹침 알림",
+   "quote": "특정 날짜에 모임이 겹치는지 알 수 있어야 합니다",
+   "screen_hint": "S1",
+   "state_hint": "error",
+   "target": "meeting-decide",
+   "state": "error"
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "회신 마감 기한",
+   "quote": "회신 마감 기한을 둘 수 있어야 합니다",
+   "state_hint": "policy",
+   "policy": "meeting-dates"
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "무응답자를 언제까지 기다릴지 결정",
+   "quote": "날짜 후보를 보내도 며칠씩 답이 없는 사람이 꼭 있어, 언제까지 기다릴지",
+   "state_hint": "policy",
+   "policy": "meeting-detail"
+  }
+ ]
+}

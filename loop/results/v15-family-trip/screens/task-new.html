@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>할 일 나누기</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="tasks.html" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></a><h1 class="appbar-title">할 일 나누기</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label">종류</span>
+    <div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">할 일</button><button class="seg-item" role="radio" aria-checked="false">준비물</button></div>
+  </div>
+  <div class="field"><label class="label" for="what">무엇을</label><input class="input" id="what" value="공항 리무진 시간 확인"></div>
+  <div class="field"><span class="label">누가</span>
+    <div class="chips"><button class="chip" aria-pressed="false"><span class="avatar"><img src="../assets/fluent/jieun.svg" alt=""></span>지은</button><button class="chip is-selected" aria-pressed="true"><span class="avatar"><img src="../assets/fluent/minsu.svg" alt=""></span>민수</button><button class="chip" aria-pressed="false"><span class="avatar"><img src="../assets/fluent/mother.svg" alt=""></span>엄마</button><button class="chip" aria-pressed="false"><span class="avatar"><img src="../assets/fluent/father.svg" alt=""></span>아빠</button><button class="chip" aria-pressed="false"><span class="avatar is-text">준</span>준호</button><button class="chip" aria-pressed="false"><span class="avatar is-text">모</span>모두 각자</button></div>
+    <p class="block-note">하윤 몫은 지은이 맡아요</p>
+  </div>
+  <div class="field"><label class="label" for="due">언제까지 (비워도 돼요)</label><input class="input" id="due" value="" placeholder="날짜를 골라 주세요"></div>
+</main>
+<div class="cta"><a class="btn primary full" href="tasks.html">나누기</a></div>
+</body></html>

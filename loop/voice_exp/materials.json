@@ -1,0 +1,263 @@
+{
+ "v18-pilates-booking": [
+  {
+   "id": "pila-01",
+   "slot": "section",
+   "screen": "대기 신청",
+   "original": "자리가 나면"
+  },
+  {
+   "id": "pila-02",
+   "slot": "section",
+   "screen": "예약 취소",
+   "original": "취소하면"
+  },
+  {
+   "id": "pila-03",
+   "slot": "big_title",
+   "screen": "대기 신청",
+   "original": "내 순번은"
+  },
+  {
+   "id": "pila-04",
+   "slot": "toast",
+   "screen": "대기 신청",
+   "original": "대기 5번으로 신청했어요 — 자리가 나면 바로 알려 드릴게요"
+  },
+  {
+   "id": "pila-05",
+   "slot": "screen_title",
+   "screen": "20:00 리포머 중급",
+   "original": "20:00 리포머 중급"
+  },
+  {
+   "id": "pila-06",
+   "slot": "screen_title",
+   "screen": "리포머 바디라인",
+   "original": "리포머 바디라인"
+  },
+  {
+   "id": "pila-07",
+   "slot": "row_sub",
+   "screen": "대기 신청",
+   "original": "오민재 · 숨 필라테스 망원점 · 정원 6명 마감"
+  },
+  {
+   "id": "pila-08",
+   "slot": "row_sub",
+   "screen": "수업 시간표",
+   "original": "오민재 · 기구 중급 · 잔여 1/6"
+  },
+  {
+   "id": "pila-09",
+   "slot": "notice",
+   "screen": "동네 설정",
+   "original": "동네는 한 곳만 정해요 · 최근 동네는 3곳까지 남아요"
+  },
+  {
+   "id": "pila-10",
+   "slot": "notice",
+   "screen": "카톡 문의 없이 빈자리 보고 바로 예약",
+   "original": "시작하면"
+  },
+  {
+   "id": "pila-s1",
+   "slot": "dialog",
+   "situation": "예약 취소 확인창 — 수업 시작 24시간 이내라 취소하면 수강권 1회가 차감된다 (제목·본문·버튼 2개)"
+  },
+  {
+   "id": "pila-s2",
+   "slot": "error",
+   "situation": "결제 실패 — 카드 한도 초과로 체험 1회권(25,000원) 결제가 안 됐다"
+  },
+  {
+   "id": "pila-s3",
+   "slot": "empty",
+   "situation": "내 예약 탭 — 예정된 수업이 하나도 없다(처음 쓰는 사람)"
+  },
+  {
+   "id": "pila-s4",
+   "slot": "toast",
+   "situation": "강사 한소영을 즐겨찾기에 추가했다"
+  },
+  {
+   "id": "pila-s5",
+   "slot": "notice",
+   "situation": "대기 순번 알림 후 2시간 안에 확정하지 않으면 다음 순번으로 넘어간다는 안내"
+  }
+ ],
+ "v18-wedding-meetup": [
+  {
+   "id": "wedd-01",
+   "slot": "screen_title",
+   "screen": "둘이 함께 쓰는 공간을 만들어요",
+   "original": "둘이 함께 쓰는 공간을 만들어요"
+  },
+  {
+   "id": "wedd-02",
+   "slot": "screen_title",
+   "screen": "확정까지 3개 남았어요",
+   "original": "확정까지 3개 남았어요"
+  },
+  {
+   "id": "wedd-03",
+   "slot": "section",
+   "screen": "청첩장모임 답하기",
+   "original": "10월 17일(토) 오후 7:00"
+  },
+  {
+   "id": "wedd-04",
+   "slot": "section",
+   "screen": "고려대 경영 동기",
+   "original": "다른 후보"
+  },
+  {
+   "id": "wedd-05",
+   "slot": "row_sub",
+   "screen": "후보 3개, 우리 일정과 겹치는 시간은 없어요",
+   "original": "이화여대 동기"
+  },
+  {
+   "id": "wedd-06",
+   "slot": "row_sub",
+   "screen": "새 모임",
+   "original": "이화여대 동기 모임 · 다녀옴"
+  },
+  {
+   "id": "wedd-07",
+   "slot": "notice",
+   "screen": "고려대 경영 동기",
+   "original": "마감 전날 한 번 자동으로 알려요 · 다시 알리기는 카톡 링크를 다시 보내요"
+  },
+  {
+   "id": "wedd-08",
+   "slot": "notice",
+   "screen": "10월 31일로 확정했어요",
+   "original": "구성원 4명 모두(최원석 포함) 같은 페이지에서 확정을 봐요 · 준호에게도 알림이 가요"
+  },
+  {
+   "id": "wedd-09",
+   "slot": "lead",
+   "screen": "10월 31일로 확정했어요",
+   "original": "10월 31일(토) 오후 6:00 · 홍대 을지로골뱅이"
+  },
+  {
+   "id": "wedd-10",
+   "slot": "toast",
+   "screen": "주예린·하소정 님께 보낼 준비가 됐어요",
+   "original": "후보 3개와 회신 마감을 저장했어요"
+  },
+  {
+   "id": "wedd-s1",
+   "slot": "dialog",
+   "situation": "모임 날짜 후보를 삭제하는 확인창 — 이미 3명이 투표한 후보다 (제목·본문·버튼 2개)"
+  },
+  {
+   "id": "wedd-s2",
+   "slot": "error",
+   "situation": "초대 링크가 만료되어 모임에 들어갈 수 없다(11월 6일까지였음)"
+  },
+  {
+   "id": "wedd-s3",
+   "slot": "empty",
+   "situation": "받은 초대 목록 — 아직 초대받은 모임이 없다"
+  },
+  {
+   "id": "wedd-s4",
+   "slot": "toast",
+   "situation": "청첩장 모임 링크를 복사했다"
+  },
+  {
+   "id": "wedd-s5",
+   "slot": "notice",
+   "situation": "날짜를 확정하면 참석자 모두에게 알림이 간다는 안내"
+  }
+ ],
+ "v18-ai-saju": [
+  {
+   "id": "ai-s-01",
+   "slot": "screen_title",
+   "screen": "서로의 빈칸을 채워 주는 사이",
+   "original": "서로의 빈칸을 채워 주는 사이"
+  },
+  {
+   "id": "ai-s-02",
+   "slot": "screen_title",
+   "screen": "별 충전",
+   "original": "별 충전"
+  },
+  {
+   "id": "ai-s-03",
+   "slot": "section",
+   "screen": "별 충전",
+   "original": "충전할 별"
+  },
+  {
+   "id": "ai-s-04",
+   "slot": "section",
+   "screen": "서로의 빈칸을 채워 주는 사이",
+   "original": "잘 맞는 점"
+  },
+  {
+   "id": "ai-s-05",
+   "slot": "row_sub",
+   "screen": "준비한 만큼 말이 술술 나오는 날",
+   "original": "말로 인정받는 날"
+  },
+  {
+   "id": "ai-s-06",
+   "slot": "row_sub",
+   "screen": "준비한 만큼 말이 술술 나오는 날",
+   "original": "먼저 연락하면 반가운 날"
+  },
+  {
+   "id": "ai-s-07",
+   "slot": "notice",
+   "screen": "서로의 빈칸을 채워 주는 사이",
+   "original": "둘 다 금이 0개예요"
+  },
+  {
+   "id": "ai-s-08",
+   "slot": "notice",
+   "screen": "별 충전",
+   "original": "지금 가진 별"
+  },
+  {
+   "id": "ai-s-09",
+   "slot": "lead",
+   "screen": "한소윤",
+   "original": "1999년 3월 15일 양력 · 오전 8:10 · 서울"
+  },
+  {
+   "id": "ai-s-10",
+   "slot": "toast",
+   "screen": "서로의 빈칸을 채워 주는 사이",
+   "original": "링크를 복사했어요 — 11월 6일까지 열려요"
+  },
+  {
+   "id": "ai-s-s1",
+   "slot": "dialog",
+   "situation": "사주 풀이 기록 삭제 확인창 — 삭제하면 되돌릴 수 없다 (제목·본문·버튼 2개)"
+  },
+  {
+   "id": "ai-s-s2",
+   "slot": "error",
+   "situation": "태어난 시간을 24시간 형식 밖(예: 25시)으로 입력했다"
+  },
+  {
+   "id": "ai-s-s3",
+   "slot": "empty",
+   "situation": "저장한 풀이 목록 — 아직 저장한 풀이가 없다"
+  },
+  {
+   "id": "ai-s-s4",
+   "slot": "toast",
+   "situation": "오늘의 운세를 카카오톡으로 공유할 링크를 복사했다"
+  },
+  {
+   "id": "ai-s-s5",
+   "slot": "notice",
+   "situation": "태어난 시간을 몰라도 풀이할 수 있지만, 넣으면 더 정확해진다는 안내"
+  }
+ ]
+}

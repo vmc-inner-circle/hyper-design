@@ -1,0 +1,147 @@
+/* 캔버스 움직임 — transitions-dev 토큰(_root.css 에서 필요한 것만 옮김) + 캔버스 전환을 그 토큰으로.
+   build_canvas.py 가 index.html <style> 안 hd-motion 표시 자리에 끼워 넣는다.
+   전환마다 @media (prefers-reduced-motion: reduce) 가드, 그리고 '애니메이션 끄기'(body.nomotion)도 같은 효과. */
+:root {
+  /* Durations */
+  --duration-micro: 80ms;
+  --duration-quick: 150ms;
+  --duration-fast: 250ms;
+  --duration-medium: 350ms;
+  --duration-slow: 400ms;
+  --duration-very-slow: 500ms;
+  /* Easings */
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: ease-in-out;
+  --ease-out: ease-out;
+  /* Scales · blur */
+  --scale-large: 0.96;
+  --scale-medium: 0.97;
+  --scale-small: 0.98;
+  --scale-tiny: 0.99;
+  --blur-small: 2px;
+  /* Card resize (01) */
+  --resize-dur: 300ms;
+  --resize-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Menu dropdown (05) */
+  --dropdown-open-dur: 250ms;
+  --dropdown-close-dur: 150ms;
+  --dropdown-pre-scale: 0.97;
+  --dropdown-closing-scale: 0.99;
+  --dropdown-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Modal open / close (06) */
+  --modal-open-dur: 250ms;
+  --modal-close-dur: 150ms;
+  --modal-scale: 0.96;
+  --modal-scale-close: 0.96;
+  --modal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Panel reveal (07) */
+  --panel-open-dur: 400ms;
+  --panel-close-dur: 350ms;
+  --panel-translate-y: 100px;
+  --panel-blur: 2px;
+  --panel-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Page side-by-side (08) → 카메라 이동 */
+  --page-slide-dur: 250ms;
+  --page-slide-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --camera-centre-dur: 250ms;
+  --camera-glide-dur: 600ms;
+  --camera-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --camera-pulse-dur: 500ms;
+  /* Focus enter / exit */
+  --focus-dur: 250ms;
+  --focus-draw-dur: 400ms;
+  --focus-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Tooltip open/close (17) → 선 위 태그 */
+  --tt-in-dur: 150ms;
+  --tt-out-dur: 50ms;
+  --tt-scale: 0.98;
+  --tt-delay: 80ms;
+  --tt-in-ease: ease-out;
+  --tt-out-ease: ease-out;
+}
+
+/* 1. 포커스 진입 / 해제 — 다른 카드 흐리게(불투명도), 색 선은 그려지듯(pathLength=1) */
+/* 흐려지는 쪽(진입)은 바로: 전체 보기에서 Shift+클릭하면 카드 iframe 이 한꺼번에 로드되며 한동안 프레임이 안 그려져
+   전환이 멈춘 채 남는다(흐려지지 않은 카드). 해제(다시 밝아짐)만 전환. 진입의 움직임은 선이 그려지는 것으로. */
+#rows .card { transition: opacity var(--focus-dur) var(--focus-ease); }
+#rows.focusing .card { transition: none; }
+svg.lks path.lk { stroke-dasharray: 1; animation: hd-draw var(--focus-draw-dur) var(--focus-ease) backwards; }
+svg.lks path.lk { transition: opacity var(--duration-quick) var(--focus-ease); }
+@keyframes hd-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  #rows .card, svg.lks path.lk { transition: none !important; animation: none !important; }
+}
+
+/* 2. 카드 펼치기 / 접기 (01-card-resize) */
+.phone {
+  transition:
+    width  var(--resize-dur) var(--resize-ease),
+    height var(--resize-dur) var(--resize-ease);
+}
+@media (prefers-reduced-motion: reduce) {
+  .phone { transition: none !important; }
+}
+
+/* 3. 카메라 이동 — 움직임은 JS(requestAnimationFrame, --camera-* 를 읽음). 도착한 카드 테두리 한 번 맥박 */
+.card.pulse::after {
+  content: ''; position: absolute; left: 0; top: 0; width: 375px; height: var(--ph, 812px); border-radius: 28px; pointer-events: none; z-index: 3;
+  animation: hd-pulse var(--camera-pulse-dur) var(--camera-ease) both;
+}
+@keyframes hd-pulse {
+  0%   { box-shadow: 0 0 0 0 var(--ring, #2563eb); opacity: 1; }
+  60%  { box-shadow: 0 0 0 22px var(--ring, #2563eb); opacity: .55; }
+  100% { box-shadow: 0 0 0 30px var(--ring, #2563eb); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card.pulse::after { animation: none !important; }
+}
+
+/* 4. 크게 보기 모달 열기 / 닫기 (06-modal) — 닫을 때는 hidden 이 먼저 켜지고 .is-closing 동안만 보인다 */
+#modal:not([hidden]) .box { animation: hd-modal-in var(--modal-open-dur) var(--modal-ease) backwards; }
+#modal:not([hidden]) { animation: hd-fade-in var(--modal-open-dur) var(--modal-ease) backwards; }
+#modal[hidden].is-closing { display: flex; pointer-events: none; animation: hd-fade-out var(--modal-close-dur) var(--modal-ease) forwards; }
+#modal.is-closing .box { animation: hd-modal-out var(--modal-close-dur) var(--modal-ease) forwards; }
+@keyframes hd-modal-in { from { transform: scale(var(--modal-scale)); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes hd-modal-out { from { transform: scale(1); opacity: 1; } to { transform: scale(var(--modal-scale-close)); opacity: 0; } }
+@keyframes hd-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes hd-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  #modal, #modal .box { animation: none !important; }
+  #modal[hidden].is-closing { display: none; }
+}
+
+/* 5. 범례 패널 표시 (07-panel-reveal) */
+#legend:not([hidden]) { animation: hd-panel-in var(--panel-open-dur) var(--panel-ease) backwards; }
+@keyframes hd-panel-in {
+  from { transform: translateY(var(--panel-translate-y)); opacity: 0; filter: blur(var(--panel-blur)); }
+  to   { transform: translateY(0); opacity: 1; filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #legend { animation: none !important; }
+}
+
+/* 6. 드롭다운 / 팝오버 (05-menu-dropdown) — 색 드롭다운(위로 열림) · 쌍 색 팝오버 · 메모 팝오버 · 전환 메뉴 */
+.t-dropdown { transform-origin: top left; }
+.t-dropdown[data-origin="top-right"]   { transform-origin: top right; }
+.t-dropdown[data-origin="bottom-left"] { transform-origin: bottom left; }
+.t-dropdown.is-open { animation: hd-dd-in var(--dropdown-open-dur) var(--dropdown-ease) backwards; }
+.t-dropdown.is-closing { animation: hd-dd-out var(--dropdown-close-dur) var(--dropdown-ease) forwards; pointer-events: none; }
+#pop:not([hidden]) { transform-origin: top left; animation: hd-dd-in var(--dropdown-open-dur) var(--dropdown-ease) backwards; }
+@keyframes hd-dd-in { from { transform: scale(var(--dropdown-pre-scale)); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes hd-dd-out { from { transform: scale(1); opacity: 1; } to { transform: scale(var(--dropdown-closing-scale)); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .t-dropdown, #pop { animation: none !important; }
+}
+
+/* 7. 태그 · 툴팁 등장 (17-tooltip) — 선 위 태그 · 단축키 안내 */
+.ltag.on { animation: hd-tt-in var(--tt-in-dur) var(--tt-in-ease) var(--tt-delay) backwards; }
+.ltag { transition: opacity var(--tt-out-dur) var(--tt-out-ease); }
+#khint { animation: hd-tt-in var(--tt-in-dur) var(--tt-in-ease) var(--tt-delay) backwards; }
+@keyframes hd-tt-in { from { opacity: 0; scale: var(--tt-scale); } to { opacity: 1; scale: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .ltag, #khint { transition: none !important; animation: none !important; }
+}
+
+/* 애니메이션 끄기(전환 메뉴 체크, prefs.motion=false) — 움직임 줄이기와 같다 */
+body.nomotion *, body.nomotion *::after { transition: none !important; animation: none !important; }
+body.nomotion #modal[hidden].is-closing { display: none; }

@@ -1,0 +1,134 @@
+{
+ "mode": "brief",
+ "items": [
+  {
+   "id": "F1",
+   "kind": "feature",
+   "name": "일정 작성·수정",
+   "quote": "**일정 작성·수정**: 날짜별로 이동·숙박·활동 계획을 적고, 자유롭게 순서를 바꾸거나 내용을 고칠 수 있",
+   "covered_by": [
+    "day-edit",
+    "item-new",
+    "item-edit"
+   ]
+  },
+  {
+   "id": "F2",
+   "kind": "feature",
+   "name": "확정 여부 표시",
+   "quote": "**확정 여부 표시**: 이미 확정된 항목과 아직 후보 단계인 항목을 구분해서 보여줄 수 있어야 합니다.",
+   "covered_by": [
+    "day",
+    "day-edit",
+    "home-edit"
+   ]
+  },
+  {
+   "id": "F3",
+   "kind": "feature",
+   "name": "역할에 따라 다르게 보여주기",
+   "quote": "**역할에 따라 다르게 보여주기**: 계획을 만드는 사람과 그 계획을 확인만 하는 사람이 같은 정보를 서로 ",
+   "covered_by": [
+    "home",
+    "home-edit",
+    "day",
+    "day-edit",
+    "family"
+   ]
+  },
+  {
+   "id": "F4",
+   "kind": "feature",
+   "name": "할 일·준비물 공유",
+   "quote": "**할 일·준비물 공유**: 여행을 위해 누가 무엇을 준비해야 하는지 구성원끼리 나누어 볼 수 있어야 합니다",
+   "covered_by": [
+    "checklist",
+    "tasks",
+    "task-new"
+   ]
+  },
+  {
+   "id": "F5",
+   "kind": "feature",
+   "name": "변경 사항 전달",
+   "quote": "**변경 사항 전달**: 계획이 바뀌었을 때 이를 다른 구성원에게 알리되, 너무 잦은 알림이 오히려 부담이 ",
+   "covered_by": [
+    "news",
+    "item-confirmed",
+    "home"
+   ]
+  },
+  {
+   "id": "US1",
+   "kind": "feature",
+   "name": "일정 짜는 자녀 — 후보 적고 수시 수정",
+   "quote": "**일정을 짜는 자녀로서**, 아직 확정되지 않은 후보들도 편하게 적어두고 수시로 고치고 싶다.",
+   "covered_by": [
+    "day-edit",
+    "item-new",
+    "item-edit",
+    "item-confirmed"
+   ]
+  },
+  {
+   "id": "US2",
+   "kind": "feature",
+   "name": "동행 부모 — 큰 흐름 파악",
+   "quote": "**동행하는 부모로서**, 자식에게 매번 묻지 않고도 이번 여행이 언제 어디로 흘러가는지 큰 흐름만이라도 알",
+   "covered_by": [
+    "home",
+    "day",
+    "news"
+   ]
+  },
+  {
+   "id": "US3",
+   "kind": "feature",
+   "name": "가족 구성원 — 내 준비물·위치 확인",
+   "quote": "**여행에 동행하는 가족 구성원으로서**, 내가 이번 여행에서 무엇을 준비하고 언제 어디에 있어야 하는지 헷",
+   "covered_by": [
+    "home-d3",
+    "home-trip",
+    "checklist"
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "O1",
+   "name": "여행",
+   "quote": "**20~40대 자녀와 50~70대 부모가 함께 떠나는 가족여행**을 계획하는 앱을 만듭니다.",
+   "create": "trip-new",
+   "view": "home",
+   "edit": "family",
+   "after": "invite--done"
+  },
+  {
+   "id": "O2",
+   "name": "일정 항목(이동·숙박·활동)",
+   "quote": "날짜별로 이동·숙박·활동 계획을 적고, 자유롭게 순서를 바꾸거나 내용을 고칠 수 있어야 합니다.",
+   "create": "item-new",
+   "view": "day",
+   "edit": "item-edit",
+   "after": "item-confirmed"
+  },
+  {
+   "id": "O3",
+   "name": "할 일·준비물",
+   "quote": "짐 챙기기, 예약 확인처럼 누군가는 반드시 해야 하는 자잘한 할 일이 여행마다 늘 남습니다.",
+   "create": "task-new",
+   "view": "checklist",
+   "edit": "tasks",
+   "after": "checklist--done"
+  },
+  {
+   "id": "O4",
+   "name": "궁금해요",
+   "quote": "자식에게 매번 묻지 않고도 이번 여행이 언제 어디로 흘러가는지 큰 흐름만이라도 알고 싶다",
+   "create": "day",
+   "view": "home-edit",
+   "edit": "n/a — 한 번 누르는 요청, 되돌리기는 day--done에서",
+   "after": "day--done"
+  }
+ ]
+}

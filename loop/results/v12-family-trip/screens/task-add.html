@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>할 일 추가</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="">
+<header class="appbar"><a class="appbar-btn" href="tasks.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><p class="appbar-title">할 일 나누기</p><span></span></header>
+<main class="page" aria-hidden="true">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">남은 일 4개</h2></div>
+    <div class="row"><span class="avatar"><img src="../assets/fluent/minsu.svg" alt="민수"></span><div class="row-main"><p class="row-title">하윤 여권 재발급</p><p class="row-sub">민수 · 11월 20일까지</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="하윤 여권 재발급 끝냄"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar"><img src="../assets/fluent/jieun.svg" alt="지은"></span><div class="row-main"><p class="row-title">여행자 보험 가입</p><p class="row-sub">지은 · 12월 10일까지</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="여행자 보험 가입 끝냄"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar"><img src="../assets/fluent/father.svg" alt="아버지"></span><div class="row-main"><p class="row-title">베트남 동 환전</p><p class="row-sub">아버지 · 12월 12일까지</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="베트남 동 환전 끝냄"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+    <div class="row"><span class="avatar"><img src="../assets/fluent/mother.svg" alt="어머니"></span><div class="row-main"><p class="row-title">가족 상비약 챙기기</p><p class="row-sub">어머니 · 12월 16일까지</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="가족 상비약 챙기기 끝냄"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <h1 class="h2" id="sheet-title">할 일 추가</h1>
+  <div class="field"><label class="label" for="task-name">할 일</label><input class="input" id="task-name" placeholder="예: 환전하기"></div>
+  <div class="field"><p class="label">맡을 사람</p><div class="chips"><button class="chip is-selected" aria-pressed="true">누구든</button><button class="chip" aria-pressed="false">지은</button><button class="chip" aria-pressed="false">민수</button><button class="chip" aria-pressed="false">아버지</button><button class="chip" aria-pressed="false">어머니</button></div></div>
+  <div class="field"><label class="label" for="task-due">마감 (선택)</label><input class="input" id="task-due" type="date"></div>
+  <p class="block-note">맡기면 그 사람의 '내가 챙길 것'에 곧 붙어요</p>
+  <a class="btn primary full" href="tasks.html">저장</a>
+</div>
+</body></html>

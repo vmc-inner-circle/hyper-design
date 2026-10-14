@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>동네 설정 · 오류</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large plain">
+<header class="appbar"><a class="appbar-btn" href="signup-info.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">동네 설정</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-valuenow="3" aria-valuemax="3"><span class="is-on"></span><span class="is-on"></span><span class="is-on"></span></div>
+  <h2 class="h2">어느 동네에서 운동하세요?</h2>
+  <div class="field is-error">
+    <p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>위치 권한이 꺼져 있어요, 동 이름으로 찾아 주세요</p>
+    <button class="btn small tint" type="button">설정 열기</button>
+  </div>
+  <section class="field" aria-label="동 이름 검색">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><input type="search" value="망원" placeholder="동 이름으로 찾기" aria-label="동 이름으로 찾기"></label>
+    <a class="row" href="home.html"><span class="row-art"><img src="../assets/fluent/pin.svg" alt=""></span><div class="row-main"><p class="row-title">망원1동</p><p class="row-sub">서울 마포구</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="home.html"><span class="row-art"><img src="../assets/fluent/pin.svg" alt=""></span><div class="row-main"><p class="row-title">망원2동</p><p class="row-sub">서울 마포구</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+  <section class="field" aria-label="최근 동네">
+    <span class="label">최근 동네</span>
+    <a class="row" href="home.html"><span class="row-art"><img src="../assets/fluent/pin.svg" alt=""></span><div class="row-main"><p class="row-title">망원동</p><p class="row-sub">서울 마포구</p></div><span class="row-trail">지금 동네<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <p class="block-note">최근 동네는 3개까지 남아요</p>
+  </section>
+</main>
+</body></html>

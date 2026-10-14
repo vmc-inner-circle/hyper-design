@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>수강권 일시정지</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="pass-detail.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">일시정지</h1><span></span></header>
+<main class="page">
+  <header class="hero"><p class="eyebrow">숨 필라테스 망원점 20회권</p><p class="title">남은 정지 <span class="num">2회 · 30일</span></p><p class="lead">최대 2회·합산 30일, 1회 최소 3일</p></header>
+  <div class="field"><label class="label" for="start">시작일</label><input class="input" id="start" value="10월 16일(금)"></div>
+  <div class="field is-error"><label class="label" for="end">종료일</label><input class="input" id="end" value="10월 17일(토)" aria-invalid="true" aria-describedby="end-msg"><p class="field-msg" id="end-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>한 번에 최소 3일부터 정지할 수 있어요 — 10월 18일(일)까지 골라 주세요</p></div>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">바뀌는 만료일</h2></div>
+    <p class="row-sub">기간을 고르면 보여요</p>
+  </section>
+</main>
+<div class="cta"><button class="btn primary full" disabled>정지하기</button></div>
+</body></html>

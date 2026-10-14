@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>전체 화면 한눈에 보기</title>
+<!-- 캔버스 템플릿(정적). build_canvas.py 가 아래 hd-data 에 데이터만 끼워 넣는다. 외부 라이브러리 없음. -->
+<link id="tokens" rel="stylesheet" href="tokens.css" media="print" onload="this.media='all'">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{display:flex;flex-direction:column;background:#ECECE8;color:#1c1c1c;font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Apple SD Gothic Neo',sans-serif;word-break:keep-all;-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit}
+
+/* ---------- 헤더: 제목 · 탭 · 팔레트 · 보기 (조작 그룹 3개) ---------- */
+.hd{flex:none;display:flex;align-items:center;gap:8px 16px;flex-wrap:wrap;padding:8px 16px;background:#fff;border-bottom:1px solid #dcdcd7;position:relative;z-index:5}
+.hd h1{font-size:17px;font-weight:700;margin:0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
+.tabs{display:flex;gap:2px;background:#EFEFEB;border-radius:12px;padding:3px}
+.tab{min-height:44px;min-width:44px;padding:0 16px;border:0;border-radius:9px;background:transparent;font-size:15px;font-weight:600;color:#5a5a55;cursor:pointer}
+.tab[aria-selected="true"]{background:#fff;color:#1c1c1c;box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.pal{display:flex;align-items:center;gap:2px;margin-left:auto}
+.pal-label{font-size:13px;color:#777;margin-right:4px}
+.dot{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 10px;border:0;border-radius:999px;background:transparent;font-size:14px;color:#444;cursor:pointer}
+.dot i{flex:none;width:22px;height:22px;border-radius:999px;background:var(--dot);box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.dot[aria-pressed="true"]{background:#F1F1ED;color:#1c1c1c;font-weight:700}
+.dot[aria-pressed="true"] i{box-shadow:0 0 0 2px #fff,0 0 0 4px #1c1c1c}
+.dot:hover{background:#F5F5F2}
+.view{display:flex;align-items:center;gap:4px}
+.vbtn{min-height:44px;min-width:44px;padding:0 14px;border:1px solid #dcdcd7;border-radius:10px;background:#fff;font-size:14px;font-weight:600;cursor:pointer}
+.vbtn:hover{background:#F5F5F2}
+.zoom{min-width:64px;font-variant-numeric:tabular-nums;color:#555}
+body:not([data-tab="screens"]) .view{visibility:hidden}
+@media (max-width:760px){
+  .hd{padding:6px 10px;gap:4px 8px}
+  .hd h1{flex:1 1 0;font-size:16px;order:1;max-width:none}
+  .pal{order:2;margin-left:0}
+  .tabs{order:3}
+  .view{order:4;margin-left:auto}
+  .tab{padding:0 7px;font-size:13px}
+  .fit-long{display:none}
+  .zoom{min-width:52px}
+  .dot{padding:0}
+  .dot{justify-content:center}
+  .dot b,.pal-label{display:none}
+  .vbtn{padding:0 10px}
+}
+
+/* ---------- 판 ---------- */
+.panes{flex:1;position:relative;overflow:hidden}
+.pane{position:absolute;inset:0}
+.pane[hidden]{display:none}
+.pane iframe.doc{width:100%;height:100%;border:0;display:block;background:#F6F6F3}
+#screens{overflow:hidden;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+#screens.dragging{cursor:grabbing}
+#screens.dragging .cover{cursor:grabbing}
+#stage{position:absolute;left:0;top:0;transform-origin:0 0;width:max-content;will-change:transform}
+
+/* 판 안의 글 — 첫 배율 0.72 기준으로 읽히게 크게 쓴다(22px → 약 16px) */
+.intro{padding:48px 0 0;max-width:1760px}
+.intro-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:56px;align-items:start}
+.hint{font-size:20px;color:#6b6b66;margin:0 0 18px}
+.story h2{font-size:42px;line-height:1.3;margin:0 0 14px}
+.story h2 em{font-style:normal;color:#2563eb}
+.story .sum{font-size:22px;line-height:1.6;color:#444;margin:0 0 24px}
+.ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.idea{background:#fff;border-radius:20px;padding:22px}
+.idea b{font-size:22px}
+.idea p{font-size:19px;line-height:1.55;color:#555;margin:8px 0 0}
+.decisions{margin-top:6px}
+.narrow .ideas,.narrow .decisions ul,.narrow .intro-grid{grid-template-columns:1fr}
+.narrow .decisions{margin-top:0}
+.narrow .story h2{font-size:38px}
+.decisions h3{font-size:27px;margin:0 0 8px}
+.decisions .core{font-size:21px;color:#333;margin:0 0 14px}
+.decisions ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.decisions li{background:#fff;border-radius:16px;padding:14px 18px;font-size:19px;line-height:1.45}
+.decisions li b{margin-right:4px}
+.decisions .why{display:block;color:#666;font-size:18px}
+.v{display:inline-block;font-size:15px;font-weight:700;border-radius:8px;padding:2px 9px;margin-right:8px;background:#eee;color:#444;vertical-align:2px}
+.v-cut{background:#fde8e8;color:#9b1c1c}
+.v-lighten{background:#e7f0ff;color:#1d4ed8}
+
+.rows{position:relative;padding-bottom:40px}
+.flow{padding-top:90px}
+.glabel{font-size:31px;font-weight:700;margin:0 0 104px;white-space:nowrap}
+.cards{display:flex;gap:84px;align-items:flex-start}
+.card{flex:none;width:375px}
+.phone{position:relative;width:375px;height:812px;border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+.phone iframe{display:block;width:375px;height:812px;border:0;pointer-events:none;background:#fff}
+.cover{position:absolute;inset:0;width:100%;height:100%;border:0;padding:0;margin:0;background:transparent;border-radius:28px;cursor:pointer}
+.cover:hover,.cover:focus-visible{outline:4px solid #2563eb;outline-offset:0}
+.ftitle{font-size:22px;font-weight:700;margin-top:16px;line-height:1.35}
+.state{display:inline-block;font-size:15px;font-weight:700;color:#8a5a00;background:#fff3cf;border-radius:8px;padding:2px 8px;margin-right:8px;vertical-align:2px}
+.fdesc{font-size:18px;color:#555;margin-top:4px;line-height:1.45}
+.pol{margin:8px 0 0;padding-left:22px;font-size:17px;line-height:1.5;color:#444}
+.more{font-size:17px;color:#666;margin-top:4px}
+.more summary,.foot summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.more .pol{margin-top:0}
+svg.ar{position:absolute;left:0;top:0;overflow:visible;pointer-events:none}
+svg.ar path.ln{fill:none;stroke:#2563eb;stroke-width:3;marker-start:url(#hd-dot);marker-end:url(#hd-head)}
+.alabel{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1.5px solid #c7d6fb;color:#1d4ed8;font-size:17px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.alabel.side{transform:translate(-100%,-50%);white-space:normal;max-width:220px;text-align:right;border-radius:14px}
+.foot{padding:20px 0 120px;font-size:17px;color:#777;max-width:1500px}
+.foot p{margin:0 0 6px}
+.foot ul{margin:4px 0 0;padding-left:22px;line-height:1.6}
+.foot a{color:#555}
+
+/* ---------- 크게 보기 ---------- */
+#modal{position:fixed;inset:0;z-index:20;background:rgba(20,20,20,.62);display:flex;align-items:center;justify-content:center}
+#modal[hidden]{display:none}
+#modal .box{position:relative;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+#modal iframe{display:block;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
+#modal .close{position:absolute;top:max(10px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:#fff;font-size:15px;font-weight:600;cursor:pointer;z-index:2}
+#modal .mtitle{position:absolute;top:max(10px,env(safe-area-inset-top));left:16px;right:96px;color:#fff;font-size:15px;font-weight:600;min-height:44px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head>
+<body data-tab="screens">
+<header class="hd">
+  <h1 id="title">전체 화면 한눈에 보기</h1>
+  <div class="tabs" role="tablist" data-group="tabs">
+    <button class="tab" role="tab" data-tab="screens" aria-selected="true">Screens</button>
+    <button class="tab" role="tab" data-tab="foundation" aria-selected="false">Foundation</button>
+    <button class="tab" role="tab" data-tab="components" aria-selected="false">Components</button>
+  </div>
+  <div class="pal" data-group="palette" aria-label="색 바꾸기"></div>
+  <div class="view" data-group="view">
+    <button class="vbtn" id="fit" title="모든 화면이 한 번에 들어오게">전체<span class="fit-long"> 보기</span></button>
+    <button class="vbtn zoom" id="zoom" title="처음 배율로">72%</button>
+  </div>
+</header>
+<main class="panes">
+  <section class="pane" id="screens" aria-label="화면 판">
+    <div id="stage" style="transform:translate(0px,0px) scale(0.72)">
+      <div class="intro" id="intro"></div>
+      <div class="rows" id="rows"></div>
+      <div class="foot" id="foot"></div>
+    </div>
+  </section>
+  <section class="pane" id="foundation" hidden><iframe class="doc" title="Foundation — 색·글자·여백" data-src="foundation.html"></iframe></section>
+  <section class="pane" id="components" hidden><iframe class="doc" title="Components — 이 앱이 쓴 부품" data-src="components.html"></iframe></section>
+</main>
+<div id="modal" hidden role="dialog" aria-modal="true" aria-label="화면 크게 보기">
+  <div class="mtitle" id="mtitle"></div>
+  <button class="close" id="mclose">닫기</button>
+  <div class="box" id="mbox"><iframe id="mframe" title="크게 보기"></iframe></div>
+</div>
+<noscript id="hd-links"><ul><li><a href="screens/splash.html">첫 실행 안내</a></li><li><a href="screens/login.html">로그인 · 가입 방법 고르기</a></li><li><a href="screens/phone-verify.html">전화번호 인증</a></li><li><a href="screens/signup-terms.html">약관 동의 · 기본 정보</a></li><li><a href="screens/neighborhood.html">동네 설정</a></li><li><a href="screens/neighborhood--done.html">동네 설정 · 보낸 뒤</a></li><li><a href="screens/home.html">홈 · 김지현 · 10/13 아침</a></li><li><a href="screens/home-jeongho.html">홈 · 이정호 · 수업 20분 전</a></li><li><a href="screens/home-new.html">홈 · 박서연 · 처음</a></li><li><a href="screens/find-list.html">스튜디오 찾기 · 목록</a></li><li><a href="screens/find-map.html">스튜디오 찾기 · 지도</a></li><li><a href="screens/studio.html">스튜디오 상세 · 숨 필라테스 망원점</a></li><li><a href="screens/instructor.html">강사 상세 · 정다은</a></li><li><a href="screens/reviews.html">리뷰 · 숨 필라테스 망원점</a></li><li><a href="screens/schedule.html">시간표 · 숨 필라테스 망원점</a></li><li><a href="screens/class.html">수업 상세 · 10/15 리포머 입문</a></li><li><a href="screens/pass-shop.html">수강권 고르기 · 숨 필라테스 망원점</a></li><li><a href="screens/checkout.html">결제 · 체험 1회</a></li><li><a href="screens/checkout-done.html">결제 완료</a></li><li><a href="screens/booking-confirm.html">예약 확인 · 10/15 리포머 입문</a></li><li><a href="screens/booking-done.html">예약 완료</a></li><li><a href="screens/waitlist.html">대기 신청 · 10/15 리포머 중급</a></li><li><a href="screens/waitlist-done.html">대기 신청 완료</a></li><li><a href="screens/promotion.html">대기 승급 · 자리가 났어요</a></li><li><a href="screens/promotion-done.html">승급 확정 완료</a></li><li><a href="screens/class-booked.html">수업 상세 · 예약한 10/13 리포머 중급</a></li><li><a href="screens/cancel.html">예약 취소 · 10/13 리포머 중급</a></li><li><a href="screens/cancel-done.html">취소 완료</a></li><li><a href="screens/my-bookings.html">내 예약 · 예정</a></li><li><a href="screens/my-bookings-waiting.html">내 예약 · 대기 중</a></li><li><a href="screens/my-bookings-past.html">내 예약 · 지난 수업</a></li><li><a href="screens/attend.html">출석 · 바른몸 소도구 필라테스</a></li><li><a href="screens/attend-done.html">출석 완료</a></li><li><a href="screens/passes.html">수강권 · 김지현</a></li><li><a href="screens/pass-detail.html">수강권 상세 · 숨 20회권</a></li><li><a href="screens/pass-pause.html">수강권 일시정지</a></li><li><a href="screens/pass-pause-done.html">일시정지 완료</a></li><li><a href="screens/review-write.html">리뷰 쓰기 · 10/9 리포머 중급</a></li><li><a href="screens/review-done.html">리뷰 등록 완료</a></li><li><a href="screens/notifications.html">알림함</a></li><li><a href="screens/mypage.html">마이 · 김지현</a></li><li><a href="screens/settings.html">설정</a></li><li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>
+<script id="hd-data" type="application/json">{"title": "전체 화면 한눈에 보기", "scale": 0.72, "card": {"w": 375, "h": 812}, "modal": {"w": 390, "h": 844}, "story": {"headline": "전화·카톡으로 묻던 <em>“몇 회 남았어요? 지금 취소하면 차감돼요?”<\/em>를 누르기 전에 숫자로 보여 준다", "summary": "예약·취소·대기 확정 화면마다 '바로 쓸 수 있는 횟수 11회 → 10회'와 실제 날짜로 계산한 무료 취소 시각이 같은 자리에 나온다. 홈은 사람마다 맨 위가 바뀌어, 다니는 사람에겐 다음 수업이, 처음 온 사람에겐 동네 스튜디오가 먼저 보인다.", "ideas": [{"title": "숫자로 보여 주는 취소 규정", "desc": "'24시간 전'이 아니라 '10월 15일(목) 20:00까지 무료'처럼 계산해서, 예약·취소·대기 화면 모두 같은 줄에"}, {"title": "남은 시간이 보이는 대기 승급", "desc": "자리 나면 '1시간 42분 남음'과 함께 확정/포기 두 버튼만 — 운영자가 기억할 필요 없음"}, {"title": "맨 위가 바뀌는 홈", "desc": "다음 수업 → 출석 시간엔 '출석하기' → 신규면 동네 스튜디오. 이정호 님은 홈만 보고 닫아도 된다"}]}, "decisions": {"core": "수강생이 예약·취소·대기 확정을 누르기 전에 '몇 회가 남고, 언제까지 무료인지'를 숫자로 알게 해서, 스튜디오에 묻지 않고 혼자 결정하게 한다.", "items": [{"verdict": "later", "label": "나중에", "name": "리뷰 사진", "how": "", "why": "탈의실·타 회원 얼굴 노출, 운영자 3/8 반대 — 1차 업데이트 후보"}, {"verdict": "cut", "label": "뺌", "name": "캘린더 자동 동기화", "how": "", "why": "휴대폰 캘린더 앱이 한다 — '캘린더 추가' 버튼 하나로 충분"}, {"verdict": "cut", "label": "뺌", "name": "강사·스튜디오와 1:1 채팅", "how": "", "why": "카톡·전화가 한다. 앱은 '전화하기'만"}, {"verdict": "later", "label": "나중에", "name": "집/회사 동네 2개", "how": "", "why": "PRD도 이후 검토 — 지도 이동 '이 지역에서 다시 찾기'로 대신"}, {"verdict": "cut", "label": "뺌", "name": "출석 스트릭·배지 보상", "how": "", "why": "장식 — 이번 달 출석 횟수 한 줄로 충분"}]}, "stage": "go", "pending": 17, "rows": [{"group": "처음 들어올 때", "screens": [{"id": "splash", "file": "screens/splash.html", "title": "첫 실행 안내", "purpose": "동네 스튜디오·남은 횟수·자리 알림 세 가지를 한 장씩", "policies": ["최초 1회만 소개 3장, 이후엔 로고 뒤 바로 홈(로그인 유지 시)", "건너뛰기는 언제나 로그인으로", "강제 업데이트 버전이면 스토어 이동 안내만 띄움"], "state": false}, {"id": "login", "file": "screens/login.html", "title": "로그인 · 가입 방법 고르기", "purpose": "카카오·Apple·전화번호 중 하나로 시작, 아니면 둘러보기", "policies": ["Apple로 시작은 iOS에만(Android 노출은 확인 중)", "같은 번호로 다른 방식 가입 이력이 있으면 '이미 카카오로 가입된 번호' 안내", "둘러보기 중 예약·구매를 누르면 이 화면으로"], "state": false}, {"id": "phone-verify", "file": "screens/phone-verify.html", "title": "전화번호 인증", "purpose": "문자로 받은 6자리를 3분 안에", "policies": ["유효 3분, 재전송은 30초 뒤·하루 5회", "5회 틀리면 10분 동안 막힘", "문자 자동 채우기"], "state": false}, {"id": "signup-terms", "file": "screens/signup-terms.html", "title": "약관 동의 · 기본 정보", "purpose": "필수 동의 + 실명만 있으면 다음", "policies": ["이름은 스튜디오 출석부용, 운영자에게만 보임 — 리뷰엔 닉네임만", "닉네임 중복 허용", "성별·생년은 선택"], "state": false}, {"id": "neighborhood", "file": "screens/neighborhood.html", "title": "동네 설정", "purpose": "현재 위치 한 번, 안 되면 동 이름 검색", "policies": ["위치 권한은 '현재 위치로'를 누를 때만 묻는다(가정 2)", "거부해도 바로 아래 검색으로 설정", "동네는 1개만, 최근 동네 최대 3개"], "state": false}, {"id": "neighborhood--done", "file": "screens/neighborhood--done.html", "title": "동네 설정 · 보낸 뒤", "purpose": "보낸 뒤 모습", "policies": [], "state": true}]}, {"group": "홈 — 사람·시간마다 맨 위가 바뀐다", "screens": [{"id": "home", "file": "screens/home.html", "title": "홈 · 김지현 · 10/13 아침", "purpose": "오늘 20시 수업과 남은 횟수가 맨 위", "policies": ["예약이 있으면 '다음 수업'이 맨 위(출석은 30분 전부터)", "수강권 요약은 만료 임박 순 1개 + '외 n개'", "대기 중·확정 필요 승급이 있으면 다음 수업 바로 아래"], "state": false}, {"id": "home-jeongho", "file": "screens/home-jeongho.html", "title": "홈 · 이정호 · 수업 20분 전", "purpose": "큰 글자로 오늘 10시 수업과 출석하기", "policies": ["수업 30분 전~시작 15분 후에만 '출석하기'가 이 블록에 생김", "큰 글자 모습", "기간권은 남은 일수로 표시"], "state": false}, {"id": "home-new", "file": "screens/home-new.html", "title": "홈 · 박서연 · 처음", "purpose": "다니는 스튜디오가 없으면 동네 스튜디오가 맨 위", "policies": ["예약 없음 → '예정된 수업이 없어요' + 찾기로", "수강권 없음 → 체험권 있는 곳부터", "다니는 스튜디오가 생기면 home 모습으로"], "state": false}]}, {"group": "찾고 고르기", "screens": [{"id": "find-list", "file": "screens/find-list.html", "title": "스튜디오 찾기 · 목록", "purpose": "사진·별점·가격을 나란히 비교", "policies": ["기본 보기는 목록, 마지막 본 방식을 기억(가정 3)", "결과 0곳 → '3km로 넓혀볼까요?'", "입점한 스튜디오만 보인다"], "state": false}, {"id": "find-map", "file": "screens/find-map.html", "title": "스튜디오 찾기 · 지도", "purpose": "동네 지도에 핀, 고르면 요약 카드", "policies": ["위치 권한 없으면 설정 동네(망원1동) 중심", "지도를 옮기면 '이 지역에서 다시 찾기'", "요약: 이름·거리·별점·사진·오늘 빈자리"], "state": false}, {"id": "studio", "file": "screens/studio.html", "title": "스튜디오 상세 · 숨 필라테스 망원점", "purpose": "여기 다닐지 정하는 데 필요한 것 전부", "policies": ["일시 휴업이면 안내 + 시간표 진입 막음", "사진 없는 스튜디오는 기본 이미지", "취소 규정은 플랫폼 공통 24시간(R1·R2)"], "state": false}, {"id": "instructor", "file": "screens/instructor.html", "title": "강사 상세 · 정다은", "purpose": "이 강사가 나에게 맞는지 — 전문 분야와 이번 주 수업", "policies": ["여러 곳 출강해도 스튜디오별 별도 프로필", "리뷰는 이 강사 수업 리뷰만"], "state": false}, {"id": "reviews", "file": "screens/reviews.html", "title": "리뷰 · 숨 필라테스 망원점", "purpose": "평균과 분포, 그리고 실제 후기", "policies": ["출석한 사람만 쓸 수 있는 리뷰", "운영자 답글은 운영자 웹에서 작성", "신고 가능, 욕설 자동 필터"], "state": false}]}, {"group": "수강권 사고 예약하기", "screens": [{"id": "schedule", "file": "screens/schedule.html", "title": "시간표 · 숨 필라테스 망원점", "purpose": "고른 날의 수업과 자리 상태를 한 줄씩", "policies": ["시작 14일 전부터 예약 가능 — 그 뒤는 '○월 ○일 오픈'(R14)", "휴무일은 '휴무'(R12), 휴강은 사유 표시(R13)", "대기 5명 차면 '대기 마감'(R5)"], "state": false}, {"id": "class", "file": "screens/class.html", "title": "수업 상세 · 10/15 리포머 입문", "purpose": "이 수업에 갈 수 있는지와 무료 취소 시각", "policies": ["무료 취소 마감은 실제 날짜로 계산(시작 24시간 전)", "수강권은 만료 빠른 것부터 자동 선택(R16), 바꿀 수 있음", "겹치는 예약이 있으면 예약 불가(R10)"], "state": false}, {"id": "pass-shop", "file": "screens/pass-shop.html", "title": "수강권 고르기 · 숨 필라테스 망원점", "purpose": "횟수권·기간권을 회당 가격으로 비교", "policies": ["체험권은 이 스튜디오 첫 구매자만", "1:1 개인레슨은 상품만 — 예약은 스튜디오와 직접", "같은 스튜디오 수강권 여러 개 보유 가능"], "state": false}, {"id": "checkout", "file": "screens/checkout.html", "title": "결제 · 체험 1회", "purpose": "무엇을 얼마에, 어떤 수단으로", "policies": ["기간권만 시작일 선택(오늘/첫 수업일/직접, 30일 이내)", "환불 규정 동의 필수", "10분 이상 머물면 결제 자동 취소, 같은 상품 1분 내 재결제는 확인(R11)"], "state": false}, {"id": "checkout-done", "file": "screens/checkout-done.html", "title": "결제 완료", "purpose": "산 수강권 요약, 보던 수업 예약으로 바로", "policies": ["수업 상세에서 왔으면 그 수업 예약이 주 버튼", "영수증은 마이 > 결제 내역"], "state": false}, {"id": "booking-confirm", "file": "screens/booking-confirm.html", "title": "예약 확인 · 10/15 리포머 입문", "purpose": "차감되는 횟수와 무료 취소 시각을 확인하고 확정", "policies": ["예약할 때 1회 차감, 무료 취소 시 복원", "'확인했습니다' 체크는 첫 예약만, 규정 문구는 매번", "노쇼 3회로 예약 제한 중이면 불가 + 해제일(R4)"], "state": false}, {"id": "booking-done", "file": "screens/booking-done.html", "title": "예약 완료", "purpose": "예약됐고, 언제까지 무료 취소인지", "policies": ["캘린더 추가·위치 보기는 휴대폰 앱으로 넘김", "예약 확정 알림이 알림함에 남는다"], "state": false}]}, {"group": "대기와 승급", "screens": [{"id": "waitlist", "file": "screens/waitlist.html", "title": "대기 신청 · 10/15 리포머 중급", "purpose": "내가 몇 번째인지와 승급 규칙", "policies": ["신청 때는 차감 없음, 확정할 때 차감", "수업당 대기 최대 5명(R5)", "겹치는 시간 대기는 가능, 확정할 때 확인(R10)"], "state": false}, {"id": "waitlist-done", "file": "screens/waitlist-done.html", "title": "대기 신청 완료", "purpose": "2번째로 기다리는 중 — 자리 나면 알림", "policies": ["승급 알림은 끌 수 없다(가정 10)", "대기 취소는 언제든 무료"], "state": false}, {"id": "promotion", "file": "screens/promotion.html", "title": "대기 승급 · 자리가 났어요", "purpose": "남은 시간 안에 확정할지 포기할지", "policies": ["2시간 안에 확정하지 않으면 자동 포기 → 다음 순번(R6)", "시작 2시간 미만에 승급되면 마감은 시작 30분 전", "확정 시점에 잔여 0·만료·겹침이면 확정 불가 → 다음 순번"], "state": false}, {"id": "promotion-done", "file": "screens/promotion-done.html", "title": "승급 확정 완료", "purpose": "대기가 예약으로 바뀌었고 1회 차감", "policies": ["무료 취소 마감은 승급 때도 시작 24시간 전 그대로"], "state": false}]}, {"group": "예약 보기·취소", "screens": [{"id": "class-booked", "file": "screens/class-booked.html", "title": "수업 상세 · 예약한 10/13 리포머 중급", "purpose": "예약 정보와 지금 취소하면 어떻게 되는지", "policies": ["예약 시각·사용 수강권을 함께 보여 줌", "시작 후엔 취소 버튼 없음(노쇼 처리, R14)", "출석 가능 시간엔 '출석하기'가 주 버튼"], "state": false}, {"id": "cancel", "file": "screens/cancel.html", "title": "예약 취소 · 10/13 리포머 중급", "purpose": "지금 취소하면 1회 차감 — 숫자로 먼저", "policies": ["시작 24시간 전까지 무료(R1), 그 뒤 시작 전까지 1회 차감(R2)", "기간권은 차감 없이 취소(논의점 4 임시안)", "대기자 승급은 자동, 수강생에게는 안 보임"], "state": false}, {"id": "cancel-done", "file": "screens/cancel-done.html", "title": "취소 완료", "purpose": "취소됐고 남은 횟수가 몇 회인지", "policies": ["알림함에 '취소 완료'가 남는다"], "state": false}, {"id": "my-bookings", "file": "screens/my-bookings.html", "title": "내 예약 · 예정", "purpose": "다가오는 수업과 무료 취소까지 남은 시간", "policies": ["예정이 없으면 시간표로 이끔", "무료 취소 마감이 지난 예약은 '지금 취소하면 1회 차감'"], "state": false}, {"id": "my-bookings-waiting", "file": "screens/my-bookings-waiting.html", "title": "내 예약 · 대기 중", "purpose": "몇 번째인지, 확정할 것이 있는지", "policies": ["확정 필요 건은 맨 위에 강조", "시작 3시간 전까지 승급 못 받으면 자동 해제"], "state": false}, {"id": "my-bookings-past", "file": "screens/my-bookings-past.html", "title": "내 예약 · 지난 수업", "purpose": "출석·노쇼·취소 기록과 리뷰 쓸 곳", "policies": ["최근 3개월 + 더 보기", "노쇼는 수업 끝나고 운영자 확정, 없으면 6시간 뒤 자동(R3)", "리뷰는 수업 후 14일 이내"], "state": false}]}, {"group": "출석", "screens": [{"id": "attend", "file": "screens/attend.html", "title": "출석 · 바른몸 소도구 필라테스", "purpose": "도착 확인 한 번 또는 QR 스캔", "policies": ["시작 30분 전~시작 후 15분까지(R15), 이후는 강사님 수동 출석", "방식은 스튜디오별(이곳은 둘 다)", "위치 확인 실패 → 'QR로 출석하거나 강사님께 말씀해 주세요'"], "state": false}, {"id": "attend-done", "file": "screens/attend-done.html", "title": "출석 완료", "purpose": "출석됐어요 — 수업명과 시간", "policies": ["출석 기록은 지난 수업에 남는다"], "state": false}]}, {"group": "수강권 관리", "screens": [{"id": "passes", "file": "screens/passes.html", "title": "수강권 · 김지현", "purpose": "스튜디오별 잔여·만료가 한눈에", "policies": ["만료 7일 이내는 위로 + 만료 임박", "잔여는 '잔여 11회 (예약 2회 포함)'처럼 예약분 함께", "만료·소진은 '지난 수강권'으로 따로"], "state": false}, {"id": "pass-detail", "file": "screens/pass-detail.html", "title": "수강권 상세 · 숨 20회권", "purpose": "어디에 몇 번 썼는지와 정지 가능 횟수", "policies": ["사용 내역: 예약 차감·무료 취소 복원·늦은 취소·노쇼", "환불은 앱에서 안 받음 — 스튜디오 전화 연결", "정지 중이면 '조기 해제'"], "state": false}, {"id": "pass-pause", "file": "screens/pass-pause.html", "title": "수강권 일시정지", "purpose": "기간을 고르면 바뀐 만료일과 취소될 예약이 바로", "policies": ["수강권당 최대 2회·합산 30일, 1회 최소 3일(R9)", "시작일은 내일부터, 신청 즉시 적용(승인 없음)", "체험권·1개월 미만 상품은 정지 불가"], "state": false}, {"id": "pass-pause-done", "file": "screens/pass-pause-done.html", "title": "일시정지 완료", "purpose": "정지 기간과 늦춰진 만료일, 취소된 예약", "policies": ["정지 중엔 이 수강권으로 예약 불가", "조기 해제하면 실제 쓴 일수만 차감"], "state": false}]}, {"group": "리뷰", "screens": [{"id": "review-write", "file": "screens/review-write.html", "title": "리뷰 쓰기 · 10/9 리포머 중급", "purpose": "별점과 좋았던 점, 한두 문장", "policies": ["출석한 수업만·수업 후 14일 이내·1회당 1개(R20)", "텍스트 10~500자, 사진은 MVP 제외(가정 4)", "닉네임으로만 보임, 수정·삭제 가능"], "state": false}, {"id": "review-done", "file": "screens/review-done.html", "title": "리뷰 등록 완료", "purpose": "올라간 리뷰가 이렇게 보여요", "policies": ["수정·삭제는 마이 > 내가 쓴 리뷰"], "state": false}]}, {"group": "알림·마이·설정", "screens": [{"id": "notifications", "file": "screens/notifications.html", "title": "알림함", "purpose": "확정할 것이 맨 위, 나머지는 시간순", "policies": ["90일 보관", "확정 마감 지난 승급 알림은 '만료됨'", "누르면 관련 화면으로"], "state": false}, {"id": "mypage", "file": "screens/mypage.html", "title": "마이 · 김지현", "purpose": "수강권·노쇼·결제·설정으로 가는 곳", "policies": ["노쇼 현황은 분쟁 예방을 위해 표시(최근 30일)", "예약 제한 중이면 해제일", "고객센터: FAQ, 카카오톡 채널"], "state": false}, {"id": "settings", "file": "screens/settings.html", "title": "설정", "purpose": "알림·위치·계정", "policies": ["대기 승급 알림은 끌 수 없음(개발팀 확인)", "탈퇴 시 잔여 수강권 소멸 경고 + 재확인, 예정 예약 자동 취소", "위치 권한은 시스템 설정으로 이동"], "state": false}]}], "arrows": [{"from": "login", "to": "phone-verify", "label": "전화번호로 시작 · 신규 카카오/Apple"}, {"from": "login", "to": "home-new", "label": "둘러보기"}, {"from": "neighborhood", "to": "home-new", "label": "설정 완료 → 홈"}, {"from": "home", "to": "class-booked", "label": "다음 수업 누르기"}, {"from": "home", "to": "schedule", "label": "다니는 스튜디오 시간표"}, {"from": "home-jeongho", "to": "attend", "label": "출석하기"}, {"from": "home-new", "to": "studio", "label": "스튜디오 누르기"}, {"from": "home-new", "to": "find-list", "label": "전체 보기"}, {"from": "find-list", "to": "studio", "label": "스튜디오 누르기"}, {"from": "find-map", "to": "studio", "label": "요약 카드 누르기"}, {"from": "studio", "to": "schedule", "label": "시간표 보고 예약"}, {"from": "studio", "to": "pass-shop", "label": "수강권 보기"}, {"from": "studio", "to": "instructor", "label": "강사 누르기"}, {"from": "studio", "to": "reviews", "label": "리뷰 전체"}, {"from": "instructor", "to": "class", "label": "이번 주 수업 누르기"}, {"from": "schedule", "to": "class", "label": "예약 가능 수업"}, {"from": "schedule", "to": "waitlist", "label": "마감 수업 → 대기"}, {"from": "class", "to": "pass-shop", "label": "이 스튜디오 수강권이 없으면"}, {"from": "class", "to": "booking-confirm", "label": "수강권이 있으면"}, {"from": "checkout-done", "to": "booking-confirm", "label": "이 수업 예약하기"}, {"from": "promotion", "to": "promotion-done", "label": "확정"}, {"from": "promotion", "to": "my-bookings-waiting", "label": "이번엔 포기"}, {"from": "class-booked", "to": "cancel", "label": "예약 취소"}, {"from": "my-bookings", "to": "class-booked", "label": "예약 누르기"}, {"from": "my-bookings-waiting", "to": "promotion", "label": "확정 필요 건"}, {"from": "my-bookings-past", "to": "review-write", "label": "리뷰 쓰기"}, {"from": "passes", "to": "pass-detail", "label": "수강권 누르기"}, {"from": "passes", "to": "pass-shop", "label": "수강권 사기"}, {"from": "pass-detail", "to": "pass-pause", "label": "일시정지"}, {"from": "notifications", "to": "promotion", "label": "대기 승급 누르기"}, {"from": "mypage", "to": "passes", "label": "수강권"}, {"from": "mypage", "to": "settings", "label": "설정"}, {"from": "mypage", "to": "neighborhood", "label": "동네 설정"}], "palettes": {"default": "seed-mindbody", "options": [{"slug": "seed-mindbody", "name": "Mindbody", "brand": "#008363", "source": "브랜드 시드(https://www.mindbodyonline.com)"}, {"slug": "kurly", "name": "컬리", "brand": "#5f0080", "source": "https://www.kurly.com/ 화면 실사용 색으로 합성 (2026-10-01 수집)"}, {"slug": "myrealtrip", "name": "마이리얼트립", "brand": "#2b96ed", "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)"}]}, "credits": [{"slot": "splash-hero", "file": "assets/photos/splash-hero.jpg", "title": "What is Reformer Pilates? Benefits of the exercise explained", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.hellomagazine.com/healthandbeauty/health-and-fitness/551058/reformer-pilates-benefits-explained/"}, {"slot": "studio-soom", "file": "assets/photos/studio-soom.jpg", "title": "Reformer Pilates | Studio einrichten, Vision board ideen, Visionboard 2026", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.pinterest.com/pin/8796161769698662/"}, {"slot": "studio-soom-2", "file": "assets/photos/studio-soom-2.jpg", "title": "Amazon.com : PAETA Pilates Reformer, Wooden Reformer Pilates Machine ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.amazon.com/PAETA-Reformer-Cadillac-Equipment-Jumpboard/dp/B0FBWR9F38"}, {"slot": "studio-soom-3", "file": "assets/photos/studio-soom-3.jpg", "title": "피트니스 탈의실 락커 캐비넷 옷장 개인신발장 헬스장신발장 변형장 : 네이버 블로그", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://blog.naver.com/own-design/224246684060"}, {"slot": "studio-barun", "file": "assets/photos/studio-barun.jpg", "title": "Pilates Class Styles — Form Plus Pilates", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.formpluspilates.com/class-styles"}, {"slot": "studio-on", "file": "assets/photos/studio-on.jpg", "title": "A Modern Fitness Studio · Free Stock Photo", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.pexels.com/photo/a-modern-fitness-studio-18499500/"}, {"slot": "studio-yoga", "file": "assets/photos/studio-yoga.jpg", "title": "Free Sunny yoga studio Image - Sunlit, Yoga, Studio | Download at StockCake", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://stockcake.com/i/sunny-yoga-studio_1437259_701003"}, {"slot": "class-mat", "file": "assets/photos/class-mat.jpg", "title": "Yoga or Pilates for Seniors: Which Is Better?", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://meadowcrestlife.com/yoga-or-pilates-for-seniors-which-is-better/"}, {"slot": "inst-soyoung", "file": "assets/photos/inst-soyoung.jpg", "title": "Portrait Of Charming Female Pilates Stock Footage SBV-348437086 ...", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.storyblocks.com/video/stock/portrait-of-charming-female-pilates-instructor-sitting-on-pilates-chair-at-studio-pilates-fitness-sport-training-and-people-concept-348437086"}, {"slot": "inst-daeun", "file": "assets/photos/inst-daeun.jpg", "title": "스타 요가강사 故 이유주, 오늘(18일) 1주기… 팬들 여전히 추모 | 스포츠 월드", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.sportsworldi.com/newsView/20260218505168"}, {"slot": "inst-jaehee", "file": "assets/photos/inst-jaehee.jpg", "title": "Woman smiling during Pilates session | Premium Photo - rawpixel", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://www.rawpixel.com/image/17358521/woman-smiling-during-pilates-session"}, {"slot": "class-intro", "file": "assets/photos/class-intro.jpg", "title": "What are the disadvantages of Pilates Reformer? – House of Senti", "author": "", "license": "unknown(내부 검토용)", "source": "bing", "url": "https://designandhealth.com/blogs/news/what-are-the-disadvantages-of-pilates-reformer"}]}</script>
+<script>
+(function () {
+'use strict';
+var D = JSON.parse(document.getElementById('hd-data').textContent || '{}');
+var Z0 = D.scale || 0.72, ZMIN = 0.25, ZMAX = 1.5;
+var CARD = D.card || {w: 375, h: 812}, MW = (D.modal || {}).w || 390, MH = (D.modal || {}).h || 844;
+var LEFT = 300;                                  // 카드 왼쪽 통로(줄을 넘는 화살표가 지나는 곳)
+var $ = function (s, r) { return (r || document).querySelector(s); };
+var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+
+if (D.title) { $('#title').textContent = D.title; document.title = D.title; }
+var pane = $('#screens'), stage = $('#stage'), rowsEl = $('#rows');
+
+/* ---------- 판 내용 ---------- */
+var intro = '';
+var st = D.story;
+if (st && (st.headline || st.summary)) {
+  var head = esc(st.headline).replace(/&lt;(\/?)em&gt;/g, '<$1em>');
+  intro += '<section class="story"><h2>' + head + '</h2>' + (st.summary ? '<p class="sum">' + esc(st.summary) + '</p>' : '') +
+    '<div class="ideas">' + (st.ideas || []).slice(0, 3).map(function (d) {
+      return '<div class="idea"><b>' + esc(d.title) + '</b><p>' + esc(d.desc) + '</p></div>'; }).join('') + '</div></section>';
+}
+var dc = D.decisions;
+if (dc && ((dc.items || []).length || dc.core)) {
+  intro += '<section class="decisions"><h3>정한 것 · 뺀 것</h3>' + (dc.core ? '<p class="core">' + esc(dc.core) + '</p>' : '') +
+    '<ul>' + (dc.items || []).map(function (i) {
+      return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
+        (i.how ? ' → ' + esc(i.how) : '') + '<span class="why">' + esc(i.why) + '</span></li>'; }).join('') + '</ul></section>';
+}
+$('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 파란 화살표는 갈래' + (D.stage === 'go' && D.pending ? ' · 오류·확인·빈 화면 같은 상태 ' + D.pending + '개는 <b>/hyper-design:max</b>로 더할 수 있어요' : '') + '</p><div class="intro-grid">' + intro + '</div>';
+$('#intro').style.marginLeft = LEFT + 'px';
+
+var html = '<svg class="ar" id="ar" width="1" height="1"><defs><marker id="hd-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker><marker id="hd-dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4"><circle cx="5" cy="5" r="4" fill="#2563eb"/></marker></defs></svg>';
+(D.rows || []).forEach(function (row) {
+  html += '<div class="flow"><div class="glabel">' + esc(row.group) + '</div><div class="cards">';
+  row.screens.forEach(function (s) {
+    var pol = s.policies || [];
+    var shown = pol.slice(0, 3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('');
+    var more = pol.length > 3 ? '<details class="more"><summary>정책 ' + (pol.length - 3) + '개 더</summary><ul class="pol">' +
+      pol.slice(3).map(function (p) { return '<li>' + esc(p) + '</li>'; }).join('') + '</ul></details>' : '';
+    html += '<div class="card" data-id="' + esc(s.id) + '"><div class="phone"><iframe scrolling="no" tabindex="-1" title="' + esc(s.title) +
+      '" data-src="' + esc(s.file) + '"></iframe><button class="cover" data-file="' + esc(s.file) + '" data-title="' + esc(s.title) +
+      '" aria-label="' + esc(s.title) + ' 크게 보기"></button></div>' +
+      '<div class="ftitle">' + (s.state ? '<span class="state">상태</span>' : '') + esc(s.title) + '</div>' +
+      (s.purpose ? '<div class="fdesc">' + esc(s.purpose) + '</div>' : '') + (shown ? '<ul class="pol">' + shown + '</ul>' : '') + more + '</div>';
+  });
+  html += '</div></div>';
+});
+rowsEl.innerHTML = html;
+rowsEl.style.paddingLeft = LEFT + 'px';
+
+var foot = '';
+var P = D.palettes;
+if (P && P.options && P.options.length) {
+  foot += '<p>색 출처: ' + P.options.map(function (o) { return esc(o.name) + ' 웹 팔레트'; }).join(' · ') +
+    ' — 시안용 참고. 출시 전 자체 브랜드 색으로 바꾸세요.</p>';
+}
+if (D.credits && D.credits.length) {
+  foot += '<details><summary>사진 출처 ' + D.credits.length + '장</summary><ul>' + D.credits.map(function (c) {
+    var t = esc(c.title || c.file || c.slot);
+    var link = c.url ? '<a href="' + esc(c.url) + '" target="_blank" rel="noopener">' + t + '</a>' : t;
+    return '<li>' + (c.slot ? esc(c.slot) + ' — ' : '') + link + (c.author ? ' · ' + esc(c.author) : '') + (c.license ? ' · ' + esc(c.license) : '') + '</li>';
+  }).join('') + '</ul></details>';
+}
+$('#foot').innerHTML = foot;
+$('#foot').style.marginLeft = LEFT + 'px';
+
+/* ---------- 화살표: 갈래(branches)에만. 같은 줄은 위쪽 호, 다른 줄은 왼쪽 통로로 우회 ---------- */
+var contentLeft = LEFT;
+function roundPath(pts, r) {
+  var d = 'M' + pts[0][0] + ',' + pts[0][1];
+  for (var i = 1; i < pts.length - 1; i++) {
+    var p = pts[i - 1], c = pts[i], n = pts[i + 1];
+    var l1 = Math.hypot(c[0] - p[0], c[1] - p[1]), l2 = Math.hypot(n[0] - c[0], n[1] - c[1]);
+    var rr = Math.min(r, l1 / 2, l2 / 2);
+    if (rr < 1) { d += ' L' + c[0] + ',' + c[1]; continue; }
+    var a = [c[0] - (c[0] - p[0]) / l1 * rr, c[1] - (c[1] - p[1]) / l1 * rr];
+    var b = [c[0] + (n[0] - c[0]) / l2 * rr, c[1] + (n[1] - c[1]) / l2 * rr];
+    d += ' L' + a[0].toFixed(1) + ',' + a[1].toFixed(1) + ' Q' + c[0] + ',' + c[1] + ' ' + b[0].toFixed(1) + ',' + b[1].toFixed(1);
+  }
+  var e = pts[pts.length - 1];
+  return d + ' L' + e[0] + ',' + e[1];
+}
+function drawArrows() {
+  var svg = $('#ar'), box = {};
+  $$('.card', rowsEl).forEach(function (c) {
+    box[c.dataset.id] = {x: c.offsetLeft, y: c.offsetTop, row: c.parentNode};   // offsetParent = .rows
+  });
+  $$('.alabel', rowsEl).forEach(function (n) { n.remove(); });
+  $$('path.ln', svg).forEach(function (n) { n.remove(); });
+  var paths = '', labels = '', k = 0, minX = LEFT;
+  (D.arrows || []).forEach(function (a) {
+    var s = box[a.from], t = box[a.to]; if (!s || !t) return;
+    var d, lx, ly, side = false;
+    if (s.row === t.row) {
+      var ax = s.x + CARD.w / 2, cx = t.x + CARD.w / 2, y = s.y - 10, peak = s.y - 58;
+      d = 'M' + ax + ',' + y + ' C' + ax + ',' + peak + ' ' + cx + ',' + peak + ' ' + cx + ',' + (y - 2);
+      lx = (ax + cx) / 2; ly = peak + 6;
+    } else {
+      var lane = LEFT - 56 - 22 * (k % 4), off = 22 + 12 * (k % 4);
+      var sx = s.x + 60 + 24 * (k % 3), tx = t.x + 60 + 24 * (k % 3);
+      var sg = s.y - off, tg = t.y - off;
+      d = roundPath([[sx, s.y - 6], [sx, sg], [lane, sg], [lane, tg], [tx, tg], [tx, t.y - 8]], 18);
+      lx = lane - 12; ly = (sg + tg) / 2; side = true; k++;
+      minX = Math.min(minX, lane - 240);
+    }
+    paths += '<path class="ln" d="' + d + '"/>';
+    if (a.label) labels += '<div class="alabel' + (side ? ' side' : '') + '" style="left:' + lx + 'px;top:' + ly + 'px">' + esc(a.label) + '</div>';
+  });
+  svg.insertAdjacentHTML('beforeend', paths);
+  rowsEl.insertAdjacentHTML('beforeend', labels);
+  if (labels) $$('.alabel.side', rowsEl).forEach(function (n) { minX = Math.min(minX, n.offsetLeft - n.offsetWidth); });
+  contentLeft = Math.max(0, minX - 24);
+}
+
+/* ---------- 이동·확대 ---------- */
+var z = Z0, tx = 0, ty = 0;
+function apply() {
+  stage.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px) scale(' + z.toFixed(4) + ')';
+  stage.dataset.zoom = z.toFixed(4);
+  $('#zoom').textContent = Math.round(z * 100) + '%';
+  scheduleVisible();
+}
+var fitMin = ZMIN;                                // 전체 보기가 0.25 보다 작아야 하면 그만큼은 허용
+function clampZ(v) { return Math.min(ZMAX, Math.max(fitMin, v)); }
+function zoomAt(px, py, nz) {
+  nz = clampZ(nz);
+  var bx = (px - tx) / z, by = (py - ty) / z;
+  z = nz; tx = px - bx * z; ty = py - by * z; apply();
+}
+function home() {
+  z = Z0;
+  tx = pane.clientWidth < 600 ? 12 - LEFT * z : 24 - contentLeft * z;   // 폰: 화면 줄이 바로 보이게 통로는 화면 밖으로
+  ty = 0; apply();
+}
+function fit() {
+  var w = stage.offsetWidth - contentLeft, h = stage.offsetHeight;
+  var pw = pane.clientWidth, ph = pane.clientHeight;
+  var fz = Math.min((pw - 32) / w, (ph - 32) / h);
+  fitMin = Math.min(ZMIN, fz);
+  z = clampZ(fz);
+  tx = (pw - w * z) / 2 - contentLeft * z;
+  ty = Math.max(16, (ph - h * z) / 2);
+  apply();
+}
+$('#fit').addEventListener('click', fit);
+$('#zoom').addEventListener('click', home);
+
+pane.addEventListener('wheel', function (e) {
+  e.preventDefault();
+  var r = pane.getBoundingClientRect(), k = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? pane.clientHeight : 1;
+  var dx = e.deltaX * k, dy = e.deltaY * k;
+  if (e.ctrlKey || e.metaKey) { zoomAt(e.clientX - r.left, e.clientY - r.top, z * Math.exp(-dy * 0.0022)); return; }
+  if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+  tx -= dx; ty -= dy; apply();
+}, {passive: false});
+
+var ptrs = new Map(), drag = null, pinch = null, justDragged = false;
+function mid() { var a = Array.from(ptrs.values()); return {x: (a[0].x + a[1].x) / 2, y: (a[0].y + a[1].y) / 2, d: Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y) || 1}; }
+function startDrag(id, p, type) { drag = {id: id, x: p.x, y: p.y, tx: tx, ty: ty, moved: false, thr: type === 'touch' ? 8 : 4}; }
+pane.addEventListener('pointerdown', function (e) {
+  if (e.pointerType === 'mouse' && e.button !== 0) return;
+  justDragged = false;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  if (ptrs.size === 1) startDrag(e.pointerId, {x: e.clientX, y: e.clientY}, e.pointerType);
+  else if (ptrs.size === 2) {
+    var m = mid(); pinch = {m: m, z: z, tx: tx, ty: ty};
+    if (drag) drag.moved = true;
+    try { ptrs.forEach(function (_, id) { pane.setPointerCapture(id); }); } catch (err) {}
+  }
+});
+pane.addEventListener('pointermove', function (e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  var r = pane.getBoundingClientRect();
+  if (pinch && ptrs.size >= 2) {
+    var m = mid(), nz = clampZ(pinch.z * m.d / pinch.m.d);
+    var bx = (pinch.m.x - r.left - pinch.tx) / pinch.z, by = (pinch.m.y - r.top - pinch.ty) / pinch.z;
+    z = nz; tx = m.x - r.left - bx * z; ty = m.y - r.top - by * z; apply();
+    return;
+  }
+  if (!drag || drag.id !== e.pointerId) return;
+  var dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (!drag.moved && Math.hypot(dx, dy) > drag.thr) {
+    drag.moved = true; pane.classList.add('dragging');
+    try { pane.setPointerCapture(e.pointerId); } catch (err) {}
+  }
+  if (drag.moved) { tx = drag.tx + dx; ty = drag.ty + dy; apply(); }
+});
+function endPtr(e) {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId);
+  if (drag && drag.moved) justDragged = true;
+  if (ptrs.size === 1) {                          // 핀치 끝 → 남은 손가락으로 이어서 이동
+    pinch = null;
+    var id = ptrs.keys().next().value, p = ptrs.get(id);
+    startDrag(id, p, 'touch'); drag.moved = true;
+  } else if (ptrs.size === 0) { drag = null; pinch = null; pane.classList.remove('dragging'); }
+}
+pane.addEventListener('pointerup', endPtr);
+pane.addEventListener('pointercancel', endPtr);
+pane.addEventListener('click', function (e) {
+  if (justDragged) { justDragged = false; e.preventDefault(); e.stopPropagation(); return; }
+  var c = e.target.closest && e.target.closest('.cover');
+  if (c) openModal(c.dataset.file, c.dataset.title);
+}, true);
+
+/* ---------- 보이는 카드만 로드(이동·확대 후 100ms 묶어서) ---------- */
+var visT = 0;
+function loadVisible() {
+  var pr = pane.getBoundingClientRect();
+  if (!pr.width || pane.hidden) return;
+  $$('.phone iframe[data-src]', rowsEl).forEach(function (f) {
+    var r = f.parentNode.getBoundingClientRect();
+    if (r.right > pr.left - 80 && r.left < pr.right + 80 && r.bottom > pr.top - 80 && r.top < pr.bottom + 80) {
+      f.addEventListener('load', function () { sendTo(f); });
+      f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+    }
+  });
+}
+function scheduleVisible() { clearTimeout(visT); visT = setTimeout(loadVisible, 100); }
+addEventListener('resize', scheduleVisible);
+
+/* ---------- 크게 보기 ---------- */
+var modal = $('#modal'), mframe = $('#mframe'), mbox = $('#mbox');
+function sizeModal() {
+  var s = Math.min(1, (innerHeight - 72) / MH, (innerWidth - 16) / MW);
+  mframe.style.transform = s < 1 ? 'scale(' + s.toFixed(4) + ')' : '';
+  mbox.style.width = Math.floor(MW * s) + 'px'; mbox.style.height = Math.floor(MH * s) + 'px';
+  mbox.style.marginTop = '48px';
+}
+function openModal(file, title) {
+  sizeModal(); $('#mtitle').textContent = title || '';
+  mframe.src = file; modal.hidden = false; $('#mclose').focus();
+}
+function closeModal() { modal.hidden = true; mframe.removeAttribute('src'); }
+mframe.addEventListener('load', function () { sendTo(mframe); });
+$('#mclose').addEventListener('click', closeModal);
+modal.addEventListener('click', function (e) { if (e.target === modal || e.target.id === 'mtitle') closeModal(); });
+addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+addEventListener('resize', function () { if (!modal.hidden) sizeModal(); });
+
+/* ---------- 탭 ---------- */
+function showTab(name) {
+  document.body.dataset.tab = name;
+  $$('.tab').forEach(function (b) { b.setAttribute('aria-selected', String(b.dataset.tab === name)); });
+  $$('.pane').forEach(function (p) { p.hidden = p.id !== name; });
+  var f = $('#' + name + ' iframe.doc');
+  if (f && f.hasAttribute('data-src')) {
+    f.addEventListener('load', function () { sendTo(f); });
+    f.src = f.getAttribute('data-src'); f.removeAttribute('data-src');
+  }
+  if (name === 'screens') scheduleVisible();
+  try { history.replaceState(null, '', name === 'screens' ? location.pathname + location.search : '#' + name); } catch (e) {}
+}
+$$('.tab').forEach(function (b) { b.addEventListener('click', function () { showTab(b.dataset.tab); }); });
+
+/* ---------- 팔레트: #tokens 교체 + 모든 iframe 에 postMessage + localStorage ---------- */
+var KEY = 'hd-palette', cur = null;
+function sendTo(f) { if (!cur) return; try { f.contentWindow.postMessage({type: 'hd-palette', slug: cur}, '*'); } catch (e) {} }
+function setPalette(slug) {
+  cur = slug;
+  var l = $('#tokens'), base = l.getAttribute('data-base') || l.getAttribute('href');
+  l.setAttribute('data-base', base);
+  l.setAttribute('href', base.replace(/tokens(-[^/]*)?\.css$/, 'tokens-' + slug + '.css'));
+  $$('iframe').forEach(sendTo);
+  $$('.dot').forEach(function (d) { d.setAttribute('aria-pressed', String(d.dataset.slug === slug)); });
+}
+if (P && P.options && P.options.length) {
+  var pal = $('.pal');
+  pal.innerHTML = '<span class="pal-label">색</span>' + P.options.slice(0, 3).map(function (o) {
+    return '<button class="dot" data-slug="' + esc(o.slug) + '" style="--dot:' + esc(o.brand) + '" aria-pressed="false" title="' +
+      esc(o.name) + ' 색으로 보기' + (o.source ? ' — ' + esc(o.source) : '') + '" aria-label="' + esc(o.name) + ' 색으로 보기"><i></i><b>' + esc(o.name) + '</b></button>';
+  }).join('');
+  $$('.dot').forEach(function (d) {
+    d.addEventListener('click', function () { setPalette(d.dataset.slug); try { localStorage.setItem(KEY, cur); } catch (e) {} });
+  });
+  var start = new URLSearchParams(location.search).get('p');
+  try { start = start || localStorage.getItem(KEY); } catch (e) {}
+  if (!start || !P.options.some(function (o) { return o.slug === start; })) start = P.default || P.options[0].slug;
+  setPalette(start);
+}
+
+/* ---------- 시작 ---------- */
+(function () {                                    // 판 위 글은 첫 배율에서 화면 폭에 들어오게
+  var pw = pane.clientWidth, narrow = pw < 600;
+  if (narrow) stage.classList.add('narrow');
+  var left = narrow ? 12 : 24 + LEFT * Z0;
+  var mw = Math.round((pw - left - 24) / Z0) + 'px';
+  $('#intro').style.maxWidth = mw; $('#foot').style.maxWidth = mw;
+})();
+drawArrows();
+home();
+loadVisible();
+var hashTab = (location.hash || '').slice(1);
+if (hashTab === 'foundation' || hashTab === 'components') showTab(hashTab);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawArrows(); });
+window.__hdReady = performance.now();
+})();
+</script>
+</body>
+</html>

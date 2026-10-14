@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>궁합 · 누구와 볼까</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--stack-s); }
+  .pair-slot { display: flex; flex-direction: column; align-items: center; gap: var(--stack-s); padding: var(--stack-m) var(--stack-s); border-radius: var(--r-l); background: var(--c-bg); text-align: center; }
+  .pair-slot.is-selected { background: var(--c-brand-tint); box-shadow: inset 0 0 0 1.5px var(--c-brand); }
+  .pair-name { font-size: var(--fs-strong); font-weight: var(--fw-strong); line-height: var(--lh-strong); color: var(--c-text-1); }
+  .pair-change { min-height: var(--h-btn-s); min-width: var(--h-btn-s); justify-content: center; display: inline-flex; align-items: center; font-size: var(--fs-sub); font-weight: var(--fw-strong); color: var(--c-brand-text); }
+</style>
+</head>
+<body class="plain has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">궁합</h1><span></span></header>
+<main class="page">
+  <div class="pair">
+    <div class="pair-slot">
+      <span class="avatar is-text">소</span>
+      <p class="pair-name">한소윤(나)</p>
+      <a class="pair-change" href="#people">바꾸기</a>
+    </div>
+    <div class="pair-slot is-selected">
+      <span class="avatar is-text">도</span>
+      <p class="pair-name">이도현</p>
+      <a class="pair-change" href="#people">바꾸기</a>
+    </div>
+  </div>
+
+  <div class="field" id="people"><span class="label">저장한 사람</span>
+    <div class="chips" role="radiogroup">
+      <button class="chip is-selected" role="radio" aria-checked="true">이도현 · 연인</button>
+      <button class="chip" role="radio" aria-checked="false">김미경 · 가족</button>
+      <button class="chip" role="radio" aria-checked="false">박지민 · 친구</button>
+      <a class="chip" href="person-edit.html">+ 새로 입력</a>
+    </div>
+    <p class="row-sub">이도현 · 1998년 11월 2일 양력 · 태어난 시간 모름</p>
+  </div>
+
+  <div class="field"><span class="label">어떤 사이인가요?</span>
+    <div class="seg" role="radiogroup">
+      <button class="seg-item is-selected" role="radio" aria-checked="true">연인</button>
+      <button class="seg-item" role="radio" aria-checked="false">배우자</button>
+      <button class="seg-item" role="radio" aria-checked="false">가족</button>
+      <button class="seg-item" role="radio" aria-checked="false">친구</button>
+      <button class="seg-item" role="radio" aria-checked="false">동료</button>
+    </div>
+    <p class="row-sub">사이에 따라 풀이가 달라져요</p>
+  </div>
+
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>상대에게 알리지 않아요 · 내 계정에만 저장돼요</span></p>
+  <p class="row-sub">같은 사람 궁합은 언제든 무료로 다시 볼 수 있어요</p>
+</main>
+<div class="cta"><a class="btn primary full" href="match-result.html">궁합 풀기</a></div>
+</body></html>

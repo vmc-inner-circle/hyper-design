@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>예약 취소 · 1회 차감 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain text-large">
+<header class="appbar"><a class="appbar-btn" href="my-bookings.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">예약 취소</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-title">리포머 중급</p><p class="row-sub">오늘 10월 13일(화) 20:00~20:50</p><p class="row-sub">숨결필라테스 망원 · 오지훈</p></div></div>
+  </section>
+  <section class="block">
+    <h2 class="title">무료 취소 기간이 지났어요</h2>
+    <p class="lead">10월 12일(월) 20:00까지 무료였어요</p>
+    <p class="lead">잔여 <span class="num">7회 → 6회</span></p>
+  </section>
+  <div class="field"><span class="label">취소 사유 (선택)</span>
+    <div class="chips"><button class="chip" aria-pressed="false">일정 변경</button><button class="chip" aria-pressed="false">몸이 안 좋아요</button><button class="chip" aria-pressed="false">기타</button></div>
+  </div>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-label="늦은 취소 확인">
+  <p class="h2">무료 취소 기간(10월 12일(월) 20:00)이 지나 1회 차감돼요</p>
+  <p class="lead">잔여 7회 → 6회, 돌려받지 못해요</p>
+  <p class="info"><img src="../assets/fluent/ticket.svg" alt=""><span>취소하면 대기 1번 분께 자리가 가요</span></p>
+  <a class="btn secondary full is-danger" href="my-bookings.html">1회 차감하고 취소</a>
+  <a class="btn tint full" href="cancel.html">돌아가기</a>
+</div>
+</body></html>

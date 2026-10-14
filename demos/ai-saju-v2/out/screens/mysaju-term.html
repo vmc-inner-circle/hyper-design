@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>용어 뜻 · 편인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.pillars { display: grid; grid-template-columns: auto repeat(4, 1fr); gap: var(--stack-s); text-align: center; align-items: stretch; }
+.pillars .h { font-size: var(--fs-caption); color: var(--c-text-2); font-weight: 600; align-self: center; }
+.pillars .c { background: var(--c-bg); border-radius: var(--r-m); padding: var(--stack-s) 0; display: flex; flex-direction: column; align-items: center; }
+.pillars .c b { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-h2); }
+.pillars .c span { font-size: var(--fs-caption); color: var(--c-text-2); }
+.pillars .c.is-me { background: var(--c-brand-tint); color: var(--c-brand-tint-text); }
+.pillars .c.is-me span { color: var(--c-brand-tint-text); }
+.elem { display: flex; align-items: center; gap: var(--stack-m); min-height: 32px; }
+.elem .n { flex: none; width: 28px; font-size: var(--fs-sub); font-weight: 600; }
+.elem .pips { flex: 1; display: flex; gap: 4px; }
+.elem .pip { width: 28px; height: 12px; border-radius: var(--r-pill); background: var(--c-text-2); }
+.elem .v { flex: none; width: 24px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.term { text-decoration: underline; text-underline-offset: 3px; color: var(--c-brand-text); font-weight: 600; }
+.basis { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+.chapter { display: flex; flex-direction: column; gap: var(--stack-s); }
+.chapter + .chapter { border-top: 1px solid var(--c-line); padding-top: var(--stack-m); }
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">한소윤님의 사주</p>
+    <h1 class="title">넓게 흐르는 큰 물 같은 사람</h1>
+    <p class="lead">생각이 넓고, 사람을 가리지 않고 품어요</p>
+  </header>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">사주 여덟 글자</h2></div>
+    <div class="pillars">
+      <span></span><span class="h">년</span><span class="h">월</span><span class="h">일</span><span class="h">시</span>
+      <span class="h">천간</span>
+      <div class="c"><b>己</b><span>기</span></div><div class="c"><b>丁</b><span>정</span></div><div class="c is-me"><b>壬</b><span>임 · 나</span></div><div class="c"><b>甲</b><span>갑</span></div>
+      <span class="h">지지</span>
+      <div class="c"><b>卯</b><span>묘</span></div><div class="c"><b>卯</b><span>묘</span></div><div class="c"><b>申</b><span>신</span></div><div class="c"><b>辰</b><span>진</span></div>
+    </div>
+    <p class="block-note">나를 뜻하는 글자는 壬水(임수), 큰 물이에요</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">AI 풀이</h2></div>
+    <div class="chapter">
+      <h3 class="row-title">성격</h3>
+      <p>큰 물처럼 생각이 넓고 사람을 가리지 않고 품어요. 배우고 도움받는 일에 힘이 되는 <a class="term" href="mysaju-term.html">편인(偏印)</a>의 기운이 있어요. 속을 잘 보여 주지 않아 가끔 외로울 수 있어요.</p>
+      <p class="basis">근거 · 壬水 일간, 일지 申(금)이 나를 도와줘요</p>
+    </div>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-label="용어 뜻">
+  <h2 class="h2">편인(偏印)</h2>
+  <p>나를 도와주는 기운 중 하나예요. 남다른 생각, 공부, 직감과 이어져요.</p>
+  <div class="chapter">
+    <h3 class="row-title">내 사주에서는</h3>
+    <p>壬水(임수)인 나에게 양의 금(庚·申)이 편인이에요. 일지 申(신) 한 글자가 그 자리예요.</p>
+    <p>면접 날인 10월 23일 庚午(경오)일도 편인 기운이라, 도와주는 기운이 이어지는 날로 본 거예요.</p>
+    <a class="block-link" href="ask.html">면접 질문 다시 보기 ›</a>
+  </div>
+  <a class="btn secondary full" href="mysaju.html">닫기</a>
+</div>
+</body></html>

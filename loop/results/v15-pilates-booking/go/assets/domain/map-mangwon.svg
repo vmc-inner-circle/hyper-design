@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" style="background:#eef1ee;color:#4a524c;font-family:sans-serif">
+        <g fill="none" stroke="currentColor" stroke-linecap="round">
+          <g stroke-opacity="0.07" stroke-width="40"><path d="M-10 296 L410 268"/></g>
+          <g stroke-opacity="0.14" stroke-width="12"><path d="M-10 150 H410"/><path d="M228 -10 V310"/><path d="M-10 236 L410 196"/></g>
+          <g stroke-opacity="0.09" stroke-width="6"><path d="M90 -10 L120 310"/><path d="M330 -10 L320 310"/><path d="M-10 70 H410"/><path d="M150 150 L60 -10"/><path d="M228 100 H330"/><path d="M120 200 H228"/></g>
+        </g>
+        <g fill="currentColor" fill-opacity="0.55" font-size="12" font-weight="600">
+          <text x="236" y="142">망원로</text>
+          <text x="20" y="226">월드컵로</text>
+        </g>
+        <g>
+          <rect x="196" y="170" width="20" height="20" rx="5" fill="currentColor" fill-opacity="0.75"/>
+          <text x="221" y="185" fill="currentColor" font-size="12" font-weight="700">망원역</text>
+        </g>
+        <g fill="#008363" color="#008363">
+          <circle cx="200" cy="160" r="16" fill="currentColor" fill-opacity="0.15"/>
+          <circle cx="200" cy="160" r="6" fill="currentColor"/>
+        </g>
+        <g fill="currentColor" fill-opacity="0.5">
+          <path d="M120 112c-5-7-9-11-9-16a9 9 0 0 1 18 0c0 5-4 9-9 16z"/>
+          <path d="M290 222c-5-7-9-11-9-16a9 9 0 0 1 18 0c0 5-4 9-9 16z"/>
+          <path d="M310 252c-5-7-9-11-9-16a9 9 0 0 1 18 0c0 5-4 9-9 16z"/>
+        </g>
+        <g fill="#008363" color="#008363">
+          <path d="M252 124c-8-10-14-16-14-24a14 14 0 0 1 28 0c0 8-6 14-14 24z" fill="currentColor"/>
+          <text x="270" y="98" fill="currentColor" font-size="13" font-weight="700">숨 필라테스</text>
+        </g>
+      </svg>

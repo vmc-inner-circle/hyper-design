@@ -1,0 +1,6 @@
+[
+ {"name": "basket", "file": "assets/fluent/basket.svg", "meaning": "세탁물 바구니", "kind": "object", "source": "resolved", "slot": "ic-basket"},
+ {"name": "delivery-truck", "file": "assets/fluent/delivery-truck.svg", "meaning": "배송 차량", "kind": "object", "source": "resolved", "slot": "ic-truck"},
+ {"name": "calendar", "file": "assets/fluent/calendar.svg", "meaning": "날짜·일정", "kind": "object", "source": "core"},
+ {"name": "mother", "file": "assets/fluent/mother.svg", "meaning": "엄마", "kind": "person", "source": "core"}
+]

@@ -1,0 +1,89 @@
+[
+ {
+  "slot": "yufuin-view",
+  "screens": [
+   "join",
+   "home"
+  ],
+  "what": "유후인 마을과 뒤의 유후다케 산 풍경",
+  "ratio": "16:9",
+  "kind": "photo",
+  "query": "yufuin town mountain"
+ },
+ {
+  "slot": "ryokan",
+  "screens": [
+   "day",
+   "day--done",
+   "home-trip"
+  ],
+  "what": "일본 전통 료칸(온천 여관) 외관이나 다다미 객실",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "japanese ryokan"
+ },
+ {
+  "slot": "kinrinko",
+  "screens": [
+   "home-trip"
+  ],
+  "what": "유후인 긴린코 호수",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "kinrinko lake yufuin"
+ },
+ {
+  "slot": "train",
+  "screens": [
+   "changes",
+   "home-trip",
+   "home"
+  ],
+  "what": "녹색 관광열차 유후인노모리",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "yufuin no mori train"
+ },
+ {
+  "slot": "beppu",
+  "screens": [
+   "day-edit",
+   "item-edit",
+   "item-edit--error"
+  ],
+  "what": "벳푸 지옥 온천(김이 나는 푸른/붉은 온천 연못)",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "beppu jigoku hell hot spring"
+ },
+ {
+  "slot": "yufuin-street",
+  "screens": [
+   "day-edit"
+  ],
+  "what": "유후인 상점 거리 산책길",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "yufuin street shops"
+ },
+ {
+  "slot": "yatai",
+  "screens": [
+   "changes"
+  ],
+  "what": "후쿠오카 하카타 밤 포장마차(야타이)",
+  "ratio": "1:1",
+  "kind": "drawing",
+  "query": "fukuoka yatai food stall"
+ },
+ {
+  "slot": "airport",
+  "screens": [
+   "home-d3"
+  ],
+  "what": "공항 출국장·체크인 카운터",
+  "ratio": "16:9",
+  "kind": "photo",
+  "query": "airport check-in counter"
+ }
+]
