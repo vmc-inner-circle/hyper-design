@@ -1,0 +1,91 @@
+/* dress.css — 꾸밈 카테고리 8개 (사용자 결정 2026-10-14: "너무 다 비슷함" → 시안 10개를 과감함 1~10단계로, 카테고리를 섞어 다르게).
+   조각은 바꾸지 않고 바깥 요소의 data-* 로만 바뀐다: 시안 보드는 시안 화면 상자, 초안·최종본은 <html> (screens.json dress).
+   data-bg 배경 · data-cards 판 모양 · data-head 제목 · data-radius 모서리 · data-space 간격 · data-font 글꼴(looks.js가 따로 만든다)
+   · data-tone 색 쓰는 방식 · 아이콘(선/Fluent)은 build.js가 조각을 바꾼다. 값과 과감함 점수는 scripts/dress.js. 토큰 변수만 쓴다. */
+
+/* ---------- 배경 data-bg: plain · tint · glow · dots · band · mesh · dark ---------- */
+[data-bg="tint"] .app { --c-bg: var(--c-primary-soft); --m-page-bg: var(--c-primary-soft); }
+[data-bg] .app .content { background-attachment: local; }
+[data-bg="glow"] .app .content { background-image: radial-gradient(130% 55% at 50% 0%, color-mix(in srgb, var(--c-primary) 20%, transparent) 0%, transparent 72%); }
+[data-bg="dots"] .app .content { background-image: radial-gradient(color-mix(in srgb, var(--c-text) 14%, transparent) 1.2px, transparent 1.6px); background-size: 14px 14px; }
+/* 색은 모두 버튼 색(--c-primary)에서 — 이웃 색(색상 ±40°)만 섞어 버튼과 따로 놀지 않게 (사용자: "레이아웃 색이 버튼이랑 안 맞으면 좋아 보이는 것도 안 좋게 보인다") */
+.app { --dress-near1: oklch(from var(--c-primary) l c calc(h + 40)); --dress-near2: oklch(from var(--c-primary) l c calc(h - 40)); }
+[data-bg="mesh"] .app .content {
+  background-image:
+    radial-gradient(55% 32% at 0% 0%, color-mix(in srgb, var(--c-primary) 30%, transparent), transparent 72%),
+    radial-gradient(48% 30% at 100% 12%, color-mix(in srgb, var(--dress-near1, var(--c-primary)) 22%, transparent), transparent 72%),
+    radial-gradient(60% 34% at 40% 62%, color-mix(in srgb, var(--dress-near2, var(--c-primary)) 14%, transparent), transparent 72%);
+}
+/* 위쪽 색 띠 · 어두운 머리: 화면 위 220px를 칠하고 그 위 제목 글자를 뒤집는다 — 아래 판이 띠에 걸쳐 떠 보인다 */
+[data-bg="band"] .app { --dress-band: var(--c-primary); --dress-band-fg: var(--c-primary-fg); }
+[data-bg="dark"] .app { --dress-band: color-mix(in srgb, var(--c-text) 92%, var(--c-primary)); --dress-band-fg: var(--c-bg); }
+:is([data-bg="band"], [data-bg="dark"]) .app .content { background-image: linear-gradient(var(--dress-band) 0, var(--dress-band) 220px, transparent 220px); }
+:is([data-bg="band"], [data-bg="dark"]) .app .content > .page-header,
+:is([data-bg="band"], [data-bg="dark"]) .app .content > .page-header :is(.page-title, .page-desc, .eyebrow, .big-num, .text-2, .text-muted) { color: var(--dress-band-fg); }
+:is([data-bg="band"], [data-bg="dark"]) .app-mobile > :is(.appbar, .toptabs) { background: var(--dress-band); color: var(--dress-band-fg); }
+:is([data-bg="band"], [data-bg="dark"]) .app-mobile > .toptabs :is(a, button) { color: var(--dress-band-fg); }
+
+/* ---------- 판 모양 data-cards: boxed · flat · line · float · outline ---------- */
+[data-cards="boxed"] .app { --border-card: 1px solid var(--c-border); --shadow-card: none; }
+[data-cards="boxed"] .app-mobile .section { border: 1px solid var(--c-border); }
+[data-cards="flat"] .app { --border-card: 1px solid transparent; --shadow-card: none; --m-card-bg: color-mix(in srgb, var(--c-surface) 55%, var(--m-page-bg, var(--c-bg))); }
+[data-cards="float"] .app { --border-card: 1px solid transparent; --shadow-card: var(--shadow-lg); }
+[data-cards="float"] .app-mobile .section { box-shadow: var(--shadow-lg); }
+[data-cards="outline"] .app { --border-card: 2px solid var(--c-text); --shadow-card: 4px 4px 0 var(--c-text); }
+[data-cards="outline"] .app-mobile .section { border: 2px solid var(--c-text); box-shadow: 4px 4px 0 var(--c-text); }
+/* 선으로만: 판을 없애고 위 줄 하나로 나눈다(잡지·문서처럼) */
+[data-cards="line"] .app :is(.section, .content > .card, .content > div > .card) { background: transparent; border: 0; border-top: 1.5px solid var(--c-text); border-radius: 0; box-shadow: none; }
+[data-cards="line"] .app-mobile .section { padding-left: 0; padding-right: 0; }
+
+/* ---------- 제목 data-head: normal · big · center · huge ---------- */
+/* 실제 앱의 글자 단계 안에서만 키운다: 휴대폰 화면 제목 28 → 큰 32 · 아주 큰 36 (한 줄에 9~10자), 컴퓨터는 한 단계씩 더 */
+[data-head="big"] .app .page-title { font-size: calc(var(--fs-2xl) + 4px); line-height: 1.25; }
+[data-head="huge"] .app .page-title { font-size: calc(var(--fs-2xl) + 8px); line-height: 1.18; letter-spacing: -0.035em; }
+[data-head="huge"] .app .section-title { font-size: calc(var(--fs-lg) + 2px); letter-spacing: -0.02em; }
+[data-platform="web"] [data-head="huge"] .app .page-title, [data-platform="web"][data-head="huge"] .app .page-title { font-size: 44px; }
+
+/* ---------- 모서리 data-radius: soft · round · sharp · pill ---------- */
+[data-radius="sharp"] .app { --r-card: 2px; --r-control: 2px; }
+[data-radius="round"] .app { --r-card: 22px; --r-control: var(--r-pill); }
+[data-radius="pill"] .app { --r-card: 32px; --r-control: var(--r-pill); }
+[data-radius="sharp"] .app .badge, [data-radius="sharp"] .app .chip { border-radius: 2px; }
+
+/* ---------- 간격 data-space: normal · airy · tight · extra ---------- */
+[data-space="airy"] .app { --space-section: calc(var(--sp-3) * 1.6); --pad-card: var(--sp-6); }
+[data-space="tight"] .app { --space-section: var(--sp-2); --pad-card: var(--sp-3); }
+[data-space="extra"] .app { --space-section: var(--sp-8); --pad-card: var(--sp-8); }
+[data-platform="web"] [data-space="airy"] .app, [data-platform="web"][data-space="airy"] .app { --space-section: var(--sp-16); }
+[data-platform="web"] [data-space="tight"] .app, [data-platform="web"][data-space="tight"] .app { --space-section: var(--sp-6); }
+
+/* ---------- 색 쓰는 방식 data-tone: neutral · soft · bold ---------- */
+/* 연한 색 판: 판 바탕에 강조색을 살짝 섞고 묶음 제목을 강조색으로 */
+[data-tone="soft"] .app { --m-card-bg: color-mix(in srgb, var(--c-surface) 90%, var(--c-primary)); }
+[data-tone="soft"] .app .card { background: color-mix(in srgb, var(--c-surface) 90%, var(--c-primary)); }
+[data-tone="soft"] .app .section-title { color: var(--c-primary-soft-fg); }
+/* 진한 색 판: 첫 판을 강조색으로 칠하고 그 안의 글자·버튼을 뒤집는다 */
+[data-tone="bold"] .app { --dress-p: var(--c-primary); --dress-pf: var(--c-primary-fg); }
+/* 큰 색 머리(.hero)·벤토 강조 칸이 이미 있는 화면은 색을 겹치지 않는다. 칠하는 판은 제목 바로 다음 판 하나뿐 */
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)) > .page-header + :is(.section, .card),
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)) > .page-header + div:not([class]) > :is(.section, .card):first-child,
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)):not(:has(> .page-header)) > :is(.section, .card):first-child {
+  background: var(--dress-p); color: var(--dress-pf); border-color: transparent;
+  --c-text: var(--dress-pf); --c-text-2: color-mix(in srgb, var(--dress-pf) 78%, var(--dress-p)); --c-text-muted: color-mix(in srgb, var(--dress-pf) 62%, var(--dress-p));
+  --c-border: color-mix(in srgb, var(--dress-pf) 22%, var(--dress-p)); --c-surface: color-mix(in srgb, var(--dress-pf) 12%, var(--dress-p)); --c-surface-2: color-mix(in srgb, var(--dress-pf) 16%, var(--dress-p));
+  --c-primary: var(--dress-pf); --c-primary-fg: var(--dress-p); --c-primary-soft: color-mix(in srgb, var(--dress-pf) 18%, var(--dress-p)); --c-primary-soft-fg: var(--dress-pf);
+}
+
+/* ---------- 그라데이션 data-grad: none · fade · sunset · aurora — 배경 · 주 버튼과 큰 색 머리 · 큰 제목 글자 ---------- */
+[data-grad="fade"] .app { --dress-grad: linear-gradient(135deg, var(--c-primary), color-mix(in srgb, var(--c-primary) 55%, #FFFFFF)); --dress-grad-bg: color-mix(in srgb, var(--c-primary) 14%, transparent); }
+[data-grad="sunset"] .app { --dress-grad: linear-gradient(135deg, var(--c-primary), var(--dress-near1, var(--c-primary))); --dress-grad-bg: color-mix(in srgb, var(--dress-near1, var(--c-primary)) 16%, transparent); }
+[data-grad="aurora"] .app { --dress-grad: linear-gradient(135deg, var(--dress-near2, var(--c-primary)), var(--c-primary) 50%, var(--dress-near1, var(--c-primary))); --dress-grad-bg: color-mix(in srgb, var(--dress-near2, var(--c-primary)) 16%, transparent); }
+[data-grad]:not([data-grad="none"]) .app .content { background-image: linear-gradient(180deg, var(--dress-grad-bg) 0%, transparent 460px), radial-gradient(70% 40% at 100% 0%, var(--dress-grad-bg), transparent 70%); }
+[data-grad]:not([data-grad="none"]) .app :is(.btn-primary, .hero, .tile-primary) { background-image: var(--dress-grad); border-color: transparent; }
+[data-grad]:not([data-grad="none"]) .app :is(.page-title, .poster-title, .big-num, .tile-num:not(.tile-primary .tile-num)) {
+  background-image: var(--dress-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+[data-grad]:not([data-grad="none"]) .app .hero .page-title { color: inherit; background: none; }
+
+/* 강조색 판·머리 안의 배지·체크 칸은 글자색을 뒤집어 읽히게 */
+.app :is(.hero, .tile-primary) .badge,
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)) > .page-header + :is(.section, .card) .badge,
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)) > .page-header + div:not([class]) > :is(.section, .card):first-child .badge,
+[data-tone="bold"] .app .content:not(:has(.hero, .tile-primary, .poster)):not(:has(> .page-header)) > :is(.section, .card):first-child .badge { background: color-mix(in srgb, currentColor 18%, transparent); color: inherit; border-color: transparent; }

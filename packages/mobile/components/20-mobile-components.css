@@ -1,0 +1,125 @@
+/* mobile/20-mobile-components — 390 폭에서 어색한 web 컴포넌트를 고쳐 쓴다.
+   카드는 회색 바탕 위 흰 판(테두리·그림자 없음, 안쪽 20), 묶음(.section)도 흰 판 하나(제목이 판 안에),
+   여러 열 배치(grid-3·grid-4·split·form-grid)는 한 열로, 긴 글자는 줄바꿈. 토큰 변수만 참조한다. */
+
+/* ---- 카드: 흰 판 ---- */
+.app-mobile .card { background: var(--m-card-bg); }
+.app-mobile .card-header {
+  padding: var(--pad-card) var(--pad-card) 0;
+  border-bottom: 0;
+}
+.app-mobile .card-title { font-size: var(--fs-lg); }
+.app-mobile .card-body { gap: var(--sp-3); }
+.app-mobile .card-footer { padding: 0 var(--pad-card) var(--pad-card); border-top: 0; }
+.app-mobile .card-footer > .btn { flex: 1 1 0; }
+.app-mobile .card-clickable:hover { box-shadow: none; border-color: transparent; }
+.app-mobile .card.is-selected { border-color: var(--c-primary); }
+
+/* ---- 묶음(.section) = 흰 판 하나. 제목·설명·내용이 모두 판 안에 ---- */
+.app-mobile .section {
+  margin-bottom: 0;
+  padding: var(--pad-card);
+  background: var(--m-card-bg);
+  border-radius: var(--r-card);
+}
+.app-mobile .section-title { margin-bottom: var(--sp-3); font-size: var(--fs-lg); }
+.app-mobile .section-title .link,
+.app-mobile .section-title .btn { font-size: var(--fs-sm); font-weight: var(--fw-regular); color: var(--c-text-2); letter-spacing: var(--ls-body); }
+.app-mobile .section-desc { margin: calc(var(--sp-2) * -1) 0 var(--sp-3); }
+/* 묶음 안에 또 카드를 넣었으면 판을 겹치지 않고 줄로 나눈다 */
+.app-mobile .section .card {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+.app-mobile .section .card-header { padding: 0 0 var(--sp-2); }
+.app-mobile .section .card-body { padding: 0; }
+.app-mobile .section .card-footer { padding: var(--sp-3) 0 0; }
+.app-mobile .section .card + .card { padding-top: var(--sp-3); border-top: 1px solid var(--c-border); }
+.app-mobile .section .card > .list .list-item,
+.app-mobile .section > .list .list-item { padding-left: 0; padding-right: 0; }
+/* 판 안 맨 끝 목록은 아래 여백을 줄여 판과 붙인다 */
+.app-mobile .card > .list .list-item:first-child { padding-top: var(--pad-card); }
+.app-mobile .card > .list .list-item:last-child { padding-bottom: var(--pad-card); }
+.app-mobile .section .card > .list .list-item:first-child { padding-top: var(--pad-row); }
+.app-mobile .section .card > .list .list-item:last-child { padding-bottom: 0; }
+
+/* ---- 여러 열 → 한 열 (2열은 숫자 둘을 나란히 둘 때만 남긴다) ---- */
+.app-mobile .grid-3,
+.app-mobile .grid-4 { grid-template-columns: minmax(0, 1fr); }
+.app-mobile .span-2 { grid-column: auto; }
+.app-mobile .grid-2 { gap: var(--sp-3); }
+.app-mobile .form-grid { grid-template-columns: minmax(0, 1fr); gap: var(--sp-4); }
+/* 좌 목록 / 우 자세히 는 모바일에서 두 화면으로 나눈다. 쓰였으면 위아래로 쌓는다 */
+.app-mobile .split {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  border: 0;
+  background: var(--m-card-bg);
+}
+.app-mobile .split-list { border-right: 0; border-bottom: 1px solid var(--c-border); overflow: visible; }
+.app-mobile .split-detail { padding: var(--pad-card); overflow: visible; }
+
+/* ---- 목록: 줄 위아래 12, 부제는 줄바꿈 ---- */
+.app-mobile .list-item { min-height: var(--ctl-md); padding: var(--pad-row) var(--sp-4); align-items: flex-start; }
+.app-mobile .list-item > .icon,
+.app-mobile .list-item > .icon-sm { align-self: center; color: var(--c-text-muted); }
+.app-mobile .list-title { white-space: normal; font-weight: var(--fw-semibold); }
+.app-mobile .list-sub { white-space: normal; }
+.app-mobile .list-meta { align-self: center; }
+.app-mobile .list-actions { align-self: center; }
+.app-mobile .list-icon { border-radius: var(--r-md); }
+
+/* ---- 도구줄 · 검색: 꽉 차게, 넘치면 가로로 밀어 본다 ---- */
+.app-mobile .toolbar { flex-wrap: nowrap; overflow-x: auto; margin-bottom: 0; }
+.app-mobile .search { width: 100%; max-width: none; flex: 1 0 auto; }
+.app-mobile .search > .input { background: var(--c-surface-2); border-color: transparent; }
+
+/* ---- 칩: 한 줄로 가로 스크롤, 고른 칩 = 주 색 테두리 + 연한 주 색 ---- */
+.app-mobile .chip-group { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; }
+.app-mobile .chip { height: var(--ctl-sm); padding: 0 var(--sp-4); flex: 0 0 auto; }
+.app-mobile .chip.active { border-color: var(--c-primary); background: var(--c-primary-soft); color: var(--c-primary-soft-fg); }
+
+/* ---- 나눔 버튼(예정 · 대기 중 · 지난 수업): 고른 칸 = 주 색 테두리 + 연한 주 색 ---- */
+.app-mobile .segmented { border-color: transparent; background: var(--c-surface-2); max-width: 100%; overflow-x: auto; }
+.app-mobile .segmented-item { flex: 1 0 auto; font-size: var(--fs-sm); }
+.app-mobile .segmented-item.active {
+  border-color: var(--c-primary);
+  background: var(--c-primary-soft);
+  color: var(--c-primary-soft-fg);
+  box-shadow: none;
+}
+.app-mobile .tabs { gap: 0; }
+.app-mobile .tab { flex: 1 0 auto; justify-content: center; padding: 0 var(--sp-2); }
+
+/* ---- 배지: 작고 연한 알약 ---- */
+.app-mobile .badge { padding: 0 var(--sp-2); font-weight: var(--fw-semibold); }
+
+/* ---- 숫자 카드 ---- */
+.app-mobile .stat-value { font-size: var(--fs-2xl); }
+
+/* ---- 입력: 손가락 크기, 버튼 줄은 위아래로 ---- */
+.app-mobile .input, .app-mobile .select { height: var(--ctl-md); }
+.app-mobile .field-inline { flex-direction: column; align-items: stretch; }
+.app-mobile .form-actions {
+  flex-direction: column-reverse;
+  align-items: stretch;
+  margin-top: var(--sp-4);
+  padding-top: 0;
+  border-top: 0;
+}
+.app-mobile .form-actions > .btn { width: 100%; height: var(--ctl-lg); }
+
+/* ---- 안내 띠 · 빈 화면 ---- */
+.app-mobile .banner { border-radius: var(--r-card); }
+.app-mobile .empty { background: var(--m-card-bg); border-radius: var(--r-card); padding: var(--sp-10) var(--pad-card); }
+.app-mobile .section .empty, .app-mobile .card .empty { background: transparent; padding: var(--sp-6) 0; }
+
+/* ---- 모바일에 맞지 않는 것: 표 · 주간 시간표는 쓰지 않는다(lint). 쓰였으면 가로로 밀어 보게만 ---- */
+.app-mobile .table-wrap { overflow-x: auto; }
+.app-mobile .week-grid { overflow-x: auto; }
+.app-mobile .day-strip-wide .day { flex: 0 0 auto; }   /* 7일 이상은 가로로 밀어 본다 */
+.app-mobile .timeline-item { column-gap: var(--sp-2); }
+.app-mobile .steps { overflow-x: auto; }

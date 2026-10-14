@@ -1,0 +1,1066 @@
+{
+  "_": "색 고르기 데이터 — scripts/looks.js가 읽는다. presets = 고정 스타일(group 국내·해외)(앱 이름은 이름표로만, 화면에는 로고·브랜드 없음) · palette = 직접 고르기 색 조각 · bases = 직접 고를 때의 바탕(12개 — tint는 고른 색으로 살짝 물들인 바탕, 그 밖의 바탕은 bgHex). exact: 버튼 색 채도를 낮추지 않는다(그 앱의 색 그대로).",
+  "presets": [
+    {
+      "id": "toss",
+      "name": "토스 느낌",
+      "why": "회색 바탕에 흰 카드, 굵고 큰 숫자 — 돈·숫자를 다루는 서비스에 어울려요",
+      "mode": "light",
+      "bg": "#F2F4F6",
+      "ink": "#191F28",
+      "shape": "flat",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#3182F6"
+        },
+        {
+          "id": "navy",
+          "name": "남색",
+          "hex": "#1B3B7A"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#0B9C8F"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#F04452"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#333D4B"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "daangn",
+      "name": "당근 느낌",
+      "why": "흰 바탕에 주황 하나 — 동네·생활 서비스처럼 친근해요",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#212124",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "carrot",
+          "name": "당근 주황",
+          "hex": "#FF6F0F"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#00A05B"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#2E7DF6"
+        },
+        {
+          "id": "brown",
+          "name": "갈색",
+          "hex": "#8B5A3C"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#4D5159"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "kakao",
+      "name": "카카오 느낌",
+      "why": "노란 버튼에 검은 글자 — 메신저처럼 익숙하고 경쾌해요",
+      "mode": "light",
+      "bg": "#F6F6F6",
+      "ink": "#191919",
+      "shape": "round",
+      "font": "nanum-square-round",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#FEE500"
+        },
+        {
+          "id": "brown",
+          "name": "밤색",
+          "hex": "#3C1E1E"
+        },
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#4B9EFF"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#2DB400"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#191919"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "kakaobank",
+      "name": "카카오뱅크 느낌",
+      "why": "노랑과 검정 — 돈을 다뤄도 가볍고 친근해요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#1E1E1E",
+      "shape": "round",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#FFE300"
+        },
+        {
+          "id": "black",
+          "name": "검정",
+          "hex": "#1E1E1E"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#3B7BF6"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#20B26C"
+        },
+        {
+          "id": "gray",
+          "name": "회색",
+          "hex": "#6B6B6B"
+        }
+      ]
+    },
+    {
+      "id": "baemin",
+      "name": "배민 느낌",
+      "why": "민트색과 둥근 모양 — 음식·주문처럼 가볍고 귀여운 서비스에 어울려요",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#222222",
+      "shape": "round",
+      "font": "nanum-square-round",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "mint",
+          "name": "민트",
+          "hex": "#2AC1BC"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#FF7E36"
+        },
+        {
+          "id": "pink",
+          "name": "분홍",
+          "hex": "#FF6B8B"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#FFC233"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#333333"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "naver",
+      "name": "네이버 느낌",
+      "why": "연회색 바탕에 초록 — 검색·정보가 많은 서비스에 어울려요",
+      "mode": "light",
+      "bg": "#F5F6F8",
+      "ink": "#1E1E23",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#03C75A"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#3D7EFF"
+        },
+        {
+          "id": "forest",
+          "name": "진초록",
+          "hex": "#00843D"
+        },
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#7A5AF8"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#404048"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "line",
+      "name": "라인 느낌",
+      "why": "흰 바탕에 초록 — 메신저처럼 깔끔하고 익숙해요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#111111",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#06C755"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#111111"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#4A90E2"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#FF334B"
+        },
+        {
+          "id": "gray",
+          "name": "회색",
+          "hex": "#8A8A8A"
+        }
+      ]
+    },
+    {
+      "id": "coupang",
+      "name": "쿠팡 느낌",
+      "why": "흰 바탕에 또렷한 파랑 — 상품을 빨리 찾고 담는 쇼핑에 어울려요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#111111",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#346AFF"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E52528"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#F26A00"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#00891A"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#333333"
+        }
+      ]
+    },
+    {
+      "id": "kurly",
+      "name": "컬리 느낌",
+      "why": "흰 바탕에 짙은 보라 — 고급스럽고 차분한 장보기에 어울려요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#333333",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "purple",
+          "name": "보라",
+          "hex": "#5F0080"
+        },
+        {
+          "id": "lavender",
+          "name": "연보라",
+          "hex": "#8D4CC4"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#1F8A80"
+        },
+        {
+          "id": "pink",
+          "name": "분홍",
+          "hex": "#D2577F"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#333333"
+        }
+      ]
+    },
+    {
+      "id": "ohou",
+      "name": "오늘의집 느낌",
+      "why": "흰 바탕에 하늘색 — 사진과 공간을 둘러보는 서비스에 어울려요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#292929",
+      "shape": "round",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#35C5F0"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#1E8FD8"
+        },
+        {
+          "id": "coral",
+          "name": "코랄",
+          "hex": "#F77266"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#F5B400"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#424242"
+        }
+      ]
+    },
+    {
+      "id": "musinsa",
+      "name": "무신사 느낌",
+      "why": "흰 바탕에 검정, 각진 모양 — 옷·상품 사진이 돋보여요",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#000000",
+      "shape": "sharp",
+      "font": "suit",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "black",
+          "name": "검정",
+          "hex": "#000000"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E6222D"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#0078FF"
+        },
+        {
+          "id": "gray",
+          "name": "회색",
+          "hex": "#6E6E6E"
+        },
+        {
+          "id": "brown",
+          "name": "갈색",
+          "hex": "#8C6A4F"
+        }
+      ],
+      "group": "국내"
+    },
+    {
+      "id": "29cm",
+      "name": "29CM 느낌",
+      "why": "흰 바탕에 검정, 각진 모양 — 잡지처럼 상품을 보여줘요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#000000",
+      "shape": "sharp",
+      "font": "suit",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "black",
+          "name": "검정",
+          "hex": "#000000"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#FF4800"
+        },
+        {
+          "id": "gray",
+          "name": "회색",
+          "hex": "#757575"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#2F54EB"
+        },
+        {
+          "id": "brown",
+          "name": "갈색",
+          "hex": "#7B5C43"
+        }
+      ]
+    },
+    {
+      "id": "banksalad",
+      "name": "뱅크샐러드 느낌",
+      "why": "연회색 바탕에 연두 초록 — 숫자를 쉽게 보여주는 자산 관리에 어울려요",
+      "group": "국내",
+      "mode": "light",
+      "bg": "#F7F8FA",
+      "ink": "#191F28",
+      "shape": "flat",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "green",
+          "name": "연두 초록",
+          "hex": "#00C281"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#4C7DFF"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#FF8A3D"
+        },
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#8E6CFF"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#2B2F38"
+        }
+      ]
+    },
+    {
+      "id": "apple",
+      "name": "애플 느낌",
+      "why": "연회색 바탕에 흰 판, 파랑 하나 — 단정하고 여백이 넓어요",
+      "group": "해외",
+      "mode": "light",
+      "bg": "#F5F5F7",
+      "ink": "#1D1D1F",
+      "shape": "flat",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#0071E3"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#1D1D1F"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#248A3D"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#C93400"
+        },
+        {
+          "id": "purple",
+          "name": "보라",
+          "hex": "#8944AB"
+        }
+      ]
+    },
+    {
+      "id": "google",
+      "name": "구글 느낌",
+      "why": "연한 바탕에 파랑, 알약 모양 버튼 — 누구나 익숙한 도구 느낌이에요",
+      "group": "해외",
+      "mode": "light",
+      "bg": "#F8F9FA",
+      "ink": "#1F1F1F",
+      "shape": "round",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#1A73E8"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#D93025"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#F9AB00"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#1E8E3E"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#3C4043"
+        }
+      ]
+    },
+    {
+      "id": "airbnb",
+      "name": "에어비앤비 느낌",
+      "why": "흰 바탕에 코랄 빨강, 둥근 모양 — 여행·숙소처럼 설레는 서비스에 어울려요",
+      "group": "해외",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#222222",
+      "shape": "round",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "coral",
+          "name": "코랄 빨강",
+          "hex": "#FF385C"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#222222"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#00A699"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#E8590C"
+        },
+        {
+          "id": "plum",
+          "name": "자두",
+          "hex": "#92174D"
+        }
+      ]
+    },
+    {
+      "id": "notion",
+      "name": "노션 느낌",
+      "why": "흰 종이에 먹색 — 기록·문서처럼 글이 중심인 서비스에 어울려요",
+      "group": "해외",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#37352F",
+      "shape": "sharp",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#37352F"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#2383E2"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E03E3E"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#DFAB01"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#0F7B6C"
+        }
+      ]
+    },
+    {
+      "id": "slack",
+      "name": "슬랙 느낌",
+      "why": "흰 바탕에 자두 보라 — 여럿이 함께 일하는 도구에 어울려요",
+      "group": "해외",
+      "mode": "light",
+      "bg": "#FFFFFF",
+      "ink": "#1D1C1D",
+      "shape": "soft",
+      "font": "pretendard",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "aubergine",
+          "name": "자두 보라",
+          "hex": "#4A154B"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#007A5A"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#1264A3"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E01E5A"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#ECB22E"
+        }
+      ]
+    },
+    {
+      "id": "linear",
+      "name": "리니어 느낌",
+      "why": "어두운 바탕에 보라, 각진 모양 — 빠르게 일하는 업무 도구에 어울려요",
+      "group": "해외",
+      "mode": "dark",
+      "bg": "#0F1011",
+      "ink": "#F7F8F8",
+      "shape": "sharp",
+      "font": "suit",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#5E6AD2"
+        },
+        {
+          "id": "white",
+          "name": "흰색",
+          "hex": "#EDEDEF"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#4CB782"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#F2994A"
+        },
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E5484D"
+        }
+      ]
+    },
+    {
+      "id": "spotify",
+      "name": "스포티파이 느낌",
+      "why": "검은 바탕에 초록 — 음악·영상처럼 오래 켜 두는 서비스에 어울려요",
+      "group": "해외",
+      "mode": "dark",
+      "bg": "#121212",
+      "ink": "#FFFFFF",
+      "shape": "round",
+      "font": "suit",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#1DB954"
+        },
+        {
+          "id": "white",
+          "name": "흰색",
+          "hex": "#FFFFFF"
+        },
+        {
+          "id": "pink",
+          "name": "분홍",
+          "hex": "#F573A0"
+        },
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#509BF5"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#FFC864"
+        }
+      ]
+    },
+    {
+      "id": "netflix",
+      "name": "넷플릭스 느낌",
+      "why": "검은 바탕에 빨강 — 영상·밤에 오래 보는 서비스에 어울려요",
+      "mode": "dark",
+      "bg": "#141414",
+      "ink": "#FFFFFF",
+      "shape": "sharp",
+      "font": "suit",
+      "exact": true,
+      "swatches": [
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E50914"
+        },
+        {
+          "id": "white",
+          "name": "흰색",
+          "hex": "#F5F5F1"
+        },
+        {
+          "id": "gold",
+          "name": "금색",
+          "hex": "#F5C518"
+        },
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#54B9FF"
+        },
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#9B6BFF"
+        }
+      ],
+      "group": "해외"
+    }
+  ],
+  "palette": [
+    {
+      "group": "기본 색",
+      "colors": [
+        {
+          "id": "red",
+          "name": "빨강",
+          "hex": "#E5383B"
+        },
+        {
+          "id": "orange",
+          "name": "주황",
+          "hex": "#F77F00"
+        },
+        {
+          "id": "yellow",
+          "name": "노랑",
+          "hex": "#FFC300"
+        },
+        {
+          "id": "green",
+          "name": "초록",
+          "hex": "#2BA84A"
+        },
+        {
+          "id": "teal",
+          "name": "청록",
+          "hex": "#0FA3A3"
+        },
+        {
+          "id": "sky",
+          "name": "하늘",
+          "hex": "#38A3F1"
+        },
+        {
+          "id": "blue",
+          "name": "파랑",
+          "hex": "#2F6BFF"
+        },
+        {
+          "id": "navy",
+          "name": "남색",
+          "hex": "#23317A"
+        },
+        {
+          "id": "violet",
+          "name": "보라",
+          "hex": "#7B4DFF"
+        },
+        {
+          "id": "pink",
+          "name": "분홍",
+          "hex": "#F0568C"
+        },
+        {
+          "id": "brown",
+          "name": "갈색",
+          "hex": "#8B5E3C"
+        },
+        {
+          "id": "ink",
+          "name": "먹색",
+          "hex": "#2B2D33"
+        }
+      ]
+    },
+    {
+      "group": "색다른 색",
+      "colors": [
+        {
+          "id": "coral",
+          "name": "코랄",
+          "hex": "#FF6F61"
+        },
+        {
+          "id": "terracotta",
+          "name": "테라코타",
+          "hex": "#C8553D"
+        },
+        {
+          "id": "mustard",
+          "name": "머스타드",
+          "hex": "#D6A21E"
+        },
+        {
+          "id": "olive",
+          "name": "올리브",
+          "hex": "#6B7A2A"
+        },
+        {
+          "id": "sage",
+          "name": "세이지",
+          "hex": "#6F9A80"
+        },
+        {
+          "id": "mint",
+          "name": "민트",
+          "hex": "#3CCFB4"
+        },
+        {
+          "id": "deep-teal",
+          "name": "짙은 청록",
+          "hex": "#1F7A7A"
+        },
+        {
+          "id": "indigo",
+          "name": "인디고",
+          "hex": "#4338CA"
+        },
+        {
+          "id": "lavender",
+          "name": "라벤더",
+          "hex": "#9C89E0"
+        },
+        {
+          "id": "plum",
+          "name": "자두",
+          "hex": "#8E3B6E"
+        },
+        {
+          "id": "burgundy",
+          "name": "버건디",
+          "hex": "#7A1F2B"
+        },
+        {
+          "id": "mocha",
+          "name": "모카",
+          "hex": "#6F4E37"
+        }
+      ]
+    }
+  ],
+  "bases": [
+    {
+      "id": "white",
+      "name": "흰색",
+      "mode": "light",
+      "bg": "#FAFAFB",
+      "ink": "#1B1D22",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "gray",
+      "name": "연회색",
+      "mode": "light",
+      "bg": "#F2F4F6",
+      "ink": "#191F28",
+      "shape": "flat",
+      "font": "pretendard"
+    },
+    {
+      "id": "warm",
+      "name": "미색",
+      "mode": "light",
+      "bg": "#FBF8F3",
+      "ink": "#2A241D",
+      "shape": "round",
+      "font": "pretendard"
+    },
+    {
+      "id": "sand",
+      "name": "모래",
+      "mode": "light",
+      "bg": "#F4EFE6",
+      "ink": "#2B251C",
+      "shape": "round",
+      "font": "pretendard"
+    },
+    {
+      "id": "sky",
+      "name": "하늘",
+      "mode": "light",
+      "bg": "#F1F6FC",
+      "ink": "#17212E",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "mint",
+      "name": "민트",
+      "mode": "light",
+      "bg": "#EFF8F5",
+      "ink": "#14241F",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "pink",
+      "name": "분홍",
+      "mode": "light",
+      "bg": "#FCF3F4",
+      "ink": "#2A1A1D",
+      "shape": "round",
+      "font": "pretendard"
+    },
+    {
+      "id": "lilac",
+      "name": "연보라",
+      "mode": "light",
+      "bg": "#F5F3FC",
+      "ink": "#1F1A2E",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "tint",
+      "name": "살짝 물든",
+      "mode": "light",
+      "bg": "#F6F7FB",
+      "ink": "#1B1D22",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "dark",
+      "name": "어두운",
+      "mode": "dark",
+      "bg": "#131417",
+      "ink": "#ECEDEF",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "navy",
+      "name": "밤 남색",
+      "mode": "dark",
+      "bg": "#0F172A",
+      "ink": "#E6EAF2",
+      "shape": "soft",
+      "font": "pretendard"
+    },
+    {
+      "id": "ink",
+      "name": "먹색",
+      "mode": "dark",
+      "bg": "#1C1C1E",
+      "ink": "#F2F2F4",
+      "shape": "sharp",
+      "font": "pretendard"
+    }
+  ]
+}

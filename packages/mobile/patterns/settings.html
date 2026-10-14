@@ -1,0 +1,20 @@
+<!-- pattern: settings (모바일 = 마이) — 탭 화면. 큰 제목 → 내 정보 판 → 설정 묶음 판들(줄 + 스위치·화살표).
+     data-region key는 예시. -->
+<main class="content">
+  <x-page-header title="마이"></x-page-header>
+  <x-card data-region="example-profile">
+    <div class="row gap-3"><x-avatar size="lg">김하</x-avatar><div class="stack gap-1"><p class="fw-semibold">김하늘 님</p><p class="text-sm text-2">010-2345-6789</p></div></div>
+  </x-card>
+  <x-section title="알림" data-region="example-alerts">
+    <div class="stack">
+      <label class="switch"><input type="checkbox" checked>수업 하루 전 알림</label>
+      <label class="switch"><input type="checkbox" checked>대기 자리가 나면 알림</label>
+    </div>
+  </x-section>
+  <x-section title="계정" data-region="example-account">
+    <x-list plain>
+      <x-item icon="ticket" small title="내 수강권"><x-icon name="chevron-right" size="sm"/></x-item>
+      <x-item icon="log-out" small title="로그아웃"><x-icon name="chevron-right" size="sm"/></x-item>
+    </x-list>
+  </x-section>
+</main>

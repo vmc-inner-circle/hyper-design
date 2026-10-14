@@ -1,0 +1,78 @@
+/* mobile/50-mobile-sheet — 아래에서 올라오는 창(bottom sheet).
+   모바일의 <x-modal>은 expand.js가 이 마크업으로 펼친다 (루트 클래스 .modal-backdrop은 그대로 — build·lint가 이걸로 찾는다):
+     <div class="modal-backdrop sheet-backdrop">
+       <div class="modal sheet" role="dialog">
+         <span class="sheet-handle" aria-hidden="true"></span>
+         <div class="modal-header"><div><h2 class="modal-title">…</h2><p class="modal-desc">…</p></div></div>
+         <div class="modal-body">…</div>
+         <div class="modal-footer">주 버튼 · 보조 버튼 (위아래로, 꽉 차게)</div>
+       </div>
+     </div>
+   흐린 화면 위, 프레임 아래쪽에 붙는다. 위쪽 모서리만 둥글게. 토큰 변수만 참조한다. */
+
+.modal-backdrop.sheet-backdrop {
+  align-items: flex-end;
+  justify-content: stretch;
+  padding: 0;
+}
+.modal.sheet {
+  width: 100%;
+  max-width: none;
+  max-height: var(--sheet-max-h);
+  border: 0;
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  background: var(--m-card-bg, var(--c-surface));
+  box-shadow: var(--shadow-lg);
+}
+.sheet-handle {
+  display: block;
+  flex: 0 0 auto;
+  width: var(--handle-w);
+  height: var(--handle-h);
+  margin: var(--sp-2) auto 0;
+  border-radius: var(--r-pill);
+  background: var(--c-border-strong);
+}
+.sheet .modal-header {
+  padding: var(--sp-5) var(--gutter) var(--sp-2);
+}
+.sheet .modal-title {
+  font-family: var(--font-head);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-head);
+  letter-spacing: var(--ls-head);
+}
+.sheet .modal-desc { margin-top: var(--sp-2); font-size: var(--fs-md); line-height: var(--lh-normal); }
+.sheet .modal-body { padding: var(--sp-2) var(--gutter) var(--sp-4); gap: var(--sp-3); }
+.sheet .modal-body:empty { display: none; }
+/* 바닥줄: 버튼을 위아래로 꽉 차게 — 주 버튼이 맨 위, 나머지(돌아가기 · 취소)는 그 아래 회색 */
+.sheet .modal-footer {
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--gutter) var(--sp-6);
+  border-top: 0;
+}
+.sheet .modal-footer > .btn {
+  width: 100%;
+  height: var(--ctl-lg);
+  font-size: var(--fs-md);
+  font-weight: var(--fw-semibold);
+}
+.sheet .modal-footer > .btn-primary,
+.sheet .modal-footer > .btn-danger { order: -1; }
+.sheet .modal-footer > .btn-secondary,
+.sheet .modal-footer > .btn-ghost { background: var(--c-surface-2); border-color: transparent; color: var(--c-text); }
+.sheet .modal-footer .spacer,
+.sheet .modal-footer .text-muted { margin-right: 0; text-align: center; font-size: var(--fs-sm); }
+/* 확인 대화상자 모양(modal-center)도 아래 창에서는 왼쪽 정렬 그대로 둔다 */
+.sheet.modal-center .modal-header,
+.sheet.modal-center .modal-body { text-align: left; align-items: stretch; justify-content: flex-start; }
+
+/* 창 안 목록은 판 가장자리까지 */
+.sheet .modal-body > .list .list-item { padding-left: 0; padding-right: 0; }
+
+/* ---- 그 밖의 창이 모바일에 쓰였을 때 (가운데 창 · 오른쪽 서랍) — 화면 폭에 맞춘다 ---- */
+.app-mobile .modal-backdrop:not(.sheet-backdrop) { padding: var(--gutter); }
+.app-mobile .modal:not(.sheet) { max-width: 100%; }
+.app-mobile .drawer { width: 100%; }
