@@ -4,16 +4,245 @@
   "platform": "web",
   "round": 1,
   "theme": "warm",
+  "facts": {
+    "todo-today": "오늘 할 일 5건 — 마감이 가까운 순",
+    "recent-changes": "최근 7일 변경 3건 — 장소 변경 · 날짜 확정 · 새 구성원",
+    "item-rule": "새 항목은 이름(2~20자)과 모임 날짜만 적으면 바로 만들어진다"
+  },
+  "roles": [
+    {
+      "key": "owner",
+      "label": "관리자",
+      "goal": "모임 준비할 일을 빠짐없이 챙기고 새 일을 바로 만든다",
+      "inclusion": "30~40대 모임지기 한 명, 사무실 컴퓨터(1280px), 하루 한두 번 확인",
+      "nav": [
+        {
+          "slug": "home",
+          "label": "홈",
+          "icon": "house"
+        }
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "key": "home",
+      "name": "오늘 보기",
+      "desc": "오늘 할 일과 최근 변경을 한눈에 봐요"
+    },
+    {
+      "key": "make",
+      "name": "새로 만들기",
+      "desc": "이름만 적으면 새 항목을 만들어요"
+    }
+  ],
+  "screens": [
+    {
+      "slug": "home",
+      "name": "홈",
+      "role": "owner",
+      "section": "home",
+      "step": "오늘 보기",
+      "file": "screens/home.html",
+      "goal": "오늘 할 일과 최근 변경을 한눈에 확인한다",
+      "problem": "무엇이 바뀌었는지 놓치면 모임 준비가 어긋난다",
+      "pattern": "목록 탐색",
+      "emphasize": "오늘 할 일 5건",
+      "data": ["todo-today", "recent-changes"],
+      "defer": ["지난달 기록 — 다음 판으로"],
+      "focus": "summary",
+      "regions": [
+        {
+          "key": "summary",
+          "label": "오늘 요약",
+          "why": "오늘 할 일이 몇 건인지 바로 봐요",
+          "level": 1,
+          "form": "hero",
+          "content": "todo-today"
+        },
+        {
+          "key": "recent",
+          "label": "최근 변경 목록",
+          "why": "무엇이 바뀌었는지 훑어봐요",
+          "level": 2,
+          "form": "list",
+          "content": "변경 이름 · 언제"
+        },
+        {
+          "key": "new",
+          "label": "새로 만들기 버튼",
+          "why": "새 항목을 시작하는 곳이에요",
+          "level": 3,
+          "form": "form",
+          "content": "주 버튼 '새로 만들기' 하나"
+        }
+      ],
+      "policy": [
+        {
+          "title": "기본 정의",
+          "items": [
+            "오늘 할 일을 마감이 가까운 순으로",
+            "변경은 최근 7일 것만"
+          ]
+        }
+      ],
+      "motion": [
+        {
+          "type": "countup",
+          "region": "summary",
+          "note": "오늘 할 일 숫자가 올라가며 보여요"
+        }
+      ]
+    },
+    {
+      "slug": "create",
+      "name": "새로 만들기",
+      "role": "owner",
+      "section": "make",
+      "step": "이름 적기",
+      "file": "screens/create.html",
+      "goal": "이름과 모임 날짜를 적어 새 항목을 만든다",
+      "problem": "무엇을 적어야 하는지 모르면 중간에 그만둔다",
+      "pattern": "입력폼",
+      "emphasize": "이름만 적으면 바로 만들어져요",
+      "data": ["item-rule"],
+      "defer": ["설명 · 참석자 — 만든 뒤에 적는다"],
+      "focus": "item-form",
+      "regions": [
+        {
+          "key": "item-form",
+          "label": "이름과 날짜 적는 곳",
+          "why": "두 칸만 채우면 돼요",
+          "level": 1,
+          "form": "form",
+          "content": "이름(2~20자) · 모임 날짜 · '만들기' 버튼"
+        }
+      ],
+      "policy": [
+        {
+          "title": "입력 규칙",
+          "items": [
+            "이름 2~20자, 비워 둘 수 없다",
+            "모임 날짜는 오늘 이후만"
+          ]
+        }
+      ],
+      "cases": [
+        {
+          "when": "이름을 비워 두고 누르면",
+          "show": "이름을 적어 주세요",
+          "tone": "danger"
+        },
+        {
+          "when": "이름이 20자를 넘으면",
+          "show": "이름은 20자까지 적을 수 있어요",
+          "tone": "warning"
+        }
+      ]
+    },
+    {
+      "slug": "create-error",
+      "name": "새로 만들기 (이름 빠짐)",
+      "role": "owner",
+      "section": "make",
+      "step": "이름 적기",
+      "file": "screens/create-error.html",
+      "state": "error",
+      "variantOf": "create",
+      "when": "이름을 비워 두고 '만들기'를 눌렀을 때",
+      "goal": "비어 있는 이름 칸을 찾아 채운다",
+      "problem": "왜 안 만들어졌는지 모르면 다시 처음부터 한다",
+      "pattern": "오류",
+      "emphasize": "이름을 적어 주세요",
+      "data": ["item-rule"],
+      "defer": [],
+      "focus": "item-form",
+      "regions": [
+        {
+          "key": "item-form",
+          "label": "이름과 날짜 적는 곳",
+          "why": "비어 있는 칸이 빨갛게 표시돼요",
+          "level": 1,
+          "form": "form",
+          "content": "빈 이름 칸 + 오류 문구 · '만들기' 버튼"
+        }
+      ]
+    },
+    {
+      "slug": "done",
+      "name": "만들기 완료",
+      "role": "owner",
+      "section": "make",
+      "step": "만들기 끝",
+      "file": "screens/done.html",
+      "state": "success",
+      "variantOf": "home",
+      "when": "'만들기'를 눌러 저장된 뒤",
+      "goal": "새 항목이 만들어졌는지 확인한다",
+      "problem": "저장됐는지 확신이 없으면 같은 항목을 또 만든다",
+      "pattern": "확인",
+      "emphasize": "새 항목을 만들었어요",
+      "data": ["item-rule"],
+      "defer": [],
+      "focus": "result",
+      "regions": [
+        {
+          "key": "result",
+          "label": "완료 안내",
+          "why": "만들기가 끝났는지 확인해요",
+          "level": 1,
+          "form": "hero",
+          "content": "만든 항목 이름 · 방금 만들었어요"
+        }
+      ]
+    }
+  ],
+  "mood": {
+    "keywords": [
+      {
+        "word": "포근한",
+        "not": "하지만 흐릿하지는 않게",
+        "prd": "예시 — 동네 모임",
+        "from": ["owner"]
+      },
+      {
+        "word": "또렷한",
+        "not": "하지만 딱딱하지는 않게",
+        "prd": "예시 — 오늘 할 일",
+        "from": ["todo-today"]
+      },
+      {
+        "word": "가벼운",
+        "not": "하지만 비어 보이지는 않게",
+        "prd": "예시 — 새로 만들기",
+        "from": ["item-rule"]
+      }
+    ]
+  },
   "looks": [
     {
       "id": "warm",
       "name": "따뜻한 종이",
       "why": "포근한 느낌이에요",
       "mode": "light",
+      "tone": "paper",
       "bg": "#FBF8F3",
       "ink": "#1F1B16",
       "shape": "round",
       "font": "pretendard",
+      "lean": "포근한",
+      "palette": {
+        "brand": { "name": "테라코타", "hex": "#D9562B", "why": "포근한 — 누르는 곳만 따뜻하게" },
+        "support": { "name": "모래", "hex": "#C9B79C", "why": "정보 면을 차분하게" },
+        "accent": { "name": "숲", "hex": "#2F6B4F", "why": "오늘 · 새로 표시 한두 곳" },
+        "why": "따뜻한 종이 바탕에 테라코타 하나로 누르는 곳을 가른다"
+      },
+      "type": {
+        "heading": "sans",
+        "headingWhy": "또렷한 — 반듯한 고딕 제목",
+        "ratio": "normal",
+        "why": "목록이 주인공이라 KRDS 기본 단계 그대로"
+      },
       "swatches": [
         {
           "id": "terracotta",
@@ -45,104 +274,21 @@
   ],
   "toggles": {
     "type": "normal",
-    "swatch": "terracotta"
+    "swatch": "terracotta",
+    "toast": { "at": "top", "icon": "on", "tone": "light", "size": "normal" }
   },
-  "roles": [
-    {
-      "key": "owner",
-      "label": "관리자",
-      "nav": [
-        {
-          "slug": "home",
-          "label": "홈",
-          "icon": "house"
-        }
-      ]
-    }
-  ],
   "board": {
     "recommend": {
       "theme": "warm",
       "themeWhy": "포근한 톤을 추천해요",
       "type": "normal",
-      "typeWhy": "보통 크기가 알맞아요",
-      "accent": "calm",
-      "accentWhy": "차분하게"
+      "typeWhy": "모임지기 한 명이 컴퓨터로 봐서 보통 크기가 알맞아요",
+      "swatch": "terracotta",
+      "swatchWhy": "차분한 바탕에서 누르는 곳만 따뜻하게",
+      "toast": { "at": "top", "icon": "on", "tone": "light", "size": "normal" }
     },
     "ask": [],
     "locked": [],
     "focus": []
-  },
-  "sections": [
-    {
-      "key": "home",
-      "name": "홈",
-      "desc": "오늘 할 일을 한눈에 봐요"
-    }
-  ],
-  "screens": [
-    {
-      "slug": "home",
-      "name": "홈",
-      "role": "owner",
-      "section": "home",
-      "step": "오늘 보기",
-      "purpose": "오늘 할 일과 최근 변경을 한눈에 본다",
-      "pattern": "dashboard",
-      "file": "screens/home.html",
-      "policy": [
-        {
-          "title": "기본 정의",
-          "items": [
-            "오늘 할 일을 마감이 가까운 순으로",
-            "변경은 최근 7일 것만"
-          ]
-        }
-      ],
-      "regions": [
-        {
-          "key": "summary",
-          "label": "오늘 요약",
-          "why": "오늘 할 일이 몇 건인지 바로 봐요"
-        },
-        {
-          "key": "recent",
-          "label": "최근 변경 목록",
-          "why": "무엇이 바뀌었는지 훑어봐요"
-        },
-        {
-          "key": "new",
-          "label": "새로 만들기 버튼",
-          "why": "새 항목을 시작하는 곳이에요"
-        }
-      ]
-    },
-    {
-      "slug": "done",
-      "name": "만들기 완료",
-      "role": "owner",
-      "section": "home",
-      "step": "오늘 보기",
-      "purpose": "새 항목이 만들어졌음을 알린다",
-      "pattern": "dashboard",
-      "file": "screens/done.html",
-      "state": "success",
-      "variantOf": "home",
-      "policy": [
-        {
-          "title": "기본 정의",
-          "items": [
-            "완료 문구를 한 줄로 보여준다"
-          ]
-        }
-      ],
-      "regions": [
-        {
-          "key": "result",
-          "label": "완료 안내",
-          "why": "만들기가 끝났는지 확인해요"
-        }
-      ]
-    }
-  ]
+  }
 }

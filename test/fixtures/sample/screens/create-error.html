@@ -1,0 +1,17 @@
+<main class="content">
+  <x-page-header title="새로 만들기" desc="이름만 적으면 바로 만들어져요"/>
+  <x-section title="이름과 날짜" data-region="item-form">
+    <div class="stack gap-4">
+      <div class="field is-error">
+        <label class="field-label">이름</label>
+        <input class="input" value="" minlength="2" maxlength="20">
+        <p class="field-error">이름을 적어 주세요</p>
+      </div>
+      <div class="field">
+        <label class="field-label">모임 날짜</label>
+        <input class="input" type="date" value="2026-11-14">
+      </div>
+      <button class="btn btn-primary" data-trigger="save">만들기</button>
+    </div>
+  </x-section>
+</main>
