@@ -1,0 +1,147 @@
+<!-- pattern: settings — 설정 화면 (폭 제한 본문 + 탭 + 카드별 설정 행 + 위험 구역).
+     설정 행은 .field.field-inline (좌 라벨·설명 / 우 컨트롤). 행 사이는 .divider.
+     data-region key는 예시(example-*). screens.json의 key로 바꾼다. -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title">설정</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 (shell.html과 동일하게 유지) -->
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>참석자</span></a>
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg><span>설정</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="content-inner">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title"><!-- slot: 설정 제목 -->워크스페이스 설정</h1>
+          <p class="page-desc"><!-- slot: 한 줄 안내 -->변경 사항은 저장 즉시 모든 구성원에게 적용됩니다.</p>
+        </div>
+      </div>
+
+      <div class="tabs mb-6">
+        <!-- slot: 설정 탭 (2~5개) -->
+        <button class="tab active">일반</button>
+        <button class="tab">알림</button>
+        <button class="tab">구성원</button>
+        <button class="tab">연동</button>
+      </div>
+
+      <section class="section" data-region="example-profile">
+        <h2 class="section-title">기본 정보</h2>
+        <div class="card">
+          <div class="card-body">
+            <form class="form-grid">
+              <!-- slot: 텍스트 설정 필드 -->
+              <div class="field">
+                <label class="field-label" for="ws-name">워크스페이스 이름</label>
+                <input class="input" id="ws-name" type="text" value="운영팀 워크스페이스">
+              </div>
+              <div class="field">
+                <label class="field-label" for="ws-tz">시간대</label>
+                <div class="select-wrap">
+                  <select class="select" id="ws-tz">
+                    <option selected>서울 (GMT+9)</option>
+                    <option>도쿄 (GMT+9)</option>
+                    <option>싱가포르 (GMT+8)</option>
+                  </select>
+                  <svg class="icon" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+                </div>
+              </div>
+              <div class="field span-2">
+                <label class="field-label" for="ws-url">초대 링크</label>
+                <div class="input-group">
+                  <input class="input" id="ws-url" type="text" value="https://team.example/join/ops-2026" readonly>
+                  <button class="btn" type="button"><svg class="icon" aria-hidden="true"><use href="#i-copy"/></svg>복사</button>
+                </div>
+                <p class="field-help">링크를 아는 사람은 누구나 참여 요청을 보낼 수 있습니다.</p>
+              </div>
+            </form>
+            <div class="form-actions">
+              <button class="btn btn-ghost">되돌리기</button>
+              <button class="btn btn-primary">변경 저장</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-region="example-notifications">
+        <h2 class="section-title">알림</h2>
+        <div class="card">
+          <div class="card-body">
+            <div class="stack gap-4">
+              <!-- slot: 스위치 행 (즉시 적용) -->
+              <div class="field field-inline">
+                <div>
+                  <div class="field-label">일정 변경 알림</div>
+                  <p class="field-help">시간·장소가 바뀌면 참석자에게 메일을 보냅니다.</p>
+                </div>
+                <label class="switch"><input type="checkbox" checked><span class="sr-only">일정 변경 알림</span></label>
+              </div>
+              <div class="divider"></div>
+              <div class="field field-inline">
+                <div>
+                  <div class="field-label">주간 요약 메일</div>
+                  <p class="field-help">매주 월요일 오전 8시에 이번 주 일정을 보냅니다.</p>
+                </div>
+                <label class="switch"><input type="checkbox" checked><span class="sr-only">주간 요약 메일</span></label>
+              </div>
+              <div class="divider"></div>
+              <div class="field field-inline">
+                <div>
+                  <div class="field-label">기본 리마인드 시점</div>
+                  <p class="field-help">새 세션을 만들 때 미리 선택되는 값입니다.</p>
+                </div>
+                <div class="segmented segmented-sm">
+                  <button class="segmented-item">1시간 전</button>
+                  <button class="segmented-item active">하루 전</button>
+                  <button class="segmented-item">없음</button>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="field field-inline">
+                <div>
+                  <div class="field-label">알림 채널</div>
+                  <p class="field-help">둘 다 끄면 앱 안에서만 알림을 봅니다.</p>
+                </div>
+                <div class="row gap-4">
+                  <label class="checkbox"><input type="checkbox" checked>메일</label>
+                  <label class="checkbox"><input type="checkbox">문자</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" data-region="example-danger">
+        <h2 class="section-title text-danger">위험 구역</h2>
+        <div class="card">
+          <div class="card-body">
+            <div class="field field-inline">
+              <div>
+                <div class="field-label">워크스페이스 보관</div>
+                <p class="field-help">모든 일정이 읽기 전용으로 바뀌고 초대 링크가 비활성화됩니다. 관리자만 되돌릴 수 있습니다.</p>
+              </div>
+              <button class="btn btn-danger-soft"><svg class="icon" aria-hidden="true"><use href="#i-archive"/></svg>보관하기</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>

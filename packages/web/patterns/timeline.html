@@ -1,0 +1,140 @@
+<!-- pattern: timeline — 날짜별 세로 타임라인 + 우측 요약 패널.
+     좌(넓게): 날짜 스트립 + 날짜 헤더로 묶인 타임라인. 우(30%): 요약·달력·참여자.
+     <!-- slot: … --> 자리를 조각으로 채우고 주석은 지운다. data-region key는 예시(example-*). -->
+<div class="app">
+  <header class="topnav">
+    <div class="topnav-brand">
+      <svg class="icon" aria-hidden="true"><use href="#i-layout-dashboard"/></svg>
+      <span><!-- slot: 서비스 이름 -->팀 워크스페이스</span>
+    </div>
+    <div class="topnav-title"><!-- slot: 현재 위치 -->일정 · 9월 넷째 주</div>
+    <div class="topnav-actions">
+      <button class="btn btn-ghost btn-icon" aria-label="알림"><svg class="icon" aria-hidden="true"><use href="#i-bell"/></svg></button>
+      <div class="avatar avatar-sm">김민</div>
+    </div>
+  </header>
+
+  <aside class="sidebar">
+    <nav class="nav">
+      <!-- slot: 내비 항목 -->
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-house"/></svg><span>홈</span></a>
+      <a class="nav-item active" href="#"><svg class="icon" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-list-checks"/></svg><span>할 일</span></a>
+      <a class="nav-item" href="#"><svg class="icon" aria-hidden="true"><use href="#i-users"/></svg><span>참여자</span></a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="page-header">
+      <div>
+        <h1 class="page-title"><!-- slot: 페이지 제목 -->이번 주 일정</h1>
+        <p class="page-desc"><!-- slot: 요약 -->9월 22일 – 28일 · 일정 11개 · 확정 8 · 조정 중 3</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary"><svg class="icon" aria-hidden="true"><use href="#i-funnel"/></svg>필터</button>
+        <button class="btn btn-primary"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>일정 추가</button>
+      </div>
+    </div>
+
+    <div class="day-strip day-strip-wide mb-6" data-region="example-days">
+      <!-- slot: 날짜 스트립 7일, 선택된 날 .active -->
+      <button class="day"><span class="day-name">월</span><span class="day-num">22</span><span class="day-dot"></span></button>
+      <button class="day"><span class="day-name">화</span><span class="day-num">23</span></button>
+      <button class="day"><span class="day-name">수</span><span class="day-num">24</span><span class="day-dot"></span></button>
+      <button class="day"><span class="day-name">목</span><span class="day-num">25</span><span class="day-dot"></span></button>
+      <button class="day"><span class="day-name">금</span><span class="day-num">26</span></button>
+      <button class="day active today"><span class="day-name">토</span><span class="day-num">27</span><span class="day-dot"></span></button>
+      <button class="day is-muted"><span class="day-name">일</span><span class="day-num">28</span></button>
+    </div>
+
+    <div class="row align-start gap-6">
+      <div class="card flex-1" data-region="example-timeline">
+        <div class="card-header"><h2 class="card-title">날짜별 일정</h2><span class="text-sm text-muted">시간순</span></div>
+        <div class="card-body">
+          <!-- slot: 타임라인 (timeline-date로 날짜 묶음, 항목 4~8개) -->
+          <div class="timeline">
+            <div class="timeline-date">9월 27일 (토) · 오늘</div>
+            <div class="timeline-item">
+              <span class="timeline-time">09:30</span>
+              <span class="timeline-dot dot-success"></span>
+              <div class="timeline-content">
+                <div class="timeline-title">주간 계획 회의 <span class="badge badge-success">완료</span></div>
+                <p class="timeline-desc">3층 회의실 B · 참석 6명 · 김민수 진행</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-time">11:00</span>
+              <span class="timeline-dot"></span>
+              <div class="timeline-content">
+                <div class="timeline-title">고객사 제안서 검토 <span class="badge badge-primary">진행 중</span></div>
+                <p class="timeline-desc">담당 이서연 · 마감 14:00</p>
+                <div class="card card-compact"><div class="card-body"><div class="row gap-2"><svg class="icon-sm text-muted" aria-hidden="true"><use href="#i-paperclip"/></svg><span class="text-sm">제안서_v3.pdf · 2.4MB</span></div></div></div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-time">15:00</span>
+              <span class="timeline-dot dot-warning"></span>
+              <div class="timeline-content">
+                <div class="timeline-title">배포 점검 <span class="badge badge-warning">조정 중</span></div>
+                <p class="timeline-desc">QA 결과 대기 · 박준호</p>
+              </div>
+            </div>
+            <div class="timeline-date">9월 28일 (일)</div>
+            <div class="timeline-item">
+              <span class="timeline-time">종일</span>
+              <span class="timeline-dot dot-neutral"></span>
+              <div class="timeline-content"><div class="timeline-title">휴무</div></div>
+            </div>
+            <div class="timeline-date">9월 29일 (월)</div>
+            <div class="timeline-item">
+              <span class="timeline-time">10:00</span>
+              <span class="timeline-dot"></span>
+              <div class="timeline-content">
+                <div class="timeline-title">월간 리뷰 <span class="badge badge-neutral">예정</span></div>
+                <p class="timeline-desc">대회의실 · 전 팀</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="stack w-30" data-region="example-summary">
+        <!-- slot: 우측 요약 패널 (요약 카드 · 작은 달력 · 참여자) -->
+        <div class="card"><div class="card-body">
+          <span class="card-title">이번 주 요약</span>
+          <div class="row-between"><span class="text-sm text-2">확정</span><span class="badge badge-success">8</span></div>
+          <div class="row-between"><span class="text-sm text-2">조정 중</span><span class="badge badge-warning">3</span></div>
+          <div class="row-between"><span class="text-sm text-2">완료율</span><span class="text-sm fw-semibold">60%</span></div>
+          <div class="progress"><div class="progress-bar w-60"></div></div>
+        </div></div>
+        <div class="calendar">
+          <div class="calendar-header">
+            <span class="calendar-title">2026년 9월</span>
+            <div class="calendar-nav">
+              <button class="btn btn-icon btn-ghost btn-sm" aria-label="이전 달"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-left"/></svg></button>
+              <button class="btn btn-icon btn-ghost btn-sm" aria-label="다음 달"><svg class="icon-sm" aria-hidden="true"><use href="#i-chevron-right"/></svg></button>
+            </div>
+          </div>
+          <div class="calendar-grid">
+            <span class="calendar-weekday">일</span><span class="calendar-weekday">월</span><span class="calendar-weekday">화</span><span class="calendar-weekday">수</span><span class="calendar-weekday">목</span><span class="calendar-weekday">금</span><span class="calendar-weekday">토</span>
+            <button class="calendar-day is-other-month">30</button><button class="calendar-day is-other-month">31</button><button class="calendar-day">1</button><button class="calendar-day">2</button><button class="calendar-day has-event">3</button><button class="calendar-day">4</button><button class="calendar-day">5</button>
+            <button class="calendar-day">6</button><button class="calendar-day">7</button><button class="calendar-day has-event">8</button><button class="calendar-day">9</button><button class="calendar-day">10</button><button class="calendar-day">11</button><button class="calendar-day">12</button>
+            <button class="calendar-day">13</button><button class="calendar-day">14</button><button class="calendar-day">15</button><button class="calendar-day has-event">16</button><button class="calendar-day">17</button><button class="calendar-day">18</button><button class="calendar-day">19</button>
+            <button class="calendar-day">20</button><button class="calendar-day">21</button><button class="calendar-day has-event">22</button><button class="calendar-day">23</button><button class="calendar-day has-event">24</button><button class="calendar-day has-event">25</button><button class="calendar-day">26</button>
+            <button class="calendar-day today selected has-event">27</button><button class="calendar-day">28</button><button class="calendar-day has-event">29</button><button class="calendar-day">30</button><button class="calendar-day is-other-month">1</button><button class="calendar-day is-other-month">2</button><button class="calendar-day is-other-month">3</button>
+          </div>
+        </div>
+        <div class="card"><div class="card-body">
+          <div class="row-between"><span class="card-title">참여자</span><span class="text-sm text-muted">6명</span></div>
+          <div class="avatar-group">
+            <span class="avatar avatar-sm">김민</span>
+            <span class="avatar avatar-sm avatar-success">이서</span>
+            <span class="avatar avatar-sm avatar-warning">박준</span>
+            <span class="avatar avatar-sm avatar-info">정우</span>
+            <span class="avatar avatar-sm avatar-more">+2</span>
+          </div>
+        </div></div>
+      </aside>
+    </div>
+  </main>
+</div>
