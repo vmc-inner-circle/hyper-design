@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>설정</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body>
+<header class="appbar"><a class="appbar-btn" href="mypage.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">설정</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">알림</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">전체 알림</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="전체 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">예약</p><p class="row-sub">예약 확정 · 취소 완료 · 휴강</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="예약 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">대기 승급</p><p class="row-sub">자리가 나면 정해진 시간 안에 확정해야 해서 끌 수 없어요</p></div><span class="row-trail">항상 받음</span></div>
+    <div class="row"><div class="row-main"><p class="row-title">리마인드</p><p class="row-sub">전날 21시 · 수업 2시간 전 · 무료 취소 마감 3시간 전</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="리마인드 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">마케팅</p><p class="row-sub">동네 스튜디오 할인·이벤트</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="false" aria-label="마케팅 알림"></button></span></div>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">위치 권한</h2></div>
+    <a class="row" href="app-settings:"><span class="row-art"><img src="../assets/fluent/pin.svg" alt=""></span><div class="row-main"><p class="row-title">허용 안 함</p><p class="row-sub">시스템 설정에서 바꿀 수 있어요</p></div><span class="row-trail">시스템 설정<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">계정</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/idcard.svg" alt=""></span><div class="row-main"><p class="row-title">연결된 로그인 계정</p><p class="row-sub">저녁필라 · 010-****-3307</p></div><span class="row-trail">카카오</span></div>
+    <a class="row" href="login.html"><div class="row-main"><p class="row-title">로그아웃</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <section class="block is-list">
+    <a class="row" href="signup-terms.html"><div class="row-main"><p class="row-title">약관·오픈소스 라이선스</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <div class="row"><div class="row-main"><p class="row-title">버전</p></div><span class="row-trail">1.0.0</span></div>
+  </section>
+
+  <section class="block is-list">
+    <a class="row" href="settings--confirm.html"><div class="row-main"><p class="row-title field-msg">회원 탈퇴</p><p class="row-sub">남은 수강권은 소멸되고 예정 예약은 자동 취소돼요</p></div></a>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <h2 class="h2" id="sheet-title">탈퇴하면 남은 수강권이 사라져요</h2>
+  <section class="block is-list">
+    <div class="row"><span class="thumb"><img src="../assets/photos/studio-soom.jpg" alt="숨 필라테스 망원점 리포머 룸"></span><div class="row-main"><p class="row-title">숨 필라테스 망원점 20회권</p><p class="row-sub">잔여 11회 소멸</p></div></div>
+    <div class="row"><span class="thumb"><img src="../assets/photos/studio-yoga.jpg" alt="오늘요가 합정 요가실"></span><div class="row-main"><p class="row-title">오늘요가 합정 10회권</p><p class="row-sub">잔여 3회 소멸</p></div></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-title">예정 예약 2개 자동 취소</p><p class="row-sub">10/15 20:00 · 10/16 20:00</p></div></div>
+  </section>
+  <section class="block is-list">
+    <a class="row" href="tel:023321048"><span class="row-art"><img src="../assets/fluent/phone.svg" alt=""></span><div class="row-main"><p class="row-title">환불은 탈퇴 전에 스튜디오에 먼저 문의해 주세요</p><p class="row-sub">02-332-1048</p></div></a>
+  </section>
+  <a class="btn primary full" href="settings.html">탈퇴하지 않기</a>
+  <a class="btn secondary full field-msg" href="login.html">탈퇴하기</a>
+</div>
+</body></html>

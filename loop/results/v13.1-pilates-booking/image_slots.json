@@ -1,0 +1,154 @@
+[
+ {
+  "slot": "splash",
+  "screens": [
+   "splash"
+  ],
+  "what": "밝은 스튜디오에서 매트 위 스트레칭하는 사람(뒷모습·옆모습)",
+  "ratio": "3:4",
+  "kind": "photo",
+  "query": "yoga stretching studio morning light"
+ },
+ {
+  "slot": "sumgyeol-1",
+  "screens": [
+   "studio",
+   "find",
+   "find-map",
+   "home",
+   "class",
+   "timetable",
+   "home-new"
+  ],
+  "what": "리포머 기구가 줄지어 있는 밝은 필라테스 스튜디오",
+  "ratio": "16:9",
+  "kind": "photo",
+  "query": "pilates reformer studio"
+ },
+ {
+  "slot": "sumgyeol-2",
+  "screens": [
+   "studio"
+  ],
+  "what": "캐딜락·체어 등 필라테스 기구 근접",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "pilates cadillac equipment"
+ },
+ {
+  "slot": "sumgyeol-3",
+  "screens": [
+   "studio"
+  ],
+  "what": "리포머 위에서 운동하는 사람(손·다리 크롭)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "pilates reformer exercise"
+ },
+ {
+  "slot": "goyo",
+  "screens": [
+   "find",
+   "home",
+   "passes",
+   "my-bookings",
+   "review-write"
+  ],
+  "what": "나무 바닥 요가 스튜디오에 매트가 깔린 실내",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "yoga studio wooden floor mats"
+ },
+ {
+  "slot": "matcore",
+  "screens": [
+   "find",
+   "find-map",
+   "home-new",
+   "pass-shop",
+   "checkout"
+  ],
+  "what": "매트 필라테스 그룹 수업",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "mat pilates class group"
+ },
+ {
+  "slot": "rhythm",
+  "screens": [
+   "find"
+  ],
+  "what": "리포머 기구 필라테스 실내 다른 각도",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "pilates studio machines"
+ },
+ {
+  "slot": "ojeon",
+  "screens": [
+   "find",
+   "home-new"
+  ],
+  "what": "햇살 드는 요가실",
+  "ratio": "4:3",
+  "kind": "photo",
+  "query": "yoga room sunlight"
+ },
+ {
+  "slot": "inst-han",
+  "screens": [
+   "instructor",
+   "studio",
+   "class"
+  ],
+  "what": "필라테스 강사(얼굴이 주인공이 아닌, 시범 동작)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "pilates instructor teaching"
+ },
+ {
+  "slot": "inst-oh",
+  "screens": [
+   "studio",
+   "class",
+   "timetable"
+  ],
+  "what": "남성 필라테스 강사 시범(크롭)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "male pilates instructor"
+ },
+ {
+  "slot": "inst-jeong",
+  "screens": [
+   "studio",
+   "timetable"
+  ],
+  "what": "여성 강사 매트 시범(크롭)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "query": "yoga teacher mat demonstration"
+ },
+ {
+  "slot": "map-mangwon",
+  "screens": [
+   "find-map",
+   "neighborhood",
+   "studio"
+  ],
+  "what": "망원동 지도: 도로 몇 줄, 핀 5개, 선택 핀 1개 강조, 내 위치 점",
+  "ratio": "3:4",
+  "kind": "drawing",
+  "query": ""
+ },
+ {
+  "slot": "qr-desk",
+  "screens": [
+   "checkin"
+  ],
+  "what": "카메라 뷰파인더 속 데스크 위 QR 스탠드(추상, 글자 없음)",
+  "ratio": "3:4",
+  "kind": "drawing",
+  "query": ""
+ }
+]

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>궁합 결과 · 한소윤 × 이도현</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.top { align-items: center; text-align: center; gap: var(--stack-s); }
+.top .avatars { display: flex; gap: var(--stack-s); }
+.score { font-size: calc(var(--fs-title) * 2); font-weight: var(--fw-title); line-height: 1.1; color: var(--c-brand-text); }
+.score small { font-size: var(--fs-h2); font-weight: var(--fw-strong); color: var(--c-text-2); }
+.points { display: flex; flex-direction: column; gap: var(--stack-m); list-style: none; }
+.points li { font-size: var(--fs-body); line-height: var(--lh-body); }
+.points li + li { padding-top: var(--stack-m); border-top: 1px solid var(--c-line); }
+.oh { display: grid; grid-template-columns: 1fr 1fr 1fr; row-gap: var(--stack-s); text-align: center; font-size: var(--fs-body); }
+.oh-head { font-size: var(--fs-sub); font-weight: 600; color: var(--c-text-2); }
+.oh-name { font-weight: 600; }
+.oh-num { font-weight: 700; }
+.cta-note { text-align: center; font-size: var(--fs-caption); color: var(--c-text-3); padding-bottom: var(--stack-s); }
+.share { gap: var(--stack-s); }
+.share-line { display: flex; align-items: center; gap: var(--stack-s); }
+.share-link { align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; font-size: var(--fs-sub); color: var(--c-text-2); text-decoration: underline; text-underline-offset: 3px; }
+</style>
+</head>
+<body class="has-cta">
+<header class="appbar"><a class="appbar-btn" href="match-new.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">궁합</h1><span></span></header>
+<main class="page">
+  <section class="block top">
+    <span class="avatars"><span class="avatar is-text">소</span><span class="avatar is-text">도</span></span>
+    <p class="score">82<small>점</small></p>
+    <p class="h2">서로의 빈칸을 채우는 사이</p>
+    <p class="row-sub">한소윤 × 이도현 · 연인</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">잘 맞는 점</h2></div>
+    <ul class="points">
+      <li>도현님에게 없는 목(木) 기운을 소윤님이 넉넉히 갖고 있어요.</li>
+      <li>소윤님에게 적은 토(土) 기운을 도현님이 많이 갖고 있어요.</li>
+      <li>화·금·수는 두 사람 모두 1개씩이라 결이 닮아서 편해요.</li>
+    </ul>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">부딪히는 점</h2></div>
+    <ul class="points">
+      <li>두 사람 모두 큰 물(壬·癸) 성향이라 서운함을 말없이 넘기기 쉬워요.</li>
+      <li>목이 많은 소윤님은 빠르게, 토가 많은 도현님은 천천히 움직여 속도가 어긋날 수 있어요.</li>
+      <li>도현님은 목이 없어 새 일을 벌이는 건 소윤님 몫이 되기 쉬워요.</li>
+    </ul>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">이렇게 해 보세요</h2></div>
+    <ul class="points">
+      <li>서운한 일은 하루를 넘기지 않고 먼저 말로 꺼내 보세요.</li>
+      <li>새 계획은 소윤님이 제안하고, 마무리는 도현님과 나눠 보세요.</li>
+    </ul>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">두 사람의 오행</h2></div>
+    <div class="oh" role="table" aria-label="오행 개수 비교">
+      <span class="oh-head"></span><span class="oh-head">소윤</span><span class="oh-head">도현</span>
+      <span class="oh-name">목</span><span class="oh-num">3</span><span class="oh-num">0</span>
+      <span class="oh-name">화</span><span class="oh-num">1</span><span class="oh-num">1</span>
+      <span class="oh-name">토</span><span class="oh-num">2</span><span class="oh-num">3</span>
+      <span class="oh-name">금</span><span class="oh-num">1</span><span class="oh-num">1</span>
+      <span class="oh-name">수</span><span class="oh-num">1</span><span class="oh-num">1</span>
+    </div>
+    <p class="block-note">도현님은 태어난 시간을 몰라 시주 없이 6글자로 봤어요.</p>
+  </section>
+<p class="cta-note">생년월일은 보이지 않아요 · 30일 동안 열려요</p>
+</main>
+<div class="cta"><a class="btn primary full" href="match--done.html">링크 보내기</a></div>
+</body></html>

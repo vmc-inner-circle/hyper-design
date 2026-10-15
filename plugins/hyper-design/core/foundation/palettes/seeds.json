@@ -1,0 +1,214 @@
+[
+ {
+  "slug": "hwahae",
+  "name": "화해",
+  "hex": "#00A5AA",
+  "domains": [
+   "건강",
+   "뷰티",
+   "화장품"
+  ],
+  "source": "https://www.hwahae.co.kr",
+  "tone": "cool",
+  "tags": [
+   "산뜻",
+   "건강",
+   "신뢰"
+  ]
+ },
+ {
+  "slug": "oliveyoung",
+  "name": "올리브영",
+  "hex": "#779F1D",
+  "domains": [
+   "기록",
+   "뷰티",
+   "자연",
+   "헤어"
+  ],
+  "source": "https://www.oliveyoung.co.kr",
+  "tone": "neutral",
+  "tags": [
+   "자연",
+   "차분",
+   "생활"
+  ]
+ },
+ {
+  "slug": "zigzag",
+  "name": "지그재그",
+  "hex": "#F947DB",
+  "domains": [
+   "쇼핑",
+   "패션"
+  ],
+  "source": "https://zigzag.kr",
+  "tone": "neutral",
+  "tags": [
+   "활기",
+   "감성",
+   "강렬"
+  ]
+ },
+ {
+  "slug": "yanolja",
+  "name": "야놀자",
+  "hex": "#4154FF",
+  "domains": [
+   "숙박",
+   "여가",
+   "여행"
+  ],
+  "source": "https://www.yanolja.com",
+  "tone": "cool",
+  "tags": [
+   "선명",
+   "활기"
+  ]
+ },
+ {
+  "slug": "zigbang",
+  "name": "직방",
+  "hex": "#FF6111",
+  "domains": [
+   "부동산",
+   "생활"
+  ],
+  "source": "https://www.zigbang.com",
+  "tone": "warm",
+  "tags": [
+   "친근",
+   "활기",
+   "따뜻함"
+  ]
+ },
+ {
+  "slug": "ridibooks",
+  "name": "리디",
+  "hex": "#0F97FF",
+  "domains": [
+   "도서",
+   "콘텐츠"
+  ],
+  "source": "https://ridibooks.com",
+  "tone": "cool",
+  "tags": [
+   "밝음",
+   "신뢰"
+  ]
+ },
+ {
+  "slug": "goodoc",
+  "name": "굿닥",
+  "hex": "#0462D1",
+  "domains": [
+   "건강",
+   "병원",
+   "의료"
+  ],
+  "source": "https://www.goodoc.co.kr",
+  "tone": "cool",
+  "tags": [
+   "신뢰",
+   "차분"
+  ]
+ },
+ {
+  "slug": "frip",
+  "name": "프립",
+  "hex": "#7A29FA",
+  "domains": [
+   "모임",
+   "여가",
+   "취미",
+   "커뮤니티"
+  ],
+  "source": "https://www.frip.co.kr",
+  "tone": "cool",
+  "tags": [
+   "활기",
+   "감성",
+   "커뮤니티"
+  ]
+ },
+ {
+  "slug": "aesop",
+  "name": "Aesop",
+  "hex": "#945C26",
+  "domains": [
+   "라이프스타일",
+   "뷰티"
+  ],
+  "source": "https://www.aesop.com",
+  "tone": "warm",
+  "tags": [
+   "고급",
+   "차분",
+   "따뜻함"
+  ]
+ },
+ {
+  "slug": "lush",
+  "name": "Lush",
+  "hex": "#0B5D45",
+  "domains": [
+   "뷰티",
+   "친환경"
+  ],
+  "source": "https://www.lush.com",
+  "tone": "neutral",
+  "tags": [
+   "자연",
+   "차분"
+  ]
+ },
+ {
+  "slug": "mindbody",
+  "name": "Mindbody",
+  "hex": "#008363",
+  "domains": [
+   "예약",
+   "요가",
+   "운동",
+   "웰니스",
+   "필라테스"
+  ],
+  "source": "https://www.mindbodyonline.com",
+  "tone": "neutral",
+  "tags": [
+   "건강",
+   "산뜻",
+   "자연"
+  ]
+ },
+ {
+  "slug": "kurly",
+  "name": "컬리",
+  "hex": "#5F0080",
+  "domains": [
+   "식품",
+   "커머스"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "고급"
+  ],
+  "tone": "neutral"
+ },
+ {
+  "slug": "samsung-blue",
+  "name": "삼성 블루",
+  "hex": "#1428A0",
+  "domains": [
+   "금융",
+   "전자",
+   "플랫폼"
+  ],
+  "source": "Samsung 브랜드 가이드",
+  "tone": "cool",
+  "tags": [
+   "신뢰",
+   "차분"
+  ]
+ }
+]

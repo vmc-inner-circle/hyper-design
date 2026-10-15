@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=375, initial-scale=1">
+<title>함께가요 — 바뀐 소식</title>
+<link rel="stylesheet" href="../tokens.css">
+<style>
+  .headline { padding: var(--space-32) var(--space-20) var(--space-24); }
+  .change { display: flex; gap: var(--space-12); align-items: baseline; }
+  .change + .change { margin-top: var(--space-8); }
+  .was { text-decoration: line-through; }
+  .change-detail { margin-top: var(--space-16); }
+  .keep { margin-top: var(--space-16); }
+</style>
+</head>
+<body class="is-viewer has-tab has-cta">
+<main class="page">
+  <section class="block headline">
+    <p class="eyebrow">9월 30일 · 지은이가 보냈어요</p>
+    <h1 class="big-title">가는 비행기가<br><span class="num">10:05</span>로 바뀌었어요</h1>
+  </section>
+
+  <section class="block">
+    <div class="change">
+      <span class="row-time">전에는</span>
+      <span class="sub was">09:10 출발</span>
+    </div>
+    <div class="change">
+      <span class="row-time">이제는</span>
+      <span class="row-title"><span class="num">10:05</span> 출발</span>
+    </div>
+    <p class="row-sub change-detail">대한항공 KE1203 · 김포 → 제주<br>11월 20일 금요일</p>
+    <p class="row-title keep">모이는 시간 8시 30분은 그대로예요</p>
+  </section>
+
+  <section class="block is-list">
+    <h2 class="section-title">새로 정해진 일정</h2>
+    <a class="row" href="parent-day.html">
+      <div class="row-main">
+        <p class="row-title">섭지코지 산책</p>
+        <p class="row-sub">11월 21일 토 오후 2시</p>
+      </div>
+      <span class="badge is-fixed">확정</span>
+      <svg class="row-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    </a>
+  </section>
+</main>
+
+<div class="cta-area">
+  <a class="btn primary block-w" href="parent-home.html">확인했어요</a>
+</div>
+
+<nav class="tabbar" aria-label="아래 메뉴">
+  <a class="tab" href="parent-home.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+    여행
+  </a>
+  <a class="tab" href="my-tasks.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="16" height="13" rx="3"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg>
+    준비물
+  </a>
+  <a class="tab" href="parent-news.html" aria-current="page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6.5 2 6.5H4S6 15 6 10z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+    소식
+  </a>
+</nav>
+</body>
+</html>

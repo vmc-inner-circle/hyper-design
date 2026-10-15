@@ -1,0 +1,4 @@
+[{"slot": "start-night", "screens": ["start"], "what": "도시 위 보랏빛 밤하늘과 초승달 — 사람 없이 고요한 밤 풍경(부적·한지·붉은색 없음)", "ratio": "3:4", "kind": "photo",
+  "queries": ["보랏빛 밤하늘 초승달 도시", "purple night sky crescent moon city skyline", "twilight sky crescent moon"]},
+ {"slot": "report-dawn", "screens": ["report", "report-view"], "what": "새해 첫 해돋이 — 수평선 위로 해가 막 떠오르는 바다, 밝고 맑은 새벽 하늘", "ratio": "16:9", "kind": "photo",
+  "queries": ["새해 해돋이 바다 수평선", "sunrise over ocean horizon new year dawn", "east sea sunrise korea"]}]

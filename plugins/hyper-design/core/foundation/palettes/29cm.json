@@ -1,0 +1,58 @@
+{
+ "name": "29CM",
+ "slug": "29cm",
+ "domain": "커머스·패션",
+ "tags": [
+  "모노",
+  "에디토리얼"
+ ],
+ "source": "https://www.29cm.co.kr/ 화면 실사용 색으로 합성 (2026-10-01 수집) · red·accent는 29CM 디자인 시스템 ruler CSS 변수 (2026-10-02)",
+ "synthesized": true,
+ "ink": "#000000",
+ "white": "#ffffff",
+ "scales": {
+  "gray": {
+   "50": "#ffffff",
+   "80": "#f4f4f4",
+   "100": "#f4f4f4",
+   "200": "#e4e4e4",
+   "300": "#c4c4c4",
+   "400": "#a0a0a0",
+   "500": "#a0a0a0",
+   "600": "#5d5d5d",
+   "700": "#474747",
+   "800": "#474747",
+   "900": "#19191a"
+  },
+  "red": {
+   "100": "#ffefeb",
+   "200": "#ffbfaa",
+   "300": "#ff916c",
+   "400": "#ff6933",
+   "500": "#ff4800",
+   "600": "#d53f00",
+   "700": "#ab3803",
+   "800": "#823107",
+   "900": "#582609"
+  }
+ },
+ "brand": "gray",
+ "brand_step": "900",
+ "mono": true,
+ "gray": "gray",
+ "danger": "red",
+ "accent": {
+  "scale": "red",
+  "step": "500",
+  "seen": "상품 카드의 할인율 숫자 (ruler common-accent = red-500, 오류 negative = red-600 같은 계열)"
+ },
+ "bg_step": "80",
+ "line_step": "100",
+ "brand_confirmed": true,
+ "candidates": [],
+ "measured": {
+  "brand": "#19191a",
+  "ink": "#000000",
+  "bg": "#f7f7f7"
+ }
+}

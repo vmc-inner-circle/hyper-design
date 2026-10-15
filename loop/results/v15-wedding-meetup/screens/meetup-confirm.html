@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>한울 날짜 정하기</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="home.html" aria-label="뒤로"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">한울 날짜 정하기</h1><span></span></header>
+<main class="page">
+  <section class="block">
+    <span class="badge is-info">회신 끝남</span>
+    <p class="info"><img src="../assets/fluent/calendar.svg" alt=""><span>마감 10월 1일(목) 밤 10시가 지났어요 · 5/6 답함 · 이준호 님 답 없음</span></p>
+    <p class="block-note">기다리지 않고 지금 확정할 수 있어요.</p>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">날짜</h2><a class="block-link" href="calendar.html">달력에서 보기</a></div>
+    <div role="radiogroup" aria-label="확정할 날짜">
+      <div class="row"><div class="row-main"><span class="badge is-warning">겹침</span><p class="row-title">10월 10일(토) 저녁 6시</p><p class="row-sub">가능 5</p><p class="row-sub">주말산책(둘 다)과 같은 시간 · 민수 님이 두 곳에 필요해요</p></div>
+        <span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="10월 10일 고르기"><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">10월 18일(일) 저녁 6시</p><p class="row-sub">가능 4 · 김태현 불가</p><p class="row-sub num">겹치지 않는 날 중 가장 많이 돼요</p></div>
+        <span class="row-trail"><button class="check" role="radio" aria-checked="true" aria-label="10월 18일 고르기"><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button></span></div>
+      <div class="row"><div class="row-main"><p class="row-title">10월 24일(토) 저녁 6시</p><p class="row-sub">가능 3</p></div>
+        <span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="10월 24일 고르기"><span><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span></button></span></div>
+    </div>
+    <a class="row" href="meetup-edit.html"><div class="row-main"><p class="row-title">다 안 되면 후보 바꾸기</p></div><span class="row-trail"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <div class="field"><label class="label" for="place">장소 (선택)</label><input class="input" id="place" value="신촌 '화로'" placeholder="어디서 만나요?"></div>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">함께 오는 사람 4명</h2></div>
+    <div class="row"><span class="avatars" aria-hidden="true"><span class="avatar is-text">박</span><span class="avatar is-text">최</span><span class="avatar is-text">정</span><span class="avatar is-text">송</span></span>
+      <div class="row-main"><p class="row-title">박성민·최동욱·정재원·송민재</p><p class="row-sub">10월 18일 가능</p></div></div>
+    <div class="row"><span class="avatar is-text">김</span>
+      <div class="row-main"><span class="badge is-danger">불가</span><p class="row-title">김태현</p></div></div>
+    <div class="row"><span class="avatar is-text">이</span>
+      <div class="row-main"><p class="row-title">이준호</p><p class="row-sub">답 없음</p></div></div>
+    <p class="block-note">두 분은 확정 뒤 아직 모임 없음으로 돌아가요.</p>
+  </section>
+</main>
+<div class="cta"><a class="btn primary full" href="meetup-confirm--done.html">10월 18일로 확정</a></div>
+</body></html>

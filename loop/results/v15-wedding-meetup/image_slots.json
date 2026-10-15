@@ -1,0 +1,54 @@
+[
+ {
+  "slot": "start-invitation",
+  "screens": [
+   "start"
+  ],
+  "what": "테이블 위에 놓인 흰 청첩장 봉투와 카드, 따뜻한 자연광",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "청첩장 봉투 테이블",
+   "wedding invitation envelope table flat lay"
+  ]
+ },
+ {
+  "slot": "place-soban",
+  "screens": [
+   "guest-confirmed"
+  ],
+  "what": "아늑한 한식당 실내, 나무 테이블에 차려진 점심 상차림",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "망원동 한식당 실내 테이블",
+   "korean restaurant interior wooden table lunch"
+  ]
+ },
+ {
+  "slot": "confirm-gathering",
+  "screens": [
+   "meetup-confirm--done"
+  ],
+  "what": "친구들이 식탁에 모여 건배하는 모습(얼굴 크게 안 보이게, 손·잔 중심)",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "친구 모임 건배 식탁",
+   "friends dinner toast hands glasses"
+  ]
+ },
+ {
+  "slot": "added-friends",
+  "screens": [
+   "people-added"
+  ],
+  "what": "카페에서 대화하는 여성 친구들 뒷모습 또는 손",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "카페 친구들 대화",
+   "women friends cafe coffee talking"
+  ]
+ }
+]

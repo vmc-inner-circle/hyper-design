@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>할 일 추가</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="tasks.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">할 일 추가</h1><span></span></header>
+<main class="page">
+  <div class="field"><span class="label" id="who">맡을 사람</span>
+    <div class="chips" role="radiogroup" aria-labelledby="who"><button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/jieun.svg" alt=""></span></span>&nbsp;&nbsp;지은</button><button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/minsu.svg" alt=""></span></span>&nbsp;&nbsp;민수</button><button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar is-text">서</span></span>&nbsp;&nbsp;서연</button><button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/mother.svg" alt=""></span></span>&nbsp;&nbsp;어머니</button><button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/father.svg" alt=""></span></span>&nbsp;&nbsp;아버지</button><button class="chip is-selected" role="radio" aria-checked="true"><span class="avatars"><span class="avatar"><img src="../assets/fluent/hayun.svg" alt=""></span></span>&nbsp;&nbsp;하윤 · 지은이 대신</button></div>
+  </div>
+  <div class="field"><label class="label" for="name">할 일</label><input class="input" id="name" value="하윤 멀미약 사기"></div>
+  <div class="field"><label class="label" for="due">마감일 (선택)</label><input class="input" id="due" value="11월 15일"></div>
+  <p class="info"><img src="../assets/fluent/calendar.svg" alt=""><span>마감 3일 전 맡은 사람에게 한 번 알려요</span></p>
+</main>
+<div class="cta"><a class="btn primary full" href="tasks.html">저장</a></div>
+</body></html>

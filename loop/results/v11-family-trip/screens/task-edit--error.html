@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>할 일 추가 · 담당자 없음</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="text-large plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="tasks.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">할 일 추가</h1><span></span></header>
+<main class="page">
+  <div class="field is-error"><span class="label" id="who">누가 챙기나요</span>
+    <div class="chips" role="radiogroup" aria-labelledby="who">
+      <button class="chip" role="radio" aria-checked="false">각자</button>
+      <button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/jieun.svg" alt=""></span></span>지은</button>
+      <button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/minsu.svg" alt=""></span></span>민수</button>
+      <button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/mother.svg" alt=""></span></span>어머니</button>
+      <button class="chip" role="radio" aria-checked="false"><span class="avatars"><span class="avatar"><img src="../assets/fluent/father.svg" alt=""></span></span>아버지</button>
+    </div>
+    <p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4 3 19.5h18L12 4z"/><path d="M12 10v4.5M12 17v.5"/></svg>누가 챙길지 골라 주세요 · 모두 챙기면 '각자'</p>
+    <p class="block-note">하윤 몫은 민수에게</p>
+  </div>
+  <div class="field"><label class="label" for="what">무엇을</label><input class="input" id="what" value="혈압약 5일치"></div>
+  <div class="field"><label class="label" for="due">언제까지 (선택)</label><input class="input" id="due" value="12월 9일(수)"></div>
+</main>
+<div class="cta"><button class="btn primary full">추가하기</button></div>
+</body></html>

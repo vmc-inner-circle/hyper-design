@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>내 사주 풀이</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.pillars { display: grid; grid-template-columns: auto repeat(4, 1fr); gap: var(--stack-s); text-align: center; align-items: stretch; }
+.pillars .h { font-size: var(--fs-caption); color: var(--c-text-2); font-weight: 600; align-self: center; }
+.pillars .c { background: var(--c-bg); border-radius: var(--r-m); padding: var(--stack-s) 0; display: flex; flex-direction: column; align-items: center; }
+.pillars .c b { font-size: var(--fs-h2); font-weight: 700; line-height: var(--lh-h2); }
+.pillars .c span { font-size: var(--fs-caption); color: var(--c-text-2); }
+.pillars .c.is-me { background: var(--c-brand-tint); color: var(--c-brand-tint-text); }
+.pillars .c.is-me span { color: var(--c-brand-tint-text); }
+.elem { display: flex; align-items: center; gap: var(--stack-m); min-height: 32px; }
+.elem .n { flex: none; width: 28px; font-size: var(--fs-sub); font-weight: 600; }
+.elem .pips { flex: 1; display: flex; gap: 4px; }
+.elem .pip { width: 28px; height: 12px; border-radius: var(--r-pill); background: var(--c-text-2); }
+.elem .v { flex: none; width: 24px; text-align: right; font-weight: 700; font-variant-numeric: tabular-nums; }
+.term { text-decoration: underline; text-underline-offset: 3px; color: var(--c-brand-text); font-weight: 600; }
+.basis { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+.chapter { display: flex; flex-direction: column; gap: var(--stack-s); }
+.chapter + .chapter { border-top: 1px solid var(--c-line); padding-top: var(--stack-m); }
+</style>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">한소윤님의 사주</p>
+    <h1 class="title">넓게 흐르는 큰 물 같은 사람</h1>
+    <p class="lead">생각이 넓고, 사람을 가리지 않고 품어요</p>
+  </header>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">사주 여덟 글자</h2></div>
+    <div class="pillars">
+      <span></span><span class="h">년</span><span class="h">월</span><span class="h">일</span><span class="h">시</span>
+      <span class="h">천간</span>
+      <div class="c"><b>己</b><span>기</span></div><div class="c"><b>丁</b><span>정</span></div><div class="c is-me"><b>壬</b><span>임 · 나</span></div><div class="c"><b>甲</b><span>갑</span></div>
+      <span class="h">지지</span>
+      <div class="c"><b>卯</b><span>묘</span></div><div class="c"><b>卯</b><span>묘</span></div><div class="c"><b>申</b><span>신</span></div><div class="c"><b>辰</b><span>진</span></div>
+    </div>
+    <p class="block-note">나를 뜻하는 글자는 壬水(임수), 큰 물이에요</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">기운의 분포</h2></div>
+    <div class="elem"><span class="n">목</span><span class="pips"><span class="pip"></span><span class="pip"></span><span class="pip"></span></span><span class="v">3</span></div>
+    <div class="elem"><span class="n">화</span><span class="pips"><span class="pip"></span></span><span class="v">1</span></div>
+    <div class="elem"><span class="n">토</span><span class="pips"><span class="pip"></span><span class="pip"></span></span><span class="v">2</span></div>
+    <div class="elem"><span class="n">금</span><span class="pips"><span class="pip"></span></span><span class="v">1</span></div>
+    <div class="elem"><span class="n">수</span><span class="pips"><span class="pip"></span></span><span class="v">1</span></div>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">지금의 큰 흐름</h2></div>
+    <p class="row-title">25~34세 庚午(경오) 대운</p>
+    <p class="block-note">10년마다 바뀌는 큰 흐름이에요. 지금은 도와주는 기운이 곁에 있는 시기예요.</p>
+  </section>
+  <section class="block">
+    <div class="block-head"><h2 class="h2">AI 풀이</h2></div>
+    <div class="chapter">
+      <h3 class="row-title">성격</h3>
+      <p>큰 물처럼 생각이 넓고 사람을 가리지 않고 품어요. 배우고 도움받는 일에 힘이 되는 <a class="term" href="mysaju-term.html">편인(偏印)</a>의 기운이 있어요. 속을 잘 보여 주지 않아 가끔 외로울 수 있어요.</p>
+      <p class="basis">근거 · 壬水 일간, 일지 申(금)이 나를 도와줘요</p>
+    </div>
+    <div class="chapter">
+      <h3 class="row-title">일·커리어</h3>
+      <p>차분히 흐름을 읽고 오래 가는 일에 강해요. 시험이나 면접처럼 평가받는 자리에서 도움을 받는 편이에요. 서두르지 않아도 준비한 만큼 결과가 따라와요.</p>
+      <p class="basis">근거 · 목(木) 기운이 3개로 가장 많아 재주를 펼치는 힘이 커요</p>
+    </div>
+    <div class="chapter">
+      <h3 class="row-title">돈</h3>
+      <p>한 번에 크게 벌기보다 꾸준히 쌓는 쪽이 잘 맞아요. 쓰는 곳을 한 번 정리하면 새는 돈이 줄어요.</p>
+      <p class="basis">근거 · 화(火) 기운이 1개로 적어 천천히 모으는 흐름이에요</p>
+    </div>
+    <div class="chapter">
+      <h3 class="row-title">관계</h3>
+      <p>처음엔 조용히 지켜보다가 마음을 열면 깊게 이어져요. 먼저 한마디 건네면 관계가 한결 편해져요.</p>
+      <p class="basis">근거 · 수(水) 기운이 1개라 속마음을 혼자 삭히기 쉬워요</p>
+    </div>
+  </section>
+</main>
+<nav class="tabbar">
+<a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>오늘</a>
+<a class="tab" href="mysaju.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>내 사주</a>
+<a class="tab" href="ask.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>묻기</a>
+<a class="tab" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>기록</a>
+<a class="tab" href="me.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>마이</a>
+</nav>
+</body></html>

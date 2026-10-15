@@ -1,0 +1,912 @@
+{
+ "groups": [
+  "처음 들어올 때",
+  "홈 — 맨 위는 지금 내 주문",
+  "수거 신청 — 일요일 밤 1분",
+  "진행 확인 — 묻지 않아도 안다",
+  "이용 내역·정기 세탁",
+  "문의·보상",
+  "내 정보"
+ ],
+ "story": {
+  "headline": "맡기기 전에 <em>값을 알고</em>, 맡긴 뒤엔 <em>묻지 않아도 안다</em>",
+  "summary": "출근 전·퇴근 후에 문 앞에 내놓고 앱으로 1분 만에 신청한다. 품목별 기본 가격과 검수 사진이 가격 다툼을 막고, 홈 맨 위는 언제나 지금 내 주문의 단계와 도착 시각이다.",
+  "ideas": [
+   {
+    "title": "홈 맨 위 = 지금 내 주문",
+    "desc": "진행 중이면 단계와 도착 예정, 승인이 필요하면 그 일이 맨 위로 — 전화할 이유를 없앤다"
+   },
+   {
+    "title": "검수는 사진으로 설명",
+    "desc": "오른 금액 옆에 그 옷의 사진과 이유를 붙이고, 안 빠지는 옷은 그 자리에서 빼고 승인"
+   },
+   {
+    "title": "다시 신청 → 정기 세탁",
+    "desc": "매주 같은 셔츠 5장은 지난 주문 그대로, 원하면 매주 자동으로"
+   }
+  ]
+ },
+ "screens": [
+  {
+   "id": "signup",
+   "file": "screens/signup.html",
+   "title": "휴대폰 번호로 시작",
+   "group": "처음 들어올 때",
+   "purpose": "휴대폰 번호 인증 한 번으로 가입한다",
+   "role": "everyone",
+   "policies": [
+    "휴대폰 번호 인증만(소셜 로그인은 PRD 미확정 — 넣지 않음)",
+    "인증번호 3분 안에 입력, 다시 받기 가능"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "address",
+   "file": "screens/address.html",
+   "title": "주소 등록",
+   "group": "처음 들어올 때",
+   "purpose": "수거·배송받을 주소와 들어오는 방법을 적는다",
+   "role": "everyone",
+   "policies": [
+    "도로명 + 상세 주소 + 출입 방법(공동현관 비밀번호·경비실 맡김·문 앞 자유 출입)",
+    "비밀번호는 기사에게만 보이고 화면에는 가려 표시",
+    "주소는 여러 개 저장 — 내 정보에서 추가"
+   ],
+   "branches": [
+    {
+     "to": "address-ok",
+     "label": "서비스 지역 안"
+    },
+    {
+     "to": "area-out",
+     "label": "서비스 지역 밖"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "address-ok",
+   "file": "screens/address-ok.html",
+   "title": "우리 동네 세탁소 연결",
+   "group": "처음 들어올 때",
+   "purpose": "이 주소를 어느 세탁소가 맡는지 확인하고 첫 신청으로 간다",
+   "role": "everyone",
+   "policies": [
+    "주소마다 제휴 세탁소 1곳이 수거·세탁",
+    "가장 빠른 수거 시간대를 바로 보여 준다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "area-out",
+   "file": "screens/area-out.html",
+   "title": "아직 서비스 지역이 아니에요",
+   "group": "처음 들어올 때",
+   "purpose": "지역 밖이면 연락처만 남겨 오픈 알림을 받는다",
+   "role": "everyone",
+   "policies": [
+    "연락처(휴대폰 번호)만 받는다 — 가입·카드 등록 없이",
+    "오픈하면 문자 한 번, 그 뒤 연락처 삭제"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "area-out--done",
+   "file": "screens/area-out--done.html",
+   "group": "처음 들어올 때",
+   "title": "아직 서비스 지역이 아니에요 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "area-out",
+   "state": "done"
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "홈 · 10월 13일(화) 점심",
+   "group": "홈 — 맨 위는 지금 내 주문",
+   "purpose": "내 셔츠가 지금 어디쯤이고 언제 오는지 맨 위에서 본다",
+   "role": "everyone",
+   "policies": [
+    "진행 중 주문이 있으면 맨 위는 그 주문의 지금 단계와 도착 예정",
+    "수거 신청은 두 번째 블록 — 지난 주문 다시 신청을 함께",
+    "홈에는 하단 고정 버튼 없음"
+   ],
+   "branches": [
+    {
+     "to": "order-detail",
+     "label": "진행 중 주문 누르기"
+    },
+    {
+     "to": "order-items",
+     "label": "새 수거 신청"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "home",
+   "tabs": [
+    {
+     "label": "홈",
+     "screen": "home"
+    },
+    {
+     "label": "이용 내역",
+     "screen": "history"
+    },
+    {
+     "label": "내 정보",
+     "screen": "my"
+    }
+   ],
+   "states": []
+  },
+  {
+   "id": "home-approve",
+   "file": "screens/home-approve.html",
+   "title": "홈 · 검수 결과 도착(한지민)",
+   "group": "홈 — 맨 위는 지금 내 주문",
+   "purpose": "승인이 필요한 주문이 생기면 홈 맨 위가 그 일로 바뀐다",
+   "role": "everyone",
+   "policies": [
+    "승인 필요 주문이 있으면 맨 위 — 응답 마감 시각을 글자로",
+    "24시간 안에 답이 없으면 예상 금액 범위의 품목만 진행(정책 문구)"
+   ],
+   "branches": [
+    {
+     "to": "inspect",
+     "label": "검수 결과 확인"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "home",
+   "tabs": [
+    {
+     "label": "홈",
+     "screen": "home-approve"
+    },
+    {
+     "label": "이용 내역",
+     "screen": "history"
+    },
+    {
+     "label": "내 정보",
+     "screen": "my"
+    }
+   ],
+   "states": []
+  },
+  {
+   "id": "order-items",
+   "file": "screens/order-items.html",
+   "title": "수거 신청 1/5 · 품목",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "품목별 기본 가격을 보며 대략 수량을 담는다",
+   "role": "everyone",
+   "policies": [
+    "수량은 대략 — 실제 수량·가격은 세탁소 검수 후 확정(안내 필수)",
+    "가죽·모피·명품은 접수 불가 — 품목 목록 아래 안내",
+    "합계가 15,000원 미만이면 수거비 3,000원이 붙는다고 합계 줄에 표시"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "order-request",
+   "file": "screens/order-request.html",
+   "title": "수거 신청 2/5 · 요청 사항",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "얼룩·다림질·세제 요청을 칩과 한 줄로 남긴다",
+   "role": "everyone",
+   "policies": [
+    "자주 쓰는 칩 + 자유 입력",
+    "얼룩 제거는 1벌당 3,000원 추가 — 검수 때 가능 여부 확정"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "order-time",
+   "file": "screens/order-time.html",
+   "title": "수거 신청 3·4/5 · 시간",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "오늘 밤 언제 가져가고 언제 오는지 고른다",
+   "role": "everyone",
+   "policies": [
+    "수거 시간대 2시간 단위, 이미 시작했거나 찬 시간대는 '마감'으로 비활성",
+    "배송 일반(3일) / 빠른(익일 +3,000원) — 이불·운동화가 있으면 빠른 배송 비활성",
+    "고른 시간대 기준 무료 취소 마감 시각을 함께"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "order-summary",
+   "file": "screens/order-summary.html",
+   "title": "수거 신청 5/5 · 확인",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "품목·예상 금액·시간·주소·출입 방법을 한 번에 확인하고 신청한다",
+   "role": "everyone",
+   "policies": [
+    "신청 때는 결제하지 않음 — 검수 확정 때 등록 카드로 자동 결제",
+    "검수 금액이 20% 이상 많으면 결제 전에 먼저 물어봄",
+    "최소 주문 15,000원 미만이면 수거비 3,000원"
+   ],
+   "branches": [
+    {
+     "to": "card-add",
+     "label": "카드가 없을 때"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "card-add",
+   "file": "screens/card-add.html",
+   "title": "결제 카드 등록",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "검수 확정 때 자동 결제될 카드를 한 번 등록한다",
+   "role": "everyone",
+   "policies": [
+    "등록 시점에는 결제하지 않음",
+    "카드는 내 정보에서 바꿀 수 있음"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "order-done",
+   "file": "screens/order-done.html",
+   "title": "신청 완료",
+   "group": "수거 신청 — 일요일 밤 1분",
+   "purpose": "신청이 끝났고 언제 가져가는지, 문 앞에 무엇을 두면 되는지 확인한다",
+   "role": "everyone",
+   "policies": [
+    "무료 취소 마감 시각(시간대 시작 1시간 전) 표시 + 취소 링크",
+    "문 앞에 세탁물이 없으면 수거 실패 — 수거비 2,000원(정책 문구)"
+   ],
+   "branches": [
+    {
+     "to": "order-cancel",
+     "label": "신청 취소"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "order-detail",
+   "file": "screens/order-detail.html",
+   "title": "주문 상세 · 세탁 중",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "purpose": "지금 단계·도착 예정·수거/검수 사진·결제 금액을 본다",
+   "role": "everyone",
+   "policies": [
+    "단계: 신청 → 수거 완료 → 검수 → 세탁 중 → 배송 중 → 배송 완료, 지난 단계는 실제 시각",
+    "단계가 바뀔 때마다 푸시 알림",
+    "수거 후 취소는 앱에서 불가 — 1:1 문의로"
+   ],
+   "branches": [
+    {
+     "to": "chat",
+     "label": "이 주문 문의"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "order-cancel",
+   "file": "screens/order-cancel.html",
+   "title": "신청 취소",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "purpose": "수거 전 신청을 취소한다 — 무료 마감 전후로 수거비가 달라진다",
+   "role": "everyone",
+   "policies": [
+    "수거 시간대 시작 1시간 전까지 무료, 이후 수거비 2,000원",
+    "수거가 끝난 뒤에는 취소 대신 1:1 문의"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "order-cancel--done",
+   "file": "screens/order-cancel--done.html",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "title": "신청 취소 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "order-cancel",
+   "state": "done"
+  },
+  {
+   "id": "inspect",
+   "file": "screens/inspect.html",
+   "title": "검수 결과 · 승인 필요",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "purpose": "왜 금액이 올랐는지 품목별 사진으로 보고, 뺄 옷을 고른 뒤 승인한다",
+   "role": "everyone",
+   "policies": [
+    "예상보다 20% 이상 많아 결제 전에 승인 필요",
+    "얼룩 제거 불가 품목은 '진행' 또는 '빼고 돌려받기' 선택",
+    "24시간 안에 답이 없으면 예상 금액 범위의 품목만 진행"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "inspect-done",
+   "file": "screens/inspect-done.html",
+   "title": "승인 완료",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "purpose": "승인한 금액과 결제 카드, 빠진 옷이 어떻게 돌아오는지 확인한다",
+   "role": "everyone",
+   "policies": [
+    "승인과 동시에 자동 결제",
+    "뺀 품목은 세탁하지 않고 다른 옷과 함께 배송"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "delivered",
+   "file": "screens/delivered.html",
+   "title": "배송 완료 · 문 앞 사진",
+   "group": "진행 확인 — 묻지 않아도 안다",
+   "purpose": "문 앞에 놓인 사진과 영수증을 보고, 다음 주도 그대로 맡긴다",
+   "role": "everyone",
+   "policies": [
+    "배송 완료 푸시에 문 앞 사진 포함",
+    "손상·분실 신고는 배송 후 48시간 안 — 마감 시각 표시",
+    "지난 주문 그대로 다시 신청 / 매주 정기 세탁으로"
+   ],
+   "branches": [
+    {
+     "to": "claim",
+     "label": "문제가 있을 때"
+    },
+    {
+     "to": "routine",
+     "label": "매주 맡기기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "history",
+   "file": "screens/history.html",
+   "title": "이용 내역",
+   "group": "이용 내역·정기 세탁",
+   "purpose": "지난 주문을 금액·품목으로 찾고 그대로 다시 신청한다",
+   "role": "everyone",
+   "policies": [
+    "주문별 품목·금액·사진·영수증",
+    "행마다 '다시 신청' — 품목·요청 사항·주소를 그대로 담고 시간만 새로 고른다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": true,
+    "long_task": false
+   },
+   "kind": "list",
+   "tabs": [
+    {
+     "label": "홈",
+     "screen": "home"
+    },
+    {
+     "label": "이용 내역",
+     "screen": "history"
+    },
+    {
+     "label": "내 정보",
+     "screen": "my"
+    }
+   ],
+   "states": []
+  },
+  {
+   "id": "routine",
+   "file": "screens/routine.html",
+   "title": "정기 세탁",
+   "group": "이용 내역·정기 세탁",
+   "purpose": "매주 같은 요일·시간대·품목을 한 번 정해 두고, 필요할 때 그 주만 건너뛴다",
+   "role": "everyone",
+   "policies": [
+    "요일·시간대·기본 품목 설정, 금액은 매번 검수 후 확정",
+    "이번 주 건너뛰기는 수거 전날까지"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "routine--done",
+   "file": "screens/routine--done.html",
+   "group": "이용 내역·정기 세탁",
+   "title": "정기 세탁 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "routine",
+   "state": "done"
+  },
+  {
+   "id": "chat",
+   "file": "screens/chat.html",
+   "title": "1:1 문의 · 주문 #D-1011",
+   "group": "문의·보상",
+   "purpose": "이 주문에 대해 묻고 답을 받는다",
+   "role": "everyone",
+   "policies": [
+    "주문별 채팅 — 주문 정보가 맨 위에 붙어 있다",
+    "운영 시간 9~22시, 그 밖에는 접수만(다음 날 9시부터 답변)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": [
+    "done"
+   ]
+  },
+  {
+   "id": "chat--done",
+   "file": "screens/chat--done.html",
+   "group": "문의·보상",
+   "title": "1:1 문의 · 주문 #D-1011 · 보낸 뒤",
+   "purpose": "운영 시간 외 문의는 접수만",
+   "role": "everyone",
+   "kind": "detail",
+   "state_of": "chat",
+   "state": "done",
+   "rules": [
+    "R12"
+   ],
+   "policies": [
+    "[R12] 운영 시간 외 문의는 접수만"
+   ]
+  },
+  {
+   "id": "claim",
+   "file": "screens/claim.html",
+   "title": "손상·분실 신고",
+   "group": "문의·보상",
+   "purpose": "문제가 생긴 옷을 사진과 함께 신고한다",
+   "role": "everyone",
+   "policies": [
+    "배송 완료 후 48시간 안 — 마감 시각 표시",
+    "수거·검수 사진과 함께 심사(내 사진만으로 판단하지 않음)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "claim-done",
+   "file": "screens/claim-done.html",
+   "title": "신고 접수 완료",
+   "group": "문의·보상",
+   "purpose": "신고가 접수됐고 언제 결과가 오는지 확인한다",
+   "role": "everyone",
+   "policies": [
+    "결과는 영업일 2일 안에 알림",
+    "심사에 쓰는 수거·검수 사진을 함께 보여 준다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "my",
+   "file": "screens/my.html",
+   "title": "내 정보",
+   "group": "내 정보",
+   "purpose": "주소·결제 카드·정기 세탁·알림을 한곳에서 관리한다",
+   "role": "everyone",
+   "policies": [
+    "주소 여러 개 — 추가·기본 주소 변경",
+    "알림: 단계 알림은 끄지 않기를 권장"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "tabs": [
+    {
+     "label": "홈",
+     "screen": "home"
+    },
+    {
+     "label": "이용 내역",
+     "screen": "history"
+    },
+    {
+     "label": "내 정보",
+     "screen": "my"
+    }
+   ],
+   "states": []
+  }
+ ],
+ "photo_centric": false,
+ "badges": {
+  "진행 중": "is-brand",
+  "승인 필요": "is-warning",
+  "배송 완료": "is-success",
+  "제거 불가": "is-danger",
+  "검수 후 확정": "is-info",
+  "취소됨": ""
+ },
+ "people": [
+  {
+   "name": "이도윤 — 주 1회 셔츠 맡기는 1인 가구",
+   "who": "34세 직장인, 마포구 오피스텔 1인 가구, 주 1회 와이셔츠 5장",
+   "why": "세탁소가 평일 9~19시라 맡기고 찾으러 두 번 들를 수 없다",
+   "feels": "귀찮음, 문 앞에 둬도 괜찮나 하는 약간의 불안",
+   "wants": [
+    {
+     "q": "오늘 밤 내놓으면 언제 가져가나",
+     "at": [
+      "order-time",
+      "order-done"
+     ]
+    },
+    {
+     "q": "내 셔츠는 지금 어디쯤이고 언제 오나",
+     "at": [
+      "home",
+      "order-detail"
+     ]
+    },
+    {
+     "q": "셔츠 5장이면 얼마인가",
+     "at": [
+      "order-items",
+      "order-detail"
+     ]
+    },
+    {
+     "q": "문 앞에 잘 왔나",
+     "at": [
+      "delivered"
+     ]
+    },
+    {
+     "q": "매주 똑같은 걸 또 입력해야 하나",
+     "at": [
+      "history",
+      "routine"
+     ]
+    }
+   ],
+   "win": "일요일 밤 1분 만에 신청하고, 수요일 밤 '문 앞에 뒀어요' 사진을 받는 순간",
+   "screens": [
+    "home",
+    "order-items",
+    "order-time",
+    "order-summary",
+    "order-detail",
+    "delivered",
+    "history",
+    "routine",
+    "claim"
+   ],
+   "core": true
+  },
+  {
+   "name": "한지민 — 품목 많은 맞벌이 가정",
+   "who": "41세 맞벌이, 성동구 아파트, 아이 둘 — 이불·교복·운동화",
+   "why": "큰 빨래를 들고 세탁소에 가기 힘든데 가격을 몰라 망설인다",
+   "feels": "예산 걱정, 나중에 돈이 더 붙지 않을까 하는 의심",
+   "wants": [
+    {
+     "q": "품목별로 얼마고 합치면 예산 안인가",
+     "at": [
+      "order-items"
+     ]
+    },
+    {
+     "q": "교복 얼룩 빼는 데 돈이 더 드나",
+     "at": [
+      "order-request"
+     ]
+    },
+    {
+     "q": "왜 금액이 올랐나, 어떤 옷 때문인가",
+     "at": [
+      "inspect",
+      "home-approve"
+     ]
+    },
+    {
+     "q": "얼룩 안 빠지는 옷만 빼고 진행할 수 있나",
+     "at": [
+      "inspect"
+     ]
+    },
+    {
+     "q": "맡길 때 상태가 기록됐나",
+     "at": [
+      "inspect",
+      "order-detail"
+     ]
+    }
+   ],
+   "win": "어떤 옷이 왜 올랐는지 사진으로 보고, 셔츠 한 장만 빼고 납득한 금액으로 승인하는 순간",
+   "screens": [
+    "order-items",
+    "order-request",
+    "home-approve",
+    "inspect",
+    "inspect-done"
+   ],
+   "core": false
+  }
+ ],
+ "prd_coverage": {
+  "F-01": [
+   "signup"
+  ],
+  "F-02": [
+   "address",
+   "my"
+  ],
+  "F-03": [
+   "area-out"
+  ],
+  "F-10": [
+   "order-items"
+  ],
+  "F-11": [
+   "order-items"
+  ],
+  "F-12": [
+   "order-request"
+  ],
+  "F-13": [
+   "order-time"
+  ],
+  "F-14": [
+   "order-time"
+  ],
+  "F-15": [
+   "order-summary"
+  ],
+  "F-20": [
+   "card-add",
+   "order-summary"
+  ],
+  "F-21": [
+   "inspect",
+   "home-approve"
+  ],
+  "F-30": [
+   "order-detail",
+   "home"
+  ],
+  "F-31": [
+   "order-detail",
+   "inspect"
+  ],
+  "F-32": [
+   "inspect"
+  ],
+  "F-33": [
+   "delivered",
+   "order-detail"
+  ],
+  "F-40": [
+   "history",
+   "delivered"
+  ],
+  "F-41": [
+   "history",
+   "delivered"
+  ],
+  "F-42": [
+   "routine"
+  ],
+  "F-50": [
+   "chat"
+  ],
+  "F-51": [
+   "claim",
+   "claim-done"
+  ],
+  "정책-취소": [
+   "order-done",
+   "order-cancel"
+  ],
+  "정책-수거실패": [
+   "order-done"
+  ],
+  "정책-최소주문": [
+   "order-items",
+   "order-summary"
+  ],
+  "정책-24시간": [
+   "inspect",
+   "home-approve"
+  ],
+  "정책-접수불가": [
+   "order-items"
+  ]
+ },
+ "stage": "go",
+ "pending_states": 9
+}

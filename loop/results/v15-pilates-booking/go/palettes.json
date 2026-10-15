@@ -1,0 +1,35 @@
+{
+ "default": "seed-mindbody",
+ "options": [
+  {
+   "slug": "seed-mindbody",
+   "name": "Mindbody",
+   "brand": "#008363",
+   "source": "브랜드 시드(https://www.mindbodyonline.com)",
+   "why": [
+    "라이브러리에 맞는 도메인이 없어 시드로 만듦",
+    "도메인(예약·요가·운동·웰니스·필라테스)",
+    "성격(건강)"
+   ]
+  },
+  {
+   "slug": "kurly",
+   "name": "컬리",
+   "brand": "#5f0080",
+   "source": "https://www.kurly.com/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+   "why": [
+    "성격(차분)",
+    "측정 합성"
+   ]
+  },
+  {
+   "slug": "myrealtrip",
+   "name": "마이리얼트립",
+   "brand": "#2b96ed",
+   "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "성격(신뢰)"
+   ]
+  }
+ ]
+}

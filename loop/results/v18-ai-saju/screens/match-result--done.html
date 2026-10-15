@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>궁합 결과 · 도현과 86점 · 보낸 뒤</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+  .score { display: flex; align-items: baseline; gap: var(--stack-s); color: var(--c-brand-text); }
+  .score-num { font-size: calc(var(--fs-title) * 2); font-weight: var(--fw-title); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .score-of { font-size: var(--fs-sub); font-weight: var(--fw-strong); color: var(--c-text-2); }
+  .points { display: flex; flex-direction: column; gap: var(--stack-m); counter-reset: pt; }
+  .points li { position: relative; padding-left: calc(var(--fs-body) * 1.8); font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-1); counter-increment: pt; }
+  .points li::before { content: counter(pt); position: absolute; left: 0; top: 0.15em; width: 1.4em; height: 1.4em; border-radius: var(--r-pill); background: var(--c-brand-tint); color: var(--c-brand-tint-text); font-size: var(--fs-caption); font-weight: var(--fw-title); display: grid; place-items: center; }
+  .oh { display: flex; flex-direction: column; gap: var(--stack-m); }
+  .oh-row { display: flex; align-items: center; gap: var(--stack-m); }
+  .oh-name { flex: none; width: 2.2em; height: 2.2em; border-radius: var(--r-pill); display: grid; place-items: center; font-size: var(--fs-sub); font-weight: var(--fw-title); }
+  .oh-bars { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .oh-bar { display: flex; align-items: center; gap: var(--stack-s); font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--c-text-2); }
+  .oh-who { flex: none; width: 2.6em; }
+  .oh-track { flex: 1; height: 0.6em; border-radius: var(--r-pill); background: var(--c-bg); overflow: hidden; }
+  .oh-fill { display: block; height: 100%; border-radius: var(--r-pill); }
+  .oh-fill.n0 { width: 0; } .oh-fill.n1 { width: 25%; } .oh-fill.n2 { width: 50%; } .oh-fill.n3 { width: 75%; }
+  .oh-n { flex: none; width: 1em; text-align: right; font-weight: var(--fw-title); color: var(--c-text-1); font-variant-numeric: tabular-nums; }
+  .is-mok .oh-name { background: var(--c-success-tint); color: var(--c-success-tint-text); } .is-mok .oh-fill { background: var(--c-success); }
+  .is-hwa .oh-name { background: var(--c-danger-tint); color: var(--c-danger-tint-text); } .is-hwa .oh-fill { background: var(--c-danger); }
+  .is-to .oh-name { background: var(--c-warning-tint); color: var(--c-warning-tint-text); } .is-to .oh-fill { background: var(--c-warning); }
+  .is-geum .oh-name { background: var(--c-bg); color: var(--c-text-2); } .is-geum .oh-fill { background: var(--c-text-3); }
+  .is-su .oh-name { background: var(--c-info-tint); color: var(--c-info-tint-text); } .is-su .oh-fill { background: var(--c-info); }
+  .done a { margin-left: var(--stack-s); text-decoration: underline; }
+</style>
+</head>
+<body class="has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="match-new.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><p class="appbar-title">궁합</p><span></span></header>
+<main class="page">
+  <p class="done">링크를 복사했어요 — 11월 6일까지 열려요<a href="match-result.html">링크 끊기</a></p>
+  <header class="hero">
+    <p class="eyebrow">소윤 · 도현 · 연인</p>
+    <p class="score"><span class="score-num">86</span><span class="score-of">100점 만점</span></p>
+    <h1 class="title">서로의 빈칸을 채워 주는 사이</h1>
+  </header>
+
+  <section class="block">
+    <div class="block-head"><h2 class="h2">잘 맞는 점</h2></div>
+    <ol class="points">
+      <li>소윤의 불이 도현의 물·흙에 온기를 줘요</li>
+      <li>도현이 소윤의 들뜬 계획을 차분히 다듬어 줘요</li>
+      <li>둘 다 한 번 정한 사람을 오래 챙겨요</li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><h2 class="h2">부딪히는 점</h2></div>
+    <ol class="points">
+      <li>소윤은 바로 말하고 도현은 혼자 정리할 시간이 필요해요</li>
+      <li>돈 쓰는 기준이 달라요</li>
+      <li>둘 다 금 기운이 없어 마무리를 미루기 쉬워요</li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><h2 class="h2">이렇게 해 보세요</h2></div>
+    <ol class="points">
+      <li>서운한 일은 하루 지나 이야기하기</li>
+      <li>큰 지출은 함께 정한 날에만</li>
+    </ol>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><h2 class="h2">두 사람의 다섯 기운</h2></div>
+    <div class="oh">
+      <div class="oh-row is-mok"><span class="oh-name">목</span><div class="oh-bars">
+        <div class="oh-bar"><span class="oh-who">소윤</span><span class="oh-track"><span class="oh-fill n3"></span></span><span class="oh-n">3</span></div>
+        <div class="oh-bar"><span class="oh-who">도현</span><span class="oh-track"><span class="oh-fill n1"></span></span><span class="oh-n">1</span></div>
+      </div></div>
+      <div class="oh-row is-hwa"><span class="oh-name">화</span><div class="oh-bars">
+        <div class="oh-bar"><span class="oh-who">소윤</span><span class="oh-track"><span class="oh-fill n2"></span></span><span class="oh-n">2</span></div>
+        <div class="oh-bar"><span class="oh-who">도현</span><span class="oh-track"><span class="oh-fill n0"></span></span><span class="oh-n">0</span></div>
+      </div></div>
+      <div class="oh-row is-to"><span class="oh-name">토</span><div class="oh-bars">
+        <div class="oh-bar"><span class="oh-who">소윤</span><span class="oh-track"><span class="oh-fill n2"></span></span><span class="oh-n">2</span></div>
+        <div class="oh-bar"><span class="oh-who">도현</span><span class="oh-track"><span class="oh-fill n3"></span></span><span class="oh-n">3</span></div>
+      </div></div>
+      <div class="oh-row is-geum"><span class="oh-name">금</span><div class="oh-bars">
+        <div class="oh-bar"><span class="oh-who">소윤</span><span class="oh-track"><span class="oh-fill n0"></span></span><span class="oh-n">0</span></div>
+        <div class="oh-bar"><span class="oh-who">도현</span><span class="oh-track"><span class="oh-fill n0"></span></span><span class="oh-n">0</span></div>
+      </div></div>
+      <div class="oh-row is-su"><span class="oh-name">수</span><div class="oh-bars">
+        <div class="oh-bar"><span class="oh-who">소윤</span><span class="oh-track"><span class="oh-fill n1"></span></span><span class="oh-n">1</span></div>
+        <div class="oh-bar"><span class="oh-who">도현</span><span class="oh-track"><span class="oh-fill n2"></span></span><span class="oh-n">2</span></div>
+      </div></div>
+    </div>
+    <p class="block-note">둘 다 금이 0개예요</p>
+  </section>
+
+  <section class="block is-list">
+    <a class="row" href="ask.html"><span class="row-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span>
+      <div class="row-main"><p class="row-title">이 궁합으로 물어보기</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>링크에는 생년월일이 보이지 않아요 · 받은 사람은 점수와 한 줄만</span></p>
+</main>
+<div class="cta"><a class="btn primary full" href="match-result--done.html">다시 보내기</a></div>
+</body></html>

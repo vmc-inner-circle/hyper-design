@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>내 사주 풀이</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--stack-s); text-align: center; }
+.pillars-head { font-size: var(--fs-caption); font-weight: var(--fw-strong); color: var(--c-text-2); }
+.ch { position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.1em; padding: var(--stack-s) 0; border-radius: var(--r-m); }
+.ch-han { font-size: var(--fs-title); font-weight: var(--fw-title); line-height: 1.2; }
+.ch-sub { font-size: var(--fs-caption); font-weight: var(--fw-strong); }
+.ch.is-me { box-shadow: inset 0 0 0 1.5px var(--c-brand); }
+.me-mark { position: absolute; top: calc(var(--stack-s) * -1); left: 50%; transform: translateX(-50%); padding: 0 var(--stack-s); border-radius: var(--r-pill); background: var(--c-brand); color: var(--c-on-brand); font-size: var(--fs-caption); font-weight: var(--fw-title); line-height: 1.5; }
+.oh-wood { background: var(--c-success-tint); color: var(--c-success-tint-text); }
+.oh-fire { background: var(--c-danger-tint); color: var(--c-danger-tint-text); }
+.oh-earth { background: var(--c-warning-tint); color: var(--c-warning-tint-text); }
+.oh-metal { background: var(--c-surface); color: var(--c-text-3); box-shadow: inset 0 0 0 1.5px var(--c-line-strong); }
+.oh-water { background: var(--c-info-tint); color: var(--c-info-tint-text); }
+.oh-list { display: flex; flex-direction: column; gap: var(--stack-s); }
+.oh-row { display: grid; grid-template-columns: 2.5em 1fr 2.5em; align-items: center; gap: var(--stack-m); }
+.oh-tag { display: grid; place-items: center; height: 2em; border-radius: var(--r-s); font-size: var(--fs-sub); font-weight: var(--fw-title); }
+.pips { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.25em; }
+.pips i { display: block; height: var(--stack-s); border-radius: var(--r-pill); background: var(--c-bg); }
+.pips.oh-wood, .pips.oh-fire, .pips.oh-earth, .pips.oh-water, .pips.oh-metal { background: none; box-shadow: none; }
+.pips.oh-wood i.on { background: var(--c-success); }
+.pips.oh-fire i.on { background: var(--c-danger); }
+.pips.oh-earth i.on { background: var(--c-warning); }
+.pips.oh-water i.on { background: var(--c-info); }
+.oh-n { font-size: var(--fs-sub); color: var(--c-text-2); text-align: right; }
+.reading-kicker { font-size: var(--fs-sub); font-weight: var(--fw-strong); color: var(--c-text-2); }
+.basis { font-size: var(--fs-sub); color: var(--c-text-2); }
+.term { display: inline-flex; align-items: center; justify-content: center; min-height: var(--h-btn-s); min-width: var(--h-btn-s); padding: 0; font-size: inherit; color: var(--c-text-1); text-decoration: underline; text-underline-offset: 0.25em; text-decoration-thickness: 0.08em; }
+.term[aria-expanded="true"] { color: var(--c-brand-text); font-weight: var(--fw-title); }
+.term-box { display: flex; flex-direction: column; gap: 0.25em; padding: var(--stack-m); border-radius: var(--r-m); background: var(--c-brand-tint); color: var(--c-brand-tint-text); font-size: var(--fs-sub); }
+.term-box b { font-weight: var(--fw-title); }
+</style>
+</head>
+<body class="has-tab text-large">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">한소윤 · 1999년 3월 15일 양력 · 오전 8:10</p>
+    <h1 class="title">한낮의 해처럼 밝고 따뜻한 사람</h1>
+  </header>
+
+  <section class="block" aria-label="사주 원국 여덟 글자">
+    <div class="pillars">
+      <span class="pillars-head">태어난 시</span><span class="pillars-head">태어난 날</span><span class="pillars-head">태어난 달</span><span class="pillars-head">태어난 해</span>
+      <div class="ch oh-water"><span class="ch-han">壬</span><span class="ch-sub">임 · 수</span></div>
+      <div class="ch oh-fire is-me"><span class="me-mark">나</span><span class="ch-han">丙</span><span class="ch-sub">병 · 화</span></div>
+      <div class="ch oh-fire"><span class="ch-han">丁</span><span class="ch-sub">정 · 화</span></div>
+      <div class="ch oh-earth"><span class="ch-han">己</span><span class="ch-sub">기 · 토</span></div>
+      <div class="ch oh-earth"><span class="ch-han">辰</span><span class="ch-sub">진 · 토</span></div>
+      <div class="ch oh-wood"><span class="ch-han">寅</span><span class="ch-sub">인 · 목</span></div>
+      <div class="ch oh-wood"><span class="ch-han">卯</span><span class="ch-sub">묘 · 목</span></div>
+      <div class="ch oh-wood"><span class="ch-han">卯</span><span class="ch-sub">묘 · 목</span></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="block-head"><h2 class="h2">다섯 기운</h2></div>
+    <ul class="oh-list">
+      <li class="oh-row"><span class="oh-tag oh-wood">목</span><span class="pips oh-wood" role="img" aria-label="목 3개"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="oh-n">3개</span></li>
+      <li class="oh-row"><span class="oh-tag oh-fire">화</span><span class="pips oh-fire" role="img" aria-label="화 2개"><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="oh-n">2개</span></li>
+      <li class="oh-row"><span class="oh-tag oh-earth">토</span><span class="pips oh-earth" role="img" aria-label="토 2개"><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="oh-n">2개</span></li>
+      <li class="oh-row"><span class="oh-tag oh-metal">금</span><span class="pips oh-metal" role="img" aria-label="금 0개"><i></i><i></i><i></i><i></i></span><span class="oh-n">0개</span></li>
+      <li class="oh-row"><span class="oh-tag oh-water">수</span><span class="pips oh-water" role="img" aria-label="수 1개"><i class="on"></i><i></i><i></i><i></i></span><span class="oh-n">1개</span></li>
+    </ul>
+    <p class="block-note">금 기운이 없어요 — 결과를 거두고 정리하는 힘은 따로 챙겨야 해요</p>
+  </section>
+
+  <section class="block">
+    <p class="reading-kicker">성격</p>
+    <h2 class="h2">주변을 환하게 만드는 사람</h2>
+    <p>한낮의 해처럼 밝고 따뜻해서, 소윤님이 있으면 자리가 환해져요. 마음에 둔 사람은 먼저 챙기는 편이에요.</p>
+    <p class="basis">근거: <button class="term" aria-expanded="true" aria-controls="term-1">일간</button> <button class="term" aria-expanded="true" aria-controls="term-1">병화</button></p>
+    <div class="term-box" id="term-1">
+      <p><b>일간</b> — 나를 뜻하는 글자</p>
+      <p><b>병화</b> — 큰 불, 한낮의 해</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="reading-kicker">일·커리어</p>
+    <h2 class="h2">말과 표현으로 인정받는 일</h2>
+    <p>생각을 말로 풀어낼 때 힘이 나요. 발표나 면접처럼 직접 보여 주는 자리에서 강해요.</p>
+    <p class="basis">근거: <button class="term" aria-expanded="false">일간</button> 병화</p>
+  </section>
+
+  <section class="block">
+    <p class="reading-kicker">돈</p>
+    <h2 class="h2">들어오는 길을 직접 만드는 타입</h2>
+    <p>기다리기보다 스스로 길을 만들어 돈을 벌어요. 거두고 정리하는 힘은 약한 편이라, 모으는 건 따로 챙기면 좋아요.</p>
+    <p class="basis">근거: <button class="term" aria-expanded="false">오행</button> 중 금 0개</p>
+  </section>
+
+  <section class="block">
+    <p class="reading-kicker">관계</p>
+    <h2 class="h2">먼저 다가가고 오래 챙기는 편</h2>
+    <p>처음 보는 사람에게도 먼저 말을 거는 편이에요. 한 번 가까워진 사람은 오래 챙겨요.</p>
+    <p class="basis">근거: <button class="term" aria-expanded="false">일간</button> 병화</p>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">지금의 10년</h2></div>
+    <div class="row"><span class="row-date">2025~<br>2034</span><div class="row-main"><p class="row-title">없던 금 기운이 들어와, 노력이 결과로 맺히는 10년</p><p class="row-sub"><button class="term" aria-expanded="false">대운</button> 경오 · 만 26~35세</p></div></div>
+  </section>
+
+  <section class="block is-list">
+    <a class="row" href="ask.html"><span class="row-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></span><div class="row-main"><p class="row-title">이 풀이로 궁금한 걸 물어보기</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>오늘</a>
+  <a class="tab" href="saju.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 12h16M8 4v16M12 4v16M16 4v16"/></svg>내 사주</a>
+  <a class="tab" href="ask.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 5h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-7l-4 3v-3H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>묻기</a>
+  <a class="tab" href="history.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>기록</a>
+  <a class="tab" href="my.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>마이</a>
+</nav>
+</body></html>

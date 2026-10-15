@@ -1,0 +1,983 @@
+[
+ {
+  "slug": "hwahae",
+  "name": "화해",
+  "url": "https://www.hwahae.co.kr",
+  "domain": "뷰티",
+  "hex": "#00A5AA",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#00A5AA",
+     "share": 0.574
+    },
+    {
+     "hex": "#FF5555",
+     "share": 0.284
+    },
+    {
+     "hex": "#467DFF",
+     "share": 0.142
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "oliveyoung",
+  "name": "올리브영",
+  "url": "https://www.oliveyoung.co.kr",
+  "domain": "뷰티",
+  "hex": "#9BCE26",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#F374B7",
+     "share": 0.432
+    },
+    {
+     "hex": "#F65C60",
+     "share": 0.286
+    },
+    {
+     "hex": "#E02020",
+     "share": 0.15
+    },
+    {
+     "hex": "#9BCE26",
+     "share": 0.084
+    },
+    {
+     "hex": "#6FCFF7",
+     "share": 0.048
+    }
+   ],
+   "logo_fill": [],
+   "note": "1위 핑크 #F374B7는 프로모션. 로고·카테고리 연두 채택"
+  }
+ },
+ {
+  "slug": "ably",
+  "name": "에이블리",
+  "url": "https://a-bly.com",
+  "domain": "패션",
+  "hex": "#FF5160",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#6093FC",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "상단 바 픽셀 측정"
+  }
+ },
+ {
+  "slug": "zigzag",
+  "name": "지그재그",
+  "url": "https://zigzag.kr",
+  "domain": "패션",
+  "hex": "#FA6EE3",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FB4333",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고 픽셀 측정. 1위 주황은 배너"
+  }
+ },
+ {
+  "slug": "baemin",
+  "name": "배달의민족",
+  "url": "https://www.baemin.com",
+  "domain": "음식",
+  "hex": "#0CEFD3",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [
+    "--sem-base-color-backgroundPrimary: #f3f5f7",
+    "--sem-base-color-borderPrimary: #181a1c",
+    "--sem-base-color-foregroundPrimary: #181a1c",
+    "--sem-base-color-negativePrimary: #ff403e",
+    "--sem-base-color-positivePrimary: #00b96b",
+    "--sem-base-color-systemMainPrimary: #7476ff",
+    "--sem-base-color-systemMainSecondary: #9ca5ff",
+    "--sem-base-color-systemMainTertiary: #d9dbff",
+    "--sem-base-color-systemSubPrimary: #1a7cff",
+    "--sem-base-color-warningPrimary: #ff8400",
+    "--sem-mint-color-backgroundPrimary: #f3f5f7",
+    "--sem-mint-color-borderPrimary: #181a1c"
+   ],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "--sem-mint-color-systemMainPrimary + 히어로 픽셀"
+  }
+ },
+ {
+  "slug": "yanolja",
+  "name": "야놀자",
+  "url": "https://www.yanolja.com",
+  "domain": "숙박",
+  "hex": "#4154FF",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#4154FF",
+     "share": 0.879
+    },
+    {
+     "hex": "#E5000F",
+     "share": 0.121
+    }
+   ],
+   "logo_fill": [
+    "#4154FF"
+   ]
+  }
+ },
+ {
+  "slug": "catchtable",
+  "name": "캐치테이블",
+  "url": "https://www.catchtable.co.kr",
+  "domain": "예약",
+  "hex": "#FF383C",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FF383C",
+     "share": 0.595
+    },
+    {
+     "hex": "#FF3D00",
+     "share": 0.405
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "zigbang",
+  "name": "직방",
+  "url": "https://www.zigbang.com",
+  "domain": "부동산",
+  "hex": "#FF681B",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "로고 픽셀 측정"
+  }
+ },
+ {
+  "slug": "soomgo",
+  "name": "숨고",
+  "url": "https://soomgo.com",
+  "domain": "생활서비스",
+  "hex": "#693BF2",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#693BF2",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "kmong",
+  "name": "크몽",
+  "url": "https://kmong.com",
+  "domain": "생활서비스",
+  "hex": "#FF402B",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FF402B",
+     "share": 0.704
+    },
+    {
+     "hex": "#27E7B7",
+     "share": 0.296
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고 무채색, 배지 색일 가능성"
+  }
+ },
+ {
+  "slug": "millie",
+  "name": "밀리의서재",
+  "url": "https://www.millie.co.kr",
+  "domain": "도서",
+  "hex": "#FFC004",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#F05C2E",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [
+    "#FFC004"
+   ],
+   "note": "로고 fill. 1위 주황은 팝업"
+  }
+ },
+ {
+  "slug": "ridibooks",
+  "name": "리디",
+  "url": "https://ridibooks.com",
+  "domain": "도서",
+  "hex": "#1E9EFF",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#DC3232",
+     "share": 0.567
+    },
+    {
+     "hex": "#1E9EFF",
+     "share": 0.433
+    }
+   ],
+   "logo_fill": [
+    "#1E9EFF",
+    "#FDC842"
+   ]
+  }
+ },
+ {
+  "slug": "watcha",
+  "name": "왓챠",
+  "url": "https://watcha.com",
+  "domain": "영상",
+  "hex": "#F82F62",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#F82F62",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [
+    "#FF0558"
+   ]
+  }
+ },
+ {
+  "slug": "bunjang",
+  "name": "번개장터",
+  "url": "https://m.bunjang.co.kr",
+  "domain": "중고",
+  "hex": "#D80C18",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [
+    "--color-primary: #d80c18",
+    "--color-brand-apple: #000000",
+    "--color-brand-twitter: #1da1f2",
+    "--color-brand-naver: #03cf5d",
+    "--color-brand-band: #21c531",
+    "--color-brand-line: #00b900",
+    "--color-brand-kakao-2: #3c1e1e",
+    "--color-brand-kakao: #fae100",
+    "--color-brand-facebook: #1877f2"
+   ],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "--color-primary"
+  }
+ },
+ {
+  "slug": "kream",
+  "name": "크림",
+  "url": "https://kream.co.kr",
+  "domain": "커머스",
+  "hex": "#000000",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [
+    "--greyscale-dark-4-dark-5-fill-light-grey-grey-light-brand-ect: #f4f4f4"
+   ],
+   "top_colors": [
+    {
+     "hex": "#0000FF",
+     "share": 0.57
+    },
+    {
+     "hex": "#1155E0",
+     "share": 0.43
+    }
+   ],
+   "logo_fill": [],
+   "note": "무채색 브랜드. 파랑은 텍스트 링크"
+  }
+ },
+ {
+  "slug": "doctornow",
+  "name": "닥터나우",
+  "url": "https://doctornow.co.kr",
+  "domain": "의료",
+  "hex": "#FD7E14",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FD7E14",
+     "share": 0.702
+    },
+    {
+     "hex": "#F76707",
+     "share": 0.298
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고·CTA 일치(스크린샷)"
+  }
+ },
+ {
+  "slug": "goodoc",
+  "name": "굿닥",
+  "url": "https://www.goodoc.co.kr",
+  "domain": "의료",
+  "hex": "#0462D1",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#E5D0B4",
+     "share": 0.416
+    },
+    {
+     "hex": "#5C529A",
+     "share": 0.416
+    },
+    {
+     "hex": "#0073FA",
+     "share": 0.165
+    },
+    {
+     "hex": "#6DE1AF",
+     "share": 0.001
+    },
+    {
+     "hex": "#115FD4",
+     "share": 0.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고·CTA 픽셀"
+  }
+ },
+ {
+  "slug": "frip",
+  "name": "프립",
+  "url": "https://www.frip.co.kr",
+  "domain": "여가",
+  "hex": "#7A29FA",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#F4373D",
+     "share": 0.48
+    },
+    {
+     "hex": "#7A29FA",
+     "share": 0.285
+    },
+    {
+     "hex": "#F43F5E",
+     "share": 0.235
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고·상단 바 보라"
+  }
+ },
+ {
+  "slug": "tumblbug",
+  "name": "텀블벅",
+  "url": "https://tumblbug.com",
+  "domain": "펀딩",
+  "hex": "#F86453",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "DOM 유채색 없음, 헤더 픽셀 측정"
+  }
+ },
+ {
+  "slug": "wadiz",
+  "name": "와디즈",
+  "url": "https://www.wadiz.kr",
+  "domain": "펀딩",
+  "hex": "#00C4F5",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#00C4F5",
+     "share": 0.659
+    },
+    {
+     "hex": "#00C4C4",
+     "share": 0.33
+    },
+    {
+     "hex": "#FF5959",
+     "share": 0.006
+    },
+    {
+     "hex": "#4672F9",
+     "share": 0.003
+    },
+    {
+     "hex": "#07868C",
+     "share": 0.002
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "socar",
+  "name": "쏘카",
+  "url": "https://www.socar.kr",
+  "domain": "모빌리티",
+  "hex": "#0078FF",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#0078FF",
+     "share": 0.891
+    },
+    {
+     "hex": "#4B68FF",
+     "share": 0.109
+    }
+   ],
+   "logo_fill": [
+    "#0078FF"
+   ]
+  }
+ },
+ {
+  "slug": "naver",
+  "name": "네이버",
+  "url": "https://www.naver.com",
+  "domain": "플랫폼",
+  "hex": "#03C75A",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#03A94D",
+     "share": 0.681
+    },
+    {
+     "hex": "#3283FD",
+     "share": 0.265
+    },
+    {
+     "hex": "#F4361E",
+     "share": 0.043
+    },
+    {
+     "hex": "#2196F3",
+     "share": 0.007
+    },
+    {
+     "hex": "#406CDC",
+     "share": 0.002
+    }
+   ],
+   "logo_fill": [
+    "#03C75A"
+   ],
+   "note": "로고 fill"
+  }
+ },
+ {
+  "slug": "kakao",
+  "name": "카카오",
+  "url": "https://www.kakaocorp.com",
+  "domain": "플랫폼",
+  "hex": "#FAE100",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FAE100",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "coupangeats",
+  "name": "쿠팡이츠",
+  "url": "https://www.coupangeats.com",
+  "domain": "음식",
+  "hex": "#01AFFF",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": "#ffffff",
+   "vars": [
+    "--e-global-color-primary: #6EC1E4",
+    "--e-global-color-accent: #61CE70"
+   ],
+   "top_colors": [
+    {
+     "hex": "#01AFFF",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "11st",
+  "name": "11번가",
+  "url": "https://www.11st.co.kr",
+  "domain": "커머스",
+  "hex": "#FF0038",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FF0038",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "musinsa",
+  "name": "무신사",
+  "url": "https://www.musinsa.com",
+  "domain": "패션",
+  "hex": "#000000",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#352945",
+     "share": 0.964
+    },
+    {
+     "hex": "#F31110",
+     "share": 0.013
+    },
+    {
+     "hex": "#E0D9A5",
+     "share": 0.005
+    },
+    {
+     "hex": "#F2665E",
+     "share": 0.005
+    },
+    {
+     "hex": "#F7E74B",
+     "share": 0.004
+    }
+   ],
+   "logo_fill": [
+    "#065B02",
+    "#065C02",
+    "#0E6C00",
+    "#0E6D00",
+    "#1C2B6F"
+   ],
+   "note": "무채색 브랜드. 1위 보라는 배너"
+  }
+ },
+ {
+  "slug": "headspace",
+  "name": "Headspace",
+  "url": "https://www.headspace.com",
+  "domain": "명상",
+  "hex": "#FF7E1D",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#0061EF",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "로고 픽셀. CTA는 파랑 #0061EF"
+  }
+ },
+ {
+  "slug": "duolingo",
+  "name": "Duolingo",
+  "url": "https://www.duolingo.com",
+  "domain": "교육",
+  "hex": "#1CB0F6",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#1CB0F6",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [
+    "#006AAD",
+    "#00729A",
+    "#0084C2",
+    "#00BDFF",
+    "#1CB0F6"
+   ],
+   "note": "측정 요소 적음, 실제 로고 초록 #58CC02 가능성"
+  }
+ },
+ {
+  "slug": "glossier",
+  "name": "Glossier",
+  "url": "https://www.glossier.com",
+  "domain": "뷰티",
+  "hex": "#000000",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "유채색 측정 없음"
+  }
+ },
+ {
+  "slug": "aesop",
+  "name": "Aesop",
+  "url": "https://www.aesop.com",
+  "domain": "뷰티",
+  "hex": "#945C26",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": "#e9e9e9",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#945C26",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "pinterest",
+  "name": "Pinterest",
+  "url": "https://www.pinterest.com",
+  "domain": "플랫폼",
+  "hex": "#E60023",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": "#FFFFFF",
+   "vars": [
+    "--sema-color-pressed-icon-primary: #b2001b",
+    "--sema-color-pressed-text-primary: #b2001b",
+    "--sema-color-pressed-background-primary: #b2001b",
+    "--sema-color-hover-icon-primary: #cc001f",
+    "--sema-color-hover-text-primary: #cc001f",
+    "--sema-color-hover-background-primary: #cc001f",
+    "--sema-color-icon-primary: #e60023",
+    "--sema-color-text-primary: #e60023",
+    "--sema-color-background-primary: #e60023",
+    "--comp-button-color-border-focus-outer-primary: #435ee5",
+    "--comp-button-color-border-focus-inner-primary: #fff",
+    "--comp-button-color-pressed-background-primary-selected: #181816"
+   ],
+   "top_colors": [
+    {
+     "hex": "#E60023",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [
+    "#E60023"
+   ]
+  }
+ },
+ {
+  "slug": "spotify",
+  "name": "Spotify",
+  "url": "https://www.spotify.com",
+  "domain": "음악",
+  "hex": "#1ED760",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#1ED760",
+     "share": 0.992
+    },
+    {
+     "hex": "#9E9EFF",
+     "share": 0.008
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "classpass",
+  "name": "ClassPass",
+  "url": "https://classpass.com",
+  "domain": "운동",
+  "hex": "#0055FF",
+  "confidence": "mid",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#0055FF",
+     "share": 0.992
+    },
+    {
+     "hex": "#0032D7",
+     "share": 0.008
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "strava",
+  "name": "Strava",
+  "url": "https://www.strava.com",
+  "domain": "운동",
+  "hex": "#FC5200",
+  "confidence": "high",
+  "evidence": {
+   "theme_color": "#FAFAFA",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#FC5200",
+     "share": 0.986
+    },
+    {
+     "hex": "#0060D0",
+     "share": 0.014
+    }
+   ],
+   "logo_fill": [
+    "#FC5200"
+   ]
+  }
+ },
+ {
+  "slug": "noom",
+  "name": "Noom",
+  "url": "https://www.noom.com",
+  "domain": "건강",
+  "hex": "#FB513B",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": "#fb513b",
+   "vars": [
+    "--unit-style-brand_color: #fb513b",
+    "--imweb-color-brand: #fb513b"
+   ],
+   "top_colors": [
+    {
+     "hex": "#FB513B",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "ko-noom.com(국내 판매처)으로 리다이렉트"
+  }
+ },
+ {
+  "slug": "lush",
+  "name": "Lush",
+  "url": "https://www.lush.com",
+  "domain": "뷰티",
+  "hex": "#0B5D45",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#0B5D45",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": []
+  }
+ },
+ {
+  "slug": "sephora",
+  "name": "Sephora",
+  "url": "https://www.sephora.com",
+  "domain": "뷰티",
+  "hex": "#CF112C",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#CF112C",
+     "share": 0.899
+    },
+    {
+     "hex": "#136BEA",
+     "share": 0.101
+    }
+   ],
+   "logo_fill": [],
+   "note": "세일 빨강일 가능성"
+  }
+ },
+ {
+  "slug": "allbirds",
+  "name": "Allbirds",
+  "url": "https://www.allbirds.com",
+  "domain": "패션",
+  "hex": "#E1D9C7",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": "#ece9e2",
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#E1D9C7",
+     "share": 1.0
+    }
+   ],
+   "logo_fill": [],
+   "note": "무채색에 가까움, 배송지 팝업"
+  }
+ },
+ {
+  "slug": "patagonia",
+  "name": "Patagonia",
+  "url": "https://www.patagonia.com",
+  "domain": "패션",
+  "hex": "#000000",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": "white",
+   "vars": [
+    "--bs-primary: #000",
+    "--bs-primary-rgb: 0, 0, 0",
+    "--bs-primary-bg-subtle: #ccc",
+    "--bs-primary-border-subtle: #999"
+   ],
+   "top_colors": [],
+   "logo_fill": [],
+   "note": "--bs-primary #000, 무채색"
+  }
+ },
+ {
+  "slug": "mindbody",
+  "name": "Mindbody",
+  "url": "https://www.mindbodyonline.com",
+  "domain": "예약",
+  "hex": "#008363",
+  "confidence": "low",
+  "evidence": {
+   "theme_color": null,
+   "vars": [],
+   "top_colors": [
+    {
+     "hex": "#008363",
+     "share": 0.605
+    },
+    {
+     "hex": "#045944",
+     "share": 0.277
+    },
+    {
+     "hex": "#AAFFD8",
+     "share": 0.118
+    }
+   ],
+   "logo_fill": [
+    "#AAFFD8"
+   ],
+   "note": "배너 올리브 #809028와 혼재"
+  }
+ }
+]

@@ -1,0 +1,302 @@
+{
+ "core": "김지현이 카톡으로 묻지 않고 — 자리가 있는지, 몇 회 남았는지, 지금 취소하면 차감되는지를 — 예약하고 취소하는 바로 그 순간에 실제 날짜로 알고 스스로 결정한다.",
+ "items": [
+  {
+   "id": "F1",
+   "name": "회원가입/로그인",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "가입은 4단계(방법→인증→약관→동네) 그대로 — 정호는 딸이 도와 가입하므로 단계를 줄이지 않는다",
+   "ask": false
+  },
+  {
+   "id": "F2",
+   "name": "동네 설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "찾기의 기준점. 위치 권한은 '현재 위치로'를 누를 때만 묻는다",
+   "ask": false
+  },
+  {
+   "id": "F3",
+   "name": "스튜디오 찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연의 첫 질문 '우리 동네 어디'의 답. 목록 기본·지도 전환",
+   "ask": false
+  },
+  {
+   "id": "F4",
+   "name": "스튜디오 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연이 사진·강사·후기로 결정하는 곳",
+   "ask": false
+  },
+  {
+   "id": "F5",
+   "name": "수업 시간표",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "카톡 '자리 있나요' 핑퐁을 없애는 핵심 — 잔여석이 줄마다",
+   "ask": false
+  },
+  {
+   "id": "F6",
+   "name": "수업 상세",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "무료 취소 마감을 실제 날짜로 보여 주는 첫 자리(core)",
+   "ask": false
+  },
+  {
+   "id": "F7",
+   "name": "수강권 구매",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "수강권 없으면 예약이 막힘 — 막힌 순간을 푸는 화면",
+   "ask": false
+  },
+  {
+   "id": "F8",
+   "name": "수업 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "core: 예약 가능 10회 → 9회와 취소 규정을 결정 화면에서",
+   "ask": false
+  },
+  {
+   "id": "F9",
+   "name": "대기 신청",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "문제 4 — 운영자가 기억 못 하던 '자리 나면 연락'을 자동으로",
+   "ask": false
+  },
+  {
+   "id": "F10",
+   "name": "예약 취소",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "core: 차감 여부를 취소 전에 먼저(문제 3 분쟁)",
+   "ask": false
+  },
+  {
+   "id": "F11",
+   "name": "내 예약",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "가장 잦은 행동 '내 예약 확인'",
+   "ask": false
+  },
+  {
+   "id": "F12",
+   "name": "출석 체크",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "정호의 성공한 순간 — 큰 버튼 하나",
+   "ask": false
+  },
+  {
+   "id": "F13",
+   "name": "수강권 관리",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "문제 2(잔여 헷갈림), 예약분 포함 표기",
+   "ask": false
+  },
+  {
+   "id": "F14",
+   "name": "리뷰",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연의 결정 근거. 사진은 MVP에서 받지 않음(PRD 논의점 3, 미정 항목이라 하네스 결정)",
+   "ask": false
+  },
+  {
+   "id": "F15",
+   "name": "알림",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "대기 승급은 알림이 없으면 기능이 성립 안 됨(시장 avoid A4)",
+   "ask": false
+  },
+  {
+   "id": "F16",
+   "name": "마이페이지·설정",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "노쇼 현황·결제 내역의 자리",
+   "ask": false
+  },
+  {
+   "id": "F17",
+   "name": "즐겨찾기",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "디자인만 먼저(PRD) — 스튜디오 상세 하트, 마이에 목록",
+   "ask": false
+  },
+  {
+   "id": "F18",
+   "name": "체험 수업",
+   "source": "PRD",
+   "verdict": "keep",
+   "how": "",
+   "why": "서연의 '처음인데 해 볼 수 있나' — 시장 consider K2와 같음",
+   "ask": false
+  },
+  {
+   "id": "M1",
+   "name": "하단 탭 5칸(홈 왼쪽·마이 오른쪽)",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "홈·찾기·내 예약·수강권·마이",
+   "why": "4개 앱 모두 5칸. 수강권 탭은 문제 2 때문에 독립(논의점 6 결정)",
+   "ask": false
+  },
+  {
+   "id": "M2",
+   "name": "날짜 먼저, 그날 수업을 시간순",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "시간표 위 주간 날짜 줄",
+   "why": "손에 익은 조작",
+   "ask": false
+  },
+  {
+   "id": "M3",
+   "name": "수업 줄에 시간·수업명·강사·잔여석",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "줄 오른쪽은 상태 글자/작은 버튼 — 누르면 수업 상세(취소 규정 확인) → 예약 확인",
+   "why": "한 줄 비교는 따르되, 바로 예약은 막는다: core가 '예약 시점에 규정을 보여 주기'라서 한 단계를 둔다",
+   "ask": false
+  },
+  {
+   "id": "M4",
+   "name": "마감 줄은 대기 버튼",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "'대기 신청' 작은 버튼(명사형)",
+   "why": "같은 줄에서 대기를 거는 관례",
+   "ask": false
+  },
+  {
+   "id": "M5",
+   "name": "수강권 상품을 행으로, 가격 크게",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "회당 가격을 함께",
+   "why": "구매 흐름 관례",
+   "ask": false
+  },
+  {
+   "id": "M6",
+   "name": "내 수강권 카드 + 사용/전체 진행 막대",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "홈 요약·수강권 탭 카드",
+   "why": "잔여를 한눈에(문제 2)",
+   "ask": false
+  },
+  {
+   "id": "M7",
+   "name": "내 예약을 월간 달력으로",
+   "source": "시장",
+   "verdict": "cut",
+   "how": "날짜순 목록 + D-day·무료 취소 마감 남은 시간",
+   "why": "core(취소 판단)와 '확인하고 닫기' 사용 패턴에는 무료 취소 마감이 한 줄에 보이는 목록이 빠르다. 달력은 날짜 탭이 한 단계 더 생긴다",
+   "ask": false
+  },
+  {
+   "id": "M8",
+   "name": "결과를 푸시 + 앱 안 알림함 두 곳에",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "알림함 화면",
+   "why": "PRD F15와 같음",
+   "ask": false
+  },
+  {
+   "id": "K1",
+   "name": "여러 스튜디오 통합 패스",
+   "source": "시장",
+   "verdict": "cut",
+   "how": "",
+   "why": "수강권은 구매 스튜디오에서만(PRD R16) — 사업 모델이 다름",
+   "ask": false
+  },
+  {
+   "id": "K2",
+   "name": "싼 체험·원데이로 먼저 겪게",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "체험 1회권(F18), 찾기 필터 '체험 가능'",
+   "why": "서연의 처음 오는 이유",
+   "ask": false
+  },
+  {
+   "id": "K3",
+   "name": "첫 화면 근처 할인·쿠폰 섹션",
+   "source": "시장",
+   "verdict": "cut",
+   "how": "결제 화면 쿠폰 입력만",
+   "why": "누구의 처음 오는 이유·성공한 순간에도 닿지 않음, 홈 첫 블록은 다음 수업",
+   "ask": false
+  },
+  {
+   "id": "K4",
+   "name": "예약 직후~시작 전 리마인드",
+   "source": "시장",
+   "verdict": "keep",
+   "how": "전날 21시 + 2시간 전 + 무료 취소 마감 3시간 전",
+   "why": "PRD F15와 같음, 지현의 늦은 취소를 미리 막는다",
+   "ask": false
+  },
+  {
+   "id": "H1",
+   "name": "출석하기를 홈 '다음 수업' 블록 안에",
+   "source": "하네스",
+   "verdict": "keep",
+   "how": "30분 전부터 같은 자리에 버튼",
+   "why": "정호가 찾을 필요가 없다",
+   "ask": false
+  },
+  {
+   "id": "H2",
+   "name": "홈에 노쇼 현황 노출",
+   "source": "하네스",
+   "verdict": "cut",
+   "how": "마이에만",
+   "why": "제한 중이 아니면 홈에 불안만 준다",
+   "ask": false
+  },
+  {
+   "id": "H3",
+   "name": "예약 완료 후 캘린더 추가",
+   "source": "하네스",
+   "verdict": "keep",
+   "how": "PRD S14 그대로, 이미 쓰는 캘린더 앱에 맡긴다",
+   "why": "알림을 새로 만들지 않고 기존 통로 사용",
+   "ask": false
+  }
+ ]
+}

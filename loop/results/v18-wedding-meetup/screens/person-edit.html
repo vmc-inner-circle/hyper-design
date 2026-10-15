@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>지인 고치기 · 김다은</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="people.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">지인 고치기</h1><span></span></header>
+<main class="page">
+  <div class="field"><label class="label" for="name">이름</label><input class="input" id="name" value="김다은"></div>
+
+  <div class="field"><span class="label">쪽</span>
+    <div class="seg" role="radiogroup" aria-label="쪽">
+      <button class="seg-item is-selected" role="radio" aria-checked="true">서연 쪽</button>
+      <button class="seg-item" role="radio" aria-checked="false">준호 쪽</button>
+      <button class="seg-item" role="radio" aria-checked="false">함께</button>
+    </div>
+  </div>
+
+  <div class="field"><span class="label">무리 · 여러 개 고를 수 있어요</span>
+    <div class="chips" role="group" aria-label="무리">
+      <button class="chip is-selected" aria-pressed="true">이화여대 동기</button>
+      <button class="chip is-selected" aria-pressed="true">토스 디자인팀</button>
+      <button class="chip" aria-pressed="false">망원동 친구</button>
+      <button class="chip" aria-pressed="false">서연 가족·친척</button>
+      <a class="chip" href="groups-edit.html">+ 새 무리</a>
+    </div>
+  </div>
+
+  <div class="field"><label class="label" for="tel">연락처</label><input class="input" id="tel" type="tel" value="010-4821-3765"></div>
+
+  <div class="row"><div class="row-main"><p class="row-title">1:1로 따로 만나기</p><p class="row-sub">켜면 모임을 짤 때 따로 만날 사람으로 묶여요</p></div><button class="switch" role="switch" aria-checked="false" aria-label="1:1로 따로 만나기"></button></div>
+
+  <div class="field"><span class="label">들어 있는 모임</span>
+    <a class="row" href="meetup-confirmed.html"><span class="thumb"><img src="../assets/photos/place-seongsu.jpg" alt="성수동 비스트로 온"></span><div class="row-main"><span class="badge is-brand">확정</span><p class="row-title">토스 디자인팀</p><p class="row-sub">10월 17일(토) 오후 6:30 · 성수동 비스트로 온</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </div>
+
+  <div class="field">
+    <button class="btn secondary full">지우기</button>
+    <p class="block-note">지우면 토스 디자인팀 모임에서도 빠져요</p>
+  </div>
+</main>
+<div class="cta"><a class="btn primary full" href="person-edit--done.html">저장하기</a></div>
+</body></html>

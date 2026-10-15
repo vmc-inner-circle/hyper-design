@@ -1,0 +1,149 @@
+[
+ {
+  "slug": "hwahae",
+  "name": "화해",
+  "hex": "#00A5AA",
+  "domains": [
+   "뷰티"
+  ],
+  "source": "https://www.hwahae.co.kr",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "oliveyoung",
+  "name": "올리브영",
+  "hex": "#779F1D",
+  "domains": [
+   "뷰티"
+  ],
+  "source": "https://www.oliveyoung.co.kr",
+  "confidence": "low",
+  "tone": "neutral"
+ },
+ {
+  "slug": "zigzag",
+  "name": "지그재그",
+  "hex": "#F947DB",
+  "domains": [
+   "패션"
+  ],
+  "source": "https://zigzag.kr",
+  "confidence": "mid",
+  "tone": "neutral"
+ },
+ {
+  "slug": "yanolja",
+  "name": "야놀자",
+  "hex": "#4154FF",
+  "domains": [
+   "숙박"
+  ],
+  "source": "https://www.yanolja.com",
+  "confidence": "high",
+  "tone": "cool"
+ },
+ {
+  "slug": "zigbang",
+  "name": "직방",
+  "hex": "#FF6111",
+  "domains": [
+   "부동산"
+  ],
+  "source": "https://www.zigbang.com",
+  "confidence": "mid",
+  "tone": "warm"
+ },
+ {
+  "slug": "ridibooks",
+  "name": "리디",
+  "hex": "#0F97FF",
+  "domains": [
+   "도서"
+  ],
+  "source": "https://ridibooks.com",
+  "confidence": "high",
+  "tone": "cool"
+ },
+ {
+  "slug": "goodoc",
+  "name": "굿닥",
+  "hex": "#0462D1",
+  "domains": [
+   "의료"
+  ],
+  "source": "https://www.goodoc.co.kr",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "frip",
+  "name": "프립",
+  "hex": "#7A29FA",
+  "domains": [
+   "여가"
+  ],
+  "source": "https://www.frip.co.kr",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "aesop",
+  "name": "Aesop",
+  "hex": "#945C26",
+  "domains": [
+   "뷰티"
+  ],
+  "source": "https://www.aesop.com",
+  "confidence": "low",
+  "tone": "warm"
+ },
+ {
+  "slug": "lush",
+  "name": "Lush",
+  "hex": "#0B5D45",
+  "domains": [
+   "뷰티"
+  ],
+  "source": "https://www.lush.com",
+  "confidence": "low",
+  "tone": "neutral"
+ },
+ {
+  "slug": "mindbody",
+  "name": "Mindbody",
+  "hex": "#008363",
+  "domains": [
+   "예약"
+  ],
+  "source": "https://www.mindbodyonline.com",
+  "confidence": "low",
+  "tone": "neutral"
+ },
+ {
+  "slug": "kurly",
+  "name": "컬리",
+  "hex": "#5F0080",
+  "domains": [
+   "커머스",
+   "식품"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "고급",
+   "차분"
+  ],
+  "tone": "neutral"
+ },
+ {
+  "slug": "samsung-blue",
+  "name": "삼성 블루",
+  "hex": "#1428A0",
+  "domains": [
+   "전자",
+   "플랫폼"
+  ],
+  "source": "Samsung 브랜드 가이드",
+  "tone": "cool"
+ }
+]

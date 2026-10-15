@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>설정</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+  button.row { width: 100%; text-align: left; }
+  .switch:disabled { opacity: .5; cursor: default; }
+  .text-danger { color: var(--c-danger); }
+</style>
+</head>
+<body>
+<header class="appbar"><a class="appbar-btn" href="my.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">설정</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">알림</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">전체 알림</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="전체 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">예약·대기</p><p class="row-sub">예약 확정·취소, 대기 순번</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="예약·대기 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">대기 승급 알림</p><p class="row-sub">자리가 나면 바로 알려요 · 2시간 안에 확정해야 해서 끌 수 없어요</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="대기 승급 알림(끌 수 없음)" disabled></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">리마인드</p><p class="row-sub">수업 전날 21시·2시간 전, 무료 취소 마감 3시간 전</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="리마인드 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">마케팅</p><p class="row-sub">이벤트·혜택 소식</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="false" aria-label="마케팅 알림"></button></span></div>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">위치 권한</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">허용 안 함</p><p class="row-sub">지도는 망원1동을 중심으로 보여요</p></div><span class="row-trail"><button class="btn small tint">시스템 설정</button></span></div>
+  </section>
+
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">로그인 계정</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/phone.svg" alt=""></span><div class="row-main"><p class="row-title">카카오</p><p class="row-sub">퇴근후필라 · 010-2741-58○○</p></div><span class="row-trail">연결됨</span></div>
+  </section>
+
+  <section class="block is-list">
+    <button class="row"><div class="row-main"><p class="row-title">이용약관</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></button>
+    <button class="row"><div class="row-main"><p class="row-title">개인정보 처리방침</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></button>
+    <button class="row"><div class="row-main"><p class="row-title">오픈소스 라이선스</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></button>
+    <div class="row"><div class="row-main"><p class="row-title">버전</p></div><span class="row-trail">1.0.0</span></div>
+  </section>
+
+  <section class="block is-list">
+    <a class="row" href="login.html"><div class="row-main"><p class="row-title">로그아웃</p></div></a>
+    <a class="row" href="login.html"><div class="row-main"><p class="row-title text-danger">회원 탈퇴</p></div></a>
+  </section>
+</main>
+</body></html>

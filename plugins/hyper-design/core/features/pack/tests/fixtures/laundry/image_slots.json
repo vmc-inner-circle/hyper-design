@@ -1,0 +1,231 @@
+[
+ {
+  "slot": "cat-shirt",
+  "screens": [
+   "order-items",
+   "routine"
+  ],
+  "what": "옷걸이에 걸린 흰 와이셔츠 한 장, 밝은 배경",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "와이셔츠 옷걸이",
+   "white dress shirt on hanger"
+  ]
+ },
+ {
+  "slot": "cat-pants",
+  "screens": [
+   "order-items"
+  ],
+  "what": "개어 놓은 정장 바지 또는 슬랙스",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "슬랙스 바지 접은",
+   "folded trousers"
+  ]
+ },
+ {
+  "slot": "cat-knit",
+  "screens": [
+   "order-items"
+  ],
+  "what": "개어 놓은 니트 스웨터",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "니트 스웨터 접은",
+   "folded knit sweater"
+  ]
+ },
+ {
+  "slot": "cat-coat",
+  "screens": [
+   "order-items"
+  ],
+  "what": "옷걸이에 걸린 울 코트",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "울 코트 옷걸이",
+   "wool coat on hanger"
+  ]
+ },
+ {
+  "slot": "cat-blanket",
+  "screens": [
+   "order-items"
+  ],
+  "what": "개어 쌓은 흰 이불",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "이불 개어 쌓은",
+   "folded white duvet stack"
+  ]
+ },
+ {
+  "slot": "cat-sneakers",
+  "screens": [
+   "order-items"
+  ],
+  "what": "흰 운동화 한 켤레",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "흰 운동화",
+   "white sneakers pair"
+  ]
+ },
+ {
+  "slot": "cat-etc",
+  "screens": [
+   "order-items"
+  ],
+  "what": "넥타이·스카프·모자 같은 작은 잡화 모음",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "넥타이 스카프 모음",
+   "ties scarves accessories flat lay"
+  ]
+ },
+ {
+  "slot": "pickup-door",
+  "screens": [
+   "order-detail",
+   "home",
+   "claim-done"
+  ],
+  "what": "현관문 앞에 놓인 세탁물 가방(수거 때 기사가 찍은 사진)",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "현관 앞 세탁물 가방",
+   "laundry bag at front door"
+  ]
+ },
+ {
+  "slot": "inspect-shirts",
+  "screens": [
+   "order-detail",
+   "claim",
+   "claim-done"
+  ],
+  "what": "작업대 위에 펼쳐 놓은 와이셔츠 여러 장(세탁소 검수 사진)",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "세탁소 와이셔츠 검수",
+   "dress shirts laid out laundry shop"
+  ]
+ },
+ {
+  "slot": "inspect-blanket",
+  "screens": [
+   "inspect"
+  ],
+  "what": "세탁소 작업대 위의 큰 이불",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "세탁소 이불",
+   "duvet on laundry table"
+  ]
+ },
+ {
+  "slot": "inspect-sneakers",
+  "screens": [
+   "inspect"
+  ],
+  "what": "흙과 얼룩이 많은 더러운 운동화",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "더러운 운동화",
+   "dirty sneakers close up"
+  ]
+ },
+ {
+  "slot": "inspect-stain",
+  "screens": [
+   "inspect",
+   "home-approve"
+  ],
+  "what": "흰 셔츠 옷깃·소매의 얼룩 클로즈업",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "흰 셔츠 얼룩",
+   "stain on white shirt collar close up"
+  ]
+ },
+ {
+  "slot": "inspect-shirt-ok",
+  "screens": [
+   "inspect"
+  ],
+  "what": "깨끗하게 다림질된 흰 셔츠(교복 셔츠 느낌)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "교복 셔츠",
+   "white school uniform shirt"
+  ]
+ },
+ {
+  "slot": "inspect-pants",
+  "screens": [
+   "inspect"
+  ],
+  "what": "아이용 교복 바지 또는 남색 바지",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "교복 바지",
+   "navy school trousers"
+  ]
+ },
+ {
+  "slot": "inspect-knit",
+  "screens": [
+   "inspect"
+  ],
+  "what": "아이 니트 스웨터",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "아이 니트",
+   "kids knit sweater"
+  ]
+ },
+ {
+  "slot": "door-delivered",
+  "screens": [
+   "delivered",
+   "history"
+  ],
+  "what": "현관문 손잡이에 걸린 비닐 포장된 와이셔츠들(배송 완료 사진)",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "세탁 비닐 포장 셔츠 문 앞",
+   "dry cleaning plastic bag hanging door"
+  ]
+ },
+ {
+  "slot": "claim-lace",
+  "screens": [
+   "claim",
+   "claim-done"
+  ],
+  "what": "흰 와이셔츠 소매 단추가 떨어져 실만 남은 클로즈업",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "셔츠 단추 떨어진 소매",
+   "shirt cuff missing button close up"
+  ]
+ }
+]

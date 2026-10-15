@@ -1,0 +1,532 @@
+{
+ "mode": "spec",
+ "items": [
+  {
+   "id": "S1",
+   "kind": "screen",
+   "name": "스플래시 / 첫 실행 안내",
+   "quote": "S01. 스플래시 / 첫 실행 안내",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "screen",
+   "name": "로그인 / 가입 방법 선택",
+   "quote": "S02. 로그인 / 가입 방법 선택",
+   "covered_by": [
+    "login"
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "screen",
+   "name": "전화번호 인증",
+   "quote": "S03. 전화번호 인증",
+   "covered_by": [
+    "phone-verify"
+   ]
+  },
+  {
+   "id": "S4",
+   "kind": "screen",
+   "name": "약관 동의 + 기본 정보",
+   "quote": "S04. 약관 동의 + 기본 정보",
+   "covered_by": [
+    "signup-terms"
+   ]
+  },
+  {
+   "id": "S5",
+   "kind": "screen",
+   "name": "동네 설정",
+   "quote": "S05. 동네 설정",
+   "covered_by": [
+    "neighborhood"
+   ]
+  },
+  {
+   "id": "S6",
+   "kind": "screen",
+   "name": "홈",
+   "quote": "S06. 홈",
+   "covered_by": [
+    "home",
+    "home-new"
+   ]
+  },
+  {
+   "id": "S7",
+   "kind": "screen",
+   "name": "스튜디오 찾기",
+   "quote": "S07. 스튜디오 찾기 (지도 / 목록)",
+   "covered_by": [
+    "find",
+    "find-map"
+   ]
+  },
+  {
+   "id": "S8",
+   "kind": "screen",
+   "name": "스튜디오 상세",
+   "quote": "S08. 스튜디오 상세",
+   "covered_by": [
+    "studio"
+   ]
+  },
+  {
+   "id": "S9",
+   "kind": "screen",
+   "name": "강사 상세",
+   "quote": "S09. 강사 상세",
+   "covered_by": [
+    "instructor"
+   ]
+  },
+  {
+   "id": "S10",
+   "kind": "screen",
+   "name": "수업 시간표",
+   "quote": "S10. 수업 시간표 (주간)",
+   "covered_by": [
+    "schedule"
+   ]
+  },
+  {
+   "id": "S11",
+   "kind": "screen",
+   "name": "수업 상세",
+   "quote": "S11. 수업 상세",
+   "covered_by": [
+    "class"
+   ]
+  },
+  {
+   "id": "S12",
+   "kind": "screen",
+   "name": "수강권 선택",
+   "quote": "S12. 수강권 선택",
+   "covered_by": [
+    "tickets-buy"
+   ]
+  },
+  {
+   "id": "S13",
+   "kind": "screen",
+   "name": "결제 / 결제 완료",
+   "quote": "S13. 결제 / 결제 완료",
+   "covered_by": [
+    "checkout",
+    "checkout-done"
+   ]
+  },
+  {
+   "id": "S14",
+   "kind": "screen",
+   "name": "예약 확인 / 예약 완료",
+   "quote": "S14. 예약 확인 / 예약 완료",
+   "covered_by": [
+    "booking-confirm",
+    "booking-done"
+   ]
+  },
+  {
+   "id": "S15",
+   "kind": "screen",
+   "name": "대기 신청",
+   "quote": "S15. 대기 신청",
+   "covered_by": [
+    "waitlist-apply"
+   ]
+  },
+  {
+   "id": "S16",
+   "kind": "screen",
+   "name": "대기 승급 확정",
+   "quote": "S16. 대기 승급 확정",
+   "covered_by": [
+    "promotion"
+   ]
+  },
+  {
+   "id": "S17",
+   "kind": "screen",
+   "name": "예약 취소",
+   "quote": "S17. 예약 취소",
+   "covered_by": [
+    "cancel",
+    "cancel-done"
+   ]
+  },
+  {
+   "id": "S18",
+   "kind": "screen",
+   "name": "내 예약 목록",
+   "quote": "S18. 내 예약 목록",
+   "covered_by": [
+    "my-bookings",
+    "my-bookings-past"
+   ]
+  },
+  {
+   "id": "S19",
+   "kind": "screen",
+   "name": "출석 체크",
+   "quote": "S19. 출석 체크",
+   "covered_by": [
+    "checkin",
+    "checkin-done"
+   ]
+  },
+  {
+   "id": "S20",
+   "kind": "screen",
+   "name": "수강권 관리",
+   "quote": "S20. 수강권 관리",
+   "covered_by": [
+    "tickets",
+    "ticket-detail"
+   ]
+  },
+  {
+   "id": "S21",
+   "kind": "screen",
+   "name": "수강권 일시정지",
+   "quote": "S21. 수강권 일시정지",
+   "covered_by": [
+    "pause",
+    "pause-done"
+   ]
+  },
+  {
+   "id": "S22",
+   "kind": "screen",
+   "name": "리뷰 작성 / 리뷰 목록",
+   "quote": "S22. 리뷰 작성 / 리뷰 목록",
+   "covered_by": [
+    "review-write",
+    "reviews"
+   ]
+  },
+  {
+   "id": "S23",
+   "kind": "screen",
+   "name": "알림함",
+   "quote": "S23. 알림함",
+   "covered_by": [
+    "notifications"
+   ]
+  },
+  {
+   "id": "S24",
+   "kind": "screen",
+   "name": "마이페이지",
+   "quote": "S24. 마이페이지",
+   "covered_by": [
+    "my"
+   ]
+  },
+  {
+   "id": "S25",
+   "kind": "screen",
+   "name": "설정",
+   "quote": "S25. 설정",
+   "covered_by": [
+    "settings"
+   ]
+  },
+  {
+   "id": "P1",
+   "kind": "step",
+   "name": "첫 실행 소개 1/3 — 동네 스튜디오 한 번에",
+   "quote": "\"동네 스튜디오 한 번에\"",
+   "screen_hint": "S1",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "P2",
+   "kind": "step",
+   "name": "첫 실행 소개 2/3 — 남은 횟수 바로 확인",
+   "quote": "\"남은 횟수 바로 확인\"",
+   "screen_hint": "S1",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "P3",
+   "kind": "step",
+   "name": "첫 실행 소개 3/3 — 자리 나면 자동 알림",
+   "quote": "\"자리 나면 자동 알림\"",
+   "screen_hint": "S1",
+   "covered_by": [
+    "onboarding"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "무료 취소: 수업 24시간 전까지 횟수 복원",
+   "quote": "**R1. 무료 취소**: 수업 시작 **24시간 전까지** 취소 시 횟수 복원.",
+   "screen_hint": "S17",
+   "state_hint": "policy",
+   "policy": "cancel"
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "늦은 취소: 24시간 이내 1회 차감",
+   "quote": "**R2. 늦은 취소**: 시작 24시간 이내~시작 전 취소 시 **1회 차감**.",
+   "screen_hint": "S17",
+   "state_hint": "confirm",
+   "policy": "cancel"
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "노쇼: 미출석 시 1회 차감 + 노쇼 누적",
+   "quote": "**R3. 노쇼**: 예약 후 미출석 시 **1회 차감** + 노쇼 1회 누적.",
+   "screen_hint": "S18",
+   "state_hint": "done",
+   "policy": "my-bookings-past"
+  },
+  {
+   "id": "R4",
+   "kind": "rule",
+   "name": "예약 제한: 노쇼 3회 시 7일간 예약·대기 불가",
+   "quote": "**R4. 예약 제한**: 최근 30일 노쇼 **3회 누적 시 7일간 신규 예약·대기 불가**",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking-confirm",
+   "state": "error"
+  },
+  {
+   "id": "R5",
+   "kind": "rule",
+   "name": "대기 정원 초과: 수업당 최대 5명",
+   "quote": "**R5. 대기 정원**: 정원 초과 시 대기 가능, 수업당 **최대 5명**.",
+   "screen_hint": "S15",
+   "state_hint": "error",
+   "policy": "waitlist-apply"
+  },
+  {
+   "id": "R6",
+   "kind": "rule",
+   "name": "대기 승급 2시간 내 미확정 시 자동 포기",
+   "quote": "**R6. 대기 승급**: 자리가 나면 1순번에 승급 알림.",
+   "screen_hint": "S16",
+   "state_hint": "error",
+   "policy": "promotion"
+  },
+  {
+   "id": "R7",
+   "kind": "rule",
+   "name": "잔여 0이면 예약·승급 확정 불가",
+   "quote": "**R7. 잔여 0**: 가용 잔여(예약분 제외)가 **0이면 예약·승급 확정 불가**.",
+   "screen_hint": "S14",
+   "state_hint": "error",
+   "target": "booking-confirm",
+   "state": "error"
+  },
+  {
+   "id": "R8",
+   "kind": "rule",
+   "name": "만료일 지난 수강권 사용 불가",
+   "quote": "**R8. 만료**: **만료일 지난 수강권 사용 불가**.",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "target": "class",
+   "state": "error"
+  },
+  {
+   "id": "R9",
+   "kind": "rule",
+   "name": "일시정지 한도: 최대 2회 합산 30일",
+   "quote": "**R9. 일시정지**: 수강권당 **최대 2회, 합산 최대 30일**, 1회 최소 3일.",
+   "screen_hint": "S21",
+   "state_hint": "error",
+   "target": "pause",
+   "state": "error"
+  },
+  {
+   "id": "R10",
+   "kind": "rule",
+   "name": "시간 겹치는 수업 중복 예약 불가",
+   "quote": "**R10. 중복 예약 금지**: 1분이라도 **시간이 겹치는 수업은 스튜디오가 달라도 중복 예약 불가**.",
+   "screen_hint": "S11",
+   "state_hint": "error",
+   "target": "class",
+   "state": "error"
+  },
+  {
+   "id": "R11",
+   "kind": "rule",
+   "name": "결제 실패: 수강권 미발급, 사유 안내 + 재시도",
+   "quote": "**R11. 결제 실패**: 실패 시 수강권 미발급",
+   "screen_hint": "S13",
+   "state_hint": "error",
+   "target": "checkout",
+   "state": "error"
+  },
+  {
+   "id": "R12",
+   "kind": "rule",
+   "name": "같은 상품 1분 내 재결제 시 확인",
+   "quote": "같은 상품 1분 내 재결제 시 확인.",
+   "screen_hint": "S13",
+   "state_hint": "confirm",
+   "target": "checkout",
+   "state": "confirm"
+  },
+  {
+   "id": "R13",
+   "kind": "rule",
+   "name": "휴무일: 시간표에 휴무 표시",
+   "quote": "**R12. 휴무일**: 정기·임시 휴무일에는 수업이 없고 시간표에 \"휴무\" 표시.",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "schedule"
+  },
+  {
+   "id": "R14",
+   "kind": "rule",
+   "name": "휴강: 예약자 자동 취소 + 횟수 복원 + 알림",
+   "quote": "**R13. 휴강**: 휴강 시 예약자 자동 취소 + 횟수 복원 + 알림",
+   "screen_hint": "S11",
+   "state_hint": "done",
+   "policy": "class"
+  },
+  {
+   "id": "R15",
+   "kind": "rule",
+   "name": "예약 오픈: 시작 14일 전부터",
+   "quote": "**R14. 예약 오픈/마감**: 수업 시작 14일 전부터 시작 시각까지 예약 가능.",
+   "screen_hint": "S10",
+   "state_hint": "policy",
+   "policy": "schedule"
+  },
+  {
+   "id": "R16",
+   "kind": "rule",
+   "name": "출석 시간: 시작 30분 전~15분 후",
+   "quote": "**R15. 출석 시간**: 시작 30분 전~시작 후 15분까지 앱 출석.",
+   "screen_hint": "S19",
+   "state_hint": "error",
+   "target": "checkin",
+   "state": "error"
+  },
+  {
+   "id": "R17",
+   "kind": "rule",
+   "name": "다른 스튜디오 QR이면 에러",
+   "quote": "다른 스튜디오 QR이면 에러.",
+   "screen_hint": "S19",
+   "state_hint": "error",
+   "target": "checkin",
+   "state": "error"
+  },
+  {
+   "id": "R18",
+   "kind": "rule",
+   "name": "인증번호 5회 오입력 시 10분 제한",
+   "quote": "5회 오입력 시 10분 제한.",
+   "screen_hint": "S3",
+   "state_hint": "error",
+   "target": "phone-verify",
+   "state": "error"
+  },
+  {
+   "id": "R19",
+   "kind": "rule",
+   "name": "같은 전화번호 다른 방식 가입 이력 안내",
+   "quote": "같은 전화번호로 다른 방식 가입 이력 있으면 \"이미 ○○로 가입된 번호\" 안내.",
+   "screen_hint": "S2",
+   "state_hint": "error",
+   "target": "login",
+   "state": "error"
+  },
+  {
+   "id": "R20",
+   "kind": "rule",
+   "name": "탈퇴 시 잔여 수강권 소멸 경고 + 재확인",
+   "quote": "탈퇴 시 잔여 수강권 있으면 \"소멸됩니다, 환불은 스튜디오에 먼저 문의\" 경고 + 재확인",
+   "screen_hint": "S25",
+   "state_hint": "confirm",
+   "target": "settings",
+   "state": "confirm"
+  }
+ ],
+ "objects": [
+  {
+   "id": "O1",
+   "name": "예약",
+   "quote": "F8 | 수업 예약 | 보유 수강권으로 예약, 예약 전 규정 확인",
+   "create": "class",
+   "view": "my-bookings",
+   "edit": "cancel",
+   "after": [
+    "booking-done",
+    "cancel-done"
+   ]
+  },
+  {
+   "id": "O2",
+   "name": "대기",
+   "quote": "F9 | 대기 신청 | 마감 수업 대기, 순번 확인, 자동 승급",
+   "create": "waitlist-apply",
+   "view": "my-bookings",
+   "edit": "promotion",
+   "after": [
+    "waitlist-apply--done",
+    "promotion--done"
+   ]
+  },
+  {
+   "id": "O3",
+   "name": "수강권",
+   "quote": "F7 | 수강권 구매 | 횟수권/기간권 선택, 결제",
+   "create": "tickets-buy",
+   "view": "tickets",
+   "edit": "ticket-detail",
+   "after": [
+    "checkout-done"
+   ]
+  },
+  {
+   "id": "O4",
+   "name": "일시정지",
+   "quote": "F13 | 수강권 관리 | 잔여·만료·사용 내역, 일시정지",
+   "create": "pause",
+   "view": "ticket-detail",
+   "edit": "ticket-detail",
+   "after": [
+    "pause-done"
+   ]
+  },
+  {
+   "id": "O5",
+   "name": "리뷰",
+   "quote": "F14 | 리뷰 | 출석한 수업에 별점+텍스트",
+   "create": "review-write",
+   "view": "reviews",
+   "edit": "my",
+   "after": [
+    "review-done"
+   ]
+  },
+  {
+   "id": "O6",
+   "name": "즐겨찾기",
+   "quote": "F17 | 즐겨찾기 | 관심 스튜디오 저장",
+   "create": "studio",
+   "view": "my",
+   "edit": "my",
+   "after": [
+    "studio--done"
+   ]
+  }
+ ]
+}

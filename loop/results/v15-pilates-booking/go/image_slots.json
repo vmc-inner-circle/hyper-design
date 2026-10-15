@@ -1,0 +1,176 @@
+[
+ {
+  "slot": "splash-hero",
+  "screens": [
+   "splash",
+   "login"
+  ],
+  "what": "리포머 위에서 스트레칭하는 여성, 밝은 자연광 실내",
+  "ratio": "3:4",
+  "kind": "photo",
+  "queries": [
+   "필라테스 리포머 여성 운동",
+   "woman pilates reformer bright studio"
+  ]
+ },
+ {
+  "slot": "studio-soom",
+  "screens": [
+   "studio",
+   "find-list",
+   "find-map",
+   "home-new",
+   "schedule",
+   "class"
+  ],
+  "what": "리포머 기구가 줄지어 있는 밝은 소규모 필라테스 스튜디오(사람 없음)",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "필라테스 리포머 스튜디오 내부",
+   "pilates reformer studio interior empty"
+  ]
+ },
+ {
+  "slot": "studio-soom-2",
+  "screens": [
+   "studio"
+  ],
+  "what": "캐딜락·체어 기구가 있는 필라테스 룸",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "필라테스 캐딜락 기구",
+   "pilates cadillac chair equipment room"
+  ]
+ },
+ {
+  "slot": "studio-soom-3",
+  "screens": [
+   "studio"
+  ],
+  "what": "깔끔한 탈의실·락커",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "피트니스 탈의실 락커",
+   "clean gym locker room"
+  ]
+ },
+ {
+  "slot": "studio-barun",
+  "screens": [
+   "find-list",
+   "home-jeongho",
+   "attend"
+  ],
+  "what": "매트와 소도구(볼·링)가 놓인 밝은 매트 필라테스 룸",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "매트 필라테스 소도구 스튜디오",
+   "mat pilates studio props ball ring"
+  ]
+ },
+ {
+  "slot": "studio-on",
+  "screens": [
+   "find-list",
+   "home-new"
+  ],
+  "what": "나무 바닥의 기구 필라테스 스튜디오, 창가",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "필라테스 스튜디오 창가 기구",
+   "pilates studio wood floor window reformer"
+  ]
+ },
+ {
+  "slot": "studio-yoga",
+  "screens": [
+   "find-list",
+   "home-new",
+   "passes"
+  ],
+  "what": "요가 매트가 깔린 따뜻한 조명의 요가 스튜디오",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "요가 스튜디오 매트",
+   "yoga studio mats warm light"
+  ]
+ },
+ {
+  "slot": "inst-soyoung",
+  "screens": [
+   "studio",
+   "class-booked"
+  ],
+  "what": "30대 여성 필라테스 강사 상반신 미소, 운동복",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "필라테스 강사 여성 프로필",
+   "female pilates instructor portrait"
+  ]
+ },
+ {
+  "slot": "inst-daeun",
+  "screens": [
+   "studio",
+   "instructor",
+   "class",
+   "booking-confirm"
+  ],
+  "what": "20~30대 여성 필라테스 강사 상반신, 스튜디오 배경",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "요가 강사 여성 프로필 사진",
+   "young female yoga pilates instructor portrait studio"
+  ]
+ },
+ {
+  "slot": "inst-jaehee",
+  "screens": [
+   "studio"
+  ],
+  "what": "20대 강사 상반신, 스튜디오 배경(다른 사람)",
+  "ratio": "1:1",
+  "kind": "photo",
+  "queries": [
+   "필라테스 강사 프로필",
+   "pilates trainer portrait smiling"
+  ]
+ },
+ {
+  "slot": "class-intro",
+  "screens": [
+   "class",
+   "booking-done",
+   "checkout-done"
+  ],
+  "what": "강사가 리포머 위 수강생 자세를 잡아 주는 장면",
+  "ratio": "16:9",
+  "kind": "photo",
+  "queries": [
+   "필라테스 강사 자세 교정 리포머",
+   "pilates instructor correcting posture reformer"
+  ]
+ },
+ {
+  "slot": "class-mat",
+  "screens": [
+   "home-jeongho",
+   "attend-done"
+  ],
+  "what": "중장년이 매트 위에서 소도구로 스트레칭하는 그룹 수업",
+  "ratio": "4:3",
+  "kind": "photo",
+  "queries": [
+   "시니어 필라테스 매트 수업",
+   "senior mat pilates class small ball"
+  ]
+ }
+]

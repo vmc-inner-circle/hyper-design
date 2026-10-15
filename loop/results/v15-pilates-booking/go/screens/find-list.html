@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>스튜디오 찾기 · 목록</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">망원1동 · 현재 위치 기준</p>
+    <h1 class="title">동네 스튜디오 찾기</h1>
+    <div class="seg" role="radiogroup" aria-label="보기 방식">
+      <a class="seg-item is-selected" href="find-list.html" role="radio" aria-checked="true">목록</a>
+      <a class="seg-item" href="find-map.html" role="radio" aria-checked="false">지도</a>
+    </div>
+  </header>
+  <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg><input type="search" placeholder="스튜디오 이름으로 찾기" aria-label="스튜디오 이름으로 찾기"></label>
+  <div class="chips" aria-label="걸러 보기">
+    <button class="chip" type="button">기구 필라테스</button>
+    <button class="chip" type="button">매트</button>
+    <button class="chip" type="button">요가</button>
+    <button class="chip is-selected" type="button" aria-pressed="true">1km 이내</button>
+    <button class="chip" type="button">시간대</button>
+    <button class="chip" type="button">체험 가능</button>
+  </div>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">1km 안 4곳</h2><button class="block-link" type="button">거리순<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button></div>
+    <a class="row" href="studio.html"><span class="thumb is-l"><img src="../assets/photos/studio-soom.jpg" alt="숨 필라테스 망원점 리포머 스튜디오"></span>
+      <div class="row-main"><p class="row-title">숨 필라테스 망원점</p><p class="row-sub">기구 필라테스 · 350m · 별점 4.8 (126)</p><p class="row-sub">1회 29,000원~ · 체험 가능</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="studio.html"><span class="thumb is-l"><img src="../assets/photos/studio-barun.jpg" alt="바른몸 소도구 필라테스 매트 공간"></span>
+      <div class="row-main"><p class="row-title">바른몸 소도구 필라테스</p><p class="row-sub">매트 필라테스 · 600m · 별점 4.9 (41)</p><p class="row-sub">1회 22,000원~</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="studio.html"><span class="thumb is-l"><img src="../assets/photos/studio-on.jpg" alt="필라테스 온 망원 기구 공간"></span>
+      <div class="row-main"><p class="row-title">필라테스 온 망원</p><p class="row-sub">기구 필라테스 · 750m · 별점 4.5 (19)</p><p class="row-sub">1회 25,000원~ · 체험 가능</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="studio.html"><span class="thumb is-l"><img src="../assets/photos/studio-yoga.jpg" alt="오늘요가 합정 요가실"></span>
+      <div class="row-main"><p class="row-title">오늘요가 합정</p><p class="row-sub">요가 · 900m · 별점 4.6 (58)</p><p class="row-sub">1회 18,000원~</p></div>
+      <span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+</main>
+<nav class="tabbar">
+  <a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>홈</a>
+  <a class="tab" href="find-list.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5"/></svg>찾기</a>
+  <a class="tab" href="my-bookings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>내 예약</a>
+  <a class="tab" href="mypage.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>마이</a>
+</nav>
+</body></html>

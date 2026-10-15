@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>별 충전 · 보낸 뒤</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.big { font-size: calc(var(--fs-title) * 2); font-weight: var(--fw-title); line-height: var(--lh-title); color: var(--c-text-1); }
+.big small { font-size: var(--fs-sub); font-weight: var(--fw-sub); color: var(--c-text-2); margin-left: var(--stack-s); }
+.plus { color: var(--c-brand-text); font-weight: var(--fw-strong); }
+.minus { color: var(--c-text-2); font-weight: var(--fw-strong); }
+</style>
+</head>
+<body class="has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="report.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">별 충전</h1><span></span></header>
+<main class="page">
+  <p class="done">별 100개를 충전했어요</p>
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span>이제 엄마 신년운세를 살 수 있어요</span></p>
+  <section class="block">
+    <p class="block-note">지금 가진 별</p>
+    <p class="big">111개</p>
+  </section>
+  <section class="block is-list" role="radiogroup" aria-label="충전할 별">
+    <div class="block-head"><h2 class="h2">충전할 별</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">별 30개</p><p class="row-sub">3,300원</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="별 30개"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">별 100개</p><p class="row-sub">9,900원</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="true" aria-label="별 100개"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">별 300개</p><p class="row-sub">27,000원</p></div><span class="row-trail"><button class="check" role="radio" aria-checked="false" aria-label="별 300개"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button></span></div>
+    <p class="block-note">결제 수단 · 앱 내 결제(App Store)</p>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">사용 내역</h2></div>
+    <div class="row"><span class="row-date">10/7</span><div class="row-main"><p class="row-title">충전 100개</p></div><span class="row-trail"><span class="plus">+100</span></span></div>
+    <div class="row"><span class="row-date">10/6</span><div class="row-main"><p class="row-title">AI 질문</p></div><span class="row-trail"><span class="minus">−5</span></span></div>
+    <div class="row"><span class="row-date">10/5</span><div class="row-main"><p class="row-title">AI 질문</p></div><span class="row-trail"><span class="minus">−5</span></span></div>
+    <div class="row"><span class="row-date">10/3</span><div class="row-main"><p class="row-title">신년운세 리포트 · 한소윤</p></div><span class="row-trail"><span class="minus">−99</span></span></div>
+    <div class="row"><span class="row-date">10/3</span><div class="row-main"><p class="row-title">충전 100개</p></div><span class="row-trail"><span class="plus">+100</span></span></div>
+    <div class="row"><span class="row-date">9/24</span><div class="row-main"><p class="row-title">AI 질문</p></div><span class="row-trail"><span class="minus">−5</span></span></div>
+    <div class="row"><span class="row-date">9/20</span><div class="row-main"><p class="row-title">충전 30개</p></div><span class="row-trail"><span class="plus">+30</span></span></div>
+  </section>
+</main>
+<div class="cta"><a class="btn primary full" href="report.html">엄마 신년운세 구매 이어서 하기</a></div>
+</body></html>

@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>생년월일 입력 1/2</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta">
+<header class="appbar"><a class="appbar-btn" href="start.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">내 정보 1/2</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemax="2" aria-label="2단계 중 1단계"><span class="is-on"></span><span></span></div>
+  <div class="field"><label class="label" for="name">이름</label><input class="input" id="name" value="한소윤"></div>
+  <div class="field"><span class="label">성별</span>
+    <div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">여</button><button class="seg-item" role="radio" aria-checked="false">남</button></div>
+  </div>
+  <div class="field"><label class="label" for="birth">생년월일</label><input class="input" id="birth" value="1999년 3월 21일"></div>
+  <div class="field"><span class="label">달력</span>
+    <div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">양력</button><button class="seg-item" role="radio" aria-checked="false">음력</button></div>
+  </div>
+</main>
+<div class="cta"><a class="btn primary full" href="birth-2.html">다음</a></div>
+</body></html>

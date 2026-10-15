@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>설정 · 확인</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="">
+<header class="appbar"><a class="appbar-btn" href="my.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">설정</h1><span></span></header>
+<main class="page">
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">알림</h2></div>
+    <div class="row"><div class="row-main"><p class="row-title">전체 알림</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="전체 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">예약·대기</p><p class="row-sub">예약 확정·취소, 대기 신청</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="예약·대기 알림"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">대기 승급</p><p class="row-sub">대기 중이면 항상 받아요</p></div></div>
+    <div class="row"><div class="row-main"><p class="row-title">수업 리마인드</p><p class="row-sub">전날 21:00 · 당일 2시간 전</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="true" aria-label="수업 리마인드"></button></span></div>
+    <div class="row"><div class="row-main"><p class="row-title">마케팅</p><p class="row-sub">이벤트·혜택</p></div><span class="row-trail"><button class="switch" role="switch" aria-checked="false" aria-label="마케팅 알림"></button></span></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">위치 권한</h2></div>
+    <div class="row"><span class="row-art"><img src="../assets/fluent/pin.svg" alt=""></span><div class="row-main"><p class="row-title">허용 안 함</p><p class="row-sub">동네는 동 이름으로 정해 두었어요</p></div><span class="row-trail"><a class="btn small secondary" href="app-settings:">설정 열기</a></span></div>
+  </section>
+  <section class="block is-list">
+    <div class="block-head"><h2 class="h2">계정</h2></div>
+    <div class="row"><span class="avatar is-text">카</span><div class="row-main"><p class="row-title">카카오로 로그인 중</p></div></div>
+    <a class="btn secondary full" href="login.html">로그아웃</a>
+  </section>
+  <section class="block is-list">
+    <a class="row" href="https://help.example.kr/terms"><div class="row-main"><p class="row-title">이용약관</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="https://help.example.kr/privacy"><div class="row-main"><p class="row-title">개인정보 처리방침</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="https://help.example.kr/licenses"><div class="row-main"><p class="row-title">오픈소스 라이선스</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <div class="row"><div class="row-main"><p class="row-title">앱 버전</p><p class="row-sub">최신 버전이에요</p></div></div>
+    <a class="row" href="settings--confirm.html"><div class="row-main"><p class="row-title">회원 탈퇴</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+</main>
+<div class="dim"></div>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="leave">
+  <h2 class="h2" id="leave">탈퇴하기 전에 확인해 주세요</h2>
+  <div class="row"><span class="row-art"><img src="../assets/fluent/ticket.svg" alt=""></span><div class="row-main"><p class="row-title">숨필라테스 20회권 잔여 7회가 사라져요</p><p class="row-sub">환불은 탈퇴 전에 스튜디오에 먼저 문의해 주세요</p></div></div>
+  <div class="row"><span class="row-art"><img src="../assets/fluent/calendar.svg" alt=""></span><div class="row-main"><p class="row-title">예정된 예약 4개가 자동 취소돼요</p><p class="row-sub">10월 6일 · 8일 · 10일 · 13일</p></div></div>
+  <div class="row"><div class="row-main"><p class="row-title">위 내용을 확인했어요</p></div><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="탈퇴 내용 확인"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div>
+  <a class="btn secondary full" href="login.html">탈퇴하기</a>
+  <a class="btn primary full" href="settings.html">취소</a>
+</div>
+</body></html>

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>내 예약 · 지난 수업</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="has-tab">
+<main class="page">
+  <header class="hero">
+    <h1 class="title">내 예약</h1>
+    <nav class="seg" aria-label="예약 구분"><a class="seg-item" href="my-bookings.html">예정</a><a class="seg-item" href="my-bookings-waiting.html">대기 중</a><a class="seg-item is-selected" href="my-bookings-past.html" aria-current="page">지난 수업</a></nav>
+  </header>
+  <section class="block is-list">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" placeholder="수업·강사 이름으로 찾기" aria-label="지난 수업 찾기"></label>
+    <div class="chips">
+      <button class="chip is-selected">전체</button><button class="chip">출석</button><button class="chip">취소</button><button class="chip">노쇼</button>
+    </div>
+    <div class="block-head"><h2 class="h2">최근 3개월</h2></div>
+    <div class="row"><span class="row-date">10/9<br>금</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">숨 필라테스 망원점 · 한소영</p></div><span class="row-trail"><a class="btn small tint" href="review-write.html">리뷰 작성 · 10/23까지</a></span></div>
+    <a class="row" href="class.html"><span class="row-date">10/6<br>화</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">숨 필라테스 망원점 · 한소영</p></div><span class="row-trail"><span class="btn small is-done" aria-disabled="true">리뷰 완료</span></span></a>
+    <a class="row" href="class.html"><span class="row-date">10/2<br>금</span><div class="row-main"><p class="row-title">20:00 리포머 기초</p><p class="row-sub">숨 필라테스 망원점 · 정다은</p></div><span class="row-trail">무료 취소</span></a>
+    <a class="row" href="class.html"><span class="row-date">9/29<br>화</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">숨 필라테스 망원점 · 한소영</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row" href="class.html"><span class="row-date">9/25<br>금</span><div class="row-main"><span class="badge is-danger">노쇼</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">숨 필라테스 망원점 · 한소영</p></div><span class="row-trail">1회 차감</span></a>
+    <a class="row" href="class.html"><span class="row-date">9/22<br>화</span><div class="row-main"><p class="row-title">20:00 요가 플로우</p><p class="row-sub">오늘요가 합정 · 김나래</p></div><span class="row-trail">휴강 · 횟수 돌려받음</span></a>
+    <button class="btn secondary">더 보기</button>
+  </section>
+  <section class="block">
+    <p class="info"><img src="../assets/fluent/clipboard.svg" alt=""><span>노쇼는 수업이 끝나고 스튜디오가 확정해요. 확정이 없으면 6시간 뒤 자동으로 정해져요</span></p>
+  </section>
+</main>
+<nav class="tabbar">
+  <a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1z"/></svg>홈</a>
+  <a class="tab" href="find-list.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>찾기</a>
+  <a class="tab" href="my-bookings.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>내 예약</a>
+  <a class="tab" href="mypage.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"/><path d="M5 20c1.2-3.5 4-5 7-5s5.8 1.5 7 5"/></svg>마이</a>
+</nav>
+</body></html>

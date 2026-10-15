@@ -1,0 +1,359 @@
+{
+ "mode": "spec",
+ "items": [
+  {
+   "id": "S1",
+   "kind": "screen",
+   "name": "휴대폰 번호 인증 가입",
+   "quote": "F-01 휴대폰 번호 인증 가입.",
+   "covered_by": [
+    "signup"
+   ]
+  },
+  {
+   "id": "S2",
+   "kind": "screen",
+   "name": "주소 등록",
+   "quote": "F-02 주소 등록: 도로명 + 상세 주소 + 출입 방법(공동현관 비밀번호, 경비실 맡김 등).",
+   "covered_by": [
+    "address"
+   ]
+  },
+  {
+   "id": "S3",
+   "kind": "screen",
+   "name": "서비스 지역 밖 오픈 알림",
+   "quote": "F-03 서비스 지역 밖이면 \"오픈 알림 받기\"로 연락처만 받는다",
+   "covered_by": [
+    "area-out"
+   ]
+  },
+  {
+   "id": "S4",
+   "kind": "screen",
+   "name": "카드 등록",
+   "quote": "F-20 카드 등록 후 **검수 확정 시 자동 결제**.",
+   "covered_by": [
+    "card-add"
+   ]
+  },
+  {
+   "id": "S5",
+   "kind": "screen",
+   "name": "진행 확인",
+   "quote": "F-30 단계: 신청 → 수거 완료 → 검수 → 세탁 중 → 배송 중 → 배송 완료",
+   "covered_by": [
+    "order-detail"
+   ]
+  },
+  {
+   "id": "S6",
+   "kind": "screen",
+   "name": "검수 결과 품목별 조정",
+   "quote": "F-32 검수 결과 품목별 조정: \"얼룩 제거 불가 — 진행 / 이 품목 빼고 돌려받기\" 선택",
+   "covered_by": [
+    "inspect"
+   ]
+  },
+  {
+   "id": "S7",
+   "kind": "screen",
+   "name": "추가 금액 승인",
+   "quote": "F-21 검수 금액이 예상 금액보다 20% 이상 많으면 자동 결제 전에 이용자 승인 필요",
+   "covered_by": [
+    "inspect",
+    "home-approve"
+   ]
+  },
+  {
+   "id": "S8",
+   "kind": "screen",
+   "name": "이용 내역",
+   "quote": "F-40 이용 내역: 주문별 품목·금액·사진·영수증",
+   "covered_by": [
+    "history"
+   ]
+  },
+  {
+   "id": "S9",
+   "kind": "screen",
+   "name": "주문별 1:1 문의",
+   "quote": "F-50 주문별 1:1 문의 (채팅형).",
+   "covered_by": [
+    "chat"
+   ]
+  },
+  {
+   "id": "S10",
+   "kind": "screen",
+   "name": "손상·분실 신고",
+   "quote": "F-51 손상·분실 신고: 배송 후 48시간 이내, 사진 첨부.",
+   "covered_by": [
+    "claim"
+   ]
+  },
+  {
+   "id": "P1",
+   "kind": "step",
+   "name": "수거 신청 1/5 — 품목·수량 선택",
+   "quote": "F-10 품목 선택: 카테고리(셔츠·바지·니트·코트·이불·운동화·기타)별 기본 가격 표시",
+   "covered_by": [
+    "order-items"
+   ]
+  },
+  {
+   "id": "P2",
+   "kind": "step",
+   "name": "수거 신청 2/5 — 요청 사항",
+   "quote": "F-12 요청 사항: 얼룩 위치·종류, 다림질 여부, 향 없는 세제 등 (자유 입력 + 자주 쓰는 칩)",
+   "covered_by": [
+    "order-request"
+   ]
+  },
+  {
+   "id": "P3",
+   "kind": "step",
+   "name": "수거 신청 3/5 — 수거 시간대",
+   "quote": "F-13 수거 시간대: 오늘 밤 22~24시 / 내일 아침 6~8시 등 **2시간 단위**, 마감된 시간대는 비활성",
+   "covered_by": [
+    "order-time"
+   ]
+  },
+  {
+   "id": "P4",
+   "kind": "step",
+   "name": "수거 신청 4/5 — 배송 희망",
+   "quote": "F-14 배송 희망: 일반(3일) / 빠른(익일, +3,000원).",
+   "covered_by": [
+    "order-time"
+   ]
+  },
+  {
+   "id": "P5",
+   "kind": "step",
+   "name": "수거 신청 5/5 — 신청 전 요약",
+   "quote": "F-15 신청 전 요약: 품목·예상 금액·수거/배송 시간·주소·출입 방법 한 화면 확인",
+   "covered_by": [
+    "order-summary"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "마감된 수거 시간대는 선택 불가",
+   "quote": "마감된 시간대는 비활성",
+   "screen_hint": "P3",
+   "state_hint": "error",
+   "target": "order-time",
+   "state": "error"
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "이불·운동화는 빠른 배송 불가",
+   "quote": "품목에 따라 빠른 배송 불가(이불·운동화)",
+   "screen_hint": "P4",
+   "state_hint": "error",
+   "target": "order-time",
+   "state": "error"
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "가죽·모피·명품 접수 불가",
+   "quote": "가죽·모피·명품은 MVP에서 접수 불가 — 품목 선택에서 안내",
+   "screen_hint": "P1",
+   "state_hint": "error",
+   "target": "order-items",
+   "state": "error"
+  },
+  {
+   "id": "R4",
+   "kind": "rule",
+   "name": "최소 주문 15,000원 미만 수거비 3,000원 추가",
+   "quote": "최소 주문 금액 15,000원. 미만이면 수거비 3,000원 추가",
+   "screen_hint": "P5",
+   "state_hint": "policy",
+   "policy": "order-summary"
+  },
+  {
+   "id": "R5",
+   "kind": "rule",
+   "name": "서비스 지역 밖 주소",
+   "quote": "서비스 지역 밖이면 \"오픈 알림 받기\"로 연락처만 받는다",
+   "screen_hint": "S3",
+   "state_hint": "error",
+   "policy": "area-out"
+  },
+  {
+   "id": "R6",
+   "kind": "rule",
+   "name": "수거 1시간 전까지 무료 취소, 이후 수거비 2,000원",
+   "quote": "수거 시간대 시작 1시간 전까지 무료 취소. 이후 취소는 수거비 2,000원",
+   "screen_hint": "S5",
+   "state_hint": "confirm",
+   "target": "order-cancel",
+   "state": "confirm"
+  },
+  {
+   "id": "R7",
+   "kind": "rule",
+   "name": "문 앞에 세탁물 없음 — 수거 실패",
+   "quote": "문 앞에 세탁물이 없으면 \"수거 실패\" 처리, 수거비 2,000원 부과, 재신청 필요",
+   "screen_hint": "S5",
+   "state_hint": "error",
+   "target": "order-detail",
+   "state": "error"
+  },
+  {
+   "id": "R8",
+   "kind": "rule",
+   "name": "검수 금액 20% 이상 초과 시 승인 필요",
+   "quote": "검수 금액이 예상 금액보다 20% 이상 많으면 자동 결제 전에 이용자 승인 필요",
+   "screen_hint": "S7",
+   "state_hint": "confirm",
+   "policy": "inspect"
+  },
+  {
+   "id": "R9",
+   "kind": "rule",
+   "name": "24시간 무응답 시 예상 금액 범위 품목만 진행",
+   "quote": "24시간 안에 응답이 없으면 **예상 금액 범위의 품목만** 진행",
+   "screen_hint": "S7",
+   "state_hint": "done",
+   "policy": "inspect"
+  },
+  {
+   "id": "R10",
+   "kind": "rule",
+   "name": "얼룩 제거 불가 — 그 품목 빼고 돌려받기",
+   "quote": "\"얼룩 제거 불가 — 진행 / 이 품목 빼고 돌려받기\" 선택",
+   "screen_hint": "S6",
+   "state_hint": "confirm",
+   "policy": "inspect"
+  },
+  {
+   "id": "R11",
+   "kind": "rule",
+   "name": "배송 후 48시간 지난 신고 불가",
+   "quote": "F-51 손상·분실 신고: 배송 후 48시간 이내",
+   "screen_hint": "S10",
+   "state_hint": "error",
+   "target": "claim",
+   "state": "error"
+  },
+  {
+   "id": "R12",
+   "kind": "rule",
+   "name": "운영 시간 외 문의는 접수만",
+   "quote": "운영 시간 외에는 접수만",
+   "screen_hint": "S9",
+   "state_hint": "done",
+   "target": "chat",
+   "state": "done"
+  }
+ ],
+ "objects": [
+  {
+   "id": "O1",
+   "name": "수거 주문",
+   "quote": "F-10 품목 선택: 카테고리(셔츠·바지·니트·코트·이불·운동화·기타)별 기본 가격 표시",
+   "create": [
+    "order-items"
+   ],
+   "view": [
+    "order-detail",
+    "home"
+   ],
+   "edit": [
+    "order-cancel"
+   ],
+   "after": [
+    "order-done",
+    "delivered"
+   ]
+  },
+  {
+   "id": "O2",
+   "name": "주소",
+   "quote": "F-02 주소 등록: 도로명 + 상세 주소 + 출입 방법(공동현관 비밀번호, 경비실 맡김 등). 주소 여러 개 저장",
+   "create": [
+    "address"
+   ],
+   "view": [
+    "my"
+   ],
+   "edit": [
+    "address"
+   ],
+   "after": [
+    "address-ok"
+   ]
+  },
+  {
+   "id": "O3",
+   "name": "1:1 문의",
+   "quote": "F-50 주문별 1:1 문의 (채팅형).",
+   "create": [
+    "chat"
+   ],
+   "view": [
+    "chat"
+   ],
+   "edit": "n/a — 보낸 메시지는 고치지 않고 이어서 보낸다(채팅 관례)",
+   "after": [
+    "chat--done"
+   ]
+  },
+  {
+   "id": "O4",
+   "name": "손상·분실 신고",
+   "quote": "F-51 손상·분실 신고: 배송 후 48시간 이내, 사진 첨부.",
+   "create": [
+    "claim"
+   ],
+   "view": [
+    "claim-done"
+   ],
+   "edit": "n/a — 접수 뒤 수정은 1:1 문의로(심사 중 사진 바꿔치기 방지)",
+   "after": [
+    "claim-done"
+   ]
+  },
+  {
+   "id": "O5",
+   "name": "정기 세탁",
+   "quote": "F-42 정기 세탁: 요일·시간대·기본 품목 설정, 그 주 건너뛰기 가능",
+   "create": [
+    "routine"
+   ],
+   "view": [
+    "my",
+    "routine"
+   ],
+   "edit": [
+    "routine"
+   ],
+   "after": [
+    "routine--done"
+   ]
+  },
+  {
+   "id": "O6",
+   "name": "검수 승인",
+   "quote": "F-21 검수 금액이 예상 금액보다 20% 이상 많으면 자동 결제 전에 이용자 승인 필요",
+   "create": [
+    "home-approve"
+   ],
+   "view": [
+    "inspect"
+   ],
+   "edit": [
+    "inspect"
+   ],
+   "after": [
+    "inspect-done"
+   ]
+  }
+ ]
+}

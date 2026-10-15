@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>내 예약 · 지난 수업</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="has-tab text-large">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">내 예약</p>
+    <h1 class="title">지난 수업</h1>
+    <p class="lead">최근 3개월 · 리뷰 쓸 수업 1개</p>
+  </header>
+  <div class="seg" role="radiogroup" aria-label="내 예약 보기"><a class="seg-item" role="radio" aria-checked="false" href="my-bookings.html">예정·대기</a><a class="seg-item is-selected" role="radio" aria-checked="true" href="my-bookings-past.html">지난 수업</a></div>
+  <section class="block is-list">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" placeholder="수업·강사 이름으로 찾기"></label>
+    <div class="chips"><button class="chip is-selected" aria-pressed="true">전체</button><button class="chip" aria-pressed="false">출석</button><button class="chip" aria-pressed="false">취소</button><button class="chip" aria-pressed="false">노쇼</button></div>
+    <div class="row"><span class="row-date">10/8<br>목</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 바디라인</p><p class="row-sub">오민재 · 숨 필라테스 망원점</p></div><span class="row-trail"><span class="btn small is-done" aria-disabled="true">리뷰 완료</span></span></div>
+    <div class="row"><span class="row-date">10/6<br>화</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">정다은 · 숨 필라테스 망원점</p></div><span class="row-trail"><a class="btn small tint" href="review-write.html">리뷰 작성 · 10/20까지</a></span></div>
+    <div class="row"><span class="row-date">10/1<br>목</span><div class="row-main"><p class="row-title">20:00 리포머 바디라인</p><p class="row-sub">무료 취소 · 오민재 · 숨 필라테스 망원점</p></div></div>
+    <div class="row"><span class="row-date">9/29<br>화</span><div class="row-main"><span class="badge is-success">출석</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">정다은 · 숨 필라테스 망원점</p></div></div>
+    <div class="row"><span class="row-date">9/24<br>목</span><div class="row-main"><span class="badge is-danger">노쇼</span><p class="row-title">20:00 리포머 바디라인</p><p class="row-sub">1회 차감 · 오민재 · 숨 필라테스 망원점</p></div></div>
+    <div class="row"><span class="row-date">9/22<br>화</span><div class="row-main"><span class="badge">휴강</span><p class="row-title">20:00 리포머 중급</p><p class="row-sub">횟수 복원 · 숨 필라테스 망원점</p></div></div>
+    <button class="btn secondary full">최근 3개월 · 더 보기</button>
+  </section>
+  <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg><span>노쇼 최근 30일 1회 · 30일 안에 3회가 되면 7일간 예약·대기를 할 수 없어요. 노쇼는 스튜디오가 출석부를 확정하면(안 하면 수업 끝나고 6시간 뒤) 반영돼요.</span></p>
+</main>
+<nav class="tabbar"><a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>홈</a><a class="tab" href="find.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>찾기</a><a class="tab" aria-current="page" href="my-bookings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>내 예약</a><a class="tab" href="tickets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>수강권</a><a class="tab" href="my.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>마이</a></nav>
+</body></html>

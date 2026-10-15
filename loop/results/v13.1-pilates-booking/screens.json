@@ -1,0 +1,1186 @@
+{
+ "groups": [
+  "처음 들어올 때",
+  "홈 — 다니는 곳이 있느냐에 따라 맨 위가 바뀐다",
+  "스튜디오 찾기·고르기",
+  "수업 고르고 예약하기",
+  "수강권 사기",
+  "수업 전·당일·후",
+  "수강권·내 정보"
+ ],
+ "story": {
+  "headline": "규정은 <em>그 순간의 날짜·횟수</em>로 보여 주고, 빈자리는 <em>기다리는 사람에게 저절로</em> 간다",
+  "summary": "카톡으로 묻던 '자리 있어요?', '몇 회 남았어요?', '지금 취소하면 차감돼요?'를 화면이 먼저 답한다. 무료 취소 마감은 모든 예약 화면에 실제 시각으로, 잔여는 예약분까지 함께, 대기는 순번과 확정 마감으로 보여 준다.",
+  "ideas": [
+   {
+    "title": "다음 수업이 홈의 첫 줄",
+    "desc": "가장 잦은 일(내 예약 확인)을 홈 맨 위에 — 이정호 님은 앱을 열고 그것만 보고 닫는다."
+   },
+   {
+    "title": "규정은 문장이 아니라 시각",
+    "desc": "'24시간 전까지'가 아니라 '10월 19일(월) 20:00까지 무료 취소'. 취소 화면은 지금 취소하면 돌려받는지 한 줄로 답한다."
+   },
+   {
+    "title": "남은 횟수는 한 가지 숫자로",
+    "desc": "어디서나 '잔여 7회 · 예약 2회 포함', 예약할 땐 '예약 가능 5회 → 4회'."
+   },
+   {
+    "title": "대기는 알아서 넘어간다",
+    "desc": "취소가 생기면 1번에게 승급 알림, 2시간 안에 확정 안 하면 다음 사람. 운영자가 기억할 필요가 없다."
+   }
+  ]
+ },
+ "screens": [
+  {
+   "id": "splash",
+   "file": "screens/splash.html",
+   "title": "스플래시 · 첫 실행 안내",
+   "group": "처음 들어올 때",
+   "purpose": "동네 스튜디오·남은 횟수·자동 알림 — 이 앱이 하는 일 세 가지",
+   "role": "everyone",
+   "policies": [
+    "첫 실행 1회만 소개 3장, 이후엔 로고만",
+    "로그인 유지 중이면 바로 홈",
+    "강제 업데이트 버전이면 스토어 이동 안내만 띄운다"
+   ],
+   "branches": [
+    {
+     "to": "login",
+     "label": "건너뛰기·마지막 장"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "login",
+   "file": "screens/login.html",
+   "title": "로그인 · 가입 방법 고르기",
+   "group": "처음 들어올 때",
+   "purpose": "카카오·Apple·전화번호 중 하나로 시작, 둘러보기도 가능",
+   "role": "everyone",
+   "policies": [
+    "Apple 로그인은 iOS에서만 노출(Android 확인 중)",
+    "둘러보기 중 예약·구매·대기를 누르면 이 화면으로",
+    "같은 번호로 다른 방식 가입 이력 → 그 방식 버튼을 강조"
+   ],
+   "branches": [
+    {
+     "to": "phone-verify",
+     "label": "전화번호로 시작 · 신규"
+    },
+    {
+     "to": "home",
+     "label": "기존 회원"
+    },
+    {
+     "to": "find",
+     "label": "둘러보기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "login--error",
+   "file": "screens/login--error.html",
+   "group": "처음 들어올 때",
+   "title": "로그인 · 가입 방법 고르기 · 오류",
+   "purpose": "이미 다른 방식으로 가입된 번호",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "login",
+   "state": "error",
+   "rules": [
+    "S02r"
+   ],
+   "policies": [
+    "[S02r] 이미 다른 방식으로 가입된 번호"
+   ]
+  },
+  {
+   "id": "phone-verify",
+   "file": "screens/phone-verify.html",
+   "title": "전화번호 인증",
+   "group": "처음 들어올 때",
+   "purpose": "번호를 받고 6자리를 넣으면 끝",
+   "role": "everyone",
+   "policies": [
+    "유효 3분, 재전송 30초 후·하루 5회",
+    "문자 자동 채우기 지원"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "phone-verify--error",
+   "file": "screens/phone-verify--error.html",
+   "group": "처음 들어올 때",
+   "title": "전화번호 인증 · 오류",
+   "purpose": "5회 오입력 시 10분 제한",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "phone-verify",
+   "state": "error",
+   "rules": [
+    "S03r"
+   ],
+   "policies": [
+    "[S03r] 5회 오입력 시 10분 제한"
+   ]
+  },
+  {
+   "id": "signup-terms",
+   "file": "screens/signup-terms.html",
+   "title": "약관 동의 · 기본 정보",
+   "group": "처음 들어올 때",
+   "purpose": "필수 3개 동의와 이름만 넣으면 가입",
+   "role": "everyone",
+   "policies": [
+    "이름은 스튜디오 출석부용 — 운영자에게만 공개, 리뷰엔 닉네임만",
+    "닉네임 중복 허용",
+    "성별·생년은 선택"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "signup-terms--error",
+   "file": "screens/signup-terms--error.html",
+   "group": "처음 들어올 때",
+   "title": "약관 동의 · 기본 정보 · 오류",
+   "purpose": "오류 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "signup-terms",
+   "state": "error"
+  },
+  {
+   "id": "neighborhood",
+   "file": "screens/neighborhood.html",
+   "title": "동네 설정",
+   "group": "처음 들어올 때",
+   "purpose": "동 이름을 검색하거나 현재 위치로 — 동네는 하나",
+   "role": "everyone",
+   "policies": [
+    "검색이 기본, '현재 위치로'를 누를 때만 위치 권한 요청",
+    "권한 거부해도 검색으로 설정 가능",
+    "최근 동네 최대 3개"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": []
+  },
+  {
+   "id": "home",
+   "file": "screens/home.html",
+   "title": "홈 · 수업 있는 날",
+   "group": "홈 — 다니는 곳이 있느냐에 따라 맨 위가 바뀐다",
+   "purpose": "다음 수업이 맨 위 — 시간·장소·출석, 그다음 남은 횟수",
+   "role": "everyone",
+   "policies": [
+    "다음 수업 '출석하기'는 시작 30분 전부터 보인다",
+    "수강권 요약은 만료 임박 순 1개 + 외 n개",
+    "확정 필요한 승급은 다음 수업 바로 아래, 마감 시각과 함께"
+   ],
+   "branches": [
+    {
+     "to": "promote",
+     "label": "확정 필요 누르기"
+    },
+    {
+     "to": "checkin",
+     "label": "시작 30분 전부터 출석하기"
+    },
+    {
+     "to": "cancel",
+     "label": "다음 수업 · 취소"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "home",
+   "states": []
+  },
+  {
+   "id": "home-new",
+   "file": "screens/home-new.html",
+   "title": "홈 · 처음 쓰는 사람",
+   "group": "홈 — 다니는 곳이 있느냐에 따라 맨 위가 바뀐다",
+   "purpose": "다니는 곳이 없으면 맨 위가 '동네 스튜디오 찾기'",
+   "role": "everyone",
+   "policies": [
+    "예약·수강권이 없으면 다음 수업 자리에 찾기 영역",
+    "체험 가능한 스튜디오를 먼저"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "home",
+   "states": []
+  },
+  {
+   "id": "find",
+   "file": "screens/find.html",
+   "title": "스튜디오 찾기 · 목록",
+   "group": "스튜디오 찾기·고르기",
+   "purpose": "사진·별점·가격을 나란히 비교",
+   "role": "everyone",
+   "policies": [
+    "기본은 목록, 마지막 본 방식을 기억",
+    "입점 스튜디오만 노출",
+    "결과 0개 → '3km로 넓혀볼까요?'"
+   ],
+   "branches": [
+    {
+     "to": "find-map",
+     "label": "지도 전환"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": true,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "find-map",
+   "file": "screens/find-map.html",
+   "title": "스튜디오 찾기 · 지도",
+   "group": "스튜디오 찾기·고르기",
+   "purpose": "내 동네 지도 위 스튜디오, 고르면 요약 카드",
+   "role": "everyone",
+   "policies": [
+    "위치 권한 없으면 설정 동네 중심",
+    "지도 이동 후 '이 지역에서 다시 찾기'",
+    "요약 카드에 오늘 빈자리 수"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": true,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "studio",
+   "file": "screens/studio.html",
+   "title": "스튜디오 상세",
+   "group": "스튜디오 찾기·고르기",
+   "purpose": "이곳이 나에게 맞는지 — 사진·강사·시설·가격·후기, 그리고 시간표",
+   "role": "everyone",
+   "policies": [
+    "시간표 보기는 스크롤 어디서나 하단 버튼",
+    "일시 휴업이면 안내 + 예약 진입 막음",
+    "취소 규정은 플랫폼 공통 24시간"
+   ],
+   "branches": [
+    {
+     "to": "timetable",
+     "label": "시간표 보고 예약하기"
+    },
+    {
+     "to": "pass-shop",
+     "label": "수강권 보기"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "instructor",
+   "file": "screens/instructor.html",
+   "title": "강사 상세",
+   "group": "스튜디오 찾기·고르기",
+   "purpose": "이 강사가 어떤 사람인지 — 경력·자격·전문 분야·이번 주 수업",
+   "role": "everyone",
+   "policies": [
+    "여러 곳 출강 강사도 스튜디오별 별도 프로필"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "reviews",
+   "file": "screens/reviews.html",
+   "title": "리뷰 목록",
+   "group": "스튜디오 찾기·고르기",
+   "purpose": "평균·분포·키워드로 한눈에, 강사별로 걸러 보기",
+   "role": "everyone",
+   "policies": [
+    "답글은 운영자 웹에서",
+    "신고 가능, 욕설 필터",
+    "리뷰 사진은 1차 업데이트(MVP 제외)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "timetable",
+   "file": "screens/timetable.html",
+   "title": "수업 시간표 · 주간",
+   "group": "수업 고르고 예약하기",
+   "purpose": "오늘·이번 주 어느 수업에 자리가 있는지",
+   "role": "everyone",
+   "policies": [
+    "14일 이후 수업은 '○월 ○일 오픈'",
+    "휴무일은 '휴무', 휴강은 사유",
+    "다니는 곳이 둘 이상이면 위에서 전환"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "class",
+   "file": "screens/class.html",
+   "title": "수업 상세",
+   "group": "수업 고르고 예약하기",
+   "purpose": "이 수업 — 언제, 누구와, 언제까지 무료 취소인지",
+   "role": "everyone",
+   "policies": [
+    "취소 규정은 실제 날짜·시각으로 계산",
+    "사용 수강권은 만료 빠른 것 자동, 만료·예약 가능 0회인 수강권은 고를 수 없음",
+    "휴강 시 예약 자동 취소 + 횟수 복원 + 알림"
+   ],
+   "branches": [
+    {
+     "to": "book",
+     "label": "자리 있으면 예약"
+    },
+    {
+     "to": "waitlist",
+     "label": "마감이면 대기 신청"
+    },
+    {
+     "to": "pass-shop",
+     "label": "이 스튜디오 수강권이 없으면"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "class--error",
+   "file": "screens/class--error.html",
+   "group": "수업 고르고 예약하기",
+   "title": "수업 상세 · 오류",
+   "purpose": "시간 겹치는 수업 중복 예약 불가",
+   "role": "everyone",
+   "kind": "detail",
+   "state_of": "class",
+   "state": "error",
+   "rules": [
+    "R10"
+   ],
+   "policies": [
+    "[R10] 시간 겹치는 수업 중복 예약 불가"
+   ]
+  },
+  {
+   "id": "book",
+   "file": "screens/book.html",
+   "title": "예약 확인",
+   "group": "수업 고르고 예약하기",
+   "purpose": "차감될 횟수와 무료 취소 마감을 보고 확정",
+   "role": "everyone",
+   "policies": [
+    "차감은 예약 시(무료 취소 시 복원)",
+    "'확인했습니다' 체크는 첫 예약만, 규정은 매번 표시"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": [
+    "error",
+    "confirm"
+   ]
+  },
+  {
+   "id": "book--error",
+   "file": "screens/book--error.html",
+   "group": "수업 고르고 예약하기",
+   "title": "예약 확인 · 오류",
+   "purpose": "노쇼 3회 누적 시 7일 예약 제한",
+   "role": "everyone",
+   "kind": "result",
+   "state_of": "book",
+   "state": "error",
+   "rules": [
+    "R4"
+   ],
+   "policies": [
+    "[R4] 노쇼 3회 누적 시 7일 예약 제한"
+   ]
+  },
+  {
+   "id": "book--confirm",
+   "file": "screens/book--confirm.html",
+   "group": "수업 고르고 예약하기",
+   "title": "예약 확인 · 확인",
+   "purpose": "확정 순간 마감",
+   "role": "everyone",
+   "kind": "result",
+   "state_of": "book",
+   "state": "confirm",
+   "rules": [
+    "S14r"
+   ],
+   "policies": [
+    "[S14r] 확정 순간 마감"
+   ]
+  },
+  {
+   "id": "book-done",
+   "file": "screens/book-done.html",
+   "title": "예약 완료",
+   "group": "수업 고르고 예약하기",
+   "purpose": "예약됐고, 무료 취소는 언제까지인지",
+   "role": "everyone",
+   "policies": [
+    "캘린더 추가는 기기 캘린더로"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "waitlist",
+   "file": "screens/waitlist.html",
+   "title": "대기 신청",
+   "group": "수업 고르고 예약하기",
+   "purpose": "몇 번째인지와 자리 나면 어떻게 되는지",
+   "role": "everyone",
+   "policies": [
+    "신청 시 차감 없음, 확정 시 차감",
+    "겹치는 시간대도 대기는 가능 — 확정 때 확인"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": true,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "done",
+    "error"
+   ]
+  },
+  {
+   "id": "waitlist--done",
+   "file": "screens/waitlist--done.html",
+   "group": "수업 고르고 예약하기",
+   "title": "대기 신청 · 보낸 뒤",
+   "purpose": "보낸 뒤 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "waitlist",
+   "state": "done"
+  },
+  {
+   "id": "waitlist--error",
+   "file": "screens/waitlist--error.html",
+   "group": "수업 고르고 예약하기",
+   "title": "대기 신청 · 오류",
+   "purpose": "대기 최대 5명 초과",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "waitlist",
+   "state": "error",
+   "rules": [
+    "R5"
+   ],
+   "policies": [
+    "[R5] 대기 최대 5명 초과"
+   ]
+  },
+  {
+   "id": "promote",
+   "file": "screens/promote.html",
+   "title": "대기 승급 확정",
+   "group": "수업 고르고 예약하기",
+   "purpose": "자리가 났다 — 마감 전에 확정할지",
+   "role": "everyone",
+   "policies": [
+    "확정 마감 = 승급 후 2시간(시작 2시간 미만이면 시작 30분 전)",
+    "확정 시점에 예약 가능 0회·만료·시간 겹침이면 확정 불가 → 다음 순번",
+    "승급 푸시에서 바로 '확정' 가능(앱 안 열고)"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "promote--error",
+   "file": "screens/promote--error.html",
+   "group": "수업 고르고 예약하기",
+   "title": "대기 승급 확정 · 오류",
+   "purpose": "승급 후 2시간 내 미확정 시 자동 포기",
+   "role": "everyone",
+   "kind": "result",
+   "state_of": "promote",
+   "state": "error",
+   "rules": [
+    "R6"
+   ],
+   "policies": [
+    "[R6] 승급 후 2시간 내 미확정 시 자동 포기"
+   ]
+  },
+  {
+   "id": "pass-shop",
+   "file": "screens/pass-shop.html",
+   "title": "수강권 고르기",
+   "group": "수강권 사기",
+   "purpose": "횟수권·기간권을 회당 가격으로 비교",
+   "role": "everyone",
+   "policies": [
+    "체험권은 이 스튜디오 첫 구매자만",
+    "1:1 개인레슨은 상품만, 예약은 전화",
+    "같은 스튜디오 수강권 여러 개 보유 가능"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "checkout",
+   "file": "screens/checkout.html",
+   "title": "결제",
+   "group": "수강권 사기",
+   "purpose": "상품·금액·환불 규정 확인 후 결제",
+   "role": "everyone",
+   "policies": [
+    "기간권만 시작일 선택(오늘/첫 수업일/직접, 30일 이내)",
+    "진행 중 이탈 건은 10분 후 자동 취소",
+    "승인 후 발급 실패 시 자동 결제 취소 + 고객센터 안내"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error",
+    "confirm"
+   ]
+  },
+  {
+   "id": "checkout--error",
+   "file": "screens/checkout--error.html",
+   "group": "수강권 사기",
+   "title": "결제 · 오류",
+   "purpose": "결제 실패 시 사유 안내 + 재시도",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "checkout",
+   "state": "error",
+   "rules": [
+    "R11"
+   ],
+   "policies": [
+    "[R11] 결제 실패 시 사유 안내 + 재시도"
+   ]
+  },
+  {
+   "id": "checkout--confirm",
+   "file": "screens/checkout--confirm.html",
+   "group": "수강권 사기",
+   "title": "결제 · 확인",
+   "purpose": "같은 상품 1분 내 재결제 확인",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "checkout",
+   "state": "confirm",
+   "rules": [
+    "R11b"
+   ],
+   "policies": [
+    "[R11b] 같은 상품 1분 내 재결제 확인"
+   ]
+  },
+  {
+   "id": "checkout-done",
+   "file": "screens/checkout-done.html",
+   "title": "결제 완료",
+   "group": "수강권 사기",
+   "purpose": "산 수강권 요약, 바로 예약으로",
+   "role": "everyone",
+   "policies": [
+    "수업 상세에서 왔으면 그 수업 예약 확인으로 바로",
+    "영수증은 마이 › 결제 내역"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "result",
+   "states": []
+  },
+  {
+   "id": "my-bookings",
+   "file": "screens/my-bookings.html",
+   "title": "내 예약",
+   "group": "수업 전·당일·후",
+   "purpose": "예정·대기 중·지난 수업, 각각 무료 취소까지 남은 시간",
+   "role": "everyone",
+   "policies": [
+    "지난 수업은 최근 3개월 + 더 보기",
+    "확정 필요 건은 대기 중 탭 맨 위",
+    "리뷰는 수업 후 14일 이내만"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": [
+    "empty"
+   ]
+  },
+  {
+   "id": "my-bookings--empty",
+   "file": "screens/my-bookings--empty.html",
+   "group": "수업 전·당일·후",
+   "title": "내 예약 · 처음(비어 있음)",
+   "purpose": "처음(비어 있음) 모습",
+   "role": "everyone",
+   "kind": "list",
+   "state_of": "my-bookings",
+   "state": "empty"
+  },
+  {
+   "id": "cancel",
+   "file": "screens/cancel.html",
+   "title": "예약 취소",
+   "group": "수업 전·당일·후",
+   "purpose": "지금 취소하면 횟수를 돌려받는지",
+   "role": "everyone",
+   "policies": [
+    "수업 시작 후 취소 불가(노쇼 처리)",
+    "대기 취소는 언제든 무료 · 대기자가 있으면 '취소하면 대기 1번 분께 자리가 가요' 한 줄",
+    "기간권 늦은 취소는 임시로 페널티 없음"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "confirm"
+   ]
+  },
+  {
+   "id": "cancel--confirm",
+   "file": "screens/cancel--confirm.html",
+   "group": "수업 전·당일·후",
+   "title": "예약 취소 · 확인",
+   "purpose": "수업 24시간 전까지 무료 취소, 이후 1회 차감",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "cancel",
+   "state": "confirm",
+   "rules": [
+    "R1"
+   ],
+   "policies": [
+    "[R1] 수업 24시간 전까지 무료 취소, 이후 1회 차감"
+   ]
+  },
+  {
+   "id": "checkin",
+   "file": "screens/checkin.html",
+   "title": "출석 체크",
+   "group": "수업 전·당일·후",
+   "purpose": "데스크 QR을 찍거나 도착 확인으로 출석",
+   "role": "everyone",
+   "policies": [
+    "앱 출석은 시작 30분 전~시작 후 15분 · 놓치면 강사님 수동 출석, 그것도 없으면 노쇼(1회 차감)",
+    "방식은 스튜디오 설정(QR·도착 둘 다/하나)",
+    "위치 실패 시 'QR로 출석하거나 강사님께 말씀해주세요'"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "checkin--error",
+   "file": "screens/checkin--error.html",
+   "group": "수업 전·당일·후",
+   "title": "출석 체크 · 오류",
+   "purpose": "다른 스튜디오 QR 에러",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "checkin",
+   "state": "error",
+   "rules": [
+    "S19r"
+   ],
+   "policies": [
+    "[S19r] 다른 스튜디오 QR 에러"
+   ]
+  },
+  {
+   "id": "review-write",
+   "file": "screens/review-write.html",
+   "title": "리뷰 쓰기",
+   "group": "수업 전·당일·후",
+   "purpose": "별점과 좋았던 점 고르기, 글은 10자부터",
+   "role": "everyone",
+   "policies": [
+    "출석한 수업만, 수업 후 14일 이내, 1회당 1개",
+    "닉네임으로 공개, 수정·삭제 가능",
+    "사진 첨부는 1차 업데이트"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "review-write--error",
+   "file": "screens/review-write--error.html",
+   "group": "수업 전·당일·후",
+   "title": "리뷰 쓰기 · 오류",
+   "purpose": "오류 모습",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "review-write",
+   "state": "error"
+  },
+  {
+   "id": "notifications",
+   "file": "screens/notifications.html",
+   "title": "알림함",
+   "group": "수업 전·당일·후",
+   "purpose": "예약·대기·수강권 소식, 누르면 그 화면으로",
+   "role": "everyone",
+   "policies": [
+    "90일 보관",
+    "확정 마감이 지난 승급 알림은 '만료됨'"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": []
+  },
+  {
+   "id": "passes",
+   "file": "screens/passes.html",
+   "title": "내 수강권",
+   "group": "수강권·내 정보",
+   "purpose": "스튜디오별 잔여·만료일, 만료 임박이 먼저",
+   "role": "everyone",
+   "policies": [
+    "잔여는 예약분 포함 표기 + 지금 예약 가능 횟수",
+    "만료·소진은 '지난 수강권'으로",
+    "환불은 앱 신청 없이 스튜디오 전화 연결"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": true,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "list",
+   "states": [
+    "empty"
+   ]
+  },
+  {
+   "id": "passes--empty",
+   "file": "screens/passes--empty.html",
+   "group": "수강권·내 정보",
+   "title": "내 수강권 · 처음(비어 있음)",
+   "purpose": "처음(비어 있음) 모습",
+   "role": "everyone",
+   "kind": "list",
+   "state_of": "passes",
+   "state": "empty"
+  },
+  {
+   "id": "pass-detail",
+   "file": "screens/pass-detail.html",
+   "title": "수강권 상세",
+   "group": "수강권·내 정보",
+   "purpose": "이 수강권을 어디에 썼는지와 일시정지",
+   "role": "everyone",
+   "policies": [
+    "사용 내역: 날짜·수업·차감/복원 사유",
+    "남은 정지 횟수·일수"
+   ],
+   "branches": [
+    {
+     "to": "pause",
+     "label": "일시정지"
+    }
+   ],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "detail",
+   "states": []
+  },
+  {
+   "id": "pause",
+   "file": "screens/pause.html",
+   "title": "수강권 일시정지",
+   "group": "수강권·내 정보",
+   "purpose": "며칠 쉬면 만료일이 어떻게 밀리는지",
+   "role": "everyone",
+   "policies": [
+    "신청 즉시 적용, 운영자 승인 없음",
+    "정지 기간 내 예약은 자동 무료 취소",
+    "시작일은 오늘 이후, 정지 중 조기 해제 가능"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": true,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "error"
+   ]
+  },
+  {
+   "id": "pause--error",
+   "file": "screens/pause--error.html",
+   "group": "수강권·내 정보",
+   "title": "수강권 일시정지 · 오류",
+   "purpose": "일시정지 최대 2회·30일, 1회 최소 3일",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "pause",
+   "state": "error",
+   "rules": [
+    "R9"
+   ],
+   "policies": [
+    "[R9] 일시정지 최대 2회·30일, 1회 최소 3일"
+   ]
+  },
+  {
+   "id": "mypage",
+   "file": "screens/mypage.html",
+   "title": "마이",
+   "group": "수강권·내 정보",
+   "purpose": "내 수강권·출석·노쇼 현황과 계정",
+   "role": "everyone",
+   "policies": [
+    "노쇼는 수업 종료 후 출석부 확정 기준, 미확정이면 종료 6시간 후 자동 확정 — 1회 차감 + 1회 누적",
+    "노쇼 현황은 분쟁 예방 차원에서 표시"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "home",
+   "states": []
+  },
+  {
+   "id": "settings",
+   "file": "screens/settings.html",
+   "title": "설정",
+   "group": "수강권·내 정보",
+   "purpose": "알림·위치 권한·계정",
+   "role": "everyone",
+   "policies": [
+    "대기 승급 알림은 끌 수 없다(대기의 전제)",
+    "탈퇴 시 예정 예약 자동 취소",
+    "글자 크기는 휴대폰 설정(큰 글씨)을 그대로 따른다"
+   ],
+   "branches": [],
+   "traits": {
+    "list_first_use": false,
+    "form": false,
+    "shares": false,
+    "large_list": false,
+    "long_task": false
+   },
+   "kind": "form",
+   "states": [
+    "confirm"
+   ]
+  },
+  {
+   "id": "settings--confirm",
+   "file": "screens/settings--confirm.html",
+   "group": "수강권·내 정보",
+   "title": "설정 · 확인",
+   "purpose": "탈퇴 시 잔여 수강권 소멸 경고",
+   "role": "everyone",
+   "kind": "form",
+   "state_of": "settings",
+   "state": "confirm",
+   "rules": [
+    "S25r"
+   ],
+   "policies": [
+    "[S25r] 탈퇴 시 잔여 수강권 소멸 경고"
+   ]
+  }
+ ],
+ "photo_centric": false,
+ "badges": {
+  "예약함": "is-brand",
+  "확정 필요": "is-info",
+  "임박": "is-warning",
+  "출석": "is-success",
+  "노쇼": "is-danger",
+  "대기 중": ""
+ },
+ "prd_coverage": {
+  "F1": [
+   "login",
+   "phone-verify",
+   "signup-terms"
+  ],
+  "F2": [
+   "neighborhood"
+  ],
+  "F3": [
+   "find",
+   "find-map"
+  ],
+  "F4": [
+   "studio"
+  ],
+  "F5": [
+   "timetable"
+  ],
+  "F6": [
+   "class"
+  ],
+  "F7": [
+   "pass-shop",
+   "checkout",
+   "checkout-done"
+  ],
+  "F8": [
+   "book",
+   "book-done"
+  ],
+  "F9": [
+   "waitlist",
+   "promote"
+  ],
+  "F10": [
+   "cancel"
+  ],
+  "F11": [
+   "my-bookings"
+  ],
+  "F12": [
+   "checkin"
+  ],
+  "F13": [
+   "passes",
+   "pass-detail",
+   "pause"
+  ],
+  "F14": [
+   "review-write",
+   "reviews"
+  ],
+  "F15": [
+   "notifications"
+  ],
+  "F16": [
+   "mypage",
+   "settings"
+  ],
+  "F17": [
+   "studio",
+   "mypage"
+  ],
+  "F18": [
+   "pass-shop",
+   "find"
+  ]
+ }
+}

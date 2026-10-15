@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>전화번호 인증 · 5번 틀림</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+</head>
+<body class="plain has-cta text-large">
+<header class="appbar"><a class="appbar-btn" href="login.html" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><h1 class="appbar-title">전화번호 인증</h1><span></span></header>
+<main class="page">
+  <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemax="3" aria-label="가입 3단계 중 1단계"><span class="is-on"></span><span></span><span></span></div>
+  <div class="field"><label class="label" for="tel">휴대폰 번호</label><input class="input" id="tel" type="tel" inputmode="numeric" autocomplete="tel" value="010-2481-3307"></div>
+  <div class="field is-error"><label class="label" for="otp">문자로 받은 인증번호 6자리</label><input class="input" id="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" value="" placeholder="6자리 숫자" disabled><p class="field-msg" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v5M12 16v.5"/></svg>인증번호를 5번 틀렸어요. 17:26부터 다시 받을 수 있어요</p>
+    <div class="row"><div class="row-main"><p class="row-sub">다시 받기 <span class="code">17:26</span>부터</p></div><span class="row-trail"><button class="btn small tint" disabled>다시 받기</button></span></div>
+  </div>
+</main>
+<div class="cta"><button class="btn primary full" disabled>확인</button></div>
+</body></html>

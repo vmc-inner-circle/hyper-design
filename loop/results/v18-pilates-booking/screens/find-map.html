@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=375, initial-scale=1">
+<title>스튜디오 찾기 · 지도</title>
+<link id="tokens" rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components.css"><script src="../palette.js"></script>
+<style>
+.map { display: block; width: 100%; height: auto; border-radius: var(--r-m); background: var(--c-bg); color: var(--c-text-3); }
+.map .road { stroke: var(--c-surface); }
+.map .pin { color: var(--c-brand); }
+.map .me { color: var(--c-info); }
+.map text { fill: var(--c-text-2); font-size: var(--fs-caption); font-weight: 600; }
+.map .pin-label { fill: var(--c-brand-text); font-size: var(--fs-sub); font-weight: 700; }
+</style>
+</head>
+<body class="has-tab text-large">
+<main class="page">
+  <header class="hero">
+    <p class="eyebrow">성산1동 · 오전 수업 있는 곳</p>
+    <h1 class="title">가까운 스튜디오 5곳</h1>
+  </header>
+  <div class="seg" role="radiogroup" aria-label="보기 방식"><a class="seg-item" role="radio" aria-checked="false" href="find.html">목록</a><a class="seg-item is-selected" role="radio" aria-checked="true" href="find-map.html">지도</a></div>
+  <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" placeholder="스튜디오 이름으로 찾기" aria-label="스튜디오 이름으로 찾기"></label>
+  <div class="chips" aria-label="걸러 보기">
+    <button class="chip" aria-pressed="false">기구 필라테스</button><button class="chip" aria-pressed="false">매트</button><button class="chip" aria-pressed="false">요가</button><button class="chip" aria-pressed="false">3km 이내</button><button class="chip is-selected" aria-pressed="true">오전</button><button class="chip" aria-pressed="false">체험 가능</button>
+  </div>
+  <section class="block">
+    <button class="btn small tint" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 5v6h-6"/></svg>이 지역에서 다시 찾기</button>
+    <svg class="map" viewBox="0 0 343 330" role="img" aria-label="성산1동 지도 — 내 위치 주변 스튜디오 5곳, 숨 필라테스 선택됨"><path class="road" d="M-10 92 L360 70" stroke-width="12" fill="none"/>
+    <path class="road" d="M-10 230 C120 210 220 250 360 200" stroke-width="12" fill="none"/>
+    <path class="road" d="M110 -10 L170 330" stroke-width="9" fill="none"/>
+    <path class="road" d="M270 -10 C250 120 300 220 255 330" stroke-width="9" fill="none"/>
+    <path class="road" d="M-10 160 L360 140" stroke-width="5" fill="none"/>
+    <path class="road" d="M40 -10 L80 330" stroke-width="5" fill="none"/>
+    <path class="road" d="M200 -10 L215 330" stroke-width="5" fill="none"/>
+    <text x="300" y="66">월드컵로</text><text x="16" y="222">양화로</text><text x="120" y="320">망원로</text><g class="me"><circle cx="205" cy="148" r="18" fill="currentColor" opacity=".18"/><circle cx="205" cy="148" r="7" fill="currentColor" class="road" stroke-width="3"/></g><text x="205" y="182" text-anchor="middle">내 위치</text><g class="pin" transform="translate(250 175) scale(1)"><path d="M0-26c-6.6 0-12 5.2-12 11.6C-12-6.6 0 4 0 4s12-10.6 12-18.4C12-20.8 6.6-26 0-26z" fill="currentColor"/><circle cy="-14" r="4.5" class="road" fill="none" stroke-width="3"/></g><text x="250" y="193" text-anchor="middle">온결 요가</text><g class="pin" transform="translate(140 118) scale(1.3)"><path d="M0-26c-6.6 0-12 5.2-12 11.6C-12-6.6 0 4 0 4s12-10.6 12-18.4C12-20.8 6.6-26 0-26z" fill="currentColor"/><circle cy="-14" r="4.5" class="road" fill="none" stroke-width="3"/></g><text x="140" y="136" text-anchor="middle" class="pin-label">숨 필라테스</text><g class="pin" transform="translate(78 170) scale(1)"><path d="M0-26c-6.6 0-12 5.2-12 11.6C-12-6.6 0 4 0 4s12-10.6 12-18.4C12-20.8 6.6-26 0-26z" fill="currentColor"/><circle cy="-14" r="4.5" class="road" fill="none" stroke-width="3"/></g><text x="78" y="188" text-anchor="middle">매트앤브리드</text><g class="pin" transform="translate(300 50) scale(1)"><path d="M0-26c-6.6 0-12 5.2-12 11.6C-12-6.6 0 4 0 4s12-10.6 12-18.4C12-20.8 6.6-26 0-26z" fill="currentColor"/><circle cy="-14" r="4.5" class="road" fill="none" stroke-width="3"/></g><text x="300" y="68" text-anchor="middle">바른몸</text><g class="pin" transform="translate(60 290) scale(1)"><path d="M0-26c-6.6 0-12 5.2-12 11.6C-12-6.6 0 4 0 4s12-10.6 12-18.4C12-20.8 6.6-26 0-26z" fill="currentColor"/><circle cy="-14" r="4.5" class="road" fill="none" stroke-width="3"/></g><text x="60" y="308" text-anchor="middle">리본 필라테스</text></svg>
+  </section>
+  <section class="block is-list">
+    <a class="row" href="studio.html"><span class="thumb is-l"><img src="../assets/photos/studio-sum-1.jpg" alt="숨 필라테스 망원점 리포머 공간"></span><div class="row-main"><p class="row-title">숨 필라테스 망원점</p><p class="row-sub">기구 필라테스 · 650m</p><span class="rating" role="img" aria-label="별점 5점 중 4.8점, 리뷰 126개"><svg class="is-on" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg><span class="row-sub">4.8 (126)</span></span><p class="row-sub"><span class="code">오늘 빈자리 3석</span></p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+  </section>
+</main>
+<nav class="tabbar"><a class="tab" href="home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>홈</a><a class="tab" href="find.html" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>찾기</a><a class="tab" href="my-bookings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>내 예약</a><a class="tab" href="tickets.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4z"/><path d="M14 6v12" stroke-dasharray="2 2"/></svg>수강권</a><a class="tab" href="my.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>마이</a></nav>
+</body></html>

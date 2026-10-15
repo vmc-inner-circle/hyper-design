@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>부품 견본</title>
+<link id="tokens" rel="stylesheet" href="tokens.css"><link rel="stylesheet" href="components.css"><script src="palette.js"></script>
+<style>
+/* 견본 전용 배치 — 색은 토큰만 */
+body { background: var(--c-bg); padding: var(--stack-m); display: flex; flex-direction: column; gap: var(--stack-l); }
+.spec { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: var(--stack-m); align-items: start; }
+.spec::before { content: attr(data-title); grid-column: 1 / -1; font-size: var(--fs-h2); font-weight: var(--fw-h2); line-height: var(--lh-h2); color: var(--c-text-1); }
+.spec-cell { display: flex; flex-direction: column; gap: var(--stack-s); align-items: stretch; min-width: 0; }
+.spec-stage { position: relative; background: var(--c-surface); box-shadow: inset 0 0 0 1px var(--c-line); border-radius: var(--r-m); padding: var(--stack-m); display: flex; flex-direction: column; gap: var(--stack-s); align-items: flex-start; min-width: 0; overflow: hidden; }
+.spec-stage.is-stretch { align-items: stretch; }
+.spec-stage.is-bg { background: var(--c-bg); }
+.spec-stage.is-flush { padding: 0; }
+.spec-cap { font-size: var(--fs-caption); font-weight: 600; line-height: var(--lh-caption); color: var(--c-text-2); }
+.spec-stage .block, .spec-stage .done, .spec-stage .search { margin: 0; }
+.spec-stage .chips { padding: 0; }
+.spec-stage .appbar, .spec-stage .cta, .spec-stage .tabbar, .spec-stage .sheet { position: relative; inset: auto; z-index: auto; }
+.spec-stage .sheet { box-shadow: none; }
+</style>
+</head>
+<body>
+
+<section class="spec" data-key="btn" data-title="버튼">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch">
+    <button class="btn primary">저장</button>
+    <button class="btn secondary">지우기</button>
+    <button class="btn small tint">초대하기</button>
+  </div></div>
+  <div class="spec-cell"><p class="spec-cap">비활성</p><div class="spec-stage is-stretch">
+    <button class="btn primary" disabled>저장</button>
+  </div></div>
+</section>
+
+<section class="spec" data-key="cta" data-title="하단 고정 버튼">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-flush">
+    <div class="cta"><button class="btn primary full">저장</button></div>
+  </div></div>
+  <div class="spec-cell"><p class="spec-cap">비활성</p><div class="spec-stage is-stretch is-flush">
+    <div class="cta"><button class="btn primary full" disabled>저장</button></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="chip" data-title="칩">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage">
+    <div class="chips"><button class="chip">아직 모임 없음</button></div>
+  </div></div>
+  <div class="spec-cell"><p class="spec-cap">선택</p><div class="spec-stage">
+    <div class="chips"><button class="chip is-selected">전체</button></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="seg" data-title="세그먼트">
+  <div class="spec-cell"><p class="spec-cap">기본 · 선택</p><div class="spec-stage is-stretch">
+    <div class="seg" role="radiogroup"><button class="seg-item is-selected" role="radio" aria-checked="true">1:1</button><button class="seg-item" role="radio" aria-checked="false">여럿이</button><button class="seg-item" role="radio" aria-checked="false">가족</button></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="badge" data-title="배지"><div class="spec-cell"><p class="spec-cap">확정 앞둠 · .badge.is-info</p><div class="spec-stage"><span class="badge is-info">확정 앞둠</span></div></div><div class="spec-cell"><p class="spec-cap">확정 · .badge.is-brand</p><div class="spec-stage"><span class="badge is-brand">확정</span></div></div><div class="spec-cell"><p class="spec-cap">답 기다림 · .badge</p><div class="spec-stage"><span class="badge ">답 기다림</span></div></div><div class="spec-cell"><p class="spec-cap">다녀옴 · .badge.is-success</p><div class="spec-stage"><span class="badge is-success">다녀옴</span></div></div><div class="spec-cell"><p class="spec-cap">겹침 · .badge.is-warning</p><div class="spec-stage"><span class="badge is-warning">겹침</span></div></div><div class="spec-cell"><p class="spec-cap">안 돼요 · .badge.is-danger</p><div class="spec-stage"><span class="badge is-danger">안 돼요</span></div></div></section>
+
+<section class="spec" data-key="row" data-title="목록 행">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-bg"><div class="block is-list">
+    <a class="row" href="#"><span class="row-date">11/20<br>금</span><div class="row-main"><p class="row-title">제주 도착</p><p class="row-sub">비행기 10:05 출발</p></div><span class="row-trail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></span></a>
+    <a class="row is-add" href="#"><span class="row-lead"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span><div class="row-main"><p class="row-title">추가하기</p></div></a>
+  </div></div></div>
+  <div class="spec-cell"><p class="spec-cap">완료</p><div class="spec-stage is-stretch is-bg"><div class="block is-list">
+    <div class="row is-done"><span class="row-lead is-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span><div class="row-main"><p class="row-title">신분증</p></div></div>
+  </div></div></div>
+</section>
+
+<section class="spec" data-key="check" data-title="체크">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage"><span class="row-trail"><button class="check" role="checkbox" aria-checked="false" aria-label="챙김"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div></div>
+  <div class="spec-cell"><p class="spec-cap">선택</p><div class="spec-stage"><span class="row-trail"><button class="check" role="checkbox" aria-checked="true" aria-label="챙김"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6.5 12.5 3.5 3.5 7.5-8"/></svg></span></button></span></div></div>
+</section>
+
+<section class="spec" data-key="switch" data-title="스위치">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage"><button class="switch" role="switch" aria-checked="false" aria-label="알림"></button></div></div>
+  <div class="spec-cell"><p class="spec-cap">선택</p><div class="spec-stage"><button class="switch" role="switch" aria-checked="true" aria-label="알림"></button></div></div>
+</section>
+
+<section class="spec" data-key="field" data-title="입력 칸">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch">
+    <div class="field"><label class="label" for="s-name">이름</label><input class="input" id="s-name" value="김지은"></div>
+  </div></div>
+  <div class="spec-cell"><p class="spec-cap">오류</p><div class="spec-stage is-stretch">
+    <div class="field is-error"><label class="label" for="s-phone">전화번호</label><input class="input" id="s-phone" value="010-12"><p class="field-msg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>번호를 끝까지 적어 주세요</p></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="search" data-title="검색">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch">
+    <label class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input type="search" placeholder="이름으로 찾기"></label>
+  </div></div>
+</section>
+
+<section class="spec" data-key="info" data-title="부가 정보">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage">
+    <p class="info"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5v.01"/></svg><span>우산과 충전기는 지은이가 챙겨요 · <span class="code">KE1203</span></span></p>
+  </div></div>
+</section>
+
+<section class="spec" data-key="avatar" data-title="아바타">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage"><span class="avatar is-text">수</span></div></div>
+  <div class="spec-cell"><p class="spec-cap">여럿</p><div class="spec-stage"><span class="avatars"><span class="avatar is-text">수</span><span class="avatar is-text">민</span><span class="avatar is-text">지</span></span></div></div>
+</section>
+
+<section class="spec" data-key="tabbar" data-title="탭바">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-flush">
+    <nav class="tabbar"><a class="tab" aria-current="page" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>홈</a><a class="tab" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>일정</a><a class="tab" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>나</a></nav>
+  </div></div>
+</section>
+
+<section class="spec" data-key="appbar" data-title="앱바">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-flush">
+    <header class="appbar"><a class="appbar-btn" href="#" aria-label="뒤로"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><p class="appbar-title">내가 챙길 것</p><span></span></header>
+  </div></div>
+</section>
+
+<section class="spec" data-key="hero" data-title="큰 머리글">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-bg">
+    <header class="hero"><p class="eyebrow">지은이가 준비하는 여행 · <span class="num">D-51</span></p><p class="title">11월 20일부터 제주에 가요</p><p class="lead">어머니, 아버지와 함께예요</p></header>
+  </div></div>
+</section>
+
+<section class="spec" data-key="block" data-title="블록">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-bg">
+    <section class="block"><div class="block-head"><p class="h2">여행 흐름</p><a class="block-link" href="#">전체 보기</a></div><p class="block-note">숙소를 아직 정하지 않았어요</p><a class="btn primary" href="#">숙소 정하기</a></section>
+  </div></div>
+</section>
+
+<section class="spec" data-key="sheet" data-title="바텀시트">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-flush">
+    <div class="sheet"><p class="h2">이 일정을 지울까요?</p><p class="lead">함께 가는 사람에게도 사라져요</p><button class="btn primary full">지우기</button><button class="btn secondary full">취소</button></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="empty" data-title="빈 상태">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch is-bg">
+    <div class="empty"><p class="row-title">아직 일정이 없어요</p><p class="row-sub">첫 일정을 추가하면 여기에 모여요</p></div>
+  </div></div>
+</section>
+
+<section class="spec" data-key="done" data-title="완료 표시">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch">
+    <p class="done">링크를 복사했어요 — 단톡방에 붙여넣으세요</p>
+  </div></div>
+</section>
+
+<section class="spec" data-key="progress" data-title="진행 막대">
+  <div class="spec-cell"><p class="spec-cap">기본</p><div class="spec-stage is-stretch">
+    <div class="progress" role="progressbar" aria-valuenow="2" aria-valuemax="5" aria-label="5단계 중 2단계"><span class="is-on"></span><span class="is-on"></span><span></span><span></span><span></span></div>
+  </div></div>
+</section>
+
+
+
+
+
+
+
+
+
+<section class="spec" data-key="photo" data-title="사진">
+  <div class="spec-cell"><p class="spec-cap">3:4 · is-3x4</p><div class="spec-stage is-stretch"><div class="photo is-3x4"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 3 4'%3E%3Crect width='3' height='4' fill='%23ADB5BD'/%3E%3C/svg%3E" alt="사진"></div></div></div>
+  <div class="spec-cell"><p class="spec-cap">1:1 · is-1x1</p><div class="spec-stage is-stretch"><div class="photo is-1x1"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3Crect width='1' height='1' fill='%23ADB5BD'/%3E%3C/svg%3E" alt="사진"></div></div></div>
+  <div class="spec-cell"><p class="spec-cap">16:9 · is-16x9</p><div class="spec-stage is-stretch"><div class="photo is-16x9"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'%3E%3Crect width='16' height='9' fill='%23ADB5BD'/%3E%3C/svg%3E" alt="사진"></div></div></div>
+</section>
+
+
+
+
+
+</body></html>

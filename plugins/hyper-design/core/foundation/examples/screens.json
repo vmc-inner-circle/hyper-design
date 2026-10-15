@@ -1,0 +1,191 @@
+{
+ "groups": [
+  "처음 들어올 때",
+  "홈 — 시기마다 맨 위가 바뀐다",
+  "홈에서 들어가는 곳",
+  "일정을 짜는 사람에게만 더 보이는 것"
+ ],
+ "badges": {
+  "확정": "is-brand",
+  "바뀜": "is-warning",
+  "궁금해하세요": "is-info",
+  "후보": ""
+ },
+ "screens": [
+  {
+   "id": "home",
+   "file": "home.html",
+   "title": "홈 · 출발 50일 전",
+   "role": "everyone",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "출발 50일 전 — 큰 흐름",
+   "policies": [
+    "확정된 일정만 보인다 — 후보는 '정하는 중' 한 줄",
+    "출발 7일 전부터 맨 위가 모이는 곳, 여행 중엔 '오늘'",
+    "바뀐 항목은 3일 동안 '바뀜' 표시(알림 없음)"
+   ],
+   "branches": [
+    {
+     "to": "home-edit",
+     "label": "일정을 같이 짜는 사람이면"
+    }
+   ]
+  },
+  {
+   "id": "home-d7",
+   "file": "home-d7.html",
+   "title": "홈 · 출발 3일 전",
+   "role": "everyone",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "출발 3일 전 — 모이는 곳·챙길 것",
+   "policies": [
+    "챙길 것은 본인 몫만",
+    "날씨는 출발지·도착지 중 도착지 기준"
+   ],
+   "branches": []
+  },
+  {
+   "id": "home-trip",
+   "file": "home-trip.html",
+   "title": "홈 · 여행 중",
+   "role": "everyone",
+   "group": "홈 — 시기마다 맨 위가 바뀐다",
+   "purpose": "여행 중 — 오늘",
+   "policies": [
+    "여행 기간 동안 이 모습",
+    "예약 확인번호는 모두에게 보인다"
+   ],
+   "branches": []
+  },
+  {
+   "id": "home-edit",
+   "file": "home-edit.html",
+   "title": "홈 · 일정을 짜는 사람",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "일정 짜는 사람 — 정할 것",
+   "policies": [
+    "정할 것 = 후보 상태 항목 + 비어 있는 날",
+    "'궁금해요'가 붙은 항목이 위로"
+   ],
+   "branches": [
+    {
+     "to": "day-edit",
+     "label": "정할 것 누르기"
+    }
+   ]
+  },
+  {
+   "id": "day",
+   "file": "day.html",
+   "title": "날짜 상세",
+   "role": "everyone",
+   "group": "홈에서 들어가는 곳",
+   "purpose": "날짜 상세 + 궁금해요",
+   "policies": [
+    "'이날 궁금해요'는 하루 한 번",
+    "누르면 짜는 사람 홈의 정할 것에 표시만 — 알림 없음"
+   ],
+   "branches": []
+  },
+  {
+   "id": "day-edit",
+   "file": "day-edit.html",
+   "title": "날짜 · 일정을 짜는 사람",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "날짜별 일정 편집",
+   "policies": [
+    "끌어서 순서 바꾸기",
+    "후보는 여러 개, 확정은 시간대당 하나"
+   ],
+   "branches": []
+  },
+  {
+   "id": "item-edit",
+   "file": "item-edit.html",
+   "title": "일정 고치기",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "일정 고치기",
+   "policies": [
+    "'확정'으로 저장하는 순간 가족 화면에 반영",
+    "시간이 없으면 확정 불가('정하는 중'으로는 저장 가능)"
+   ],
+   "branches": [
+    {
+     "to": "item-edit--error",
+     "label": "시간 없이 확정"
+    }
+   ]
+  },
+  {
+   "id": "item-edit--error",
+   "file": "item-edit--error.html",
+   "title": "일정 고치기 · 시간 없음",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "시간 없이 저장하면",
+   "policies": [
+    "시간 없이 '확정'으로 저장하려 할 때"
+   ],
+   "branches": []
+  },
+  {
+   "id": "checklist",
+   "file": "checklist.html",
+   "title": "내가 챙길 것",
+   "role": "everyone",
+   "group": "홈에서 들어가는 곳",
+   "purpose": "내가 챙길 것",
+   "policies": [
+    "누가 챙길지는 짜는 사람이 정한다",
+    "체크는 본인과 짜는 사람 모두 가능"
+   ],
+   "branches": []
+  },
+  {
+   "id": "tasks",
+   "file": "tasks.html",
+   "title": "할 일 나누기",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "할 일 나누기",
+   "policies": [
+    "맡은 사람 1명, 마감일은 선택"
+   ],
+   "branches": []
+  },
+  {
+   "id": "family",
+   "file": "family.html",
+   "title": "가족",
+   "role": "editor",
+   "group": "일정을 짜는 사람에게만 더 보이는 것",
+   "purpose": "일정 같이 짜기 권한",
+   "policies": [
+    "켜면 후보까지 보이고 고칠 수 있다",
+    "큰 글자는 같이 짜지 않는 사람의 기본값"
+   ],
+   "branches": []
+  },
+  {
+   "id": "join",
+   "file": "join.html",
+   "title": "초대 링크 첫 화면",
+   "role": "everyone",
+   "group": "처음 들어올 때",
+   "purpose": "초대 링크로 처음 들어오는 화면",
+   "policies": [
+    "초대 링크는 7일 뒤 만료",
+    "처음엔 '일정 같이 짜기' 꺼진 상태로 합류"
+   ],
+   "branches": [
+    {
+     "to": "home",
+     "label": "함께하기"
+    }
+   ]
+  }
+ ]
+}

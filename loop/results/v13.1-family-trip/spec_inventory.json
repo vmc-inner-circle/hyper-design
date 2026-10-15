@@ -1,0 +1,90 @@
+{
+ "mode": "brief",
+ "items": [
+  {
+   "id": "F1",
+   "kind": "feature",
+   "name": "일정 작성·수정",
+   "quote": "**일정 작성·수정**: 날짜별로 이동·숙박·활동 계획을 적고, 자유롭게 순서를 바꾸거나 내용을 고칠 수 있",
+   "covered_by": [
+    "day-edit",
+    "item-edit"
+   ]
+  },
+  {
+   "id": "F2",
+   "kind": "feature",
+   "name": "확정 여부 표시",
+   "quote": "**확정 여부 표시**: 이미 확정된 항목과 아직 후보 단계인 항목을 구분해서 보여줄 수 있어야 합니다.",
+   "covered_by": [
+    "day-edit",
+    "home"
+   ]
+  },
+  {
+   "id": "F3",
+   "kind": "feature",
+   "name": "역할별 보기(작성자/확인자)",
+   "quote": "**역할에 따라 다르게 보여주기**: 계획을 만드는 사람과 그 계획을 확인만 하는 사람이 같은 정보를 서로 ",
+   "covered_by": [
+    "home",
+    "home-edit",
+    "family"
+   ]
+  },
+  {
+   "id": "F4",
+   "kind": "feature",
+   "name": "할 일·준비물 공유",
+   "quote": "**할 일·준비물 공유**: 여행을 위해 누가 무엇을 준비해야 하는지 구성원끼리 나누어 볼 수 있어야 합니다",
+   "covered_by": [
+    "checklist",
+    "tasks"
+   ]
+  },
+  {
+   "id": "F5",
+   "kind": "feature",
+   "name": "변경 사항 전달",
+   "quote": "**변경 사항 전달**: 계획이 바뀌었을 때 이를 다른 구성원에게 알리되, 너무 잦은 알림이 오히려 부담이 ",
+   "covered_by": [
+    "changes",
+    "item-edit"
+   ]
+  },
+  {
+   "id": "R1",
+   "kind": "rule",
+   "name": "예약 끝난 항목(항공·숙소)은 바뀌지 않음",
+   "quote": "항공권·숙소처럼 이미 예약이 끝나 바뀌지 않는 항목이 있는 반면, 현지 일정은 출발 직전까지도 계속 손이 갑",
+   "screen_hint": "F2",
+   "state_hint": "policy",
+   "policy": [
+    "day-edit"
+   ]
+  },
+  {
+   "id": "R2",
+   "kind": "rule",
+   "name": "확인만 하는 사람은 계획 수정 불가",
+   "quote": "계획을 만드는 사람과 그 계획을 확인만 하는 사람이 같은 정보를 서로 다른 방식으로 받아볼 수 있어야 합니다",
+   "screen_hint": "F3",
+   "state_hint": "policy",
+   "policy": [
+    "family"
+   ]
+  },
+  {
+   "id": "R3",
+   "kind": "rule",
+   "name": "잦은 변경 알림 억제",
+   "quote": "계획이 바뀌었을 때 이를 다른 구성원에게 알리되, 너무 잦은 알림이 오히려 부담이 되지 않도록 설계해주세요.",
+   "screen_hint": "F5",
+   "state_hint": "policy",
+   "policy": [
+    "changes",
+    "item-edit"
+   ]
+  }
+ ]
+}

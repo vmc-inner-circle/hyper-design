@@ -1,0 +1,471 @@
+[
+ {
+  "name": "alarm-clock",
+  "file": "alarm-clock.svg",
+  "meaning": "알람",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "bank",
+  "file": "bank.svg",
+  "meaning": "은행",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "bar-chart",
+  "file": "bar-chart.svg",
+  "meaning": "통계",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "bell",
+  "file": "bell.svg",
+  "meaning": "알림",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "bookmark",
+  "file": "bookmark.svg",
+  "meaning": "저장·북마크",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "books",
+  "file": "books.svg",
+  "meaning": "책·학습",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "bust-in-silhouette",
+  "file": "bust-in-silhouette.svg",
+  "meaning": "사용자",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "busts-in-silhouette",
+  "file": "busts-in-silhouette.svg",
+  "meaning": "사용자 여럿·그룹",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "calendar",
+  "file": "calendar.svg",
+  "meaning": "달력·날짜",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "camera",
+  "file": "camera.svg",
+  "meaning": "카메라·사진",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "chart-decreasing",
+  "file": "chart-decreasing.svg",
+  "meaning": "감소",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "chart-increasing",
+  "file": "chart-increasing.svg",
+  "meaning": "증가·성장",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "check-mark-button",
+  "file": "check-mark-button.svg",
+  "meaning": "완료·확인",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "clipboard",
+  "file": "clipboard.svg",
+  "meaning": "목록·기록",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "coin",
+  "file": "coin.svg",
+  "meaning": "동전·포인트",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "credit-card",
+  "file": "credit-card.svg",
+  "meaning": "카드 결제",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "envelope",
+  "file": "envelope.svg",
+  "meaning": "메일·편지",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "eyes",
+  "file": "eyes.svg",
+  "meaning": "보기·확인",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "father",
+  "file": "father.svg",
+  "meaning": "아빠/어르신 남성",
+  "kind": "person",
+  "source": "core"
+ },
+ {
+  "name": "file-folder",
+  "file": "file-folder.svg",
+  "meaning": "폴더",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "gear",
+  "file": "gear.svg",
+  "meaning": "설정",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "globe-with-meridians",
+  "file": "globe-with-meridians.svg",
+  "meaning": "인터넷·언어",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "hayun",
+  "file": "hayun.svg",
+  "meaning": "젊은 인물",
+  "kind": "person",
+  "source": "core"
+ },
+ {
+  "name": "hourglass-not-done",
+  "file": "hourglass-not-done.svg",
+  "meaning": "기다림·진행 중",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "house",
+  "file": "house.svg",
+  "meaning": "집·홈",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "hundred-points",
+  "file": "hundred-points.svg",
+  "meaning": "만점",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "idcard",
+  "file": "idcard.svg",
+  "meaning": "신분증",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "inbox-tray",
+  "file": "inbox-tray.svg",
+  "meaning": "받은 편지함",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "invite",
+  "file": "invite.svg",
+  "meaning": "초대",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "jieun",
+  "file": "jieun.svg",
+  "meaning": "젊은 인물(여성)",
+  "kind": "person",
+  "source": "core"
+ },
+ {
+  "name": "key",
+  "file": "key.svg",
+  "meaning": "열쇠·비밀번호",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "label",
+  "file": "label.svg",
+  "meaning": "태그·라벨",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "laptop",
+  "file": "laptop.svg",
+  "meaning": "노트북·컴퓨터",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "light-bulb",
+  "file": "light-bulb.svg",
+  "meaning": "아이디어·팁",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "link",
+  "file": "link.svg",
+  "meaning": "링크·연결",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "locked",
+  "file": "locked.svg",
+  "meaning": "잠금·보안",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "magnifying-glass-tilted-left",
+  "file": "magnifying-glass-tilted-left.svg",
+  "meaning": "검색",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "megaphone",
+  "file": "megaphone.svg",
+  "meaning": "공지·안내",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "memo",
+  "file": "memo.svg",
+  "meaning": "메모",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "minsu",
+  "file": "minsu.svg",
+  "meaning": "젊은 인물(남성)",
+  "kind": "person",
+  "source": "core"
+ },
+ {
+  "name": "mobile-phone",
+  "file": "mobile-phone.svg",
+  "meaning": "휴대폰",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "money-bag",
+  "file": "money-bag.svg",
+  "meaning": "돈·수익",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "mother",
+  "file": "mother.svg",
+  "meaning": "엄마/어르신 여성",
+  "kind": "person",
+  "source": "core"
+ },
+ {
+  "name": "outbox-tray",
+  "file": "outbox-tray.svg",
+  "meaning": "보낸 편지함",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "package",
+  "file": "package.svg",
+  "meaning": "택배·상자",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "page-facing-up",
+  "file": "page-facing-up.svg",
+  "meaning": "문서",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "party-popper",
+  "file": "party-popper.svg",
+  "meaning": "축하",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "pencil",
+  "file": "pencil.svg",
+  "meaning": "쓰기·편집",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "phone",
+  "file": "phone.svg",
+  "meaning": "휴대폰",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "pin",
+  "file": "pin.svg",
+  "meaning": "위치",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "pushpin",
+  "file": "pushpin.svg",
+  "meaning": "고정",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "receipt",
+  "file": "receipt.svg",
+  "meaning": "영수증",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "red-heart",
+  "file": "red-heart.svg",
+  "meaning": "좋아요·찜",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "shopping-bags",
+  "file": "shopping-bags.svg",
+  "meaning": "쇼핑",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "shopping-cart",
+  "file": "shopping-cart.svg",
+  "meaning": "장바구니",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "sparkles",
+  "file": "sparkles.svg",
+  "meaning": "새로움·특별",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "speech-balloon",
+  "file": "speech-balloon.svg",
+  "meaning": "대화·메시지",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "star",
+  "file": "star.svg",
+  "meaning": "별점·즐겨찾기",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "stopwatch",
+  "file": "stopwatch.svg",
+  "meaning": "시간 측정",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "telephone-receiver",
+  "file": "telephone-receiver.svg",
+  "meaning": "전화",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "three-o-clock",
+  "file": "three-o-clock.svg",
+  "meaning": "시간",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "thumbs-up",
+  "file": "thumbs-up.svg",
+  "meaning": "좋음·추천",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "ticket",
+  "file": "ticket.svg",
+  "meaning": "티켓·예약",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "trophy",
+  "file": "trophy.svg",
+  "meaning": "우승·성과",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "warning",
+  "file": "warning.svg",
+  "meaning": "경고",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "world-map",
+  "file": "world-map.svg",
+  "meaning": "지도·지역",
+  "kind": "object",
+  "source": "core"
+ },
+ {
+  "name": "wrapped-gift",
+  "file": "wrapped-gift.svg",
+  "meaning": "선물",
+  "kind": "object",
+  "source": "core"
+ }
+]

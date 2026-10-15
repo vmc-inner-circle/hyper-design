@@ -1,0 +1,216 @@
+{
+  "name": "토스",
+  "slug": "toss",
+  "label": "짧고 담백하게",
+  "pitch": "결과부터 바로 말한다. 친근하지만 군더더기가 없다.",
+  "fits": "매일 빠르게 쓰는 거래·예약·금융·생활 앱. 사용자가 바쁘고, 돈·시간이 걸린 안내가 많을 때.",
+  "tags": [
+    "신뢰",
+    "선명",
+    "생활",
+    "차분"
+  ],
+  "evidence": "official",
+  "collected": "2026-10-12",
+  "sources": [
+    {
+      "url": "https://developers-apps-in-toss.toss.im/design/consumer-ux-guide.md",
+      "what": "앱인토스 UX 라이팅 — 해요체·능동·긍정·경어·명사+명사, 다이얼로그 닫기"
+    },
+    {
+      "url": "https://toss.tech/article/8-writing-principles-of-toss",
+      "what": "8가지 라이팅 원칙(잡초 뽑기, Easy to speak)"
+    },
+    {
+      "url": "https://toss.tech/article/how-to-write-error-message",
+      "what": "에러 메시지 원칙"
+    },
+    {
+      "url": "https://toss.tech/article/introducing-toss-error-message-system",
+      "what": "에러 템플릿"
+    },
+    {
+      "url": "https://toss.im/tossfeed/article/uxwriter-interview",
+      "what": "버튼 규칙, 완료 토스트 Do/Don't"
+    }
+  ],
+  "register": {
+    "default": "해요체",
+    "rule": "상황·맥락을 가리지 않고 모든 문구에 해요체. 합니다체를 섞지 않는다.",
+    "why": "사용자는 토스를 '하나의 서비스'로 받아들인다 — 비슷한 보이스 톤이 유지되어야 혼선이 줄어든다(원문).",
+    "exceptions": [
+      {
+        "when": "약관 동의 철회·법적 고지·수수료·공인/공동인증서처럼 법률·금융 효력이 있는 안내",
+        "use": "합니다체",
+        "note": "가이드에 없는 실제 예외 — 본앱 관찰(합니다체 10/96이 모두 이 자리)"
+      }
+    ]
+  },
+  "honorific": {
+    "si": "쓰지 않는다 — '~시겠어요'·'~시나요'·'계시다'·'여쭈다'·'께' 금지",
+    "address": "이름+님 (예: 김토스님). '고객님' 쓰지 않음",
+    "why": "과한 경어는 문장을 길게 하고 거리를 만든다(추론). 원문은 금지 목록만 둔다."
+  },
+  "voice": {
+    "active": "능동형 — '됐어요'보다 '했어요'. 수동은 서비스 종료·기간 만료·사용자 영향·안심시킬 때만",
+    "positive": "부정보다 긍정 — '안 돼요/없어요' 대신 '~하면 할 수 있어요'",
+    "can": "'~할 수 있어요'는 권장 — '~해야 해요'(강요) 대신 권유. 단 정보 없는 빈 문장은 잡초",
+    "nouns": "문장 안에서 '{명사}+{명사}' 한자어 묶음 금지 — 동사로 풀거나 '{명사}가 {명사}해서'"
+  },
+  "slots": {
+    "screen_title": {
+      "form": "해요체 문장 또는 질문, 마침표 없음",
+      "examples": [
+        "얼마를 갚을까요?",
+        "지금은 점검 시간이에요"
+      ]
+    },
+    "input_question": {
+      "form": "정보를 주어로 세운 질문·요청",
+      "examples": [
+        "대출 목적이 무엇인가요?",
+        "신고 이유를 선택해주세요"
+      ]
+    },
+    "toast": {
+      "form": "목적어+동사 과거형 해요체 한 문장",
+      "examples": [
+        "카드를 연결했어요.",
+        "알림을 설정했어요."
+      ]
+    },
+    "result_title": {
+      "form": "한 일을 해요체로",
+      "examples": [
+        "카드를 연결했어요"
+      ]
+    },
+    "progress": {
+      "form": "~하고 있어요 / ~중이에요",
+      "examples": [
+        "토스뱅크 통장을 만들고 있어요"
+      ]
+    },
+    "error": {
+      "form": "무엇이 안 됐는지 + 어떻게 하면 되는지. '유효하지 않은 X' 대신 'X를 다시 확인해주세요'",
+      "examples": [
+        "계좌번호를 다시 확인해주세요",
+        "신용점수는 만 19세 이상부터 확인할 수 있어요."
+      ]
+    },
+    "confirm": {
+      "form": "~할까요?",
+      "examples": [
+        "카드를 해지할까요?"
+      ]
+    }
+  },
+  "buttons": {
+    "single": "~하기 (이동하기·동의하기·문의하기)",
+    "next": "확인 / 다음",
+    "dialog": {
+      "secondary": "닫기 (또는 다음에)",
+      "primary": "~하기 또는 짧은 명사(업데이트·다시 시도)"
+    },
+    "why": "'취소'는 사용자가 하고 있는 작업이 취소된다고 오해할 수 있어 쓰지 않는다(원문). 본앱 확인창 2버튼 8쌍 중 5쌍이 '닫기'(관찰)."
+  },
+  "emotion": {
+    "exclaim": "쓰지 않는다",
+    "emoji": "제품 안 문구에 쓰지 않는다",
+    "note": "「카드 연결 끝! 이제 써볼까요? 😆」는 Don't"
+  },
+  "density": {
+    "sentence": "한 문장에 메시지 하나, 소리 내어 읽어 자연스럽게",
+    "screen": "의미 없는 단어·문장·정보를 뺀다('혹시'는 잡초)"
+  },
+  "lexicon": {
+    "prefer": {
+      "되어요": "돼요",
+      "환불을 받았어요": "돌려받았어요",
+      "잔액 부족으로": "잔액이 부족해서",
+      "께": "에게",
+      "계시나요": "있나요"
+    },
+    "avoid": [
+      "~로 인한",
+      "~을 통해",
+      "~이 가능하며",
+      "유효하지 않은",
+      "입력이 필요합니다"
+    ]
+  },
+  "notation": {
+    "period": "제목 없음, 본문·토스트 있음",
+    "money": "4,000원 (쉼표, 숫자와 '원' 붙임)",
+    "percent": "연 1%"
+  },
+  "pairs": [
+    {
+      "before": "카드 연결을 완료했습니다. / 카드 연결 완료",
+      "after": "카드를 연결했어요.",
+      "why": "합니다체·명사형 종결·시스템 관점을 한 보이스(목적어+동사 해요체)로",
+      "source": "tossfeed uxwriter-interview"
+    },
+    {
+      "before": "알림이 설정됐어요.",
+      "after": "알림을 설정했어요.",
+      "why": "능동형",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "카드를 해지하시겠어요?",
+      "after": "카드를 해지할까요?",
+      "why": "과한 경어 금지",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "잔액 부족으로 구매하지 못했어요",
+      "after": "잔액이 부족해서 구매하지 못했어요",
+      "why": "명사+명사 한자어 묶음을 풀어 쓴다",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "자동차를 가지고 계시나요?",
+      "after": "자동차가 있나요?",
+      "why": "'계시다'·'가지다' 번역투",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "어떤 목적으로 대출받으시나요?",
+      "after": "대출 목적이 무엇인가요?",
+      "why": "경어를 빼고 정보를 주어로",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "보호자가 허락하기 전에는 가입할 수 없어요",
+      "after": "보호자가 허락해야 가입할 수 있어요",
+      "why": "긍정형",
+      "source": "consumer-ux-guide"
+    },
+    {
+      "before": "유효하지 않은 계좌번호 입니다.",
+      "after": "계좌번호를 다시 확인해주세요.",
+      "why": "invalid X 직역 대신 할 일을 말한다",
+      "source": "introducing-toss-error-message-system"
+    },
+    {
+      "before": "집 주소 입력이 필요합니다.",
+      "after": "집 주소를 확인해주세요.",
+      "why": "X is required 직역 대신 할 일을 말한다",
+      "source": "introducing-toss-error-message-system"
+    },
+    {
+      "before": "앞으로 받을 배당금",
+      "after": "받을 배당금",
+      "why": "의미 없는 단어 빼기",
+      "source": "8-writing-principles-of-toss"
+    },
+    {
+      "before": "내일 카드값이 결제될 예정이에요",
+      "after": "내일은 카드값 나가는 날이에요",
+      "why": "소리 내어 읽기 쉬운 말",
+      "source": "consumer-ux-guide"
+    }
+  ],
+  "observed": "docs/research/ux-writing/real/README.md (본앱 캡처, 2026-10-12) — 실제 문구는 검증 정답지라 여기 인용하지 않는다"
+}
