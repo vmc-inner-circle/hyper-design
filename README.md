@@ -1,75 +1,79 @@
-# hyper-design
+# k-style-ui-ux
 
-VIBE MAFIA CLUB 이너서클이 함께 만드는 오픈소스 디자인 하네스 실험 레포입니다.
+PRD(기획 문서) 한 장을 넣으면 **한국 앱 스타일의 모바일 화면 초안**을 15분 안팎에 HTML로 뽑아 주는 Claude Code·Codex·Cursor 플러그인입니다. [VIBE MAFIA CLUB 이너서클](https://www.vibemafiaclub.com/inner-circle)이 함께 만드는 오픈소스입니다.
 
-## 지금 이 레포의 상태
+![가족여행 PRD로 만든 화면](./docs/images/family-trip.jpg)
 
-**하네스톤 개인전(2026-09-30)의 공통 출발점입니다.** 모두가 같은 수준에서 시작하도록, 9/5 하네스톤 2회차 참가자가 받은 빈 템플릿([`b946678`](https://github.com/vmc-inner-circle/hyper-design/tree/b946678))으로 되돌렸습니다. 이번 결과물은 HTML이라 Figma 전제 문구만 최소한으로 고쳤습니다.
+## 이런 분께 맞습니다
 
-- 규칙·제출 방법: [HARNESSTON.md](./HARNESSTON.md)
-- 공통 PRD: [prd/family-trip.md](./prd/family-trip.md)(결과물용) · [prd/wedding-meetup.md](./prd/wedding-meetup.md)(연습용)
-- 제출 위치: [submissions/](./submissions/)
+- **디자이너 없이 초기 앱을 만드는 분** — 외주를 맡기기 전에 화면 흐름과 첫 초안을 먼저 받아 볼 수 있습니다.
+- **사내 도구처럼 기획·디자인까지 직접 해야 하는 개발자**
+- **디자이너** — 같은 작업의 첫 초안을 빨리 받고 다듬는 데 쓸 수 있습니다.
 
-## 이전 하네스(v1) 아카이브
+완제품을 대신 만드는 도구는 아닙니다. 초안을 빨리 만들어 병목을 없애는 도구이고, 디테일·미감·문구는 여전히 사람이 잡아야 합니다.
 
-harnessthon-2-team-3 판본을 이식해 다듬던 기존 하네스(`apps/harness`)는 아래에 보존되어 있습니다.
+## 무엇이 다른가
 
-- 브랜치: [`archive/v1-team3`](https://github.com/vmc-inner-circle/hyper-design/tree/archive/v1-team3)
-- 태그: [`v1-team3-final`](https://github.com/vmc-inner-circle/hyper-design/tree/v1-team3-final)
-- v1 기준으로 열려 있던 PR(#6·#7·#8)은 base를 `archive/v1-team3`로 옮겨 보존했습니다.
+- **UX 먼저** — 화려한 화면보다 핵심 기능에 헤매지 않고 닿는지를 먼저 봅니다. 사용자가 만들거나 신청하는 모든 대상마다 시작 → 보기 → 고치기 → 끝(결과) 화면을 빠짐없이 만듭니다.
+- **한국 서비스 기준** — 29CM·에어비앤비·클래스101·당근·컬리·무신사·마이리얼트립 등 국내 서비스에서 수집한 색 팔레트 중에서 고르고, 결과물에서 팔레트 3벌을 원클릭으로 바꿔 볼 수 있습니다. 여백·글자 크기 같은 값과 아이콘([Fluent Emoji](https://github.com/microsoft/fluentui-emoji), MIT)은 미리 준비돼 있습니다.
+- **검사 후 전달** — 토큰·부품 사용과 빠진 화면, 한국어 줄바꿈(어절 쪼개짐·칸 넘침, [hangul-wrap](https://github.com/hanmariyang/giting-skills)의 실측 방식, MIT)은 스크립트(`selfcheck.py`·`audit.py`)로 검사하고, 화면 캡처는 체크리스트로 비평해 P0·P1 문제를 고친 뒤 넘깁니다. 체크리스트([`core/references/checklist.md`](./plugins/k-style-ui-ux/core/references/checklist.md))는 하네스를 안 써도 참고할 만합니다.
 
-## 기여 규칙
+## 예시
+
+main 하네스(v14·v15)로 만든 화면입니다. 결과 폴더는 산출물 정리 전 커밋에 보관돼 있습니다. 받아서 `index.html`을 브라우저로 열면 캔버스에서 전체 흐름을 볼 수 있습니다.
+
+| PRD | 결과 | 걸린 시간(당시 판본) |
+|---|---|---|
+| [가족여행 계획](./prd/family-trip.md) | [loop/results/v15-family-trip](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v15-family-trip) | 8.6분 |
+| [청첩장 모임](./prd/wedding-meetup.md) | [loop/results/v15-wedding-meetup](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v15-wedding-meetup) | 1차 16.1분 + 2차 17.0분 |
+| [필라테스 예약](./prd/pilates-booking.md) | [loop/results/v14-pilates-booking](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v14-pilates-booking) | 23.3분 |
+
+![필라테스 예약 PRD로 만든 화면](./docs/images/pilates-booking.jpg)
+![청첩장 모임 PRD로 만든 화면](./docs/images/wedding-meetup.jpg)
+
+캔버스(흐름별 화면·화살표·화면별 정책):
+
+![캔버스 Screens 탭](./docs/pr/v15/canvas-screens.png)
+
+## 설치
+
+Claude Code에서:
+```
+/plugin marketplace add vmc-inner-circle/k-style-ui-ux
+/plugin install k-style-ui-ux@k-style-ui-ux
+```
+로컬에서 바로 써 보려면: `claude --plugin-dir <이 저장소>/plugins/k-style-ui-ux`
+
+Codex에서:
+```
+codex plugin marketplace add vmc-inner-circle/k-style-ui-ux
+codex plugin add k-style-ui-ux@k-style-ui-ux
+```
+
+Cursor에서: **Customize → Plugins**에서 GitHub 저장소로 가져오기에 `https://github.com/vmc-inner-circle/k-style-ui-ux`를 넣고 `k-style-ui-ux`를 설치합니다.
+
+## 사용법
+
+```
+/k-style-ui-ux:go <PRD 파일 경로>   # 1차, 약 15분
+/k-style-ui-ux:max                  # 2차 — 오류·확인창·빈 화면 같은 상태 화면 추가, 약 10분
+```
+
+Codex에서는 `$k-style-ui-ux:go`·`$k-style-ui-ux:max`로, Cursor에서는 채팅에 `/`를 치고 `go`·`max`를 골라 부릅니다.
+
+PRD만 붙여넣고 "화면 만들어줘"라고 해도 됩니다. 결과는 실행한 폴더의 `out/index.html`입니다. 결과물 구성과 구조는 [plugins/k-style-ui-ux/README.md](./plugins/k-style-ui-ux/README.md)에 있습니다.
+
+## 피드백
+
+써 보셨다면 [피드백 남기기](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/new?template=feedback.yml)로 알려 주세요. 어떤 앱을 만들었는지, 어디서 막혔는지, 결과물을 실제로 썼는지가 다음 개선 방향을 정합니다. 디자이너 분의 혹평도 환영합니다.
+
+## 기여
 
 - `main`에 직접 push하지 않습니다. 브랜치를 만들고 GitHub PR로 병합합니다.
+- 이 하네스는 이너서클의 하네스톤(하네스 자체를 겨루는 워크샵·해커톤)에서 시작했습니다. 같이 만들고 싶다면 [이너서클](https://www.vibemafiaclub.com/inner-circle)에서 모임 일정과 모집 소식을 볼 수 있습니다.
+- 자동 개선 루프 기록: [loop/RESULTS.md](./loop/RESULTS.md)
+- 하네스톤 개인전 안내, v1 아카이브, 첫 빈 템플릿 설명: [docs/history.md](./docs/history.md)
 
----
-
-## 하네스 템플릿 — oss-design-harness
-
-**현업 디자이너의 판단 기준(안목)을 추출해, 에이전트에 최적화된 형태로 재구성하는 디자인 하네스.**
-
-VIBE MAFIA CLUB 하네스톤 2회차(2026-09-05)를 계기로 이너서클 코파운더들과 함께 만드는 오픈소스 프로젝트입니다.
-지향점: `ui-ux-pro-max` 급, 현업에서 쓸 수 있는 수준의 skill.
-
-### 이 레포의 상태
-
-**완전 빈 템플릿입니다.** 뼈대(A/B/C/0 4단계 구조, 파일 포맷)만 있고, 실제 판단 기준 내용은 비어 있습니다.
-
-- 판단 기준의 실제 내용(예: "무엇을 보고 고급스럽다고 판단하는가")은 **하네스톤 참가자·코파운더가 실제로 채워야** 의미가 있습니다.
-- 미리 채워서 예시로 주면, 참가자가 자기 안목을 꺼내는 대신 이미 있는 답을 검토하는 일이 되어 버려 원래 목적(다양한 디자이너의 독립적 안목 수집)이 오염됩니다.
-- 그래서 지금은 각 섹션에 `TODO`만 있고, 예시 2~3개만 남깁니다.
-
-### 프레임워크 — 4단계 판단 구조
-
-디자이너가 일하는 **순서**를 그대로 흉내내지 않습니다. 사람이 순서대로 일하는 이유의 상당수는 사람의 기억력·주의력 한계를 우회하는 것이지, 결과가 좋아지는 진짜 원인이 아닙니다. 대신 각 단계가 실제로 하려던 일(**판단 기준**)만 뽑아서, 에이전트가 잘하는 방식(병렬 생성, 다각도 교차 비평)으로 다시 구현합니다.
-
-| 단계 | 시점 | 하는 일 |
-|---|---|---|
-| **0. 요구사항 정렬** | 화면을 만들기 **전** | 뭘 만들지 자체가 불확실할 때, 레퍼런스/시나리오를 보여주고 반응(좋다/싫다+이유)을 받아 암묵적 판단기준을 뽑아낸다. 라벨형 질문("모던한 게 좋으세요?") 금지. |
-| **B. 발산·수렴** | 만드는 도중, 정답이 여러 개일 때 | 독립적인 축(무드/밀도/난이도 등)을 먼저 나누고, 축마다 후보를 병렬 생성해 비교·수렴한다. |
-| **A. 구조적 사실 검증** | 다 만든 후 | 데이터로 예/아니오 확인 가능한 것 (spacing, 컴포넌트 재사용, 네이밍, 상태 존재 여부). |
-| **C. 미적·게슈탈트 판단** | 다 만든 후 | 스크린샷을 렌더해서 실제로 봐야만 아는 것 (색온도 일관성, 위계, 여백 리듬, 클리셰 여부, 엣지케이스 완성도). |
-
-C단계에서 탈락하면 원인에 따라 세 갈래로 라우팅한다 — ① 국소 결함(그 속성만 고쳐 C 재검) ② 방향 자체가 틀림(B로 회귀) ③ 반복 실패(0으로 에스컬레이션). 재시도 상한을 두고, 최종 판단은 항상 사람이 내린다.
-
-자세한 배경·논리 검증 과정은 킥오프 자료(`docs/concept.md`) 참고.
-
-### 구조
-
-```
-.claude/skills/oss-design-harness/SKILL.md   # 하네스 본체 — 4단계 프롬프트 뼈대
-templates/brief.md                            # 0단계 산출물 양식
-templates/decisions.md                        # B단계 산출물 양식
-docs/concept.md                               # 컨셉 스펙 전문 (배경·경쟁 포지셔닝·논리 검증 과정)
-```
-
-### 사용법 (참가자용)
-
-1. 이 레포를 프로젝트 루트로 해서 Claude Code(또는 다른 코딩 에이전트)를 실행한다.
-2. `.claude/skills/oss-design-harness/SKILL.md`의 각 단계 `TODO`를 채워 넣는다 — 이게 당신의 판단기준을 코드화하는 작업이다.
-3. 0단계 결과는 `brief.md`, B단계 결과는 `decisions.md`에 남긴다 (템플릿을 프로젝트 폴더로 복사해서 사용).
-4. 완성된 SKILL.md는 팀/코파운더와 공유해 비교한다.
-
-### 라이선스
+## 라이선스
 
 MIT — [LICENSE](./LICENSE)

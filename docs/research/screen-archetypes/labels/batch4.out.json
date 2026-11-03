@@ -1,0 +1,782 @@
+[
+ {
+  "domain": "book",
+  "name": "예스24 eBook & 크레마클럽",
+  "ratings": 10271,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "본문 글",
+     "하단 고정 버튼:재생 컨트롤"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "본문 글",
+     "기타:글자 설정 패널(밝기·배경색·글자크기·글꼴)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "기타:PDF 문서 필기",
+     "기타:필기 도구 모음"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "기타:상단 로고·검색",
+     "상단 탭",
+     "기타:섹션 제목",
+     "필터 칩",
+     "랭킹 목록",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "기타:상단 로고·검색",
+     "상단 탭",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "본문 글",
+     "하단 고정 버튼:재생 컨트롤"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "class",
+  "name": "소모임 - 취미모임 동호회 앱 | 우리동네 취미 모임",
+  "ratings": 8751,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "카테고리 아이콘 격자",
+     "목록 행",
+     "하단 고정 버튼:플로팅 +"
+    ],
+    "tabbar": [
+     "홈",
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "날짜 줄(주간)",
+     "세로 카드 피드",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "기타:모달 제목(내 지역)",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:모임 제목·소개 글",
+     "기타:정기모임 카드",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "사진 갤러리(상단 큰 사진)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "기타:채팅 대화",
+     "입력 칸 여러 개"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "edu",
+  "name": "스픽 (Speak) - 영어회화, 스피킹, 발음",
+  "ratings": 173463,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "기타:대화 말풍선 카드",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "slots": [
+     "결과 큰 문구",
+     "결과 요약 카드",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "기타:캐릭터 롤플레이 화면",
+     "기타:대화 말풍선"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "기타:대화 문장 목록",
+     "기타:AI 피드백 카드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "finance",
+  "name": "케이뱅크",
+  "ratings": 180786,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목·알림",
+     "배너 캐러셀",
+     "자산·잔액 카드",
+     "바로가기 버튼 줄",
+     "목록 행",
+     "탭바(4개)"
+    ],
+    "tabbar": [
+     "홈",
+     "발견",
+     "혜택",
+     "전체"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목",
+     "필터 칩",
+     "배너 캐러셀",
+     "세로 카드 피드",
+     "탭바(4개)"
+    ],
+    "tabbar": [
+     "홈",
+     "발견",
+     "혜택",
+     "전체"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목",
+     "기타:섹션 제목",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "탭바(4개)"
+    ],
+    "tabbar": [
+     "홈",
+     "발견",
+     "혜택",
+     "전체"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목",
+     "상단 탭",
+     "자산·잔액 카드",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "fitness",
+  "name": "플릭 - 운동일지, 운동기록, 운동일기, 운동루틴",
+  "ratings": 13762,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "기타:인체 일러스트",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "form",
+    "slots": [
+     "단계 표시",
+     "기타:운동 일러스트",
+     "기타:운동 이름",
+     "입력 칸 여러 개",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "기타:운동 일러스트",
+     "기타:운동 이름",
+     "상단 탭",
+     "필터 칩",
+     "현황 카드(숫자 크게)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "기타:운동 일러스트",
+     "기타:운동 이름",
+     "상단 탭",
+     "필터 칩",
+     "본문 글"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "기타:운동 이름",
+     "상단 탭",
+     "필터 칩",
+     "본문 글",
+     "차트"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "slots": [
+     "기타:상단 제목",
+     "기타:인체 일러스트",
+     "현황 카드(숫자 크게)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "result",
+    "slots": [
+     "기타:상단 제목",
+     "기타:인체 일러스트",
+     "기타:기간 슬라이더",
+     "필터 칩"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목",
+     "상단 탭",
+     "월 달력",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "grocery",
+  "name": "쿠팡(Coupang)-모바일 쇼핑",
+  "ratings": 31371,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "평점·리뷰 요약",
+     "옵션 선택",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "상단 탭",
+     "검색창",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "2열 상품 격자",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "기타:상단 제목",
+     "검색창",
+     "배너 캐러셀",
+     "바로가기 버튼 줄"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "필터 칩",
+     "2열 상품 격자",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "result",
+    "slots": [
+     "기타:상단 제목",
+     "결과 큰 문구",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "상단 탭",
+     "세로 카드 피드",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "house",
+  "name": "호갱노노",
+  "ratings": 12513,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "detail",
+    "slots": [
+     "기타:단지 제목",
+     "현황 카드(숫자 크게)",
+     "목록 행",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "form",
+    "slots": [
+     "기타:채팅 대화",
+     "결과 요약 카드",
+     "입력 칸 여러 개"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "result",
+    "slots": [
+     "결과 큰 문구",
+     "결과 요약 카드",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "세로 카드 피드",
+     "탭바(5개)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "랭킹 목록",
+     "탭바(5개)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "목록 행",
+     "탭바(5개)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "결과 요약 카드",
+     "현황 카드(숫자 크게)",
+     "탭바(5개)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "restaurant",
+  "name": "카카오맵 - 대한민국 No.1 지도앱",
+  "ratings": 187522,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "지도",
+     "목록 행",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "result",
+    "slots": [
+     "지도",
+     "정보 행(라벨:값)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "other",
+    "slots": [
+     "기타:내비게이션 안내",
+     "지도"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "지도"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "지도",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "지도",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "기타:상단 제목",
+     "상단 탭",
+     "필터 칩",
+     "랭킹 목록"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "stay",
+  "name": "호텔스닷컴: 숙소 예약",
+  "ratings": 208897,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "검색창",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "세로 카드 피드",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:예약 정보",
+     "다음 행동 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "todo",
+  "name": "minical - 일정 관리 캘린더 앱 (달력)",
+  "ratings": 60380,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "기타:상단 아이콘",
+     "월 달력",
+     "일정 타임라인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "기타:상단 아이콘",
+     "월 달력",
+     "일정 타임라인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "travel",
+  "name": "클룩 KLOOK: 액티비티, 투어, 렌터카 예약",
+  "ratings": 10541,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "평점·리뷰 요약",
+     "사진 갤러리(상단 큰 사진)",
+     "정렬",
+     "필터 칩",
+     "리뷰 목록"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "정렬",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "slots": [
+     "가격·할인",
+     "옵션 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ }
+]

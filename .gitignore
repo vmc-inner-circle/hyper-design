@@ -1,0 +1,9 @@
+loop/results/*/.cands/
+__pycache__/
+
+# 산출물은 커밋하지 않는다(ci/verify.py가 검사). 지난 결과는 커밋 e8a9616에 보관:
+# https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4
+# PR 본문용 캡처는 docs/pr/<주제>/에 둔다.
+/loop/results/
+/demos/
+/submissions/*/

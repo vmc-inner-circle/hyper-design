@@ -1,0 +1,34 @@
+{
+ "default": "myrealtrip",
+ "options": [
+  {
+   "slug": "myrealtrip",
+   "name": "마이리얼트립",
+   "brand": "#2b96ed",
+   "source": "https://www.myrealtrip.com/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "도메인(여행)",
+    "성격(신뢰,여행)"
+   ]
+  },
+  {
+   "slug": "airbnb",
+   "name": "에어비앤비",
+   "brand": "#da1249",
+   "source": "https://www.airbnb.co.kr/ CSS 변수 + 화면 실사용 색 (2026-10-01 수집)",
+   "why": [
+    "도메인(여행·숙소)",
+    "성격(따뜻함)"
+   ]
+  },
+  {
+   "slug": "29cm",
+   "name": "29CM",
+   "brand": "#19191a",
+   "source": "https://www.29cm.co.kr/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+   "why": [
+    "측정 합성"
+   ]
+  }
+ ]
+}

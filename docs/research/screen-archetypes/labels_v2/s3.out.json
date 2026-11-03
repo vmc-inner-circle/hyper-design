@@ -1,0 +1,784 @@
+[
+ {
+  "site": "catchtable",
+  "name": "캐치테이블",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "상품 격자"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "검색 결과 카드 일부"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "지도",
+     "목록 행"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "월 달력",
+     "시간·날짜 선택",
+     "옵션 선택"
+    ],
+    "anchor": "달력·날짜",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "내 숫자 카드",
+     "정보 행(라벨:값)",
+     "배너 캐러셀"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "목록 행",
+     "목록 행",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:음식 종류 가로 줄",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "팝업 라벨 겹침"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "정보 행(라벨:값)",
+     "시간·날짜 선택",
+     "하단 고정 버튼"
+    ],
+    "anchor": "목록 행",
+    "repeat": "없음",
+    "exit": "예약",
+    "conf": "low",
+    "note": "팝업이 상당히 가림"
+   }
+  ]
+ },
+ {
+  "site": "coupangplay",
+  "name": "쿠팡플레이",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "포스터 3열, 앱 UI 일부"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "instagram",
+  "name": "Instagram",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:스토리 편집 화면",
+     "하단 고정 버튼"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 2,
+    "kind": "chat",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "채팅 말풍선",
+     "입력 칸 여러 개"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "가로 카드 줄",
+     "작성자/프로필 줄",
+     "세로 카드 피드",
+     "반응(좋아요·댓글)",
+     "탭바(5)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "작성자/프로필 줄",
+     "반응(좋아요·댓글)",
+     "탭바(5)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "kakaotalk",
+  "name": "카카오톡 KakaoTalk",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "chat",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "채팅 말풍선",
+     "입력 칸 여러 개"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 2,
+    "kind": "chat",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "채팅 말풍선"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "영상 플레이어",
+     "반응(좋아요·댓글)",
+     "탭바(5)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상단 탭",
+     "목록 행",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "다음 행동 버튼",
+     "사진 갤러리(상단 큰 사진)"
+    ],
+    "anchor": "프로필(사람·가게)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "상단 탭",
+     "배너 캐러셀",
+     "가로 카드 줄",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "탭바 첫 칸(친구) 선택"
+   }
+  ]
+ },
+ {
+  "site": "monimo",
+  "name": "모니모(삼성금융통합앱) 생명 화재 카드 증권",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "내 숫자 카드",
+     "차트",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "내 숫자 카드",
+     "서비스 격자",
+     "탭바(5)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상단 탭",
+     "배너 캐러셀",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "큰 사진",
+     "다음 행동 버튼",
+     "내 숫자 카드",
+     "탭바(5)"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "naverpay",
+  "name": "네이버페이",
+  "screens": [
+   {
+    "idx": 5,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "QR·바코드",
+     "바로가기 버튼 줄",
+     "탭바(5)"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "검색창",
+     "서비스 격자",
+     "내 숫자 카드",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "내 숫자 카드",
+     "가로 카드 줄",
+     "배너 캐러셀"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상단 탭",
+     "차트",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "remember",
+  "name": "리멤버 - No.1 경력채용, 명함관리, 커뮤니티",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "정보 행(라벨:값)",
+     "본문 글",
+     "다음 행동 버튼"
+    ],
+    "anchor": "글(제목+작성자+본문)",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": "팝업이 일부 가림"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "세로 카드 피드",
+     "반응(좋아요·댓글)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "low",
+    "note": "팝업 일부"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "가로 카드 줄",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "팝업 일부"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "목록 행",
+     "다음 행동 버튼"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "tmap",
+  "name": "티맵 - 장소추천, 지도, 운전점수, 대중교통, 대리",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "서비스 격자",
+     "배너 캐러셀",
+     "상품 격자",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "상품 격자",
+     "반응(좋아요·댓글)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "사진 2열, 하단 아이콘 겹침"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "가로 카드 줄",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "지도",
+     "결과 요약 카드"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "지도",
+     "바로가기 버튼 줄",
+     "목록 행"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "지도",
+     "단계 표시"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "상단 탭",
+     "목록 행",
+     "사진 갤러리(상단 큰 사진)",
+     "탭바(5)"
+    ],
+    "anchor": "프로필(사람·가게)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "yeogi",
+  "name": "여기어때: 호텔, 모텔, 숙소, 항공권 여행 최저가",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "로고줄",
+     "서비스 격자",
+     "배너 캐러셀",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "배너 캐러셀",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "입력 칸 여러 개",
+     "필터 칩",
+     "가로 카드 줄"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "입력 칸 여러 개",
+     "필터 칩",
+     "가로 카드 줄"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "입력 칸 여러 개",
+     "다음 행동 버튼"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "큰 사진",
+     "서비스 격자"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "배너 캐러셀",
+     "목록 행",
+     "서비스 격자"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   }
+  ]
+ }
+]

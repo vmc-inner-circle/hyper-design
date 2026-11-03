@@ -1,0 +1,7 @@
+interface:
+  display_name: "k-style-ui-ux go"
+  short_description: "PRD 한 장 → 모든 흐름의 모바일 앱 HTML 화면 + 캔버스"
+  default_prompt: "k-style-ui-ux go로 이 PRD의 화면을 만들어줘."
+
+policy:
+  allow_implicit_invocation: true
