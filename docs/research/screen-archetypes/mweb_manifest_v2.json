@@ -1,0 +1,142 @@
+[
+ {
+  "id": "daangn-main",
+  "domain": "동네 생활",
+  "pages": {
+   "home": "https://www.daangn.com/kr/",
+   "list": "https://www.daangn.com/kr/search/buy-sell/",
+   "detail": "https://www.daangn.com/kr/buy-sell/%EC%95%8C%EB%A1%9C%EB%B4%87-%EC%95%BD%EA%B8%B0%EB%AA%A8-%ED%8B%B0%EC%85%94%EC%B8%A0-145%EC%82%AC%EC%9D%B4%EC%A6%88-%EA%B8%B0%EB%AA%A8%EB%B0%94%EC%A7%80-150%EC%82%AC%EC%9D%B4%EC%A6%88-%EC%9D%BC%EA%B4%84%ED%8C%94%EC%95%84%EC%9A%94-v857gg5q3dup/"
+  }
+ },
+ {
+  "id": "daangn-community",
+  "domain": "동네 생활",
+  "pages": {
+   "list": "https://www.daangn.com/kr/search/community/",
+   "detail": "https://www.daangn.com/kr/community/%EA%B0%95%EC%95%84%EC%A7%80%EC%99%80-%EA%B0%99%EC%9D%B4-%EC%82%AC%EC%A7%84%EC%B0%8D%EC%96%B4%EB%93%9C%EB%A0%A4%EC%9A%94-jnv7u56kar7z/"
+  }
+ },
+ {
+  "id": "daangn-group",
+  "domain": "모임",
+  "pages": {
+   "list": "https://www.daangn.com/kr/search/group/",
+   "detail": "https://www.daangn.com/kr/group/qkhskf5xz3r6/"
+  }
+ },
+ {
+  "id": "daangn-local",
+  "domain": "동네 가게",
+  "pages": {
+   "list": "https://www.daangn.com/kr/search/local-profile/?q=%EB%A7%9B%EC%A7%91",
+   "detail": "https://www.daangn.com/kr/search/local-profile/?q=%ED%99%94%EC%84%9C%EC%97%AD+%EB%A7%9B%EC%A7%91"
+  }
+ },
+ {
+  "id": "daangn-cars",
+  "domain": "중고차",
+  "pages": {
+   "list": "https://www.daangn.com/kr/search/cars/",
+   "detail": "https://www.daangn.com/kr/cars/%EB%AA%A8%EB%8D%B8-3-awd-%EB%A1%B1-%EB%A0%88%EC%9D%B8%EC%A7%80-9pexhxww91pe/"
+  }
+ },
+ {
+  "id": "daangn-jobs",
+  "domain": "알바",
+  "pages": {
+   "list": "https://jobs.daangn.com/s?regionId=4543&referrer=daangn_web&referrer_context=daangn_web.search",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "daangn-realty",
+  "domain": "부동산",
+  "pages": {
+   "list": "https://realty.daangn.com/map/%EA%B2%BD%EA%B8%B0%EB%8F%84/%EC%88%98%EC%9B%90%EC%8B%9C%20%EC%9E%A5%EC%95%88%EA%B5%AC/%EC%A0%95%EC%9E%90%EB%8F%99?region_feed=false",
+   "detail": "https://realty.daangn.com/?home=false"
+  }
+ },
+ {
+  "id": "chzzk",
+  "domain": "라이브 방송",
+  "pages": {
+   "home": "https://m.chzzk.naver.com/",
+   "detail": "https://m.chzzk.naver.com/0d800f435656efb53ecd910079b73a0a"
+  }
+ },
+ {
+  "id": "soop",
+  "domain": "라이브 방송",
+  "pages": {
+   "home": "https://m.sooplive.com/#/home",
+   "detail": "https://play.sooplive.com/yeniouoyeni/298218355"
+  }
+ },
+ {
+  "id": "naver",
+  "domain": "포털",
+  "pages": {
+   "home": "https://m.naver.com/",
+   "detail": "https://m.naver.com/"
+  }
+ },
+ {
+  "id": "navermap",
+  "domain": "지도",
+  "pages": {
+   "home": "https://m.map.naver.com/",
+   "detail": "https://m.smartplace.naver.com/places/user-engagements"
+  }
+ },
+ {
+  "id": "oliveyoung",
+  "domain": "뷰티 쇼핑",
+  "pages": {
+   "home": "https://m.oliveyoung.co.kr/m/mtn?menu=home&bottom_sheet=themeDrawerModal",
+   "list": "https://m.oliveyoung.co.kr/m/mtn/search/result?query=%EC%84%A0%ED%81%AC%EB%A6%BC",
+   "detail": "https://m.oliveyoung.co.kr/m/goods/getGoodsDetail.do?goodsNo=A000000253632&dispCatNo=1000001001100060001&trackingCd=SearchResult_Mcuration1_1&t_page=%ED%86%B5%ED%95%A9%EA%B2%80%EC%83%89%EA%B2%B0%EA%B3%BC%ED%8E%98%EC%9D%B4%EC%A7%80&t_click=%EB%AA%B0%EB%A1%9C%EC%BD%94_%ED%81%B4%EB%A6%AD_%EA%B2%80%EC%83%89%EA%B2%B0%EA%B3%BC_%EC%9D%B8%EB%B2%A4%ED%86%A0%EB%A6%AC_A&t_search_name=%EC%84%A0%ED%81%AC%EB%A6%BC&t_number=1"
+  }
+ },
+ {
+  "id": "daiso",
+  "domain": "생활 쇼핑",
+  "pages": {
+   "home": "https://prdm.daisomall.co.kr/main/ds",
+   "detail": "https://prdm.daisomall.co.kr/main/ds/spexhbt/C211?exbtNo=2170"
+  }
+ },
+ {
+  "id": "cgv",
+  "domain": "영화 예매",
+  "pages": {
+   "home": "https://cgv.co.kr/",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "albamon",
+  "domain": "알바",
+  "pages": {
+   "home": "https://m.albamon.com/",
+   "detail": "https://m.albamon.com/alba-talk/tv"
+  }
+ },
+ {
+  "id": "kmong",
+  "domain": "전문가 찾기",
+  "pages": {
+   "home": "https://kmong.com/",
+   "list": "https://kmong.com/search?keyword=%EB%A1%9C%EA%B3%A0&type=gigs",
+   "detail": "https://kmong.com/article/3409--%EC%8B%A0%EA%B7%9C-%ED%8F%AC%ED%8A%B8%ED%8F%B4%EB%A6%AC%EC%98%A4-%EA%B8%B0%ED%9A%8D%EC%A0%84"
+  }
+ },
+ {
+  "id": "coupang",
+  "domain": "종합 쇼핑",
+  "pages": {
+   "home": "https://m.coupang.com/",
+   "list": "https://m.coupang.com/nm/search?q=%EC%82%AC%EA%B3%BC",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ }
+]

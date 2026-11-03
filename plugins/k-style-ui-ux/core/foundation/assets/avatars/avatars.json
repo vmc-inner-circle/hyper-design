@@ -1,0 +1,406 @@
+{
+ "styles": {
+  "photo": {
+   "name": "실제 사진",
+   "use": "실명이 신뢰의 핵심 — 후기·전문가·매칭·중고 판매자",
+   "files": "없음 — images.md 이미지 자리로 사람마다 찾는다(사용자와 닮은 사람)",
+   "license": "이미지마다 credits.json"
+  },
+  "people": {
+   "name": "컬러 사람 일러스트",
+   "use": "친근·가족·생활·교육 — 나이·성별이 화면에서 중요한 곳",
+   "source": "Microsoft Fluent Emoji(밝은 피부 변형)",
+   "license": "MIT"
+  },
+  "line": {
+   "name": "선 드로잉",
+   "use": "업무·에디토리얼·차분·신뢰 — 어른 위주",
+   "source": "DiceBear Notionists(Zoish)",
+   "license": "CC0 1.0"
+  },
+  "soft": {
+   "name": "부드러운 선",
+   "use": "감성·뷰티·커뮤니티·취미",
+   "source": "DiceBear Lorelei(Lisa Wischofsky)",
+   "license": "CC0 1.0"
+  },
+  "animals": {
+   "name": "동물 얼굴",
+   "use": "익명 서비스(익명 커뮤니티·메신저 기본 프로필) — 사람 얼굴을 보이지 않는 곳",
+   "source": "Microsoft Fluent Emoji",
+   "license": "MIT"
+  }
+ },
+ "files": {
+  "people": [
+   {
+    "file": "people/01.png",
+    "gender": "여성",
+    "age": "성인",
+    "what": "Woman"
+   },
+   {
+    "file": "people/02.png",
+    "gender": "여성",
+    "age": "성인",
+    "what": "Woman curly hair"
+   },
+   {
+    "file": "people/03.png",
+    "gender": "여성",
+    "age": "성인",
+    "what": "Woman technologist"
+   },
+   {
+    "file": "people/04.png",
+    "gender": "여성",
+    "age": "성인",
+    "what": "Woman office worker"
+   },
+   {
+    "file": "people/05.png",
+    "gender": "여성",
+    "age": "청소년",
+    "what": "Woman student"
+   },
+   {
+    "file": "people/06.png",
+    "gender": "여성",
+    "age": "성인",
+    "what": "Woman cook"
+   },
+   {
+    "file": "people/07.png",
+    "gender": "여성",
+    "age": "어린이",
+    "what": "Girl"
+   },
+   {
+    "file": "people/08.png",
+    "gender": "여성",
+    "age": "노년",
+    "what": "Old woman"
+   },
+   {
+    "file": "people/09.png",
+    "gender": "여성",
+    "age": "노년",
+    "what": "Woman white hair"
+   },
+   {
+    "file": "people/10.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man"
+   },
+   {
+    "file": "people/11.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man curly hair"
+   },
+   {
+    "file": "people/12.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man beard"
+   },
+   {
+    "file": "people/13.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man technologist"
+   },
+   {
+    "file": "people/14.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man office worker"
+   },
+   {
+    "file": "people/15.png",
+    "gender": "남성",
+    "age": "청소년",
+    "what": "Man student"
+   },
+   {
+    "file": "people/16.png",
+    "gender": "남성",
+    "age": "성인",
+    "what": "Man cook"
+   },
+   {
+    "file": "people/17.png",
+    "gender": "남성",
+    "age": "어린이",
+    "what": "Boy"
+   },
+   {
+    "file": "people/18.png",
+    "gender": "남성",
+    "age": "노년",
+    "what": "Old man"
+   },
+   {
+    "file": "people/19.png",
+    "gender": "남성",
+    "age": "노년",
+    "what": "Man white hair"
+   },
+   {
+    "file": "people/20.png",
+    "gender": "중립",
+    "age": "성인",
+    "what": "Person"
+   },
+   {
+    "file": "people/21.png",
+    "gender": "중립",
+    "age": "어린이",
+    "what": "Child"
+   },
+   {
+    "file": "people/22.png",
+    "gender": "중립",
+    "age": "아기",
+    "what": "Baby"
+   },
+   {
+    "file": "people/23.png",
+    "gender": "중립",
+    "age": "노년",
+    "what": "Older person"
+   }
+  ],
+  "animals": [
+   {
+    "file": "animals/01.svg",
+    "what": "Cat face"
+   },
+   {
+    "file": "animals/02.svg",
+    "what": "Dog face"
+   },
+   {
+    "file": "animals/03.svg",
+    "what": "Rabbit face"
+   },
+   {
+    "file": "animals/04.svg",
+    "what": "Bear"
+   },
+   {
+    "file": "animals/05.svg",
+    "what": "Fox"
+   },
+   {
+    "file": "animals/06.svg",
+    "what": "Panda"
+   },
+   {
+    "file": "animals/07.svg",
+    "what": "Hamster"
+   },
+   {
+    "file": "animals/08.svg",
+    "what": "Tiger face"
+   },
+   {
+    "file": "animals/09.svg",
+    "what": "Koala"
+   },
+   {
+    "file": "animals/10.svg",
+    "what": "Mouse face"
+   },
+   {
+    "file": "animals/11.svg",
+    "what": "Pig face"
+   },
+   {
+    "file": "animals/12.svg",
+    "what": "Cow face"
+   },
+   {
+    "file": "animals/13.svg",
+    "what": "Frog"
+   },
+   {
+    "file": "animals/14.svg",
+    "what": "Monkey face"
+   },
+   {
+    "file": "animals/15.svg",
+    "what": "Penguin"
+   },
+   {
+    "file": "animals/16.svg",
+    "what": "Chicken"
+   }
+  ],
+  "line": [
+   {
+    "file": "line/01.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/02.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/03.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/04.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/05.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/06.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/07.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "line/08.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/09.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/10.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/11.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/12.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/13.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/14.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/15.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "line/16.svg",
+    "gender": "남성",
+    "age": "노년"
+   }
+  ],
+  "soft": [
+   {
+    "file": "soft/01.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/02.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/03.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/04.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/05.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/06.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/07.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/08.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/09.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/10.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/11.svg",
+    "gender": "여성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/12.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/13.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/14.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/15.svg",
+    "gender": "남성",
+    "age": "성인"
+   },
+   {
+    "file": "soft/16.svg",
+    "gender": "남성",
+    "age": "성인"
+   }
+  ]
+ }
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "k-style-ui-ux max"
+  short_description: "1차 위에 오류·확인·빈 화면·진행 중 상태 화면까지"
+  default_prompt: "k-style-ui-ux max로 오류·확인·빈 화면까지 더해줘."
+
+policy:
+  allow_implicit_invocation: true

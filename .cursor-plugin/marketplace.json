@@ -1,0 +1,8 @@
+{
+  "name": "k-style-ui-ux",
+  "owner": {"name": "vmc-inner-circle"},
+  "metadata": {"description": "PRD 한 장 → 모바일 앱 HTML 디자인 하네스"},
+  "plugins": [
+    {"name": "k-style-ui-ux", "source": "plugins/k-style-ui-ux", "description": "PRD → 모바일 앱 HTML 디자인 하네스 (go, max)", "category": "Design"}
+  ]
+}

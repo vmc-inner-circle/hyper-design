@@ -1,0 +1,761 @@
+[
+ {
+  "domain": "book",
+  "name": "밀리의서재",
+  "ratings": 46487,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "기타:앱 상단바(로고·아이콘)",
+     "상단 탭",
+     "제목+가로 스크롤 필터 칩",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "탭바(5)"
+    ],
+    "tabbar": [
+     "홈",
+     "밀리로드",
+     "검색",
+     "피드",
+     "내서재"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "기타:본문 읽기 화면",
+     "기타:하단 팝업 목소리 선택 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "기타:AI 독파핑 채팅 요약글",
+     "기타:하단 입력창"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "작성자/프로필 줄",
+     "현황 카드(숫자 크게)",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "탭바(5)"
+    ],
+    "tabbar": [
+     "홈",
+     "밀리로드",
+     "검색",
+     "피드",
+     "내서재"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "탭바(5)"
+    ],
+    "tabbar": [
+     "홈",
+     "밀리로드",
+     "검색",
+     "피드",
+     "내서재"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "본문 글",
+     "기타:오디오 재생 컨트롤"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "budget",
+  "name": "이달의지출 - 지출기입장",
+  "ratings": 9518,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "list",
+    "slots": [
+     "기타:월 이동 헤더",
+     "검색창",
+     "현황 카드(숫자 크게)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "other",
+    "slots": [
+     "기타:홈 화면 위젯 3종"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "result",
+    "slots": [
+     "기타:연 이동 헤더",
+     "현황 카드(숫자 크게)",
+     "차트",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "slots": [
+     "목록 행",
+     "기타:하단 시트 메뉴(통계·데이터·설정)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "기타:뒤로/제목/저장 헤더",
+     "입력 칸 여러 개"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "현황 카드(숫자 크게)",
+     "목록 행",
+     "기타:기간 선택 시트",
+     "다음 행동 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "community",
+  "name": "블라인드 Blind",
+  "ratings": 42438,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "세로 카드 피드",
+     "탭바(6)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "목록 행",
+     "랭킹 목록",
+     "세로 카드 피드",
+     "탭바(6)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "작성자/프로필 줄",
+     "세로 카드 피드",
+     "탭바(6)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "반응(좋아요·댓글)",
+     "목록 행",
+     "탭바(6)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "기타:채팅 말풍선 목록",
+     "기타:메시지 입력줄"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "평점·리뷰 요약",
+     "리뷰 목록",
+     "탭바(6)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "fashion",
+  "name": "유니클로 UNIQLO - 쇼핑",
+  "ratings": 72717,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "사진 갤러리(상단 큰 사진)",
+     "카테고리 아이콘 격자",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "옵션 선택",
+     "옵션 선택",
+     "가격·할인",
+     "평점·리뷰 요약"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "위치·주소 선택",
+     "정렬",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "단계 표시",
+     "옵션 선택",
+     "기타:배송 방법 선택"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "slots": [
+     "기타:바코드 스캔 영역",
+     "기타:최근 스캔 내역",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "fitness",
+  "name": "인아웃 - 다이어트 코치 & 식단, 운동, 체중 기록",
+  "ratings": 57336,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "날짜 줄(주간)",
+     "진행률/목표",
+     "차트"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "기타:AI 코치 채팅",
+     "결과 요약 카드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "세로 카드 피드",
+     "반응(좋아요·댓글)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "랭킹 목록"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "result",
+    "slots": [
+     "결과 큰 문구",
+     "결과 요약 카드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "food",
+  "name": "땡겨요",
+  "ratings": 39119,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "세로 카드 피드",
+     "다음 행동 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "목록 행",
+     "가격·할인",
+     "결과 요약 카드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "hospital",
+  "name": "여신티켓 - 피부시술/성형 정보,피부과 병원 예약 어플",
+  "ratings": 10807,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "지도",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "interior",
+  "name": "숨고 - 이사, 청소, 취미, 인테리어 전문가 찾기",
+  "ratings": 132638,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "기타:상단 헤더",
+     "정렬",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "기타:채팅 말풍선",
+     "결과 요약 카드",
+     "기타:메시지 입력줄"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "위치·주소 선택",
+     "정렬",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "배너 캐러셀",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "작성자/프로필 줄",
+     "평점·리뷰 요약",
+     "리뷰 목록",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "form",
+    "slots": [
+     "시간·날짜 선택",
+     "가격·할인",
+     "본문 글",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "stay",
+  "name": "NOL : 야놀자와 인터파크의 새로운 이름",
+  "ratings": 976850,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "입력 칸 여러 개",
+     "시간·날짜 선택",
+     "다음 행동 버튼",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "카테고리 아이콘 격자",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "날짜 줄(주간)",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "taxi",
+  "name": "티머니GO - 택시 고속시외 따릉이 킥보드",
+  "ratings": 56676,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "바로가기 버튼 줄",
+     "현황 카드(숫자 크게)",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "상단 탭",
+     "입력 칸 여러 개",
+     "시간·날짜 선택",
+     "다음 행동 버튼",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "지도",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "form",
+    "slots": [
+     "상단 탭",
+     "입력 칸 여러 개",
+     "시간·날짜 선택",
+     "다음 행동 버튼",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "slots": [
+     "지도",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "travel",
+  "name": "케이케이데이 KKday: 전세계 자유여행 액티비티 예약",
+  "ratings": 29953,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "카테고리 아이콘 격자",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "제목+필터",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "진행률/목표",
+     "정보 행(라벨:값)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "slots": [
+     "정보 행(라벨:값)",
+     "기타:QR 코드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "기타:문의 채팅",
+     "기타:전화 걸기 팝업"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "평점·리뷰 요약",
+     "정렬",
+     "리뷰 목록"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ }
+]

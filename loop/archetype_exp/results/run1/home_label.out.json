@@ -1,0 +1,233 @@
+[
+ {
+  "site": "x00",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "내 숫자 카드",
+   "목록 행",
+   "탭바(4)"
+  ],
+  "anchor": "내 숫자 카드",
+  "repeat": "목록 행",
+  "exit": "없음",
+  "conf": "high",
+  "note": ""
+ },
+ {
+  "site": "x01",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "상단 탭",
+   "가로 카드 줄",
+   "세로 카드 피드",
+   "반응(좋아요·댓글)",
+   "탭바(5)"
+  ],
+  "anchor": "카드 피드",
+  "repeat": "큰 카드",
+  "exit": "없음",
+  "conf": "high",
+  "note": "상단 결 아이콘 줄은 머리말"
+ },
+ {
+  "site": "x02",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "가로 카드 줄",
+   "대표 글(큰 사진+제목)",
+   "필터 칩",
+   "탭바(5)"
+  ],
+  "anchor": "진열(배너·가로 줄)",
+  "repeat": "큰 카드",
+  "exit": "없음",
+  "conf": "low",
+  "note": "팔로우 줄과 대표 방송 카드 면적 비슷"
+ },
+ {
+  "site": "x03",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "배너 캐러셀",
+   "바로가기 버튼 줄",
+   "가로 카드 줄",
+   "탭바(5)"
+  ],
+  "anchor": "진열(배너·가로 줄)",
+  "repeat": "가로 줄",
+  "exit": "없음",
+  "conf": "high",
+  "note": ""
+ },
+ {
+  "site": "x04",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "필터 칩",
+   "검색창",
+   "목록 행",
+   "탭바(4)"
+  ],
+  "anchor": "목록 행",
+  "repeat": "목록 행",
+  "exit": "없음",
+  "conf": "high",
+  "note": ""
+ },
+ {
+  "site": "x05",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "검색창",
+   "목록 행",
+   "필터 칩",
+   "목록 행",
+   "기타:글쓰기 플로팅 버튼",
+   "탭바(4)"
+  ],
+  "anchor": "목록 행",
+  "repeat": "목록 행",
+  "exit": "없음",
+  "conf": "high",
+  "note": ""
+ },
+ {
+  "site": "x06",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "검색창",
+   "위치·주소 선택",
+   "결과 요약 카드",
+   "서비스 격자",
+   "내 숫자 카드",
+   "탭바(3)"
+  ],
+  "anchor": "서비스 격자",
+  "repeat": "없음",
+  "exit": "없음",
+  "conf": "low",
+  "note": "다가오는 표 카드와 격자 면적 비슷"
+ },
+ {
+  "site": "x07",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "바로가기 버튼 줄",
+   "대표 글(큰 사진+제목)",
+   "가로 카드 줄",
+   "탭바(5)"
+  ],
+  "anchor": "글 목록(대표 글+제목 행)",
+  "repeat": "가로 줄",
+  "exit": "없음",
+  "conf": "low",
+  "note": "대표 방송 카드가 가장 큼"
+ },
+ {
+  "site": "x08",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "큰 제목",
+   "세로 카드 피드",
+   "반응(좋아요·댓글)",
+   "하단 고정 버튼",
+   "탭바(4)"
+  ],
+  "anchor": "카드 피드",
+  "repeat": "큰 카드",
+  "exit": "없음",
+  "conf": "high",
+  "note": "글쓰기 플로팅 버튼"
+ },
+ {
+  "site": "x09",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "검색창",
+   "상단 탭",
+   "배너 캐러셀",
+   "목록 행",
+   "세로 카드 피드",
+   "탭바(5)"
+  ],
+  "anchor": "목록 행",
+  "repeat": "가로 줄",
+  "exit": "없음",
+  "conf": "low",
+  "note": "취향 브랜드 목록 행 vs 배너"
+ },
+ {
+  "site": "x10",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "검색창",
+   "바로가기 버튼 줄",
+   "서비스 격자",
+   "내 숫자 카드",
+   "탭바(3)"
+  ],
+  "anchor": "서비스 격자",
+  "repeat": "없음",
+  "exit": "없음",
+  "conf": "high",
+  "note": ""
+ },
+ {
+  "site": "x11",
+  "domain": "",
+  "page": "home",
+  "kind": "home",
+  "valid": true,
+  "slots": [
+   "인사/큰제목",
+   "내 숫자 카드",
+   "결과 요약 카드",
+   "목록 행",
+   "탭바(5)"
+  ],
+  "anchor": "내 숫자 카드",
+  "repeat": "목록 행",
+  "exit": "없음",
+  "conf": "low",
+  "note": "합계 숫자와 곧 나갈 돈 목록 비슷"
+ }
+]

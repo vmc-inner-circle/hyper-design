@@ -1,0 +1,792 @@
+[
+ {
+  "domain": "budget",
+  "name": "위플 가계부 - Weple Money",
+  "ratings": 217051,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "상단 탭:월 헤더",
+     "현황 카드(숫자 크게)",
+     "월 달력",
+     "목록 행",
+     "기타:추가 플로팅 버튼"
+    ],
+    "tabbar": [
+     "월간",
+     "주간",
+     "일간",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "상단 탭:월 헤더",
+     "목록 행",
+     "차트",
+     "목록 행",
+     "기타:추가 플로팅 버튼"
+    ],
+    "tabbar": [
+     "월간",
+     "주간",
+     "일간",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "상단 탭:월 헤더",
+     "날짜 줄(주간)",
+     "현황 카드(숫자 크게)",
+     "목록 행",
+     "기타:추가 플로팅 버튼"
+    ],
+    "tabbar": [
+     "월간",
+     "주간",
+     "일간",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "상단 탭:뒤로/제목/삭제",
+     "결과 요약 카드",
+     "정보 행(라벨:값)",
+     "다음 행동 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "result",
+    "slots": [
+     "상단 탭:기간 선택",
+     "현황 카드(숫자 크게)",
+     "차트",
+     "랭킹 목록"
+    ],
+    "tabbar": [
+     "통계",
+     "예산",
+     "카드",
+     "자산"
+    ],
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "class",
+  "name": "프립 - 대한민국 1등 취미여가 탐색 플랫폼",
+  "ratings": 6692,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "사진 갤러리(상단 큰 사진)",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "배너 캐러셀",
+     "랭킹 목록",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "edu",
+  "name": "말해보카: 단어, 문법, 스피킹, 영어 회화",
+  "ratings": 53420,
+  "screens": [
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "진행률/목표",
+     "질문 하나(큰 질문+선택지)",
+     "기타:영어 입력 키보드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "slots": [
+     "진행률/목표",
+     "질문 하나(큰 질문+선택지)",
+     "기타:영어 입력 키보드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "finance",
+  "name": "KB스타뱅킹",
+  "ratings": 135800,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "자산·잔액 카드",
+     "목록 행",
+     "자산·잔액 카드"
+    ],
+    "tabbar": [
+     "상품",
+     "자산",
+     "지갑",
+     "혜택",
+     "전체"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "자산·잔액 카드",
+     "바로가기 버튼 줄",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": [
+     "상품",
+     "자산",
+     "지갑",
+     "혜택",
+     "전체"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "자산·잔액 카드",
+     "차트",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "큰제목",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "결과 요약 카드",
+     "목록 행",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "자산·잔액 카드",
+     "바로가기 버튼 줄",
+     "현황 카드(숫자 크게)",
+     "바로가기 버튼 줄",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "food",
+  "name": "배달의민족 - 배달팁 무료 배민클럽",
+  "ratings": 2674449,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "상단 탭:뒤로/제목",
+     "필터 칩",
+     "배너 캐러셀",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "큰제목",
+     "필터 칩",
+     "2열 상품 격자",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "상단 탭:뒤로/제목",
+     "큰제목",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "검색창",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "지도",
+     "결과 요약 카드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "hospital",
+  "name": "닥터나우 - 대한민국 1위 비대면진료 앱",
+  "ratings": 30858,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "큰제목",
+     "카테고리 아이콘 격자",
+     "바로가기 버튼 줄"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "지도",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "작성자/프로필 줄",
+     "평점·리뷰 요약",
+     "리뷰 목록"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "정렬",
+     "목록 행",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "지도",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "house",
+  "name": "자리톡 - 최다매물 부동산 앱, 실거주 후기, 실거래가",
+  "ratings": 7645,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "현황 카드(숫자 크게)",
+     "진행률/목표",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "지도",
+     "정보 행(라벨:값)",
+     "상단 탭",
+     "차트"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "큰제목",
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "현황 카드(숫자 크게)",
+     "진행률/목표",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "restaurant",
+  "name": "캐치테이블",
+  "ratings": 133231,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "위치·주소 선택",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "지도",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "월 달력",
+     "시간·날짜 선택",
+     "시간·날짜 선택"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "정보 행(라벨:값)",
+     "배너 캐러셀",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "세로 카드 피드",
+     "시간·날짜 선택"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "가로 카드 줄(제목+가로 스크롤)",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "slots": [
+     "정보 행(라벨:값)",
+     "바로가기 버튼 줄",
+     "시간·날짜 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "stay",
+  "name": "여기어때: 호텔, 모텔, 숙소, 항공권 여행 최저가",
+  "ratings": 163706,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "큰제목",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀"
+    ],
+    "tabbar": [
+     "홈",
+     "검색",
+     "주변",
+     "찜",
+     "내정보"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "form",
+    "slots": [
+     "검색창",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "검색창",
+     "시간·날짜 선택",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "검색창",
+     "시간·날짜 선택",
+     "필터 칩",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "slots": [
+     "상단 탭",
+     "입력 칸 여러 개",
+     "시간·날짜 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "배너 캐러셀",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "todo",
+  "name": "심플 캘린더 - 매일 일정과 스케줄 플래너 (달력)",
+  "ratings": 58314,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "slots": [
+     "월 달력",
+     "일정 타임라인",
+     "기타:새 일정 만들기 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "일정 타임라인"
+    ],
+    "tabbar": [
+     "월",
+     "주",
+     "일"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "상단 탭",
+     "목록 행",
+     "기타:템플릿 추가"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "used",
+  "name": "번개장터",
+  "ratings": 162159,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "정보 행(라벨:값)",
+     "결과 요약 카드",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "상단 탭",
+     "바로가기 버튼 줄",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "홈",
+     "관심",
+     "검색",
+     "번개톡",
+     "MY"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "배너 캐러셀",
+     "상단 탭",
+     "바로가기 버튼 줄",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "홈",
+     "관심",
+     "검색",
+     "번개톡",
+     "MY"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "가격·할인",
+     "정보 행(라벨:값)",
+     "평점·리뷰 요약",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "홈",
+     "관심",
+     "검색",
+     "번개톡",
+     "MY"
+    ],
+    "conf": "high"
+   }
+  ]
+ }
+]

@@ -1,0 +1,50 @@
+name: 사용 피드백
+description: k-style-ui-ux를 써 본 경험을 알려 주세요 (3분)
+title: "[피드백] "
+labels: ["feedback"]
+body:
+  - type: dropdown
+    id: role
+    attributes:
+      label: 어떤 분이신가요?
+      options:
+        - 디자이너 없이 앱을 만드는 창업자·기획자
+        - 개발자 (사내 도구 등 직접 기획·디자인)
+        - 디자이너
+        - 기타
+    validations:
+      required: true
+  - type: input
+    id: app
+    attributes:
+      label: 어떤 앱을 만들었나요?
+      placeholder: 예) 동네 필라테스 예약 앱
+    validations:
+      required: true
+  - type: dropdown
+    id: used
+    attributes:
+      label: 결과물을 실제로 어디까지 썼나요?
+      options:
+        - 그대로 썼다 (개발·배포에 사용)
+        - 고쳐서 썼다
+        - 참고만 했다
+        - 쓰지 않았다
+    validations:
+      required: true
+  - type: textarea
+    id: good
+    attributes:
+      label: 좋았던 점
+  - type: textarea
+    id: bad
+    attributes:
+      label: 아쉬웠던 점·막힌 곳
+      description: 화면이 뻔하다, 문구가 어색하다, 흐름이 헷갈린다 등 무엇이든. 해당 화면 캡처를 붙여 주시면 더 좋습니다.
+    validations:
+      required: true
+  - type: input
+    id: time
+    attributes:
+      label: 실행 시간과 모델 (알면)
+      placeholder: 예) go 14분, Opus
