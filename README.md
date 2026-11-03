@@ -74,6 +74,31 @@ PRD만 붙여넣고 "화면 만들어줘"라고 해도 됩니다. 결과는 실�
 - 자동 개선 루프 기록: [loop/RESULTS.md](./loop/RESULTS.md)
 - 하네스톤 개인전 안내, v1 아카이브, 첫 빈 템플릿 설명: [docs/history.md](./docs/history.md)
 
+## 기여자
+
+하네스톤과 이너서클에서 아이디어·코드·실험을 함께 만든 분들입니다([이모지 뜻](https://allcontributors.org/docs/en/emoji-key)). PR이나 이슈에 `@all-contributors please add @아이디 for ideas, code`라고 남기면 봇이 이 표를 고치는 PR을 엽니다.
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://sumins.notion.site/cv2"><img src="https://avatars.githubusercontent.com/u/48555121?v=4?s=80" width="80px;" alt="Choi Sumin"/><br /><sub><b>Choi Sumin</b></sub></a><br /><a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=greatSumini" title="Code">💻</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=greatSumini" title="Documentation">📖</a> <a href="#ideas-greatSumini" title="Ideas, Planning, & Feedback">🤔</a> <a href="#maintenance-greatSumini" title="Maintenance">🚧</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/eungshin"><img src="https://avatars.githubusercontent.com/u/127283787?v=4?s=80" width="80px;" alt="Eungshin Kim"/><br /><sub><b>Eungshin Kim</b></sub></a><br /><a href="#ideas-eungshin" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=eungshin" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hydrojun"><img src="https://avatars.githubusercontent.com/u/108723979?v=4?s=80" width="80px;" alt="hydrojun"/><br /><sub><b>hydrojun</b></sub></a><br /><a href="#ideas-hydrojun" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=hydrojun" title="Code">💻</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=hydrojun" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/srlee0408"><img src="https://avatars.githubusercontent.com/u/63906712?v=4?s=80" width="80px;" alt="srlee0408"/><br /><sub><b>srlee0408</b></sub></a><br /><a href="#ideas-srlee0408" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=srlee0408" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/yeoul9703"><img src="https://avatars.githubusercontent.com/u/289879211?v=4?s=80" width="80px;" alt="Myunggeun-Jo"/><br /><sub><b>Myunggeun-Jo</b></sub></a><br /><a href="#ideas-yeoul9703" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=yeoul9703" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/doojin88"><img src="https://avatars.githubusercontent.com/u/2003813?v=4?s=80" width="80px;" alt="DOOJIN KIM"/><br /><sub><b>DOOJIN KIM</b></sub></a><br /><a href="https://github.com/vmc-inner-circle/k-style-ui-ux/commits?author=doojin88" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 ## 라이선스
 
 MIT — [LICENSE](./LICENSE)
