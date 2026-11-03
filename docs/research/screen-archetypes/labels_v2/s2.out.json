@@ -1,0 +1,877 @@
+[
+ {
+  "site": "bunjang",
+  "name": "번개장터",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "기타:주문 안내 행",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "정보 행",
+    "repeat": "없음",
+    "exit": "구매",
+    "conf": "low",
+    "note": "팝업 시트가 하단 절반 가림"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄(메뉴·검색·알림)",
+     "배너 캐러셀",
+     "상단 탭",
+     "서비스 격자",
+     "바로가기 버튼 줄",
+     "상품 격자",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "상단 탭 4개 안에 카드형 격자와 아이콘 줄"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "가격·할인",
+     "옵션 선택",
+     "기타:안심 보증 안내 카드",
+     "추천 상품 가로 줄",
+     "하단 고정 버튼"
+    ],
+    "anchor": "기타:보증 안내 카드",
+    "repeat": "가로 줄",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "바로가기 버튼 줄",
+     "배너 캐러셀",
+     "관련 항목 가로 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "해외 대행 전용관"
+   }
+  ]
+ },
+ {
+  "site": "coupang",
+  "name": "쿠팡(Coupang)-모바일 쇼핑",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "큰 사진(상품)",
+     "평점·리뷰 요약",
+     "옵션 선택",
+     "가격·할인"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "구매",
+    "conf": "low",
+    "note": "오버레이 카드가 하단 가림"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "검색창",
+     "필터 칩",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "로켓프레시 전용관"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상품 격자(2열)",
+     "가격·할인",
+     "평점·리뷰 요약"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "추천 상품"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "큰 사진 배너",
+     "바로가기 버튼 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "R.LUX 전용관"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "필터 칩",
+     "상품 격자(2열)",
+     "가격·할인"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "해외직구 전용관"
+   },
+   {
+    "idx": 7,
+    "kind": "result",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "결과 큰 문구",
+     "정보 행(라벨:값)",
+     "결과 요약 카드"
+    ],
+    "anchor": "결과 문구",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "high",
+    "note": "결제 완료"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "영상 플레이어",
+     "가로 카드 줄"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "라이브 쇼핑"
+   }
+  ]
+ },
+ {
+  "site": "gs",
+  "name": "우리동네GS (GS25, GS더프레시, 와인25플러스)",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "상품 분류 격자",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "GS더프레시 사전예약 전용관"
+   },
+   {
+    "idx": 3,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "상품 분류 격자",
+     "내 숫자 카드",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "와인25플러스 전용관, AI 검색 버튼 떠있음"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "탭",
+     "내 숫자 카드",
+     "목록 행",
+     "상품 격자"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "low",
+    "note": "나만의 냉장고"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "서비스 격자",
+     "바로가기 버튼 줄",
+     "내 숫자 카드",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "택배예약"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "탭",
+     "QR·바코드",
+     "목록 행",
+     "바로가기 버튼 줄"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "결제 QR"
+   }
+  ]
+ },
+ {
+  "site": "kakaot",
+  "name": "카카오 T - 택시, 세차, 주차, 바이크, 항공, 퀵",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "정보 행(라벨:값)",
+     "목록 행",
+     "배너 캐러셀"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "통합검색 결과"
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "검색창",
+     "바로가기 버튼 줄",
+     "배너 캐러셀",
+     "서비스 격자",
+     "탭바"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "홈 탭 선택"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "바로가기 버튼 줄",
+     "내 숫자 카드",
+     "목록 행",
+     "배너 캐러셀"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "low",
+    "note": "스크롤 하단 정보"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "내 숫자 카드",
+     "바로가기 버튼 줄",
+     "서비스 격자",
+     "내 숫자 카드"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "마이카 탭"
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "큰 사진 배너",
+     "가로 카드 줄",
+     "서비스 격자"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "여행 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "입력 칸 여러 개",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "기차 시간표"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:프로필 줄",
+     "검색창",
+     "서비스 격자",
+     "기타:공지 행",
+     "배너 캐러셀"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "비즈니스 서비스"
+   }
+  ]
+ },
+ {
+  "site": "mcdonalds",
+  "name": "맥도날드",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상단 탭",
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "M오더 메뉴 분류, 배달주문 탭"
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "상단 탭",
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "M오더 매장수령"
+   },
+   {
+    "idx": 3,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:포인트 헤더",
+     "QR·바코드",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": "MY 탭, 포인트 QR"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:포인트 헤더",
+     "큰제목",
+     "필터 칩",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": "쿠폰 탭"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "큰 사진(상품)",
+     "큰제목",
+     "본문 글",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "쿠폰 상세"
+   }
+  ]
+ },
+ {
+  "site": "navermap",
+  "name": "네이버지도 - 장소의 발견과 예약, 내비게이션",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "지도",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "발견 탭, 하단 시트"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "필터 칩",
+     "랭킹 목록",
+     "탭바(5)"
+    ],
+    "anchor": "랭킹 목록",
+    "repeat": "순위",
+    "exit": "없음",
+    "conf": "high",
+    "note": "인기 장소"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "서비스 격자",
+     "필터 칩",
+     "사진 갤러리",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "예약 탭"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "지도",
+     "정보 행(라벨:값)",
+     "차트",
+     "하단 고정 버튼"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "high",
+    "note": "대중교통 길찾기"
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:안내 표지판",
+     "큰 사진(길 안내)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "내비게이션 안내"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "지도",
+     "큰제목",
+     "상단 탭",
+     "목록 행",
+     "사진 갤러리"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "저장 리스트"
+   }
+  ]
+ },
+ {
+  "site": "oliveyoung",
+  "name": "올리브영",
+  "screens": [
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "상단 탭",
+     "위치·주소 선택",
+     "정렬",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "검색 결과"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "필터 칩",
+     "목록 행(체크박스)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "목록 행",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "low",
+    "note": "필터 화면, 팝업 가림"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "큰제목",
+     "상품 격자",
+     "가격·할인"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "오늘의 특가"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "큰제목",
+     "세로 카드 피드(2열)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": "피드"
+   }
+  ]
+ },
+ {
+  "site": "starbucks",
+  "name": "스타벅스",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "인사/큰제목",
+     "바로가기 버튼 줄",
+     "가로 카드 줄",
+     "배너 캐러셀",
+     "탭바"
+    ],
+    "anchor": "인사/큰제목",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "홈 탭 추정, 팝업 일부 가림"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰제목",
+     "배너 캐러셀",
+     "상단 탭",
+     "상품 분류 격자"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "온라인 스토어"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰 사진 배너",
+     "상단 탭",
+     "큰 사진(상품)",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "딜리버스"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "정렬",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "쿠폰 목록"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "큰 카드 이미지",
+     "가격·할인",
+     "QR·바코드",
+     "하단 고정 버튼"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "스타벅스 카드"
+   }
+  ]
+ },
+ {
+  "site": "weverse",
+  "name": "위버스 - 아티스트와 더 가까이",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "대표 글(큰 사진+제목)",
+     "배너 캐러셀",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "대표 글(큰 사진+제목)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "Discover 탭, 탭바 홈 선택"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "작성자/프로필 줄",
+     "채팅 말풍선",
+     "반응(좋아요·댓글)"
+    ],
+    "anchor": "영상 플레이어",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "LIVE 재생"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "큰 사진(앨범)",
+     "배너 캐러셀",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "Party 탭"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "필터 칩",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "DM 목록"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "작성자/프로필 줄",
+     "본문 글",
+     "관련 항목 가로 줄",
+     "하단 고정 버튼"
+    ],
+    "anchor": "영상 플레이어",
+    "repeat": "없음",
+    "exit": "구매",
+    "conf": "high",
+    "note": "콘텐츠 상세"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰 사진(아티스트)",
+     "프로필(가게·사람)",
+     "상단 탭",
+     "목록 행"
+    ],
+    "anchor": "프로필(사람·가게)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "커뮤니티 홈, 팝업 일부 가림"
+   }
+  ]
+ }
+]

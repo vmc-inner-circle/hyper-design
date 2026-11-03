@@ -1,0 +1,20 @@
+{
+  "name": "k-style-ui-ux",
+  "interface": {
+    "displayName": "k-style-ui-ux"
+  },
+  "plugins": [
+    {
+      "name": "k-style-ui-ux",
+      "source": {
+        "source": "local",
+        "path": "./plugins/k-style-ui-ux"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Design"
+    }
+  ]
+}

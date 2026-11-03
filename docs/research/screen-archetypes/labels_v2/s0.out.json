@@ -1,0 +1,1136 @@
+[
+ {
+  "site": "albamon",
+  "name": "알바몬 - 대한민국 1위 아르바이트 플랫폼",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "검색창",
+     "배너 캐러셀",
+     "서비스 격자",
+     "필터 칩",
+     "목록 행"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "지도",
+     "필터 칩",
+     "목록 행"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "작성자/프로필 줄",
+     "정보 행(라벨:값)",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "배너 캐러셀",
+     "큰 제목",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "대표 글(큰 사진+제목)",
+     "목록 행"
+    ],
+    "anchor": "글 목록(대표 글+제목 행)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "cgv",
+  "name": "CGV",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:로고 머리줄",
+     "인사/큰제목",
+     "상단 탭",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "배너 캐러셀",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": "씨네톡 커뮤니티 탭"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "기타:극장 선택 칩",
+     "가로 카드 줄",
+     "서비스 격자",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "예매 탭"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "위치·주소 선택",
+     "상품 격자",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "매점 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "진행률/목표",
+     "내 숫자 카드",
+     "정보 행(라벨:값)",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "마이 탭"
+   }
+  ]
+ },
+ {
+  "site": "daangn",
+  "name": "당근",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "필터 칩",
+     "목록 행",
+     "하단 고정 버튼",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "홈 탭 중고거래 피드, 글쓰기 버튼"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "목록 행",
+     "하단 고정 버튼",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "동네생활"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "필터 칩",
+     "지도",
+     "하단 고정 버튼",
+     "탭바(5)"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "동네지도"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "서비스 격자",
+     "큰 제목",
+     "상품 격자",
+     "탭바(5)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "당근알바 전용관"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상품 분류 격자",
+     "큰 제목",
+     "가로 카드 줄",
+     "필터 칩",
+     "목록 행"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "부동산 전용관"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상품 분류 격자",
+     "큰 제목",
+     "상품 격자"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "중고차 전용관"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "내 숫자 카드",
+     "내 숫자 카드",
+     "서비스 격자",
+     "목록 행"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "당근페이"
+   }
+  ]
+ },
+ {
+  "site": "kakaobank",
+  "name": "카카오뱅크",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:알림 머리줄",
+     "내 숫자 카드",
+     "목록 행",
+     "바로가기 버튼 줄",
+     "탭바(4)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "인사/큰제목",
+     "결과 요약 카드",
+     "바로가기 버튼 줄",
+     "탭바(3)"
+    ],
+    "anchor": "기타:시작 안내 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "외국인 뱅킹 홈"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "상단 탭",
+     "내 숫자 카드",
+     "목록 행",
+     "탭바(3)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "내 계좌"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "내 숫자 카드",
+     "바로가기 버튼 줄",
+     "내 숫자 카드",
+     "목록 행"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "모임 회비"
+   },
+   {
+    "idx": 5,
+    "kind": "result",
+    "valid": true,
+    "slots": [
+     "결과 큰 문구",
+     "결과 요약 카드",
+     "다음 행동 버튼"
+    ],
+    "anchor": "결과 문구",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "low",
+    "note": "이체 경고 팝업이 하단 시트로 뜸"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "내 숫자 카드",
+     "옵션 선택",
+     "입력 칸 여러 개",
+     "결과 요약 카드"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "대출 금리 계산"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "목록 행",
+     "큰 제목",
+     "내 숫자 카드",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "개인사업자 뱅킹"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "인사/큰제목",
+     "내 숫자 카드",
+     "목록 행",
+     "바로가기 버튼 줄",
+     "탭바(4)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "mini 홈"
+   }
+  ]
+ },
+ {
+  "site": "kmong",
+  "name": "크몽 - 프리랜서 마켓 No.1",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상품 분류 격자"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "프레임 안 일부만 보임"
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "상단 탭",
+     "큰 제목",
+     "상품 분류 격자",
+     "큰 제목",
+     "필터 칩",
+     "가로 카드 줄"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "포트폴리오"
+   },
+   {
+    "idx": 4,
+    "kind": "chat",
+    "valid": true,
+    "slots": [
+     "채팅 말풍선",
+     "채팅 말풍선",
+     "입력 칸 여러 개"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상품 분류 격자",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "전자책 탭 홈"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "대표 글(큰 사진+제목)",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "대표 글(큰 사진+제목)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "전화 운세 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "결과 큰 문구",
+     "하단 고정 버튼"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": "엔터프라이즈 전용관"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "정렬",
+     "목록 행",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "판매 관리"
+   }
+  ]
+ },
+ {
+  "site": "musinsa",
+  "name": "온라인 패션 스토어 무신사",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "서비스 격자",
+     "배너 캐러셀",
+     "바로가기 버튼 줄"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "스토어 이동 메뉴 오버레이 위에 홈이 어둡게 깔림"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "대표 글(큰 사진+제목)",
+     "바로가기 버튼 줄",
+     "상품 격자"
+    ],
+    "anchor": "대표 글(큰 사진+제목)",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "low",
+    "note": "뷰티 전용관"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "큰 제목",
+     "대표 글(큰 사진+제목)",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "글 목록(대표 글+제목 행)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": "콘텐츠 탭"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "랭킹 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "날짜 줄(주간)",
+     "필터 칩",
+     "상품 격자",
+     "큰 제목"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "세일 탭"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "대표 글(큰 사진+제목)",
+     "목록 행"
+    ],
+    "anchor": "글 목록(대표 글+제목 행)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "발매 탭"
+   }
+  ]
+ },
+ {
+  "site": "nol",
+  "name": "NOL : 야놀자와 인터파크의 새로운 이름",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "큰 사진(대상 하나)",
+     "큰 제목",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "오늘의 플래시 특가 전용관"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "상단 탭",
+     "입력 칸 여러 개",
+     "다음 행동 버튼",
+     "목록 행"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "항공 검색"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "서비스 격자",
+     "탭바(5)"
+    ],
+    "anchor": "배너 캐러셀",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "공연 탭 첫 화면"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "상품 분류 격자",
+     "배너 캐러셀",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "해외 투어·티켓 전용관"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "검색창",
+     "입력 칸 여러 개",
+     "배너 캐러셀",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "해외숙소 전용관"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "NOL 라이브"
+   }
+  ]
+ },
+ {
+  "site": "socar",
+  "name": "쏘카",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:로고 머리줄",
+     "내 숫자 카드",
+     "서비스 격자",
+     "배너 캐러셀",
+     "큰 제목",
+     "가로 카드 줄",
+     "탭바(3)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "지도",
+     "시간·날짜 선택",
+     "목록 행",
+     "목록 행"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "지금 배달"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰 사진(대상 하나)",
+     "입력 칸 여러 개",
+     "필터 칩",
+     "큰 사진(대상 하나)"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "low",
+    "note": "블랙라벨 전용관"
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "결과 요약 카드",
+     "결과 요약 카드",
+     "결과 요약 카드"
+    ],
+    "anchor": "결과 요약 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "보장 안내"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "큰 사진(대상 하나)",
+     "바로가기 버튼 줄",
+     "목록 행"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "내 차 제어 화면"
+   },
+   {
+    "idx": 8,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "지도",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": "반납 장소 설정"
+   }
+  ]
+ },
+ {
+  "site": "toss",
+  "name": "토스",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:로고 머리줄",
+     "목록 행",
+     "내 숫자 카드",
+     "목록 행"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "토스 홈 일부"
+   },
+   {
+    "idx": 2,
+    "kind": "result",
+    "valid": true,
+    "slots": [
+     "결과 큰 문구"
+    ],
+    "anchor": "결과 문구",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:지수 머리줄",
+     "상단 탭",
+     "내 숫자 카드",
+     "내 숫자 카드",
+     "정렬",
+     "목록 행"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "토스증권 홈"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "배너 캐러셀",
+     "큰 제목",
+     "상품 격자"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "쇼핑 탭"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "큰 제목",
+     "큰 사진(대상 하나)",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "low",
+    "note": "대출 비교"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "큰 제목",
+     "내 숫자 카드",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "혜택"
+   }
+  ]
+ },
+ {
+  "site": "yogiyo",
+  "name": "요기요 - 배달할 때마다 포인트 적립",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "상품 분류 격자",
+     "정렬",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "할인랭킹 전용관"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "서비스 격자",
+     "배너 캐러셀",
+     "큰 제목",
+     "가로 카드 줄"
+    ],
+    "anchor": "배너 캐러셀",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "추천 팝업 카드가 하단을 가림"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "큰 제목",
+     "가로 카드 줄",
+     "상단 탭"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "큰 사진(대상 하나)",
+     "정보 행(라벨:값)",
+     "상단 탭",
+     "필터 칩",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "가게 상세"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "배너 캐러셀",
+     "검색창",
+     "상품 분류 격자"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "요마트 전용관"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "위치·주소 선택",
+     "상품 분류 격자",
+     "정렬",
+     "지도"
+    ],
+    "anchor": "지도",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "포장 전용관"
+   }
+  ]
+ }
+]

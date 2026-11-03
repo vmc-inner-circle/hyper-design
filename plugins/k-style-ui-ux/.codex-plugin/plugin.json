@@ -1,0 +1,23 @@
+{
+  "name": "k-style-ui-ux",
+  "version": "0.18.2",
+  "description": "PRD 한 장 → 모바일 앱 HTML 디자인 + 캔버스. go 는 모든 흐름을 처음부터 끝까지(1차), max 는 오류·확인·빈 화면 같은 상태까지(2차).",
+  "author": {"name": "VIBE MAFIA CLUB inner circle"},
+  "homepage": "https://github.com/vmc-inner-circle/k-style-ui-ux",
+  "repository": "https://github.com/vmc-inner-circle/k-style-ui-ux",
+  "license": "MIT",
+  "keywords": ["design", "prd", "mobile-app", "html", "korean", "claude-code", "codex", "cursor"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "k-style-ui-ux",
+    "shortDescription": "PRD 한 장 → 모바일 앱 HTML 디자인",
+    "longDescription": "PRD를 주면 모바일 앱 HTML 화면들과 한눈에 보는 캔버스를 만든다. go는 모든 흐름(1차), max는 오류·확인·빈 화면 같은 상태까지(2차).",
+    "developerName": "VIBE MAFIA CLUB inner circle",
+    "category": "Design",
+    "capabilities": ["Interactive", "Write"],
+    "defaultPrompt": [
+      "k-style-ui-ux go로 이 PRD의 화면을 만들어줘.",
+      "k-style-ui-ux max로 오류·확인·빈 화면까지 더해줘."
+    ]
+  }
+}

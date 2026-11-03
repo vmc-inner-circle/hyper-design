@@ -1,0 +1,86 @@
+[
+ {
+  "src": "mweb",
+  "file": "full-branch/toss/out/.shots/home.png",
+  "site": "x00",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-branch/threads/out/.shots/home.png",
+  "site": "x01",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/chzzk/out/.shots/home.png",
+  "site": "x02",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-branch/musinsa/out/.shots/home.png",
+  "site": "x03",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-branch/kakaotalk/out/.shots/chats.png",
+  "site": "x04",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/kakaotalk/out/.shots/chats.png",
+  "site": "x05",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/kakaot/out/.shots/home.png",
+  "site": "x06",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-branch/chzzk/out/.shots/home.png",
+  "site": "x07",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/threads/out/.shots/home.png",
+  "site": "x08",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/musinsa/out/.shots/home.png",
+  "site": "x09",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-branch/kakaot/out/.shots/home.png",
+  "site": "x10",
+  "domain": "",
+  "page": "home"
+ },
+ {
+  "src": "mweb",
+  "file": "full-main/toss/out/.shots/home.png",
+  "site": "x11",
+  "domain": "",
+  "page": "home"
+ }
+]

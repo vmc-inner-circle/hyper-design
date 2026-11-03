@@ -1,0 +1,787 @@
+[
+ {
+  "domain": "budget",
+  "name": "편한가계부",
+  "ratings": 87227,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "날짜 줄(주간)",
+     "현황 카드(숫자 크게)",
+     "목록 행",
+     "하단 고정 버튼"
+    ],
+    "tabbar": [
+     "가계부",
+     "통계",
+     "자산",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "result",
+    "slots": [
+     "상단 탭",
+     "차트",
+     "목록 행"
+    ],
+    "tabbar": [
+     "가계부",
+     "통계",
+     "자산",
+     "설정"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "필터 칩",
+     "현황 카드(숫자 크게)",
+     "진행률/목표",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "상단 탭",
+     "정보 행(라벨:값)",
+     "입력 칸 여러 개",
+     "기타:사진 첨부"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "현황 카드(숫자 크게)",
+     "월 달력"
+    ],
+    "tabbar": [
+     "가계부",
+     "통계",
+     "자산",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "자산·잔액 카드",
+     "목록 행"
+    ],
+    "tabbar": [
+     "가계부",
+     "통계",
+     "자산",
+     "설정"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "result",
+    "slots": [
+     "상단 탭",
+     "차트",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "class",
+  "name": "문토 - 소모임 취미 동호회 동네친구 원데이클래스",
+  "ratings": 6479,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "slots": [
+     "진행률/목표",
+     "월 달력"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "작성자/프로필 줄",
+     "사진 갤러리(상단 큰 사진)",
+     "본문 글",
+     "상단 탭",
+     "사진 갤러리(상단 큰 사진)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "slots": [
+     "기타:채팅 말풍선"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "fashion",
+  "name": "에이블리 - 전 상품 무료배송",
+  "ratings": 566598,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "form",
+    "slots": [
+     "정보 행(라벨:값)",
+     "가격·할인",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "카테고리 아이콘 격자",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "카테고리 아이콘 격자",
+     "랭킹 목록",
+     "필터 칩"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "카테고리 아이콘 격자",
+     "랭킹 목록",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "finance",
+  "name": "신한 슈퍼SOL - 신한 유니버셜 금융 앱",
+  "ratings": 103862,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "기타:알림 카드",
+     "자산·잔액 카드",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "slots": [
+     "기타:AI 채팅",
+     "입력 칸 여러 개",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "검색창",
+     "목록 행",
+     "필터 칩"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "현황 카드(숫자 크게)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "기타:캐릭터 일러스트",
+     "바로가기 버튼 줄",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "food",
+  "name": "요기요 - 배달할 때마다 포인트 적립",
+  "ratings": 861848,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "카테고리 아이콘 격자",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "상단 탭",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "판매자/가게 정보",
+     "정보 행(라벨:값)",
+     "상단 탭",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "배너 캐러셀",
+     "검색창",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "위치·주소 선택",
+     "상단 탭",
+     "카테고리 아이콘 격자",
+     "필터 칩",
+     "지도"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "hospital",
+  "name": "똑닥 - 병원 예약/접수, 실시간 대기순서",
+  "ratings": 30763,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "위치·주소 선택",
+     "검색창",
+     "현황 카드(숫자 크게)",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "지도",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "단계 표시",
+     "시간·날짜 선택"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "평점·리뷰 요약",
+     "리뷰 목록"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "house",
+  "name": "삼삼엠투 - 단기임대 부동산 앱 33m2",
+  "ratings": 4590,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "검색창",
+     "카테고리 아이콘 격자",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "지도",
+     "필터 칩"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "slots": [
+     "시간·날짜 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "other",
+    "slots": [
+     "작성자/프로필 줄",
+     "기타:채팅 말풍선"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "form",
+    "slots": [
+     "단계 표시",
+     "질문 하나(큰 질문+선택지)",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "현황 카드(숫자 크게)",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "restaurant",
+  "name": "테이블링",
+  "ratings": 78162,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "지도",
+     "필터 칩",
+     "목록 행",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "랭킹 목록"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "상단 탭",
+     "차트",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "작성자/프로필 줄",
+     "현황 카드(숫자 크게)",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "slots": [
+     "자산·잔액 카드",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "taxi",
+  "name": "카카오 T - 택시, 세차, 주차, 바이크, 항공, 퀵",
+  "ratings": 464100,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "목록 행",
+     "정렬"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "검색창",
+     "바로가기 버튼 줄",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "바로가기 버튼 줄",
+     "배너 캐러셀",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "기타:차량 정보 카드",
+     "자산·잔액 카드",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "입력 칸 여러 개",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "작성자/프로필 줄",
+     "검색창",
+     "카테고리 아이콘 격자",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "todo",
+  "name": "플래닛 - 할 일, 일정, 캘린더",
+  "ratings": 39569,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "오늘 할 일 목록",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "slots": [
+     "월 달력",
+     "입력 칸 여러 개",
+     "기타:키보드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "slots": [
+     "작성자/프로필 줄",
+     "월 달력"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "used",
+  "name": "후루츠패밀리: 빈티지, 세컨핸드 패션 중고거래 커뮤니티",
+  "ratings": 55618,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "form",
+    "slots": [
+     "입력 칸 여러 개",
+     "사진 갤러리(상단 큰 사진)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "판매자/가게 정보",
+     "가격·할인",
+     "하단 고정 버튼",
+     "탭바(5)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "정보 행(라벨:값)",
+     "질문 하나(큰 질문+선택지)",
+     "기타:숫자 키패드"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "작성자/프로필 줄",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "작성자/프로필 줄",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ }
+]

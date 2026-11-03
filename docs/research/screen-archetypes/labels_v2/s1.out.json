@@ -1,0 +1,867 @@
+[
+ {
+  "site": "baemin",
+  "name": "배달의민족 - 배달팁 무료 배민클럽",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "배너 캐러셀",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "기타:큰 제목 배너",
+     "필터 칩",
+     "상품 격자(2~3열)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "기타:쿠폰 목록(할인 라벨+받기 버튼)",
+     "목록 행"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "검색창",
+     "서비스 격자",
+     "배너 캐러셀",
+     "기타:쿠폰 띠"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "장보기쇼핑 전용관, 홈 아님"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "지도",
+     "기타:배달 현황 카드"
+    ],
+    "anchor": "지도",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "chzzk",
+  "name": "치지직",
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "영상 플레이어",
+     "배너 캐러셀",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "탭바 없음, 추천 탭 첫 화면"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "영상 플레이어",
+     "가로 카드 줄"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "필터 칩",
+     "영상 플레이어",
+     "일정 타임라인"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "영상 플레이어",
+     "작성자/프로필 줄",
+     "반응(좋아요·댓글)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "클립 세로 영상"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:큰 로고 배너",
+     "작성자/프로필 줄",
+     "가로 카드 줄",
+     "가로 카드 줄"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "daiso",
+  "name": "다이소몰",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "화면 작고 겹침"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "인사/큰제목",
+     "상품 분류 격자",
+     "다음 행동 버튼"
+    ],
+    "anchor": "상품 분류 격자",
+    "repeat": "없음",
+    "exit": "다음·확인",
+    "conf": "low",
+    "note": "관심사 선택"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "입력 칸 여러 개",
+     "검색창",
+     "정보 행(라벨:값)"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "매장 재고 조회"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "작성자/프로필 줄",
+     "QR·바코드",
+     "내 숫자 카드(잔액·포인트·진행·현황)",
+     "정보 행(라벨:값)"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "kakaopay",
+  "name": "카카오페이",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "상단 탭",
+     "바로가기 버튼 줄",
+     "내 숫자 카드(잔액·포인트·진행·현황)",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "마이/투데이 두 상태가 한 장에 겹침"
+   },
+   {
+    "idx": 3,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "서비스 격자",
+     "배너 캐러셀",
+     "내 숫자 카드(잔액·포인트·진행·현황)",
+     "목록 행",
+     "차트",
+     "탭바(5)"
+    ],
+    "anchor": "내 숫자 카드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "자산 탭"
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "QR·바코드",
+     "내 숫자 카드(잔액·포인트·진행·현황)",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "QR·바코드",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "가격·할인",
+     "상단 탭",
+     "차트",
+     "기타:AI 분석 카드",
+     "하단 고정 버튼"
+    ],
+    "anchor": "차트",
+    "repeat": "없음",
+    "exit": "구매",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "result",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "작성자/프로필 줄",
+     "결과 요약 카드",
+     "차트"
+    ],
+    "anchor": "차트",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "보험 진단 결과"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "대표 글(큰 사진+제목)",
+     "질문 하나(큰 질문+선택지)"
+    ],
+    "anchor": "글 목록(대표 글+제목 행)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "내 숫자 카드(잔액·포인트·진행·현황)",
+     "가로 카드 줄",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "korail",
+  "name": "코레일+",
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "인사/큰제목",
+     "입력 칸 여러 개",
+     "다음 행동 버튼",
+     "바로가기 버튼 줄",
+     "서비스 격자",
+     "탭바(5)"
+    ],
+    "anchor": "입력 칸",
+    "repeat": "없음",
+    "exit": "요청·신청",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "서비스 격자",
+     "위치·주소 선택",
+     "탭바(5)"
+    ],
+    "anchor": "서비스 격자",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "이동·편의 탭, 하단 일부 깨짐"
+   },
+   {
+    "idx": 3,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "옵션 선택",
+     "기타:좌석 배치도",
+     "하단 고정 버튼"
+    ],
+    "anchor": "기타:좌석 배치도",
+    "repeat": "없음",
+    "exit": "예약",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "form",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "필터 칩",
+     "목록 행",
+     "정보 행(라벨:값)",
+     "하단 고정 버튼"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "구매",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "필터 칩",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ },
+ {
+  "site": "naver",
+  "name": "네이버 - NAVER",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "배너 캐러셀",
+     "세로 카드 피드",
+     "탭바(5)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": "사진 카드 2열 피드"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상품 분류 격자",
+     "가로 카드 줄",
+     "상품 격자(2~3열)",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "low",
+    "note": "스토어 탭"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "배너 캐러셀",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "투데이 탭"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "가로 카드 줄",
+     "영상 플레이어",
+     "탭바(5)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": "클립 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "작성자/프로필 줄",
+     "서비스 격자",
+     "목록 행",
+     "상품 격자(2~3열)",
+     "탭바(5)"
+    ],
+    "anchor": "목록 행",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "low",
+    "note": "마이 탭"
+   },
+   {
+    "idx": 8,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "검색창",
+     "가로 카드 줄",
+     "상품 격자(2~3열)"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "low",
+    "note": "AI 탭, 홍보 연출 강함"
+   }
+  ]
+ },
+ {
+  "site": "ohou",
+  "name": "오늘의집 - 라이프스타일 슈퍼앱",
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "배너 캐러셀",
+     "필터 칩"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "쿠폰 혜택 배너"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "작성자/프로필 줄",
+     "사진 갤러리(상단 큰 사진)"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:큰 제목 배너",
+     "단계 표시",
+     "목록 행"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "배너 캐러셀",
+     "사진 갤러리(상단 큰 사진)",
+     "판매자/가게 정보"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 6,
+    "kind": "other",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "인사/큰제목",
+     "바로가기 버튼 줄"
+    ],
+    "anchor": "기타:전용관 큰 제목 배너",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": ""
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "필터 칩",
+     "세로 카드 피드"
+    ],
+    "anchor": "카드 피드",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "정보 행(라벨:값)",
+     "서비스 격자",
+     "사진 갤러리(상단 큰 사진)",
+     "평점·리뷰 요약"
+    ],
+    "anchor": "프로필(사람·가게)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "시공 업체 상세"
+   }
+  ]
+ },
+ {
+  "site": "soop",
+  "name": "SOOP - Live Streaming",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "가로 카드 줄",
+     "영상 플레이어",
+     "채팅 말풍선",
+     "탭바(5)"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "큰 카드",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "필터 칩",
+     "상품 격자(2~3열)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "탐색 카테고리"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "영상 플레이어",
+     "반응(좋아요·댓글)",
+     "탭바(5)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "Catch 숏폼"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "정보 행(라벨:값)",
+     "채팅 말풍선",
+     "입력 칸 여러 개"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "low",
+    "note": "라이브 시청"
+   }
+  ]
+ },
+ {
+  "site": "tving",
+  "name": "TVING",
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "대표 글(큰 사진+제목)",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "큰 사진(대상 하나)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 4,
+    "kind": "detail",
+    "valid": true,
+    "slots": [
+     "영상 플레이어",
+     "정보 행(라벨:값)",
+     "상단 탭",
+     "목록 행"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": "스포츠 중계"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "인사/큰제목",
+     "상품 격자(2~3열)",
+     "탭바(5)"
+    ],
+    "anchor": "상품 격자",
+    "repeat": "상품 격자",
+    "exit": "없음",
+    "conf": "high",
+    "note": "오리지널 전용관"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "영상 플레이어",
+     "목록 행",
+     "탭바(5)"
+    ],
+    "anchor": "콘텐츠 자체(영상·본문·만화)",
+    "repeat": "목록 행",
+    "exit": "없음",
+    "conf": "high",
+    "note": "라이브 탭"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "상단 탭",
+     "랭킹 목록",
+     "가로 카드 줄",
+     "가로 카드 줄",
+     "탭바(5)"
+    ],
+    "anchor": "진열(배너·가로 줄)",
+    "repeat": "가로 줄",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   },
+   {
+    "idx": 8,
+    "kind": "chat",
+    "valid": true,
+    "slots": [
+     "기타:머리줄",
+     "채팅 말풍선",
+     "입력 칸 여러 개"
+    ],
+    "anchor": "채팅",
+    "repeat": "없음",
+    "exit": "없음",
+    "conf": "high",
+    "note": ""
+   }
+  ]
+ }
+]
