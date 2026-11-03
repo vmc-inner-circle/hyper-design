@@ -1,0 +1,278 @@
+{
+ "toss": [
+  {
+   "id": "toss-app-89",
+   "slot": "dialog_title",
+   "situation": "병원비 청구 — 진찰 대상자 확인 바텀시트(이름 가림)"
+  },
+  {
+   "id": "toss-app-36",
+   "slot": "empty",
+   "situation": "페이스페이 홈의 결제내역 카드가 비었을 때"
+  },
+  {
+   "id": "toss-app-105",
+   "slot": "notice",
+   "situation": "송금 확인증 기간 선택 화면 부제(합니다체)"
+  },
+  {
+   "id": "toss-app-49",
+   "slot": "notice",
+   "situation": "자동이체 시작 화면 장점 안내 1"
+  },
+  {
+   "id": "toss-app-99",
+   "slot": "notice",
+   "situation": "신분증 준비 화면 부제"
+  },
+  {
+   "id": "toss-app-94",
+   "slot": "screen_title",
+   "situation": "내 송금한도 — OTP 등록 권유 제목"
+  },
+  {
+   "id": "toss-app-73",
+   "slot": "notice",
+   "situation": "회원 탈퇴 유의사항 4"
+  },
+  {
+   "id": "toss-app-05",
+   "slot": "notice",
+   "situation": "동의 철회 안내 본문(삭제·복구 불가)"
+  },
+  {
+   "id": "toss-app-64",
+   "slot": "dialog_body",
+   "situation": "1회 예약 자동이체 확인 본문(계좌명 가림)"
+  },
+  {
+   "id": "toss-app-35",
+   "slot": "screen_title",
+   "situation": "결제한도 설정 화면 제목"
+  },
+  {
+   "id": "toss-app-08",
+   "slot": "dialog_body",
+   "situation": "페이스페이 동의 철회 확인 본문"
+  },
+  {
+   "id": "toss-app-24",
+   "slot": "notice",
+   "situation": "포인트 출금 금액 입력 아래 수수료 안내"
+  },
+  {
+   "id": "toss-app-17",
+   "slot": "notice",
+   "situation": "계좌번호 입력 칸 아래 도움말"
+  },
+  {
+   "id": "toss-app-51",
+   "slot": "screen_title",
+   "situation": "자동이체 추가 — 출금 계좌 질문"
+  },
+  {
+   "id": "toss-app-65",
+   "slot": "dialog_title",
+   "situation": "자동이체 수정 화면에서 삭제 확인"
+  },
+  {
+   "id": "toss-app-52",
+   "slot": "screen_title",
+   "situation": "자동이체 추가 — 이체 주기 바텀시트 제목"
+  },
+  {
+   "id": "toss-app-75",
+   "slot": "screen_title",
+   "situation": "고객센터 화면 상단 제목(합니다체)"
+  },
+  {
+   "id": "toss-app-16",
+   "slot": "notice",
+   "situation": "결제 계좌 등록 화면 부제"
+  },
+  {
+   "id": "toss-app-82",
+   "slot": "error",
+   "situation": "토스증권(앱) 서비스 점검 중 진입 차단 화면 제목"
+  },
+  {
+   "id": "toss-app-02",
+   "slot": "dialog_body",
+   "situation": "브랜드콘 결제 취소 확인 본문"
+  }
+ ],
+ "daangn": [
+  {
+   "id": "daangn-app-35",
+   "slot": "notice",
+   "situation": "차단 후 채팅 입력창 placeholder"
+  },
+  {
+   "id": "daangn-app-62",
+   "slot": "dialog_body",
+   "situation": "이용제한 계정 로그인 시 대화상자 본문"
+  },
+  {
+   "id": "daangn-app-44",
+   "slot": "result_title",
+   "situation": "택배 예약 완료 화면 제목(상단 라벨 '택배 예약 완료')"
+  },
+  {
+   "id": "daangn-app-30",
+   "slot": "screen_title",
+   "situation": "비매너 평가 사유 선택 질문"
+  },
+  {
+   "id": "daangn-app-58",
+   "slot": "result_body",
+   "situation": "보호조치 해제 완료 화면 본문"
+  },
+  {
+   "id": "daangn-app-27",
+   "slot": "dialog_title",
+   "situation": "채팅방 메뉴에서 매너 평가하기 선택 시 액션시트 제목"
+  },
+  {
+   "id": "daangn-app-12",
+   "slot": "notice",
+   "situation": "내 동네 설정 바텀시트 설명"
+  },
+  {
+   "id": "daangn-app-24",
+   "slot": "notice",
+   "situation": "중고거래 글쓰기 자세한 설명 입력란 안내(placeholder)"
+  },
+  {
+   "id": "daangn-app-68",
+   "slot": "empty",
+   "situation": "채팅방 모두 삭제 후 채팅 탭 빈 화면"
+  },
+  {
+   "id": "daangn-app-22",
+   "slot": "notice",
+   "situation": "현재 위치에 있는 동네 선택 바텀시트 설명"
+  },
+  {
+   "id": "daangn-app-87",
+   "slot": "system_message",
+   "situation": "판매자 채팅방 '구매확정 대기중' 카드"
+  },
+  {
+   "id": "daangn-app-01",
+   "slot": "screen_title",
+   "situation": "모임 탈퇴 전 확인 화면 제목"
+  },
+  {
+   "id": "daangn-app-84",
+   "slot": "screen_title",
+   "situation": "구매자 안심결제 진행 화면 제목"
+  },
+  {
+   "id": "daangn-app-34",
+   "slot": "toast",
+   "situation": "차단 완료 토스트(닉네임 모자이크)"
+  },
+  {
+   "id": "daangn-app-97",
+   "slot": "notice",
+   "situation": "제재 이력 상세 화면 하단 안내(해요체+합니다체 혼용)"
+  },
+  {
+   "id": "daangn-app-28",
+   "slot": "dialog_body",
+   "situation": "매너 평가 액션시트 보조 문구"
+  },
+  {
+   "id": "daangn-app-80",
+   "slot": "notice",
+   "situation": "알바 공고 지원자 수 아래 안내"
+  },
+  {
+   "id": "daangn-app-46",
+   "slot": "system_message",
+   "situation": "택배 수거 후 채팅 시스템 카드"
+  },
+  {
+   "id": "daangn-app-49",
+   "slot": "notice",
+   "situation": "구매자 보호 수수료 안내 시트"
+  },
+  {
+   "id": "daangn-app-73",
+   "slot": "screen_title",
+   "situation": "제재 내역 화면 제목(닉네임 블로거가 덧씀, 첫 글자 일부 가림)"
+  }
+ ],
+ "ridi": [
+  {
+   "id": "ridi-app-07",
+   "slot": "notice",
+   "situation": "웹툰 회차 대여·소장 결제 시트 — 결제 취소 조건"
+  },
+  {
+   "id": "ridi-app-21",
+   "slot": "notice",
+   "situation": "2단계 인증 설정 화면 설명문"
+  },
+  {
+   "id": "ridi-app-31",
+   "slot": "error",
+   "situation": "네트워크 끊김 — 홈 탭 오프라인 화면 제목"
+  },
+  {
+   "id": "ridi-app-32",
+   "slot": "error",
+   "situation": "네트워크 끊김 — 오프라인 화면 설명"
+  },
+  {
+   "id": "ridi-app-35",
+   "slot": "dialog_body",
+   "situation": "뷰어 듣기 타이머 시트 설명"
+  },
+  {
+   "id": "ridi-app-06",
+   "slot": "notice",
+   "situation": "웹툰 회차 대여 결제 시트 — 대여 기간 안내"
+  },
+  {
+   "id": "ridi-app-22",
+   "slot": "notice",
+   "situation": "2단계 인증 수단 설명(OTP 앱 / 이메일)"
+  },
+  {
+   "id": "ridi-app-20",
+   "slot": "screen_title",
+   "situation": "2단계 인증 설정 화면 헤드라인"
+  },
+  {
+   "id": "ridi-app-34",
+   "slot": "dialog_title",
+   "situation": "뷰어 듣기(TTS) 중 타이머 시트 제목 (고객센터 문서 이미지 업로드일 기준)"
+  },
+  {
+   "id": "ridi-app-04",
+   "slot": "notice",
+   "situation": "앱 알림함 — 혜택/당첨 알림(랜덤티켓)"
+  },
+  {
+   "id": "ridi-app-17",
+   "slot": "dialog_body",
+   "situation": "구매 확정 확인창 본문"
+  },
+  {
+   "id": "ridi-app-05",
+   "slot": "notice",
+   "situation": "앱 알림함 — 혜택/당첨 알림(캘린더 포인트 마감 임박)"
+  },
+  {
+   "id": "ridi-app-16",
+   "slot": "dialog_title",
+   "situation": "결제 상세에서 '구매 확정'을 누를 때 확인창(iOS 앱)"
+  },
+  {
+   "id": "ridi-app-19",
+   "slot": "notice",
+   "situation": "결제 상세 하단 버튼(결제 취소/구매 확정) 아래 안내"
+  }
+ ]
+}

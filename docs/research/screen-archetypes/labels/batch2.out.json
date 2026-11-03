@@ -1,0 +1,759 @@
+[
+ {
+  "domain": "book",
+  "name": "만화 웹툰 웹소설 도서는 리디",
+  "ratings": 21151,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "카테고리 아이콘 격자",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "기타:뒤로+제목 헤더",
+     "정렬",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "기타:쇼핑 헤더(검색·장바구니)",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "class",
+  "name": "CLASS101 - 클래스101",
+  "ratings": 37423,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "배너 캐러셀",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "기타:내 클래스 제목",
+     "상단 탭",
+     "목록 행",
+     "기타:출석 체크 팝업(주간 날짜 줄+버튼)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:챕터 제목",
+     "상단 탭",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:수강중 클래스 정보",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "현황 카드(숫자 크게)",
+     "목록 행",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "community",
+  "name": "다톡 - 관심사로 만나는 온라인 채팅 친구",
+  "ratings": 25381,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "list",
+    "slots": [
+     "인사/큰제목",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 2,
+    "kind": "list",
+    "slots": [
+     "인사/큰제목",
+     "상단 탭",
+     "세로 카드 피드"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 3,
+    "kind": "detail",
+    "slots": [
+     "기타:채팅 헤더",
+     "기타:채팅 말풍선 대화",
+     "입력 칸 여러 개"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "인사/큰제목",
+     "필터 칩",
+     "세로 카드 피드"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "fashion",
+  "name": "지그재그 - ZIGZAG",
+  "ratings": 68073,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": [
+     "홈",
+     "스토어",
+     "카테고리",
+     "찜",
+     "마이페이지"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "기타:랭킹 헤더",
+     "상단 탭",
+     "필터 칩",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "홈",
+     "스토어",
+     "카테고리",
+     "찜",
+     "마이페이지"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:상품명",
+     "가격·할인",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "home",
+    "slots": [
+     "상단 탭",
+     "필터 칩",
+     "배너 캐러셀",
+     "목록 행"
+    ],
+    "tabbar": [
+     "홈",
+     "스토어",
+     "카테고리",
+     "찜",
+     "마이페이지"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "상단 탭",
+     "가로 카드 줄(제목+가로 스크롤)",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "fitness",
+  "name": "Nike Training Club",
+  "ratings": 41622,
+  "screens": [
+   {
+    "idx": 1,
+    "kind": "list",
+    "slots": [
+     "검색창",
+     "기타:섹션 제목",
+     "목록 행",
+     "목록 행",
+     "목록 행"
+    ],
+    "tabbar": [
+     "기타",
+     "운동",
+     "기타",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "인사/큰제목",
+     "기타:카테고리 큰 이미지 카드 세로"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:제목",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "form",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "시간·날짜 선택"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "grocery",
+  "name": "이마트몰 - Emartmall",
+  "ratings": 241204,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "기타:로고+검색 헤더",
+     "상단 탭",
+     "배너 캐러셀",
+     "바로가기 버튼 줄"
+    ],
+    "tabbar": [
+     "메뉴",
+     "기타",
+     "홈",
+     "MY",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "기타:헤더",
+     "배너 캐러셀",
+     "카테고리 아이콘 격자"
+    ],
+    "tabbar": [
+     "메뉴",
+     "기타",
+     "홈",
+     "MY",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "기타:로고+검색 헤더",
+     "상단 탭",
+     "바로가기 버튼 줄",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "메뉴",
+     "기타",
+     "홈",
+     "MY",
+     "기타"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 5,
+    "kind": "list",
+    "slots": [
+     "기타:로고+검색 헤더",
+     "상단 탭",
+     "필터 칩",
+     "정렬",
+     "2열 상품 격자"
+    ],
+    "tabbar": [
+     "메뉴",
+     "기타",
+     "홈",
+     "MY",
+     "기타"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "기타:헤더",
+     "필터 칩",
+     "2열 상품 격자"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "기타:장바구니 헤더",
+     "필터 칩",
+     "목록 행",
+     "목록 행",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   }
+  ]
+ },
+ {
+  "domain": "house",
+  "name": "피터팬의 좋은방 구하기: 원룸, 투룸, 빌라, 오피스텔",
+  "ratings": 66275,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "detail",
+    "slots": [
+     "기타:뒤로+단지명 헤더",
+     "정보 행(라벨:값)",
+     "상단 탭",
+     "차트"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "form",
+    "slots": [
+     "필터 칩",
+     "옵션 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:인증 배지",
+     "가격·할인",
+     "정보 행(라벨:값)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "list",
+    "slots": [
+     "기타:헤더",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "home",
+    "slots": [
+     "인사/큰제목",
+     "카테고리 아이콘 격자",
+     "다음 행동 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "interior",
+  "name": "텐바이텐- 디자인 쇼핑몰 10x10",
+  "ratings": 36454,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "list",
+    "slots": [
+     "기타:커뮤니티 제목",
+     "카테고리 아이콘 격자",
+     "세로 카드 피드",
+     "반응(좋아요·댓글)"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "기타:로고+검색 헤더",
+     "상단 탭",
+     "카테고리 아이콘 격자",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "home",
+    "slots": [
+     "기타:로고+검색 헤더",
+     "상단 탭",
+     "배너 캐러셀"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "result",
+    "slots": [
+     "기타:출석체크 제목",
+     "월 달력"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "stay",
+  "name": "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교",
+  "ratings": 419739,
+  "screens": [
+   {
+    "idx": 2,
+    "kind": "home",
+    "slots": [
+     "기타:특가 제목",
+     "입력 칸 여러 개",
+     "세로 카드 피드"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 3,
+    "kind": "form",
+    "slots": [
+     "기타:헤더",
+     "상단 탭",
+     "입력 칸 여러 개",
+     "월 달력"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "list",
+    "slots": [
+     "입력 칸 여러 개",
+     "필터 칩",
+     "정렬",
+     "목록 행"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "기타:경로 제목",
+     "목록 행",
+     "기타:알림 토글 팝업"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 6,
+    "kind": "list",
+    "slots": [
+     "입력 칸 여러 개",
+     "필터 칩",
+     "목록 행"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "기타",
+     "기타"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 7,
+    "kind": "detail",
+    "slots": [
+     "사진 갤러리(상단 큰 사진)",
+     "기타:호텔명",
+     "평점·리뷰 요약",
+     "시간·날짜 선택",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 8,
+    "kind": "list",
+    "slots": [
+     "지도",
+     "필터 칩",
+     "세로 카드 피드"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "taxi",
+  "name": "i.M(아이.엠)",
+  "ratings": 33125,
+  "screens": [
+   {
+    "idx": 4,
+    "kind": "home",
+    "slots": [
+     "지도",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 5,
+    "kind": "detail",
+    "slots": [
+     "지도",
+     "정보 행(라벨:값)",
+     "작성자/프로필 줄"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 6,
+    "kind": "form",
+    "slots": [
+     "지도",
+     "옵션 선택",
+     "가격·할인"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   },
+   {
+    "idx": 7,
+    "kind": "form",
+    "slots": [
+     "지도",
+     "시간·날짜 선택",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "high"
+   },
+   {
+    "idx": 8,
+    "kind": "form",
+    "slots": [
+     "지도",
+     "옵션 선택",
+     "가격·할인",
+     "하단 고정 버튼"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ },
+ {
+  "domain": "travel",
+  "name": "트리플 - 항공·호텔 최저가 예약, 여행계획",
+  "ratings": 27304,
+  "screens": [
+   {
+    "idx": 3,
+    "kind": "home",
+    "slots": [
+     "검색창",
+     "상단 탭",
+     "배너 캐러셀",
+     "카테고리 아이콘 격자",
+     "가로 카드 줄(제목+가로 스크롤)"
+    ],
+    "tabbar": [
+     "기타",
+     "기타",
+     "홈",
+     "찜",
+     "마이"
+    ],
+    "conf": "high"
+   },
+   {
+    "idx": 4,
+    "kind": "result",
+    "slots": [
+     "작성자/프로필 줄",
+     "결과 큰 문구",
+     "지도",
+     "상단 탭",
+     "일정 타임라인"
+    ],
+    "tabbar": null,
+    "conf": "low"
+   }
+  ]
+ }
+]

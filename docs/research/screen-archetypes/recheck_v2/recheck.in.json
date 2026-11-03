@@ -1,0 +1,196 @@
+[
+ {
+  "id": "M|daumnews|home",
+  "src": "mweb",
+  "file": "mweb/daumnews-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|chzzk|home",
+  "src": "mweb",
+  "file": "mweb/chzzk-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|daangn-group|list",
+  "src": "mweb",
+  "file": "mweb/daangn-group-list.png",
+  "page": "list"
+ },
+ {
+  "id": "S|yeogi|2",
+  "src": "store",
+  "file": "yeogi/market/1-여기어때호텔모텔숙소항공.jpg",
+  "which": "2번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "S|cgv|5",
+  "src": "store",
+  "file": "cgv/market/1-CGV.jpg",
+  "which": "5번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "S|baemin|5",
+  "src": "store",
+  "file": "baemin/market/1-배달의민족배달팁무료배민.jpg",
+  "which": "5번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "S|nol|6",
+  "src": "store",
+  "file": "nol/market/1-NOL야놀자와인터파크의.jpg",
+  "which": "6번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "M|munto|detail",
+  "src": "mweb",
+  "file": "mweb/munto-detail.png",
+  "page": "detail"
+ },
+ {
+  "id": "M|inflearn|home",
+  "src": "mweb",
+  "file": "mweb/inflearn-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|daangn-main|list",
+  "src": "mweb",
+  "file": "mweb/daangn-main-list.png",
+  "page": "list"
+ },
+ {
+  "id": "M|class101|detail",
+  "src": "mweb",
+  "file": "mweb/class101-detail.png",
+  "page": "detail"
+ },
+ {
+  "id": "M|oliveyoung|detail",
+  "src": "mweb",
+  "file": "mweb/oliveyoung-detail.png",
+  "page": "detail"
+ },
+ {
+  "id": "M|frip|home",
+  "src": "mweb",
+  "file": "mweb/frip-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|11st|list",
+  "src": "mweb",
+  "file": "mweb/11st-list.png",
+  "page": "list"
+ },
+ {
+  "id": "S|kmong|6",
+  "src": "store",
+  "file": "kmong/market/1-크몽프리랜서마켓No1.jpg",
+  "which": "6번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "S|kmong|8",
+  "src": "store",
+  "file": "kmong/market/1-크몽프리랜서마켓No1.jpg",
+  "which": "8번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "S|kakaobank|1",
+  "src": "store",
+  "file": "kakaobank/market/1-카카오뱅크.jpg",
+  "which": "1번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "S|soop|4",
+  "src": "store",
+  "file": "soop/market/1-SOOPLiveStre.jpg",
+  "which": "4번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "S|toss|3",
+  "src": "store",
+  "file": "toss/market/1-토스.jpg",
+  "which": "3번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "S|toss|4",
+  "src": "store",
+  "file": "toss/market/1-토스.jpg",
+  "which": "4번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "M|brunch|home",
+  "src": "mweb",
+  "file": "mweb/brunch-home.png",
+  "page": "home"
+ },
+ {
+  "id": "S|bunjang|4",
+  "src": "store",
+  "file": "bunjang/market/1-번개장터.jpg",
+  "which": "4번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "M|melon|home",
+  "src": "mweb",
+  "file": "mweb/melon-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|youtube|list",
+  "src": "mweb",
+  "file": "mweb/youtube-list.png",
+  "page": "list"
+ },
+ {
+  "id": "S|kakaotalk|5",
+  "src": "store",
+  "file": "kakaotalk/market/1-카카오톡KakaoTal.jpg",
+  "which": "5번 스크린샷만",
+  "kind": "detail"
+ },
+ {
+  "id": "M|daiso|home",
+  "src": "mweb",
+  "file": "mweb/daiso-home.png",
+  "page": "home"
+ },
+ {
+  "id": "M|kakaomap|list",
+  "src": "mweb",
+  "file": "mweb/kakaomap-list.png",
+  "page": "list"
+ },
+ {
+  "id": "S|catchtable|3",
+  "src": "store",
+  "file": "catchtable/market/1-캐치테이블.jpg",
+  "which": "3번 스크린샷만",
+  "kind": "list"
+ },
+ {
+  "id": "S|cgv|3",
+  "src": "store",
+  "file": "cgv/market/1-CGV.jpg",
+  "which": "3번 스크린샷만",
+  "kind": "home"
+ },
+ {
+  "id": "M|soomgo|home",
+  "src": "mweb",
+  "file": "mweb/soomgo-home.png",
+  "page": "home"
+ }
+]

@@ -1,0 +1,341 @@
+[
+ {
+  "id": "29cm",
+  "domain": "패션 쇼핑",
+  "pages": {
+   "home": "https://www.29cm.co.kr/",
+   "list": "https://www.29cm.co.kr/search?keyword=%EB%8B%88%ED%8A%B8",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "musinsa",
+  "domain": "패션 쇼핑",
+  "pages": {
+   "home": "https://www.musinsa.com/main/musinsa/recommend?gf=A",
+   "list": "https://www.musinsa.com/search/goods?keyword=%EB%8B%88%ED%8A%B8&gf=A",
+   "detail": "https://www.musinsa.com/products/7493901"
+  }
+ },
+ {
+  "id": "zigzag",
+  "domain": "패션 쇼핑",
+  "pages": {
+   "home": "https://zigzag.kr/",
+   "list": "https://zigzag.kr/search?keyword=%EB%8B%88%ED%8A%B8",
+   "detail": "https://zigzag.kr/catalog/products/172010604"
+  }
+ },
+ {
+  "id": "kream",
+  "domain": "리셀",
+  "pages": {
+   "home": "https://kream.co.kr/",
+   "list": "https://kream.co.kr/search?keyword=%EB%82%98%EC%9D%B4%ED%82%A4",
+   "detail": "https://kream.co.kr/products/748804"
+  }
+ },
+ {
+  "id": "kurly",
+  "domain": "장보기",
+  "pages": {
+   "home": "https://www.kurly.com/main",
+   "list": "https://www.kurly.com/search?sword=%EC%82%AC%EA%B3%BC",
+   "detail": "https://www.kurly.com/goods/5061259?collectionCode=k4pv4fn1"
+  }
+ },
+ {
+  "id": "11st",
+  "domain": "종합 쇼핑",
+  "pages": {
+   "home": "http://m.11st.co.kr/page/main/home",
+   "list": "https://search.11st.co.kr/MW/search?searchKeyword=%EC%82%AC%EA%B3%BC",
+   "detail": "http://m.11st.co.kr/products/ma/1109849029?&trTypeCd=MAS03&trCtgrNo=950076&priceCompare=false"
+  }
+ },
+ {
+  "id": "gmarket",
+  "domain": "종합 쇼핑",
+  "pages": {
+   "home": "https://m.gmarket.co.kr/",
+   "list": "ERR Error",
+   "detail": "ERR Error"
+  }
+ },
+ {
+  "id": "ohou",
+  "domain": "인테리어",
+  "pages": {
+   "home": "https://ohou.se/",
+   "list": "https://ohou.se/search/index?query=%EC%9D%98%EC%9E%90",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "bunjang",
+  "domain": "중고거래",
+  "pages": {
+   "home": "https://m.bunjang.co.kr/",
+   "list": "https://m.bunjang.co.kr/keywords/%EC%95%84%EC%9D%B4%ED%8F%B0",
+   "detail": "https://m.bunjang.co.kr/products/442924477?imp_id=01M65RCAS96VQVDC0HVKGBKE6E&ref_code=%22%7B%5C%22level1%5C%22%3A%5C%22ad%5C%22%2C%5C%22level2%5C%22%3A%5C%22sa%5C%22%2C%5C%22level3%5C%22%3A%5C%22keyword%5C%22%2C%5C%22level4%5C%22%3A%5C%22keyword-search%5C%22%7D%22&ref_source=sa&ref_medium=AD_N&ref_campaign=%22%7B%5C%22adSetId%5C%22%3A534289%2C%5C%22adPid%5C%22%3A1760906%2C%5C%22uid%5C%22%3A80311125%2C%5C%22matchKeywordId%5C%22%3A9244973%7D%22&ref_content=0%3ArGGiRtTnCQysKRqQwWqEhgdzOEveiAHmO8QDzYskb2bqJIEA6KEG02h2Z3CDrIKGeMrYs9EYsf2uT23piMe%2FvjGPJNJI6ejYt34SoIxJl8tuTjj0DGMRtVkryIW0KPQ%2Fv2oicbsxnxkeuMDBrlvZRXzs0M%2BxyMNyR3QQTWD0%2F6Cd6vXp4iZ9O7CDPiPdH7Jl%3A10%3A6&content_position=0"
+  }
+ },
+ {
+  "id": "joongna",
+  "domain": "중고거래",
+  "pages": {
+   "home": "https://web.joongna.com/",
+   "list": "https://web.joongna.com/search/%EC%95%84%EC%9D%B4%ED%8F%B0",
+   "detail": "https://web.joongna.com/product/233339510"
+  }
+ },
+ {
+  "id": "daangn",
+  "domain": "중고거래",
+  "pages": {
+   "home": "https://www.daangn.com/kr/search/buy-sell/",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "myrealtrip",
+  "domain": "여행",
+  "pages": {
+   "home": "https://www.myrealtrip.com/",
+   "list": "https://www.myrealtrip.com/search?q=%EC%98%A4%EC%82%AC%EC%B9%B4",
+   "detail": "https://accommodation.myrealtrip.com/union/products/5007317?checkIn=2026-11-01&checkOut=2026-11-02&adultCount=1&childCount=0&isDomestic=false"
+  }
+ },
+ {
+  "id": "yeogi",
+  "domain": "숙소",
+  "pages": {
+   "home": "https://www.yeogi.com/",
+   "detail": "https://www.yeogi.com/domestic-accommodations?keyword=%EC%A0%9C%EC%A3%BC%EB%8F%84"
+  }
+ },
+ {
+  "id": "nol",
+  "domain": "숙소",
+  "pages": {
+   "home": "https://nol.yanolja.com/",
+   "detail": "https://tour.yanolja.com/tna"
+  }
+ },
+ {
+  "id": "triple",
+  "domain": "여행",
+  "pages": {
+   "home": "https://triple.guide/intro",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "klook",
+  "domain": "여행",
+  "pages": {
+   "home": "https://www.klook.com/ko/",
+   "list": "https://www.klook.com/ko/search/result/?query=%EC%98%A4%EC%82%AC%EC%B9%B4",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "airbnb",
+  "domain": "숙소",
+  "pages": {
+   "home": "https://www.airbnb.co.kr/",
+   "detail": "https://www.airbnb.co.kr/s/%EC%84%9C%EC%9A%B8/experiences?place_id=ChIJzzlcLQGifDURm_JbQKHsEX4&refinement_paths%5B%5D=%2Fexperiences&kg_or_tags=Tag%3A8970&search_type=HOMEPAGE_CAROUSEL_CLICK"
+  }
+ },
+ {
+  "id": "catchtable",
+  "domain": "식당 예약",
+  "pages": {
+   "home": "https://app.catchtable.co.kr/",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "kakaomap",
+  "domain": "지도",
+  "pages": {
+   "home": "https://m.map.kakao.com/",
+   "list": "https://m.map.kakao.com/actions/searchView?q=%EC%B9%B4%ED%8E%98",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "hogangnono",
+  "domain": "부동산",
+  "pages": {
+   "home": "https://hogangnono.com/",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "dabang",
+  "domain": "부동산",
+  "pages": {
+   "home": "https://www.dabangapp.com/mobile/map/onetwo",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "soomgo",
+  "domain": "전문가 찾기",
+  "pages": {
+   "home": "https://soomgo.com/",
+   "detail": "https://soomgo.com/review/detail/6ae2ca6cd9a34aa2e741bef5?from=home&locationEntryMethod=main_contents_feeds"
+  }
+ },
+ {
+  "id": "class101",
+  "domain": "클래스",
+  "pages": {
+   "home": "https://class101.net/ko?viewMode=svod",
+   "list": "https://class101.net/ko/search?query=%EB%93%9C%EB%A1%9C%EC%9E%89&viewMode=svod",
+   "detail": "https://class101.net/ko/products/61ee14cb9ec3fc000daaa485?viewMode=svod"
+  }
+ },
+ {
+  "id": "frip",
+  "domain": "취미",
+  "pages": {
+   "home": "https://www.frip.co.kr/",
+   "detail": "https://www.frip.co.kr/products/121737"
+  }
+ },
+ {
+  "id": "munto",
+  "domain": "모임",
+  "pages": {
+   "home": "https://www.munto.kr/ko",
+   "detail": "https://www.munto.kr/ko/socialing?id=700417"
+  }
+ },
+ {
+  "id": "ridi",
+  "domain": "전자책",
+  "pages": {
+   "home": "https://ridibooks.com/comics/ebook",
+   "list": "https://ridibooks.com/search?q=%EC%86%8C%EC%84%A4",
+   "detail": "https://ridibooks.com/books/777192899?_s=search&_q=%EC%86%8C%EC%84%A4&_rdt_sid=SearchBookListWithTab&_rdt_idx=0"
+  }
+ },
+ {
+  "id": "yes24",
+  "domain": "책",
+  "pages": {
+   "home": "https://m.yes24.com/home/main",
+   "list": "https://m.yes24.com/Search?query=%EC%86%8C%EC%84%A4",
+   "detail": "https://m.yes24.com/goods/detail/122771074"
+  }
+ },
+ {
+  "id": "kakaopage",
+  "domain": "웹소설",
+  "pages": {
+   "home": "https://page.kakao.com/",
+   "detail": "https://page.kakao.com/content/70110208/"
+  }
+ },
+ {
+  "id": "navercomic",
+  "domain": "웹툰",
+  "pages": {
+   "home": "https://m.comic.naver.com/index#",
+   "detail": "https://m.comic.naver.com/webtoon/detail?titleId=641253&no=624"
+  }
+ },
+ {
+  "id": "navernews",
+  "domain": "뉴스",
+  "pages": {
+   "home": "https://news.naver.com/section/101",
+   "detail": "https://n.news.naver.com/mnews/article/586/0000141199"
+  }
+ },
+ {
+  "id": "daumnews",
+  "domain": "뉴스",
+  "pages": {
+   "home": "https://news.daum.net/",
+   "detail": "https://v.daum.net/v/20261030153023342"
+  }
+ },
+ {
+  "id": "youtube",
+  "domain": "영상",
+  "pages": {
+   "home": "https://m.youtube.com/?ra=m",
+   "list": "https://m.youtube.com/results?search_query=%EC%9A%94%EB%A6%AC&ra=m",
+   "detail": "https://m.youtube.com/watch?v=_w_9yeCD9Qg&pp=ygUG7JqU66as&ra=m"
+  }
+ },
+ {
+  "id": "melon",
+  "domain": "음악",
+  "pages": {
+   "home": "https://m2.melon.com/index.htm",
+   "detail": "ERR 상세 링크 못 찾음"
+  }
+ },
+ {
+  "id": "brunch",
+  "domain": "글",
+  "pages": {
+   "home": "https://brunch.co.kr/",
+   "detail": "https://brunch.co.kr/@leehyunmin/119"
+  }
+ },
+ {
+  "id": "velog",
+  "domain": "글",
+  "pages": {
+   "home": "https://velog.io/",
+   "detail": "https://velog.io/@harudle/%EC%9A%B0%ED%85%8C%EC%BD%94-%EC%8B%A0%EB%B9%84%EC%A3%BC%EC%9D%98-%EA%B9%A8%EB%93%9C%EB%A6%BD%EB%8B%88%EB%8B%A4"
+  }
+ },
+ {
+  "id": "blind",
+  "domain": "커뮤니티",
+  "pages": {
+   "home": "https://www.teamblind.com/kr/",
+   "detail": "https://www.teamblind.com/kr/topics/Im%EC%86%94%EB%A1%9C"
+  }
+ },
+ {
+  "id": "inflearn",
+  "domain": "강의",
+  "pages": {
+   "home": "https://www.inflearn.com/",
+   "list": "https://www.inflearn.com/search?s=%ED%8C%8C%EC%9D%B4%EC%8D%AC",
+   "detail": "https://www.inflearn.com/course/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EB%A8%B8%EC%8B%A0%EB%9F%AC%EB%8B%9D-%EC%99%84%EB%B2%BD%EA%B0%80%EC%9D%B4%EB%93%9C?cid=324238"
+  }
+ },
+ {
+  "id": "wanted",
+  "domain": "채용",
+  "pages": {
+   "home": "https://www.wanted.co.kr/",
+   "detail": "https://www.wanted.co.kr/wd/395577"
+  }
+ },
+ {
+  "id": "saramin",
+  "domain": "채용",
+  "pages": {
+   "home": "ERR TimeoutError",
+   "detail": "ERR TimeoutError"
+  }
+ },
+ {
+  "id": "10000recipe",
+  "domain": "레시피",
+  "pages": {
+   "home": "https://m.10000recipe.com/",
+   "list": "https://m.10000recipe.com/recipe/list.html?q=%EA%B9%80%EC%B9%98%EC%B0%8C%EA%B0%9C",
+   "detail": "https://m.10000recipe.com/recipe/6835685"
+  }
+ }
+]

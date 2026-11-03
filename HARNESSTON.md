@@ -27,7 +27,7 @@
 - 이 레포를 fork하거나 `solo/{github_id}` 브랜치를 만들어 작업합니다.
 - **출발점은 이 레포의 빈 템플릿입니다.** 9/5 하네스톤 2회차 참가자가 받은 것과 같은 수준이며(`.claude/skills/oss-design-harness/SKILL.md`의 `TODO` 뼈대 + `templates/` + `docs/concept.md`), 결과물이 HTML이라 Figma 전제 문구만 고쳤습니다.
 - `SKILL.md`의 `TODO`를 채우고 구조를 바꾸는 것이 곧 각자의 하네스 작업입니다.
-- **규칙 외에는 전부 자유입니다.** 템플릿을 고쳐 쓰든 버리고 새로 짜든, 이전 하네스([`archive/v1-team3`](https://github.com/vmc-inner-circle/hyper-design/tree/archive/v1-team3))나 외부 스킬·도구·모델을 가져다 쓰든 상관없습니다.
+- **규칙 외에는 전부 자유입니다.** 템플릿을 고쳐 쓰든 버리고 새로 짜든, 이전 하네스([`archive/v1-team3`](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/archive/v1-team3))나 외부 스킬·도구·모델을 가져다 쓰든 상관없습니다.
 
 ## 제출
 

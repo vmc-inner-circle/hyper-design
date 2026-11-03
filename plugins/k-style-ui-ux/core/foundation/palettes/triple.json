@@ -1,0 +1,77 @@
+{
+ "name": "트리플",
+ "slug": "triple",
+ "domain": "여행",
+ "tags": [
+  "산뜻",
+  "여행"
+ ],
+ "source": "https://triple.guide/ 화면 실사용 색으로 합성 (2026-10-01 수집)",
+ "synthesized": true,
+ "ink": "#3a3a3a",
+ "white": "#ffffff",
+ "scales": {
+  "gray": {
+   "50": "#ffffff",
+   "80": "#ffffff",
+   "100": "#f1f7ff",
+   "200": "#f1f7ff",
+   "300": "#f1f7ff",
+   "400": "#8b8d92",
+   "500": "#8b8d92",
+   "600": "#8b8d92",
+   "700": "#8b8d92",
+   "800": "#3a3a3a",
+   "900": "#3a3a3a"
+  },
+  "red": {
+   "50": "#fdf2f2",
+   "80": "#fbe4e5",
+   "100": "#f9d2d4",
+   "200": "#f4afb1",
+   "300": "#ed8285",
+   "400": "#e7555a",
+   "500": "#e5484d",
+   "600": "#d81f25",
+   "700": "#b3191e",
+   "800": "#8e1418",
+   "900": "#690f12"
+  },
+  "brand": {
+   "50": "#f1fdfe",
+   "80": "#e2fbfd",
+   "100": "#cff9fc",
+   "200": "#a9f4f9",
+   "300": "#79eef6",
+   "400": "#49e9f3",
+   "500": "#0ecedb",
+   "600": "#0ba9b4",
+   "700": "#0a8c95",
+   "800": "#086f76",
+   "900": "#065258"
+  }
+ },
+ "brand": "brand",
+ "brand_step": "500",
+ "mono": false,
+ "gray": "gray",
+ "danger": "red",
+ "bg_step": "50",
+ "line_step": "80",
+ "brand_confirmed": true,
+ "candidates": [
+  [
+   "#0ecedb",
+   1
+  ],
+  [
+   "#1aadf6",
+   1
+  ]
+ ],
+ "measured": {
+  "brand": "#0ecedb",
+  "ink": "#3a3a3a",
+  "bg": "#f9fbfd"
+ }
+}

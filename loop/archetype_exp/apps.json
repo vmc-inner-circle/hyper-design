@@ -1,0 +1,122 @@
+[
+ {
+  "id": "kakaot",
+  "name": "카카오 T - 택시, 세차, 주차, 바이크, 항공, 퀵",
+  "exclude": "카카오 T",
+  "surveyed": true,
+  "truth": "찾기형",
+  "truth_from": "2차+이번"
+ },
+ {
+  "id": "yeogi",
+  "name": "여기어때: 호텔, 모텔, 숙소, 항공권 여행 최저가",
+  "exclude": "여기어때",
+  "surveyed": true,
+  "truth": "찾기형",
+  "truth_from": "2차+이번"
+ },
+ {
+  "id": "musinsa",
+  "name": "온라인 패션 스토어 무신사",
+  "exclude": "무신사",
+  "surveyed": true,
+  "truth": "진열형",
+  "truth_from": "2차(웹·앱)"
+ },
+ {
+  "id": "toss",
+  "name": "토스",
+  "exclude": "토스",
+  "surveyed": true,
+  "truth": "현황형",
+  "truth_from": "2차+이번"
+ },
+ {
+  "id": "kakaotalk",
+  "name": "카카오톡 KakaoTalk",
+  "exclude": "카카오톡,KakaoTalk",
+  "surveyed": true,
+  "truth": "목록형",
+  "truth_from": "2차"
+ },
+ {
+  "id": "blind",
+  "name": "블라인드 Blind",
+  "exclude": "블라인드,Blind",
+  "surveyed": true,
+  "truth": "목록형",
+  "truth_from": "2차(웹)+이번"
+ },
+ {
+  "id": "instagram",
+  "name": "Instagram",
+  "exclude": "Instagram,인스타그램",
+  "surveyed": true,
+  "truth": "피드형",
+  "truth_from": "2차+이번"
+ },
+ {
+  "id": "chzzk",
+  "name": "치지직",
+  "exclude": "치지직",
+  "surveyed": true,
+  "truth": "대표 콘텐츠형",
+  "truth_from": "2차+이번"
+ },
+ {
+  "id": "timetree",
+  "name": "TimeTree 캘린더 공유 앱",
+  "exclude": "TimeTree",
+  "surveyed": true,
+  "truth": "일정형",
+  "truth_from": "1차+이번"
+ },
+ {
+  "id": "navercal",
+  "name": "네이버 캘린더 - Naver Calendar",
+  "exclude": "네이버 캘린더,Naver Calendar",
+  "surveyed": false,
+  "truth": "일정형",
+  "truth_from": "이번(화면 1장)"
+ },
+ {
+  "id": "gmarket",
+  "name": "G마켓",
+  "exclude": "G마켓,지마켓,Gmarket",
+  "surveyed": false,
+  "truth": "진열형",
+  "truth_from": "라벨러 2명 일치"
+ },
+ {
+  "id": "lotteon",
+  "name": "롯데ON",
+  "exclude": "롯데ON,롯데온",
+  "surveyed": false,
+  "truth": "진열형",
+  "truth_from": "라벨러 2명 일치"
+ },
+ {
+  "id": "woori",
+  "name": "우리WON뱅킹",
+  "exclude": "우리WON,우리은행",
+  "surveyed": false,
+  "truth": "현황형",
+  "truth_from": "라벨러 2명 일치"
+ },
+ {
+  "id": "lpoint",
+  "name": "L.POINT with L.PAY",
+  "exclude": "L.POINT,L.PAY,엘포인트",
+  "surveyed": false,
+  "truth": "현황형",
+  "truth_from": "라벨러 2명 일치"
+ },
+ {
+  "id": "threads",
+  "name": "Threads",
+  "exclude": "Threads,스레드",
+  "surveyed": false,
+  "truth": "피드형",
+  "truth_from": "라벨러 2명 일치"
+ }
+]
