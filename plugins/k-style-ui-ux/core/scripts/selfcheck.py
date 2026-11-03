@@ -1,4 +1,4 @@
-"""빠른 자가 점검(v8) — 매니페스트·파일·링크·갈 곳 없는 버튼·상태 규칙·금지 문구. 실패 항목을 출력하고 종료코드 1.
+"""빠른 자가 점검(v8) — 매니페스트·파일·링크·갈 곳 없는 버튼·상태 규칙·금지 문구·한글 문구. 실패 항목을 출력하고 종료코드 1(한글 문구 경고는 출력만).
 
 python3 selfcheck.py out
 """
@@ -320,5 +320,89 @@ for s in S:
         n = len(re.findall(r'class="seg-item[ "]', grp))
         if not 2 <= n <= 4: errs.append(f"{f.name}: 세그먼트 {n}칸 — 2~4칸만(많으면 고르기 시트·가로 날짜 줄·칩)")
     if re.search(r'<div class="seg[ "](?:(?!</div>).)*</div>\s*<div class="seg[ "]', h, re.S): errs.append(f"{f.name}: 세그먼트를 쌓아 격자로 씀 — 고르기 시트로")
+# 한글 문구(v0.19): 화면에 보이는 문장만(탭·버튼·배지·칩 같은 짧은 라벨은 뺀다). 확실한 것만 실패, 나머지는 경고.
+# 실패: 해요체 앱에 하십시오체 문장 · '~을 통해' · '제공합니다'. 앱 대부분이 합니다체면(정중한 말투) 하십시오체는 실패가 아니다.
+# 출처: hydrojun KOREAN.md(#26) — 토스 UX 라이팅 원칙·국립국어원 번역투·KRDS
+KO_FAIL = [(re.compile(r"[을를]\s?통(?:해|하여)(?![가-힣])"), "'~을 통해' → '~로'·'~에서'"),
+           (re.compile(r"제공(?:합니다|됩니다|해\s?드립니다|해요|돼요)"), "'제공합니다' → '드려요'·'볼 수 있어요'(합니다체 앱이면 '드립니다')")]
+KO_WARN = [(r"에\s?의(?:해|하여)(?![가-힣])|에\s?의한\s", "'~에 의해' → 능동형"), (r"(?<![가-힣])(?:으로|로)부터", "'~로부터' → '~에게서'·'~에서'"),
+           (r"에\s?대한\s", "'~에 대한' → '~의'·'~를'"), (r"[을를]\s?가지고\s?있", "'~을 가지고 있다' → '~이 있다'"),
+           (r"(?:되었|하였|되어졌)(?:습니다|어요)", "'~되었어요' → '~했어요'"), (r"되어지|되어진|만들어지", "이중 피동"),
+           (r"진행(?:하|되|해|중)", "'진행하다' → '하다'"), (r"(?:하시기|하기)\s?바랍니다", "명령조 → '~해 주세요'"),
+           (r"(?<![가-힣])해당\s", "'해당' → '이'·'그'"), (r"익일|금일|명일|기재|요망|불가(?:합니다|해요)|상이(?:하|한)", "어려운 한자어"),
+           (r"것이\s?가능", "'~하는 것이 가능' → '~할 수 있어요'"), (r"성공적으로|다양한", "뜻 없는 꾸밈말"),
+           (r"유저|컨펌|어사인|인바이트|셰어|리마인드|세팅", "영어 직역 → 우리말"), (r"메세지|컨텐츠", "외래어 표기(메시지·콘텐츠)"),
+           (r"(?:할|될|볼|갈|올|쓸|있을|없을)수(?:있|없)", "띄어쓰기: '할 수 있어요'"),
+           (r"(?:할|볼|갈|하는|있는|없는|했던)것(?:이|을|은|도|같)", "띄어쓰기: 의존 명사 '것'"),
+           (r"(?<![가-힣])안(?:돼|되)", "띄어쓰기: 부정 '안 돼요'"), (r"되요", "'되요' → '돼요'"),
+           (r"로딩중|저장중|전송중|업로드중", "띄어쓰기: '불러오는 중'"),
+           (r"(?<![가-힣])(?:한|두|세|네)(?:개|명|곳|장)(?![가-힣])", "띄어쓰기: '두 명'(한글 수)"),
+           (r"\d+\s(?:개|명|번|분|시간|원|장)(?![가-힣])", "숫자와 단위는 붙임: '3개'"),
+           (r"(?:로그인|로그아웃|가입|저장|삭제|공유|초대|검색|수정|추가|확인|선택|입력)\s(?:하기|하세요|했어요|할까요|해요|해\s?주세요)", "'저장 하기' → '저장하기'"),
+           (r"(?<![가-힣])(?:볼|할|갈)때", "띄어쓰기: '볼 때'"), (r"몇(?:개|명|번|시|분)(?![가-힣])", "띄어쓰기: '몇 개'"), (r"몇일", "'몇일' → '며칠'")]
+KO_WARN = [(re.compile(p), w) for p, w in KO_WARN]
+KO_META = ["작업대", "작업실", "공방", "안내판", "안내장", "수첩", "일지", "우체통", "우편함", "전령", "관제탑", "관제실", "지휘소",
+           "나침반", "등대", "항해일지", "비밀기지", "보물상자", "보물지도", "곳간", "다락방", "아지트", "조종석", "사령부"]
+KO_META = re.compile(r"(?<![가-힣])(?:" + "|".join(KO_META) + r")")   # 앞 글자가 한글이면 다른 낱말('보일지'의 '일지')
+KO_HAPNIDA = re.compile(r"(?:습니다|입니다|니다|니까)\s*[.!?]*$")
+KO_HAEYO = re.compile(r"(?<!세)요\s*[.!?~]*$")   # '~해 주세요·~하세요'는 합니다체 앱도 쓰므로 세지 않는다
+KO_SET = re.compile(r"(?:감사|고맙|죄송|축하|반갑)(?:합|드립|하겠습|습)니다\s*[.!]*$")   # 해요체 앱도 쓰는 인사말
+class KoText(HTMLParser):
+    SKIP = {"script", "style", "svg", "title", "head", "button", "nav", "select", "option", "noscript", "template"}
+    LABEL = {"badge", "chip", "tab", "tabbar", "seg", "seg-item", "btn", "cta", "fab", "stamp", "tag", "pill", "eyebrow", "like", "step-label"}
+    INLINE = {"span", "em", "strong", "b", "i", "small", "mark", "time", "u", "s", "sup", "sub", "abbr", "code", "br", "wbr", "img", "q", "cite"}
+    ITEM = {"row", "card", "item", "tile", "p-card", "s-card"}
+    def __init__(self):
+        super().__init__(); self.stack, self.seg, self.labels, self.n, self.item_of, self.flag = [], {}, [], 0, {}, {}
+    def item(self):   # 가장 가까운 목록 한 칸(행·카드) — 후기(별점이 있는 칸)·체크 칸은 칸 단위로 가린다
+        return next((n for t, c, n in reversed(self.stack) if t in ("article", "li", "label") or c & self.ITEM), None)
+    def handle_starttag(self, tag, attrs):
+        if tag in VOID and tag not in {"br", "wbr"}: return
+        if tag in {"br", "wbr"}: self.handle_data(" "); return
+        a = dict(attrs); self.n += 1; cls = set((a.get("class") or "").split())
+        it = self.item()
+        if it and "rating" in cls: self.flag.setdefault(it, set()).add("ugc")          # 별점이 붙은 칸 = 사용자가 쓴 후기(와 답글)
+        if it and (a.get("role") in ("checkbox", "radio") or a.get("type") in ("checkbox", "radio")): self.flag.setdefault(it, set()).add("check")
+        self.stack.append((tag, cls, self.n))
+    def handle_endtag(self, tag):
+        for i in range(len(self.stack) - 1, -1, -1):
+            if self.stack[i][0] == tag: del self.stack[i:]; return
+    def handle_data(self, d):
+        if not d.strip() or not self.stack: return
+        if any(t in self.SKIP or c & self.LABEL for t, c, _ in self.stack):
+            if any(t in ("button", "nav") or c & {"tab", "tabbar", "btn", "cta", "fab", "chip", "seg-item"} for t, c, _ in self.stack): self.labels.append(d.strip())
+            return
+        key = next((n for t, _, n in reversed(self.stack) if t not in self.INLINE), self.stack[0][2])
+        if any(t in ("h1", "h2", "h3") or "appbar-title" in c for t, c, _ in self.stack): self.labels.append(d.strip())
+        self.seg[key] = self.seg.get(key, "") + d; self.item_of.setdefault(key, self.item())
+KO_SENT, ko_warn = [], {}
+for s in S:
+    f = out / s["file"]
+    if not f.exists(): continue
+    kp = KoText(); kp.feed(f.read_text(encoding="utf-8"))
+    for key, seg in kp.seg.items():
+        fl = kp.flag.get(kp.item_of.get(key), set())
+        if "ugc" in fl: continue                                                     # 후기·답글은 앱의 말투가 아니다
+        seg = re.sub(r"\s+", " ", seg).strip()
+        seg = re.sub(r"\d{1,2}[/.]\s?\d{1,2}\.?\s?\(?[월화수목금토일]\)?", "", seg)   # '1/17 일'의 요일은 단위가 아니다
+        if len(re.findall(r"[가-힣]", seg)) < 4: continue                          # 낱말 하나짜리는 문장이 아니다
+        for sent in re.split(r"(?<=[.!?])\s+", seg): KO_SENT.append((f.name, sent, "check" in fl))
+    for lab in kp.labels:
+        if KO_META.search(lab): ko_warn.setdefault("은유·만든 말 라벨 — 처음 보는 사람이 무엇을 하는 곳인지 바로 알 말로", []).append(f'{f.name} "{lab[:30]}"')
+n_hap = sum(1 for _, x, _ in KO_SENT if KO_HAPNIDA.search(x)); n_hae = sum(1 for _, x, _ in KO_SENT if KO_HAEYO.search(x))
+haeyo_app = n_hae >= 5 and n_hae >= 4 * n_hap   # 앱 문장 대부분이 해요체일 때만 하십시오체를 섞임으로 본다
+for fn, x, chk in KO_SENT:
+    if KO_HAPNIDA.search(x) and not KO_SET.search(x):
+        if haeyo_app and chk: ko_warn.setdefault("동의·체크 칸의 하십시오체 — 해요체 앱이면 '확인했어요'처럼", []).append(f'{fn} "{x[:30]}"')
+        elif haeyo_app: errs.append(f'{fn}: 해요체 화면에 하십시오체 "{x[:40]}" — 해요체로(저장되었습니다 → 저장했어요)')
+        elif n_hae > n_hap: ko_warn.setdefault("해요체·하십시오체 섞임 — 한 앱은 한 말투로", []).append(f'{fn} "{x[:30]}"')
+    for rx, why in KO_FAIL:
+        mm = rx.search(x)
+        if mm: errs.append(f'{fn}: 번역투 "{x[:40]}" — {why}')
+    for rx, why in KO_WARN:
+        if rx.search(x): ko_warn.setdefault(why, []).append(f'{fn} "{x[:30]}"')
 print("\n".join(errs) if errs else "selfcheck OK")
+if ko_warn:                                    # 경고는 실패가 아니다 — 고칠지는 화면 맥락을 보고 정한다
+    print(f"\n경고(한글 문구, {sum(len(v) for v in ko_warn.values())}곳 — 실패 아님):")
+    for why, v in ko_warn.items(): print(f"  {why} {len(v)}곳: " + " · ".join(dict.fromkeys(v[:3])))
 sys.exit(1 if errs else 0)

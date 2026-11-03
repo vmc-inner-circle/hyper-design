@@ -34,7 +34,7 @@ PRD만 붙여넣고 "화면 만들어줘"라고 해도 `go`가 실행된다. PRD
 
 ## 결과물 (`out/`)
 
-- `index.html` — 캔버스: Screens(흐름별 줄, 갈래 화살표, 화면별 정책) · Foundation(색·글자·여백) · Components(쓰인 부품) 탭, 드래그 이동·확대, 화면 누르면 크게 보기, 색 점으로 팔레트 전환
+- `index.html` — 캔버스: Screens(흐름별 줄, 갈래 화살표, 화면별 정책) · Foundation(색·글자·여백) · Components(쓰인 부품) 탭, 드래그 이동·확대, 화면 누르면 크게 보기, 색 점으로 팔레트 전환. 크게 보기에서 **의견**을 켜고 고칠 요소를 눌러 적은 뒤 **의견 복사** → 대화창에 붙여넣으면 그 요소만 고친다(`core/references/feedback.md`)
 - `screens/*.html` — 화면 파일(토큰·부품 클래스만 사용)
 - `conventions.json`(시장 관례: 따를 것·참고할 후킹 장치·리뷰 불만) · `market/`(잘 되는 앱 5개의 스토어 화면 시트·설명·리뷰)
 - `journey.md`(여정표·사실 표·가정 로그) · `decisions.json`(정한 것·뺀 것) · `spec_inventory.json`(명세 목록·흐름 고리) · `credits.json`(사진 출처)

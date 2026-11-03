@@ -8,9 +8,10 @@ description: k-style-ui-ux의 끝까지 버전 — 1차(모든 흐름의 처음�
 **경로**: 이 SKILL.md가 있는 폴더(`<스킬 폴더>` — Claude Code는 Base directory로 보여 준다)의 `../../core`가 공용 폴더다. 맨 처음 `SK=$(cd "<스킬 폴더>/../../core" && pwd -P)`, 1차 지시문은 `<스킬 폴더>/../go/SKILL.md` — 그 맨 위 "에이전트마다 다른 것"(동시에 띄우기·모델 등급)을 여기서도 따른다.
 
 ## 0. 어디서 시작하나
+- 메시지가 `[k-style-ui-ux 수정 요청]`로 시작하면 → 상태를 더하지 않는다. `$SK/references/feedback.md`대로 **적힌 화면의 그 요소만** 고치고 `selfcheck.py`·`audit.py --shots`·`build_canvas.py`를 다시 돌린 뒤 그 문서의 마지막 메시지 형식으로 끝낸다.
 - `out/screens.json`이 있고 `"stage": "go"`면 → **1차는 끝났다. 바로 2차로.** 첫 줄: "1차 위에 상태 화면을 더할게요. 10분쯤 걸려요."
 - `out/screens.json`이 없으면(PRD를 받음) → 첫 줄: "처음부터 끝까지 만들게요. 25분쯤 걸려요." 그리고 **1차 지시문(go/SKILL.md)을 그대로 따른다** — 단, 1차의 "끝 — 마지막 메시지"는 쓰지 않고(중간에 `[[DONE]]` 금지) 2차로 이어 간다. 1차에서 PRD 요구사항 확인(`[[ASK]]`)이 필요하면 그때는 턴을 끝내고, 답을 받으면 1차 → 2차를 이어 간다.
-- `"stage": "max"`면 이미 끝났다 — 캔버스 경로만 알려 주고 무엇을 고칠지 묻는다.
+- `"stage": "max"`면 이미 끝났다 — 캔버스 경로만 알려 주고, 고칠 곳은 캔버스에서 '의견'으로 남겨 '의견 복사'해 붙여넣으면 된다고 안내한다.
 
 ## 1. 상태 펼치기 (1분)
 - `python3 $SK/scripts/expand_states.py out --stage max` → 오류(`error`)·확인 대화상자(`confirm`)·빈 상태(`empty`)·진행 중(`progress`)·규칙 상태가 screens.json에 추가된다. 화면당 상태 2개 초과 오류가 나면 해당 규칙을 정책 문구(`policy`)로 내리고 다시.
