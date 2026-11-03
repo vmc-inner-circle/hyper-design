@@ -9,6 +9,7 @@ python3 canvas_test.py <out_dir> [--shot PNG]
       팔레트 점 → Foundation 브랜드 칸 값 변경 / 콘솔 에러 0 / 첫 로드 < 1초 /
       의견: 크게 보기 "의견" → 화면 요소 누름(이동 안 함) → 의견 더하기 → 목록·localStorage → 복사 텍스트 형식 → 지우기
       (복사 형식은 references/feedback.md 와 같다)
+      연결 보기: 카드 아래 '갈 수 있는 곳' → 링크 대상 수만큼 색 선·이름표, Esc → 지워짐
 """
 import sys, re, json, time, argparse
 from pathlib import Path
@@ -159,6 +160,20 @@ def run(out: Path, shot=None):
             page.mouse.wheel(0, 200); page.wait_for_timeout(150)
             add("wheel_pans_not_zooms", abs(zoom() - z2) < 1e-4 and transform() != t1, transform())
             page.click("#zoom"); page.wait_for_timeout(300)
+
+            # 연결 보기: '갈 수 있는 곳' → 그 화면의 링크 대상마다 색 선·이름표 하나, Esc → 지워짐
+            nlk = page.evaluate("() => { const L = JSON.parse(document.getElementById('hd-data').textContent).links || {}; return L; }")
+            btn = page.query_selector(".lkbtn")
+            if btn:
+                want = len(nlk.get(btn.get_attribute("data-id"), []))
+                page.evaluate("b => b.click()", btn); page.wait_for_timeout(150)
+                got = page.evaluate("() => [document.querySelectorAll('#ar path.lk').length, document.querySelectorAll('.lklabel').length, document.getElementById('rows').classList.contains('lkon')]")
+                add("links_draw", got[0] == want and got[1] == want and got[2], f"{got[0]}/{want} 선 · {got[1]} 이름표")
+                page.keyboard.press("Escape"); page.wait_for_timeout(100)
+                left = page.evaluate("() => document.querySelectorAll('#ar path.lk').length + document.querySelectorAll('.lklabel').length")
+                add("links_clear", left == 0, left)
+            else:
+                add("links_draw", not nlk, f"버튼 0 · 링크 데이터 {len(nlk)}화면")
 
             # (5) Foundation 색 칸 ≥ 20
             page.click(".tab[data-tab=foundation]")

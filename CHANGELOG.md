@@ -2,6 +2,10 @@
 
 버전은 `plugins/k-style-ui-ux/`의 manifest 4개(`.claude-plugin/plugin.json`·`.codex-plugin/plugin.json`·`.cursor-plugin/plugin.json`·`plugin.json`)와 이 파일 맨 위 항목이 같아야 한다(`ci/verify.py`가 검사).
 
+## v0.19.1
+
+- 캔버스 연결 보기(@eungshin #29): 카드 아래 "갈 수 있는 곳 N"(또는 Shift+클릭)을 누르면 그 화면의 버튼·링크가 어느 화면으로 가는지 색 선과 버튼 글자로 보이고, 나머지 화면은 흐려진다. Esc나 빈 곳을 누르면 꺼진다. 링크는 build_canvas가 화면 HTML의 `<a href>`에서 읽는다(뒤로·하단 탭 제외, 같은 곳으로 가는 링크는 한 선으로 묶음). go 시간 영향 없음.
+
 ## v0.19.0
 
 하네스톤 멤버 PR의 아이디어를 지금 구조로 옮겼다(원래 커밋은 그대로 history에).

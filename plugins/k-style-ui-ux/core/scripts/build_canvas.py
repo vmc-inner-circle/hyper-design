@@ -5,6 +5,8 @@ python3 build_canvas.py <out_dir>
 출력
 - out/index.html      : canvas_template.html 에 데이터 JSON(<script id="hd-data">)만 끼워 넣은 것.
                         크게 보기의 "의견" = 화면 요소를 골라 의견을 적고 한 번에 복사(palette.js 의 hd-pick, 붙여넣기 형식은 references/feedback.md).
+                        연결 보기 = 카드 아래 '갈 수 있는 곳'(또는 Shift+클릭) → 그 화면의 버튼·링크가 어느 화면으로 가는지 색 선과 버튼 글자로.
+                        (화면 HTML의 <a href>를 빌드 때 읽는다 — 같은 곳으로 가는 링크는 한 선으로 묶고 글자는 한 번씩, 개수는 괄호)
 - out/palette.js      : foundation/palette.js 최신본으로 덮어쓴다(지난 결과물에서도 의견 고르기가 돌게).
                         헤더 = 제목 · 탭[Screens|Foundation|Components] · 팔레트 점 · [전체 보기][배율%]
                         (조작 그룹 3개: data-group="tabs"/"palette"/"view", 모드 전환 없음)
@@ -42,6 +44,39 @@ def load(p, default=None):
 
 
 # ---------------------------------------------------------------- index.html
+A_TAG = re.compile(r'<a\b([^>]*)>(.*?)</a>', re.S | re.I)
+
+def screen_links(out, data_rows):
+    """연결 보기(아이디어: eungshin #29) — 화면마다 <a href>가 가리키는 다른 화면을 모은다.
+    {화면 id: [{"to", "texts": [버튼 글자, 한 번씩], "n": 링크 수}]}. 뒤로(data-back·앱바 버튼)·하단 탭(모든 화면에 같은 길)·
+    자기 자신·화면 밖 링크는 뺀다 — 그 화면에서만 갈 수 있는 길이 보이게."""
+    cards = [c for r in data_rows for c in r["screens"]]
+    by_file = {os.path.normpath(str(out / c["file"])): c["id"] for c in cards}
+    res = {}
+    for c in cards:
+        f = out / c["file"]
+        try: src = f.read_text(encoding="utf-8")
+        except OSError: continue
+        got = {}
+        for m in A_TAG.finditer(src):
+            attrs = m.group(1)
+            if re.search(r'\bdata-back\b', attrs): continue
+            cls = (re.search(r'\bclass\s*=\s*["\']([^"\']*)', attrs) or [None, ""])[1].split()
+            if "tab" in cls or "appbar-btn" in cls: continue
+            h = re.search(r'\bhref\s*=\s*["\']([^"\'#?]+)', attrs)
+            if not h or re.match(r'[a-z]+:', h.group(1)): continue
+            to = by_file.get(os.path.normpath(str(f.parent / h.group(1))))
+            if not to or to == c["id"]: continue
+            bits = [re.sub(r'\s+', ' ', html.unescape(b)).strip() for b in re.split(r'<[^>]+>', m.group(2))]
+            text = next((b for b in bits if b), "")          # 행 링크는 첫 글자 덩어리(제목)만
+            if not text: text = (re.search(r'aria-label\s*=\s*["\']([^"\']+)', attrs) or [None, ""])[1]
+            g = got.setdefault(to, {"to": to, "texts": [], "n": 0})
+            g["n"] += 1
+            t = text if len(text) <= 18 else text[:17] + "…"
+            if t and t not in g["texts"]: g["texts"].append(t)
+        if got: res[c["id"]] = list(got.values())
+    return res
+
 def build_index(out, m):
     screens = m["screens"]
     groups = list(m.get("groups") or [])
@@ -69,6 +104,8 @@ def build_index(out, m):
               for s in screens for b in (s.get("branches") or [])
               if b.get("to") in ids and b.get("to") != s["id"]]
 
+    links = screen_links(out, data_rows)
+
     D = load(out / "decisions.json")
     decisions = None
     if D:
@@ -94,15 +131,15 @@ def build_index(out, m):
 
     data = {"title": m.get("title") or "전체 화면 한눈에 보기", "scale": SCALE, "card": CARD, "modal": MODAL,
             "story": m.get("story") or None, "people": [{"name": p.get("name", ""), "why": p.get("why", ""), "win": p.get("win", ""), "core": bool(p.get("core")),
-                                                     "wants": [w.get("q", "") for w in (p.get("wants") or [])][:5]} for p in (m.get("people") or [])[:4]], "decisions": decisions, "stage": m.get("stage") or "", "pending": m.get("pending_states") or 0, "rows": data_rows, "arrows": arrows,
+                                                     "wants": [w.get("q", "") for w in (p.get("wants") or [])][:5]} for p in (m.get("people") or [])[:4]], "decisions": decisions, "stage": m.get("stage") or "", "pending": m.get("pending_states") or 0, "rows": data_rows, "arrows": arrows, "links": links,
             "palettes": pal, "credits": credits if isinstance(credits, list) else []}
     blob = json.dumps(data, ensure_ascii=False).replace("</", "<\\/").replace("<!--", "<\\!--")
     tpl = TEMPLATE.read_text(encoding="utf-8")
     marker = '<script id="hd-data" type="application/json">{}</script>'
     assert marker in tpl, "canvas_template.html 에 hd-data 자리가 없다"
     # 스크립트 없이도(그리고 도달성 검사가) 따라갈 수 있는 화면 링크 목록
-    links = "".join(f'<li><a href="{esc(c["file"])}">{esc(c["title"])}</a></li>' for r in data_rows for c in r["screens"])
-    nos = f'<noscript id="hd-links"><ul>{links}<li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>'
+    lis = "".join(f'<li><a href="{esc(c["file"])}">{esc(c["title"])}</a></li>' for r in data_rows for c in r["screens"])
+    nos = f'<noscript id="hd-links"><ul>{lis}<li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>'
     tpl = tpl.replace('<noscript id="hd-links"></noscript>', nos)
     (out / "index.html").write_text(tpl.replace(marker, marker.replace("{}", blob)), encoding="utf-8")
     pj = HERE.parent / "foundation" / "palette.js"          # 화면의 의견 고르기(hd-pick)가 지난 결과물에서도 돌게 최신으로
