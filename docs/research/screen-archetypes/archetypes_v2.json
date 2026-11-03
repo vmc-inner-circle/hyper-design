@@ -1,0 +1,462 @@
+{
+ "screens": {
+  "home": 71,
+  "list": 99,
+  "chat": 5,
+  "detail": 55
+ },
+ "unmatched": {
+  "home": 1,
+  "list": 3,
+  "detail": 5
+ },
+ "archetypes": {
+  "home": [
+   {
+    "type": "진열형",
+    "n": 24,
+    "apps": [
+     "10000recipe",
+     "11st",
+     "29cm",
+     "airbnb",
+     "albamon",
+     "catchtable",
+     "cgv",
+     "daiso",
+     "inflearn",
+     "joongna",
+     "kakaopage",
+     "kmong",
+     "kream",
+     "kurly",
+     "melon",
+     "munto",
+     "musinsa",
+     "myrealtrip",
+     "nol",
+     "ridi",
+     "starbucks",
+     "tving",
+     "yogiyo",
+     "zigzag"
+    ],
+    "shape": "배너·제목 달린 가로 줄·상품 격자(같은 상품의 큐레이션)",
+    "variants": {
+     "가로 줄": 21,
+     "상품 격자": 4,
+     "없음": 3,
+     "목록 행": 1,
+     "기타": 1,
+     "큰 카드": 1,
+     "순위": 1
+    }
+   },
+   {
+    "type": "목록형",
+    "n": 9,
+    "apps": [
+     "blind",
+     "brunch",
+     "daangn",
+     "daumnews",
+     "kakaopay",
+     "kakaotalk",
+     "navercomic",
+     "navernews",
+     "soop"
+    ],
+    "shape": "첫 화면부터 같은 높이의 행(글·매물·대화)",
+    "variants": {
+     "목록 행": 6,
+     "순위": 3,
+     "큰 카드": 1
+    }
+   },
+   {
+    "type": "찾기형",
+    "n": 7,
+    "apps": [
+     "bunjang",
+     "frip",
+     "kakaot",
+     "socar",
+     "soomgo",
+     "tmap",
+     "yeogi"
+    ],
+    "shape": "서로 다른 서비스로 가는 격자가 첫 화면 주인공",
+    "variants": {
+     "가로 줄": 3,
+     "상품 격자": 2,
+     "없음": 2
+    }
+   },
+   {
+    "type": "대표 콘텐츠형",
+    "n": 6,
+    "apps": [
+     "chzzk",
+     "coupangplay",
+     "kmong",
+     "soop",
+     "tving",
+     "weverse"
+    ],
+    "shape": "지금 볼 것 하나(라이브·영상·포스터)가 크게, 아래 가로 줄",
+    "variants": {
+     "가로 줄": 6,
+     "큰 카드": 1
+    }
+   },
+   {
+    "type": "피드형",
+    "n": 4,
+    "apps": [
+     "instagram",
+     "kakaot",
+     "naver",
+     "velog"
+    ],
+    "shape": "사진+글 큰 카드가 세로로 끝없이",
+    "variants": {
+     "큰 카드": 5
+    }
+   },
+   {
+    "type": "현황형",
+    "n": 3,
+    "apps": [
+     "kakaobank",
+     "monimo",
+     "toss"
+    ],
+    "shape": "내 숫자(잔액·포인트·진행) 카드",
+    "variants": {
+     "목록 행": 5
+    }
+   },
+   {
+    "type": "조건 입력형",
+    "n": 1,
+    "apps": [
+     "korail"
+    ],
+    "shape": "출발·도착 같은 입력 칸이 홈",
+    "variants": {
+     "없음": 1
+    }
+   },
+   {
+    "type": "지도형",
+    "n": 1,
+    "apps": [
+     "navermap"
+    ],
+    "shape": "지도가 화면 전체",
+    "variants": {
+     "목록 행": 1,
+     "없음": 1
+    }
+   },
+   {
+    "type": "증표형",
+    "n": 1,
+    "apps": [
+     "naverpay"
+    ],
+    "shape": "결제·멤버십 QR이 홈",
+    "variants": {
+     "없음": 1
+    }
+   }
+  ],
+  "list": [
+   {
+    "type": "행 목록",
+    "n": 24,
+    "apps": [
+     "10000recipe",
+     "11st",
+     "albamon",
+     "baemin",
+     "catchtable",
+     "daangn",
+     "kakaobank",
+     "kakaomap",
+     "kakaopay",
+     "kakaot",
+     "kakaotalk",
+     "kmong",
+     "mcdonalds",
+     "musinsa",
+     "naver",
+     "naverpay",
+     "nol",
+     "remember",
+     "ridi",
+     "starbucks",
+     "toss",
+     "weverse",
+     "yes24",
+     "yogiyo"
+    ],
+    "shape": "",
+    "variants": {
+     "목록 행": 32,
+     "가로 줄": 1,
+     "없음": 1
+    }
+   },
+   {
+    "type": "상품 격자",
+    "n": 20,
+    "apps": [
+     "albamon",
+     "baemin",
+     "cgv",
+     "class101",
+     "coupang",
+     "coupangplay",
+     "daangn",
+     "inflearn",
+     "joongna",
+     "kmong",
+     "kurly",
+     "musinsa",
+     "myrealtrip",
+     "oliveyoung",
+     "remember",
+     "soop",
+     "tmap",
+     "toss",
+     "tving",
+     "zigzag"
+    ],
+    "shape": "",
+    "variants": {
+     "상품 격자": 28,
+     "가로 줄": 1
+    }
+   },
+   {
+    "type": "진열(카테고리 홈)",
+    "n": 12,
+    "apps": [
+     "baemin",
+     "cgv",
+     "chzzk",
+     "daangn",
+     "gs",
+     "kmong",
+     "korail",
+     "monimo",
+     "naver",
+     "nol",
+     "yeogi",
+     "yogiyo"
+    ],
+    "shape": "",
+    "variants": {
+     "가로 줄": 8,
+     "없음": 3,
+     "목록 행": 2,
+     "상품 격자": 1
+    }
+   },
+   {
+    "type": "카드 피드",
+    "n": 11,
+    "apps": [
+     "cgv",
+     "chzzk",
+     "coupangplay",
+     "gs",
+     "korail",
+     "mcdonalds",
+     "ohou",
+     "oliveyoung",
+     "remember",
+     "socar",
+     "youtube"
+    ],
+    "shape": "",
+    "variants": {
+     "큰 카드": 11,
+     "가로 줄": 2,
+     "목록 행": 1
+    }
+   },
+   {
+    "type": "지도+목록",
+    "n": 3,
+    "apps": [
+     "catchtable",
+     "daangn",
+     "yogiyo"
+    ],
+    "shape": "",
+    "variants": {
+     "목록 행": 2,
+     "큰 카드": 1,
+     "없음": 1
+    }
+   },
+   {
+    "type": "순위",
+    "n": 1,
+    "apps": [
+     "navermap"
+    ],
+    "shape": "",
+    "variants": {
+     "순위": 1
+    }
+   }
+  ],
+  "chat": [
+   {
+    "type": "채팅",
+    "n": 4,
+    "apps": [
+     "instagram",
+     "kakaotalk",
+     "kmong",
+     "tving"
+    ],
+    "shape": "",
+    "variants": {
+     "없음": 5
+    }
+   }
+  ],
+  "detail": [
+   {
+    "type": "대상형",
+    "n": 21,
+    "apps": [
+     "10000recipe",
+     "11st",
+     "class101",
+     "coupang",
+     "daangn",
+     "daiso",
+     "frip",
+     "joongna",
+     "kurly",
+     "mcdonalds",
+     "monimo",
+     "munto",
+     "musinsa",
+     "myrealtrip",
+     "oliveyoung",
+     "ridi",
+     "socar",
+     "wanted",
+     "yes24",
+     "yogiyo",
+     "zigzag"
+    ],
+    "shape": "대상 하나의 큰 사진 → 이름·가격·정보 → 하단 행동(구매·예약·신청·연락)",
+    "variants": {
+     "구매": 9,
+     "없음": 5,
+     "요청·신청": 4,
+     "예약": 2,
+     "기타": 2
+    }
+   },
+   {
+    "type": "읽기·재생형",
+    "n": 9,
+    "apps": [
+     "chzzk",
+     "inflearn",
+     "instagram",
+     "kakaopage",
+     "kakaotalk",
+     "navercomic",
+     "soop",
+     "tving",
+     "weverse"
+    ],
+    "shape": "영상·본문·만화 자체가 맨 위",
+    "variants": {
+     "없음": 7,
+     "구매": 2,
+     "기타": 2
+    }
+   },
+   {
+    "type": "글형",
+    "n": 7,
+    "apps": [
+     "brunch",
+     "daangn",
+     "daumnews",
+     "navernews",
+     "remember",
+     "soomgo",
+     "velog"
+    ],
+    "shape": "제목+작성자 → 본문 → 반응",
+    "variants": {
+     "없음": 5,
+     "요청·신청": 1,
+     "기타": 1
+    }
+   },
+   {
+    "type": "사람형",
+    "n": 4,
+    "apps": [
+     "daangn",
+     "kakaotalk",
+     "ohou",
+     "tmap"
+    ],
+    "shape": "프로필(사람·가게) → 평점·소개",
+    "variants": {
+     "없음": 3,
+     "기타": 1
+    }
+   },
+   {
+    "type": "수치형",
+    "n": 2,
+    "apps": [
+     "catchtable",
+     "kakaopay"
+    ],
+    "shape": "",
+    "variants": {
+     "구매": 1,
+     "없음": 1
+    }
+   },
+   {
+    "type": "진행 추적형",
+    "n": 2,
+    "apps": [
+     "navermap",
+     "tmap"
+    ],
+    "shape": "",
+    "variants": {
+     "없음": 3
+    }
+   },
+   {
+    "type": "증표형",
+    "n": 1,
+    "apps": [
+     "starbucks"
+    ],
+    "shape": "결제·멤버십 QR이 홈",
+    "variants": {
+     "요청·신청": 1
+    }
+   }
+  ]
+ }
+}

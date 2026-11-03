@@ -1,14 +1,13 @@
 """하네스 1회 구동: 격리 폴더에서 claude -p 헤드리스 실행, 질문은 가상 사용자가 답한다.
-python3 loop/run.py <prd.md> <run_dir> [--max] [--harness 이름] [--no-trace]
-플러그인(plugins/hyper-design)을 --plugin-dir로 불러 /hyper-design:go 로 구동. --max면 go가 끝난 뒤 같은 세션에서 /hyper-design:max(1차 결과는 out-go/로 보존)
+python3 loop/run.py <prd.md> <run_dir> [--max] [--until-screens] [--plugin <플러그인 폴더>]
+플러그인(plugins/k-style-ui-ux)을 --plugin-dir로 불러 /k-style-ui-ux:go 로 구동. --max면 go가 끝난 뒤 같은 세션에서 /k-style-ui-ux:max(1차 결과는 out-go/로 보존)
 산출: run_dir/out(결과), prompt-log.md, elapsed.txt, transcript.jsonl
-끝나면 기본으로 perf/trace.py를 불러 perf/perf.db에 적재한다(run_id = run_dir 이름). --no-trace로 끈다.
 """
 import sys, json, re, shutil, subprocess, time, pathlib, datetime
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 prd = pathlib.Path(sys.argv[1]).resolve(); run = pathlib.Path(sys.argv[2]).resolve(); DO_MAX = "--max" in sys.argv
-HARNESS = sys.argv[sys.argv.index("--harness") + 1] if "--harness" in sys.argv else "eungshin"
-PLUGIN = ROOT / "plugins/hyper-design"
+UNTIL_SCREENS = "--until-screens" in sys.argv   # 실험(loop/archetype_exp): 화면 목록(screens.json)까지만 — 유형 선택만 본다
+PLUGIN = pathlib.Path(sys.argv[sys.argv.index("--plugin") + 1]).resolve() if "--plugin" in sys.argv else ROOT / "plugins/k-style-ui-ux"
 MODEL = "claude-opus-5-5"; MAX_TURNS = 4
 if run.exists(): shutil.rmtree(run)
 work = run / "work"; work.mkdir(parents=True)
@@ -33,7 +32,8 @@ def shoot(html, png):
 SIM = (ROOT / "loop/sim_user.md").read_text(encoding="utf-8")
 log = [f"# prompt-log\n\n- 하네스: solo/greatSumini `.claude/skills/oss-design-harness`\n- 모델: Claude Code headless / {MODEL}\n- 답변자: 가상 사용자 에이전트(비개발자 페르소나, loop/sim_user.md)\n"]
 trans = open(run / "transcript.jsonl", "w")
-harness_sec, sid, msg = 0.0, None, "/hyper-design:go\n\n" + prd.read_text(encoding="utf-8")
+harness_sec, sid, msg = 0.0, None, "/k-style-ui-ux:go\n\n" + prd.read_text(encoding="utf-8")
+if UNTIL_SCREENS: msg += "\n\n---\n(실험 모드: 1단계에서 out/screens.json을 쓰면 거기서 멈춘다. 1.5단계 이후·빌드는 하지 않고, 질문도 하지 않는다. 마지막 줄 [[DONE out/screens.json]])"
 start = datetime.datetime.now(); turns = 0; status = "max_turns"
 while turns < MAX_TURNS:
     turns += 1
@@ -61,9 +61,9 @@ while turns < MAX_TURNS:
 go_sec = harness_sec; max_sec = 0.0
 if DO_MAX and status == "done":
     if (work / "out").exists(): shutil.copytree(work / "out", run / "out-go", ignore=shutil.ignore_patterns(".shots", ".cands"))
-    turns += 1; log.append(f"\n## {turns}회 (/hyper-design:max)\n")
-    t0 = time.time(); res = claude("/hyper-design:max", work, sid); max_sec = time.time() - t0; harness_sec += max_sec
-    text = res.get("result", ""); trans.write(json.dumps({"turn": turns, "sec": round(max_sec), "user": "/hyper-design:max", "assistant": text}, ensure_ascii=False) + "\n"); trans.flush()
+    turns += 1; log.append(f"\n## {turns}회 (/k-style-ui-ux:max)\n")
+    t0 = time.time(); res = claude("/k-style-ui-ux:max", work, sid); max_sec = time.time() - t0; harness_sec += max_sec
+    text = res.get("result", ""); trans.write(json.dumps({"turn": turns, "sec": round(max_sec), "user": "/k-style-ui-ux:max", "assistant": text}, ensure_ascii=False) + "\n"); trans.flush()
     print(f"[max] {max_sec:.0f}s :: {text[-300:]!r}", flush=True)
     status = "done" if "[[DONE" in text else "max_no_marker"
 end = datetime.datetime.now()
@@ -71,7 +71,3 @@ if (work / "out").exists(): shutil.copytree(work / "out", run / "out")
 (run / "prompt-log.md").write_text("".join(log) + f"\n\n총 개입 횟수: {turns} / 5 · 종료 상태: {status}\n", encoding="utf-8")
 (run / "elapsed.txt").write_text(f"시작: {start:%Y-%m-%d %H:%M}\n종료: {end:%Y-%m-%d %H:%M}\n하네스 실행 시간(가상 사용자 응답 제외): {harness_sec/60:.1f}분\n" + (f"1차(go) {go_sec/60:.1f}분 · 2차(max) {max_sec/60:.1f}분\n" if DO_MAX else ""), encoding="utf-8")
 print(json.dumps({"status": status, "turns": turns, "harness_min": round(harness_sec / 60, 1), "go_min": round(go_sec / 60, 1), "max_min": round(max_sec / 60, 1)}))
-if "--no-trace" not in sys.argv:
-    subprocess.run([sys.executable, str(ROOT / "perf/trace.py"), "--latest", str(work), "--run", run.name, "--harness", HARNESS,
-                    "--prd", str(prd.relative_to(ROOT)) if prd.is_relative_to(ROOT) else str(prd), "--out", str(run / "out"),
-                    "--note", f"loop/run.py headless · {status} · 개입 {turns}회"])

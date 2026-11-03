@@ -8,7 +8,7 @@ run, prd, base = (pathlib.Path(a).resolve() for a in args[1:4])
 designer = pathlib.Path(args[4]).resolve() if len(args) > 4 else None
 SFX = "" if OUTN == "out" else "-" + OUTN.replace("out-", "")
 shots = run / f"shots{SFX}"; shots.mkdir(exist_ok=True)
-subprocess.run(["python3", str(ROOT / "loop/score.py"), str(run / OUTN), "--shots", str(shots), "--json", str(run / f"score{SFX}.json")],
+subprocess.run(["python3", str(ROOT / "plugins/k-style-ui-ux/core/scripts/audit.py"), str(run / OUTN), "--shots", str(shots), "--json", str(run / f"score{SFX}.json")],
                stdout=open(run / f"score{SFX}.txt", "w"), stderr=subprocess.STDOUT)
 # 바닐라 스크린샷
 bshots = base / "shots"
@@ -50,7 +50,7 @@ except Exception: STAGE = ""
 if STAGE == "go":
     J += """
 
-중요 — 이 결과물은 1차(/hyper-design:go)다. 설계상 1차는 모든 흐름의 시작·보기·고치기·끝(결과) 화면과 사진까지만 그리고, 오류·확인 대화상자·빈 상태·진행 중·네트워크/권한 실패 같은 **상태 화면은 2차(/hyper-design:max)가 더한다**(캔버스 맨 위에 그 개수가 안내돼 있다). 상태 화면이 없는 것은 P0·P1로 세지 말고, 흐름의 시작·끝·단계 누락과 화면 품질을 평가하라."""
+중요 — 이 결과물은 1차(/k-style-ui-ux:go)다. 설계상 1차는 모든 흐름의 시작·보기·고치기·끝(결과) 화면과 사진까지만 그리고, 오류·확인 대화상자·빈 상태·진행 중·네트워크/권한 실패 같은 **상태 화면은 2차(/k-style-ui-ux:max)가 더한다**(캔버스 맨 위에 그 개수가 안내돼 있다). 상태 화면이 없는 것은 P0·P1로 세지 말고, 흐름의 시작·끝·단계 누락과 화면 품질을 평가하라."""
 C = (ROOT / "loop/compare.md").read_text().replace("{{PRD}}", str(prd))
 def cmp(i):
     flip = random.random() < .5

@@ -1,0 +1,660 @@
+[
+ {
+  "slug": "hwahae",
+  "name": "화해",
+  "hex": "#00A5AA",
+  "domains": [
+   "건강",
+   "뷰티",
+   "화장품"
+  ],
+  "source": "https://www.hwahae.co.kr",
+  "confidence": "mid",
+  "tags": [
+   "산뜻",
+   "건강",
+   "신뢰"
+  ],
+  "shape": {
+   "r_s": 4,
+   "r_m": 8,
+   "r_l": 0,
+   "seen": "홈 화면(390px) 실측 — 버튼 8px · 카드 대부분 0px (2026-10-30)"
+  },
+  "tone": "cool"
+ },
+ {
+  "slug": "oliveyoung",
+  "name": "올리브영",
+  "hex": "#779F1D",
+  "domains": [
+   "기록",
+   "뷰티",
+   "자연",
+   "헤어"
+  ],
+  "source": "https://www.oliveyoung.co.kr",
+  "confidence": "low",
+  "tags": [
+   "자연",
+   "차분",
+   "생활"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 4,
+   "r_l": 0,
+   "seen": "홈 화면(390px) 실측 — 버튼 미측정px · 카드 대부분 0px (2026-10-30)"
+  },
+  "tone": "neutral"
+ },
+ {
+  "slug": "zigzag",
+  "name": "지그재그",
+  "hex": "#F947DB",
+  "domains": [
+   "쇼핑",
+   "패션"
+  ],
+  "source": "https://zigzag.kr",
+  "confidence": "mid",
+  "tags": [
+   "활기",
+   "감성",
+   "강렬"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 4,
+   "r_l": 0,
+   "seen": "홈 화면(390px) 실측 — 버튼 미측정px · 카드 대부분 0px (2026-10-30)"
+  },
+  "tone": "neutral"
+ },
+ {
+  "slug": "baemin",
+  "name": "배달의민족",
+  "hex": "#0CEFD3",
+  "domains": [
+   "음식",
+   "배달"
+  ],
+  "source": "https://www.baemin.com",
+  "confidence": "high",
+  "bright": true,
+  "tone": "cool"
+ },
+ {
+  "slug": "yanolja",
+  "name": "야놀자",
+  "hex": "#4154FF",
+  "domains": [
+   "숙박",
+   "여가",
+   "여행"
+  ],
+  "source": "https://www.yanolja.com",
+  "confidence": "high",
+  "tags": [
+   "선명",
+   "활기"
+  ],
+  "shape": {
+   "r_s": 6,
+   "r_m": 12,
+   "r_l": 20,
+   "seen": "홈 화면(390px) 실측 — 버튼 12px · 카드 20px (2026-10-30)"
+  },
+  "tone": "cool"
+ },
+ {
+  "slug": "zigbang",
+  "name": "직방",
+  "hex": "#FF6111",
+  "domains": [
+   "부동산",
+   "생활"
+  ],
+  "source": "https://www.zigbang.com",
+  "confidence": "mid",
+  "tags": [
+   "친근",
+   "활기",
+   "따뜻함"
+  ],
+  "tone": "warm"
+ },
+ {
+  "slug": "soomgo",
+  "name": "숨고",
+  "hex": "#693BF2",
+  "domains": [
+   "생활서비스",
+   "전문가",
+   "견적"
+  ],
+  "source": "https://soomgo.com",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "millie",
+  "name": "밀리의서재",
+  "hex": "#FFC004",
+  "domains": [
+   "도서",
+   "독서",
+   "콘텐츠"
+  ],
+  "source": "https://www.millie.co.kr",
+  "confidence": "mid",
+  "bright": true,
+  "tone": "warm"
+ },
+ {
+  "slug": "ridibooks",
+  "name": "리디",
+  "hex": "#0F97FF",
+  "domains": [
+   "도서",
+   "콘텐츠"
+  ],
+  "source": "https://ridibooks.com",
+  "confidence": "high",
+  "tags": [
+   "밝음",
+   "신뢰"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 4,
+   "r_l": 4,
+   "seen": "홈 화면(390px) 실측 — 버튼 미측정px · 카드 4px (2026-10-30)"
+  },
+  "tone": "cool"
+ },
+ {
+  "slug": "doctornow",
+  "name": "닥터나우",
+  "hex": "#F06E02",
+  "domains": [
+   "의료"
+  ],
+  "source": "https://doctornow.co.kr",
+  "confidence": "high",
+  "tone": "warm"
+ },
+ {
+  "slug": "goodoc",
+  "name": "굿닥",
+  "hex": "#0462D1",
+  "domains": [
+   "건강",
+   "병원",
+   "의료"
+  ],
+  "source": "https://www.goodoc.co.kr",
+  "confidence": "mid",
+  "tags": [
+   "신뢰",
+   "차분"
+  ],
+  "shape": {
+   "r_s": 3,
+   "r_m": 6,
+   "r_l": 8,
+   "seen": "홈 화면(390px) 실측 — 버튼 6px · 카드 8px (2026-10-30)"
+  },
+  "tone": "cool"
+ },
+ {
+  "slug": "frip",
+  "name": "프립",
+  "hex": "#7A29FA",
+  "domains": [
+   "모임",
+   "여가",
+   "취미",
+   "커뮤니티"
+  ],
+  "source": "https://www.frip.co.kr",
+  "confidence": "mid",
+  "tags": [
+   "활기",
+   "감성",
+   "커뮤니티"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 5,
+   "r_l": 12,
+   "seen": "홈 화면(390px) 실측 — 버튼 5px · 카드 12px (2026-10-30)"
+  },
+  "tone": "cool"
+ },
+ {
+  "slug": "wadiz",
+  "name": "와디즈",
+  "hex": "#009FC7",
+  "domains": [
+   "펀딩",
+   "크라우드펀딩"
+  ],
+  "source": "https://www.wadiz.kr",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "socar",
+  "name": "쏘카",
+  "hex": "#0078FF",
+  "domains": [
+   "모빌리티",
+   "이동",
+   "택시",
+   "차량",
+   "카셰어링"
+  ],
+  "source": "https://www.socar.kr",
+  "confidence": "high",
+  "tone": "cool"
+ },
+ {
+  "slug": "naver",
+  "name": "네이버",
+  "hex": "#03A94C",
+  "domains": [
+   "플랫폼",
+   "포털",
+   "검색",
+   "지도"
+  ],
+  "source": "https://www.naver.com",
+  "confidence": "high",
+  "tone": "neutral"
+ },
+ {
+  "slug": "kakao",
+  "name": "카카오",
+  "hex": "#FAE100",
+  "domains": [
+   "메신저",
+   "대화",
+   "소셜",
+   "플랫폼"
+  ],
+  "source": "https://www.kakaocorp.com",
+  "confidence": "mid",
+  "bright": true,
+  "tone": "warm"
+ },
+ {
+  "slug": "coupangeats",
+  "name": "쿠팡이츠",
+  "hex": "#009AE1",
+  "domains": [
+   "음식",
+   "배달"
+  ],
+  "source": "https://www.coupangeats.com",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "headspace",
+  "name": "Headspace",
+  "hex": "#F36800",
+  "domains": [
+   "명상",
+   "건강"
+  ],
+  "source": "https://www.headspace.com",
+  "confidence": "mid",
+  "tone": "warm"
+ },
+ {
+  "slug": "duolingo",
+  "name": "Duolingo",
+  "hex": "#099BE0",
+  "domains": [
+   "교육",
+   "학습",
+   "언어"
+  ],
+  "source": "https://www.duolingo.com",
+  "confidence": "low",
+  "tone": "cool"
+ },
+ {
+  "slug": "aesop",
+  "name": "Aesop",
+  "hex": "#945C26",
+  "domains": [
+   "라이프스타일",
+   "뷰티"
+  ],
+  "source": "https://www.aesop.com",
+  "confidence": "low",
+  "tags": [
+   "고급",
+   "차분",
+   "따뜻함"
+  ],
+  "tone": "warm"
+ },
+ {
+  "slug": "spotify",
+  "name": "Spotify",
+  "hex": "#18AA4C",
+  "domains": [
+   "음악",
+   "오디오"
+  ],
+  "source": "https://www.spotify.com",
+  "confidence": "high",
+  "tone": "neutral"
+ },
+ {
+  "slug": "classpass",
+  "name": "ClassPass",
+  "hex": "#0055FF",
+  "domains": [
+   "운동",
+   "예약"
+  ],
+  "source": "https://classpass.com",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "strava",
+  "name": "Strava",
+  "hex": "#FC5200",
+  "domains": [
+   "운동",
+   "기록"
+  ],
+  "source": "https://www.strava.com",
+  "confidence": "high",
+  "tone": "warm"
+ },
+ {
+  "slug": "lush",
+  "name": "Lush",
+  "hex": "#0B5D45",
+  "domains": [
+   "뷰티",
+   "친환경"
+  ],
+  "source": "https://www.lush.com",
+  "confidence": "low",
+  "tags": [
+   "자연",
+   "차분"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 4,
+   "r_l": 0,
+   "seen": "홈 화면(390px) 실측 — 버튼 미측정px · 카드 대부분 0px (2026-10-30)"
+  },
+  "tone": "neutral"
+ },
+ {
+  "slug": "mindbody",
+  "name": "Mindbody",
+  "hex": "#008363",
+  "domains": [
+   "예약",
+   "요가",
+   "운동",
+   "웰니스",
+   "필라테스"
+  ],
+  "source": "https://www.mindbodyonline.com",
+  "confidence": "low",
+  "tags": [
+   "건강",
+   "산뜻",
+   "자연"
+  ],
+  "shape": {
+   "r_s": 2,
+   "r_m": 3,
+   "r_l": 0,
+   "seen": "홈 화면(390px) 실측 — 버튼 3px · 카드 대부분 0px (2026-10-30)"
+  },
+  "tone": "neutral"
+ },
+ {
+  "slug": "toss",
+  "name": "토스",
+  "hex": "#3082F6",
+  "domains": [
+   "금융",
+   "송금",
+   "은행",
+   "결제",
+   "자산"
+  ],
+  "source": "https://toss.im",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "kakaobank",
+  "name": "카카오뱅크",
+  "hex": "#FFE300",
+  "domains": [
+   "금융",
+   "은행"
+  ],
+  "source": "https://www.kakaobank.com",
+  "confidence": "high",
+  "bright": true,
+  "tone": "warm"
+ },
+ {
+  "slug": "chzzk",
+  "name": "치지직",
+  "hex": "#00E693",
+  "domains": [
+   "방송",
+   "영상",
+   "라이브"
+  ],
+  "source": "https://chzzk.naver.com",
+  "confidence": "mid",
+  "bright": true,
+  "tone": "neutral"
+ },
+ {
+  "slug": "band",
+  "name": "밴드",
+  "hex": "#00EC64",
+  "domains": [
+   "커뮤니티",
+   "모임",
+   "메신저"
+  ],
+  "source": "https://band.us",
+  "confidence": "low",
+  "bright": true,
+  "tone": "neutral"
+ },
+ {
+  "slug": "flo",
+  "name": "FLO",
+  "hex": "#3F3FFF",
+  "domains": [
+   "음악",
+   "오디오"
+  ],
+  "source": "https://www.music-flo.com",
+  "confidence": "mid",
+  "tone": "cool"
+ },
+ {
+  "slug": "class101",
+  "name": "클래스101",
+  "hex": "#FF5D00",
+  "domains": [
+   "교육",
+   "취미"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "활기",
+   "친근"
+  ],
+  "tone": "warm"
+ },
+ {
+  "slug": "kurly",
+  "name": "컬리",
+  "hex": "#5F0080",
+  "domains": [
+   "식품",
+   "커머스"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "고급",
+   "차분"
+  ],
+  "tone": "neutral"
+ },
+ {
+  "slug": "myrealtrip",
+  "name": "마이리얼트립",
+  "hex": "#2B96ED",
+  "domains": [
+   "여행"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "밝음",
+   "여행",
+   "신뢰"
+  ],
+  "tone": "cool"
+ },
+ {
+  "slug": "ohouse",
+  "name": "오늘의집",
+  "hex": "#009BF5",
+  "domains": [
+   "생활",
+   "인테리어"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "산뜻",
+   "생활"
+  ],
+  "tone": "cool"
+ },
+ {
+  "slug": "triple",
+  "name": "트리플",
+  "hex": "#0BA1AB",
+  "domains": [
+   "여행"
+  ],
+  "source": "라이브러리",
+  "tags": [
+   "산뜻",
+   "여행"
+  ],
+  "tone": "cool"
+ },
+ {
+  "slug": "starbucks-green",
+  "name": "스타벅스 그린",
+  "hex": "#00704A",
+  "domains": [
+   "음식",
+   "카페"
+  ],
+  "source": "Starbucks 브랜드 가이드",
+  "tone": "neutral"
+ },
+ {
+  "slug": "samsung-blue",
+  "name": "삼성 블루",
+  "hex": "#1428A0",
+  "domains": [
+   "금융",
+   "전자",
+   "플랫폼"
+  ],
+  "source": "Samsung 브랜드 가이드",
+  "tags": [
+   "신뢰",
+   "차분"
+  ],
+  "tone": "cool"
+ },
+ {
+  "slug": "claude-clay",
+  "name": "Claude 클레이",
+  "hex": "#D97757",
+  "domains": [
+   "AI",
+   "도구"
+  ],
+  "source": "Anthropic 브랜드",
+  "tone": "warm"
+ },
+ {
+  "slug": "twitch-purple",
+  "name": "Twitch 퍼플",
+  "hex": "#9146FF",
+  "domains": [
+   "방송",
+   "라이브",
+   "영상",
+   "게임"
+  ],
+  "source": "Twitch 브랜드 가이드",
+  "tone": "cool"
+ },
+ {
+  "slug": "discord",
+  "name": "Discord 블러플",
+  "hex": "#5865F2",
+  "domains": [
+   "메신저",
+   "커뮤니티",
+   "게임",
+   "대화"
+  ],
+  "source": "Discord 브랜드 가이드",
+  "tone": "cool"
+ },
+ {
+  "slug": "facebook",
+  "name": "Facebook 블루",
+  "hex": "#0866FF",
+  "domains": [
+   "SNS",
+   "소셜"
+  ],
+  "source": "Meta 브랜드 가이드(2023)",
+  "tone": "cool"
+ },
+ {
+  "slug": "threads",
+  "name": "Threads",
+  "hex": "#000000",
+  "domains": [
+   "SNS",
+   "소셜",
+   "커뮤니티",
+   "글"
+  ],
+  "source": "Threads 로고·화면(검정)",
+  "mono": true,
+  "tone": "warm"
+ }
+]

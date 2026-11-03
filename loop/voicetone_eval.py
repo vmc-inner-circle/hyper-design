@@ -9,7 +9,7 @@ import sys, json, re, random, subprocess, pathlib, hashlib, argparse, statistics
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 D = ROOT / "loop/voicetone"
-VOICES = pathlib.Path(sys.argv[sys.argv.index("--voices") + 1]) if "--voices" in sys.argv else ROOT / "plugins/hyper-design/core/foundation/voices"
+VOICES = pathlib.Path(sys.argv[sys.argv.index("--voices") + 1]) if "--voices" in sys.argv else ROOT / "plugins/k-style-ui-ux/core/foundation/voices"
 REAL = ROOT / "docs/research/ux-writing/real"
 SLUGS = ["toss", "daangn", "ridi"]
 LABEL_SLOTS = {"button", "tab", "badge", "label", "section", "row", "dialog_buttons", "marketing"}
@@ -17,22 +17,11 @@ GEN_MODEL, JUDGE_MODEL, AUX_MODEL = "claude-sonnet-5-5", "claude-opus-5-5", "cla
 SIZE_CAP = 9000  # 프리셋 JSON 바이트 상한 — 정답을 외워 넣는 과적합 방지
 
 
-class Limit(Exception): pass
-
-
-LEAN = ["--system-prompt", "You are a careful Korean UX writing assistant. Follow the user's instructions exactly.",
-        "--tools", "", "--strict-mcp-config", "--setting-sources", "", "--no-session-persistence"]   # 호출당 고정 비용 2만→600 토큰
-
-
-def claude(prompt, model, cwd="/tmp", tools=False):
-    extra = ["--strict-mcp-config", "--setting-sources", "", "--no-session-persistence", "--dangerously-skip-permissions"] if tools else LEAN
-    r = subprocess.run(["claude", "-p", "--model", model, *extra, "--output-format", "json"],
-                       input=prompt, capture_output=True, text=True, cwd=cwd)
-    try: d = json.loads(r.stdout)
+def claude(prompt, model):
+    r = subprocess.run(["claude", "-p", "--model", model, "--dangerously-skip-permissions", "--output-format", "json"],
+                       input=prompt, capture_output=True, text=True, cwd="/tmp")
+    try: return json.loads(r.stdout).get("result", "")
     except Exception: return r.stdout + r.stderr
-    if d.get("is_error") and (d.get("api_error_status") == 429 or "limit" in str(d.get("result", "")).lower()):
-        raise Limit(d.get("result"))                        # 사용 한도 — 조용히 0점으로 넘어가지 않고 멈춘다
-    return d.get("result", "")
 
 
 def parse_json(txt):
@@ -40,17 +29,6 @@ def parse_json(txt):
     s = m.group(1) if m else txt
     starts = [i for i in (s.find("["), s.find("{")) if i >= 0]
     return json.JSONDecoder().raw_decode(s[min(starts):])[0]
-
-
-def kv(xs, val="text"):
-    """[{"id":..., "text":...}] → dict. 모델이 키를 조금 틀려도(" text") 읽는다."""
-    out = {}
-    for x in xs if isinstance(xs, list) else []:
-        if not isinstance(x, dict): continue
-        k = {re.sub(r"\s", "", kk): v for kk, v in x.items()}
-        v = k.get(val) or next((vv for kk, vv in k.items() if kk != "id" and isinstance(vv, str)), None)
-        if k.get("id") and v: out[k["id"]] = v
-    return out
 
 
 def pmap(f, xs, n=8):
@@ -81,7 +59,7 @@ def prepare():
         if not q: return {}
         txt = claude("""For each Korean app UI string, write a plain English meaning memo: what the screen tells or asks the user, keeping every fact, number, name and option, but NO tone, politeness level, sentence ending style, punctuation style or exclamation. Neutral, like a spec. Do not quote Korean.
 """ + json.dumps(q, ensure_ascii=False, indent=1) + '\nJSON array only: [{"id": "...", "memo": "..."}]', AUX_MODEL)
-        try: return kv(parse_json(txt), "memo")
+        try: return {x["id"]: x["memo"] for x in parse_json(txt)}
         except Exception: return {}
 
     def orc(batch):
@@ -89,7 +67,7 @@ def prepare():
         if not q: return {}
         txt = claude("""아래 한국어 앱 문구를 **말투는 그대로** 두고 표현만 바꿔 쓴다 — 문체(해요/합니다), 경어, 문장 끝 모양, 마침표·느낌표, 길이, 버튼 짝 형식을 원문과 같게. 단어·어순만 다르게, 뜻과 데이터는 유지.
 """ + json.dumps(q, ensure_ascii=False, indent=1) + '\nJSON 배열만: [{"id": "...", "text": "..."}]', AUX_MODEL)
-        try: return kv(parse_json(txt))
+        try: return {x["id"]: x["text"] for x in parse_json(txt)}
         except Exception: return {}
     for m in pmap(memo, todo): memos.update(m)
     for m in pmap(orc, todo): oracle.update(m)
@@ -136,13 +114,9 @@ def generate(slug, rows, memos):
 {json.dumps(q, ensure_ascii=False, indent=1)}
 
 JSON 배열만: [{{"id": "...", "text": "..."}}]""", GEN_MODEL)
-        try: return kv(parse_json(txt))
+        try: return {x["id"]: x["text"] for x in parse_json(txt)}
         except Exception: return {}
-    batches = [rows[i:i + 20] for i in range(0, len(rows), 20)]
-    for m in pmap(one, batches): out.update(m)
-    miss = [r for r in rows if r["id"] not in out]                # 실패한 묶음은 한 번 더
-    if miss:
-        for m in pmap(one, [miss[i:i + 20] for i in range(0, len(miss), 20)]): out.update(m)
+    for m in pmap(one, [rows[i:i + 20] for i in range(0, len(rows), 20)]): out.update(m)
     return out
 
 
@@ -188,11 +162,7 @@ def rule_bad(slug, text):
     return bad
 
 
-def digits(s):
-    """숫자 값 집합 — 표기 차이(1천=1,000, 쉼표)는 같게 본다. 시각을 다른 체계로 바꾸면(11시→23:) 다르게 잡힌다."""
-    s = re.sub(r"(\d+)\s*천", lambda m: str(int(m.group(1)) * 1000), s)
-    s = re.sub(r"(\d+)\s*만", lambda m: str(int(m.group(1)) * 10000), s)
-    return set(x.replace(",", "").lstrip("0") or "0" for x in re.findall(r"\d[\d,]*", s))
+def digits(s): return set(re.findall(r"\d[\d,.:]*", s))
 
 
 def leak_check(slug, split, items):
@@ -240,12 +210,11 @@ def run(split_name="dev", seed=0, cands=("toss", "daangn", "ridi"), tag=None, on
             tot += 1; b = rule_bad(slug, t)
             if b: bad += 1; viol.append((slug, r["id"], t, b))
             d = digits(r["text"])
-            if d and not re.search(r"\[[^\]]*\]|\{[^}]*\}|가림", r["text"]): dig += 1; keep += d <= digits(t)
+            if d: dig += 1; keep += d <= digits(t)
     res.update({"agree": agree, "U1": 1 - bad / max(1, tot), "U2": keep / max(1, dig), "violations": viol[:20]})
     cores = [res["per"][co]["V1"] for co in ("toss", "daangn") if res["per"][co]["V1"] is not None]
     res["V1_core"] = sum(cores) / len(cores) if cores else None
-    res["score"] = res["V1_core"] or 0                      # 점수는 회사다움만. U1·U2는 루프에서 관문(미달이면 거절)
-    res["gate_ok"] = res["U1"] >= 0.98 and res["U2"] >= 0.95
+    res["score"] = (res["V1_core"] or 0) - (0.2 if res["U1"] < 0.98 else 0) - (0.2 if res["U2"] < 1 else 0)
     res["fails"] = [{"co": q["co"], "real": q["real"], "own": q["cands"].get(q["co"]), "picked": q["cands"].get(a) if a else None, "picked_name": a}
                     for q, a in zip(Qall, p1) if q["co"] in cands and a != q["co"]][:40]
     out = D / "runs" / f"{tag or split_name}-{seed}.json"

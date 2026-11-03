@@ -8,7 +8,7 @@
 
 ## 고칠 수 있는 것
 
-- `plugins/hyper-design/core/foundation/voices/<대상>.json` 하나. 다른 파일을 건드리면 회차가 버려진다.
+- `plugins/k-style-ui-ux/core/foundation/voices/<대상>.json` 하나. 다른 파일을 건드리면 회차가 버려진다.
 - 규칙 문장, 자리별 형태(`slots`), 버튼 짝, 감정 강도, 밀도, 어휘, 표기, 예시 쌍(`pairs`).
 
 ## 하지 말 것

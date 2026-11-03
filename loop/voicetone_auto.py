@@ -51,19 +51,14 @@ def main():
     if not all(T[co]["discriminates"] for co in ("toss", "daangn")):
         (D / "SUMMARY.md").write_text("# 중단: 측정이 변별하지 못함\n\n천장−바닥 < 0.15 — 평가 방식부터 다시 설계해야 한다.\n" + json.dumps(T, ensure_ascii=False, indent=1))
         return
-    start = 1
-    if TSV.exists():                                              # 이어 하기: 지금 프리셋을 새로 재서 출발점으로
-        start = max(int(l.split("\t")[1]) for l in TSV.read_text().splitlines()[1:]) + 1
-        cur_runs = [E.run("dev", 500 + start + k, tag=f"resume{start}-{k}") for k in range(2)]
-    else:
-        cur_runs = [json.loads(p.read_text()) for p in sorted((D / "runs").glob("cal-current-*.json"))]
+    cur_runs = [json.loads(p.read_text()) for p in sorted((D / "runs").glob("cal-current-*.json"))]
     best = avg_score(cur_runs); best_run = cur_runs[-1]
     base_leak = {s: set(E.leak_check(s, split, items)[0]) for s in E.SLUGS}
     cap = {s: E.leak_check(s, split, items)[1] + 1500 for s in E.SLUGS}
     log([datetime.datetime.now().isoformat(timespec="minutes"), 0, "-", f"{best:.3f}", *(f"{statistics.mean(r['per'][c]['V1'] for r in cur_runs):.3f}" for c in TARGETS),
-         f"{statistics.mean(r['U1'] for r in cur_runs):.3f}", f"{statistics.mean(r['U2'] for r in cur_runs):.3f}", f"{statistics.mean(r['agree'] for r in cur_runs):.2f}", "baseline" if start == 1 else "resume", f"σ={T['sigma']:.3f}"])
+         f"{statistics.mean(r['U1'] for r in cur_runs):.3f}", f"{statistics.mean(r['U2'] for r in cur_runs):.3f}", f"{statistics.mean(r['agree'] for r in cur_runs):.2f}", "baseline", f"σ={T['sigma']:.3f}"])
     program = (ROOT / "loop/voicetone_program.md").read_text()
-    for it in range(start, start + a.iters):
+    for it in range(1, a.iters + 1):
         tgt = TARGETS[(it - 1) % len(TARGETS)]
         path = E.VOICES / f"{tgt}.json"; rel = path.relative_to(ROOT)
         fails = [f for f in best_run["fails"] if f["co"] == tgt][:15]
@@ -80,10 +75,10 @@ def main():
 {json.dumps(fails, ensure_ascii=False, indent=1)}
 
 파일 `{rel}`을 직접 열어 고친다."""
-        try: txt = E.claude(prompt, RESEARCH_MODEL, cwd=ROOT, tools=True)
-        except E.Limit as e:
-            sh("git", "checkout", "--", str(rel)); log([datetime.datetime.now().isoformat(timespec="minutes"), it, tgt, "-", "-", "-", "-", "-", "-", "stop:limit", str(e)[:80]])
-            print("사용 한도로 중단:", e); return
+        r = subprocess.run(["claude", "-p", "--model", RESEARCH_MODEL, "--dangerously-skip-permissions", "--output-format", "json"],
+                           input=prompt, capture_output=True, text=True, cwd=ROOT)
+        try: txt = json.loads(r.stdout).get("result", "")
+        except Exception: txt = r.stdout[-500:]
         hyp = next((l.split("HYPOTHESIS:", 1)[1].strip() for l in reversed(txt.splitlines()) if "HYPOTHESIS:" in l), "(가설 없음)")
         changed = [l[3:] for l in sh("git", "status", "--porcelain").stdout.splitlines()
                    if l.strip() and "__pycache__" not in l and "loop/voicetone/" not in l]
@@ -100,16 +95,12 @@ def main():
         hits, size = E.leak_check(tgt, split, items)
         if size > cap[tgt]: revert(f"size{size}"); continue
         if set(hits) - base_leak[tgt]: revert(f"leak:{','.join(sorted(set(hits) - base_leak[tgt]))}"); continue
-        try: r1 = E.run("dev", 1000 + it, tag=f"iter{it}")
-        except E.Limit as e:
-            sh("git", "checkout", "--", str(rel)); log([now, it, tgt, "-", "-", "-", "-", "-", "-", "stop:limit", hyp]); print("사용 한도로 중단:", e); return
-        dec = "discard" if r1["gate_ok"] else "reject:gate"
-        if r1["gate_ok"] and r1["score"] > best + T["sigma"]:                      # 1차 선별: σ보다 크게 좋아짐
-            try: r2 = E.run("dev", 2000 + it, tag=f"iter{it}-confirm")
-            except E.Limit as e:
-                sh("git", "checkout", "--", str(rel)); log([now, it, tgt, "-", "-", "-", "-", "-", "-", "stop:limit", hyp]); print("사용 한도로 중단:", e); return  # 확인: 두 번 평균이 1.5σ 넘게 좋아야 유지
+        r1 = E.run("dev", 1000 + it, tag=f"iter{it}")
+        dec = "discard"
+        if r1["score"] > best + T["sigma"]:                      # 1차 선별: σ보다 크게 좋아짐
+            r2 = E.run("dev", 2000 + it, tag=f"iter{it}-confirm")  # 확인: 두 번 평균이 1.5σ 넘게 좋아야 유지
             s = avg_score([r1, r2])
-            if s > best + 1.5 * T["sigma"] and r2["gate_ok"]:
+            if s > best + 1.5 * T["sigma"]:
                 dec = "keep"; best = s; best_run = r1
                 sh("git", "add", str(rel)); sh("git", "commit", "-qm", f"보이스톤 루프 iter {it} ({tgt}): {hyp}\n\ndev score {s:.3f}\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>")
         if dec != "keep": sh("git", "checkout", "--", str(rel))
@@ -121,7 +112,6 @@ def main():
          "| 회사 | V1 | 바닥 | 합격선 | 천장 | 판정 |", "|---|---|---|---|---|---|"]
     for co in ("toss", "daangn"):
         v = rt["per"][co]["V1"]; t = T[co]
-        if v is None: L.append(f"| {E_name(co)} | 측정 실패 | | | | |"); continue
         L.append(f"| {E_name(co)} | {v:.2f} | {t['floor']:.2f} | {t['pass']:.2f} | {t['ceiling']:.2f} | {'통과' if v >= t['pass'] else '미달'} |")
     L += [f"\nU1 {rt['U1']:.3f} (≥0.98) · U2 {rt['U2']:.3f} (=1) · 판정 2회 일치 {rt['agree']:.2f}", "\n기록: `loop/voicetone/runs.tsv`, 합격선: `thresholds.json`"]
     (D / "SUMMARY.md").write_text("\n".join(L) + "\n", encoding="utf-8")

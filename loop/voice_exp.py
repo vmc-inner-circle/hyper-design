@@ -9,7 +9,7 @@ import sys, json, re, random, subprocess, pathlib, collections, concurrent.futur
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "loop/voice_exp"
-VOICES = ROOT / "plugins/hyper-design/core/foundation/voices"
+VOICES = ROOT / "plugins/k-style-ui-ux/core/foundation/voices"
 REAL = ROOT / "docs/research/ux-writing/real"
 SLUGS = ["toss", "daangn", "ridi"]
 COMPANY = {"toss": "토스", "daangn": "당근", "ridi": "리디"}

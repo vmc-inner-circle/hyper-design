@@ -1,0 +1,595 @@
+{
+ "screens": {
+  "home": 157,
+  "list": 164,
+  "detail": 112,
+  "form": 49,
+  "result": 28
+ },
+ "unmatched": {
+  "detail": 29,
+  "list": 14,
+  "result": 4,
+  "home": 6,
+  "form": 5
+ },
+ "archetypes": {
+  "home": [
+   {
+    "type": "지도형",
+    "shape": "지도가 화면을 차지하고 그 위에 검색·목록이 뜬다",
+    "apps": [
+     "i.M(아이.엠)(taxi)",
+     "카카오맵(restaurant)"
+    ],
+    "n": 2
+   },
+   {
+    "type": "일정형",
+    "shape": "달력·날짜 줄이 맨 위, 아래에 그날의 할 일·기록",
+    "apps": [
+     "NOL(stay)",
+     "TimeTree 캘린더 공유 앱(todo)",
+     "minical(todo)",
+     "꼬박가계부(budget)",
+     "소모임(class)",
+     "심플 캘린더(todo)",
+     "위플 가계부(budget)",
+     "인아웃(fitness)",
+     "타임스프레드(todo)",
+     "편한가계부(budget)",
+     "플래닛(todo)",
+     "플릭(fitness)"
+    ],
+    "n": 12
+   },
+   {
+    "type": "현황형",
+    "shape": "내 숫자(잔액·진행·현황) 카드가 맨 위, 아래 바로가기·목록",
+    "apps": [
+     "11번가(grocery)",
+     "CLASS101(class)",
+     "Grab(taxi)",
+     "IKEA(interior)",
+     "KB스타뱅킹(finance)",
+     "Nike Run Club(fitness)",
+     "i-ONE Bank(finance)",
+     "굿닥(hospital)",
+     "당근(used)",
+     "똑닥(hospital)",
+     "밀리의서재(book)",
+     "신한 슈퍼SOL(finance)",
+     "자리톡(house)",
+     "카카오 T(taxi)",
+     "캐시닥(hospital)",
+     "케이뱅크(finance)",
+     "테이블링(restaurant)",
+     "티머니GO(taxi)",
+     "플랜핏(fitness)",
+     "호갱노노(house)"
+    ],
+    "n": 20
+   },
+   {
+    "type": "피드형",
+    "shape": "(동네·칩) 아래 세로 카드가 끝없이 이어진다",
+    "apps": [
+     "velog(글)",
+     "당근(used)",
+     "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교(stay)",
+     "컬리(food)"
+    ],
+    "n": 4
+   },
+   {
+    "type": "글 목록형",
+    "shape": "대표 글 하나 아래 제목 위주 글 목록·순위가 이어진다(뉴스·커뮤니티·글)",
+    "apps": [
+     "CLASS101(class)",
+     "blind(커뮤니티)",
+     "brunch(글)",
+     "daumnews(뉴스)",
+     "navernews(뉴스)",
+     "신한 슈퍼SOL(finance)",
+     "지그재그(fashion)",
+     "카카오 T(taxi)"
+    ],
+    "n": 8
+   },
+   {
+    "type": "찾기형",
+    "shape": "(위치·검색 아래) 카테고리 아이콘 격자가 맨 위, 아래 배너·추천 줄",
+    "apps": [
+     "11번가(grocery)",
+     "Grab(taxi)",
+     "KREAM(크림)(fashion)",
+     "NOL(stay)",
+     "No.1 부동산 플랫폼, 직방(house)",
+     "Trip.com 트립닷컴(restaurant)",
+     "catchtable(식당 예약)",
+     "frip(취미)",
+     "kurly(장보기)",
+     "munto(모임)",
+     "myrealtrip(여행)",
+     "nol(숙소)",
+     "soomgo(전문가 찾기)",
+     "yeogi(숙소)",
+     "zigzag(패션 쇼핑)",
+     "네이버플러스 스토어(interior)",
+     "닥터나우(hospital)",
+     "당근(used)",
+     "마이리얼트립(travel)",
+     "만화 웹툰 웹소설 도서는 리디(book)",
+     "문토(class)",
+     "배달의민족(food)",
+     "번개장터(used)",
+     "사람인(community)",
+     "삼삼엠투(house)",
+     "소모임(class)",
+     "숨고(interior)",
+     "아고다(stay)",
+     "에이블리(fashion)",
+     "여기어때(stay)",
+     "여신티켓(hospital)",
+     "요기요(food)",
+     "유니클로 UNIQLO(fashion)",
+     "카카오 T(taxi)",
+     "캐시닥(hospital)",
+     "케이케이데이 KKday(travel)",
+     "쿠팡이츠(food)",
+     "클룩 KLOOK(travel)",
+     "트리플(travel)",
+     "프립(class)",
+     "피터팬의 좋은방 구하기(house)"
+    ],
+    "n": 41
+   },
+   {
+    "type": "진열형",
+    "shape": "배너 아래 제목 달린 가로 줄·상품 격자가 반복된다",
+    "apps": [
+     "10000recipe(레시피)",
+     "11st(종합 쇼핑)",
+     "11번가(grocery)",
+     "29CM(fashion)",
+     "29cm(패션 쇼핑)",
+     "CLASS101(class)",
+     "NOL(stay)",
+     "SERIES(book)",
+     "airbnb(숙소)",
+     "class101(클래스)",
+     "inflearn(강의)",
+     "joongna(중고거래)",
+     "kakaopage(웹소설)",
+     "kream(리셀)",
+     "melon(음악)",
+     "musinsa(패션 쇼핑)",
+     "navercomic(웹툰)",
+     "ridi(전자책)",
+     "wanted(채용)",
+     "yes24(책)",
+     "네이버플러스 스토어(interior)",
+     "만화 웹툰 웹소설 도서는 리디(book)",
+     "밀리의서재(book)",
+     "뱅크샐러드(budget)",
+     "번개장터(used)",
+     "에이블리(fashion)",
+     "예스24 eBook & 크레마클럽(book)",
+     "이마트몰(grocery)",
+     "중고나라(used)",
+     "지그재그(fashion)",
+     "카카오페이지(book)",
+     "캐치테이블(restaurant)",
+     "케이뱅크(finance)",
+     "쿠팡(Coupang)-모바일 쇼핑(grocery)",
+     "텐바이텐- 디자인 쇼핑몰 10x10(interior)",
+     "페이북/ISP(finance)",
+     "호텔스닷컴(stay)"
+    ],
+    "n": 37
+   }
+  ],
+  "detail": [
+   {
+    "type": "읽기·재생형",
+    "shape": "본문·영상·만화 자체가 맨 위(헤더·컨트롤만 얹힘), 아래 제목·작성자·반응",
+    "apps": [
+     "SERIES(book)",
+     "navercomic(웹툰)",
+     "youtube(영상)",
+     "밀리의서재(book)",
+     "예스24 eBook & 크레마클럽(book)",
+     "카카오페이지(book)"
+    ],
+    "n": 6
+   },
+   {
+    "type": "진행 추적형",
+    "shape": "지도·진행 단계가 맨 위, 아래 정보 행",
+    "apps": [
+     "IKEA(interior)",
+     "Uber(우버)(taxi)",
+     "i.M(아이.엠)(taxi)",
+     "배달의민족(food)",
+     "자리톡(house)",
+     "쿠팡이츠(food)"
+    ],
+    "n": 6
+   },
+   {
+    "type": "수치형",
+    "shape": "숫자 요약·차트가 맨 위, 아래 정보 행·내역",
+    "apps": [
+     "KB스타뱅킹(finance)",
+     "KREAM(크림)(fashion)",
+     "뱅크샐러드(budget)",
+     "번개장터(used)",
+     "숨고(interior)",
+     "위플 가계부(budget)",
+     "인아웃(fitness)",
+     "자리톡(house)",
+     "테이블링(restaurant)",
+     "호갱노노(house)"
+    ],
+    "n": 10
+   },
+   {
+    "type": "상품형",
+    "shape": "큰 사진 → 이름·가격 → 옵션 → 리뷰, 하단 구매 버튼",
+    "apps": [
+     "11st(종합 쇼핑)",
+     "IKEA(interior)",
+     "No.1 부동산 플랫폼, 직방(house)",
+     "inflearn(강의)",
+     "joongna(중고거래)",
+     "kream(리셀)",
+     "kurly(장보기)",
+     "munto(모임)",
+     "musinsa(패션 쇼핑)",
+     "myrealtrip(여행)",
+     "ridi(전자책)",
+     "yes24(책)",
+     "zigzag(패션 쇼핑)",
+     "네이버플러스 스토어(interior)",
+     "땡겨요(food)",
+     "마이리얼트립(travel)",
+     "번개장터(used)",
+     "유니클로 UNIQLO(fashion)",
+     "지그재그(fashion)",
+     "쿠팡(Coupang)-모바일 쇼핑(grocery)",
+     "플랜핏(fitness)",
+     "피터팬의 좋은방 구하기(house)",
+     "후루츠패밀리(used)"
+    ],
+    "n": 23
+   },
+   {
+    "type": "장소·예약형",
+    "shape": "큰 사진 → 이름·평점 → 정보(위치·시간) → 날짜 고르기·예약",
+    "apps": [
+     "TimeTree 캘린더 공유 앱(todo)",
+     "frip(취미)",
+     "soomgo(전문가 찾기)",
+     "닥터나우(hospital)",
+     "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교(stay)",
+     "아고다(stay)",
+     "캐시닥(hospital)",
+     "캐치테이블(restaurant)"
+    ],
+    "n": 8
+   },
+   {
+    "type": "사람형",
+    "shape": "프로필 → 평점·리뷰 → 하단 요청 버튼",
+    "apps": [
+     "똑닥(hospital)",
+     "블라인드 Blind(community)",
+     "숨고(interior)",
+     "케이케이데이 KKday(travel)"
+    ],
+    "n": 4
+   },
+   {
+    "type": "글형",
+    "shape": "작성자 줄 → 사진·본문 → 반응·댓글",
+    "apps": [
+     "10000recipe(레시피)",
+     "Nike Run Club(fitness)",
+     "brunch(글)",
+     "bunjang(중고거래)",
+     "class101(클래스)",
+     "daumnews(뉴스)",
+     "navernews(뉴스)",
+     "velog(글)",
+     "wanted(채용)",
+     "리멤버(community)",
+     "문토(class)",
+     "블라인드 Blind(community)",
+     "슈퍼멤버스(restaurant)",
+     "카카오페이지(book)",
+     "컬리(food)",
+     "플랜핏(fitness)",
+     "플릭(fitness)"
+    ],
+    "n": 17
+   }
+  ],
+  "form": [
+   {
+    "type": "한 질문씩",
+    "shape": "진행 표시 + 큰 질문 하나 + 선택지, 하단 버튼",
+    "apps": [
+     "굿닥(hospital)",
+     "꼬박가계부(budget)",
+     "듀오링고(Duolingo)(edu)",
+     "말해보카(edu)",
+     "삼삼엠투(house)",
+     "후루츠패밀리(used)"
+    ],
+    "n": 6
+   },
+   {
+    "type": "조건 검색",
+    "shape": "출발·도착·장소 칸 + 날짜 → 찾기 버튼, 아래 최근·추천",
+    "apps": [
+     "NOL(stay)",
+     "Uber(우버)(taxi)",
+     "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교(stay)",
+     "여기어때(stay)",
+     "티머니GO(taxi)"
+    ],
+    "n": 5
+   },
+   {
+    "type": "날짜·시간 고르기",
+    "shape": "달력 → 시간 칸 → 하단 버튼",
+    "apps": [
+     "Nike Training Club(fitness)",
+     "i.M(아이.엠)(taxi)",
+     "굿닥(hospital)",
+     "똑닥(hospital)",
+     "삼삼엠투(house)",
+     "숨고(interior)",
+     "캐치테이블(restaurant)"
+    ],
+    "n": 7
+   },
+   {
+    "type": "옵션·결제",
+    "shape": "옵션 고르기 + 가격 → 하단 결제 버튼",
+    "apps": [
+     "i.M(아이.엠)(taxi)",
+     "에이블리(fashion)",
+     "유니클로 UNIQLO(fashion)",
+     "중고나라(used)",
+     "클룩 KLOOK(travel)",
+     "피터팬의 좋은방 구하기(house)"
+    ],
+    "n": 6
+   },
+   {
+    "type": "한 화면 기록",
+    "shape": "여러 칸 + 분류 격자·사진 첨부를 한 화면에",
+    "apps": [
+     "Grab(taxi)",
+     "Trip.com 트립닷컴(restaurant)",
+     "꼬박가계부(budget)",
+     "슈퍼멤버스(restaurant)",
+     "이달의지출(budget)",
+     "중고나라(used)",
+     "편한가계부(budget)",
+     "플릭(fitness)",
+     "호갱노노(house)",
+     "후루츠패밀리(used)"
+    ],
+    "n": 10
+   }
+  ],
+  "result": [
+   {
+    "type": "완료형",
+    "shape": "결과 큰 문구 + 요약 카드 + 다음 행동",
+    "apps": [
+     "Nike Run Club(fitness)",
+     "굿닥(hospital)",
+     "스픽 (Speak)(edu)",
+     "인아웃(fitness)",
+     "쿠팡(Coupang)-모바일 쇼핑(grocery)",
+     "타임스프레드(todo)",
+     "트리플(travel)"
+    ],
+    "n": 7
+   },
+   {
+    "type": "추천 결과형",
+    "shape": "결과 문구·요약 → 그에 맞는 목록",
+    "apps": [
+     "No.1 부동산 플랫폼, 직방(house)",
+     "뱅크샐러드(budget)",
+     "사람인(community)",
+     "호갱노노(house)"
+    ],
+    "n": 4
+   },
+   {
+    "type": "리포트형",
+    "shape": "기간 고르기 → 큰 숫자 → 차트 → 항목별 순위·목록",
+    "apps": [
+     "꼬박가계부(budget)",
+     "뱅크샐러드(budget)",
+     "슈퍼멤버스(restaurant)",
+     "위플 가계부(budget)",
+     "이달의지출(budget)",
+     "편한가계부(budget)",
+     "플랜핏(fitness)",
+     "플릭(fitness)"
+    ],
+    "n": 8
+   },
+   {
+    "type": "증표형",
+    "shape": "QR·바코드 + 정보 행",
+    "apps": [
+     "유니클로 UNIQLO(fashion)",
+     "케이케이데이 KKday(travel)"
+    ],
+    "n": 2
+   }
+  ],
+  "list": [
+   {
+    "type": "지도+목록",
+    "shape": "지도 위·아래로 결과 목록, 필터 칩",
+    "apps": [
+     "Uber(우버)(taxi)",
+     "굿닥(hospital)",
+     "닥터나우(hospital)",
+     "똑닥(hospital)",
+     "삼삼엠투(house)",
+     "솜씨당- 취미와 원데이클래스 모든 것(class)",
+     "슈퍼멤버스(restaurant)",
+     "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교(stay)",
+     "여신티켓(hospital)",
+     "카카오맵(restaurant)",
+     "캐치테이블(restaurant)",
+     "테이블링(restaurant)",
+     "티머니GO(taxi)"
+    ],
+    "n": 13
+   },
+   {
+    "type": "상품 격자",
+    "shape": "필터 칩·정렬 → 2~3열 상품 격자",
+    "apps": [
+     "29CM(fashion)",
+     "KREAM(크림)(fashion)",
+     "bunjang(중고거래)",
+     "class101(클래스)",
+     "inflearn(강의)",
+     "joongna(중고거래)",
+     "kream(리셀)",
+     "kurly(장보기)",
+     "musinsa(패션 쇼핑)",
+     "myrealtrip(여행)",
+     "youtube(영상)",
+     "zigzag(패션 쇼핑)",
+     "리멤버(community)",
+     "마이리얼트립(travel)",
+     "만화 웹툰 웹소설 도서는 리디(book)",
+     "배달의민족(food)",
+     "솜씨당- 취미와 원데이클래스 모든 것(class)",
+     "에이블리(fashion)",
+     "유니클로 UNIQLO(fashion)",
+     "이마트몰(grocery)",
+     "중고나라(used)",
+     "지그재그(fashion)",
+     "카카오페이지(book)",
+     "컬리(food)",
+     "쿠팡(Coupang)-모바일 쇼핑(grocery)",
+     "후루츠패밀리(used)"
+    ],
+    "n": 26
+   },
+   {
+    "type": "순위",
+    "shape": "탭·칩 → 번호 달린 랭킹 목록",
+    "apps": [
+     "SERIES(book)",
+     "블라인드 Blind(community)",
+     "에이블리(fashion)",
+     "인아웃(fitness)",
+     "카카오맵(restaurant)",
+     "캐시닥(hospital)",
+     "타임스프레드(todo)",
+     "테이블링(restaurant)",
+     "프립(class)",
+     "호갱노노(house)"
+    ],
+    "n": 10
+   },
+   {
+    "type": "카드 피드",
+    "shape": "세로 큰 카드(사진+글)가 이어진다",
+    "apps": [
+     "29CM(fashion)",
+     "IKEA(interior)",
+     "SERIES(book)",
+     "Trip.com 트립닷컴(restaurant)",
+     "다톡(community)",
+     "당근(used)",
+     "땡겨요(food)",
+     "리멤버(community)",
+     "마이리얼트립(travel)",
+     "문토(class)",
+     "배달의민족(food)",
+     "블라인드 Blind(community)",
+     "숨고(interior)",
+     "슈퍼멤버스(restaurant)",
+     "아고다(stay)",
+     "에이블리(fashion)",
+     "여신티켓(hospital)",
+     "오늘의집(interior)",
+     "인아웃(fitness)",
+     "자리톡(house)",
+     "캐시닥(hospital)",
+     "캐치테이블(restaurant)",
+     "케이케이데이 KKday(travel)",
+     "쿠팡(Coupang)-모바일 쇼핑(grocery)",
+     "쿠팡이츠(food)",
+     "클룩 KLOOK(travel)",
+     "텐바이텐- 디자인 쇼핑몰 10x10(interior)",
+     "프립(class)",
+     "호갱노노(house)",
+     "호텔스닷컴(stay)",
+     "호텔스컴바인(travel)"
+    ],
+    "n": 31
+   },
+   {
+    "type": "행 목록",
+    "shape": "검색·칩 → 같은 높이의 목록 행",
+    "apps": [
+     "10000recipe(레시피)",
+     "11st(종합 쇼핑)",
+     "NOL(stay)",
+     "Nike Training Club(fitness)",
+     "No.1 부동산 플랫폼, 직방(house)",
+     "TimeTree 캘린더 공유 앱(todo)",
+     "Trip.com 트립닷컴(restaurant)",
+     "i-ONE Bank(finance)",
+     "kakaomap(지도)",
+     "ridi(전자책)",
+     "yes24(책)",
+     "꼬박가계부(budget)",
+     "다톡(community)",
+     "닥터나우(hospital)",
+     "듀오링고(Duolingo)(edu)",
+     "리멤버(community)",
+     "마이리얼트립(travel)",
+     "문토(class)",
+     "배달의민족(food)",
+     "뱅크샐러드(budget)",
+     "사람인(community)",
+     "삼삼엠투(house)",
+     "숨고(interior)",
+     "스카이스캐너 – 항공권・호텔 ・렌트카 최저가 비교(stay)",
+     "신한 슈퍼SOL(finance)",
+     "아고다(stay)",
+     "요기요(food)",
+     "위플 가계부(budget)",
+     "이달의지출(budget)",
+     "이마트몰(grocery)",
+     "카카오 T(taxi)",
+     "캐시닥(hospital)",
+     "편한가계부(budget)",
+     "플랜핏(fitness)",
+     "플릭(fitness)",
+     "피터팬의 좋은방 구하기(house)",
+     "호갱노노(house)",
+     "호텔스컴바인(travel)"
+    ],
+    "n": 38
+   }
+  ]
+ }
+}
