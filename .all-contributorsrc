@@ -1,0 +1,78 @@
+{
+  "projectName": "k-style-ui-ux",
+  "projectOwner": "vmc-inner-circle",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 80,
+  "commit": false,
+  "commitConvention": "none",
+  "contributorsPerLine": 7,
+  "linkToUsage": false,
+  "contributors": [
+    {
+      "login": "greatSumini",
+      "name": "Choi Sumin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48555121?v=4",
+      "profile": "https://sumins.notion.site/cv2",
+      "contributions": [
+        "code",
+        "doc",
+        "ideas",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "eungshin",
+      "name": "Eungshin Kim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/127283787?v=4",
+      "profile": "https://github.com/eungshin",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "hydrojun",
+      "name": "hydrojun",
+      "avatar_url": "https://avatars.githubusercontent.com/u/108723979?v=4",
+      "profile": "https://github.com/hydrojun",
+      "contributions": [
+        "ideas",
+        "code",
+        "doc"
+      ]
+    },
+    {
+      "login": "srlee0408",
+      "name": "srlee0408",
+      "avatar_url": "https://avatars.githubusercontent.com/u/63906712?v=4",
+      "profile": "https://github.com/srlee0408",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "yeoul9703",
+      "name": "Myunggeun-Jo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/289879211?v=4",
+      "profile": "https://github.com/yeoul9703",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
+    },
+    {
+      "login": "doojin88",
+      "name": "DOOJIN KIM",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2003813?v=4",
+      "profile": "https://github.com/doojin88",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}

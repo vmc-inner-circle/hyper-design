@@ -8,6 +8,7 @@ python3 loop/evaluate.py /tmp/hd/runN prd/family-trip.md /tmp/hd/baseline-family
 ```
 
 - `run.py` — 하네스(`plugins/k-style-ui-ux/core`)만 빈 폴더에 복사해 `claude -p` 헤드리스로 돌린다. 하네스가 `[[ASK 페이지]]`로 질문하면 페이지를 캡처해 **가상 사용자**(`sim_user.md`, 비개발자 페르소나, 선택형으로만 답함)가 답한다. `prompt-log.md`·`elapsed.txt`(가상 사용자 응답 시간 제외)를 남긴다.
+- `stats.py` — run.py가 끝나면 `elapsed.txt` 옆에 `stats.json`(전체·단계별 시간, 메인/서브에이전트·모델별 입력·캐시·출력 토큰과 추정 비용, 서브에이전트 수·최대 동시 수)을 남긴다. **Claude Code 세션 기록(`~/.claude/projects`)에 묶여 있다** — Codex·Cursor 구동은 집계하지 못한다. 따로: `python3 loop/stats.py <세션 id> --out stats.json`.
 - 기계 채점은 하네스의 [`audit.py`](../plugins/k-style-ui-ux/core/scripts/audit.py)를 그대로 부른다([성공 기준](../docs/success-criteria.md), Playwright로 렌더링된 computed style 측정). 하네스가 자가 수정에 쓰는 것과 같은 파일이라 사본을 두지 않는다.
 - `evaluate.py` — 기계 채점 + 평가 에이전트(`judge.md`: P0~P3 비평, 루브릭 6항목) + 바닐라 대비 블라인드 비교 5회(`compare.md`).
 - 바닐라 비교군: 같은 PRD를 하네스 없이 Claude Code에 넣은 결과(`/tmp/hd/baseline-*`).

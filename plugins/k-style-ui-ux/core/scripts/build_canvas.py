@@ -4,6 +4,8 @@ python3 build_canvas.py <out_dir>
 
 출력
 - out/index.html      : canvas_template.html 에 데이터 JSON(<script id="hd-data">)만 끼워 넣은 것.
+                        크게 보기의 "의견" = 화면 요소를 골라 의견을 적고 한 번에 복사(palette.js 의 hd-pick, 붙여넣기 형식은 references/feedback.md).
+- out/palette.js      : foundation/palette.js 최신본으로 덮어쓴다(지난 결과물에서도 의견 고르기가 돌게).
                         헤더 = 제목 · 탭[Screens|Foundation|Components] · 팔레트 점 · [전체 보기][배율%]
                         (조작 그룹 3개: data-group="tabs"/"palette"/"view", 모드 전환 없음)
                         Screens 판 = 끌어서 이동, Ctrl/⌘+휠·핀치 확대, 카드 누르면 390×844 크게 보기.
@@ -103,6 +105,9 @@ def build_index(out, m):
     nos = f'<noscript id="hd-links"><ul>{links}<li><a href="foundation.html">Foundation</a></li><li><a href="components.html">Components</a></li></ul></noscript>'
     tpl = tpl.replace('<noscript id="hd-links"></noscript>', nos)
     (out / "index.html").write_text(tpl.replace(marker, marker.replace("{}", blob)), encoding="utf-8")
+    pj = HERE.parent / "foundation" / "palette.js"          # 화면의 의견 고르기(hd-pick)가 지난 결과물에서도 돌게 최신으로
+    if pj.exists():
+        (out / "palette.js").write_text(pj.read_text(encoding="utf-8"), encoding="utf-8")
     return len(screens), len(arrows), len(data_rows)
 
 

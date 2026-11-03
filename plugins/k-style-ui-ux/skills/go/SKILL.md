@@ -1,6 +1,6 @@
 ---
 name: go
-description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 만든다 — 모든 흐름을 처음부터 끝까지(시작·결과 화면 포함), 실제 사진, 색 팔레트 원클릭 전환, 한눈에 보는 캔버스. 사용자가 PRD·기획서·요구사항을 붙여넣거나 "화면 만들어줘/디자인해줘/HTML로" 할 때 트리거. 오류·확인·빈 화면 같은 상태까지 원하면 max.
+description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 만든다 — 모든 흐름을 처음부터 끝까지(시작·결과 화면 포함), 실제 사진, 색 팔레트 원클릭 전환, 한눈에 보는 캔버스. 사용자가 PRD·기획서·요구사항을 붙여넣거나 "화면 만들어줘/디자인해줘/HTML로" 할 때 트리거. 캔버스에서 복사한 `[k-style-ui-ux 수정 요청]`을 붙여넣었을 때도(적힌 요소만 고친다). 오류·확인·빈 화면 같은 상태까지 원하면 max.
 ---
 
 # k-style-ui-ux:go — 1차: 모든 흐름을 처음부터 끝까지
@@ -15,6 +15,10 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
 - **"같은 메시지에서/한 메시지에" 띄운다** = 서브에이전트를 동시에 띄우고 모두 돌아올 때까지 같은 턴에서 기다린다는 뜻이다. Claude Code는 Agent 도구, Cursor는 Task 도구(서브에이전트) 여러 개를 한 응답에, Codex는 서브에이전트(multi-agent)를 연달아 띄운 뒤 결과를 기다린다. 서브에이전트를 쓸 수 없는 환경이면 같은 묶음을 메인이 순서대로 처리한다(시간은 늘어난다).
 - **모델 등급**: "가벼운 모델" = Claude Code `haiku`, "중간 모델" = Claude Code `sonnet`. 모델을 고를 수 없으면 기본 모델로 띄운다.
 - **스킬 부르기**: Claude Code는 `/k-style-ui-ux:go`·`/k-style-ui-ux:max`, Codex는 `$k-style-ui-ux:go`·`$k-style-ui-ux:max`, Cursor는 채팅에 `/`를 치고 `go`·`max`(또는 "k-style-ui-ux max로 …").
+
+## 캔버스 의견 고치기 — 메시지가 `[k-style-ui-ux 수정 요청]`로 시작하면
+
+새로 만들지 않는다. 아래 "진행"을 건너뛰고 `$SK/references/feedback.md`대로 **적힌 화면의 그 요소만** 고친 뒤 `selfcheck.py`·`audit.py --shots`·`build_canvas.py`를 다시 돌리고, 그 문서의 마지막 메시지 형식으로 끝낸다.
 
 ## 원칙
 
@@ -114,7 +118,7 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
 
 한 메시지에서 동시에(**포그라운드로 실행해 같은 턴에서 결과를 받는다 — 백그라운드로 돌려 놓고 "끝나면 알려드릴게요"로 턴을 끝내지 않는다. 턴이 끝나면 다시 이어지지 않는다**):
 - `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(Screens·Foundation·Components 탭, 드래그 이동, 색 점 3개, 갈래 화살표, 정책 3줄 — 스크립트가 만들고 AI는 손대지 않는다)
-- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구
+- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구·한글 문구(해요체에 섞인 하십시오체·"~을 통해"·"제공합니다"는 실패, 나머지 번역투·띄어쓰기·은유 라벨은 경고 — 맥락을 보고 고칠지 정한다)
 - `python3 $SK/scripts/audit.py out --shots out/.shots` — 렌더링 측정(대비·토큰 밖 색·의미 배지·CTA·터치·한국어 줄바꿈·캔버스) + 화면 캡처
 - **사실 대조 서브에이전트 1개**(같은 메시지에서): `journey.md` 사실 표와 모든 `screens/*.html`의 글자를 대조해 어긋남(날짜·시간·인원·겹침·상태 이름)과 "누른 뒤 갈 곳이 없는 조작"만 목록으로 돌려준다. 고치지는 않는다.
 
@@ -129,10 +133,11 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
 - 따른 시장 관례 1~2개와 일부러 벗어난 것(있으면, 이유와 함께) — 참고한 앱 이름
 - 하네스가 대신 정한 것 중 사용자가 알아야 할 것 2~3개
 - 남은 ❌ 항목(있으면)
+- 고칠 곳 한 줄: "고칠 곳은 캔버스에서 화면을 크게 보고 '의견'으로 남긴 뒤, '의견 복사'해 여기에 붙여넣으세요 — 그 요소만 고쳐요"
 - 다음 단계 한 줄: "오류·확인·빈 화면 같은 상태까지 보고 싶으면 max를 실행하세요(10분쯤, N장 예정)" — max를 부르는 법은 위 "에이전트마다 다른 것"대로 지금 에이전트에 맞춰 적는다 — N은 screens.json의 `pending_states`
 - 마지막 줄: `[[DONE out/index.html]]` — 이 줄 없이 턴을 끝내면 미완성으로 처리된다. 기다릴 작업이 남았으면 기다린 뒤에 쓴다.
 
 ## 참고
 - 기준: `docs/success-criteria.md`, 근거: `docs/design-criteria.md`
 - 팔레트 라이브러리 방법·목록: `$SK/foundation/palettes/README.md` (구동 중에는 라이브러리·승인된 시드(`seeds.json`)에서만 고른다)
-- 시장 관례: `$SK/references/market.md` · 명세 목록: `$SK/references/spec-mode.md` · 이미지: `$SK/references/images.md`
+- 시장 관례: `$SK/references/market.md` · 명세 목록: `$SK/references/spec-mode.md` · 이미지: `$SK/references/images.md` · 캔버스 의견 고치기: `$SK/references/feedback.md`
