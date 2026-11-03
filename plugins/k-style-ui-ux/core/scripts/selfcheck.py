@@ -1,4 +1,4 @@
-"""빠른 자가 점검(v8) — 매니페스트·파일·링크·상태 규칙·금지 문구. 실패 항목을 출력하고 종료코드 1.
+"""빠른 자가 점검(v8) — 매니페스트·파일·링크·갈 곳 없는 버튼·상태 규칙·금지 문구. 실패 항목을 출력하고 종료코드 1.
 
 python3 selfcheck.py out
 """
@@ -44,6 +44,27 @@ AV = json.loads((pathlib.Path(__file__).resolve().parent.parent / "foundation/as
 AVS = m.get("avatar_style")
 if AVS is not None and AVS not in AV["styles"]: errs.append(f"avatar_style {AVS!r} — {sorted(AV['styles'])} 중 하나(assets/avatars/avatars.json)")
 PASSIVE = re.compile(r"보기만|읽기 전용|게스트|확인만 하")
+# 누르는 것(button·a)은 셋 중 하나: 다른 화면으로 가는 href / data-back(뒤로) / data-stay="바뀐 뒤 안내 문구"(palette.js가 화면 위쪽에 띄운다).
+# 면제: 그 자리에서 값이 바뀌는 게 분명한 부품(COMPONENTS.md 버튼 절)·상태 ARIA를 가진 것·비활성.
+from html.parser import HTMLParser
+INPLACE_CLS = {"chip", "seg-item", "check", "switch", "like", "tab", "tabs-item", "s-circle"}
+INPLACE_ROLE = {"radio", "checkbox", "switch", "tab", "option"}
+INPLACE_ARIA = ("aria-pressed", "aria-checked", "aria-selected", "aria-current")
+class PressScan(HTMLParser):
+    def __init__(self, fname):
+        super().__init__(); self.fname, self.lost, self.cur = fname, [], None
+    def handle_starttag(self, tag, attrs):
+        if tag not in ("button", "a"): return
+        a = dict(attrs); self.cur = None
+        if set((a.get("class") or "").split()) & INPLACE_CLS or a.get("role") in INPLACE_ROLE or any(k in a for k in INPLACE_ARIA): return
+        if "disabled" in a or a.get("aria-disabled") == "true" or "data-back" in a or (a.get("data-stay") or "").strip(): return
+        href = (a.get("href") or "").split("#")[0].split("?")[0]
+        if href and pathlib.PurePosixPath(href).name != self.fname: return
+        self.cur = {"label": a.get("aria-label") or "", "text": ""}; self.lost.append(self.cur)
+    def handle_endtag(self, tag):
+        if tag in ("button", "a"): self.cur = None
+    def handle_data(self, d):
+        if self.cur is not None: self.cur["text"] += d
 for s in S:
     for key in ("title", "group", "purpose", "file"):
         if not s.get(key): errs.append(f'{s["id"]}: {key} 없음')
@@ -89,6 +110,11 @@ for s in S:
         hm = re.search(r'href="([^"#]*)', tag)
         if not hm or not hm.group(1) or pathlib.Path(hm.group(1)).name == f.name:
             errs.append(f"{f.name}: '+ 추가' 행이 다른 화면·시트로 이어지지 않음(누른 뒤 모습 없음)")
+    ps = PressScan(f.name); ps.feed(h)
+    if ps.lost:
+        names = [re.sub(r"\s+", " ", x["text"]).strip()[:16] or x["label"] or "(글자 없음)" for x in ps.lost]
+        errs.append(f"{f.name}: 누른 뒤 갈 곳 없는 버튼·링크 {len(names)}개 '" + "', '".join(names[:4]) + ("' 외" if len(names) > 4 else "'")
+                    + ' — 다른 화면이면 href, 뒤로면 data-back, 그 자리에서 바뀌면 data-stay="바뀐 뒤 안내 한 문장"')
     if t.get("large_list") and 'type="search"' not in h:
         errs.append(f"{f.name}: 수십 개 목록(large_list)인데 검색 칸 없음")
     # 아바타: 미리 준비한 그림만 — 앱 전체에 하나의 스타일(avatar_style), 이름 한 글자 금지
@@ -216,7 +242,6 @@ for s in S:
         if mean is None: errs.append(f"{f.name}: 표에 없는 배지 '{text}'(시간·순서라면 배지 말고 글자로)")
         elif (BADGES[mean] or "") != cls.strip(): errs.append(f"{f.name}: '{text}' 배지 색 {cls or '회색'} ≠ 표 {BADGES[mean] or '회색'}")
 # 강조색(v17): screens.json accent에 선언한 뜻 하나 · 8자 이하 글자/점 · 화면당 2곳(목록 반복은 1곳) · 제목·버튼·배지 밖
-from html.parser import HTMLParser
 ACCENT = m.get("accent")
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
 NO_ACCENT_TAG = {"h1", "h2", "h3", "button"}; NO_ACCENT_CLS = {"btn", "cta", "badge", "tabbar", "tab", "appbar-title", "title"}

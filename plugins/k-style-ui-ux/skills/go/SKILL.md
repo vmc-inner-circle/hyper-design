@@ -114,15 +114,15 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
 - 각 에이전트에게 맡은 화면 영역의 **시장 관례**(`follow` 중 keep한 것 + 근거 시트 경로 `out/market/<n>-<앱>.jpg`, 관련 `avoid`)도 붙인다 — "구조만 참고, 문구·그림·색은 베끼지 말 것".
 - 각 에이전트에게 맡은 화면의 **명세 항목**(spec_inventory의 covered_by·rule — PRD 원문 인용 포함)과 **이미지 자리 경로**(`image_slots.json` 중 그 화면 것)도 붙인다. 상태 화면은 `rules`에 적힌 규칙이 보이는 모습으로.
 - 각 에이전트에게 **사람 카드**(맡은 화면을 쓰는 사람과, `at`이 그 화면인 알고 싶은 것 — 첫 화면에서 그 질문의 답을 가장 크게, 말투는 그 사람의 마음에 맞춘다 — 질문마다 블록을 만들어 질답지로 만들지 않는다)와 **사실 표**도 붙이고 "표에 없는 날짜·숫자·상태를 지어내지 말 것"을 지시한다.
-- 파일: `out/screens/<id>.html` — COMPONENTS.md의 뼈대 그대로(`../tokens.css`·`../components.css`·`../palette.js`, 일러스트 `../assets/fluent/<이름>.svg`). 갈래·이동은 실제 `<a href>`로 잇는다.
+- 파일: `out/screens/<id>.html` — COMPONENTS.md의 뼈대 그대로(`../tokens.css`·`../components.css`·`../palette.js`, 일러스트 `../assets/fluent/<이름>.svg`). 갈래·이동은 실제 `<a href>`로 잇는다. 누르는 것은 전부 셋 중 하나 — 다른 화면 `href` / `data-back` / `data-stay="바뀐 뒤 안내 한 문장"`(COMPONENTS.md 버튼 절, selfcheck가 검사).
 
 ### 3단계 — 검증·수정 (목표 3분, 동시에 · 수정은 1회, 흐름별 병렬)
 
 한 메시지에서 동시에(**포그라운드로 실행해 같은 턴에서 결과를 받는다 — 백그라운드로 돌려 놓고 "끝나면 알려드릴게요"로 턴을 끝내지 않는다. 턴이 끝나면 다시 이어지지 않는다**):
 - `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(Screens·Foundation·Components 탭, 드래그 이동, 색 점 3개, 갈래 화살표, 정책 3줄 — 스크립트가 만들고 AI는 손대지 않는다)
-- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구
+- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구·갈 곳 없는 버튼
 - `python3 $SK/scripts/audit.py out --shots out/.shots` — 렌더링 측정(대비·토큰 밖 색·의미 배지·CTA·터치·한국어 줄바꿈·캔버스) + 화면 캡처
-- **사실 대조 서브에이전트 1개**(같은 메시지에서): `journey.md` 사실 표와 모든 `screens/*.html`의 글자를 대조해 어긋남(날짜·시간·인원·겹침·상태 이름)과 "누른 뒤 갈 곳이 없는 조작"만 목록으로 돌려준다. 고치지는 않는다.
+- **사실 대조 서브에이전트 1개**(같은 메시지에서): `journey.md` 사실 표와 모든 `screens/*.html`의 글자를 대조해 어긋남(날짜·시간·인원·겹침·상태 이름)만 목록으로 돌려준다. 고치지는 않는다.
 
 ❌ 항목과 캡처를 보고 고친다. 여러 화면에 걸친 문제는 공통 원인부터. 고칠 화면이 많으면 흐름별로 서브에이전트에 나눠 **병렬로** 고친다. 수정은 **1회**, 흐름 고리(시작·끝)와 P0 항목 우선. 수정 후 selfcheck만 한 번 더. 그래도 남는 항목은 마지막 메시지에 적는다. 1차의 시간 상한은 15분 — 넘을 것 같으면 P1 이하 수정은 미루고 마지막 메시지에 적는다.
 

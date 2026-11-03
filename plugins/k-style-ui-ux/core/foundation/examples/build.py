@@ -90,7 +90,7 @@ S["home-d7"] = ("홈 · 출발 3일 전", "everyone", "홈 — 시기마다 맨 
     <p class="eyebrow">제주 가족여행 · <span class="num">D-3</span></p>
     <h1 class="title">금요일 아침 8시 30분, 김포공항에서 만나요</h1>
     <p class="lead">국내선 1층 대한항공 카운터 앞</p>
-    <a class="hero-more" href="#">지도에서 보기{CH}</a>
+    <button class="hero-more" data-stay="지도 앱에서 김포공항을 열어요">지도에서 보기{CH}</button>
   </header>
   <section class="block">
     <div class="block-head"><h2 class="h2">챙길 것 1가지 남았어요</h2></div>
@@ -151,7 +151,7 @@ S["day"] = ("날짜 상세", "everyone", "홈에서 들어가는 곳", f'''{appb
   </section>
   <section class="block">
     <p class="block-note">이날이 궁금하면 눌러 주세요. 지은이에게 조용히 표시만 가요.</p>
-    <button class="btn secondary">이날 궁금해요</button>
+    <button class="btn secondary" data-stay="지은이에게 표시했어요">이날 궁금해요</button>
   </section>
 </main>''', "text-large")
 
@@ -183,7 +183,7 @@ form = lambda err: f'''{appbar("일정 고치기", "day-edit.html")}
     <div class="seg" role="radiogroup"><button class="seg-item" role="radio" aria-checked="false">정하는 중</button><button class="seg-item is-selected" role="radio" aria-checked="true">확정</button></div>
   </div>
 </main>
-<div class="cta"><button class="btn primary full">저장</button></div>'''
+<div class="cta">{'<button class="btn primary full" data-stay="시간을 먼저 골라 주세요">저장</button>' if err else '<a class="btn primary full" href="day-edit.html">저장</a>'}</div>'''
 S["item-edit"] = ("일정 고치기", "editor", "일정을 짜는 사람에게만 더 보이는 것", form(False), "plain has-cta")
 S["item-edit--error"] = ("일정 고치기 · 시간 없음", "editor", "일정을 짜는 사람에게만 더 보이는 것", form(True), "plain has-cta")
 
