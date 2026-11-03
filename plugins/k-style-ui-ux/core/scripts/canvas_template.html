@@ -109,6 +109,17 @@ svg.ar path.ln{fill:none;stroke:var(--c-brand,#2563eb);stroke-width:3;marker-sta
 svg.ar marker path,svg.ar marker circle{fill:var(--c-brand,#2563eb)}
 .alabel{position:absolute;transform:translate(-50%,-100%);background:#fff;border:1.5px solid var(--c-brand,#2563eb);color:var(--c-brand-text,#1d4ed8);font-size:17px;font-weight:600;padding:4px 12px;border-radius:999px;white-space:nowrap;pointer-events:none}
 .alabel.side{transform:translate(-100%,-50%);white-space:normal;max-width:220px;text-align:right;border-radius:14px}
+/* ---------- 연결 보기: 카드 아래 '갈 수 있는 곳'(또는 Shift+클릭) → 버튼별 색 선 (아이디어: eungshin #29) ---------- */
+.lkbtn{margin-top:10px;min-height:44px;padding:0 14px;border:1.5px solid #d0d5dd;border-radius:12px;background:#fff;font:inherit;font-size:17px;font-weight:600;color:#333;cursor:pointer}
+.lkbtn:hover{border-color:#1c1c1c}
+.lkbtn[aria-pressed="true"]{background:#1c1c1c;border-color:#1c1c1c;color:#fff}
+.rows.lkon .card{opacity:.28;transition:opacity .15s}
+.rows.lkon .card.lkfrom,.rows.lkon .card.lkto{opacity:1}
+.rows.lkon svg.ar path.ln,.rows.lkon .alabel{opacity:.12}
+.card.lkfrom .phone{outline:4px solid #1c1c1c;outline-offset:6px}
+.card.lkto .phone{outline:4px solid var(--ring,#2563eb);outline-offset:6px}
+svg.ar path.lk{fill:none;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.lklabel{position:absolute;transform:translate(-50%,-50%);background:#fff;border:2px solid;font-size:16px;font-weight:700;padding:3px 10px;border-radius:999px;white-space:nowrap;pointer-events:none;z-index:3}
 .foot{padding:20px 0 120px;font-size:17px;color:#777;max-width:1500px}
 .foot p{margin:0 0 6px}
 .foot ul{margin:4px 0 0;padding-left:22px;line-height:1.6}
@@ -194,6 +205,7 @@ svg.ar marker path,svg.ar marker circle{fill:var(--c-brand,#2563eb)}
 var D = JSON.parse(document.getElementById('hd-data').textContent || '{}');
 var Z0 = D.scale || 0.72, ZMIN = 0.25, ZMAX = 1.5;
 var CARD = D.card || {w: 375, h: 812}, MW = (D.modal || {}).w || 390, MH = (D.modal || {}).h || 844;
+var LINKS = D.links || {};                       // 연결 보기: {화면 id: [{to, texts, n}]} — build_canvas가 화면의 <a href>에서 읽음
 var LEFT = 300;                                  // 카드 왼쪽 통로(줄을 넘는 화살표가 지나는 곳)
 var $ = function (s, r) { return (r || document).querySelector(s); };
 var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -223,7 +235,7 @@ if (dc && ((dc.items || []).length || dc.core)) {
       return '<li><span class="v v-' + esc(i.verdict) + '">' + esc(i.label) + '</span><b>' + esc(i.name) + '</b>' +
         '<span class="why">' + esc(i.verdict === 'cut' ? i.why : (i.how || i.why)) + '</span></li>'; }).join('') + '</ul>' : '') + '</section>';
 }
-$('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 화살표는 갈래' + (D.stage === 'go' && D.pending ? ' · 오류·확인·빈 화면 같은 상태 ' + D.pending + '개는 <b>k-style-ui-ux max</b>로 더할 수 있어요' : '') + '</p><div class="intro-grid">' + intro + '</div>';
+$('#intro').innerHTML = '<p class="hint">끌어서 둘러보고, 화면을 누르면 크게 보고 직접 눌러볼 수 있어요 · 화살표는 갈래 · <b>갈 수 있는 곳</b>은 버튼별 길' + (D.stage === 'go' && D.pending ? ' · 오류·확인·빈 화면 같은 상태 ' + D.pending + '개는 <b>k-style-ui-ux max</b>로 더할 수 있어요' : '') + '</p><div class="intro-grid">' + intro + '</div>';
 $('#intro').style.marginLeft = LEFT + 'px';
 
 var html = '<svg class="ar" id="ar" width="1" height="1"><defs><marker id="hd-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker><marker id="hd-dot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4"><circle cx="5" cy="5" r="4"/></marker></defs></svg>';
@@ -238,7 +250,8 @@ var html = '<svg class="ar" id="ar" width="1" height="1"><defs><marker id="hd-he
       '" data-src="' + esc(s.file) + '"></iframe><button class="cover" data-file="' + esc(s.file) + '" data-title="' + esc(s.title) +
       '" aria-label="' + esc(s.title) + ' 크게 보기"></button></div>' +
       '<div class="ftitle">' + (s.state ? '<span class="state">상태</span>' : '') + esc(s.title) + '</div>' +
-      (s.purpose ? '<div class="fdesc">' + esc(s.purpose) + '</div>' : '') + (shown ? '<ul class="pol">' + shown + '</ul>' : '') + more + '</div>';
+      (s.purpose ? '<div class="fdesc">' + esc(s.purpose) + '</div>' : '') + (shown ? '<ul class="pol">' + shown + '</ul>' : '') + more +
+      ((LINKS[s.id] || []).length ? '<button class="lkbtn" data-id="' + esc(s.id) + '" aria-pressed="false">갈 수 있는 곳 ' + LINKS[s.id].length + '</button>' : '') + '</div>';
   });
   html += '</div></div>';
 });
@@ -308,6 +321,48 @@ function drawArrows() {
   if (labels) $$('.alabel.side', rowsEl).forEach(function (n) { minX = Math.min(minX, n.offsetLeft - n.offsetWidth); });
   contentLeft = Math.max(0, minX - 24);
 }
+
+/* ---------- 연결 보기 ---------- */
+var LKC = ['#e11d48', '#2563eb', '#059669', '#d97706', '#7c3aed', '#0891b2', '#db2777', '#65a30d'], lkFrom = null;
+function lkLabel(g) {
+  var a = g.texts || [], first = a[0] || '이동';
+  return a.length > 1 ? first + ' 외 ' + (g.n - 1) + '개' : first + (g.n > 1 ? ' (' + g.n + ')' : '');
+}
+function drawLinks() {
+  var svg = $('#ar');
+  $$('path.lk, marker.lkm', svg).forEach(function (n) { n.remove(); });
+  $$('.lklabel', rowsEl).forEach(function (n) { n.remove(); });
+  $$('.card', rowsEl).forEach(function (c) { c.classList.remove('lkfrom', 'lkto'); c.style.removeProperty('--ring'); });
+  $$('.lkbtn', rowsEl).forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.id === lkFrom)); });
+  rowsEl.classList.toggle('lkon', !!lkFrom);
+  if (!lkFrom) return;
+  var box = {};
+  $$('.card', rowsEl).forEach(function (c) { box[c.dataset.id] = {x: c.offsetLeft, y: c.offsetTop, row: c.parentNode, el: c}; });
+  var s = box[lkFrom]; if (!s) return;
+  s.el.classList.add('lkfrom');
+  var defs = $('defs', svg), paths = '', labels = '';
+  (LINKS[lkFrom] || []).forEach(function (g, i) {
+    var t = box[g.to]; if (!t) return;
+    var col = LKC[i % LKC.length], d, lx, ly;
+    defs.insertAdjacentHTML('beforeend', '<marker class="lkm" id="lkh' + i + '" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="' + col + '"/></marker>');
+    var sx = s.x + 70 + 34 * (i % 7), tx = t.x + CARD.w / 2;
+    if (s.row === t.row) {
+      var peak = s.y - 70 - 26 * i;
+      d = 'M' + sx + ',' + (s.y - 8) + ' C' + sx + ',' + peak + ' ' + tx + ',' + peak + ' ' + tx + ',' + (t.y - 10);
+      lx = (sx + tx) / 2; ly = peak + 18;
+    } else {
+      var lane = LEFT - 70 - 20 * i, sg = s.y - 30 - 14 * i, tg = t.y - 30 - 14 * i;
+      d = roundPath([[sx, s.y - 8], [sx, sg], [lane, sg], [lane, tg], [tx, tg], [tx, t.y - 10]], 18);
+      lx = (lane + tx) / 2; ly = tg;
+    }
+    paths += '<path class="lk" data-to="' + esc(g.to) + '" d="' + d + '" stroke="' + col + '" marker-end="url(#lkh' + i + ')"/>';
+    labels += '<div class="lklabel" style="left:' + lx + 'px;top:' + ly + 'px;border-color:' + col + ';color:' + col + '">' + esc(lkLabel(g)) + '</div>';
+    t.el.classList.add('lkto'); t.el.style.setProperty('--ring', col);
+  });
+  svg.insertAdjacentHTML('beforeend', paths);
+  rowsEl.insertAdjacentHTML('beforeend', labels);
+}
+function setLinks(id) { lkFrom = (id && id !== lkFrom && (LINKS[id] || []).length) ? id : null; drawLinks(); }
 
 /* ---------- 이동·확대 ---------- */
 var z = Z0, tx = 0, ty = 0;
@@ -397,8 +452,12 @@ pane.addEventListener('pointerup', endPtr);
 pane.addEventListener('pointercancel', endPtr);
 pane.addEventListener('click', function (e) {
   if (justDragged) { justDragged = false; e.preventDefault(); e.stopPropagation(); return; }
+  var b = e.target.closest && e.target.closest('.lkbtn');
+  if (b) { e.preventDefault(); e.stopPropagation(); setLinks(b.dataset.id); return; }
   var c = e.target.closest && e.target.closest('.cover');
+  if (c && e.shiftKey) { e.preventDefault(); setLinks(c.closest('.card').dataset.id); return; }
   if (c) openModal(c.dataset.file, c.dataset.title);
+  else if (lkFrom && !(e.target.closest && e.target.closest('.card'))) setLinks(null);
 }, true);
 
 /* ---------- 보이는 카드만 로드(이동·확대 후 100ms 묶어서) ---------- */
@@ -497,7 +556,7 @@ function legacyCopy(t) {
 }
 $('#fbcopy').addEventListener('click', function () { copyText(fbText()).then(function () { $('#fbdone').hidden = false; }); });
 fbRender();
-addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; if (!modal.hidden) closeModal(); else if (lkFrom) setLinks(null); });
 addEventListener('resize', function () { if (!modal.hidden) sizeModal(); });
 
 /* ---------- 탭 ---------- */
@@ -554,7 +613,7 @@ home();
 loadVisible();
 var hashTab = (location.hash || '').slice(1);
 if (hashTab === 'foundation' || hashTab === 'components') showTab(hashTab);
-if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawArrows(); });
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { drawArrows(); drawLinks(); });
 window.__hdReady = performance.now();
 })();
 </script>
