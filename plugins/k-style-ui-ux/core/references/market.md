@@ -48,5 +48,5 @@ App Store 검색 → 관련 낱말이 이름·설명에 있는 앱 중 평점 �
 - **screens.json을 쓰기 전에** conventions.json을 읽는다. `archetypes.*.majority`는 그 종류 화면의 `archetype` 기본값이다(`screen-kinds.md` "어떻게 고르나"). 탭 구성·온보딩 순서·홈 첫 블록·결제 흐름은 `follow`가 기본값이다. 사람 카드·여정표는 리서치를 기다리지 않고 먼저 쓴다(사람의 질문은 시장이 정하지 않는다).
 - **decisions.json**: `follow`·`consider`의 모든 id를 항목으로 옮긴다 — `{"id": "M1", "name": "…", "source": "시장", "verdict": "keep|cut|lighten", "how": "…", "why": "…"}`. `follow`를 `cut`(관례에서 벗어남)하면 why에 **이 앱의 core 때문에** 벗어나는 이유를 쓴다. `consider`는 여섯 질문으로 판정한다(통과 못 하면 cut). 시장 항목은 PRD 요구사항이 아니므로 묻지 않는다(`ask: false`).
 - **avoid**: 해당 화면의 정책 한 줄이나 빌드 메모로 넘긴다(예: "결과 전에 결제 유도 팝업 금지").
-- **빌드 에이전트**: `scripts/pack.py`가 keep·lighten한 `follow` 항목과 그 근거 시트 경로, `avoid`를 묶음 파일에 넣는다 — "구조만 참고, 문구·그림·색은 베끼지 말 것".
+- **빌드 에이전트**: 맡은 화면과 같은 영역(area)의 `follow` 항목과 그 근거가 된 시트 경로를 붙인다 — "구조만 참고, 문구·그림·색은 베끼지 말 것".
 - 리서치가 실패하거나(네트워크) 3분 안에 오지 않으면 기다리지 않는다 — `out/market/SKIPPED`에 이유 한 줄을 쓰고 진행, 마지막 메시지에 "시장 관례 확인 못 함"을 적는다.
