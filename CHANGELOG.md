@@ -2,6 +2,15 @@
 
 버전은 `plugins/k-style-ui-ux/`의 manifest 4개(`.claude-plugin/plugin.json`·`.codex-plugin/plugin.json`·`.cursor-plugin/plugin.json`·`plugin.json`)와 이 파일 맨 위 항목이 같아야 한다(`ci/verify.py`가 검사).
 
+## v0.19.0
+
+하네스톤 멤버 PR의 아이디어를 지금 구조로 옮겼다(원래 커밋은 그대로 history에).
+
+- 캔버스에서 의견 남기기(@yeoul9703 #13·#30, @srlee0408 #16, @eungshin #29): 크게 보기에서 "의견"을 켜고 화면 요소를 눌러 의견을 달면, `[k-style-ui-ux 수정 요청]` 텍스트로 한 번에 복사된다. 대화창에 붙여넣으면 go/max가 `core/references/feedback.md`(고치는 순서, 막연한 말 해석표 17줄)를 따라 그 요소만 고치고 selfcheck·audit·캔버스를 다시 돌린다. 캔버스 테스트 +1.9초.
+- 한글 문구 검사(@hydrojun #26): selfcheck가 해요체 앱에 섞인 하십시오체, "~을 통해", "제공합니다"는 실패로, 나머지 번역투·띄어쓰기·은유 라벨은 경고로 낸다. 짧은 라벨과 후기 본문은 뺀다. 지난 결과물 795화면 기준 실패 오탐 0, +0.04초.
+- 누르는 것은 반드시 어딘가로 이어진다(@srlee0408 #16·#23): `<button>`·`<a>`는 다른 화면 링크·`data-back`·`data-stay="안내 문구"` 중 하나가 없으면 selfcheck 실패다. 칩·세그먼트·체크·스위치·탭은 면제. `data-stay`는 화면 위쪽 토스트로 뜬다. 사실 대조 에이전트의 이 일을 뺐다. 실측 go 14.2·13.0분 → 12.3·13.1분(PRD 2개).
+- 저장소: 산출물(`loop/results`·`demos`·`submissions/*/`)은 커밋하지 않는다(#59, `ci/verify.py` 검사). `loop/run.py`가 `stats.json`(단계별 시간·모델별 토큰·비용)을 남긴다(@hydrojun #14).
+
 ## v0.18.2
 
 - 큰 글자 세트의 캡션 14px → 16px(@doojin88, #19): 배지·탭 라벨이 캡션 토큰을 써서 큰 글자 화면에서도 14px로 남아 audit `large_text_body_font`가 83%(기준 90%)로 떨어지던 것. 예시 토큰 4벌도 같은 한 줄.

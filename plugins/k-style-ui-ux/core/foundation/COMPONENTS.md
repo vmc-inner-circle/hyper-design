@@ -53,7 +53,8 @@
 - 팔레트에 강조색이 없으면 브랜드 글자색으로 보인다 — 그래도 같은 규칙.
 
 ## 버튼
-- 하단 고정(폼·확인·결정·결과 화면에만): `<div class="cta"><button class="btn primary full">저장</button></div>` + body `has-cta`. **탭 첫 화면·홈에는 두지 않는다.** 문구는 확정 동사(저장·보내기·함께하기), "~보기"는 링크.
+- **누르는 것(`<button>`·`<a>`)은 반드시 어딘가로 이어진다** — 셋 중 하나: 다른 화면으로 가는 `href` / `data-back`(뒤로) / `data-stay="바뀐 뒤 안내 한 문장"`(그 자리에서 바뀜 — 복사·지우기·신고·정렬처럼. 누르면 화면 위쪽에 그 문구가 뜬다, 예: `<button class="btn secondary" data-stay="링크를 복사했어요">링크 복사</button>`). `href="#"`·자기 화면 링크는 갈 곳이 없는 것. 면제: 값이 바뀌는 게 보이는 부품(`chip`·`seg-item`·`check`·`switch`·`like`·`tab`·`tabs-item`·`s-circle`)과 상태 ARIA(`role="radio|checkbox|switch|tab|option"`·`aria-pressed`·`aria-checked`·`aria-selected`·`aria-current`)를 단 것, 비활성. (selfcheck가 검사)
+- 하단 고정(폼·확인·결정·결과 화면에만): `<div class="cta"><a class="btn primary full" href="…">저장</a></div>` + body `has-cta`. **탭 첫 화면·홈에는 두지 않는다.** 문구는 확정 동사(저장·보내기·함께하기), "~보기"는 링크.
 - 상황에 따라 생기는 할 일: 블록 안 `<a class="btn primary">…</a>`(할 일이 있을 때만)
 - 보조: `btn secondary`, 작은 버튼: `btn small tint`
 - 비활성: `disabled` 속성. 누를 때 짙어짐(`--c-brand-pressed`)·포커스 링은 자동.

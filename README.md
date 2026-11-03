@@ -99,6 +99,16 @@ PRD만 붙여넣고 "화면 만들어줘"라고 해도 됩니다. 결과는 실�
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
+## Star History
+
+<a href="https://www.star-history.com/#vmc-inner-circle/k-style-ui-ux&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=vmc-inner-circle/k-style-ui-ux&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=vmc-inner-circle/k-style-ui-ux&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=vmc-inner-circle/k-style-ui-ux&type=Date" />
+ </picture>
+</a>
+
 ## 라이선스
 
 MIT — [LICENSE](./LICENSE)
