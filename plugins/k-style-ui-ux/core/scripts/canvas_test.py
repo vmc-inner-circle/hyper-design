@@ -6,9 +6,11 @@ python3 canvas_test.py <out_dir> [--shot PNG]
 결과를 JSON 으로 출력({"pass": bool, "passed": n, "total": n, "checks": [...]}). 하나라도 실패하면 종료코드 1.
 확인: 헤더 조작 그룹 3개·모드 토글 0 / 빈 곳 200px 드래그 → 판 이동 / 카드 클릭 → 모달, Esc → 닫힘 /
       Ctrl+휠 → 배율 변경, 전체 보기 → 배율 변경 / Foundation 색 칸 ≥ 20 / Components 섹션 ≥ 5 /
-      팔레트 점 → Foundation 브랜드 칸 값 변경 / 콘솔 에러 0 / 첫 로드 < 1초
+      팔레트 점 → Foundation 브랜드 칸 값 변경 / 콘솔 에러 0 / 첫 로드 < 1초 /
+      의견: 크게 보기 "의견" → 화면 요소 누름(이동 안 함) → 의견 더하기 → 목록·localStorage → 복사 텍스트 형식 → 지우기
+      (복사 형식은 references/feedback.md 와 같다)
 """
-import sys, json, time, argparse
+import sys, re, json, time, argparse
 from pathlib import Path
 
 MODE_WORDS = ("편집", "선택 모드", "범위", "모드", "손 도구", "Edit", "Select", "Mode")
@@ -25,6 +27,40 @@ FIND_EMPTY_JS = r"""
   return null;
 }
 """
+
+
+FB_LINE = re.compile(r"^- \S+ · '.+' \(.+\) — 글씨가 작아요$")
+
+
+def feedback_checks(page, add):
+    """크게 보기가 열린 상태에서: 의견 켜기 → 화면 요소 누르기(이동 안 함) → 의견 더하기 → 목록·저장 → 복사 텍스트 → 지우기."""
+    try:
+        page.click("#fbtn"); page.wait_for_timeout(200)
+        add("feedback_toggle", page.evaluate("!document.getElementById('fb').hidden && document.getElementById('fbtn').getAttribute('aria-pressed') === 'true'"))
+        mf = page.frame_locator("#mframe")
+        target = mf.locator("a[href]:visible, button:visible, h1:visible, .title:visible").first
+        target.wait_for(timeout=5000)
+        url0 = page.query_selector("#mframe").content_frame().url
+        target.click()
+        page.wait_for_function("!document.getElementById('fbpick').hidden", timeout=3000)
+        page.wait_for_timeout(200)
+        url1 = page.query_selector("#mframe").content_frame().url
+        add("feedback_pick_no_navigate", url0 == url1, f"{url0.split('/')[-1]} → {url1.split('/')[-1]}")
+        page.fill("#fbnote", "글씨가 작아요"); page.click("#fbadd"); page.wait_for_timeout(100)
+        n = page.locator("#fblist li").count()
+        stored = page.evaluate("Object.keys(localStorage).filter(k => k.startsWith('hd-feedback:')).map(k => JSON.parse(localStorage[k]).length)")
+        add("feedback_list_saved", n == 1 and stored == [1], f"목록 {n} · 저장 {stored}")
+        page.evaluate("navigator.clipboard.writeText = t => { window.__copied = t; return Promise.resolve(); }")
+        page.click("#fbcopy"); page.wait_for_timeout(150)
+        txt = page.evaluate("window.__copied || ''")
+        lines = txt.split("\n")
+        ok = len(lines) == 2 and re.match(r"^\[k-style-ui-ux 수정 요청\] out=\S", lines[0]) and bool(FB_LINE.match(lines[1]))
+        add("feedback_copy_format", ok, txt[:200])
+        page.click("#fbclear"); page.wait_for_timeout(100)
+        add("feedback_clear", page.locator("#fblist li").count() == 0)
+        page.click("#fbtn")
+    except Exception as e:
+        add("feedback_flow", False, detail=str(e)[:300])
 
 
 def run(out: Path, shot=None):
@@ -84,17 +120,23 @@ def run(out: Path, shot=None):
             page.click("#zoom")          # 처음 배율·위치로
             page.wait_for_timeout(200)
 
-            # (3) 카드 클릭 → 모달, Esc → 닫힘
-            box = page.evaluate("""() => { const pr = document.getElementById('screens').getBoundingClientRect();
-                for (const c of document.querySelectorAll('.cover')) { const r = c.getBoundingClientRect();
-                  if (r.top > pr.top && r.top + 40 < pr.bottom && r.left > pr.left && r.right < pr.right) return {x: r.left + r.width / 2, y: r.top + Math.min(r.height / 2, (pr.bottom - r.top) / 2)}; }
-                return null; }""")
+            # (3) 카드 클릭 → 모달, Esc → 닫힘 (판 위 글이 길어 첫 위치에 카드가 없으면 휠로 내려 찾는다)
+            box = None
+            for _ in range(12):
+                box = page.evaluate("""() => { const pr = document.getElementById('screens').getBoundingClientRect();
+                    for (const c of document.querySelectorAll('.cover')) { const r = c.getBoundingClientRect();
+                      if (r.top > pr.top && r.top + 40 < pr.bottom && r.left > pr.left && r.right < pr.right) return {x: r.left + r.width / 2, y: r.top + Math.min(r.height / 2, (pr.bottom - r.top) / 2)}; }
+                    return null; }""")
+                if box:
+                    break
+                page.mouse.move(700, 500); page.mouse.wheel(0, 300); page.wait_for_timeout(150)
             if box:
                 page.mouse.click(box["x"], box["y"])
                 page.wait_for_timeout(250)
                 opened = page.evaluate("!document.getElementById('modal').hidden && !!document.getElementById('mframe').getAttribute('src')")
                 size = page.evaluate("(() => { const f = document.getElementById('mframe'); return [f.offsetWidth, f.offsetHeight] })()")
                 add("card_click_opens_modal", opened and size == [390, 844], f"open={opened} iframe={size}")
+                feedback_checks(page, add)
                 page.keyboard.press("Escape"); page.wait_for_timeout(150)
                 closed = page.evaluate("document.getElementById('modal').hidden")
                 add("esc_closes_modal", closed, closed)
