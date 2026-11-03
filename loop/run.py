@@ -1,9 +1,10 @@
 """하네스 1회 구동: 격리 폴더에서 claude -p 헤드리스 실행, 질문은 가상 사용자가 답한다.
 python3 loop/run.py <prd.md> <run_dir> [--max] [--until-screens] [--plugin <플러그인 폴더>]
 플러그인(plugins/k-style-ui-ux)을 --plugin-dir로 불러 /k-style-ui-ux:go 로 구동. --max면 go가 끝난 뒤 같은 세션에서 /k-style-ui-ux:max(1차 결과는 out-go/로 보존)
-산출: run_dir/out(결과), prompt-log.md, elapsed.txt, transcript.jsonl
+산출: run_dir/out(결과), prompt-log.md, elapsed.txt, transcript.jsonl, stats.json(시간·토큰·비용 — loop/stats.py, Claude Code 세션 기록에 묶임)
 """
 import sys, json, re, shutil, subprocess, time, pathlib, datetime
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent)); import stats
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 prd = pathlib.Path(sys.argv[1]).resolve(); run = pathlib.Path(sys.argv[2]).resolve(); DO_MAX = "--max" in sys.argv
 UNTIL_SCREENS = "--until-screens" in sys.argv   # 실험(loop/archetype_exp): 화면 목록(screens.json)까지만 — 유형 선택만 본다
@@ -18,8 +19,10 @@ def claude(prompt, cwd, resume=None, model=MODEL):
     cmd = ["claude", "-p", "--model", model, "--dangerously-skip-permissions", "--output-format", "json", "--plugin-dir", str(PLUGIN)]
     if resume: cmd += ["--resume", resume]
     r = subprocess.run(cmd, input=prompt, capture_output=True, text=True, cwd=cwd)
-    try: return json.loads(r.stdout)
-    except Exception: return {"result": r.stdout + r.stderr, "session_id": resume, "is_error": True}
+    try: out = json.loads(r.stdout)
+    except Exception: out = {"result": r.stdout + r.stderr, "session_id": resume, "is_error": True}
+    CLI.append({k: out.get(k) for k in ("session_id", "total_cost_usd", "duration_ms", "num_turns", "modelUsage")} | {"who": "harness" if cwd == work else "sim_user"})
+    return out
 
 def shoot(html, png):
     from playwright.sync_api import sync_playwright
@@ -29,6 +32,7 @@ def shoot(html, png):
         pg.goto(html.as_uri()); pg.wait_for_timeout(1500)
         pg.screenshot(path=str(png), full_page=True); b.close()
 
+CLI = []   # claude -p가 돌려준 비용·모델별 사용량(호출마다)
 SIM = (ROOT / "loop/sim_user.md").read_text(encoding="utf-8")
 log = [f"# prompt-log\n\n- 하네스: solo/greatSumini `.claude/skills/oss-design-harness`\n- 모델: Claude Code headless / {MODEL}\n- 답변자: 가상 사용자 에이전트(비개발자 페르소나, loop/sim_user.md)\n"]
 trans = open(run / "transcript.jsonl", "w")
@@ -71,3 +75,11 @@ if (work / "out").exists(): shutil.copytree(work / "out", run / "out")
 (run / "prompt-log.md").write_text("".join(log) + f"\n\n총 개입 횟수: {turns} / 5 · 종료 상태: {status}\n", encoding="utf-8")
 (run / "elapsed.txt").write_text(f"시작: {start:%Y-%m-%d %H:%M}\n종료: {end:%Y-%m-%d %H:%M}\n하네스 실행 시간(가상 사용자 응답 제외): {harness_sec/60:.1f}분\n" + (f"1차(go) {go_sec/60:.1f}분 · 2차(max) {max_sec/60:.1f}분\n" if DO_MAX else ""), encoding="utf-8")
 print(json.dumps({"status": status, "turns": turns, "harness_min": round(harness_sec / 60, 1), "go_min": round(go_sec / 60, 1), "max_min": round(max_sec / 60, 1)}))
+# 시간·토큰·비용(stats.json): 하네스 세션 기록을 읽어 메인/서브에이전트·모델별로 — 가상 사용자 응답은 cli에만 따로
+try: st = stats.collect([c["session_id"] for c in CLI if c["who"] == "harness" and c["session_id"]])
+except Exception as e: st = {"notes": [f"세션 기록 집계 실패: {e!r}"]}   # 기록 형식이 바뀌어도 구동 결과는 남긴다
+st["run"] = {"status": status, "turns": turns, "harness_sec": round(harness_sec), "go_sec": round(go_sec), "max_sec": round(max_sec),
+             "cli_total_cost_usd": round(sum(c["total_cost_usd"] or 0 for c in CLI if c["who"] == "harness"), 2),
+             "sim_user_cost_usd": round(sum(c["total_cost_usd"] or 0 for c in CLI if c["who"] == "sim_user"), 2), "cli": CLI}
+(run / "stats.json").write_text(json.dumps(st, ensure_ascii=False, indent=1), encoding="utf-8")
+print(json.dumps({k: st.get(k) for k in ("wall_sec", "stages_sec", "subagents", "est_cost_usd")}, ensure_ascii=False))
