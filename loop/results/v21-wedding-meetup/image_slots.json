@@ -1,6 +1,0 @@
-[{"slot": "couple-start", "screens": ["start"], "what": "한국인 20~30대 예비부부가 카페 테이블에서 함께 휴대폰 달력을 보는 모습(얼굴이 작거나 손 위주)", "ratio": "4:3", "kind": "photo",
-  "queries": ["커플 휴대폰 함께 보기 카페", "korean couple looking at phone together cafe"]},
- {"slot": "place-soban", "screens": ["meetup-confirmed", "invite-confirmed"], "what": "합정의 따뜻한 조명의 작은 한식 다이닝 식당 내부, 4~6인 테이블", "ratio": "16:9", "kind": "photo",
-  "queries": ["합정 한식 다이닝 식당 내부", "cozy korean restaurant interior warm light table"]},
- {"slot": "invitation-card", "screens": ["invite-inbox", "invite-respond"], "what": "테이블 위 종이 청첩장과 봉투, 위에서 본 구도, 글자 없이", "ratio": "16:9", "kind": "photo",
-  "queries": ["청첩장 봉투 테이블 위", "wedding invitation envelope flat lay table"]}]

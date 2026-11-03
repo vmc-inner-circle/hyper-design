@@ -1,8 +1,0 @@
-[
- {"key":"v18-ai-saju","dir":"loop/results/v18-ai-saju","screens":["home","saju","ask","match-result"]},
- {"key":"v18-family-trip","dir":"loop/results/v18-family-trip","screens":["home","day","news-send","tasks"]},
- {"key":"v18-pilates-booking","dir":"loop/results/v18-pilates-booking","screens":["home","class","booking-done","my-bookings"]},
- {"key":"v18-wedding-meetup","dir":"loop/results/v18-wedding-meetup","screens":["home","calendar","meetup-detail","invitee-reply"]},
- {"key":"ai-saju-v2","dir":"demos/ai-saju-v2/out","screens":["home-first","mysaju","ask","match"]},
- {"key":"greatSumini","dir":"submissions/greatSumini","screens":["planner-home","share-preview","parent-home","notify-compose"]}
-]

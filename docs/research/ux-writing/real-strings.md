@@ -23,8 +23,8 @@ iTunes Lookup API(`itunes.apple.com/lookup?id=…&country=kr`)로 받은 KR 스�
 | BM | 배달의민족 (267만) | apps.apple.com/kr/app/id378084485 |
 | SC | 쏘카 (31만) | apps.apple.com/kr/app/id515173864 |
 | C101 | 클래스101 (3.7만) | apps.apple.com/kr/app/id1320607634 |
-| SM | 스튜디오메이트 회원용 | repo `loop/results/v18-pilates-booking/market/4-스튜디오메이트회원용.jpg` (해상도가 낮아 일부만 판독) |
-| BC2 | 바디코디 (repo 시트) | repo `loop/results/v18-pilates-booking/market/2-바디코디회원용1등피트니.jpg` |
+| SM | 스튜디오메이트 회원용 | [`loop/results/v18-pilates-booking/market/4-스튜디오메이트회원용.jpg`](https://github.com/vmc-inner-circle/k-style-ui-ux/blob/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v18-pilates-booking/market/4-스튜디오메이트회원용.jpg) (해상도가 낮아 일부만 판독) |
+| BC2 | 바디코디 (repo 시트) | [`loop/results/v18-pilates-booking/market/2-바디코디회원용1등피트니.jpg`](https://github.com/vmc-inner-circle/k-style-ui-ux/blob/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v18-pilates-booking/market/2-바디코디회원용1등피트니.jpg) |
 
 ### B. 국내 서비스 고객센터와 공지 (화면 문구를 그대로 인용한 부분)
 - **TB-W** 테이블링 FAQ 「현장대기/원격줄서기」 https://docs.channel.io/tabling/ko/articles/%ED%98%84%EC%9E%A5%EB%8C%80%EA%B8%B0%EC%9B%90%EA%B2%A9%EC%A4%84%EC%84%9C%EA%B8%B0-7a6e145b
@@ -58,7 +58,7 @@ iTunes Lookup API(`itunes.apple.com/lookup?id=…&country=kr`)로 받은 KR 스�
 (Element와 Telegram-X는 경로가 404여서 빠졌다.)
 
 ### F. 이 repo의 시장 리서치
-- **REV** `loop/results/v18-pilates-booking/market/reviews.md`: 바디코디, 오붓, 스튜디오메이트 사용자 리뷰. 사용자가 실제로 쓰는 단어를 확인하는 데 썼다.
+- **REV** [`loop/results/v18-pilates-booking/market/reviews.md`](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v18-pilates-booking/market/reviews.md): 바디코디, 오붓, 스튜디오메이트 사용자 리뷰. 사용자가 실제로 쓰는 단어를 확인하는 데 썼다.
 
 ---
 
@@ -293,7 +293,7 @@ iTunes Lookup API(`itunes.apple.com/lookup?id=…&country=kr`)로 받은 KR 스�
 
 ## 5. 우리 어색한 문구 고쳐쓰기 (근거 포함)
 
-대상: `loop/results/v18-pilates-booking/screens/waitlist-apply*.html`, `home.html`, `settings.html`
+대상: [`loop/results/v18-pilates-booking/screens/waitlist-apply*.html`](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v18-pilates-booking/screens), `home.html`, `settings.html`
 
 ### 5.1 섹션 제목 "자리가 나면"
 - 문제: 조건절 제목이다. 수집한 국내 섹션 제목 35개 중 조건절은 0(§2.2).

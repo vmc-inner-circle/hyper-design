@@ -6,9 +6,10 @@ python3 ci/verify.py
 - manifest 4개 버전이 같고 CHANGELOG 맨 위와 같다
 - 스킬마다 Codex용 agents/openai.yaml 이 있다
 - 스킬 frontmatter에 한 에이전트 전용 필드(allowed-tools 등)가 없다 — 있으면 폴더 하나로 못 나눠 쓴다
+- .gitignore에 걸리는 산출물(loop/results·demos·submissions/*/)이 커밋돼 있지 않다 — 있으면 ci/prune_outputs.sh
 """
 from __future__ import annotations
-import json, re, sys
+import json, re, subprocess, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -42,6 +43,11 @@ for rel in sorted(c_src | x_src | u_src):
         if not fm: fails.append(f"frontmatter 없음: {name}")
         elif re.search(r"^(allowed-tools|disable-model-invocation|model):", fm.group(1), re.M):
             fails.append(f"한 에이전트 전용 frontmatter: {name} — 폴더 하나를 같이 쓸 수 없다")
+
+tracked = subprocess.run(["git", "ls-files", "-ci", "--exclude-standard"], cwd=ROOT,
+                         capture_output=True, text=True).stdout.split()
+if tracked:
+    fails.append(f"산출물 {len(tracked)}개가 커밋돼 있다(예: {tracked[0]}) — ci/prune_outputs.sh로 빼고 커밋")
 
 if fails:
     print("\n".join("✗ " + f for f in fails)); sys.exit(1)
