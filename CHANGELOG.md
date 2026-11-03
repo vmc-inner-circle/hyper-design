@@ -2,6 +2,10 @@
 
 버전은 `plugins/k-style-ui-ux/`의 manifest 4개(`.claude-plugin/plugin.json`·`.codex-plugin/plugin.json`·`.cursor-plugin/plugin.json`·`plugin.json`)와 이 파일 맨 위 항목이 같아야 한다(`ci/verify.py`가 검사).
 
+## v0.18.2
+
+- 큰 글자 세트의 캡션 14px → 16px(@doojin88, #19): 배지·탭 라벨이 캡션 토큰을 써서 큰 글자 화면에서도 14px로 남아 audit `large_text_body_font`가 83%(기준 90%)로 떨어지던 것. 예시 토큰 4벌도 같은 한 줄.
+
 ## v0.18.1
 
 - Cursor 지원: 저장소 루트 `.cursor-plugin/marketplace.json`과 플러그인 `.cursor-plugin/plugin.json`을 더해 Cursor에서 GitHub 저장소로 가져와 설치한다(같은 폴더, 사본 없음). 스킬 부르기는 `/` → `go`·`max`.
