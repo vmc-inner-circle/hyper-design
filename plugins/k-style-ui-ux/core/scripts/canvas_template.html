@@ -120,7 +120,29 @@ svg.ar marker path,svg.ar marker circle{fill:var(--c-brand,#2563eb)}
 #modal .box{position:relative;border-radius:30px;overflow:hidden;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.35)}
 #modal iframe{display:block;width:390px;height:844px;border:0;transform-origin:0 0;background:#fff}
 #modal .close{position:absolute;top:max(10px,env(safe-area-inset-top));right:12px;min-width:44px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:#fff;font-size:15px;font-weight:600;cursor:pointer;z-index:2}
-#modal .mtitle{position:absolute;top:max(10px,env(safe-area-inset-top));left:16px;right:96px;color:#fff;font-size:15px;font-weight:600;min-height:44px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#modal .mtitle{position:absolute;top:max(10px,env(safe-area-inset-top));left:16px;right:190px;color:#fff;font-size:15px;font-weight:600;min-height:44px;display:flex;align-items:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* ---------- 의견: 크게 보기에서 요소를 골라 의견을 남기고 한 번에 복사 ---------- */
+#modal .fbtn{position:absolute;top:max(10px,env(safe-area-inset-top));right:96px;min-width:44px;min-height:44px;padding:0 16px;border:0;border-radius:12px;background:#fff;color:#1c1c1c;font-size:15px;font-weight:600;cursor:pointer;z-index:2}
+#modal .fbtn[aria-pressed="true"]{background:#f59e0b;color:#1c1c1c}
+#modal .fbtn .n{margin-left:6px;font-variant-numeric:tabular-nums}
+#modal.fb-on{gap:20px}
+#fb{width:340px;max-height:calc(100vh - 96px);margin-top:48px;background:#fff;border-radius:20px;padding:18px;display:flex;flex-direction:column;gap:12px;overflow:auto;font-size:15px;line-height:1.5}
+#fb[hidden]{display:none}
+#fb h2{font-size:17px;margin:0}
+#fb .tip{color:#666;margin:0}
+#fb .picked{background:#FFF7E6;border-radius:12px;padding:10px 12px;color:#333;word-break:break-all}
+#fb .picked code{display:block;font-size:12px;color:#777;margin-top:2px}
+#fb textarea{width:100%;min-height:88px;padding:10px 12px;border:1px solid #dcdcd7;border-radius:12px;font:inherit;resize:vertical}
+#fb .acts{display:flex;gap:8px;flex-wrap:wrap}
+#fb .acts button{min-height:44px;padding:0 14px;border:1px solid #dcdcd7;border-radius:10px;background:#fff;font-weight:600;cursor:pointer}
+#fb .acts button.pri{background:#1c1c1c;border-color:#1c1c1c;color:#fff}
+#fb .acts button:disabled{opacity:.4;cursor:default}
+#fb ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+#fb li{color:#333}
+#fb li small{color:#777}
+#fb li button{min-width:44px;min-height:32px;margin-left:4px;border:0;background:transparent;color:#9b1c1c;cursor:pointer;font-size:13px}
+#fb .done{color:#166534;font-weight:600;margin:0}
+@media (max-width:760px){#modal.fb-on{flex-direction:column;justify-content:flex-start;overflow:auto}#fb{width:calc(100vw - 16px);margin-top:8px;max-height:none}}
 </style>
 </head>
 <body data-tab="screens">
@@ -150,8 +172,19 @@ svg.ar marker path,svg.ar marker circle{fill:var(--c-brand,#2563eb)}
 </main>
 <div id="modal" hidden role="dialog" aria-modal="true" aria-label="화면 크게 보기">
   <div class="mtitle" id="mtitle"></div>
+  <button class="fbtn" id="fbtn" aria-pressed="false" title="화면 요소를 눌러 고칠 점을 적어요">의견<span class="n" id="fbn"></span></button>
   <button class="close" id="mclose">닫기</button>
   <div class="box" id="mbox"><iframe id="mframe" title="크게 보기"></iframe></div>
+  <aside id="fb" hidden aria-label="의견">
+    <h2>의견 남기기</h2>
+    <p class="tip" id="fbtip">화면에서 고칠 곳을 누르세요.</p>
+    <div class="picked" id="fbpick" hidden></div>
+    <textarea id="fbnote" placeholder="어떻게 바뀌면 좋을지 적어 주세요 (예: 글씨가 작아요)" disabled></textarea>
+    <div class="acts"><button class="pri" id="fbadd" disabled>의견 더하기</button></div>
+    <ol id="fblist"></ol>
+    <div class="acts"><button class="pri" id="fbcopy" disabled>의견 복사</button><button id="fbclear" disabled>모두 지우기</button></div>
+    <p class="done" id="fbdone" hidden>복사했어요. 대화창에 붙여넣으면 그 요소만 고쳐요.</p>
+  </aside>
 </div>
 <noscript id="hd-links"></noscript>
 <script id="hd-data" type="application/json">{}</script>
@@ -387,7 +420,8 @@ addEventListener('resize', scheduleVisible);
 /* ---------- 크게 보기 ---------- */
 var modal = $('#modal'), mframe = $('#mframe'), mbox = $('#mbox');
 function sizeModal() {
-  var s = Math.min(1, (innerHeight - 72) / MH, (innerWidth - 16) / MW);
+  var side = fbOn && innerWidth > 760 ? 360 : 0;
+  var s = Math.min(1, (innerHeight - 72) / MH, (innerWidth - 16 - side) / MW);
   mframe.style.transform = s < 1 ? 'scale(' + s.toFixed(4) + ')' : '';
   mbox.style.width = Math.floor(MW * s) + 'px'; mbox.style.height = Math.floor(MH * s) + 'px';
   mbox.style.marginTop = '48px';
@@ -397,9 +431,72 @@ function openModal(file, title) {
   mframe.src = file; modal.hidden = false; $('#mclose').focus();
 }
 function closeModal() { modal.hidden = true; mframe.removeAttribute('src'); }
-mframe.addEventListener('load', function () { sendTo(mframe); });
+mframe.addEventListener('load', function () { sendTo(mframe); sendPick(); });
 $('#mclose').addEventListener('click', closeModal);
 modal.addEventListener('click', function (e) { if (e.target === modal || e.target.id === 'mtitle') closeModal(); });
+/* ---------- 의견: 고른 요소(palette.js 의 hd-picked) + 적은 말 → localStorage(결과 폴더별) → 복사 ---------- */
+var fbOn = false, picked = null;
+var outDir = decodeURIComponent(location.pathname).replace(/\/[^\/]*$/, '').replace(/^\/([A-Za-z]:)/, '$1');
+var FBKEY = 'hd-feedback:' + outDir;
+function fbLoad() { try { return JSON.parse(localStorage.getItem(FBKEY) || '[]'); } catch (e) { return []; } }
+function fbSave(a) { try { localStorage.setItem(FBKEY, JSON.stringify(a)); } catch (e) {} }
+function fbText() {
+  return '[k-style-ui-ux 수정 요청] out=' + outDir + '\n' + fbLoad().map(function (i) {
+    return '- ' + i.screen + ' · \'' + (i.text || '(글자 없음)') + '\' (' + i.path + ') — ' + i.note.replace(/\s+/g, ' ');
+  }).join('\n');
+}
+window.__hdFeedbackText = fbText;
+function fbRender() {
+  var a = fbLoad();
+  $('#fbn').textContent = a.length ? String(a.length) : '';
+  $('#fblist').innerHTML = a.map(function (i, k) {
+    return '<li><small>' + esc(i.screen) + ' · ‘' + esc(i.text || '(글자 없음)') + '’</small><br>' + esc(i.note) +
+      '<button data-k="' + k + '" aria-label="이 의견 지우기">지우기</button></li>'; }).join('');
+  $('#fbcopy').disabled = $('#fbclear').disabled = !a.length;
+  $('#fbcopy').textContent = a.length ? '의견 ' + a.length + '개 복사' : '의견 복사';
+  $('#fbpick').hidden = !picked;
+  if (picked) $('#fbpick').innerHTML = '‘' + esc(picked.text || '(글자 없음)') + '’<code>' + esc(picked.screen + ' · ' + picked.path) + '</code>';
+  $('#fbtip').textContent = picked ? '다른 곳을 누르면 바꿔 고를 수 있어요.' : '화면에서 고칠 곳을 누르세요.';
+  $('#fbnote').disabled = !picked;
+  $('#fbadd').disabled = !picked || !$('#fbnote').value.trim();
+}
+function sendPick() { try { mframe.contentWindow.postMessage({type: 'hd-pick', on: fbOn}, '*'); } catch (e) {} }
+function setFb(on) {
+  fbOn = on; picked = null;
+  $('#fbtn').setAttribute('aria-pressed', String(on));
+  $('#fb').hidden = !on; modal.classList.toggle('fb-on', on);
+  $('#fbdone').hidden = true;
+  sendPick(); sizeModal(); fbRender();
+}
+$('#fbtn').addEventListener('click', function () { setFb(!fbOn); });
+addEventListener('message', function (e) {
+  var d = e.data;
+  if (!fbOn || !d || d.type !== 'hd-picked' || e.source !== mframe.contentWindow) return;
+  picked = {screen: String(d.screen || ''), path: String(d.path || ''), text: String(d.text || '')};
+  fbRender(); $('#fbnote').focus();
+});
+$('#fbnote').addEventListener('input', fbRender);
+$('#fbnote').addEventListener('keydown', function (e) { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) $('#fbadd').click(); });
+$('#fbadd').addEventListener('click', function () {
+  var note = $('#fbnote').value.trim(); if (!picked || !note) return;
+  var a = fbLoad(); a.push({screen: picked.screen, path: picked.path, text: picked.text, note: note}); fbSave(a);
+  $('#fbnote').value = ''; picked = null; $('#fbdone').hidden = true; sendPick(); fbRender();
+});
+$('#fblist').addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-k]'); if (!b) return;
+  var a = fbLoad(); a.splice(+b.dataset.k, 1); fbSave(a); fbRender();
+});
+$('#fbclear').addEventListener('click', function () { fbSave([]); $('#fbdone').hidden = true; fbRender(); });
+function copyText(t) {
+  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t).catch(function () { return legacyCopy(t); });
+  return Promise.resolve(legacyCopy(t));
+}
+function legacyCopy(t) {
+  var ta = document.createElement('textarea'); ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove();
+}
+$('#fbcopy').addEventListener('click', function () { copyText(fbText()).then(function () { $('#fbdone').hidden = false; }); });
+fbRender();
 addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 addEventListener('resize', function () { if (!modal.hidden) sizeModal(); });
 
