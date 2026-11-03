@@ -120,7 +120,7 @@ description: PRD(기획 문서) 한 장으로 모바일 앱 HTML 디자인을 �
 
 한 메시지에서 동시에(**포그라운드로 실행해 같은 턴에서 결과를 받는다 — 백그라운드로 돌려 놓고 "끝나면 알려드릴게요"로 턴을 끝내지 않는다. 턴이 끝나면 다시 이어지지 않는다**):
 - `python3 $SK/scripts/build_canvas.py out` — 캔버스 `out/index.html`(Screens·Foundation·Components 탭, 드래그 이동, 색 점 3개, 갈래 화살표, 정책 3줄 — 스크립트가 만들고 AI는 손대지 않는다)
-- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구
+- `python3 $SK/scripts/selfcheck.py out` — 매니페스트·파일·상태·금지 문구·한글 문구(해요체에 섞인 하십시오체·"~을 통해"·"제공합니다"는 실패, 나머지 번역투·띄어쓰기·은유 라벨은 경고 — 맥락을 보고 고칠지 정한다)
 - `python3 $SK/scripts/audit.py out --shots out/.shots` — 렌더링 측정(대비·토큰 밖 색·의미 배지·CTA·터치·한국어 줄바꿈·캔버스) + 화면 캡처
 - **사실 대조 서브에이전트 1개**(같은 메시지에서): `journey.md` 사실 표와 모든 `screens/*.html`의 글자를 대조해 어긋남(날짜·시간·인원·겹침·상태 이름)과 "누른 뒤 갈 곳이 없는 조작"만 목록으로 돌려준다. 고치지는 않는다.
 
