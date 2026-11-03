@@ -56,7 +56,7 @@ plugins/k-style-ui-ux/
   skills/go/SKILL.md           # 1차
   skills/max/SKILL.md          # 2차
   skills/*/agents/openai.yaml  # Codex 표시 이름·기본 프롬프트(Claude는 무시)
-  core/                        # 공용 — foundation(토큰·부품·팔레트·시드), scripts(검사·캔버스·이미지 검색), references(원칙·체크리스트·명세·이미지)
+  core/                        # 공용 — foundation(토큰·부품·팔레트·시드), scripts(검사·캔버스·이미지 검색·빌드 묶음), references(원칙·체크리스트·명세·이미지)
 ```
 
 마켓 파일: `.claude-plugin/marketplace.json`(Claude) · `.agents/plugins/marketplace.json`(Codex) · `.cursor-plugin/marketplace.json`(Cursor) — 모두 이 폴더를 가리킨다. 버전을 올릴 때는 manifest 4개와 `CHANGELOG.md` 맨 위를 함께 바꾼다 — PR마다 CI(`ci/verify.py`)가 어긋남을 잡는다.
