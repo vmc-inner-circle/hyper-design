@@ -20,13 +20,13 @@ PRD(기획 문서) 한 장을 넣으면 **한국 앱 스타일의 모바일 화�
 
 ## 예시
 
-main 하네스(v14·v15)로 만든 화면입니다. 결과 폴더의 `index.html`을 브라우저로 열면 캔버스에서 전체 흐름을 볼 수 있습니다.
+main 하네스(v14·v15)로 만든 화면입니다. 결과 폴더는 산출물 정리 전 커밋에 보관돼 있습니다. 받아서 `index.html`을 브라우저로 열면 캔버스에서 전체 흐름을 볼 수 있습니다.
 
 | PRD | 결과 | 걸린 시간(당시 판본) |
 |---|---|---|
-| [가족여행 계획](./prd/family-trip.md) | [loop/results/v15-family-trip](./loop/results/v15-family-trip/) | 8.6분 |
-| [청첩장 모임](./prd/wedding-meetup.md) | [loop/results/v15-wedding-meetup](./loop/results/v15-wedding-meetup/) | 1차 16.1분 + 2차 17.0분 |
-| [필라테스 예약](./prd/pilates-booking.md) | [loop/results/v14-pilates-booking](./loop/results/v14-pilates-booking/) | 23.3분 |
+| [가족여행 계획](./prd/family-trip.md) | [loop/results/v15-family-trip](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v15-family-trip) | 8.6분 |
+| [청첩장 모임](./prd/wedding-meetup.md) | [loop/results/v15-wedding-meetup](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v15-wedding-meetup) | 1차 16.1분 + 2차 17.0분 |
+| [필라테스 예약](./prd/pilates-booking.md) | [loop/results/v14-pilates-booking](https://github.com/vmc-inner-circle/k-style-ui-ux/tree/e8a96166c2631e6219f88007ffc5dc2de4e21bc4/loop/results/v14-pilates-booking) | 23.3분 |
 
 ![필라테스 예약 PRD로 만든 화면](./docs/images/pilates-booking.jpg)
 ![청첩장 모임 PRD로 만든 화면](./docs/images/wedding-meetup.jpg)
