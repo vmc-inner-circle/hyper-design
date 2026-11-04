@@ -2,6 +2,11 @@
 
 버전은 `plugins/k-style-ui-ux/`의 manifest 4개(`.claude-plugin/plugin.json`·`.codex-plugin/plugin.json`·`.cursor-plugin/plugin.json`·`plugin.json`)와 이 파일 맨 위 항목이 같아야 한다(`ci/verify.py`가 검사).
 
+## v0.19.2
+
+- 정보에는 브랜드 색을 쓰지 않는다(#48): 숫자 강조(`.num`)·할인율(`.price-off`)·진행 막대(`.progress .is-on`)·읽기용 별점(`.rating .is-on`)을 브랜드 색 → 먹색(`--c-text-1`). 별점 입력(`.rating.is-input`)·범위 고르기·체크·스위치·주 버튼·탭 선택은 그대로 브랜드 색. 원칙 21에 한 줄, `COMPONENTS.md`·체크리스트에 같은 규칙. 근거: 팔레트 원본 8곳(당근·컬리 등) 모바일 웹 첫 화면은 숫자·진행·별점에 핵심 색 0회, 지난 결과물 528화면 중 27%가 그 자리에 브랜드 색을 썼다(화면당 브랜드 색 수는 원본과 같은 중앙값 1곳 — 양이 아니라 자리의 문제).
+- selfcheck: 화면 `<style>`에서 숫자 글자·얇은 막대를 `--c-brand*`로 칠하면 실패(지난 결과물 528화면 중 20화면에 해당).
+
 ## v0.19.1
 
 - 캔버스 연결 보기(@eungshin #29): 카드 아래 "갈 수 있는 곳 N"(또는 Shift+클릭)을 누르면 그 화면의 버튼·링크가 어느 화면으로 가는지 색 선과 버튼 글자로 보이고, 나머지 화면은 흐려진다. Esc나 빈 곳을 누르면 꺼진다. 링크는 build_canvas가 화면 HTML의 `<a href>`에서 읽는다(뒤로·하단 탭 제외, 같은 곳으로 가는 링크는 한 선으로 묶음). go 시간 영향 없음.
