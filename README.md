@@ -65,7 +65,12 @@ PRD만 붙여넣고 "화면 만들어줘"라고 해도 됩니다. 결과는 실�
 
 ## 피드백
 
-써 보셨다면 [피드백 남기기](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/new?template=feedback.yml)로 알려 주세요. 어떤 앱을 만들었는지, 어디서 막혔는지, 결과물을 실제로 썼는지가 다음 개선 방향을 정합니다. 디자이너 분의 혹평도 환영합니다.
+써 보셨다면 이슈로 알려 주세요.
+
+- [👍 좋았던 점 남기기](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/new?template=feedback.yml) — 하네스가 앞으로도 지켜야 할 동작이 돼요.
+- [🔧 고친 점 남기기](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/new?template=feedback-fix.yml) — 하네스가 처음부터 잘하도록 고치는 데 써요.
+
+공개 이슈라 기획서 원문과 실제 이름은 넣지 말아 주세요. 디자이너 분의 혹평도 환영합니다.
 
 ## 기여
 
