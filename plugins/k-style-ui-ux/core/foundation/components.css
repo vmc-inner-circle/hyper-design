@@ -42,7 +42,7 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 .eyebrow { font-size: var(--fs-sub); font-weight: 600; line-height: var(--lh-sub); color: var(--c-text-2); }
 .title { font-size: var(--fs-title); font-weight: var(--fw-title); line-height: var(--lh-title); letter-spacing: -0.03em; }
 .lead { font-size: var(--fs-body); line-height: var(--lh-body); color: var(--c-text-2); }
-.num { color: var(--c-brand-text); font-weight: 700; }
+.num { color: var(--c-text-1); font-weight: 700; }
 .hero-more { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; font-size: var(--fs-sub); font-weight: 600; color: var(--c-brand-text); }
 .hero-more svg { width: 18px; height: 18px; }
 
@@ -197,12 +197,12 @@ body.has-cta .page, body:has(> .cta) .page { padding-bottom: calc(var(--h-btn) +
 /* 진행 막대 — 단계형. 켜진 칸 = 지나온 단계 */
 .progress { display: flex; gap: 4px; height: 4px; }
 .progress > span { flex: 1; border-radius: var(--r-pill); background: var(--c-line-strong); }
-.progress > span.is-on { background: var(--c-brand-line); }
+.progress > span.is-on { background: var(--c-text-1); }
 
 /* 별점 — 선 아이콘 별 5개(svg는 HTML 인라인). 채운 별 = .is-on */
 .rating { display: inline-flex; align-items: center; gap: 4px; color: var(--c-line-strong); }
 .rating svg { width: 20px; height: 20px; fill: none; }
-.rating .is-on { color: var(--c-brand-line); }
+.rating .is-on { color: var(--c-text-1); }
 .rating svg.is-on, .rating .is-on svg { fill: currentColor; }
 .rating.is-input { gap: 0; }
 .rating.is-input button { width: 44px; height: 44px; display: grid; place-items: center; color: var(--c-line-strong); }
@@ -321,7 +321,7 @@ body:not(:has(.appbar)) .tabs { top: 0; }
 
 /* 가격 — 할인율(있으면) + 지금 가격 + 원래 가격(취소선) */
 .price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; font-variant-numeric: tabular-nums; }
-.price-off { font-size: var(--fs-strong); font-weight: 700; color: var(--c-brand-text); }
+.price-off { font-size: var(--fs-strong); font-weight: 700; color: var(--c-text-1); }
 .price-now { font-size: var(--fs-strong); font-weight: 700; color: var(--c-text-1); }
 .price-was { font-size: var(--fs-caption); color: var(--c-text-3); text-decoration: line-through; }
 .price.is-l .price-off, .price.is-l .price-now { font-size: var(--fs-h2); }

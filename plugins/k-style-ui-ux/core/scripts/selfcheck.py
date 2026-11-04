@@ -320,6 +320,25 @@ for s in S:
         n = len(re.findall(r'class="seg-item[ "]', grp))
         if not 2 <= n <= 4: errs.append(f"{f.name}: 세그먼트 {n}칸 — 2~4칸만(많으면 고르기 시트·가로 날짜 줄·칩)")
     if re.search(r'<div class="seg[ "](?:(?!</div>).)*</div>\s*<div class="seg[ "]', h, re.S): errs.append(f"{f.name}: 세그먼트를 쌓아 격자로 씀 — 고르기 시트로")
+# 정보에 브랜드 색(v0.19.2, #48): 화면 <style>에서 숫자 글자·얇은 막대를 --c-brand*로 칠하지 않는다 — 브랜드 색은 행동·값에만(원칙 21).
+# 부품(.num·.progress·.rating·.price-off)은 components.css가 먹색으로 칠한다. 근거: 팔레트 원본 8곳 첫 화면은 숫자·진행·별점에 핵심 색 0회.
+BRANDV = re.compile(r"var\(--c-brand(?:-text|-pressed|-line)?\)")
+NUMTXT = re.compile(r"[\d\s,.%+\-:/~원점회명개월일시분초·()D]+")
+for s in S:
+    f = out / s["file"]
+    if not f.exists(): continue
+    h = f.read_text(encoding="utf-8")
+    for css in re.findall(r"<style[^>]*>(.*?)</style>", h, re.S):
+        for sel, body in re.findall(r"([^{}]+)\{([^{}]*)\}", re.sub(r"/\*.*?\*/", "", css, flags=re.S)):
+            if not BRANDV.search(body) or not sel.split(): continue
+            last = sel.split(",")[0].split()[-1]
+            if re.search(r"background", body) and (re.search(r"height:\s*(?:100%|var\(--stack-(?:xs|s)\))", body) or any(int(x) <= 12 for x in re.findall(r"height:\s*(\d+)px", body))):
+                errs.append(f"{f.name}: <style>의 '{sel.strip()[:30]}'가 얇은 막대를 브랜드 색으로 칠함 — 진행·정도는 정보라 먹색(--c-text-1)"); continue
+            cls = re.findall(r"\.([a-zA-Z][\w-]*)", last)
+            if not cls or not re.search(r"(?:^|;|\s)color:\s*var\(--c-brand", body): continue
+            texts = [m.group(2).strip() for m in re.finditer(r'<\w+[^>]*class="([^"]*)"[^>]*>([^<]*)', h) if set(cls) <= set(m.group(1).split())]   # 요소가 직접 가진 글자(안쪽 태그 앞까지)
+            if texts and all(t and NUMTXT.fullmatch(t) and re.search(r"\d", t) for t in texts):
+                errs.append(f"{f.name}: <style>의 '{sel.strip()[:30]}'가 숫자({texts[0][:10]})를 브랜드 색으로 칠함 — 숫자는 정보라 먹색(--c-text-1), 강조가 필요하면 accent")
 # 한글 문구(v0.19): 화면에 보이는 문장만(탭·버튼·배지·칩 같은 짧은 라벨은 뺀다). 확실한 것만 실패, 나머지는 경고.
 # 실패: 해요체 앱에 하십시오체 문장 · '~을 통해' · '제공합니다'. 앱 대부분이 합니다체면(정중한 말투) 하십시오체는 실패가 아니다.
 # 출처: hydrojun KOREAN.md(#26) — 토스 UX 라이팅 원칙·국립국어원 번역투·KRDS

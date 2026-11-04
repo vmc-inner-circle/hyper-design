@@ -1,6 +1,6 @@
 {
   "name": "k-style-ui-ux",
-  "version": "0.19.1",
+  "version": "0.19.2",
   "description": "PRD 한 장 → 모바일 앱 HTML 디자인 + 캔버스. go 는 모든 흐름을 처음부터 끝까지(1차), max 는 오류·확인·빈 화면 같은 상태까지(2차).",
   "author": {"name": "VIBE MAFIA CLUB inner circle"},
   "homepage": "https://github.com/vmc-inner-circle/k-style-ui-ux",
