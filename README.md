@@ -18,6 +18,20 @@ PRD(기획 문서) 한 장을 넣으면 **한국 앱 스타일의 모바일 화�
 - **한국 서비스 기준** — 29CM·에어비앤비·클래스101·당근·컬리·무신사·마이리얼트립 등 국내 서비스에서 수집한 색 팔레트 중에서 고르고, 결과물에서 팔레트 3벌을 원클릭으로 바꿔 볼 수 있습니다. 여백·글자 크기 같은 값과 아이콘([Fluent Emoji](https://github.com/microsoft/fluentui-emoji), MIT)은 미리 준비돼 있습니다.
 - **검사 후 전달** — 토큰·부품 사용과 빠진 화면, 한국어 줄바꿈(어절 쪼개짐·칸 넘침, [hangul-wrap](https://github.com/hanmariyang/giting-skills)의 실측 방식, MIT)은 스크립트(`selfcheck.py`·`audit.py`)로 검사하고, 화면 캡처는 체크리스트로 비평해 P0·P1 문제를 고친 뒤 넘깁니다. 체크리스트([`core/references/checklist.md`](./plugins/k-style-ui-ux/core/references/checklist.md))는 하네스를 안 써도 참고할 만합니다.
 
+## 자주 묻는 질문
+
+**Claude Design이나 다른 오픈소스 디자인 도구와 무엇이 다른가요?**
+이 하네스는 범용 디자인 도구나 규칙집이 아니라, **PRD 한 장 → 한국 앱 스타일 모바일 화면 묶음**이라는 한 가지 일에 맞춘 파이프라인입니다. 위 "무엇이 다른가"의 세 가지가 그 차이입니다 — 사용자가 만들거나 신청하는 모든 대상의 시작·보기·고치기·끝 화면을 빠짐없이 만들고, 국내 서비스에서 수집한 팔레트·여백 값을 쓰고, 토큰·부품·줄바꿈을 스크립트로 검사한 뒤 전달합니다. 디자인 규칙·어휘를 모아 둔 도구(예: ui-ux-pro-max, Impeccable)나 자체 캔버스에서 화면을 만드는 서비스(예: Gesso)와는 접근 층위가 다릅니다. 다른 도구를 조사한 기록은 [docs/concept.md](./docs/concept.md)의 "경쟁 포지셔닝"(2026-08 기준)에 있습니다. Claude Design을 포함해 다른 도구의 기능은 계속 바뀌니, 비교는 각 도구의 최신 문서로 확인하세요.
+
+**React Native(또는 React) 코드를 만들어 주나요?**
+아니요. 결과는 HTML·CSS 파일(`out/screens/*.html`)과 전체 흐름을 보는 캔버스(`out/index.html`)입니다. 앱 코드가 아니라 **화면 초안**이고, 브라우저에서 열어 보거나 개발 단계에서 구현 참고 자료로 씁니다.
+
+**윈도우·데스크톱 프로그램이나 크롬 확장 프로그램 UI에도 쓸 수 있나요?**
+지금은 모바일 앱 화면만 만듭니다. 캔버스·부품·여백 값과 검사(`audit.py`)가 모두 모바일 폭(375px) 기준이라, 데스크톱 창이나 확장 프로그램의 팝업·사이드 패널에 맞는 화면은 나오지 않습니다. 필요하시면 [#51](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/51)·[#52](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/52)에 의견을 남겨 주세요. 다만 [체크리스트](./plugins/k-style-ui-ux/core/references/checklist.md)는 하네스를 안 써도 참고할 만합니다.
+
+**이미 쓰는 디자인 시스템(shadcn, MUI 등)과 연결되나요?**
+아직 아닙니다. 토큰은 하네스가 준비한 팔레트에서 만들고, 부품은 자체 `components.css`를 씁니다. 관련 논의는 [#50](https://github.com/vmc-inner-circle/k-style-ui-ux/issues/50)에 있습니다.
+
 ## 예시
 
 main 하네스(v14·v15)로 만든 화면입니다. 결과 폴더는 산출물 정리 전 커밋에 보관돼 있습니다. 받아서 `index.html`을 브라우저로 열면 캔버스에서 전체 흐름을 볼 수 있습니다.
